@@ -1,0 +1,13 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {apply = id; cancel = id; preview = id; update = id; }; 
+            CLASS = BlurClass; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {panel = id; scaleLabel = id; scaleSlider = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}

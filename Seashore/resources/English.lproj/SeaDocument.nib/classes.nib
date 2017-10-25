@@ -1,0 +1,864 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {showOptions = id; }; 
+            CLASS = AbstractExporter; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {activate = id; modifierPopupChanged = id; }; 
+            CLASS = AbstractOptions; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {document = id; modifierPopup = id; view = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {toggleBrushes = id; toggleTextures = id; }; 
+            CLASS = AbstractPaintOptions; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = AbstractOptions; 
+        }, 
+        {
+            ACTIONS = {closePanel = id; }; 
+            CLASS = AbstractPanelUtility; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {window = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = AbstractSelectOptions; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = AbstractOptions; 
+        }, 
+        {CLASS = AbstractSelectTool; LANGUAGE = ObjC; SUPERCLASS = AbstractTool; }, 
+        {
+            CLASS = AbstractTool; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {document = id; options = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                applyCustomItem = id; 
+                changeCustomAspectType = id; 
+                setCustomItem = id; 
+                update = id; 
+            }; 
+            CLASS = AspectRatio; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                aspectTypePopup = id; 
+                document = id; 
+                master = id; 
+                panel = id; 
+                prefString = id; 
+                ratioCheckbox = id; 
+                ratioPopup = id; 
+                toLabel = id; 
+                xRatioValue = id; 
+                yRatioValue = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = BannerView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {alternateButton = id; defaultButton = id; document = id; }; 
+            SUPERCLASS = NSView; 
+        }, 
+        {
+            ACTIONS = {
+                modifierPopupChanged = id; 
+                toggledBrushes = id; 
+                toggledTextures = id; 
+                update = id; 
+            }; 
+            CLASS = BrushOptions; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                fadeCheckbox = id; 
+                fadeSlider = id; 
+                pressureCheckbox = id; 
+                pressurePopup = id; 
+                scaleCheckbox = id; 
+            }; 
+            SUPERCLASS = AbstractPaintOptions; 
+        }, 
+        {CLASS = BrushTool; LANGUAGE = ObjC; SUPERCLASS = AbstractTool; }, 
+        {
+            ACTIONS = {changeGroup = id; changeSpacing = id; }; 
+            CLASS = BrushUtility; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                brushGroupPopUp = id; 
+                brushNameLabel = id; 
+                document = id; 
+                spacingLabel = id; 
+                spacingSlider = id; 
+                view = id; 
+            }; 
+            SUPERCLASS = AbstractPanelUtility; 
+        }, 
+        {
+            ACTIONS = {toleranceSliderChanged = id; }; 
+            CLASS = BucketOptions; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {intervalsSlider = id; toleranceLabel = id; toleranceSlider = id; }; 
+            SUPERCLASS = AbstractPaintOptions; 
+        }, 
+        {CLASS = BucketTool; LANGUAGE = ObjC; SUPERCLASS = AbstractTool; }, 
+        {
+            ACTIONS = {mergedChanged = id; }; 
+            CLASS = CloneOptions; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {mergedCheckbox = id; sourceLabel = id; }; 
+            SUPERCLASS = AbstractPaintOptions; 
+        }, 
+        {
+            CLASS = CloneTool; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {fadingTimer = id; sourceLayer = id; }; 
+            SUPERCLASS = AbstractTool; 
+        }, 
+        {
+            ACTIONS = {
+                activateBackgroundColor = id; 
+                activateForegroundColor = id; 
+                changeBackgroundColor = id; 
+                changeForegroundColor = id; 
+                defaultColors = id; 
+                swapColors = id; 
+            }; 
+            CLASS = ColorSelectView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {document = id; textureUtility = id; }; 
+            SUPERCLASS = NSView; 
+        }, 
+        {
+            ACTIONS = {crop = id; }; 
+            CLASS = CropOptions; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {aspectRatio = id; }; 
+            SUPERCLASS = AbstractOptions; 
+        }, 
+        {CLASS = CropTool; LANGUAGE = ObjC; SUPERCLASS = AbstractTool; }, 
+        {
+            ACTIONS = {closeEffects = id; showEffects = id; updateClickCount = id; }; 
+            CLASS = EffectOptions; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                clickCountLabel = id; 
+                effectTable = id; 
+                effectTableInstruction = id; 
+                panel = id; 
+            }; 
+            SUPERCLASS = AbstractOptions; 
+        }, 
+        {
+            CLASS = EffectTool; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {seaPlugins = id; }; 
+            SUPERCLASS = AbstractTool; 
+        }, 
+        {
+            CLASS = EllipseSelectOptions; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {aspectRatio = id; }; 
+            SUPERCLASS = AbstractSelectOptions; 
+        }, 
+        {CLASS = EllipseSelectTool; LANGUAGE = ObjC; SUPERCLASS = AbstractSelectTool; }, 
+        {
+            ACTIONS = {opacityChanged = id; }; 
+            CLASS = EraserOptions; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {mimicBrushCheckbox = id; opacityLabel = id; opacitySlider = id; }; 
+            SUPERCLASS = AbstractPaintOptions; 
+        }, 
+        {CLASS = EraserTool; LANGUAGE = ObjC; SUPERCLASS = AbstractTool; }, 
+        {
+            CLASS = EyedropOptions; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {mergedCheckbox = id; sizeSlider = id; }; 
+            SUPERCLASS = AbstractOptions; 
+        }, 
+        {CLASS = EyedropTool; LANGUAGE = ObjC; SUPERCLASS = AbstractTool; }, 
+        {
+            ACTIONS = {showOptions = id; }; 
+            CLASS = GIFExporter; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = AbstractExporter; 
+        }, 
+        {
+            CLASS = GradientOptions; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {repeatPopup = id; typePopup = id; }; 
+            SUPERCLASS = AbstractOptions; 
+        }, 
+        {CLASS = GradientTool; LANGUAGE = ObjC; SUPERCLASS = AbstractTool; }, 
+        {CLASS = InfoPanel; LANGUAGE = ObjC; SUPERCLASS = NSPanel; }, 
+        {CLASS = InfoPanelBacking; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {
+            ACTIONS = {changeUnits = id; hide = id; show = id; toggle = id; }; 
+            CLASS = InfoUtility; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                alphaValue = id; 
+                blueValue = id; 
+                colorWell = id; 
+                controlView = id; 
+                deltaX = id; 
+                deltaY = id; 
+                document = id; 
+                greenValue = id; 
+                heightValue = id; 
+                radiusValue = id; 
+                redValue = id; 
+                toggleButton = id; 
+                unitsMenu = id; 
+                view = id; 
+                viewAbove = id; 
+                widthValue = id; 
+                xValue = id; 
+                yValue = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {compressionChanged = id; endPanel = id; targetChanged = id; }; 
+            CLASS = JP2Exporter; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                compressImageView = id; 
+                compressLabel = id; 
+                compressSlider = id; 
+                panel = id; 
+                realImageRep = id; 
+                realImageView = id; 
+                targetRadios = id; 
+            }; 
+            SUPERCLASS = AbstractExporter; 
+        }, 
+        {
+            ACTIONS = {compressionChanged = id; endPanel = id; targetChanged = id; }; 
+            CLASS = JPEGExporter; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                compressImageView = id; 
+                compressLabel = id; 
+                compressSlider = id; 
+                panel = id; 
+                realImageRep = id; 
+                realImageView = id; 
+                targetRadios = id; 
+            }; 
+            SUPERCLASS = AbstractExporter; 
+        }, 
+        {CLASS = LassoOptions; LANGUAGE = ObjC; SUPERCLASS = AbstractSelectOptions; }, 
+        {CLASS = LassoTool; LANGUAGE = ObjC; SUPERCLASS = AbstractSelectTool; }, 
+        {CLASS = LayerCell; LANGUAGE = ObjC; SUPERCLASS = NSTextFieldCell; }, 
+        {
+            CLASS = LayerControlView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                delButton = id; 
+                divider = id; 
+                dupButton = id; 
+                leftPane = id; 
+                newButton = id; 
+                rightPane = id; 
+                shButton = id; 
+                statusUtility = id; 
+            }; 
+            SUPERCLASS = NSView; 
+        }, 
+        {
+            ACTIONS = {outlineViewAction = id; }; 
+            CLASS = LayerDataSource; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {document = id; outlineView = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                apply = id; 
+                cancel = id; 
+                changeChannelEditing = id; 
+                changeEnabledAlpha = id; 
+                changeLinked = id; 
+                changeMode = id; 
+                changeOpacity = id; 
+            }; 
+            CLASS = LayerSettings; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                alphaEnabledCheckbox = id; 
+                channelEditingMatrix = id; 
+                document = id; 
+                heightUnits = id; 
+                heightValue = id; 
+                layerTitle = id; 
+                leftUnits = id; 
+                leftValue = id; 
+                linkedCheckbox = id; 
+                modePopup = id; 
+                opacityLabel = id; 
+                opacitySlider = id; 
+                panel = id; 
+                pegasusUtility = id; 
+                topUnits = id; 
+                topValue = id; 
+                widthUnits = id; 
+                widthValue = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {changeSpecialFont = id; }; 
+            CLASS = MovePanel; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {textTool = id; }; 
+            SUPERCLASS = NSPanel; 
+        }, 
+        {CLASS = NSExtendedTableView; LANGUAGE = ObjC; SUPERCLASS = NSTableView; }, 
+        {CLASS = NSOutlineView; LANGUAGE = ObjC; SUPERCLASS = NSTableView; }, 
+        {CLASS = NSPreciseImageView; LANGUAGE = ObjC; SUPERCLASS = NSImageView; }, 
+        {
+            ACTIONS = {changeSpecialFont = id; }; 
+            CLASS = NSTextViewRedirect; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSTextView; 
+        }, 
+        {
+            ACTIONS = {hide = id; show = id; toggle = id; }; 
+            CLASS = OptionsUtility; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                blankView = id; 
+                brushOptions = id; 
+                bucketOptions = id; 
+                cloneOptions = id; 
+                cropOptions = id; 
+                document = id; 
+                effectOptions = id; 
+                ellipseSelectOptions = id; 
+                eraserOptions = id; 
+                eyedropOptions = id; 
+                gradientOptions = id; 
+                lassoOptions = id; 
+                lastView = id; 
+                leftPane = id; 
+                pencilOptions = id; 
+                polygonLassoOptions = id; 
+                positionOptions = id; 
+                rectSelectOptions = id; 
+                rightPane = id; 
+                smudgeOptions = id; 
+                textOptions = id; 
+                toolboxUtility = id; 
+                view = id; 
+                wandOptions = id; 
+                window = id; 
+                zoomOptions = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {showOptions = id; }; 
+            CLASS = PNGExporter; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = AbstractExporter; 
+        }, 
+        {
+            ACTIONS = {
+                addLayer = id; 
+                deleteLayer = id; 
+                duplicateLayer = id; 
+                hide = id; 
+                show = id; 
+                toggleLayers = id; 
+            }; 
+            CLASS = PegasusUtility; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                colorSelectView = id; 
+                dataSource = id; 
+                deleteButton = id; 
+                document = id; 
+                downButton = id; 
+                duplicateButton = id; 
+                layerSettings = id; 
+                layerSettingsPanel = id; 
+                layersView = id; 
+                leftPane = id; 
+                newButton = id; 
+                rightPane = id; 
+                upButton = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {modifierPopupChanged = id; }; 
+            CLASS = PencilOptions; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {sizeSlider = id; }; 
+            SUPERCLASS = AbstractPaintOptions; 
+        }, 
+        {CLASS = PencilTool; LANGUAGE = ObjC; SUPERCLASS = AbstractTool; }, 
+        {
+            CLASS = PluginData; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {document = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = PolygonLassoOptions; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = AbstractSelectOptions; 
+        }, 
+        {CLASS = PolygonLassoTool; LANGUAGE = ObjC; SUPERCLASS = LassoTool; }, 
+        {
+            CLASS = PositionOptions; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {canAnchorCheckbox = id; }; 
+            SUPERCLASS = AbstractOptions; 
+        }, 
+        {
+            CLASS = PositionTool; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {seaOperations = id; }; 
+            SUPERCLASS = AbstractTool; 
+        }, 
+        {
+            ACTIONS = {update = id; }; 
+            CLASS = RectSelectOptions; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {aspectRatio = id; radiusCheckbox = id; radiusSlider = id; }; 
+            SUPERCLASS = AbstractSelectOptions; 
+        }, 
+        {CLASS = RectSelectTool; LANGUAGE = ObjC; SUPERCLASS = AbstractSelectTool; }, 
+        {
+            ACTIONS = {
+                alignBottom = id; 
+                alignHorizontalCenters = id; 
+                alignLeft = id; 
+                alignRight = id; 
+                alignTop = id; 
+                alignVerticalCenters = id; 
+                centerLayerHorizontally = id; 
+                centerLayerVertically = id; 
+            }; 
+            CLASS = SeaAlignment; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {document = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = SeaDocRotation; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {document = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                customRedo = id; 
+                customUndo = id; 
+                exporterChanged = id; 
+                saveDocument = id; 
+                saveDocumentAs = id; 
+                showExporterOptions = id; 
+            }; 
+            CLASS = SeaDocument; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                accessoryView = id; 
+                contents = id; 
+                dataSource = id; 
+                docWindow = id; 
+                exporters = id; 
+                exportersPopUp = id; 
+                gifExporter = id; 
+                helpers = id; 
+                jp2Exporter = id; 
+                jpegExporter = id; 
+                operations = id; 
+                optionsButton = id; 
+                optionsSummary = id; 
+                pluginData = id; 
+                pngExporter = id; 
+                selection = id; 
+                textureExporter = id; 
+                tiffExporter = id; 
+                tools = id; 
+                view = id; 
+                warnings = id; 
+                whiteboard = id; 
+                xcfExporter = id; 
+            }; 
+            SUPERCLASS = NSDocument; 
+        }, 
+        {
+            CLASS = SeaFlip; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {document = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = SeaHelpers; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {document = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                apply = id; 
+                cancel = id; 
+                changeToPreset = id; 
+                condenseLayer = id; 
+                condenseToSelection = id; 
+                cropImage = id; 
+                dimensionsChanged = id; 
+                expandLayer = id; 
+                marginsChanged = id; 
+                maskImage = id; 
+                unitsChanged = id; 
+            }; 
+            CLASS = SeaMargins; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                bottomLabel = id; 
+                bottomValue = id; 
+                box = id; 
+                clippingMatrix = id; 
+                contentRelative = id; 
+                document = id; 
+                heightLabel = id; 
+                heightValue = id; 
+                leftLabel = id; 
+                leftValue = id; 
+                presetsMenu = id; 
+                rightLabel = id; 
+                rightValue = id; 
+                selectionLabel = id; 
+                sheet = id; 
+                topPopdown = id; 
+                topValue = id; 
+                widthLabel = id; 
+                widthValue = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = SeaOperations; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                seaAlignment = id; 
+                seaDocRotation = id; 
+                seaFlip = id; 
+                seaMargins = id; 
+                seaResolution = id; 
+                seaRotation = id; 
+                seaScale = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = SeaOptionsView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {window = id; }; 
+            SUPERCLASS = NSView; 
+        }, 
+        {
+            CLASS = SeaOutlineView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {document = id; }; 
+            SUPERCLASS = NSOutlineView; 
+        }, 
+        {
+            ACTIONS = {
+                apply = id; 
+                cancel = id; 
+                toggleForceSquare = id; 
+                togglePreserveSize = id; 
+                xValueChanged = id; 
+            }; 
+            CLASS = SeaResolution; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                document = id; 
+                forceSquare = id; 
+                preserveSize = id; 
+                seaScale = id; 
+                sheet = id; 
+                xValue = id; 
+                yValue = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {apply = id; cancel = id; }; 
+            CLASS = SeaRotation; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {document = id; rotateValue = id; selectionLabel = id; sheet = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                apply = id; 
+                cancel = id; 
+                changeToPreset = id; 
+                toggleKeepProportions = id; 
+                unitsChanged = id; 
+                valueChanged = id; 
+            }; 
+            CLASS = SeaScale; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                document = id; 
+                heightUnits = id; 
+                heightValue = id; 
+                interpolationPopup = id; 
+                keepProportions = id; 
+                presetsMenu = id; 
+                selectionLabel = id; 
+                sheet = id; 
+                widthPopdown = id; 
+                widthValue = id; 
+                xScaleValue = id; 
+                yScaleValue = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = SeaShadowView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {scrollView = id; }; 
+            SUPERCLASS = NSView; 
+        }, 
+        {
+            CLASS = SeaTools; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                brushTool = id; 
+                bucketTool = id; 
+                cloneTool = id; 
+                cropTool = id; 
+                effectTool = id; 
+                ellipseSelectTool = id; 
+                eraserTool = id; 
+                eyedropTool = id; 
+                gradientTool = id; 
+                lassoTool = id; 
+                pencilTool = id; 
+                polygonLassoTool = id; 
+                positionTool = id; 
+                rectSelectTool = id; 
+                smudgeTool = id; 
+                textTool = id; 
+                wandTool = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = SeaWindowContent; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                document = SeaDocument; 
+                layers = NSScrollView; 
+                mainDocumentView = NSView; 
+                nonOptionsBar = NSView; 
+                nonSidebar = NSView; 
+                optionsBar = SeaOptionsView; 
+                pointInformation = NSView; 
+                sidebar = NSView; 
+                sidebarStatusbar = LayerControlView; 
+                statusBar = LayerControlView; 
+                warningsBar = BannerView; 
+            }; 
+            SUPERCLASS = NSView; 
+        }, 
+        {
+            ACTIONS = {rateChanged = id; }; 
+            CLASS = SmudgeOptions; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {rateLabel = id; rateSlider = id; }; 
+            SUPERCLASS = AbstractPaintOptions; 
+        }, 
+        {CLASS = SmudgeTool; LANGUAGE = ObjC; SUPERCLASS = AbstractTool; }, 
+        {
+            ACTIONS = {
+                changeChannel = id; 
+                changeZoom = id; 
+                channelChanged = id; 
+                hide = id; 
+                quickColorChange = id; 
+                show = id; 
+                toggle = id; 
+                trueViewChanged = id; 
+                zoomIn = id; 
+                zoomNormal = id; 
+                zoomOut = id; 
+            }; 
+            CLASS = StatusUtility; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                alphaBox = id; 
+                alphaSlider = id; 
+                blueBox = id; 
+                blueSlider = id; 
+                channelSelectionPopup = id; 
+                dimensionLabel = id; 
+                document = id; 
+                greenBox = id; 
+                greenSlider = id; 
+                redBox = id; 
+                redSlider = id; 
+                trueViewCheckbox = id; 
+                view = id; 
+                viewAbove = id; 
+                zoomSlider = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {endPanel = id; showOptions = id; targetChanged = id; }; 
+            CLASS = TIFFExporter; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {idocument = id; panel = id; targetRadios = id; }; 
+            SUPERCLASS = AbstractExporter; 
+        }, 
+        {
+            ACTIONS = {changeFont = id; showFonts = id; update = id; }; 
+            CLASS = TextOptions; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                alignmentControl = id; 
+                fontLabel = id; 
+                fontManager = id; 
+                fringeCheckbox = id; 
+                outlineCheckbox = id; 
+                outlineSlider = id; 
+                seaProxy = id; 
+            }; 
+            SUPERCLASS = AbstractPaintOptions; 
+        }, 
+        {
+            ACTIONS = {
+                apply = id; 
+                cancel = id; 
+                cancelMove = id; 
+                doneMove = id; 
+                move = id; 
+                preview = id; 
+                showFonts = id; 
+            }; 
+            CLASS = TextTool; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {fontManager = id; movePanel = id; panel = id; textbox = id; }; 
+            SUPERCLASS = AbstractTool; 
+        }, 
+        {
+            ACTIONS = {
+                apply = id; 
+                cancel = id; 
+                existingCategoryClick = id; 
+                exportAsTexture = id; 
+                newCategoryClick = id; 
+            }; 
+            CLASS = TextureExporter; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                categoryTable = id; 
+                categoryTextbox = id; 
+                document = id; 
+                existingCategoryRadio = id; 
+                nameTextbox = id; 
+                newCategoryRadio = id; 
+                sheet = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {activate = id; changeGroup = id; changeOpacity = id; }; 
+            CLASS = TextureUtility; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                document = id; 
+                opacityLabel = id; 
+                opacitySlider = id; 
+                seaProxy = id; 
+                textureGroupPopUp = id; 
+                textureNameLabel = id; 
+                view = id; 
+            }; 
+            SUPERCLASS = AbstractPanelUtility; 
+        }, 
+        {
+            ACTIONS = {selectToolFromSender = id; selectToolUsingTag = id; }; 
+            CLASS = ToolboxUtility; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                background = id; 
+                colorSelectView = id; 
+                colorsMenu = id; 
+                "delay_timer" = id; 
+                document = id; 
+                drawMenu = id; 
+                drawTBView = id; 
+                effectMenu = id; 
+                effectTBView = id; 
+                foreground = id; 
+                optionsUtility = id; 
+                seaProxy = id; 
+                selectionMenu = id; 
+                selectionTBView = id; 
+                toolbar = id; 
+                toolbox = id; 
+                transformMenu = id; 
+                transformTBView = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {changeColor = id; toggle = id; }; 
+            CLASS = TransparentUtility; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {toleranceSliderChanged = id; }; 
+            CLASS = WandOptions; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {intervalsSlider = id; toleranceLabel = id; toleranceSlider = id; }; 
+            SUPERCLASS = AbstractSelectOptions; 
+        }, 
+        {CLASS = WandTool; LANGUAGE = ObjC; SUPERCLASS = AbstractSelectTool; }, 
+        {
+            ACTIONS = {alternateAction = id; defaultAction = id; }; 
+            CLASS = WarningsUtility; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {document = id; view = BannerView; windowContent = SeaWindowContent; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = WebSlider; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {document = id; utility = id; }; 
+            SUPERCLASS = NSView; 
+        }, 
+        {
+            ACTIONS = {showOptions = id; }; 
+            CLASS = XCFExporter; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {document = id; }; 
+            SUPERCLASS = AbstractExporter; 
+        }, 
+        {
+            CLASS = ZoomOptions; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {zoomLabel = id; }; 
+            SUPERCLASS = AbstractOptions; 
+        }
+    ); 
+    IBVersion = 1; 
+}

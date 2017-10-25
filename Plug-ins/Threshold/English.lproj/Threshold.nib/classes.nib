@@ -1,0 +1,19 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {apply = id; cancel = id; preview = id; update = id; }; 
+            CLASS = ThresholdClass; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {bottomSlider = id; panel = id; rangeLabel = id; topSlider = id; view = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = ThresholdView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {thresholdClass = id; }; 
+            SUPERCLASS = NSView; 
+        }
+    ); 
+    IBVersion = 1; 
+}

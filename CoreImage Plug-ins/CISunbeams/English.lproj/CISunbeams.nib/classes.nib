@@ -1,0 +1,26 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {apply = id; cancel = id; preview = id; update = id; }; 
+            CLASS = BlurClass; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                contrastLabel = id; 
+                contrastSlider = id; 
+                mainColorWell = id; 
+                panel = id; 
+                strengthLabel = id; 
+                strengthSlider = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            CLASS = SunbeamsColorWell; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {ciSunbeams = id; }; 
+            SUPERCLASS = NSColorWell; 
+        }
+    ); 
+    IBVersion = 1; 
+}

@@ -1,0 +1,82 @@
+
+This is a place to quickly jot down bugs that you notice during editing.
+
+== Mark ==
+
+1. Change from "Tab" to something else for previewing plug-ins (otherwise it will cause problems when text fields are implemented).
+2. Some values for inch sizes default to their lower value without warning in the Preferences window.
+3. Rounded rectangle does not grow smoothly at larager radius values.
+4. Clone tool is slow (actually a lot of stuff is slow).
+5. Undo does not update tools (may lead to selection tool being incorrectly available for a floating selection).
+6. Reconsider bucket fills when filling selections are isolated from each other.
+
+== Stephen ==
+Bugs marked with (?) are things I've seen but haven't been able to reliably reproduce.
+
+** Really Broken Behaviors **
+- On two monitors, one window may never get the focus back (?)
+- Sometimes wand selects the wrong area after the anchoring of a new layer (?)
+- Performance/memory usage SUCKS!! There have to be a lot of inefficiencies now, we need to find and ELIMINATE them!
+- Leaving the font panel open across two documents both with text being inserted can result in the fonts being wrong on one of the docs
+- When you create a bucket fill as a preview first (hold down shift, then release before mouse up), you'll get multiple undo records that don't do anything
+- Some layers become unwriteable after opening as PDF (?)
+- Opening images at high DPI (or maybe it's setting the image to a high dpi, or maybe it's just with PDF's) doesn't work (?)
+- selectionRect being recognized by some tools. This is because they are being called erroneously (?)
+- Applying plugins on floating layers and reanchoring them results in visible edges
+- Looks like Color Edges is somehow inverting the colors
+- If the info panel is hidden by default the button at the bottom starts in the wrong state
+
+** Near-term projects **
+- We need an anchor cursor, or just get rid of anchoring all together
+- Rotating floating selection in still a little weird.
+- Maximizing (zooming) a window, default and minimum / maximum window sizes need to be coordinated
+- Floating a layer with an anti-aliased selection mask can result in lost pixels at the boundary when the layer is re-anchored.
+- In 10.4 there's a potential redraw issue with the options view
+- Changing the visibility status of a layer temporarily toggles that layer's selection
+- Hitting the info button in the layers view selects the layer
+- Use Gimp Core more extensively for selections (feathering etc...)
+- Create a much more graphical file new window with thumbnails of recent documents, for example.
+- Need to remove deprecated 10.6 API's as well as remove all instances of "id" in class declarations favor of a more descriptive class
+- The info panels should flip when they are at the edges of the screen, also the arrow should move along the appropriate side.
+- The info panels should be document modal not app modal
+- The layer info panel's dimension fields should be editable
+- The goal for the info panel should be more intelligent
+- The warning banner's alternate buttons should be more intelligent. For example, with a read only file, make the button be a Save As...
+- Should be able to paste text directly into an image
+- Sometimes you can get a "run away" auto scroll when you don't get sufficient mouse events, meaning the user releases the mouse (?)
+outside the view ( I've changed the behavior for now, but it really should go back to the way it was, but without this bug)
+- Because of the change in color handling, a certain color palette can't be serialized, and if it's in the prefs it crashes the app on open I've worked around it but it's still unclear why this is happening
+
+
+
+** General UI Improvements **
+-  We need gradients with stops
+- The options bar should really use more segmented controls instead of so many dropdowns
+- A one pixel grid should be visible when zoomed in, maybe coordinated with the checkerboard
+- Use Sparkle for the updating system
+- Make sure shortcuts don't overlap for options
+	-- Maybe some way of combining all the shortcuts into one place
+- You can see the sea shadow view in the small rect between the horizontal and vertical scrollers when booth visible
+
+** Undefined decisions **
+- Need to make some decisions regarding aspect ratios regarding resizing selections (how should a 1-d resize behave, for example).
+- The help button should actually be a button instead of a tooltip. We really need to create a better help system overall.
+- Maybe make make Seashore help use Apple's help system instead of a PDF
+- Should there be a button on the color control view for default colors?
+- There really should be more options for nudging
+- Combine SeaScale and SeaResolution.
+- Fix SeaMarigns--it crops the SeaContent but not the layers.
+
+** Coding Improvements **
+- Are all of the things that are malloc'ed in the Lasso, PolyLasso, Brush, Eraser tool free'd?
+- Make sure that everything in shutdown is taken care of
+- The status bar needs to get fewer update actions, something is triggering it a lot
+- When you zoom in on lasso tools since it's doing subpixel rendering, it can be super slow, using huge amounts of memory (for example, if you have 16x zoom it uses 256x the amount of space to calculate the mask
+- Enforce the kMinImageSize and kMaxImageSize throughout the App
+- Make better use of NSFormatter
+- Figure out someway to deal with the Prefs window (Templates?)
+and the NewImage window
+- The spotlight importers and quicklooks plugins are supposed to be FAST... I just made them tolerable, they can definitely be improved
+- I hardcoded all of the various UI element sizes (such as scrollbar or toolbar size). At the very least there should be one place to change these, but really that one place should also dynamically figure those out.
+- The code in SeaWindowContent needs to be seriously cleaned up (data structures more wisely chosen etc...)
+- There should be bounds checking in the XCFLayer.m - (BOOL)readProperties:(FILE *)file sharedInfo:(SharedXCFInfo *)info for each of the properties

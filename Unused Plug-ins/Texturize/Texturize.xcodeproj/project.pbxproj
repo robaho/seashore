@@ -1,0 +1,343 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
+		A80CED2209FE7001009859A6 /* initialiser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A80CED2109FE7001009859A6 /* initialiser.cpp */; };
+		A80CED3009FE7062009859A6 /* compter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A80CED2F09FE7062009859A6 /* compter.cpp */; };
+		A80CEDA309FE733D009859A6 /* graph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A80CEDA109FE733D009859A6 /* graph.cpp */; };
+		A80CEDAE09FE7352009859A6 /* maxflow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A80CEDAD09FE7352009859A6 /* maxflow.cpp */; };
+		A80CEDD309FE740E009859A6 /* graphcut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A80CEDD209FE740E009859A6 /* graphcut.cpp */; };
+		A80CEE1209FE7517009859A6 /* offset.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A80CEE1109FE7517009859A6 /* offset.cpp */; };
+		A80CF0AB09FE848A009859A6 /* render.mm in Sources */ = {isa = PBXBuildFile; fileRef = A80CF0AA09FE848A009859A6 /* render.mm */; };
+		A831E1410789471D0009080F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A831E13F0789471D0009080F /* Localizable.strings */; };
+		A89DCE51078A300C005008F4 /* Rects.mm in Sources */ = {isa = PBXBuildFile; fileRef = A89DCE50078A300C005008F4 /* Rects.mm */; };
+		A8CA58350793689B004BE921 /* Texturize.nib in Resources */ = {isa = PBXBuildFile; fileRef = A8CA58330793689B004BE921 /* Texturize.nib */; };
+		A8D55D7A0792124D00B6C7C8 /* TexturizeClass.mm in Sources */ = {isa = PBXBuildFile; fileRef = A8D55D780792124D00B6C7C8 /* TexturizeClass.mm */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		8D5B49B6048680CD000E48DA /* Texturize.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Texturize.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Info.plist; sourceTree = "<group>"; };
+		A80CECF109FE6F79009859A6 /* GIMPBridge.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = GIMPBridge.h; sourceTree = "<group>"; };
+		A80CED1409FE6FDE009859A6 /* texturize.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = texturize.h; path = src/texturize.h; sourceTree = "<group>"; };
+		A80CED2109FE7001009859A6 /* initialiser.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = initialiser.cpp; path = src/initialiser.cpp; sourceTree = "<group>"; };
+		A80CED2F09FE7062009859A6 /* compter.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = compter.cpp; path = src/compter.cpp; sourceTree = "<group>"; };
+		A80CEDA109FE733D009859A6 /* graph.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = graph.cpp; path = src/graph.cpp; sourceTree = "<group>"; };
+		A80CEDA209FE733D009859A6 /* graph.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = graph.h; path = src/graph.h; sourceTree = "<group>"; };
+		A80CEDAD09FE7352009859A6 /* maxflow.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = maxflow.cpp; path = src/maxflow.cpp; sourceTree = "<group>"; };
+		A80CEDD209FE740E009859A6 /* graphcut.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = graphcut.cpp; path = src/graphcut.cpp; sourceTree = "<group>"; };
+		A80CEE1109FE7517009859A6 /* offset.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = offset.cpp; path = src/offset.cpp; sourceTree = "<group>"; };
+		A80CF0AA09FE848A009859A6 /* render.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; name = render.mm; path = src/render.mm; sourceTree = "<group>"; };
+		A80CF12009FE87CB009859A6 /* block.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = block.h; path = src/block.h; sourceTree = "<group>"; };
+		A831E1400789471D0009080F /* English */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A84C96B8078965B900451E47 /* SeaPlugins.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SeaPlugins.h; sourceTree = "<group>"; };
+		A89DCE2A078A2FCB005008F4 /* Rects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rects.h; sourceTree = "<group>"; };
+		A89DCE50078A300C005008F4 /* Rects.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = Rects.mm; sourceTree = "<group>"; };
+		A8CA58340793689B004BE921 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/Texturize.nib; sourceTree = "<group>"; };
+		A8CA5C4307937C9E004BE921 /* PluginData.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = PluginData.h; sourceTree = "<group>"; };
+		A8D55D770792124D00B6C7C8 /* TexturizeClass.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = TexturizeClass.h; sourceTree = "<group>"; };
+		A8D55D780792124D00B6C7C8 /* TexturizeClass.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = TexturizeClass.mm; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D5B49B3048680CD000E48DA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		089C166AFE841209C02AAC07 /* Texturize */ = {
+			isa = PBXGroup;
+			children = (
+				A80CECAB09FE6BDC009859A6 /* Headers */,
+				A80CED1A09FE6FF1009859A6 /* Source */,
+				08FB77AFFE84173DC02AAC07 /* Classes */,
+				089C167CFE841241C02AAC07 /* Resources */,
+				089C1671FE841209C02AAC07 /* Frameworks and Libraries */,
+				19C28FB8FE9D52D311CA2CBB /* Products */,
+			);
+			name = Texturize;
+			sourceTree = "<group>";
+		};
+		089C1671FE841209C02AAC07 /* Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */,
+				1058C7AEFEA557BF11CA2CBB /* Other Frameworks */,
+			);
+			name = "Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		089C167CFE841241C02AAC07 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A8CA58330793689B004BE921 /* Texturize.nib */,
+				8D5B49B7048680CD000E48DA /* Info.plist */,
+				A831E13F0789471D0009080F /* Localizable.strings */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		08FB77AFFE84173DC02AAC07 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				A89DCE2A078A2FCB005008F4 /* Rects.h */,
+				A89DCE50078A300C005008F4 /* Rects.mm */,
+				A8CA5C4307937C9E004BE921 /* PluginData.h */,
+				A84C96B8078965B900451E47 /* SeaPlugins.h */,
+				A8D55D770792124D00B6C7C8 /* TexturizeClass.h */,
+				A8D55D780792124D00B6C7C8 /* TexturizeClass.mm */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7AEFEA557BF11CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				089C1672FE841209C02AAC07 /* Foundation.framework */,
+				089C167FFE841241C02AAC07 /* AppKit.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FB8FE9D52D311CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D5B49B6048680CD000E48DA /* Texturize.bundle */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A80CECAB09FE6BDC009859A6 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				A80CECF109FE6F79009859A6 /* GIMPBridge.h */,
+				A80CF12009FE87CB009859A6 /* block.h */,
+				A80CEDA209FE733D009859A6 /* graph.h */,
+				A80CED1409FE6FDE009859A6 /* texturize.h */,
+			);
+			name = Headers;
+			sourceTree = "<group>";
+		};
+		A80CED1A09FE6FF1009859A6 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				A80CEDA109FE733D009859A6 /* graph.cpp */,
+				A80CEDD209FE740E009859A6 /* graphcut.cpp */,
+				A80CEDAD09FE7352009859A6 /* maxflow.cpp */,
+				A80CED2F09FE7062009859A6 /* compter.cpp */,
+				A80CED2109FE7001009859A6 /* initialiser.cpp */,
+				A80CEE1109FE7517009859A6 /* offset.cpp */,
+				A80CF0AA09FE848A009859A6 /* render.mm */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D5B49AC048680CD000E48DA /* Texturize */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A8582DD209BD8EF90098D48C /* Build configuration list for PBXNativeTarget "Texturize" */;
+			buildPhases = (
+				8D5B49AF048680CD000E48DA /* Resources */,
+				8D5B49B1048680CD000E48DA /* Sources */,
+				8D5B49B3048680CD000E48DA /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Texturize;
+			productInstallPath = "$(HOME)/Library/Bundles";
+			productName = Texturize;
+			productReference = 8D5B49B6048680CD000E48DA /* Texturize.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		089C1669FE841209C02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = A8582DD609BD8EF90098D48C /* Build configuration list for PBXProject "Texturize" */;
+			hasScannedForEncodings = 1;
+			mainGroup = 089C166AFE841209C02AAC07 /* Texturize */;
+			projectDirPath = "";
+			targets = (
+				8D5B49AC048680CD000E48DA /* Texturize */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D5B49AF048680CD000E48DA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A831E1410789471D0009080F /* Localizable.strings in Resources */,
+				A8CA58350793689B004BE921 /* Texturize.nib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D5B49B1048680CD000E48DA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A89DCE51078A300C005008F4 /* Rects.mm in Sources */,
+				A8D55D7A0792124D00B6C7C8 /* TexturizeClass.mm in Sources */,
+				A80CED2209FE7001009859A6 /* initialiser.cpp in Sources */,
+				A80CED3009FE7062009859A6 /* compter.cpp in Sources */,
+				A80CEDA309FE733D009859A6 /* graph.cpp in Sources */,
+				A80CEDAE09FE7352009859A6 /* maxflow.cpp in Sources */,
+				A80CEDD309FE740E009859A6 /* graphcut.cpp in Sources */,
+				A80CEE1209FE7517009859A6 /* offset.cpp in Sources */,
+				A80CF0AB09FE848A009859A6 /* render.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		A831E13F0789471D0009080F /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A831E1400789471D0009080F /* English */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		A8CA58330793689B004BE921 /* Texturize.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A8CA58340793689B004BE921 /* English */,
+			);
+			name = Texturize.nib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A8582DD309BD8EF90098D48C /* Development (Native) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_VERSION_i386 = 4.0;
+				GCC_VERSION_ppc = 3.3;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = Texturize;
+				WRAPPER_EXTENSION = bundle;
+				ZERO_LINK = YES;
+			};
+			name = "Development (Native)";
+		};
+		A8582DD409BD8EF90098D48C /* Deployment (Universal) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_VERSION_i386 = 4.0;
+				GCC_VERSION_ppc = 3.3;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = Texturize;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = "Deployment (Universal)";
+		};
+		A8582DD509BD8EF90098D48C /* Deployment (Native) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_VERSION_i386 = 4.0;
+				GCC_VERSION_ppc = 3.3;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = Texturize;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = "Deployment (Native)";
+		};
+		A8582DD709BD8EF90098D48C /* Development (Native) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = "Development (Native)";
+		};
+		A8582DD809BD8EF90098D48C /* Deployment (Universal) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = "Deployment (Universal)";
+		};
+		A8582DD909BD8EF90098D48C /* Deployment (Native) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = "Deployment (Native)";
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A8582DD209BD8EF90098D48C /* Build configuration list for PBXNativeTarget "Texturize" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A8582DD309BD8EF90098D48C /* Development (Native) */,
+				A8582DD409BD8EF90098D48C /* Deployment (Universal) */,
+				A8582DD509BD8EF90098D48C /* Deployment (Native) */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = "Deployment (Universal)";
+		};
+		A8582DD609BD8EF90098D48C /* Build configuration list for PBXProject "Texturize" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A8582DD709BD8EF90098D48C /* Development (Native) */,
+				A8582DD809BD8EF90098D48C /* Deployment (Universal) */,
+				A8582DD909BD8EF90098D48C /* Deployment (Native) */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = "Deployment (Universal)";
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 089C1669FE841209C02AAC07 /* Project object */;
+}

@@ -1,0 +1,525 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A80162E20D17F4BB00C4A2BE /* GIMPRotating.c in Sources */ = {isa = PBXBuildFile; fileRef = A80162E10D17F4BB00C4A2BE /* GIMPRotating.c */; };
+		A80162EE0D17F5B800C4A2BE /* gimpmatrix.h in Headers */ = {isa = PBXBuildFile; fileRef = A80162EC0D17F5B800C4A2BE /* gimpmatrix.h */; };
+		A80162EF0D17F5B800C4A2BE /* gimpmatrix.c in Sources */ = {isa = PBXBuildFile; fileRef = A80162ED0D17F5B800C4A2BE /* gimpmatrix.c */; };
+		A8A7BDCB07C1E06C006AB467 /* GIMPCore.h in Headers */ = {isa = PBXBuildFile; fileRef = A8BEC8DE05018CCC00A80207 /* GIMPCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A8A7BDCC07C1E06C006AB467 /* GIMPBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = A8BEC8E2050190CA00A80207 /* GIMPBridge.h */; };
+		A8A7BDCD07C1E06C006AB467 /* PixelRegion.h in Headers */ = {isa = PBXBuildFile; fileRef = A8379685056B959C00A80207 /* PixelRegion.h */; };
+		A8A7BDCE07C1E06C006AB467 /* Channel.h in Headers */ = {isa = PBXBuildFile; fileRef = A8379689056B989100A80207 /* Channel.h */; };
+		A8A7BDCF07C1E06C006AB467 /* gimpadaptivesupersample.h in Headers */ = {isa = PBXBuildFile; fileRef = A87138D2069C391A00A80207 /* gimpadaptivesupersample.h */; };
+		A8A7BDD007C1E06C006AB467 /* gimprgb.h in Headers */ = {isa = PBXBuildFile; fileRef = A87138D6069C393900A80207 /* gimprgb.h */; };
+		A8A7BDD107C1E06C006AB467 /* Gradient.h in Headers */ = {isa = PBXBuildFile; fileRef = A829A54F06A181FF006CD6F9 /* Gradient.h */; };
+		A8A7BDD707C1E06C006AB467 /* GIMPScaling.c in Sources */ = {isa = PBXBuildFile; fileRef = A8BEC8F105019EC900A80207 /* GIMPScaling.c */; };
+		A8A7BDD807C1E06C006AB467 /* GIMPEllipse.c in Sources */ = {isa = PBXBuildFile; fileRef = A8379682056B930200A80207 /* GIMPEllipse.c */; };
+		A8A7BDD907C1E06C006AB467 /* GIMPGradient.c in Sources */ = {isa = PBXBuildFile; fileRef = A8393904069C2B1100A80207 /* GIMPGradient.c */; };
+		A8A7BDDA07C1E06C006AB467 /* gimprgb.c in Sources */ = {isa = PBXBuildFile; fileRef = A87138D5069C393900A80207 /* gimprgb.c */; };
+		A8A7BDDB07C1E06C006AB467 /* gimpadaptivesupersample.c in Sources */ = {isa = PBXBuildFile; fileRef = A87138D1069C391A00A80207 /* gimpadaptivesupersample.c */; };
+		DCA784CF0A6E89F80058681A /* GIMPPolygon.c in Sources */ = {isa = PBXBuildFile; fileRef = DCA784CD0A6E89F80058681A /* GIMPPolygon.c */; };
+		DCA784D20A6E8E930058681A /* gimpscanconvert.c in Sources */ = {isa = PBXBuildFile; fileRef = DCA784D00A6E8E930058681A /* gimpscanconvert.c */; };
+		DCA784D30A6E8E930058681A /* gimpscanconvert.h in Headers */ = {isa = PBXBuildFile; fileRef = DCA784D10A6E8E930058681A /* gimpscanconvert.h */; };
+		DCA7850B0A6E93950058681A /* art_svp.c in Sources */ = {isa = PBXBuildFile; fileRef = DCA785090A6E93950058681A /* art_svp.c */; };
+		DCA7850C0A6E93950058681A /* art_svp.h in Headers */ = {isa = PBXBuildFile; fileRef = DCA7850A0A6E93950058681A /* art_svp.h */; };
+		DCA785550A6E99910058681A /* ArtBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = DCA785540A6E99910058681A /* ArtBridge.h */; };
+		DCA785580A6E9AA40058681A /* art_svp_render_aa.c in Sources */ = {isa = PBXBuildFile; fileRef = DCA785560A6E9AA40058681A /* art_svp_render_aa.c */; };
+		DCA785590A6E9AA40058681A /* art_svp_render_aa.h in Headers */ = {isa = PBXBuildFile; fileRef = DCA785570A6E9AA40058681A /* art_svp_render_aa.h */; };
+		DCA7860C0A6EB8290058681A /* art_svp_intersect.h in Headers */ = {isa = PBXBuildFile; fileRef = DCA7860B0A6EB8290058681A /* art_svp_intersect.h */; };
+		DCA7860E0A6EB8B00058681A /* art_svp_intersect.c in Sources */ = {isa = PBXBuildFile; fileRef = DCA7860D0A6EB8B00058681A /* art_svp_intersect.c */; };
+		DCA786640A6EC21C0058681A /* art_svp_vpath.c in Sources */ = {isa = PBXBuildFile; fileRef = DCA786620A6EC21C0058681A /* art_svp_vpath.c */; };
+		DCA786650A6EC21C0058681A /* art_svp_vpath.h in Headers */ = {isa = PBXBuildFile; fileRef = DCA786630A6EC21C0058681A /* art_svp_vpath.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		0867D6A5FE840307C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		A80162E10D17F4BB00C4A2BE /* GIMPRotating.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = GIMPRotating.c; path = source/GIMPRotating.c; sourceTree = "<group>"; };
+		A80162EC0D17F5B800C4A2BE /* gimpmatrix.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = gimpmatrix.h; path = source/gimpmatrix.h; sourceTree = "<group>"; };
+		A80162ED0D17F5B800C4A2BE /* gimpmatrix.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gimpmatrix.c; path = source/gimpmatrix.c; sourceTree = "<group>"; };
+		A829A54F06A181FF006CD6F9 /* Gradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gradient.h; path = source/Gradient.h; sourceTree = "<group>"; };
+		A8379682056B930200A80207 /* GIMPEllipse.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = GIMPEllipse.c; path = source/GIMPEllipse.c; sourceTree = "<group>"; };
+		A8379685056B959C00A80207 /* PixelRegion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PixelRegion.h; path = source/PixelRegion.h; sourceTree = "<group>"; };
+		A8379689056B989100A80207 /* Channel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Channel.h; path = source/Channel.h; sourceTree = "<group>"; };
+		A8393904069C2B1100A80207 /* GIMPGradient.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = GIMPGradient.c; path = source/GIMPGradient.c; sourceTree = "<group>"; };
+		A87138D1069C391A00A80207 /* gimpadaptivesupersample.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gimpadaptivesupersample.c; path = source/gimpadaptivesupersample.c; sourceTree = "<group>"; };
+		A87138D2069C391A00A80207 /* gimpadaptivesupersample.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = gimpadaptivesupersample.h; path = source/gimpadaptivesupersample.h; sourceTree = "<group>"; };
+		A87138D5069C393900A80207 /* gimprgb.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gimprgb.c; path = source/gimprgb.c; sourceTree = "<group>"; };
+		A87138D6069C393900A80207 /* gimprgb.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = gimprgb.h; path = source/gimprgb.h; sourceTree = "<group>"; };
+		A8A7BDE207C1E06C006AB467 /* GIMPCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GIMPCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A8BEC8DE05018CCC00A80207 /* GIMPCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GIMPCore.h; path = public/GIMPCore.h; sourceTree = "<group>"; };
+		A8BEC8E2050190CA00A80207 /* GIMPBridge.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = GIMPBridge.h; path = source/GIMPBridge.h; sourceTree = "<group>"; };
+		A8BEC8F105019EC900A80207 /* GIMPScaling.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = GIMPScaling.c; path = source/GIMPScaling.c; sourceTree = "<group>"; };
+		DCA784CD0A6E89F80058681A /* GIMPPolygon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = GIMPPolygon.c; path = source/Polygon/GIMPPolygon.c; sourceTree = "<group>"; };
+		DCA784D00A6E8E930058681A /* gimpscanconvert.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gimpscanconvert.c; path = source/Polygon/gimpscanconvert.c; sourceTree = "<group>"; };
+		DCA784D10A6E8E930058681A /* gimpscanconvert.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = gimpscanconvert.h; path = source/Polygon/gimpscanconvert.h; sourceTree = "<group>"; };
+		DCA785090A6E93950058681A /* art_svp.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = art_svp.c; path = source/Polygon/art_svp.c; sourceTree = "<group>"; };
+		DCA7850A0A6E93950058681A /* art_svp.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = art_svp.h; path = source/Polygon/art_svp.h; sourceTree = "<group>"; };
+		DCA785540A6E99910058681A /* ArtBridge.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ArtBridge.h; path = source/Polygon/ArtBridge.h; sourceTree = "<group>"; };
+		DCA785560A6E9AA40058681A /* art_svp_render_aa.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = art_svp_render_aa.c; path = source/Polygon/art_svp_render_aa.c; sourceTree = "<group>"; };
+		DCA785570A6E9AA40058681A /* art_svp_render_aa.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = art_svp_render_aa.h; path = source/Polygon/art_svp_render_aa.h; sourceTree = "<group>"; };
+		DCA7860B0A6EB8290058681A /* art_svp_intersect.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = art_svp_intersect.h; path = source/Polygon/art_svp_intersect.h; sourceTree = "<group>"; };
+		DCA7860D0A6EB8B00058681A /* art_svp_intersect.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = art_svp_intersect.c; path = source/Polygon/art_svp_intersect.c; sourceTree = "<group>"; };
+		DCA786620A6EC21C0058681A /* art_svp_vpath.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = art_svp_vpath.c; path = source/Polygon/art_svp_vpath.c; sourceTree = "<group>"; };
+		DCA786630A6EC21C0058681A /* art_svp_vpath.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = art_svp_vpath.h; path = source/Polygon/art_svp_vpath.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A8A7BDDC07C1E06C006AB467 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		034768DFFF38A50411DB9C8B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A8A7BDE207C1E06C006AB467 /* GIMPCore.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0867D691FE84028FC02AAC07 /* GIMPCore */ = {
+			isa = PBXGroup;
+			children = (
+				A8BEC8970501889400A80207 /* Public Headers */,
+				A87138DB069C3ACA00A80207 /* Supersampling */,
+				A80162E50D17F59300C4A2BE /* Rotating */,
+				DCA784CB0A6E89E00058681A /* Polygon */,
+				08FB77AEFE84172EC02AAC07 /* Source */,
+				0867D69AFE84028FC02AAC07 /* Frameworks */,
+				034768DFFF38A50411DB9C8B /* Products */,
+			);
+			name = GIMPCore;
+			sourceTree = "<group>";
+		};
+		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */,
+				1058C7B2FEA5585E11CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		08FB77AEFE84172EC02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				A8BEC8E2050190CA00A80207 /* GIMPBridge.h */,
+				A8379685056B959C00A80207 /* PixelRegion.h */,
+				A8379689056B989100A80207 /* Channel.h */,
+				A829A54F06A181FF006CD6F9 /* Gradient.h */,
+				A8BEC8F105019EC900A80207 /* GIMPScaling.c */,
+				A8379682056B930200A80207 /* GIMPEllipse.c */,
+				A8393904069C2B1100A80207 /* GIMPGradient.c */,
+				A80162E10D17F4BB00C4A2BE /* GIMPRotating.c */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7B2FEA5585E11CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0867D69BFE84028FC02AAC07 /* Foundation.framework */,
+				0867D6A5FE840307C02AAC07 /* AppKit.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		A80162E50D17F59300C4A2BE /* Rotating */ = {
+			isa = PBXGroup;
+			children = (
+				A80162EC0D17F5B800C4A2BE /* gimpmatrix.h */,
+				A80162ED0D17F5B800C4A2BE /* gimpmatrix.c */,
+			);
+			name = Rotating;
+			sourceTree = "<group>";
+		};
+		A87138DB069C3ACA00A80207 /* Supersampling */ = {
+			isa = PBXGroup;
+			children = (
+				A87138D6069C393900A80207 /* gimprgb.h */,
+				A87138D5069C393900A80207 /* gimprgb.c */,
+				A87138D2069C391A00A80207 /* gimpadaptivesupersample.h */,
+				A87138D1069C391A00A80207 /* gimpadaptivesupersample.c */,
+			);
+			name = Supersampling;
+			sourceTree = "<group>";
+		};
+		A8BEC8970501889400A80207 /* Public Headers */ = {
+			isa = PBXGroup;
+			children = (
+				A8BEC8DE05018CCC00A80207 /* GIMPCore.h */,
+			);
+			name = "Public Headers";
+			sourceTree = "<group>";
+		};
+		DCA784CB0A6E89E00058681A /* Polygon */ = {
+			isa = PBXGroup;
+			children = (
+				DCA785540A6E99910058681A /* ArtBridge.h */,
+				DCA7850A0A6E93950058681A /* art_svp.h */,
+				DCA785090A6E93950058681A /* art_svp.c */,
+				DCA786630A6EC21C0058681A /* art_svp_vpath.h */,
+				DCA786620A6EC21C0058681A /* art_svp_vpath.c */,
+				DCA7860B0A6EB8290058681A /* art_svp_intersect.h */,
+				DCA7860D0A6EB8B00058681A /* art_svp_intersect.c */,
+				DCA785570A6E9AA40058681A /* art_svp_render_aa.h */,
+				DCA785560A6E9AA40058681A /* art_svp_render_aa.c */,
+				DCA784D10A6E8E930058681A /* gimpscanconvert.h */,
+				DCA784D00A6E8E930058681A /* gimpscanconvert.c */,
+				DCA784CD0A6E89F80058681A /* GIMPPolygon.c */,
+			);
+			name = Polygon;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		A8A7BDCA07C1E06C006AB467 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A8A7BDCB07C1E06C006AB467 /* GIMPCore.h in Headers */,
+				A8A7BDCC07C1E06C006AB467 /* GIMPBridge.h in Headers */,
+				A8A7BDCD07C1E06C006AB467 /* PixelRegion.h in Headers */,
+				A8A7BDCE07C1E06C006AB467 /* Channel.h in Headers */,
+				A8A7BDCF07C1E06C006AB467 /* gimpadaptivesupersample.h in Headers */,
+				A8A7BDD007C1E06C006AB467 /* gimprgb.h in Headers */,
+				A8A7BDD107C1E06C006AB467 /* Gradient.h in Headers */,
+				DCA784D30A6E8E930058681A /* gimpscanconvert.h in Headers */,
+				DCA7850C0A6E93950058681A /* art_svp.h in Headers */,
+				DCA785550A6E99910058681A /* ArtBridge.h in Headers */,
+				DCA785590A6E9AA40058681A /* art_svp_render_aa.h in Headers */,
+				DCA7860C0A6EB8290058681A /* art_svp_intersect.h in Headers */,
+				DCA786650A6EC21C0058681A /* art_svp_vpath.h in Headers */,
+				A80162EE0D17F5B800C4A2BE /* gimpmatrix.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		A8A7BDC907C1E06C006AB467 /* GIMPCore */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A8E9640009BD8F4E0038694C /* Build configuration list for PBXNativeTarget "GIMPCore" */;
+			buildPhases = (
+				A8A7BDCA07C1E06C006AB467 /* Headers */,
+				A8A7BDD507C1E06C006AB467 /* Resources */,
+				A8A7BDD607C1E06C006AB467 /* Sources */,
+				A8A7BDDC07C1E06C006AB467 /* Frameworks */,
+				A8A7BDE007C1E06C006AB467 /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GIMPCore;
+			productInstallPath = "@executable_path/../Frameworks";
+			productName = GIMPCore;
+			productReference = A8A7BDE207C1E06C006AB467 /* GIMPCore.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0867D690FE84028FC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0900;
+			};
+			buildConfigurationList = A8E9640409BD8F4E0038694C /* Build configuration list for PBXProject "GIMPCore" */;
+			compatibilityVersion = "Xcode 2.4";
+			developmentRegion = en;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 0867D691FE84028FC02AAC07 /* GIMPCore */;
+			productRefGroup = 034768DFFF38A50411DB9C8B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A8A7BDC907C1E06C006AB467 /* GIMPCore */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A8A7BDD507C1E06C006AB467 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXRezBuildPhase section */
+		A8A7BDE007C1E06C006AB467 /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXRezBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A8A7BDD607C1E06C006AB467 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A8A7BDD707C1E06C006AB467 /* GIMPScaling.c in Sources */,
+				A8A7BDD807C1E06C006AB467 /* GIMPEllipse.c in Sources */,
+				A8A7BDD907C1E06C006AB467 /* GIMPGradient.c in Sources */,
+				A8A7BDDA07C1E06C006AB467 /* gimprgb.c in Sources */,
+				A8A7BDDB07C1E06C006AB467 /* gimpadaptivesupersample.c in Sources */,
+				DCA784CF0A6E89F80058681A /* GIMPPolygon.c in Sources */,
+				DCA784D20A6E8E930058681A /* gimpscanconvert.c in Sources */,
+				DCA7850B0A6E93950058681A /* art_svp.c in Sources */,
+				DCA785580A6E9AA40058681A /* art_svp_render_aa.c in Sources */,
+				DCA7860E0A6EB8B00058681A /* art_svp_intersect.c in Sources */,
+				DCA786640A6EC21C0058681A /* art_svp_vpath.c in Sources */,
+				A80162E20D17F4BB00C4A2BE /* GIMPRotating.c in Sources */,
+				A80162EF0D17F5B800C4A2BE /* gimpmatrix.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		A8E9640109BD8F4E0038694C /* Development (Native) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_VERSION = "";
+				GCC_VERSION_i386 = 4.0;
+				GCC_VERSION_ppc = 4.0;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "@executable_path/../Frameworks";
+				OTHER_LDFLAGS = (
+					"-seg1addr",
+					0x01520000,
+				);
+				PREBINDING = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore.gimpcore;
+				PRODUCT_NAME = GIMPCore;
+				SDKROOT = macosx;
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = framework;
+				ZERO_LINK = YES;
+			};
+			name = "Development (Native)";
+		};
+		A8E9640209BD8F4E0038694C /* Deployment (Universal) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_AUTO_VECTORIZATION = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_VERSION = "";
+				GCC_VERSION_i386 = 4.0;
+				GCC_VERSION_ppc = 4.0;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "@executable_path/../Frameworks";
+				OTHER_LDFLAGS = (
+					"-seg1addr",
+					0x01520000,
+				);
+				PREBINDING = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore.gimpcore;
+				PRODUCT_NAME = GIMPCore;
+				SDKROOT = macosx;
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = framework;
+			};
+			name = "Deployment (Universal)";
+		};
+		A8E9640309BD8F4E0038694C /* Deployment (Native) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_AUTO_VECTORIZATION = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_VERSION = "";
+				GCC_VERSION_i386 = 4.0;
+				GCC_VERSION_ppc = 4.0;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "@executable_path/../Frameworks";
+				OTHER_LDFLAGS = (
+					"-seg1addr",
+					0x01520000,
+				);
+				PREBINDING = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore.gimpcore;
+				PRODUCT_NAME = GIMPCore;
+				SDKROOT = macosx;
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = framework;
+			};
+			name = "Deployment (Native)";
+		};
+		A8E9640509BD8F4E0038694C /* Development (Native) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = "Development (Native)";
+		};
+		A8E9640609BD8F4E0038694C /* Deployment (Universal) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = "Deployment (Universal)";
+		};
+		A8E9640709BD8F4E0038694C /* Deployment (Native) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = "Deployment (Native)";
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A8E9640009BD8F4E0038694C /* Build configuration list for PBXNativeTarget "GIMPCore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A8E9640109BD8F4E0038694C /* Development (Native) */,
+				A8E9640209BD8F4E0038694C /* Deployment (Universal) */,
+				A8E9640309BD8F4E0038694C /* Deployment (Native) */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = "Deployment (Universal)";
+		};
+		A8E9640409BD8F4E0038694C /* Build configuration list for PBXProject "GIMPCore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A8E9640509BD8F4E0038694C /* Development (Native) */,
+				A8E9640609BD8F4E0038694C /* Deployment (Universal) */,
+				A8E9640709BD8F4E0038694C /* Deployment (Native) */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = "Deployment (Universal)";
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0867D690FE84028FC02AAC07 /* Project object */;
+}

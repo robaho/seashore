@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>author</key>
+	<string>Mark Pazolli and Michael Sweet</string>
+	<key>copyright</key>
+	<string>Copyright (c) 2005 Mark Pazolli and Copyright (c) 1997-1998 Michael Sweet</string>
+	<key>description</key>
+	<string>Sharpens the selection.</string>
+	<key>groupName</key>
+	<string>Enhance</string>
+	<key>license</key>
+	<string>GNU General Public License</string>
+	<key>name</key>
+	<string>Sharpen</string>
+</dict>
+</plist>

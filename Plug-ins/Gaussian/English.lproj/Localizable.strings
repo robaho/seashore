@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>author</key>
+	<string>Mark Pazolli, Spencer Kimball and Peter Mattis</string>
+	<key>copyright</key>
+	<string>Copyright (c) 2004 Mark Pazolli and Copyright (c) 1995 Spencer Kimball and Peter Mattis</string>
+	<key>description</key>
+	<string>Blurs the selection using a Gaussian blur.</string>
+	<key>groupName</key>
+	<string>Blur</string>
+	<key>license</key>
+	<string>GNU General Public License</string>
+	<key>name</key>
+	<string>Gaussian Blur</string>
+</dict>
+</plist>

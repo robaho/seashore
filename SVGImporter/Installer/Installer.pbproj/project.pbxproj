@@ -1,0 +1,432 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 39;
+	objects = {
+		080E96DDFE201D6D7F000001 = {
+			children = (
+				A874C2BA07E54CD20019511F,
+				A874C2BB07E54CD20019511F,
+			);
+			isa = PBXGroup;
+			name = Classes;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+//080
+//081
+//082
+//083
+//084
+//100
+//101
+//102
+//103
+//104
+		1058C7A0FEA54F0111CA2CBB = {
+			children = (
+				1058C7A1FEA54F0111CA2CBB,
+			);
+			isa = PBXGroup;
+			name = "Linked Frameworks";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		1058C7A1FEA54F0111CA2CBB = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.framework;
+			name = Cocoa.framework;
+			path = /System/Library/Frameworks/Cocoa.framework;
+			refType = 0;
+			sourceTree = "<absolute>";
+		};
+		1058C7A2FEA54F0111CA2CBB = {
+			children = (
+				29B97325FDCFA39411CA2CEA,
+				29B97324FDCFA39411CA2CEA,
+			);
+			isa = PBXGroup;
+			name = "Other Frameworks";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+//100
+//101
+//102
+//103
+//104
+//190
+//191
+//192
+//193
+//194
+		19C28FACFE9D520D11CA2CBB = {
+			children = (
+				A8B275E007E54D6800701EA8,
+			);
+			isa = PBXGroup;
+			name = Products;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+//190
+//191
+//192
+//193
+//194
+//290
+//291
+//292
+//293
+//294
+		29B97313FDCFA39411CA2CEA = {
+			buildSettings = {
+			};
+			buildStyles = (
+				4A9504CCFFE6A4B311CA0CBA,
+				4A9504CDFFE6A4B311CA0CBA,
+			);
+			hasScannedForEncodings = 0;
+			isa = PBXProject;
+			mainGroup = 29B97314FDCFA39411CA2CEA;
+			projectDirPath = "";
+			targets = (
+				A8B275D407E54D6800701EA8,
+			);
+		};
+		29B97314FDCFA39411CA2CEA = {
+			children = (
+				080E96DDFE201D6D7F000001,
+				29B97315FDCFA39411CA2CEA,
+				29B97317FDCFA39411CA2CEA,
+				29B97323FDCFA39411CA2CEA,
+				19C28FACFE9D520D11CA2CBB,
+			);
+			isa = PBXGroup;
+			name = Updater;
+			path = "";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA = {
+			children = (
+				29B97316FDCFA39411CA2CEA,
+			);
+			isa = PBXGroup;
+			name = "Other Sources";
+			path = "";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		29B97316FDCFA39411CA2CEA = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = main.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA = {
+			children = (
+				A873F73B07E86F9E00D77206,
+				A873F73F07E86FB000D77206,
+				A81BE74F0876504B007D886A,
+				F589968102801C730116BBC0,
+				A8B275DF07E54D6800701EA8,
+				29B97318FDCFA39411CA2CEA,
+			);
+			isa = PBXGroup;
+			name = Resources;
+			path = "";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		29B97318FDCFA39411CA2CEA = {
+			children = (
+				29B97319FDCFA39411CA2CEA,
+			);
+			isa = PBXVariantGroup;
+			name = MainMenu.nib;
+			path = "";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		29B97319FDCFA39411CA2CEA = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.nib;
+			name = English;
+			path = English.lproj/MainMenu.nib;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA = {
+			children = (
+				1058C7A0FEA54F0111CA2CBB,
+				1058C7A2FEA54F0111CA2CBB,
+			);
+			isa = PBXGroup;
+			name = Frameworks;
+			path = "";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		29B97324FDCFA39411CA2CEA = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.framework;
+			name = AppKit.framework;
+			path = /System/Library/Frameworks/AppKit.framework;
+			refType = 0;
+			sourceTree = "<absolute>";
+		};
+		29B97325FDCFA39411CA2CEA = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.framework;
+			name = Foundation.framework;
+			path = /System/Library/Frameworks/Foundation.framework;
+			refType = 0;
+			sourceTree = "<absolute>";
+		};
+//290
+//291
+//292
+//293
+//294
+//4A0
+//4A1
+//4A2
+//4A3
+//4A4
+		4A9504CCFFE6A4B311CA0CBA = {
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUGGING_SYMBOLS = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OPTIMIZATION_CFLAGS = "-O0";
+				ZERO_LINK = YES;
+			};
+			isa = PBXBuildStyle;
+			name = Development;
+		};
+		4A9504CDFFE6A4B311CA0CBA = {
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUGGING_SYMBOLS = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				OPTIMIZATION_CFLAGS = "-O3";
+				ZERO_LINK = NO;
+			};
+			isa = PBXBuildStyle;
+			name = Deployment;
+		};
+//4A0
+//4A1
+//4A2
+//4A3
+//4A4
+//A80
+//A81
+//A82
+//A83
+//A84
+		A81BE74F0876504B007D886A = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.icns;
+			path = Installer.icns;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		A81BE7500876504B007D886A = {
+			fileRef = A81BE74F0876504B007D886A;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		A873F73B07E86F9E00D77206 = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.application;
+			name = SVGImporter.app;
+			path = ../build/SVGImporter.app;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
+		};
+		A873F73C07E86F9E00D77206 = {
+			fileRef = A873F73B07E86F9E00D77206;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		A873F73F07E86FB000D77206 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.icns;
+			name = "SVG Icon.icns";
+			path = "../../Seashore/resources/icons/SVG Icon.icns";
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
+		};
+		A873F74007E86FB000D77206 = {
+			fileRef = A873F73F07E86FB000D77206;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		A874C2BA07E54CD20019511F = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = InstallerObject.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		A874C2BB07E54CD20019511F = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = InstallerObject.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		A8B275D407E54D6800701EA8 = {
+			buildPhases = (
+				A8B275D507E54D6800701EA8,
+				A8B275D707E54D6800701EA8,
+				A8B275DA07E54D6800701EA8,
+				A8B275DD07E54D6800701EA8,
+			);
+			buildRules = (
+			);
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = "";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "SVG Installer";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+				WRAPPER_EXTENSION = app;
+			};
+			dependencies = (
+			);
+			isa = PBXNativeTarget;
+			name = Installer;
+			productInstallPath = "$(HOME)/Applications";
+			productName = Updater;
+			productReference = A8B275E007E54D6800701EA8;
+			productType = "com.apple.product-type.application";
+		};
+		A8B275D507E54D6800701EA8 = {
+			buildActionMask = 2147483647;
+			files = (
+				A8B275D607E54D6800701EA8,
+			);
+			isa = PBXHeadersBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A8B275D607E54D6800701EA8 = {
+			fileRef = A874C2BA07E54CD20019511F;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		A8B275D707E54D6800701EA8 = {
+			buildActionMask = 2147483647;
+			files = (
+				A8B275D807E54D6800701EA8,
+				A8B275D907E54D6800701EA8,
+				A873F73C07E86F9E00D77206,
+				A873F74007E86FB000D77206,
+				A81BE7500876504B007D886A,
+			);
+			isa = PBXResourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A8B275D807E54D6800701EA8 = {
+			fileRef = 29B97318FDCFA39411CA2CEA;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		A8B275D907E54D6800701EA8 = {
+			fileRef = F589968102801C730116BBC0;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		A8B275DA07E54D6800701EA8 = {
+			buildActionMask = 2147483647;
+			files = (
+				A8B275DB07E54D6800701EA8,
+				A8B275DC07E54D6800701EA8,
+			);
+			isa = PBXSourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A8B275DB07E54D6800701EA8 = {
+			fileRef = 29B97316FDCFA39411CA2CEA;
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+				);
+			};
+		};
+		A8B275DC07E54D6800701EA8 = {
+			fileRef = A874C2BB07E54CD20019511F;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		A8B275DD07E54D6800701EA8 = {
+			buildActionMask = 2147483647;
+			files = (
+				A8B275DE07E54D6800701EA8,
+			);
+			isa = PBXFrameworksBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A8B275DE07E54D6800701EA8 = {
+			fileRef = 1058C7A1FEA54F0111CA2CBB;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		A8B275DF07E54D6800701EA8 = {
+			isa = PBXFileReference;
+			lastKnownFileType = text.xml;
+			path = Info.plist;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		A8B275E007E54D6800701EA8 = {
+			explicitFileType = wrapper.application;
+			includeInIndex = 0;
+			isa = PBXFileReference;
+			path = "SVG Installer.app";
+			refType = 3;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+//A80
+//A81
+//A82
+//A83
+//A84
+//F50
+//F51
+//F52
+//F53
+//F54
+		F589968102801C730116BBC0 = {
+			isa = PBXFileReference;
+			lastKnownFileType = text.rtf;
+			path = Credits.rtf;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA;
+}

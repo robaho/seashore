@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>author</key>
+	<string>Mark Pazolli</string>
+	<key>copyright</key>
+	<string>Public Domain 2007</string>
+	<key>description</key>
+	<string>Adds random noise to a selection.</string>
+	<key>groupName</key>
+	<string>Generate</string>
+	<key>license</key>
+	<string>Public Domain</string>
+	<key>name</key>
+	<string>Random Generator</string>
+</dict>
+</plist>

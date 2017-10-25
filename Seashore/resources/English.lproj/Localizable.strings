@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>16-bit message</key>
+	<string>Seashore does not support the editing of 16-bit images. This image has been resampled at 8-bits to be imported.</string>
+	<key>SVG message</key>
+	<string>Seashore is unable to open the given SVG file because the SVG Importer is not installed. The installer for this importer can be found on Seashore&apos;s website.</string>
+	<key>all group</key>
+	<string>All</string>
+	<key>anchor selection</key>
+	<string>Anchor Selection</string>
+	<key>background</key>
+	<string>Background</string>
+	<key>gif trans</key>
+	<string>Seashore does not support GIF transparency or animation.</string>
+	<key>background layer</key>
+	<string>Background</string>
+	<key>beta message</key>
+	<string>Seashore is still under development and may contain bugs. Please make sure to only work on copies of images as there is the potential for corruption. Also please report any bugs you find.</string>
+	<key>cancel</key>
+	<string>Cancel</string>
+	<key>channels message</key>
+	<string>This XCF file contains channels which are not currently supported by Seashore. These channels will be lost upon saving.</string>
+	<key>click count</key>
+	<string>Clicks remaining: %d</string>
+	<key>compatibility (gimp) message</key>
+	<string>This file contains layer modes which will not be recognized by the GIMP 1.2 series and earlier.</string>
+	<key>corner radius</key>
+	<string>Corner radius: %d</string>
+	<key>disable alpha</key>
+	<string>Disable Alpha Channel</string>
+	<key>disk space body</key>
+	<string>To allow for unlimited undos Seashore needs to write some data to your system disk during operation. However since your system disk now has less than 50 MB of space some or all of the data Seashore has written to disk will be deleted (possibly causing certain undo or redo actions to fail). As such, it is strongly advised you save all documents and quit Seashore. This may improve the disk space situation on your system disk however you are urged to delete some additional files from your system disk to ensure this problem does not arise again in the future.</string>
+	<key>disk space title</key>
+	<string>Disk space low</string>
+	<key>download available body</key>
+	<string>An updated version of Seashore is now availble for download.</string>
+	<key>download available title</key>
+	<string>Update available</string>
+	<key>download error body</key>
+	<string>The file required to check if Seashore cannot be downloaded from the Internet. Please check your Internet connection and try again.</string>
+	<key>download error title</key>
+	<string>Downolad error</string>
+	<key>download later</key>
+	<string>Download later</string>
+	<key>download now</key>
+	<string>Download now</string>
+	<key>empty selection body</key>
+	<string>The selection cannot be floated since it is empty.</string>
+	<key>empty selection copy body</key>
+	<string>The selection cannot be copied since it is empty.</string>
+	<key>empty selection copy title</key>
+	<string>Selection empty</string>
+	<key>empty selection title</key>
+	<string>Selection empty</string>
+	<key>enable alpha</key>
+	<string>Enable Alpha Channel</string>
+	<key>fade-out</key>
+	<string>Fade-out: %d</string>
+	<key>feedback survey body</key>
+	<string>In order to improve the next release of Seashore we are asking users to participate in a survey. The survey is only one page long and can be accessed by clicking the &quot;Run Survey&quot; button. This message should not trouble you again.</string>
+	<key>feedback survey button</key>
+	<string>Run Survey</string>
+	<key>feedback survey title</key>
+	<string>Seashore Feedback Survey</string>
+	<key>flatten body</key>
+	<string>Parts of the document that are not currently visible will be lost. Are you sure you wish to continue?</string>
+	<key>flatten title</key>
+	<string>Information will be lost</string>
+	<key>flattened</key>
+	<string>Flattened Layer</string>
+	<key>float selection</key>
+	<string>Float Selection</string>
+	<key>floating</key>
+	<string>Floating Selection</string>
+	<key>foreground</key>
+	<string>Foreground</string>
+	<key>general</key>
+	<string>General</string>
+	<key>hide boundaries</key>
+	<string>Hide Layer Boundaries</string>
+	<key>hide brushes</key>
+	<string>Hide Brushes</string>
+	<key>hide channels</key>
+	<string>Hide Channels</string>
+	<key>hide info</key>
+	<string>Hide Point Information</string>
+	<key>hide layers</key>
+	<string>Hide Layers</string>
+	<key>hide options</key>
+	<string>Hide Options</string>
+	<key>hide rulers</key>
+	<string>Hide Rulers</string>
+	<key>hide textures</key>
+	<string>Hide Textures</string>
+	<key>hide toolbox</key>
+	<string>Hide Toolbox</string>
+	<key>hide transparent</key>
+	<string>Hide Transparent Color</string>
+	<key>high res message</key>
+	<string>This image has a high resolution. Seashore&apos;s performance may therefore be reduced. You can reduce the resolution using &quot;Image &gt; Resolution...&quot; (with &quot;Preserve size&quot; checked). This will result in a lower-quality image.</string>
+	<key>import failure message</key>
+	<string>The selected file was not able to be successfully imported into this document.</string>
+	<key>indexed color body</key>
+	<string>XCF files using indexed colors are only supported if they are of version 1 or greater. This is because version 0 is known to have certain problems with indexed colors.</string>
+	<key>indexed color title</key>
+	<string>Indexed color not supported</string>
+	<key>jp2 not supported</key>
+	<string>The JPEG 2000 image format is only supported on systems running Mac OS 10.4 or later.</string>
+	<key>layer title</key>
+	<string>Layer %d</string>
+	<key>locked body</key>
+	<string>The &quot;Compare to Last Saved&quot; operation failed. The most likely cause for this is that the disk the original is kept on is full or read-only.</string>
+	<key>locked title</key>
+	<string>Operation Failed</string>
+	<key>mask-to-alpha message</key>
+	<string>Some of the masks in this image have been composited to their layer&apos;s alpha channel. These masks will be lost upon saving.</string>
+	<key>new images</key>
+	<string>New Images</string>
+	<key>no</key>
+	<string>No</string>
+	<key>non-current message</key>
+	<string>This file will be deleted upon closing unless it is saved.</string>
+	<key>not available</key>
+	<string>N/A</string>
+	<key>ok</key>
+	<string>OK</string>
+	<key>old crash report message</key>
+	<string>Seashore has moved its old crash report to the Trash so that it will be deleted next time you empty the trash.</string>
+	<key>opacity</key>
+	<string>Opacity: %d%%</string>
+	<key>outline</key>
+	<string>Outline: %d pt</string>
+	<key>paper size</key>
+	<string>Paper size</string>
+	<key>rate</key>
+	<string>Rate: %d%%</string>
+	<key>read only message</key>
+	<string>This file is in a read-only format, as such you cannot save this file. This warning will not be displayed for subsequent files in a read-only format.</string>
+	<key>resolution no effect message</key>
+	<string>The resolution of this image has been changed and this will affect printing and saving. However this will not affect the viewing window because your Preferences are set to ignore image resolution.</string>
+	<key>revert</key>
+	<string>Revert</string>
+	<key>revert body</key>
+	<string>&quot;%@&quot; has been edited. Are you sure you want to undo changes?</string>
+	<key>revert title</key>
+	<string>Revert</string>
+	<key>show boundaries</key>
+	<string>Show Layer Boundaries</string>
+	<key>show brushes</key>
+	<string>Show Brushes</string>
+	<key>show channels</key>
+	<string>Show Channels</string>
+	<key>show info</key>
+	<string>Show Point Information</string>
+	<key>show layers</key>
+	<string>Show Layers</string>
+	<key>show options</key>
+	<string>Show Options</string>
+	<key>show rulers</key>
+	<string>Show Rulers</string>
+	<key>show textures</key>
+	<string>Show Textures</string>
+	<key>show toolbox</key>
+	<string>Show Toolbox</string>
+	<key>show transparent</key>
+	<string>Show Transparent Color</string>
+	<key>source set</key>
+	<string>Source: (%d, %d) from &quot;%@&quot;</string>
+	<key>source set document</key>
+	<string>Source: (%d, %d) from whole document</string>
+	<key>source unset</key>
+	<string>Source: Unset</string>
+	<key>spacing</key>
+	<string>Spacing: %d%%</string>
+	<key>strange res message</key>
+	<string>This image has an unusual resolution. As such, it may look different to what is expected at 100% zoom. To fix this use &quot;Image &gt; Resolution...&quot; and set to 72 x 72 dpi.</string>
+	<key>tablet bug message</key>
+	<string>There is a bug in Mac OS 10.4 that causes some tablets to incorrectly register their first touch at full strength. A workaround is provided in the &quot;Preferences&quot; dialog however the best solution is to upgrade to Mac OS 10.4.6 or later.</string>
+	<key>tolerance</key>
+	<string>Tolerance: %d</string>
+	<key>transparent</key>
+	<string>Transparent</string>
+	<key>untitled</key>
+	<string>Untitled</string>
+	<key>up-to-date body</key>
+	<string>Seashore is up-to-date.</string>
+	<key>up-to-date title</key>
+	<string>Seashore up-to-date</string>
+	<key>user guide message</key>
+	<string>Seashore is distributed with a user guide to help you understand its features. Simply select &quot;Seashore Help&quot; from the &quot;Help&quot; menu to read it.</string>
+	<key>whole document</key>
+	<string>Whole Document</string>
+	<key>window back</key>
+	<string>Window Frame</string>
+	<key>xcf version body</key>
+	<string>The version of the XCF file you are trying to load is not supported by this program, every attempt will be made to load the file in its current state but loading may fail.</string>
+	<key>xcf version title</key>
+	<string>XCF version not supported</string>
+	<key>yes</key>
+	<string>Yes</string>
+	<key>zoom</key>
+	<string>Zoom: %.0f%%</string>
+</dict>
+</plist>

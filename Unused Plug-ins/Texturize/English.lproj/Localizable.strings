@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>author</key>
+	<string>Manu Cornet and Jean-Baptise Rouquier</string>
+	<key>copyright</key>
+	<string>Copyright (c) 2004-2005 Manu Cornet and Jean-Baptise Rouquier</string>
+	<key>description</key>
+	<string>Generate a texture from the active document.</string>
+	<key>groupName</key>
+	<string>Document</string>
+	<key>license</key>
+	<string>GNU General Public License</string>
+	<key>name</key>
+	<string>Texturize</string>
+	<key>ok</key>
+	<string>Ok</string>
+	<key>small body</key>
+	<string>The texturize plug-in can only be used with images that are larger than 64 pixels in both width and height.</string>
+	<key>small title</key>
+	<string>Image too small</string>
+</dict>
+</plist>

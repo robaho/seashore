@@ -1,0 +1,569 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A854ACF109BC12A2004AD947 /* t4.h in Headers */ = {isa = PBXBuildFile; fileRef = A854ACBE09BC12A2004AD947 /* t4.h */; };
+		A854ACF609BC12A2004AD947 /* tif_close.c in Sources */ = {isa = PBXBuildFile; fileRef = A854ACC309BC12A2004AD947 /* tif_close.c */; };
+		A854ACF709BC12A2004AD947 /* tif_codec.c in Sources */ = {isa = PBXBuildFile; fileRef = A854ACC409BC12A2004AD947 /* tif_codec.c */; };
+		A854ACF809BC12A2004AD947 /* tif_color.c in Sources */ = {isa = PBXBuildFile; fileRef = A854ACC509BC12A2004AD947 /* tif_color.c */; };
+		A854ACF909BC12A2004AD947 /* tif_compress.c in Sources */ = {isa = PBXBuildFile; fileRef = A854ACC609BC12A2004AD947 /* tif_compress.c */; };
+		A854ACFA09BC12A2004AD947 /* tif_dir.c in Sources */ = {isa = PBXBuildFile; fileRef = A854ACC709BC12A2004AD947 /* tif_dir.c */; };
+		A854ACFB09BC12A2004AD947 /* tif_dir.h in Headers */ = {isa = PBXBuildFile; fileRef = A854ACC809BC12A2004AD947 /* tif_dir.h */; };
+		A854ACFC09BC12A2004AD947 /* tif_dirinfo.c in Sources */ = {isa = PBXBuildFile; fileRef = A854ACC909BC12A2004AD947 /* tif_dirinfo.c */; };
+		A854ACFD09BC12A2004AD947 /* tif_dirread.c in Sources */ = {isa = PBXBuildFile; fileRef = A854ACCA09BC12A2004AD947 /* tif_dirread.c */; };
+		A854ACFE09BC12A2004AD947 /* tif_dirwrite.c in Sources */ = {isa = PBXBuildFile; fileRef = A854ACCB09BC12A2004AD947 /* tif_dirwrite.c */; };
+		A854ACFF09BC12A2004AD947 /* tif_dumpmode.c in Sources */ = {isa = PBXBuildFile; fileRef = A854ACCC09BC12A2004AD947 /* tif_dumpmode.c */; };
+		A854AD0009BC12A2004AD947 /* tif_error.c in Sources */ = {isa = PBXBuildFile; fileRef = A854ACCD09BC12A2004AD947 /* tif_error.c */; };
+		A854AD0109BC12A2004AD947 /* tif_extension.c in Sources */ = {isa = PBXBuildFile; fileRef = A854ACCE09BC12A2004AD947 /* tif_extension.c */; };
+		A854AD0209BC12A2004AD947 /* tif_fax3.c in Sources */ = {isa = PBXBuildFile; fileRef = A854ACCF09BC12A2004AD947 /* tif_fax3.c */; };
+		A854AD0309BC12A2004AD947 /* tif_fax3.h in Headers */ = {isa = PBXBuildFile; fileRef = A854ACD009BC12A2004AD947 /* tif_fax3.h */; };
+		A854AD0409BC12A2004AD947 /* tif_fax3sm.c in Sources */ = {isa = PBXBuildFile; fileRef = A854ACD109BC12A2004AD947 /* tif_fax3sm.c */; };
+		A854AD0509BC12A2004AD947 /* tif_flush.c in Sources */ = {isa = PBXBuildFile; fileRef = A854ACD209BC12A2004AD947 /* tif_flush.c */; };
+		A854AD0609BC12A2004AD947 /* tif_getimage.c in Sources */ = {isa = PBXBuildFile; fileRef = A854ACD309BC12A2004AD947 /* tif_getimage.c */; };
+		A854AD0709BC12A2004AD947 /* tif_jpeg.c in Sources */ = {isa = PBXBuildFile; fileRef = A854ACD409BC12A2004AD947 /* tif_jpeg.c */; };
+		A854AD0809BC12A2004AD947 /* tif_luv.c in Sources */ = {isa = PBXBuildFile; fileRef = A854ACD509BC12A2004AD947 /* tif_luv.c */; };
+		A854AD0909BC12A2004AD947 /* tif_lzw.c in Sources */ = {isa = PBXBuildFile; fileRef = A854ACD609BC12A2004AD947 /* tif_lzw.c */; };
+		A854AD0C09BC12A2004AD947 /* tif_ojpeg.c in Sources */ = {isa = PBXBuildFile; fileRef = A854ACD909BC12A2004AD947 /* tif_ojpeg.c */; };
+		A854AD0D09BC12A2004AD947 /* tif_open.c in Sources */ = {isa = PBXBuildFile; fileRef = A854ACDA09BC12A2004AD947 /* tif_open.c */; };
+		A854AD0E09BC12A2004AD947 /* tif_packbits.c in Sources */ = {isa = PBXBuildFile; fileRef = A854ACDB09BC12A2004AD947 /* tif_packbits.c */; };
+		A854AD0F09BC12A2004AD947 /* tif_pixarlog.c in Sources */ = {isa = PBXBuildFile; fileRef = A854ACDC09BC12A2004AD947 /* tif_pixarlog.c */; };
+		A854AD1009BC12A2004AD947 /* tif_predict.c in Sources */ = {isa = PBXBuildFile; fileRef = A854ACDD09BC12A2004AD947 /* tif_predict.c */; };
+		A854AD1109BC12A2004AD947 /* tif_predict.h in Headers */ = {isa = PBXBuildFile; fileRef = A854ACDE09BC12A2004AD947 /* tif_predict.h */; };
+		A854AD1209BC12A2004AD947 /* tif_print.c in Sources */ = {isa = PBXBuildFile; fileRef = A854ACDF09BC12A2004AD947 /* tif_print.c */; };
+		A854AD1309BC12A2004AD947 /* tif_read.c in Sources */ = {isa = PBXBuildFile; fileRef = A854ACE009BC12A2004AD947 /* tif_read.c */; };
+		A854AD1509BC12A2004AD947 /* tif_strip.c in Sources */ = {isa = PBXBuildFile; fileRef = A854ACE209BC12A2004AD947 /* tif_strip.c */; };
+		A854AD1609BC12A2004AD947 /* tif_swab.c in Sources */ = {isa = PBXBuildFile; fileRef = A854ACE309BC12A2004AD947 /* tif_swab.c */; };
+		A854AD1709BC12A2004AD947 /* tif_thunder.c in Sources */ = {isa = PBXBuildFile; fileRef = A854ACE409BC12A2004AD947 /* tif_thunder.c */; };
+		A854AD1809BC12A2004AD947 /* tif_tile.c in Sources */ = {isa = PBXBuildFile; fileRef = A854ACE509BC12A2004AD947 /* tif_tile.c */; };
+		A854AD1909BC12A2004AD947 /* tif_unix.c in Sources */ = {isa = PBXBuildFile; fileRef = A854ACE609BC12A2004AD947 /* tif_unix.c */; };
+		A854AD1A09BC12A2004AD947 /* tif_version.c in Sources */ = {isa = PBXBuildFile; fileRef = A854ACE709BC12A2004AD947 /* tif_version.c */; };
+		A854AD1B09BC12A2004AD947 /* tif_warning.c in Sources */ = {isa = PBXBuildFile; fileRef = A854ACE809BC12A2004AD947 /* tif_warning.c */; };
+		A854AD1E09BC12A2004AD947 /* tif_write.c in Sources */ = {isa = PBXBuildFile; fileRef = A854ACEB09BC12A2004AD947 /* tif_write.c */; };
+		A854AD1F09BC12A2004AD947 /* tif_zip.c in Sources */ = {isa = PBXBuildFile; fileRef = A854ACEC09BC12A2004AD947 /* tif_zip.c */; };
+		A854AD2209BC12A2004AD947 /* uvcode.h in Headers */ = {isa = PBXBuildFile; fileRef = A854ACEF09BC12A2004AD947 /* uvcode.h */; };
+		A854AD2E09BC12CC004AD947 /* tiff.h in Headers */ = {isa = PBXBuildFile; fileRef = A854AD2A09BC12CC004AD947 /* tiff.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A854AD2F09BC12CC004AD947 /* tiffconf.h in Headers */ = {isa = PBXBuildFile; fileRef = A854AD2B09BC12CC004AD947 /* tiffconf.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A854AD3009BC12CC004AD947 /* tiffio.h in Headers */ = {isa = PBXBuildFile; fileRef = A854AD2C09BC12CC004AD947 /* tiffio.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A854AD3109BC12CC004AD947 /* tiffvers.h in Headers */ = {isa = PBXBuildFile; fileRef = A854AD2D09BC12CC004AD947 /* tiffvers.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A854AD7C09BC1598004AD947 /* tif_next.c in Sources */ = {isa = PBXBuildFile; fileRef = A854AD7B09BC1598004AD947 /* tif_next.c */; };
+		A854AD7E09BC15BB004AD947 /* tif_aux.c in Sources */ = {isa = PBXBuildFile; fileRef = A854AD7D09BC15BB004AD947 /* tif_aux.c */; };
+		A8C11F3309D95C8300FDB067 /* tif_config.h in Headers */ = {isa = PBXBuildFile; fileRef = A8C11F3209D95C8300FDB067 /* tif_config.h */; };
+		A8D6231009C13B6500B67215 /* tiffiop.h in Headers */ = {isa = PBXBuildFile; fileRef = A8D6230F09C13B6500B67215 /* tiffiop.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		8DC2EF5B0486A6940098B216 /* TIFF.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TIFF.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A854ACBE09BC12A2004AD947 /* t4.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = t4.h; sourceTree = "<group>"; };
+		A854ACC309BC12A2004AD947 /* tif_close.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = tif_close.c; sourceTree = "<group>"; };
+		A854ACC409BC12A2004AD947 /* tif_codec.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = tif_codec.c; sourceTree = "<group>"; };
+		A854ACC509BC12A2004AD947 /* tif_color.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = tif_color.c; sourceTree = "<group>"; };
+		A854ACC609BC12A2004AD947 /* tif_compress.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = tif_compress.c; sourceTree = "<group>"; };
+		A854ACC709BC12A2004AD947 /* tif_dir.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = tif_dir.c; sourceTree = "<group>"; };
+		A854ACC809BC12A2004AD947 /* tif_dir.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = tif_dir.h; sourceTree = "<group>"; };
+		A854ACC909BC12A2004AD947 /* tif_dirinfo.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = tif_dirinfo.c; sourceTree = "<group>"; };
+		A854ACCA09BC12A2004AD947 /* tif_dirread.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = tif_dirread.c; sourceTree = "<group>"; };
+		A854ACCB09BC12A2004AD947 /* tif_dirwrite.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = tif_dirwrite.c; sourceTree = "<group>"; };
+		A854ACCC09BC12A2004AD947 /* tif_dumpmode.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = tif_dumpmode.c; sourceTree = "<group>"; };
+		A854ACCD09BC12A2004AD947 /* tif_error.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = tif_error.c; sourceTree = "<group>"; };
+		A854ACCE09BC12A2004AD947 /* tif_extension.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = tif_extension.c; sourceTree = "<group>"; };
+		A854ACCF09BC12A2004AD947 /* tif_fax3.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = tif_fax3.c; sourceTree = "<group>"; };
+		A854ACD009BC12A2004AD947 /* tif_fax3.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = tif_fax3.h; sourceTree = "<group>"; };
+		A854ACD109BC12A2004AD947 /* tif_fax3sm.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = tif_fax3sm.c; sourceTree = "<group>"; };
+		A854ACD209BC12A2004AD947 /* tif_flush.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = tif_flush.c; sourceTree = "<group>"; };
+		A854ACD309BC12A2004AD947 /* tif_getimage.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = tif_getimage.c; sourceTree = "<group>"; };
+		A854ACD409BC12A2004AD947 /* tif_jpeg.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = tif_jpeg.c; sourceTree = "<group>"; };
+		A854ACD509BC12A2004AD947 /* tif_luv.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = tif_luv.c; sourceTree = "<group>"; };
+		A854ACD609BC12A2004AD947 /* tif_lzw.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = tif_lzw.c; sourceTree = "<group>"; };
+		A854ACD909BC12A2004AD947 /* tif_ojpeg.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = tif_ojpeg.c; sourceTree = "<group>"; };
+		A854ACDA09BC12A2004AD947 /* tif_open.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = tif_open.c; sourceTree = "<group>"; };
+		A854ACDB09BC12A2004AD947 /* tif_packbits.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = tif_packbits.c; sourceTree = "<group>"; };
+		A854ACDC09BC12A2004AD947 /* tif_pixarlog.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = tif_pixarlog.c; sourceTree = "<group>"; };
+		A854ACDD09BC12A2004AD947 /* tif_predict.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = tif_predict.c; sourceTree = "<group>"; };
+		A854ACDE09BC12A2004AD947 /* tif_predict.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = tif_predict.h; sourceTree = "<group>"; };
+		A854ACDF09BC12A2004AD947 /* tif_print.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = tif_print.c; sourceTree = "<group>"; };
+		A854ACE009BC12A2004AD947 /* tif_read.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = tif_read.c; sourceTree = "<group>"; };
+		A854ACE209BC12A2004AD947 /* tif_strip.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = tif_strip.c; sourceTree = "<group>"; };
+		A854ACE309BC12A2004AD947 /* tif_swab.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = tif_swab.c; sourceTree = "<group>"; };
+		A854ACE409BC12A2004AD947 /* tif_thunder.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = tif_thunder.c; sourceTree = "<group>"; };
+		A854ACE509BC12A2004AD947 /* tif_tile.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = tif_tile.c; sourceTree = "<group>"; };
+		A854ACE609BC12A2004AD947 /* tif_unix.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = tif_unix.c; sourceTree = "<group>"; };
+		A854ACE709BC12A2004AD947 /* tif_version.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = tif_version.c; sourceTree = "<group>"; };
+		A854ACE809BC12A2004AD947 /* tif_warning.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = tif_warning.c; sourceTree = "<group>"; };
+		A854ACEB09BC12A2004AD947 /* tif_write.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = tif_write.c; sourceTree = "<group>"; };
+		A854ACEC09BC12A2004AD947 /* tif_zip.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = tif_zip.c; sourceTree = "<group>"; };
+		A854ACEF09BC12A2004AD947 /* uvcode.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = uvcode.h; sourceTree = "<group>"; };
+		A854AD2A09BC12CC004AD947 /* tiff.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = tiff.h; sourceTree = "<group>"; };
+		A854AD2B09BC12CC004AD947 /* tiffconf.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = tiffconf.h; sourceTree = "<group>"; };
+		A854AD2C09BC12CC004AD947 /* tiffio.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = tiffio.h; sourceTree = "<group>"; };
+		A854AD2D09BC12CC004AD947 /* tiffvers.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = tiffvers.h; sourceTree = "<group>"; };
+		A854AD7B09BC1598004AD947 /* tif_next.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = tif_next.c; sourceTree = "<group>"; };
+		A854AD7D09BC15BB004AD947 /* tif_aux.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = tif_aux.c; sourceTree = "<group>"; };
+		A8C11F3209D95C8300FDB067 /* tif_config.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = tif_config.h; sourceTree = "<group>"; };
+		A8D6230F09C13B6500B67215 /* tiffiop.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = tiffiop.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8DC2EF560486A6940098B216 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		034768DFFF38A50411DB9C8B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8DC2EF5B0486A6940098B216 /* TIFF.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0867D691FE84028FC02AAC07 /* TIFF */ = {
+			isa = PBXGroup;
+			children = (
+				A854AD2809BC12B9004AD947 /* Public Headers */,
+				A854AD3609BC13B0004AD947 /* Private Headers */,
+				32C88DFF0371C24200C91783 /* Source */,
+				089C1665FE841158C02AAC07 /* Resources */,
+				0867D69AFE84028FC02AAC07 /* External Libraries */,
+				034768DFFF38A50411DB9C8B /* Products */,
+			);
+			name = TIFF;
+			sourceTree = "<group>";
+		};
+		0867D69AFE84028FC02AAC07 /* External Libraries */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "External Libraries";
+			sourceTree = "<group>";
+		};
+		089C1665FE841158C02AAC07 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8DC2EF5A0486A6940098B216 /* Info.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		32C88DFF0371C24200C91783 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				A854AD7D09BC15BB004AD947 /* tif_aux.c */,
+				A854ACC309BC12A2004AD947 /* tif_close.c */,
+				A854ACC409BC12A2004AD947 /* tif_codec.c */,
+				A854ACC509BC12A2004AD947 /* tif_color.c */,
+				A854ACC609BC12A2004AD947 /* tif_compress.c */,
+				A854ACC709BC12A2004AD947 /* tif_dir.c */,
+				A854ACC909BC12A2004AD947 /* tif_dirinfo.c */,
+				A854ACCA09BC12A2004AD947 /* tif_dirread.c */,
+				A854ACCB09BC12A2004AD947 /* tif_dirwrite.c */,
+				A854ACCC09BC12A2004AD947 /* tif_dumpmode.c */,
+				A854ACCD09BC12A2004AD947 /* tif_error.c */,
+				A854ACCE09BC12A2004AD947 /* tif_extension.c */,
+				A854ACCF09BC12A2004AD947 /* tif_fax3.c */,
+				A854ACD109BC12A2004AD947 /* tif_fax3sm.c */,
+				A854ACD209BC12A2004AD947 /* tif_flush.c */,
+				A854ACD309BC12A2004AD947 /* tif_getimage.c */,
+				A854ACD409BC12A2004AD947 /* tif_jpeg.c */,
+				A854ACD509BC12A2004AD947 /* tif_luv.c */,
+				A854ACD609BC12A2004AD947 /* tif_lzw.c */,
+				A854ACD909BC12A2004AD947 /* tif_ojpeg.c */,
+				A854ACDA09BC12A2004AD947 /* tif_open.c */,
+				A854ACDB09BC12A2004AD947 /* tif_packbits.c */,
+				A854ACDC09BC12A2004AD947 /* tif_pixarlog.c */,
+				A854ACDD09BC12A2004AD947 /* tif_predict.c */,
+				A854ACDF09BC12A2004AD947 /* tif_print.c */,
+				A854AD7B09BC1598004AD947 /* tif_next.c */,
+				A854ACE009BC12A2004AD947 /* tif_read.c */,
+				A854ACE209BC12A2004AD947 /* tif_strip.c */,
+				A854ACE309BC12A2004AD947 /* tif_swab.c */,
+				A854ACE409BC12A2004AD947 /* tif_thunder.c */,
+				A854ACE509BC12A2004AD947 /* tif_tile.c */,
+				A854ACE609BC12A2004AD947 /* tif_unix.c */,
+				A854ACE709BC12A2004AD947 /* tif_version.c */,
+				A854ACE809BC12A2004AD947 /* tif_warning.c */,
+				A854ACEB09BC12A2004AD947 /* tif_write.c */,
+				A854ACEC09BC12A2004AD947 /* tif_zip.c */,
+			);
+			name = Source;
+			path = source;
+			sourceTree = "<group>";
+		};
+		A854AD2809BC12B9004AD947 /* Public Headers */ = {
+			isa = PBXGroup;
+			children = (
+				A854AD2A09BC12CC004AD947 /* tiff.h */,
+				A854AD2B09BC12CC004AD947 /* tiffconf.h */,
+				A854AD2C09BC12CC004AD947 /* tiffio.h */,
+				A854AD2D09BC12CC004AD947 /* tiffvers.h */,
+			);
+			name = "Public Headers";
+			path = public;
+			sourceTree = "<group>";
+		};
+		A854AD3609BC13B0004AD947 /* Private Headers */ = {
+			isa = PBXGroup;
+			children = (
+				A8D6230F09C13B6500B67215 /* tiffiop.h */,
+				A854ACBE09BC12A2004AD947 /* t4.h */,
+				A854ACC809BC12A2004AD947 /* tif_dir.h */,
+				A854ACD009BC12A2004AD947 /* tif_fax3.h */,
+				A854ACDE09BC12A2004AD947 /* tif_predict.h */,
+				A8C11F3209D95C8300FDB067 /* tif_config.h */,
+				A854ACEF09BC12A2004AD947 /* uvcode.h */,
+			);
+			name = "Private Headers";
+			path = source;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		8DC2EF500486A6940098B216 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A854ACF109BC12A2004AD947 /* t4.h in Headers */,
+				A854ACFB09BC12A2004AD947 /* tif_dir.h in Headers */,
+				A854AD0309BC12A2004AD947 /* tif_fax3.h in Headers */,
+				A854AD1109BC12A2004AD947 /* tif_predict.h in Headers */,
+				A854AD2209BC12A2004AD947 /* uvcode.h in Headers */,
+				A854AD2E09BC12CC004AD947 /* tiff.h in Headers */,
+				A854AD2F09BC12CC004AD947 /* tiffconf.h in Headers */,
+				A854AD3009BC12CC004AD947 /* tiffio.h in Headers */,
+				A854AD3109BC12CC004AD947 /* tiffvers.h in Headers */,
+				A8D6231009C13B6500B67215 /* tiffiop.h in Headers */,
+				A8C11F3309D95C8300FDB067 /* tif_config.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		8DC2EF4F0486A6940098B216 /* TIFF */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A85D0B2109BD8F60009BD89D /* Build configuration list for PBXNativeTarget "TIFF" */;
+			buildPhases = (
+				8DC2EF500486A6940098B216 /* Headers */,
+				8DC2EF520486A6940098B216 /* Resources */,
+				8DC2EF540486A6940098B216 /* Sources */,
+				8DC2EF560486A6940098B216 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TIFF;
+			productInstallPath = "$(HOME)/Library/Frameworks";
+			productName = TIFF;
+			productReference = 8DC2EF5B0486A6940098B216 /* TIFF.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0867D690FE84028FC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0900;
+			};
+			buildConfigurationList = A85D0B2509BD8F60009BD89D /* Build configuration list for PBXProject "TIFF" */;
+			compatibilityVersion = "Xcode 2.4";
+			developmentRegion = en;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 0867D691FE84028FC02AAC07 /* TIFF */;
+			productRefGroup = 034768DFFF38A50411DB9C8B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8DC2EF4F0486A6940098B216 /* TIFF */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8DC2EF520486A6940098B216 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8DC2EF540486A6940098B216 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A854ACF609BC12A2004AD947 /* tif_close.c in Sources */,
+				A854ACF709BC12A2004AD947 /* tif_codec.c in Sources */,
+				A854ACF809BC12A2004AD947 /* tif_color.c in Sources */,
+				A854ACF909BC12A2004AD947 /* tif_compress.c in Sources */,
+				A854ACFA09BC12A2004AD947 /* tif_dir.c in Sources */,
+				A854ACFC09BC12A2004AD947 /* tif_dirinfo.c in Sources */,
+				A854ACFD09BC12A2004AD947 /* tif_dirread.c in Sources */,
+				A854ACFE09BC12A2004AD947 /* tif_dirwrite.c in Sources */,
+				A854ACFF09BC12A2004AD947 /* tif_dumpmode.c in Sources */,
+				A854AD0009BC12A2004AD947 /* tif_error.c in Sources */,
+				A854AD0109BC12A2004AD947 /* tif_extension.c in Sources */,
+				A854AD0209BC12A2004AD947 /* tif_fax3.c in Sources */,
+				A854AD0409BC12A2004AD947 /* tif_fax3sm.c in Sources */,
+				A854AD0509BC12A2004AD947 /* tif_flush.c in Sources */,
+				A854AD0609BC12A2004AD947 /* tif_getimage.c in Sources */,
+				A854AD0709BC12A2004AD947 /* tif_jpeg.c in Sources */,
+				A854AD0809BC12A2004AD947 /* tif_luv.c in Sources */,
+				A854AD0909BC12A2004AD947 /* tif_lzw.c in Sources */,
+				A854AD0C09BC12A2004AD947 /* tif_ojpeg.c in Sources */,
+				A854AD0D09BC12A2004AD947 /* tif_open.c in Sources */,
+				A854AD0E09BC12A2004AD947 /* tif_packbits.c in Sources */,
+				A854AD0F09BC12A2004AD947 /* tif_pixarlog.c in Sources */,
+				A854AD1009BC12A2004AD947 /* tif_predict.c in Sources */,
+				A854AD1209BC12A2004AD947 /* tif_print.c in Sources */,
+				A854AD1309BC12A2004AD947 /* tif_read.c in Sources */,
+				A854AD1509BC12A2004AD947 /* tif_strip.c in Sources */,
+				A854AD1609BC12A2004AD947 /* tif_swab.c in Sources */,
+				A854AD1709BC12A2004AD947 /* tif_thunder.c in Sources */,
+				A854AD1809BC12A2004AD947 /* tif_tile.c in Sources */,
+				A854AD1909BC12A2004AD947 /* tif_unix.c in Sources */,
+				A854AD1A09BC12A2004AD947 /* tif_version.c in Sources */,
+				A854AD1B09BC12A2004AD947 /* tif_warning.c in Sources */,
+				A854AD1E09BC12A2004AD947 /* tif_write.c in Sources */,
+				A854AD1F09BC12A2004AD947 /* tif_zip.c in Sources */,
+				A854AD7C09BC1598004AD947 /* tif_next.c in Sources */,
+				A854AD7E09BC15BB004AD947 /* tif_aux.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		A85D0B2209BD8F60009BD89D /* Development (Native) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION_i386 = 4.0;
+				GCC_VERSION_ppc = 4.0;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "@executable_path/../Frameworks";
+				OTHER_LDFLAGS = (
+					"-seg1addr",
+					0x01530000,
+					"-lz",
+				);
+				PREBINDING = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = org.remotesensing.libtiff;
+				PRODUCT_NAME = TIFF;
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = framework;
+				ZERO_LINK = YES;
+			};
+			name = "Development (Native)";
+		};
+		A85D0B2309BD8F60009BD89D /* Deployment (Universal) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_AUTO_VECTORIZATION = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION_i386 = 4.0;
+				GCC_VERSION_ppc = 4.0;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "@executable_path/../Frameworks";
+				OTHER_LDFLAGS = (
+					"-seg1addr",
+					0x01530000,
+					"-lz",
+				);
+				PREBINDING = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = org.remotesensing.libtiff;
+				PRODUCT_NAME = TIFF;
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = framework;
+			};
+			name = "Deployment (Universal)";
+		};
+		A85D0B2409BD8F60009BD89D /* Deployment (Native) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_AUTO_VECTORIZATION = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION_i386 = 4.0;
+				GCC_VERSION_ppc = 4.0;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "@executable_path/../Frameworks";
+				OTHER_LDFLAGS = (
+					"-seg1addr",
+					0x01530000,
+					"-lz",
+				);
+				PREBINDING = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = org.remotesensing.libtiff;
+				PRODUCT_NAME = TIFF;
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = framework;
+			};
+			name = "Deployment (Native)";
+		};
+		A85D0B2609BD8F60009BD89D /* Development (Native) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = "Development (Native)";
+		};
+		A85D0B2709BD8F60009BD89D /* Deployment (Universal) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				SDKROOT = macosx;
+			};
+			name = "Deployment (Universal)";
+		};
+		A85D0B2809BD8F60009BD89D /* Deployment (Native) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				SDKROOT = macosx;
+			};
+			name = "Deployment (Native)";
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A85D0B2109BD8F60009BD89D /* Build configuration list for PBXNativeTarget "TIFF" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A85D0B2209BD8F60009BD89D /* Development (Native) */,
+				A85D0B2309BD8F60009BD89D /* Deployment (Universal) */,
+				A85D0B2409BD8F60009BD89D /* Deployment (Native) */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = "Deployment (Universal)";
+		};
+		A85D0B2509BD8F60009BD89D /* Build configuration list for PBXProject "TIFF" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A85D0B2609BD8F60009BD89D /* Development (Native) */,
+				A85D0B2709BD8F60009BD89D /* Deployment (Universal) */,
+				A85D0B2809BD8F60009BD89D /* Deployment (Native) */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = "Deployment (Universal)";
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0867D690FE84028FC02AAC07 /* Project object */;
+}

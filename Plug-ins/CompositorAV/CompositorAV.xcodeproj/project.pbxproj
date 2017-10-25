@@ -1,0 +1,342 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
+		A83F5D0709FFAB0300EF0268 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A83F5D0509FFAB0300EF0268 /* Localizable.strings */; };
+		A8F214CB0909EA3600E2D032 /* AltiVecMerge.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F214C50909EA3600E2D032 /* AltiVecMerge.m */; };
+		A8F214CC0909EA3600E2D032 /* AltiVecCore.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F214C70909EA3600E2D032 /* AltiVecCore.m */; };
+		A8F214CD0909EA3600E2D032 /* SeaCompositorAV.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F214CA0909EA3600E2D032 /* SeaCompositorAV.m */; };
+		A8F215BE0909ED0B00E2D032 /* IndiciesKeeper.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F215BD0909ED0B00E2D032 /* IndiciesKeeper.m */; };
+		A8F215C00909ED1100E2D032 /* Rects.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F215BF0909ED1100E2D032 /* Rects.m */; };
+		A8F215C20909ED1700E2D032 /* StandardMerge.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F215C10909ED1700E2D032 /* StandardMerge.m */; };
+		A8F215D60909ED4F00E2D032 /* ColorConversion.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F215D50909ED4F00E2D032 /* ColorConversion.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		8D5B49B6048680CD000E48DA /* CompositorAV.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CompositorAV.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		A83F5D0609FFAB0300EF0268 /* English */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A8F214C50909EA3600E2D032 /* AltiVecMerge.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AltiVecMerge.m; sourceTree = "<group>"; };
+		A8F214C60909EA3600E2D032 /* AltiVecMerge.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AltiVecMerge.h; sourceTree = "<group>"; };
+		A8F214C70909EA3600E2D032 /* AltiVecCore.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AltiVecCore.m; sourceTree = "<group>"; };
+		A8F214C80909EA3600E2D032 /* AltiVecCore.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AltiVecCore.h; sourceTree = "<group>"; };
+		A8F214C90909EA3600E2D032 /* SeaCompositorAV.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SeaCompositorAV.h; sourceTree = "<group>"; };
+		A8F214CA0909EA3600E2D032 /* SeaCompositorAV.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = SeaCompositorAV.m; sourceTree = "<group>"; };
+		A8F214D50909EA8600E2D032 /* StandardMerge.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = StandardMerge.h; path = ../../Seashore/source/extra/StandardMerge.h; sourceTree = SOURCE_ROOT; };
+		A8F214EC0909EADE00E2D032 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A8F214F20909EB0F00E2D032 /* Globals.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Globals.h; path = ../../Seashore/source/main/Globals.h; sourceTree = SOURCE_ROOT; };
+		A8F214F30909EB0F00E2D032 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = ../../Seashore/source/main/Constants.h; sourceTree = SOURCE_ROOT; };
+		A8F214F70909EB2D00E2D032 /* Rects.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Rects.h; path = ../../Seashore/source/extra/Rects.h; sourceTree = SOURCE_ROOT; };
+		A8F214FD0909EB4700E2D032 /* SeaDocument.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = SeaDocument.h; path = ../../Seashore/source/document/SeaDocument.h; sourceTree = SOURCE_ROOT; };
+		A8F214FE0909EB8600E2D032 /* SeaCompositor.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = SeaCompositor.h; path = ../../Seashore/source/display/SeaCompositor.h; sourceTree = SOURCE_ROOT; };
+		A8F215000909EB9E00E2D032 /* SeaWhiteboard.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = SeaWhiteboard.h; path = ../../Seashore/source/display/SeaWhiteboard.h; sourceTree = SOURCE_ROOT; };
+		A8F215010909EBC400E2D032 /* SeaLayer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = SeaLayer.h; path = ../../Seashore/source/document/SeaLayer.h; sourceTree = SOURCE_ROOT; };
+		A8F215020909EBD300E2D032 /* SeaContent.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = SeaContent.h; path = ../../Seashore/source/document/SeaContent.h; sourceTree = SOURCE_ROOT; };
+		A8F215030909EBEA00E2D032 /* SeaSelection.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = SeaSelection.h; path = ../../Seashore/source/display/SeaSelection.h; sourceTree = SOURCE_ROOT; };
+		A8F215B90909ECF600E2D032 /* IndiciesKeeper.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IndiciesKeeper.h; path = ../../Seashore/source/extra/IndiciesKeeper.h; sourceTree = SOURCE_ROOT; };
+		A8F215BD0909ED0B00E2D032 /* IndiciesKeeper.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = IndiciesKeeper.m; path = ../../Seashore/source/extra/IndiciesKeeper.m; sourceTree = SOURCE_ROOT; };
+		A8F215BF0909ED1100E2D032 /* Rects.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = Rects.m; path = ../../Seashore/source/extra/Rects.m; sourceTree = SOURCE_ROOT; };
+		A8F215C10909ED1700E2D032 /* StandardMerge.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = StandardMerge.m; path = ../../Seashore/source/extra/StandardMerge.m; sourceTree = SOURCE_ROOT; };
+		A8F215D40909ED4F00E2D032 /* ColorConversion.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ColorConversion.h; path = ../../Seashore/source/extra/ColorConversion.h; sourceTree = SOURCE_ROOT; };
+		A8F215D50909ED4F00E2D032 /* ColorConversion.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = ColorConversion.m; path = ../../Seashore/source/extra/ColorConversion.m; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D5B49B3048680CD000E48DA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		089C166AFE841209C02AAC07 /* Blur */ = {
+			isa = PBXGroup;
+			children = (
+				A8F214DD0909EA9B00E2D032 /* Externals */,
+				08FB77AFFE84173DC02AAC07 /* Classes */,
+				089C167CFE841241C02AAC07 /* Resources */,
+				089C1671FE841209C02AAC07 /* Frameworks and Libraries */,
+				19C28FB8FE9D52D311CA2CBB /* Products */,
+			);
+			name = Blur;
+			sourceTree = "<group>";
+		};
+		089C1671FE841209C02AAC07 /* Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */,
+				1058C7AEFEA557BF11CA2CBB /* Other Frameworks */,
+			);
+			name = "Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		089C167CFE841241C02AAC07 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A83F5D0509FFAB0300EF0268 /* Localizable.strings */,
+				A8F214EC0909EADE00E2D032 /* Info.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		08FB77AFFE84173DC02AAC07 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				A8F214C60909EA3600E2D032 /* AltiVecMerge.h */,
+				A8F214C50909EA3600E2D032 /* AltiVecMerge.m */,
+				A8F214C80909EA3600E2D032 /* AltiVecCore.h */,
+				A8F214C70909EA3600E2D032 /* AltiVecCore.m */,
+				A8F214C90909EA3600E2D032 /* SeaCompositorAV.h */,
+				A8F214CA0909EA3600E2D032 /* SeaCompositorAV.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7AEFEA557BF11CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				089C1672FE841209C02AAC07 /* Foundation.framework */,
+				089C167FFE841241C02AAC07 /* AppKit.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FB8FE9D52D311CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D5B49B6048680CD000E48DA /* CompositorAV.bundle */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A8F214DD0909EA9B00E2D032 /* Externals */ = {
+			isa = PBXGroup;
+			children = (
+				A8F215D40909ED4F00E2D032 /* ColorConversion.h */,
+				A8F215D50909ED4F00E2D032 /* ColorConversion.m */,
+				A8F214F70909EB2D00E2D032 /* Rects.h */,
+				A8F215BF0909ED1100E2D032 /* Rects.m */,
+				A8F214D50909EA8600E2D032 /* StandardMerge.h */,
+				A8F215C10909ED1700E2D032 /* StandardMerge.m */,
+				A8F215B90909ECF600E2D032 /* IndiciesKeeper.h */,
+				A8F215BD0909ED0B00E2D032 /* IndiciesKeeper.m */,
+				A8F214F30909EB0F00E2D032 /* Constants.h */,
+				A8F214F20909EB0F00E2D032 /* Globals.h */,
+				A8F214FE0909EB8600E2D032 /* SeaCompositor.h */,
+				A8F214FD0909EB4700E2D032 /* SeaDocument.h */,
+				A8F215000909EB9E00E2D032 /* SeaWhiteboard.h */,
+				A8F215010909EBC400E2D032 /* SeaLayer.h */,
+				A8F215020909EBD300E2D032 /* SeaContent.h */,
+				A8F215030909EBEA00E2D032 /* SeaSelection.h */,
+			);
+			name = Externals;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D5B49AC048680CD000E48DA /* CompositorAV */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A8D8860F09BD8F040027B1E7 /* Build configuration list for PBXNativeTarget "CompositorAV" */;
+			buildPhases = (
+				8D5B49AF048680CD000E48DA /* Resources */,
+				8D5B49B1048680CD000E48DA /* Sources */,
+				8D5B49B3048680CD000E48DA /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CompositorAV;
+			productInstallPath = "$(HOME)/Library/Bundles";
+			productName = Blur;
+			productReference = 8D5B49B6048680CD000E48DA /* CompositorAV.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		089C1669FE841209C02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = A8D8861309BD8F040027B1E7 /* Build configuration list for PBXProject "CompositorAV" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 1;
+			mainGroup = 089C166AFE841209C02AAC07 /* Blur */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D5B49AC048680CD000E48DA /* CompositorAV */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D5B49AF048680CD000E48DA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A83F5D0709FFAB0300EF0268 /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D5B49B1048680CD000E48DA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A8F214CB0909EA3600E2D032 /* AltiVecMerge.m in Sources */,
+				A8F214CC0909EA3600E2D032 /* AltiVecCore.m in Sources */,
+				A8F214CD0909EA3600E2D032 /* SeaCompositorAV.m in Sources */,
+				A8F215BE0909ED0B00E2D032 /* IndiciesKeeper.m in Sources */,
+				A8F215C00909ED1100E2D032 /* Rects.m in Sources */,
+				A8F215C20909ED1700E2D032 /* StandardMerge.m in Sources */,
+				A8F215D60909ED4F00E2D032 /* ColorConversion.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		A83F5D0509FFAB0300EF0268 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A83F5D0609FFAB0300EF0268 /* English */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A859AE6D09C12BAB00684E83 /* Development (Native) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = ppc;
+				COPY_PHASE_STRIP = NO;
+				GCC_ALTIVEC_EXTENSIONS = YES;
+				GCC_AUTO_VECTORIZATION = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = 4.0;
+				GCC_VERSION_i386 = 4.0;
+				GCC_VERSION_ppc = 4.0;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = CompositorAV;
+				WRAPPER_EXTENSION = bundle;
+				ZERO_LINK = YES;
+			};
+			name = "Development (Native)";
+		};
+		A859AE6E09C12BAB00684E83 /* Deployment (Universal) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = ppc;
+				GCC_ALTIVEC_EXTENSIONS = YES;
+				GCC_AUTO_VECTORIZATION = YES;
+				GCC_AUTO_VECTORIZATION = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_VERSION = 4.0;
+				GCC_VERSION_i386 = 4.0;
+				GCC_VERSION_ppc = 4.0;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = CompositorAV;
+				WRAPPER_EXTENSION = bundle;
+				ZERO_LINK = NO;
+			};
+			name = "Deployment (Universal)";
+		};
+		A859AE6F09C12BAB00684E83 /* Development (Native) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PREBINDING = NO;
+			};
+			name = "Development (Native)";
+		};
+		A859AE7009C12BAB00684E83 /* Deployment (Universal) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PREBINDING = NO;
+			};
+			name = "Deployment (Universal)";
+		};
+		A8B9A3CD0A42515000F63ECD /* Deployment (Native) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = ppc;
+				GCC_ALTIVEC_EXTENSIONS = YES;
+				GCC_AUTO_VECTORIZATION = YES;
+				GCC_AUTO_VECTORIZATION = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_VERSION = 4.0;
+				GCC_VERSION_i386 = 4.0;
+				GCC_VERSION_ppc = 4.0;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = CompositorAV;
+				WRAPPER_EXTENSION = bundle;
+				ZERO_LINK = NO;
+			};
+			name = "Deployment (Native)";
+		};
+		A8B9A3CE0A42515000F63ECD /* Deployment (Native) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PREBINDING = NO;
+			};
+			name = "Deployment (Native)";
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A8D8860F09BD8F040027B1E7 /* Build configuration list for PBXNativeTarget "CompositorAV" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A859AE6D09C12BAB00684E83 /* Development (Native) */,
+				A859AE6E09C12BAB00684E83 /* Deployment (Universal) */,
+				A8B9A3CD0A42515000F63ECD /* Deployment (Native) */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = "Deployment (Universal)";
+		};
+		A8D8861309BD8F040027B1E7 /* Build configuration list for PBXProject "CompositorAV" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A859AE6F09C12BAB00684E83 /* Development (Native) */,
+				A859AE7009C12BAB00684E83 /* Deployment (Universal) */,
+				A8B9A3CE0A42515000F63ECD /* Deployment (Native) */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = "Deployment (Universal)";
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 089C1669FE841209C02AAC07 /* Project object */;
+}

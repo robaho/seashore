@@ -1,0 +1,426 @@
+
+----
+
+REQUEST:
+Color Picker should not reset to the RGB Picker.
+
+RESOLUTION:
+Implemented in 0.1.4.
+
+---
+
+REQUEST:
+Selections should be pasted to centre of viewing region not centre of image.
+
+RESOLUTION:
+Implemented in 0.1.4.
+
+---
+
+REQUEST:
+Lines should have a trace before drawing.
+
+RESOLUTION:
+Pending.
+
+---
+
+REQUEST:
+Rulers.
+
+RESOLUTION:
+Implemented in 0.1.6.
+
+---
+
+REQUEST:
+Improve text tool.
+
+RESOLUTION:
+Pending.
+
+---
+
+REQUEST:
+Photoshop import/export.
+
+RESOLUTION:
+Pending.
+
+---
+
+REQUEST:
+Drag and crop tool.
+
+RESOLUTION:
+Implemented in 0.1.4.
+
+---
+
+REQUEST:
+Viewable gradients.
+
+RESOLUTION:
+Pending.
+
+---
+
+REQUEST:
+Accept 16-bit TIFF files.
+
+RESOLUION:
+Implemented in 0.1.5.
+
+---
+
+REQUEST:
+Add 2 button mouse support.
+
+RESOLUTION:
+Implemented in 0.1.4.
+
+---
+
+REQUEST:
+Vector or shape tools.
+
+RESOLUTION:
+Pending.
+
+---
+
+REQUEST:
+Handle animation.
+
+RESOLUTION:
+Pending.
+
+---
+
+REQUEST:
+User tips.
+
+RESOLUTION:
+Implemented in 0.1.8.
+
+---
+
+REQUEST:
+Delete by the delete key.
+
+RESOLUTION:
+Implemented in 0.1.4.
+
+---
+
+REQUEST:
+Select by colour.
+
+RESOLUTION:
+Implemented before 0.1.9
+
+---
+
+REQUEST:
+History and actions for undoing.
+
+RESOLUTION:
+Pending.
+
+---
+
+REQUEST:
+Image rotation.
+
+RESOLUTION:
+Implemented in 0.1.5.
+
+---
+
+REQUEST:
+Image Capture or TWAIN support.
+
+RESOLUTION:
+Pending.
+
+---
+
+REQUEST:
+Application Support folder used for brushes, textures and plug-ins.
+
+RESOLUTION:
+Pending.
+
+---
+
+REQUEST:
+Optimize visual space usage.
+
+RESOLUTION:
+Improved in 0.1.4, 0.1.5 and 0.1.7.
+
+---
+
+REQUEST:
+Fix smudge tool's behaviour when used with alpha channels.
+
+RESOLUTION:
+Implemented in 0.1.4.
+
+---
+
+REQUEST:
+Visual effects.
+
+RESOLUTION:
+Improved in 0.1.4.
+
+---
+
+REQUEST:
+Drag and drop layers.
+
+RESOLUTION:
+Implemented in 0.1.4.
+
+---
+
+REQUEST:
+Tablet pressure support.
+
+RESOLUTION:
+Implemented in 0.1.4.
+
+---
+
+REQUEST:
+Add more options for layer alignment.
+
+RESOLUTION:
+Implemented in 0.1.5.
+
+---
+
+REQUEST:
+Add an FAQ to the documentation.
+
+RESOLUTION:
+Pending.
+
+---
+
+REQUEST:
+Add selection operations such as AND, OR or XOR.
+
+RESOLUTION:
+Implemented in 0.1.9
+
+---
+
+REQUEST:
+Add the ability to grow a selection.
+
+RESOLUTION:
+Implemented in 0.5.0
+
+---
+
+REQUEST:
+Scale, margin and resolution panels should have live updating.
+
+RESOLUTION:
+Pending.
+
+---
+
+REQUEST:
+More brushes.
+
+RESOLUTION:
+Pending.
+
+---
+
+REQUEST:
+SVG support.
+
+RESOLUTION:
+Implemented in 0.1.5, removed in 0.5.0
+
+---
+
+REQUEST:
+Manual scaling.
+
+RESOLUTION:
+Implemented in 0.1.5.
+
+---
+
+REQUEST:
+Custom magnification levels.
+
+RESOLUTION:
+Pending.
+
+---
+
+REQUEST:
+New image from clipboard.
+
+RESOLUTION:
+Implemented in 0.1.7.
+
+---
+
+REQUEST:
+Lasso (or free selection) tool.
+
+RESOLUTION:
+Implemented in 0.1.8.
+
+---
+
+REQUEST:
+GIF support.
+
+RESOLUTION:
+Implemented in 0.1.8 and improved in 0.1.9.
+
+---
+
+REQUEST:
+Lighten/darkening tool.
+
+RESOLUTION:
+Pending.
+
+---
+
+REQUEST:
+Green button to fit window to image not maximize window.
+
+RESOLUTION:
+Implemented in 0.1.9.
+
+---
+
+REQUEST:
+Allow destructive fusion of layers.
+
+RESOLUTION:
+Implemented in 0.2.0.
+
+---
+
+REQUEST:
+Panel dedicated to selection management.
+
+RESOLUTION:
+Pending.
+
+---
+
+REQUEST:
+Cursors that are visible on black backgrounds.
+
+RESOLUTION:
+Implemented in 0.1.9.
+
+---
+
+REQUEST:
+Clone (or rubber stamp) tool.
+
+RESOLUTION:
+Implemented in 0.1.9.
+
+---
+
+REQUEST:
+Hand tool.
+
+RESOLUTION:
+Implemented in 0.1.8.
+
+---
+
+REQUEST:
+Restore G3 compatibility.
+
+RESOLUTION:
+Implemented in 0.1.8.
+
+---
+
+REQUEST:
+Brush scaling according to tablet pressure.
+
+RESOLUTION:
+Implemented in 0.1.8.
+
+---
+
+REQUEST:
+Ability to select or crop according to an aspect ratio.
+
+RESOLUTION:
+Implemented in 0.1.9.
+
+---
+
+REQUEST:
+Grabbers on the crop tool.
+
+RESOLUTION:
+Implemented in 0.5.0
+
+---
+
+REQUEST:
+Intel support.
+
+RESOLUTION:
+Implemented in 0.1.9 (and 0.1.8 special release).
+
+---
+
+REQUEST:
+16-bit colour support.
+
+RESOLUTION:
+Pending.
+
+---
+
+REQUEST:
+Polygon selections.
+
+RESOLUTION:
+Implemented in 0.1.9
+
+---
+
+REQUEST:
+Auto-update.
+
+RESOLUTION:
+Implemented in 0.1.9.
+
+---
+
+REQUEST:
+Guides.
+
+RESOLUTION:
+Started in 0.5.0
+
+---
+
+REQUEST:
+Colour levels/curves plug-in.
+
+RESOLUTION:
+Pending.
+
+---

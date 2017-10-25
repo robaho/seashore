@@ -1,0 +1,155 @@
+#! /bin/sh
+
+DOCFOLDER="../doc"
+HEADER2HTML="headerdoc2html -o"
+SRCFOLDER="../source"
+
+# build docs from the 'options' directory
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/options/AbstractOptions.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/options/AbstractSelectOptions.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/options/RectSelectOptions.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/options/EllipseSelectOptions.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/options/LassoOptions.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/options/PolygonLassoOptions.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/options/WandOptions.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/options/ZoomOptions.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/options/PencilOptions.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/options/BrushOptions.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/options/BucketOptions.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/options/TextOptions.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/options/EyedropOptions.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/options/EraserOptions.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/options/PositionOptions.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/options/GradientOptions.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/options/SmudgeOptions.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/options/CloneOptions.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/options/CropOptions.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/options/EffectOptions.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/options/AspectRatio.h
+
+# build docs from the 'application' directory
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/application/SeaController.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/application/SeaDocumentController.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/application/PluginClass.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/application/SeaPlugins.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/application/SeaProxy.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/application/SeaHelp.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/application/SeaWarning.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/application/SeaPrefs.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/application/ImageToolbarItem.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/application/SeaApplication.h
+
+# build docs from the 'components' directory
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/component/SeaBrush.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/component/SeaBrushFuncs.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/component/SeaTexture.h
+
+# build docs from the 'display' directory
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/display/SeaPrintView.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/display/SeaView.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/display/SeaWhiteboard.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/display/SeaCompositor.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/display/SeaSelection.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/display/CenteringClipView.h
+
+# build docs from the 'document' directory
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/document/PluginData.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/document/SeaDocument.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/document/SeaHelpers.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/document/SeaContent.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/document/SeaLayer.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/document/SeaLayerUndo.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/document/TextureExporter.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/document/CocoaContent.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/document/CocoaLayer.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/document/SVGContent.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/document/SVGLayer.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/document/XBMContent.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/document/XBMLayer.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/document/XCFContent.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/document/XCFLayer.h
+
+# build docs from the 'extra' directory
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/extra/Bucket.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/extra/ColorConversion.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/extra/StandardMerge.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/extra/RLE.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/extra/Bitmap.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/extra/Rects.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/extra/IndiciesKeeper.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/extra/MovePanel.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/extra/NSTextViewRedirect.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/extra/NSPreciseImageView.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/extra/NSExtendedTableView.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/extra/Units.h
+
+# build docs from the 'importer' directory
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/importer/CocoaImporter.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/importer/SVGImporter.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/importer/XBMImporter.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/importer/XCFImporter.h
+
+# build docs from the 'exporter' directory
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/exporter/AbstractExporter.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/exporter/GIFExporter.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/exporter/JP2Exporter.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/exporter/JPEGExporter.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/exporter/PNGExporter.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/exporter/TIFFExporter.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/exporter/XCFExporter.h
+
+# build docs from the 'operations' directory
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/operation/SeaOperations.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/operation/SeaAlignment.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/operation/SeaResolution.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/operation/SeaMargins.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/operation/SeaScale.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/operation/SeaDocRotation.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/operation/SeaRotation.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/operation/SeaFlip.h
+
+# build docs from the 'main' directory
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/main/Constants.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/main/Globals.h
+
+# build docs from the 'tool' directory
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/tool/SeaTools.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/tool/AbstractTool.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/tool/RectSelectTool.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/tool/EllipseSelectTool.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/tool/LassoTool.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/tool/PolygonLassoTool.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/tool/WandTool.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/tool/PencilTool.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/tool/BrushTool.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/tool/BucketTool.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/tool/TextTool.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/tool/EyedropTool.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/tool/EraserTool.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/tool/PositionTool.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/tool/GradientTool.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/tool/SmudgeTool.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/tool/CloneTool.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/tool/CropTool.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/tool/EffectTool.h
+
+# build docs from the 'utility' directory
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/utility/UtilitiesManager.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/utility/SeaUtilityPanel.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/utility/TransparentUtility.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/utility/InfoUtility.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/utility/ToolboxUtility.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/utility/ColorSelectView.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/utility/BrushUtility.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/utility/BrushView.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/utility/OptionsUtility.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/utility/TextureUtility.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/utility/TextureView.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/utility/PegasusUtility.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/utility/LayerSettings.h
+$HEADER2HTML $DOCFOLDER $SRCFOLDER/utility/LayersView.h
+
+# build the contents
+./addtop.pl $DOCFOLDER
+cp MasterTOC.html ../doc
+cp Introduction.html ../doc

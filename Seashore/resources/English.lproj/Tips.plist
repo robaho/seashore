@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>You can select an arbitrary part of the image by creating a new layer, using the paintbrush to trace what you want to select and then choosing "Select Alpha" from the "Edit" menu.</string>
+	<string>It possible for Seashore to open images in the SVG format using a special Java-based add-on. You can download this add-on from Seashore's website.</string>
+	<string>You can make a new image that is the same size as the clipboard's contents using the "Presets" pop-down menu in the bottom-left of the new image dialog.</string>
+	<string>You can make it so the configuration panel for effects appear in a separate dialog rather than a sheet through the preferences.</string>
+	<string>You can reduce the number of warning messages Seashore displays through the preferences. To access the preferences select "Preferences..." from the "Seashore" menu.</string>
+	<string>When specifying an image size, you can cycle through various units of measurement (namely pixels, inches and millimetres) by clicking on the unit's label.</string>
+</array>
+</plist>

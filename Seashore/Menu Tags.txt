@@ -1,0 +1,172 @@
+// File
+400 - New from Pasteboard
+
+170 - Close
+171 - Save
+172 - Save As...
+
+175 - Revert
+176 - Compare to Last Saved
+
+//185 - Show Palette
+
+// Edit
+
+180 - Undo
+181 - Redo
+
+260 - Cut
+261 - Copy
+265 - Copy Image
+262 - Paste
+263 - Delete
+264 - Duplicate
+
+270 - Select All
+271 - Select None
+272 - Select Inverse
+273 - Select Alpha
+
+600 - Tool 0
+601 - Tool 1
+602 - Tool 2
+603 - Tool 3
+604 - Tool 4
+605 - Tool 5
+606 - Tool 6
+607 - Tool 7
+608 - Tool 8
+609 - Tool 9
+610 - Tool 10
+611 - Tool 11
+612 - Tool 12
+613 - Tool 13
+614 - Tool 14
+615 - Tool 15
+616 - Tool 16
+617 - Tool 17
+
+
+// Image 
+
+322 - Scale Image...
+320 - Resolution...
+321 - Image Canvas Size...
+
+410 - Rotate 90 Left
+411 - Rotate 90 Right
+412 - Flip Image Horizontally
+413 - Flip Image Vertically
+
+450 - Edit All Channels
+451 - Edit Primary Channel
+452 - Edit Alpha Channel
+460 - Show All Channels During Edit
+
+240 - Full Color
+241 - Grayscale
+
+233 - ColorSync Settings...
+230 - CMYK Preview
+232 - Save using CMYK
+//231 - CMYK Convert
+
+710 - Pixels
+711 - Inches
+712 - Millimetres
+
+220 - Flatten Image...
+221 - Export As Texture...
+
+// Layer
+
+331 - Scale Layer...
+332 - Rotate...
+330 - Layer Boundaries...
+360 - Expand to Document
+361 - Condense to Content
+362 - Condense to Selection
+
+217 - New Layer
+218 - Duplicate Layer
+219 - Delete Layer
+
+213 - Bring Forward
+214 - Bring to Front
+215 - Send Backward
+216 - Send to Back
+
+340 - Align Left
+341 - Align Right
+342 - Align Horizontal Centres
+
+345 - Align Top
+346 - Align Bottom
+347 - Align Vertical Centres
+
+350 - Centre Horizontally
+351 - Centre Vertically
+
+250 - Enable alpha channel
+
+348 - Merge with Underneath
+349 - Merge Linked Layers
+382 - Toggle Linked
+381 - Clear All Links
+
+//295 - Show Debug
+
+
+300 - Float selection
+
+310 - Flip Selection Horizontally
+311 - Flip Selection Vertically
+
+380 - Reapply Last Effect
+
+// View
+
+370 - Show Rulers
+225 - Mask Layer Margins
+371 - Show Guides
+
+290 - Rotate Selection Mask
+
+210 - Zoom In
+211 - Zoom Out
+212 - Actual Size
+
+200 - Show Layers
+//201 - Show Channels
+//202 - Show Paths
+
+190 - Show Toolbox
+193 - Customize Toolbar
+192 - Show Info
+
+191 - Show Options
+//195 - Show Brushes
+//196 - Show Textures
+194 - Show Status Bar
+
+197 - All
+198 - Toolbar
+199 - None
+
+//205 - Show Transparent Colour
+
+// **** In prefs dialog ****
+// Selection
+
+//280 - Cyan (selection colour)
+//281 - Magenta (selection colour)
+//282 - Yellow (selection colour)
+//283 - Black (selection colour)
+
+// Guides
+
+//290 - Cyan (guide colour)
+//291 - Magenta (guide colour)
+//292 - Yellow (guide colour)
+//293 - Black (guide colour)
+

@@ -1,0 +1,8 @@
+None - 0
+Option - 1
+Shift - 2
+Control - 3
+Shift + Control - 4
+Option + Control - 5
+Reserved - 20
+Reserved - 21

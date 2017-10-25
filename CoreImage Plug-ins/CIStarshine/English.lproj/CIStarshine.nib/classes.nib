@@ -1,0 +1,28 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {apply = id; cancel = id; preview = id; update = id; }; 
+            CLASS = BlurClass; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                mainColorWell = id; 
+                opacityLabel = id; 
+                opacitySlider = id; 
+                panel = id; 
+                scaleLabel = id; 
+                scaleSlider = id; 
+                widthLabel = id; 
+                widthSlider = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            CLASS = StarshineColorWell; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {ciStarshine = id; }; 
+            SUPERCLASS = NSColorWell; 
+        }
+    ); 
+    IBVersion = 1; 
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>author</key>
+	<string>Mark Pazolli</string>
+	<key>copyright</key>
+	<string>Public Domain 2007</string>
+	<key>description</key>
+	<string>Generates horizontal stripes for the selection.</string>
+	<key>groupName</key>
+	<string>Generate</string>
+	<key>instruction</key>
+	<string>Click twice: first to locate the top-side of a stripe, then to locate the bottom-side of a stripe.</string>
+	<key>license</key>
+	<string>Public Domain</string>
+	<key>name</key>
+	<string>Horizontal Stripes</string>
+</dict>
+</plist>

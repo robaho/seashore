@@ -1,0 +1,28 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {apply = id; cancel = id; preview = id; update = id; }; 
+            CLASS = BlurClass; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                contrastLabel = id; 
+                contrastSlider = id; 
+                mainColorWell = id; 
+                overlapLabel = id; 
+                overlapSlider = id; 
+                panel = id; 
+                strengthLabel = id; 
+                strengthSlider = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            CLASS = HaloColorWell; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {ciHalo = id; }; 
+            SUPERCLASS = NSColorWell; 
+        }
+    ); 
+    IBVersion = 1; 
+}

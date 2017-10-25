@@ -1,0 +1,384 @@
+Change Log
+
+This documents how Seashore has changed over its various releases.
+
+0.2.0 (Not yet released)
+
+- Adds 53 new plug-ins from Core Image for Mac OS 10.4 users (excluding G3 chipsets)
+- Adds 6 new plug-ins for Mac OS 10.3 users
+- Adds the effects tool
+- Reinstates the crop tool
+- Removes preview from most plug-ins for quicker previewing
+- Adds the ability to merge layers
+- Adds previewing for text
+- Adds subpixel rendering for text
+- Adds multiple line text input
+- Adds outline option for text
+- Adds show-as-you-go modifier system
+- Adds the ability to temporarily select the colour sampling tool using the Tab key
+- Adds an user preference to specify how the image resolution should affect the display of an image on screen
+- Fixes a bug that caused plug-in previews to become permanent if Seashore was switched out of
+- Fixes a bug that sometimes prevented editing the layer title
+- Fixes a bug that prevented the eyedrop tool from working with channels
+
+---
+
+0.1.9 (5th April, 2007)
+
+- Makes Seashore a universal binary
+- Fixes a bug that caused the program to produce dull colours for some TIFF files and when flattening an image
+- Fixes a bug that caused floating layers to appear incorrectly when working with channels
+- Fixes a bug when rotating images on Mac OS 10.3
+- Fixes a bug that made large TIFF files unreadable on Mac OS 10.3
+- Adds write support for GIFs
+- Adds Hue, Saturation and Value plug-in
+- Adds CMYK plug-in
+- Adds the clone tool
+- Adds the ability to check for updates
+- Adds aspect ratio setting to selection tools
+- Adds ellipse tool
+- Adds polygon lasso tool
+- Adds anti-aliasing to lasso tool
+- Adds non-modal new document panel
+- Adds selection operations
+- Adds the ability to create new documents with a transparent background
+- Scales the new document window to the content size (plus border)
+- Removes crop tool (now part of rectangular selection tool)
+- Improves plug-in capabilities
+- Retains EXIF data for JPEGs (Mac OS 10.4+ only)
+
+---
+
+0.1.8 (24th February, 2006)
+
+- Adds Sharpen plug-in
+- Adds the lasso tool
+- Fixes colour-distortion when loading Windows Bitmaps on Mac OS 10.4
+- Fixes a bug when drawing in the alpha channel of greyscale images
+- Fixes a bug in the Brightness and Contrast plug-in when working with
+	the primary or alpha channels
+- Fixes a bug that causes bright colours when using the Posterize plug-in
+- Fixes a bug that may cause the thumbnail of greyscale images to not
+	update correctly on Mac OS 10.4
+- Fixes a bug with Brushed that caused it not to display the preview on
+	Mac OS 10.4
+- Adds rounded rectangle selections
+- Adds the ability to flip and rotate entire images
+- Adds brush scaling for pressure-sensitive drawing
+- Adds pressure-sensitive and fading options for the eraser
+- Adds ability to scale SVG/PDF content upon importing
+- Adds a scrolling mode when the space bar is held down
+- Adds read-only support for GIF image format
+- Makes Seashore G3-compatible by making the AltiVec compositor a 
+	plug-in
+
+---
+
+0.1.7 (21st September, 2005)
+
+- Adds the Gaussian Blur plug-in
+- Fixes a bug that caused corruption when blurring a selection
+- Fixes a bug that caused problems drawing when using pressure-sensitive
+	devices and mulithreaded brush strokes
+- Fixes a bug that sometimes caused corruption when rotating
+- Fixes a bug that caused problems when drawing lines using multithreaded
+	brush strokes
+- Fixes a minor bug when undoing a dialog-based rotation
+- Adds the ability to create new documents from the pastebaord
+- Adds the ability to save resolution tags with TIFF files on Mac OS 10.4
+- Improves saving of CMYK TIFF files
+- Resizes the toolbox so it only uses two columns
+
+---
+
+0.1.6 (12th August, 2005)
+
+- Adds support for JPEG 2000 image format (Mac OS 10.4 or later only)
+- Adds Posterize plug-in
+- Adds Threshold plug-in
+- Adds rulers
+- Adds the ability to reapply the last effect
+- Adds tool tips
+- Adds the ability to disable multithreaded brush strokes
+- Adds a menu item for layer rotation
+- Fixes problems with the centering view in Mac OS 10.4
+- Fixes problems with the canvas not being refreshed when zoomed out in
+	Mac OS 10.4
+- Fixes a number of rotation bugs
+- Fixes PDF importing
+- Fixes a bug when condensing to content
+- Fixes a bug when zooming in or out on content
+- Fixes a bug when printing at resolutions other than 72 dpi
+- Improves usability
+
+---
+
+0.1.5 (4th April, 2005)
+
+- Introduces multi-threaded brush strokes
+- Adds the ability to import SVG files to Seashore (requires
+	additional software)
+- Adds new alignment options for layers
+- Adds option for image smoothing when viewing images
+- Adds utility window configuration shortcuts
+- Adds a new mechanism to add textures to Seashore
+- Adds the ability to import layers from other documents
+- Adds preset sizes to a number of dialogs
+- Adds the ability to disable new documents at start-up
+- Adds new brushes including ones suitable for high resolution
+	images
+- Adds the ability to scale and rotate floating selections
+	using the position tool
+- Adds the ability to import 16-bit images (and convert them to 8-bit
+	for editing)
+- Adds the ability to export JPEG files with embedded colour profiles
+- Adds the ability to export TIFF files in the CMYK format
+- Fixes a bug that caused the zoom-level to affect printing
+- Fixes a bug that caused alpha channels to appear incorrectly in JPEGs
+	or CMYK Previewing was on 
+- Fixes a bug that caused inverse selections to be wrong for layers
+	with non-zero offsets
+- Fixes a bug that caused hairline fractures to sometimes appear
+	when editing images
+- Fixes the gradient tool so it now works with greyscale image
+- Fixes a bug that meant scaling would not work correctly with floating
+	selections
+- Fixes a bug that caused problems when using the cropping tool at
+	non-standard sizes
+- Fixes a ColorSync bug so that Seashore uses the display's profile as
+	opposed to ColorSync's default RGB profile (this was not properly
+	fixed in the previous version)
+- Fixes a bug whereby the incorrect file format might sometimes be
+	used upon saving after cancelling a save operation
+- Fixes the blur effect so that it works with alpha channels
+- Improves CMYK Previewing so that the colour selection now displays the
+	matched colour
+- Improves drag and drop support
+- Improves usability
+- Improves Brushed
+- Updates documentation
+
+---
+
+0.1.4 (2nd February, 2005)
+
+- Fixes a bug so that Seashore uses the display's profile as opposed
+	to ColorSync's default RGB profile
+- Fixes a bug with flatten image that was likely to lead to corruption
+	or Seashore unexpectedly quitting
+- Fixes a bug with smudging and transparency
+- Adds the cropping tool
+- Adds two button mouse support
+- Adds Invert plug-in
+- Adds Blur plug-in
+- Adds Brightness and Contrast plug-in
+- Adds Greyscale plug-in
+- Adds support for plug-ins
+- Adds fading for brushes
+- Adds preliminary support for tablet pressure sensitivity
+- Adds new icon
+- Improves texture selection
+- Improves info utility
+- Improves usability
+- Improves user guide
+- Re-implements drag and drop operations to allow layers to be copied
+	between documents
+- Combines the options utility and the brush and texture utility
+	so they appear in a single window
+
+---
+
+0.1.3 (7th December, 2004)
+
+- Adds the magic wand tool for selecting like-coloured pixels
+- Adds a user guide
+- Fixes various issues with selections
+- Fixes a bug which meant some fonts would not draw properly
+- Fixes a bug whereby flattening an image would not update the 
+	layers panel properly
+- Fixes a bug where some images with redundant bytes would not display
+	properly
+- Fixes a bug whereby the incorrect file format might sometimes be
+	used upon saving after exporting
+- Fixes minor imperfections occasionally apparent when using the
+	paint brush or eraser
+- Adds default image size settings
+- Adds read-only support for Windows Bitmap Images
+- Adds the ability to pick the page number in multi-page PDFs
+- Adds basic document icons
+- Adds facilities for easy translation
+- Adds ability to flip graphics
+- Adds the ability to paste in the primary and alpha channels
+- Improves rendering of standard quality gradients
+- Saves font size and name upon quitting
+
+---
+
+0.1.2 (17th July, 2004)
+
+- Fixes display bug with Mac OS 10.3 (Panther)
+- Fixes a bug whereby the user would be advised that he has run
+	out of free space if he had too much
+- Fixes a bug which prevented Seashore's XCF documents from being
+	read by the GIMP
+- Combines the brush and texture utilities so they appear in a single
+	window
+- Adds support for copying, pasting, cutting and deleting selections
+- Adds support for floating selections
+- Adds support for complex and elliptical selections
+- Adds read-only support for PICT and PDF files
+- Adds support for pasting PICTs from the clipboard
+- Adds a new Mac OS X icon
+- Adds the eraser tool
+- Adds the smudge tool (preliminary version only)
+- Adds the gradient tool
+- Adds basic checking to preference values (may fix some bugs)
+- Introduces colour correction for TIFF files
+- Introduces embedded ICCC profiles for TIFF files
+- Makes compression values for JPEG saves persistent
+
+---
+
+0.1.0 (19th November, 2003)
+
+- Introduces selections
+- Introduces six new layer modes namely Dodge, Burn, Hard Light, Soft 
+	Light, Grain Extract and Grain Merge
+- Revises texture system allowing them to be used by the pencil, brush 
+	and text tools as well
+- Introduces a facility to easily centre layers
+- Improves the preferences system
+- Fixes a major bug fixed whereby the incorrect file format might
+	sometimes be used upon saving
+
+---
+
+0.0.9 (1st November, 2003)
+
+- Introduces HeaderDoc commenting for all classes
+- Implements numerous structural changes
+- Introduces AltiVec optimizations for grayscale images
+- Introduces the ability to switch between document colour spaces
+	using ColorSync
+- Adds support for opening and saving JPEG files
+- Adds JPEG previewing
+- Adds support for opening XBM files
+- Introduces a new less-intrusive warning system
+- Adds the ability to scale and change the margins of individual layers
+- Adds text alignment settings with the text tool
+- Implements number of minor improvements and bug fixes
+
+---
+
+0.0.8 (4th July, 2003)
+
+- Adds the text tool
+- Adds the colour sampling tool
+- Introduces a new utility for determining RGBA values and cursor
+	co-ordinates
+- Implements reversion
+- Fixes a major bug in the paint bucket's functionality
+- Fixes a bug in scaling whereby redos would fail
+- Allows the user to double-click on a toolbox button to reveal
+	tool options
+
+---
+
+0.0.7 (23rd June, 2003)
+
+- Adds channels
+- Adds the ability to change layer names
+- Revises the paint bucket's functionality
+- Improves updating scheme leading to significant improvements in
+	performance
+- Adds the ability to interpret "mm", "cm" and "in" in some dialogs
+- Adds ability to duplicate layers
+- Fixes strange file name problems
+
+---
+
+0.0.6 (25th May, 2003)
+
+- Introduces a number of speed improvements using AltiVec technology
+- Adds textures for the flood fill tool
+- Adds multiple pencil sizes and implements pencil drawing through the
+	overlay
+- Introduces a new "Instant Help" facility
+- Fixes line-drawing hang-overs
+- Disables undoing where appropriate (e.g. when you are in the middle of
+	drawing something)
+
+---
+
+0.0.5 (3rd May, 2003)
+
+- Fixes a bug opening and saving XCF files
+- Adds anti-aliased brush strokes
+- Implements brush groupings
+- Warns users not to save over existing XCF files
+- Improves co-operation between Seashore and ColorSync
+- Preserves paths and other information upon XCF saving
+- Introduces new brushes (fixes bug with version 1 brushes)
+- Adds the flood fill tool
+- Introduces the "Options" utility panel
+
+---
+
+0.0.4 (7th April, 2003)
+
+- Fixes some minor interface annoyances
+- Implements a vastly improved undo system with disk cache
+- Adds basic printing functionality
+- Provides a colour selection mechanism
+- Implements more efficient thumbnail calculation algorithm
+- Adds CMYK previewing using ColorSync
+- Adds the pencil tool
+- Adds the brush tool
+- Adds a new brush selector that is capable of loading gbr brushes from
+	the GIMP
+
+---
+
+0.0.3 (20th March, 2003)
+
+- Allows the adjustment of an image's margins
+- Allows the scaling of an image (using code from the GIMP)
+- Allows the adjustment of an image's resolution with scaling to
+	maintain size
+- Allows a layer's boundaries to be viewed
+- Allows images to be exported
+- Begins to implement drag and drop
+- Provides a toolbox with working hand navigation, positioning and 
+	zooming tools
+- Provides a basic implementation of PNG file opening, saving and
+	exporting using Cocoa (in future libpng may be used)
+- Stops the creation of indexed images
+- Improves saving to the XCF file format
+
+---
+
+0.0.2 (3rd February, 2003)
+
+- Opens TIFF files (multiple compressions) through Cocoa with support
+	for Grayscale, RGB and CMYK (using ColorSync) colour spaces
+- Saves to TIFF files (Grayscale or RGB) with an alpha channel where
+	appropriate
+- Supports unlimited Undos and Redos
+- Allows the adjustment of layer positions (in the image hierarchy)
+- Allows the adjustment of an image's resolution
+- Saves to XCF files (indexed colour spaces not yet fully implemented)
+- Allows the flattening of an image
+
+---
+
+0.0.1 (17th January, 2003)
+
+- Opens existing XCF documents
+- Provides zooming functionality
+- Allows adjustment of the transparency colour
+- Allows adjustment of a layer's opacity
+- Allows adjustment of a layer's blending mode
+- Provides a mechanism to toggle the visibility of multiple layers
+- Provides a read-only palette for indexed images
+
+---

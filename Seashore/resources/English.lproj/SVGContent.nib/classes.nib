@@ -1,0 +1,20 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {endPanel = id; update = id; }; 
+            CLASS = SVGContent; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                scalePanel = id; 
+                scaleSlider = id; 
+                sizeLabel = id; 
+                spinner = id; 
+                waitPanel = id; 
+            }; 
+            SUPERCLASS = SeaContent; 
+        }, 
+        {CLASS = SeaContent; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}

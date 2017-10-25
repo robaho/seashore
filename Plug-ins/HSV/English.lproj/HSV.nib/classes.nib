@@ -1,0 +1,21 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {apply = id; cancel = id; preview = id; update = id; }; 
+            CLASS = HSVClass; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                hueLabel = id; 
+                hueSlider = id; 
+                panel = id; 
+                saturationLabel = id; 
+                saturationSlider = id; 
+                valueLabel = id; 
+                valueSlider = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

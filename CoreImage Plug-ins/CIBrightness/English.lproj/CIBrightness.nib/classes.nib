@@ -1,0 +1,21 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {apply = id; cancel = id; preview = id; update = id; }; 
+            CLASS = BlurClass; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                brightnessLabel = id; 
+                brightnessSlider = id; 
+                contrastLabel = id; 
+                contrastSlider = id; 
+                panel = id; 
+                saturationLabel = id; 
+                saturationSlider = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}

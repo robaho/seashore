@@ -1,0 +1,30 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {apply = id; cancel = id; preview = id; update = id; }; 
+            CLASS = BlurClass; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                brightnessLabel = id; 
+                brightnessSlider = id; 
+                concentrationLabel = id; 
+                concentrationSlider = id; 
+                destHeightLabel = id; 
+                destHeightSlider = id; 
+                mainColorWell = id; 
+                panel = id; 
+                srcHeightLabel = id; 
+                srcHeightSlider = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            CLASS = SpotLightColorWell; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {ciSpotLight = id; }; 
+            SUPERCLASS = NSColorWell; 
+        }
+    ); 
+    IBVersion = 1; 
+}

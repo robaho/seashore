@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>author</key>
+	<string>Mark Pazolli, Spencer Kimball and Peter Mattis</string>
+	<key>description</key>
+	<string>Adjusts the hue, saturation and value of the selection.</string>
+	<key>groupName</key>
+	<string>Color Adjust</string>
+	<key>license</key>
+	<string>GNU General Public License</string>
+	<key>name</key>
+	<string>Hue, Saturation and Value</string>
+</dict>
+</plist>

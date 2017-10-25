@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="content-type"
+ content="text/html; charset=ISO-8859-1">
+  <title>Seashore Documentation - Introduction</title>
+  <meta name="author" content="Mark Pazolli">
+</head>
+<body>
+<div style="text-align: center;"><br>
+<big><big><big style="font-weight: bold;">Seashore Developer
+Documentation</big></big></big><br>
+<br>
+<a href="Introduction.html">Introduction</a> <a href="MasterTOC.html">Contents</a><br>
+<div style="text-align: left;">
+<div style="text-align: center;">
+<hr style="width: 100%; height: 2px;"><span style="font-style: italic;"></span>
+<h3 style="text-align: left;">Purpose</h3>
+<div style="text-align: left;">It's difficult to write a document
+that adequately introduces a program to new developers. The following
+doesn't try to explain all of Seashore but rather aims to give an
+overview of how Seashore works.<br>
+</div>
+<h3 style="text-align: left;">Introduction<br>
+</h3>
+<div style="text-align: left;">Seashore classes can be divided into two
+categories, document classes and application classes.<br>
+</div>
+<div style="text-align: left;"><br>
+The instances of document classes, belong to a particular document. For
+example, a particular layer is unique to a particular document so the <a
+ href="SeaLayer/index.html">SeaLayer</a> class is a document class. The
+instances of application classes are shared by all documents. For
+example, only one brush selection utility is needed for any number of
+documents so the <a href="BrushUtility/index.html">BrushUtility</a>
+class is an application class.<br>
+<br>
+Document classes are associated with the SeaDocument.nib file and
+application classes are associated with the MainMenu.nib file.<br>
+<h3>Document Classes</h3>
+The most important document class is the <a
+ href="SeaDocument/index.html">SeaDocument</a>
+class. It has a method "contents" which provides access to an
+instance of the <a href="SeaContent/index.html">SeaContent</a>
+class. This class describes all of the document's attributes and keeps
+an array of <a href="SeaLayer/index.html">SeaLayer</a>s
+- each of which represents a single layer of the document.<br>
+<br>
+To find the width of a particular document you might use the
+syntax "[[document contents] width]" and to find the bitmap of the
+active layer you might use "[[[document contents] activeLayer] data]".<br>
+<br>
+The various import formats of Seashore are implemented by subclassing
+the <a href="SeaContent/index.html">SeaContent</a>
+and <a href="SeaLayer/index.html">SeaLayer</a>
+classes. See the <a href="CocoaContent/index.html">CocoaContent</a>
+and <a href="CocoaLayer/index.html">CocoaLayer</a> classes for
+examples of this.<br>
+<br>
+<a href="SeaWhiteboard/index.html">SeaWhiteboard</a>
+takes the contents of the document and with the help of <a
+ href="SeaCompositor/index.html">SeaCompositor</a>
+produces a single image representing the document. This image is then
+displayed to the user by an instance of the <a
+ href="SeaView/index.html">SeaView</a>
+class.<br>
+<br>
+The whiteboard not only composites the layer bitmaps together but also
+composites what is known as an overlay on top of the active layer. The
+overlay is the same size and has the same samples per pixel as the
+active layer. It is what is adjusted when you draw on the canvas with
+the paint brush. For example, when you first press the mouse button the
+<a href="BrushTool/index.html">BrushTool</a>
+sets the overlay's opacity using "[[document whiteboard]
+setOverlayOpacity:255]". As you drag your mouse across the document <a
+ href="BrushTool/index.html">BrushTool</a> makes additional changes
+directly to the overlay's bitmap&nbsp; (obtained using
+"[[document
+whiteboard] overlay]") and calls "[[document helpers]
+overlayChanged:whichRect]" to ensure the changes are visible to the
+user. Finally once the mouse button is released <a
+ href="BrushTool/index.html">BrushTool</a> applies the overlay to the
+layer and then clears it for reuse by calling "[[document helpers]
+applyOverlay]". The advantage of using the overlay is that the process
+is largely the
+same regardless of what channels are selected. Furthermore, undoing
+is much simpler and the overlay allows colours with alpha
+channels to be correctly plotted.<br>
+<br>
+In the previous two paragraphs "[document helpers]" was referred to
+quite a bit. This syntax returns the document's instance of the <a
+ href="SeaHelpers/index.html">SeaHelpers</a> class.&nbsp; The <a
+ href="SeaHelpers/index.html">SeaHelpers</a> class is a new addition to
+Seashore which means rather than <a href="BrushTool/index.html">BrushTool</a>
+calling several different classes with each update, such calls are
+handled by a single method in the <a href="SeaHelpers/index.html">SeaHelpers</a>
+class. This makes the code easier to read, use and adjust.<br>
+<br>
+The behaviour of all of Seashore's tools (with the exception of those
+built into <a href="SeaView/index.html">SeaView</a>)
+are guided by classes which inherit from the <a
+ href="AbstractTool/index.html">AbstractTool</a> class. They
+are all document classes and can be accessed by calling "[document
+tools]" which will return the document's instance of the <a
+ href="SeaTools/index.html">SeaTools</a> class. <br>
+<br>
+The final set of noteworthy document classes are the exporters. All of
+Seashore's exporters inherit from the <a
+ href="AbstractExporter/index.html">AbstractExporter</a> class. To
+develop an
+understanding of exporters it is best to look at a simple exporter such
+as the <a href="TIFFExporter/index.html">TIFFExporter</a>.<br>
+<h3>Application Classes<br>
+</h3>
+If you wish to add a menu item to Seashore then the <a
+ href="SeaProxy/index.html">SeaProxy</a>
+class may be of interest to you. It acts as a mediator between various
+menu items and the active document. These menu items are connected to
+methods of the <a href="SeaProxy/index.html">SeaProxy</a> class which
+then forwards their requests to the active document. <a
+ href="SeaProxy/index.html">SeaProxy</a>
+also takes on the responsibility of disabling and enabling such menu
+items.<br>
+<br>
+Another important application class is the <a
+ href="SeaController/index.html">SeaController</a> class that provides
+access to the shared instances of a number of other classes. The most
+important of which is the <a href="UtilitiesManager/index.html">UtilitiesManager</a>
+that allows you to access all of Seashore's utilities.<br>
+<br>
+In Seashore a utility is basically something that sits in a floating
+window separate from the document window. The most important utility is
+probably the <a href="PegasusUtility/index.html">PegasusUtility</a>
+which allows you to select the active layer and channel. There is also
+a brush selection utility (called <a href="BrushUtility/index.html">BrushUtility</a>),
+a texture selection
+utility (called <a href="TextureUtility/index.html">TextureUtility</a>)
+and even a cursor information utility (called <a
+ href="InfoUtility/index.html">InfoUtility</a>). The current tool and
+currently used colours are typically selected by the <a
+ href="ToolboxUtility/index.html">ToolboxUtility</a> and the options of
+the current tool are displayed by the <a
+ href="OptionsUtility/index.html">OptionsUtility</a>.<br>
+<br>
+It should be noted, that the <a href="TextureUtility/index.html">TextureUtility</a>
+keeps an array of <a href="SeaTexture/index.html">SeaTexture</a>s,
+each of which represents a single Seashore texture. Likewise the <a
+ href="BrushUtility/index.html">BrushUtility</a> keeps an array of <a
+ href="SeaBrush/index.html">SeaBrush</a>es. These are passed to the
+document as is necessary. The <a href="OptionsUtility/index.html">OptionsUtility</a>
+also allows access to the options of any tool each of which inherits
+from the <a href="AbstractOptions/index.html">AbstractOptions</a>
+class.<br>
+<br>
+Finally a number of operations are implemented by application classes,
+specifically scaling (by the <a href="SeaScale/index.html">SeaScale</a>
+class),
+margin adjustment (by the <a href="SeaMargins/index.html">SeaMargins</a>
+class)
+and resolution adjustment (by <a href="SeaResolution/index.html">SeaResolution</a>
+class).<br>
+<br>
+<span style="font-style: italic;">For further information please don't
+hesitate to post to Seashore's <a
+ href="http://groups.google.com/group/seashore-dev/">Google Group</a>.
+ </span><br>
+<hr style="width: 100%; height: 2px;"></div>
+</div>
+</div>
+</div>
+</body>
+</html>

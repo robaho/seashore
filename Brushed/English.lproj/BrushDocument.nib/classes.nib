@@ -1,0 +1,26 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {changeName = id; changeSpacing = id; changeType = id; }; 
+            CLASS = BrushDocument; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                dimensionsLabel = id; 
+                nameTextField = id; 
+                spacingLabel = id; 
+                spacingSlider = id; 
+                typeButton = id; 
+                view = id; 
+            }; 
+            SUPERCLASS = NSDocument; 
+        }, 
+        {
+            CLASS = BrushView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {document = id; }; 
+            SUPERCLASS = NSView; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}

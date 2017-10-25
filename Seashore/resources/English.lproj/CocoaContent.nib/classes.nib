@@ -1,0 +1,14 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {endPanel = id; }; 
+            CLASS = CocoaContent; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {pageInput = id; pageLabel = id; pdfPanel = id; resMenu = id; }; 
+            SUPERCLASS = SeaContent; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = SeaContent; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}

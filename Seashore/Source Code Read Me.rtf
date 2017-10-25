@@ -1,0 +1,146 @@
+{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf410
+{\fonttbl\f0\fswiss\fcharset77 Helvetica-Bold;\f1\froman\fcharset77 Times-Roman;\f2\froman\fcharset77 Times-Bold;
+}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue255;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11640\viewh14380\viewkind0
+\pard\tx565\tx1133\tx1700\tx2266\tx2832\tx3401\tx3967\tx4535\tx5102\tx5669\tx6235\tx6802\ql\qnatural
+
+\f0\b\fs36 \cf0 \
+Seashore Source Code\
+
+\f1\b0\fs24 \
+
+\f0\b\fs28 Introduction
+\f1\b0\fs24 \
+\
+The Seashore source code consists of several different modules. If you are accessing the source code through SVN you must make sure to download each of these modules. Alternatively, if you are accessing the source code through a disk image, all of these modules should be included on the disk image.\
+\
+For the latest version of the Seashore source code please consult:\
+\
+\cf2 http://seashore.sourceforge.net/\
+\cf0 \
+Unless otherwise noted all of Seashore's source code is distributed under the GNU General Public License v2.0.\
+\
+
+\f0\b\fs28 Build Environment
+\f1\b0\fs24 \
+\
+Building Seashore requires Xcode 2.2 or later on Mac OS 10.4 or later. Seashore is a Universal build, and will run on any Macintosh computer running Mac OS 10.3.9 or later.\
+\
+It is also strongly recommended that you have a common, 
+\f2\b Customized Location
+\f1\b0  for your 
+\f2\b Build Products
+\f1\b0 . This location may be anywhere on your disk. You can set this preference in Xcode by choosing 
+\f2\b Xcode > Preferences > Building > Place Build Product in: > Customized location:
+\f1\b0 , and clicking on the 
+\f2\b Choose...
+\f1\b0  button.\
+\
+
+\f0\b\fs28 Modules and Build Order
+\f1\b0\fs24 \
+\
+The following are the modules of Seashore. You can build them independently, but we recommend that you use the Seashore project, which has the correct dependencies.\
+\
+
+\f2\b GIMPCore\
+
+\f1\b0 \
+GIMPCore contains parts of the GIMP's code that Seashore uses more or less unaltered. Seashore relies upon the presence of GIMPCore to work.\
+\
+
+\f2\b TIFF\
+
+\f1\b0 \
+TIFF contains libtiff 3.8.2. Seashore relies upon the presence of the TIFF framework to write TIFF files. \
+\
+
+\f2\b Plug-ins\
+
+\f1\b0 \
+Plug-ins contains the various plug-ins of Seashore. It is not necessary to build any of Seashore's plug-ins to build the application but if you chose not to build them you should remove them from "Plug-ins" subgroup of the "Resources" group in the Seashore project.\
+\
+One of the Plug-ins (CompositorAV) is not Universal, and is not part of the default Seashore.xcodeproj\
+\
+
+\f2\b SVGImporter
+\f1\b0  (not required)
+\f2\b \
+
+\f1\b0 \
+SVGImporter adds SVG support to Seashore. You can optionally build the installer - this can be used to remove the importer from Seashore.\
+\
+
+\f2\b Seashore\
+
+\f1\b0 \
+Seashore contains the main application Seashore. After this is compiled you should be able to launch and use Seashore as an application.\
+
+\f2\b \
+Brushed
+\f1\b0  (not required)
+\f2\b \
+
+\f1\b0 \
+Brushed contains Seashore's brush editor. This is a stand-alone application which is not necessary for Seashore to function.\
+\
+
+\f2\b Pat2PNG
+\f1\b0  (not required)
+\f2\b \
+
+\f1\b0 \
+Pat2PNG contains Seashore's texture to PNG converter. This is a stand-alone application which is not necessary for Seashore to function.\
+\
+
+\f2\b Updater
+\f1\b0  (not required)\
+\
+Updater contains the updater Seashore uses when it ships patches. Unlike other modules, the updater will not compile out-of-the-box and is generally not required by most users. It is distributed under the MIT License (not the GNU General Public License).\
+\pard\tx565\tx1133\tx1700\tx2266\tx2832\tx3401\tx3967\tx4535\tx5102\tx5669\tx6235\tx6802\ql\qnatural
+
+\f0\b\fs28 \cf0 \
+Developer Documentation\
+\pard\tx565\tx1133\tx1700\tx2266\tx2832\tx3401\tx3967\tx4535\tx5102\tx5669\tx6235\tx6802\ql\qnatural
+
+\f1\b0\fs24 \cf0 \
+Seashore has full developer documentation using Apple's HeaderDoc documentation system. If you have HeaderDoc installed you can generate the HeaderDoc documentation by running the "document.sh" script in the "scripts" directory. That should generate a "doc" directory in the Seashore module which you can then explore with any modern web browser.\
+\pard\tx565\tx1133\tx1700\tx2266\tx2832\tx3401\tx3967\tx4535\tx5102\tx5669\tx6235\tx6802\ql\qnatural
+
+\f0\b\fs28 \cf0 \
+Contributing\
+\pard\tx565\tx1133\tx1700\tx2266\tx2832\tx3401\tx3967\tx4535\tx5102\tx5669\tx6235\tx6802\ql\qnatural
+
+\f1\b0\fs24 \cf0 \
+There are a few things you should note before contributing to the Seashore source code.\
+\
+\pard\tx565\tx1133\tx1700\tx2266\tx2832\tx3401\tx3967\tx4535\tx5102\tx5669\tx6235\tx6802\ql\qnatural
+\cf0 \ul 1. Source code in the Seashore module that does not have HeaderDoc commenting will not be accepted\
+\pard\tx565\tx1133\tx1700\tx2266\tx2832\tx3401\tx3967\tx4535\tx5102\tx5669\tx6235\tx6802\ql\qnatural
+\cf0 \ulnone \
+All of the code in the Seashore module has HeaderDoc comments. These are the comments in the header file that begin with "/*!" and end with "*/". In order to maintain some level of readability in the code, code that does not have HeaderDoc comments will not be accepted into the Seashore module. This rule does not apply for other modules.\
+\
+\pard\tx565\tx1133\tx1700\tx2266\tx2832\tx3401\tx3967\tx4535\tx5102\tx5669\tx6235\tx6802\ql\qnatural
+\cf0 \ul 2. Try and use a consistent coding style\
+\pard\tx565\tx1133\tx1700\tx2266\tx2832\tx3401\tx3967\tx4535\tx5102\tx5669\tx6235\tx6802\ql\qnatural
+\cf0 \ulnone \
+Everyone's coding style is unique, but try and use a coding style consistent with the project's. Please also try and use tabs as opposed to spaces for indentation.\
+\
+\pard\tx565\tx1133\tx1700\tx2266\tx2832\tx3401\tx3967\tx4535\tx5102\tx5669\tx6235\tx6802\ql\qnatural
+\cf0 \ul 3. Proprietary add-ons or helper programs may be made\
+\pard\tx565\tx1133\tx1700\tx2266\tx2832\tx3401\tx3967\tx4535\tx5102\tx5669\tx6235\tx6802\ql\qnatural
+\cf0 \ulnone \
+I or anyone else may at a later date decide to implement proprietary add-ons or helper programs. These will need to be consistent with the GNU General Public License which means they cannot incorporate your open source code. However if you have an ideological opposition to such extensions you probably should not contribute to Seashore. Seashore's Invert and Blend plug-ins have been placed in the public domain to allow proprietary plug-ins to be built from them.\
+\
+\pard\tx565\tx1133\tx1700\tx2266\tx2832\tx3401\tx3967\tx4535\tx5102\tx5669\tx6235\tx6802\ql\qnatural
+\cf0 \ul 4. Have fun and talk to us\
+\pard\tx565\tx1133\tx1700\tx2266\tx2832\tx3401\tx3967\tx4535\tx5102\tx5669\tx6235\tx6802\ql\qnatural
+\cf0 \ulnone \
+The forums and mailing list are there for you to talk to us. If you're interested in contributing please talk to us through the website:\
+\
+\pard\tx565\tx1133\tx1700\tx2266\tx2832\tx3401\tx3967\tx4535\tx5102\tx5669\tx6235\tx6802\ql\qnatural
+\cf2 http://seashore.sourceforge.net/\
+\pard\tx565\tx1133\tx1700\tx2266\tx2832\tx3401\tx3967\tx4535\tx5102\tx5669\tx6235\tx6802\ql\qnatural
+\cf0 \
+}

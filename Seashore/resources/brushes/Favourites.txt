@@ -1,0 +1,10 @@
+(
+    "Calligraphy/calligraphy-10.gbr", 
+    "Calligraphy/calligraphy-15.gbr", 
+    "Calligraphy/calligraphy-20.gbr", 
+    "Full Circles/circle-09.gbr", 
+    "Full Circles/circle-11.gbr", 
+    "Full Circles/circle-15.gbr", 
+    "Full Circles/circle-17.gbr", 
+    "Decorative/confetti.gbr"
+)

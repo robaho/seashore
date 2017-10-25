@@ -1,0 +1,23 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {apply = id; cancel = id; update = id; }; 
+            CLASS = BlurClass; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                heightLabel = id; 
+                heightSlider = id; 
+                overlapLabel = id; 
+                overlapSlider = id; 
+                panel = id; 
+                progressBar = id; 
+                tileableCheckbox = id; 
+                widthLabel = id; 
+                widthSlider = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}

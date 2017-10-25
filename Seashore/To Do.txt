@@ -1,0 +1,24 @@
+To Do List
+
+This document highlights priority work that should be carried out on
+Seashore as soon as possible.
+
+== Mark ==
+
+1. Add Core Image rotation/scale
+2. Double check instructions on effect tool effects
+3. Fix Core Image plug-ins so they don't ruin the primary channels
+4. Check green button behaviour for different resolution handling
+5. Update user guide
+6. Add effect guide
+7. Finalize interface
+
+== Stephen ==
+
+== Henry ==
+
+== Future versions ==
+
+* CoreImage
+* Text layers
+* Foreign alpha channels

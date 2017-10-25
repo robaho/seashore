@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Default</key>
+	<dict>
+		<key>Builtin</key>
+		<string>Default</string>
+	</dict>
+	<key>Clipboard</key>
+	<dict>
+		<key>Builtin</key>
+		<string>Clipboard</string>
+	</dict>
+	<key>Paper</key>
+	<dict>
+		<key>Builtin</key>
+		<string>Paper</string>
+	</dict>
+	<key>Screen</key>
+	<dict>
+		<key>Builtin</key>
+		<string>Screen</string>
+	</dict>
+	<key>US Letter</key>
+	<dict>
+		<key>Height</key>
+		<integer>10</integer>
+		<key>Mode</key>
+		<string>Full Color</string>
+		<key>Resolution</key>
+		<integer>72</integer>
+		<key>Transparent</key>
+		<true/>
+		<key>Units</key>
+		<string>Inches</string>
+		<key>Width</key>
+		<integer>8</integer>
+	</dict>
+</dict>
+</plist>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>author</key>
+	<string>Mark Pazolli</string>
+	<key>copyright</key>
+	<string>Copyright (c) 2005 Mark Pazolli</string>
+	<key>description</key>
+	<string>Runs a posterize operation on the selection.</string>
+	<key>groupName</key>
+	<string>Colour Effect</string>
+	<key>license</key>
+	<string>GNU General Public License</string>
+	<key>name</key>
+	<string>Posterize</string>
+</dict>
+</plist>

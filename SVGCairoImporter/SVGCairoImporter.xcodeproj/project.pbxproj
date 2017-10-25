@@ -1,0 +1,422 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		A87889680D93EFAA00F19F0F /* Update libsvg-cairo (Intel) */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = A878896A0D93EFAA00F19F0F /* Build configuration list for PBXAggregateTarget "Update libsvg-cairo (Intel)" */;
+			buildPhases = (
+				A87889690D93EFAA00F19F0F /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = "Update libsvg-cairo (Intel)";
+			productName = "Build PPC";
+		};
+		A89F023C0D4CB2D900FBFBBB /* Build libraries */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = A89F023F0D4CB2DC00FBFBBB /* Build configuration list for PBXAggregateTarget "Build libraries" */;
+			buildPhases = (
+				A89F02420D4CB2EB00FBFBBB /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = "Build libraries";
+			productName = "Build PPC";
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		8DD76FAC0486AB0100D96B5E /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 08FB7796FE84155DC02AAC07 /* main.c */; settings = {ATTRIBUTES = (); }; };
+		A88008C70D4CD8BA00F5AF3E /* png.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = A88008C60D4CD8BA00F5AF3E /* png.h */; };
+		A88008C90D4CD8BD00F5AF3E /* pngconf.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = A88008C80D4CD8BD00F5AF3E /* pngconf.h */; };
+		A88008CF0D4CD8D400F5AF3E /* libpng12.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88008CE0D4CD8D400F5AF3E /* libpng12.a */; };
+		A8800E170D4CDB2600F5AF3E /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8800E160D4CDB2600F5AF3E /* ApplicationServices.framework */; };
+		A8800E2E0D4CDFCA00F5AF3E /* libjpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8800E2D0D4CDFCA00F5AF3E /* libjpeg.a */; };
+		A89F04840D4CD0CC00FBFBBB /* libcairo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A89F04800D4CD0CC00FBFBBB /* libcairo.a */; };
+		A89F04850D4CD0CC00FBFBBB /* libpixman-1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A89F04810D4CD0CC00FBFBBB /* libpixman-1.a */; };
+		A89F04860D4CD0CC00FBFBBB /* libsvg-cairo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A89F04820D4CD0CC00FBFBBB /* libsvg-cairo.a */; };
+		A89F04870D4CD0CC00FBFBBB /* libsvg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A89F04830D4CD0CC00FBFBBB /* libsvg.a */; };
+		A89F04C90D4CD4BC00FBFBBB /* svg-cairo.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = A89F04C70D4CD4BC00FBFBBB /* svg-cairo.h */; };
+		A89F04CA0D4CD4BC00FBFBBB /* svg.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = A89F04C80D4CD4BC00FBFBBB /* svg.h */; };
+		A89F04D50D4CD50E00FBFBBB /* cairo.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = A89F04D40D4CD50E00FBFBBB /* cairo.h */; };
+		A89F04E20D4CD52C00FBFBBB /* cairo-atsui.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = A89F04DD0D4CD52C00FBFBBB /* cairo-atsui.h */; };
+		A89F04E30D4CD52C00FBFBBB /* cairo-quartz.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = A89F04DE0D4CD52C00FBFBBB /* cairo-quartz.h */; };
+		A89F04E40D4CD52C00FBFBBB /* cairo-deprecated.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = A89F04DF0D4CD52C00FBFBBB /* cairo-deprecated.h */; };
+		A89F04E50D4CD52C00FBFBBB /* cairo-svg.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = A89F04E00D4CD52C00FBFBBB /* cairo-svg.h */; };
+		A89F04E60D4CD52C00FBFBBB /* cairo-features.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = A89F04E10D4CD52C00FBFBBB /* cairo-features.h */; };
+		A8E6BE3D0D4D4A87004C3CE7 /* args.c in Sources */ = {isa = PBXBuildFile; fileRef = A8E6BE3A0D4D4A87004C3CE7 /* args.c */; };
+		A8E6BE3E0D4D4A87004C3CE7 /* svg2png.c in Sources */ = {isa = PBXBuildFile; fileRef = A8E6BE3B0D4D4A87004C3CE7 /* svg2png.c */; };
+		A8E6BE3F0D4D4A87004C3CE7 /* args.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = A8E6BE3C0D4D4A87004C3CE7 /* args.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8DD76FAF0486AB0100D96B5E /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 8;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				A89F04C90D4CD4BC00FBFBBB /* svg-cairo.h in CopyFiles */,
+				A89F04CA0D4CD4BC00FBFBBB /* svg.h in CopyFiles */,
+				A89F04D50D4CD50E00FBFBBB /* cairo.h in CopyFiles */,
+				A89F04E20D4CD52C00FBFBBB /* cairo-atsui.h in CopyFiles */,
+				A89F04E30D4CD52C00FBFBBB /* cairo-quartz.h in CopyFiles */,
+				A89F04E40D4CD52C00FBFBBB /* cairo-deprecated.h in CopyFiles */,
+				A89F04E50D4CD52C00FBFBBB /* cairo-svg.h in CopyFiles */,
+				A89F04E60D4CD52C00FBFBBB /* cairo-features.h in CopyFiles */,
+				A88008C70D4CD8BA00F5AF3E /* png.h in CopyFiles */,
+				A88008C90D4CD8BD00F5AF3E /* pngconf.h in CopyFiles */,
+				A8E6BE3F0D4D4A87004C3CE7 /* args.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		08FB7796FE84155DC02AAC07 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		8DD76FB20486AB0100D96B5E /* SVGCairoImporter */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SVGCairoImporter; sourceTree = BUILT_PRODUCTS_DIR; };
+		A88008C60D4CD8BA00F5AF3E /* png.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = png.h; path = lib/i386/include/libpng12/png.h; sourceTree = "<group>"; };
+		A88008C80D4CD8BD00F5AF3E /* pngconf.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = pngconf.h; path = lib/i386/include/libpng12/pngconf.h; sourceTree = "<group>"; };
+		A88008CE0D4CD8D400F5AF3E /* libpng12.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng12.a; path = lib/i386/libpng12.a; sourceTree = "<group>"; };
+		A8800E160D4CDB2600F5AF3E /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
+		A8800E2D0D4CDFCA00F5AF3E /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = lib/libjpeg.a; sourceTree = "<group>"; };
+		A89F04800D4CD0CC00FBFBBB /* libcairo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcairo.a; path = lib/libcairo.a; sourceTree = "<group>"; };
+		A89F04810D4CD0CC00FBFBBB /* libpixman-1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libpixman-1.a"; path = "lib/libpixman-1.a"; sourceTree = "<group>"; };
+		A89F04820D4CD0CC00FBFBBB /* libsvg-cairo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsvg-cairo.a"; path = "lib/libsvg-cairo.a"; sourceTree = "<group>"; };
+		A89F04830D4CD0CC00FBFBBB /* libsvg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsvg.a; path = lib/libsvg.a; sourceTree = "<group>"; };
+		A89F04C70D4CD4BC00FBFBBB /* svg-cairo.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = "svg-cairo.h"; path = "lib/i386/include/svg-cairo.h"; sourceTree = "<group>"; };
+		A89F04C80D4CD4BC00FBFBBB /* svg.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = svg.h; path = lib/i386/include/svg.h; sourceTree = "<group>"; };
+		A89F04D40D4CD50E00FBFBBB /* cairo.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = cairo.h; path = lib/i386/include/cairo/cairo.h; sourceTree = "<group>"; };
+		A89F04DD0D4CD52C00FBFBBB /* cairo-atsui.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = "cairo-atsui.h"; path = "lib/i386/include/cairo/cairo-atsui.h"; sourceTree = "<group>"; };
+		A89F04DE0D4CD52C00FBFBBB /* cairo-quartz.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = "cairo-quartz.h"; path = "lib/i386/include/cairo/cairo-quartz.h"; sourceTree = "<group>"; };
+		A89F04DF0D4CD52C00FBFBBB /* cairo-deprecated.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = "cairo-deprecated.h"; path = "lib/i386/include/cairo/cairo-deprecated.h"; sourceTree = "<group>"; };
+		A89F04E00D4CD52C00FBFBBB /* cairo-svg.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = "cairo-svg.h"; path = "lib/i386/include/cairo/cairo-svg.h"; sourceTree = "<group>"; };
+		A89F04E10D4CD52C00FBFBBB /* cairo-features.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = "cairo-features.h"; path = "lib/i386/include/cairo/cairo-features.h"; sourceTree = "<group>"; };
+		A8E6BE3A0D4D4A87004C3CE7 /* args.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = args.c; sourceTree = "<group>"; };
+		A8E6BE3B0D4D4A87004C3CE7 /* svg2png.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = svg2png.c; sourceTree = "<group>"; };
+		A8E6BE3C0D4D4A87004C3CE7 /* args.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = args.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8DD76FAD0486AB0100D96B5E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A89F04840D4CD0CC00FBFBBB /* libcairo.a in Frameworks */,
+				A89F04850D4CD0CC00FBFBBB /* libpixman-1.a in Frameworks */,
+				A89F04860D4CD0CC00FBFBBB /* libsvg-cairo.a in Frameworks */,
+				A89F04870D4CD0CC00FBFBBB /* libsvg.a in Frameworks */,
+				A88008CF0D4CD8D400F5AF3E /* libpng12.a in Frameworks */,
+				A8800E170D4CDB2600F5AF3E /* ApplicationServices.framework in Frameworks */,
+				A8800E2E0D4CDFCA00F5AF3E /* libjpeg.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		08FB7794FE84155DC02AAC07 /* SVGCairoImporter */ = {
+			isa = PBXGroup;
+			children = (
+				A89F04C60D4CD49800FBFBBB /* Headers */,
+				08FB7795FE84155DC02AAC07 /* Source */,
+				A89F047F0D4CD0B800FBFBBB /* Libraries */,
+				A88008EA0D4CDA6D00F5AF3E /* Frameworks */,
+				1AB674ADFE9D54B511CA2CBB /* Products */,
+			);
+			name = SVGCairoImporter;
+			sourceTree = "<group>";
+		};
+		08FB7795FE84155DC02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				A8E6BE3C0D4D4A87004C3CE7 /* args.h */,
+				A8E6BE3A0D4D4A87004C3CE7 /* args.c */,
+				A8E6BE3B0D4D4A87004C3CE7 /* svg2png.c */,
+				08FB7796FE84155DC02AAC07 /* main.c */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		1AB674ADFE9D54B511CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8DD76FB20486AB0100D96B5E /* SVGCairoImporter */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A88008EA0D4CDA6D00F5AF3E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A8800E160D4CDB2600F5AF3E /* ApplicationServices.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A89F047F0D4CD0B800FBFBBB /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				A89F04800D4CD0CC00FBFBBB /* libcairo.a */,
+				A89F04810D4CD0CC00FBFBBB /* libpixman-1.a */,
+				A89F04820D4CD0CC00FBFBBB /* libsvg-cairo.a */,
+				A89F04830D4CD0CC00FBFBBB /* libsvg.a */,
+				A8800E2D0D4CDFCA00F5AF3E /* libjpeg.a */,
+				A88008CE0D4CD8D400F5AF3E /* libpng12.a */,
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
+		A89F04C60D4CD49800FBFBBB /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				A89F04DD0D4CD52C00FBFBBB /* cairo-atsui.h */,
+				A89F04DE0D4CD52C00FBFBBB /* cairo-quartz.h */,
+				A89F04DF0D4CD52C00FBFBBB /* cairo-deprecated.h */,
+				A89F04E00D4CD52C00FBFBBB /* cairo-svg.h */,
+				A89F04E10D4CD52C00FBFBBB /* cairo-features.h */,
+				A89F04D40D4CD50E00FBFBBB /* cairo.h */,
+				A89F04C70D4CD4BC00FBFBBB /* svg-cairo.h */,
+				A89F04C80D4CD4BC00FBFBBB /* svg.h */,
+				A88008C80D4CD8BD00F5AF3E /* pngconf.h */,
+				A88008C60D4CD8BA00F5AF3E /* png.h */,
+			);
+			name = Headers;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8DD76FA90486AB0100D96B5E /* SVGCairoImporter */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB928508733DD80010E9CD /* Build configuration list for PBXNativeTarget "SVGCairoImporter" */;
+			buildPhases = (
+				8DD76FAB0486AB0100D96B5E /* Sources */,
+				8DD76FAD0486AB0100D96B5E /* Frameworks */,
+				8DD76FAF0486AB0100D96B5E /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SVGCairoImporter;
+			productInstallPath = "$(HOME)/bin";
+			productName = SVGCairoImporter;
+			productReference = 8DD76FB20486AB0100D96B5E /* SVGCairoImporter */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "SVGCairoImporter" */;
+			hasScannedForEncodings = 1;
+			mainGroup = 08FB7794FE84155DC02AAC07 /* SVGCairoImporter */;
+			projectDirPath = "";
+			targets = (
+				8DD76FA90486AB0100D96B5E /* SVGCairoImporter */,
+				A89F023C0D4CB2D900FBFBBB /* Build libraries */,
+				A87889680D93EFAA00F19F0F /* Update libsvg-cairo (Intel) */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A87889690D93EFAA00F19F0F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "CODE_DIR=`pwd`\"/src\"\nBUILD_DIR_ppc=`pwd`\"/lib/ppc\"\nBUILD_DIR_i386=`pwd`\"/lib/i386\"\nexport PKG_CONFIG=\"/sw/bin/pkg-config\"\n\ncd \"$CODE_DIR/libsvg-cairo-0.1.6\"\nmake \"CC=cc -arch i386\"\nmake install\n\ncd /tmp/i386/lib\nmkdir -p \"$BUILD_DIR_i386\"\ncp *.a \"$BUILD_DIR_i386\"\ncp -R /tmp/i386/include \"$BUILD_DIR_i386\"\n\ncd \"$BUILD_DIR_i386\"\nls *.a > ../manifest\n\ncd ..\n\nfor lib in `cat manifest`; do\n\tlipo -create */$lib -output $lib\ndone\n\nexit 0\n";
+		};
+		A89F02420D4CB2EB00FBFBBB /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "CODE_DIR=`pwd`\"/src\"\nBUILD_DIR_ppc=`pwd`\"/lib/ppc\"\nBUILD_DIR_i386=`pwd`\"/lib/i386\"\nexport PKG_CONFIG=\"/sw/bin/pkg-config\"\n\nif [ ! -f \"/tmp/ppc/lib/libpng12.a\" ]\nthen\n\tcd \"$CODE_DIR/libpng-1.2.24\"\n\tmake clean\n\tmkdir -p /tmp/ppc\n\t./configure ppc darwin-ppc-cc --prefix=\"/tmp/ppc\" \"CC=cc -arch ppc\"\n\tmake \"CC=cc -arch ppc\"\n\tmake install\nfi\n\nif [ ! -f \"/tmp/ppc/lib/libjpeg.a\" ]\nthen\n\tcd \"$CODE_DIR/jpeg-6b\"\n\tmake clean\n\t./configure ppc darwin-ppc-cc --prefix=\"/tmp/ppc\" \"CC=cc -arch ppc\"\n\tmake \"CC=cc -arch ppc\" libjpeg.a\n\tmv libjpeg.a /tmp/ppc/lib\nfi\n\nif [ ! -f \"/tmp/ppc/lib/libpixman-1.a\" ]\nthen\n\tcd \"$CODE_DIR/pixman-0.9.6\"\n\tmake clean\n\tmkdir -p /tmp/ppc\n\t./configure ppc darwin-ppc-cc --prefix=\"/tmp/ppc\" \"CC=cc -arch ppc\"\n\tmake \"CC=cc -arch ppc\"\n\tmake install\nfi\n\nif [ ! -f \"/tmp/ppc/lib/libsvg.a\" ]\nthen\n\tcd \"$CODE_DIR/libsvg-0.1.4\"\n\tmake clean\n\t./configure  --prefix=\"/tmp/ppc\" ppc darwin-ppc-cc \"CC=cc -arch ppc\" \n\tmake \"CC=cc -arch ppc\"\n\tmake install\nfi\n\nif [ ! -f \"/tmp/ppc/lib/libcairo.a\" ]\nthen\n\tcd \"$CODE_DIR/cairo-1.5.12\"\n\tmake clean\n\t./configure ppc darwin-ppc-cc --prefix=\"/tmp/ppc\" --enable-quartz=yes --enable-pdf=no --enable-ps=no --enable-xlib=no --enable-atsui=yes --enable-svg=yes \"CC=cc -arch ppc\" \"PKG_CONFIG_PATH=/tmp/ppc/lib/pkgconfig\"\n\tmake \"CC=cc -arch ppc\"\n\tmake install\nfi\n\nif [ ! -f \"/tmp/ppc/lib/libsvg-cairo.a\" ]\nthen\n\tcd \"$CODE_DIR/libsvg-cairo-0.1.6\"\n\tmake clean\n\tmkdir -p /tmp/ppc\n\t./configure --prefix=\"/tmp/ppc\" ppc darwin-ppc-cc \"CC=cc -arch ppc\" \"PKG_CONFIG_PATH=/tmp/ppc/lib/pkgconfig\"\n\tmake \"CC=cc -arch ppc\"\n\tmake install\nfi\n\ncd /tmp/ppc/lib\nmkdir -p \"$BUILD_DIR_ppc\"\ncp *.a \"$BUILD_DIR_ppc\"\ncp -R /tmp/ppc/include \"$BUILD_DIR_ppc\"\n\nif [ ! -f \"/tmp/i386/lib/libpng12.a\" ]\nthen\n\tcd \"$CODE_DIR/libpng-1.2.24\"\n\tmake clean\n\tmkdir -p /tmp/i386\n\t./configure i386 darwin-i386-cc --prefix=\"/tmp/i386\" \"CC=cc -arch i386\"\n\tmake \"CC=cc -arch i386\"\n\tmake install\nfi\n\nif [ ! -f \"/tmp/i386/lib/libjpeg.a\" ]\nthen\n\tcd \"$CODE_DIR/jpeg-6b\"\n\tmake clean\n\t./configure i386 --prefix=\"/tmp/i386\" \"CC=cc -arch i386\"\n\tmake \"CC=cc -arch i386\" libjpeg.a\n\tmv libjpeg.a /tmp/i386/lib\nfi\n\nif [ ! -f \"/tmp/i386/lib/libpixman-1.a\" ]\nthen\n\tcd \"$CODE_DIR/pixman-0.9.6\"\n\tmake clean\n\t./configure i386 darwin-i386-cc --prefix=\"/tmp/i386\" \"CC=cc -arch i386\"\n\tmake \"CC=cc -arch i386\"\n\tmake install\nfi\n\nif [ ! -f \"/tmp/i386/lib/libsvg.a\" ]\nthen\n\tcd \"$CODE_DIR/libsvg-0.1.4\"\n\tmake clean\n\tmkdir -p /tmp/i386\n\t./configure  --prefix=\"/tmp/i386\" i386 darwin-i386-cc \"CC=cc -arch i386\" \n\tmake \"CC=cc -arch i386\"\n\tmake install\nfi\n\nif [ ! -f \"/tmp/i386/lib/libcairo.a\" ]\nthen\n\tcd \"$CODE_DIR/cairo-1.5.12\"\n\tmake clean\n\t./configure i386 darwin-i386-cc --prefix=\"/tmp/i386\" --enable-quartz=yes --enable-pdf=no --enable-ps=no --enable-xlib=no --enable-atsui=yes --enable-svg=yes \"CC=cc -arch i386\" \"PKG_CONFIG_PATH=/tmp/i386/lib/pkgconfig\"\n\tmake \"CC=cc -arch i386\"\n\tmake install\nfi\n\nif [ ! -f \"/tmp/i386/lib/libsvg-cairo.a\" ]\nthen\n\tcd \"$CODE_DIR/libsvg-cairo-0.1.6\"\n\tmake clean\n\tmkdir -p /tmp/i386\n\t./configure --prefix=\"/tmp/i386\" i386 darwin-i386-cc \"CC=cc -arch i386\" \"PKG_CONFIG_PATH=/tmp/i386/lib/pkgconfig\"\n\tmake \"CC=cc -arch i386\"\n\tmake install\nfi\n\ncd /tmp/i386/lib\nmkdir -p \"$BUILD_DIR_i386\"\ncp *.a \"$BUILD_DIR_i386\"\ncp -R /tmp/i386/include \"$BUILD_DIR_i386\"\n\ncd \"$BUILD_DIR_i386\"\nls *.a > ../manifest\n\ncd ..\n\nfor lib in `cat manifest`; do\n\tlipo -create */$lib -output $lib\ndone\n\nexit 0\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8DD76FAB0486AB0100D96B5E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8DD76FAC0486AB0100D96B5E /* main.c in Sources */,
+				A8E6BE3D0D4D4A87004C3CE7 /* args.c in Sources */,
+				A8E6BE3E0D4D4A87004C3CE7 /* svg2png.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB928608733DD80010E9CD /* Development (Native) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G4;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INSTALL_PATH = "$(HOME)/bin";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_1)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_2)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_3)",
+				);
+				LIBRARY_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/lib\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_2 = "\"$(SRCROOT)/lib/i386\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_3 = "\"$(SRCROOT)/lib\"";
+				OTHER_LDFLAGS = (
+					"-lz",
+					"-lxml2",
+				);
+				PRODUCT_NAME = SVGCairoImporter;
+				ZERO_LINK = YES;
+			};
+			name = "Development (Native)";
+		};
+		1DEB928708733DD80010E9CD /* Deployment (Universal) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G4;
+				INSTALL_PATH = "$(HOME)/bin";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_1)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_2)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_3)",
+				);
+				LIBRARY_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/lib\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_2 = "\"$(SRCROOT)/lib/i386\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_3 = "\"$(SRCROOT)/lib\"";
+				OTHER_LDFLAGS = (
+					"-lz",
+					"-lxml2",
+				);
+				PRODUCT_NAME = SVGCairoImporter;
+			};
+			name = "Deployment (Universal)";
+		};
+		1DEB928A08733DD80010E9CD /* Development (Native) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = "Development (Native)";
+		};
+		1DEB928B08733DD80010E9CD /* Deployment (Universal) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = "Deployment (Universal)";
+		};
+		A878896B0D93EFAA00F19F0F /* Development (Native) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "Build PPC";
+			};
+			name = "Development (Native)";
+		};
+		A878896C0D93EFAA00F19F0F /* Deployment (Universal) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "Build PPC";
+			};
+			name = "Deployment (Universal)";
+		};
+		A89F02400D4CB2DC00FBFBBB /* Development (Native) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "Build PPC";
+			};
+			name = "Development (Native)";
+		};
+		A89F02410D4CB2DC00FBFBBB /* Deployment (Universal) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "Build PPC";
+			};
+			name = "Deployment (Universal)";
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB928508733DD80010E9CD /* Build configuration list for PBXNativeTarget "SVGCairoImporter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB928608733DD80010E9CD /* Development (Native) */,
+				1DEB928708733DD80010E9CD /* Deployment (Universal) */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = "Deployment (Universal)";
+		};
+		1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "SVGCairoImporter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB928A08733DD80010E9CD /* Development (Native) */,
+				1DEB928B08733DD80010E9CD /* Deployment (Universal) */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = "Deployment (Universal)";
+		};
+		A878896A0D93EFAA00F19F0F /* Build configuration list for PBXAggregateTarget "Update libsvg-cairo (Intel)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A878896B0D93EFAA00F19F0F /* Development (Native) */,
+				A878896C0D93EFAA00F19F0F /* Deployment (Universal) */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = "Deployment (Universal)";
+		};
+		A89F023F0D4CB2DC00FBFBBB /* Build configuration list for PBXAggregateTarget "Build libraries" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A89F02400D4CB2DC00FBFBBB /* Development (Native) */,
+				A89F02410D4CB2DC00FBFBBB /* Deployment (Universal) */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = "Deployment (Universal)";
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}

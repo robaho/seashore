@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>author</key>
+	<string>Mark Pazolli</string>
+	<key>copyright</key>
+	<string>Public Domain 2007</string>
+	<key>description</key>
+	<string>Applies a perspective transform to the selection.</string>
+	<key>groupName</key>
+	<string>Transform</string>
+	<key>instruction</key>
+	<string>Click four times: to indicate the points of the perspective transform in a clockwise direction from the top-left.</string>
+	<key>license</key>
+	<string>Public Domain</string>
+	<key>name</key>
+	<string>Perspective</string>
+</dict>
+</plist>

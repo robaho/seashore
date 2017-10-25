@@ -1,0 +1,22 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {copy = id; paste = id; }; 
+            CLASS = BrushedController; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = BrushedDocumentController; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSDocumentController; 
+        }, 
+        {
+            ACTIONS = {export = id; import = id; preSaveDocument = id; preSaveDocumentAs = id; }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

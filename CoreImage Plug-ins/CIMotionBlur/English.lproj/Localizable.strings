@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>author</key>
+	<string>Mark Pazolli</string>
+	<key>copyright</key>
+	<string>Public Domain 2007</string>
+	<key>description</key>
+	<string>Applies a motion blur effect to the selection.</string>
+	<key>groupName</key>
+	<string>Blur</string>
+	<key>instruction</key>
+	<string>Click twice: first to begin and then to specify the direction and extent of the blur.</string>
+	<key>license</key>
+	<string>Public Domain</string>
+	<key>name</key>
+	<string>Motion Blur</string>
+</dict>
+</plist>
