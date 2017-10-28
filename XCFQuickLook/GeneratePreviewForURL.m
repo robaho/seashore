@@ -20,8 +20,18 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 	XCFContent *contents = [[XCFContent alloc] initWithContentsOfFile: [(NSURL *)url path]];
 	SeaWhiteboard *whiteboard = [[SeaWhiteboard alloc] initWithContent:contents];
 	[whiteboard update];
-	
-	QLPreviewRequestSetDataRepresentation(preview, (CFDataRef)[[whiteboard printableImage] TIFFRepresentation], kUTTypeTIFF, NULL);
+    
+    NSImage* rimage = [whiteboard printableImage];
+    NSRect imageRect = NSMakeRect(0, 0, rimage.size.width, rimage.size.height);
+    CGImageRef image = [rimage CGImageForProposedRect:&imageRect context:NULL hints:nil];
+    
+//    QLPreviewRequestSetDataRepresentation(preview, (CFDataRef)tiff, kUTTypeTIFF, NULL);
+    
+    CGSize size = CGSizeMake(CGImageGetWidth(image), CGImageGetHeight(image));
+    CGContextRef ctxt = QLPreviewRequestCreateContext(preview, size, YES, nil);
+    CGContextDrawImage(ctxt, CGRectMake(0, 0, size.width, size.height), image);
+    QLPreviewRequestFlushContext(preview, ctxt);
+    CGContextRelease(ctxt);
 	
     [pool release];
     return noErr;

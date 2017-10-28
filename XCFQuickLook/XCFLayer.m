@@ -5,7 +5,7 @@
 
 static inline void fix_endian_read(int *input, int size)
 {
-#ifdef __i386__
+#ifdef __LITTLE_ENDIAN__
 	int i;
 	
 	for (i = 0; i < size; i++) {

@@ -35,7 +35,7 @@
 {
 	unsigned char *srcPtr, *overlay, *replace;
 	int lwidth = [(SeaLayer *)layer width], lheight = [(SeaLayer *)layer height], mode = [(SeaLayer *)layer mode];
-	int opacity = [layer opacity], selectedChannel = [contents selectedChannel];
+	int opacity = [(SeaLayer*)layer opacity], selectedChannel = [contents selectedChannel];
 	int xoff = [layer xoff], yoff = [layer yoff], selectOpacity;
 	int startX, startY, endX, endY;
 	int i, j, k, srcLoc, destLoc;
@@ -189,7 +189,7 @@
 	unsigned char *srcPtr, *floatPtr, *destPtr, *overlay, *replace;
 	int lwidth = [(SeaLayer *)layer width], lheight = [(SeaLayer *)layer height], mode = [(SeaLayer *)layer mode];
 	int lfwidth = [(SeaLayer *)floatingLayer width], lfheight = [(SeaLayer *)floatingLayer height];
-	int opacity = [layer opacity], selectedChannel = [contents selectedChannel];
+	int opacity = [(SeaLayer*)layer opacity], selectedChannel = [contents selectedChannel];
 	int xoff = [layer xoff], yoff = [layer yoff], selectOpacity;
 	int xfoff = [floatingLayer xoff], yfoff = [floatingLayer yoff];
 	int startX, startY, endX, endY;
