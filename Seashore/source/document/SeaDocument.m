@@ -61,7 +61,6 @@ enum {
 	
 	// Set data members appropriately
 	whiteboard = NULL;
-	restoreOldType = NO;
 	current = YES;
 	specialStart = kNormalStart;
 	
@@ -95,7 +94,6 @@ enum {
 	
 	// Set data members appropriately
 	whiteboard = NULL;
-	restoreOldType = NO;
 	current = YES;
 	specialStart = kPasteboardStart;
 	
@@ -127,7 +125,6 @@ enum {
 	
 	// Set data members appropriately
 	whiteboard = NULL;
-	restoreOldType = NO;
 	current = YES;
 	specialStart = kOpenStart;
 	
@@ -163,7 +160,6 @@ enum {
 	
 	// Set data members appropriately
 	whiteboard = NULL;
-	restoreOldType = NO;
 	current = YES;
 	contents = [[SeaContent alloc] initWithDocument:self data:data type:type width:width height:height res:72];
 	specialStart = kPlugInStart;
@@ -661,39 +657,6 @@ enum {
 		return ![self locked] && [[self undoManager] canRedo];
 
 	return YES;
-}
-
-- (void)runModalSavePanelForSaveOperation:(NSSaveOperationType)saveOperation delegate:(id)delegate didSaveSelector:(SEL)didSaveSelector contextInfo:(void *)contextInfo
-{
-	// Remember the old type
-	oldType = [self fileType];
-	[oldType retain];
-	if (saveOperation == NSSaveToOperation) {
-		restoreOldType = YES;
-	}
-	
-	// Check we're not meant to call someone
-	if (delegate)
-		NSLog(@"Delegate specified for save panel");
-	
-	// Run the super's method calling our custom
-	[super runModalSavePanelForSaveOperation:saveOperation delegate:self didSaveSelector:@selector(document:didSave:contextInfo:) contextInfo:NULL];
-	
-}
-
-- (void)document:(NSDocument *)doc didSave:(BOOL)didSave contextInfo:(void *)contextInfo
-{
-	// Restore the old type
-	if (restoreOldType && didSave) {
-		[self setFileType:oldType];
-		[oldType autorelease];
-		restoreOldType = NO;
-	}
-	else if (!didSave) {
-		[self setFileType:oldType];
-		[oldType autorelease];
-		restoreOldType = NO;
-	}
 }
 
 - (NSString *)fileTypeFromLastRunSavePanel

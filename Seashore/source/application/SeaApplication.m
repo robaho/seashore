@@ -8,4 +8,12 @@
 	return NSFontPanelFaceModeMask | NSFontPanelSizeModeMask | NSFontPanelCollectionModeMask;
 }
 
+- (void)terminate:(_Nullable id)sender
+{
+    [super terminate:sender];
+}
+
+
+
+
 @end

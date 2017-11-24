@@ -21,5 +21,7 @@
 	@result		Returns a 32-bit string indicating the valid modes for the font panel.
 */
 - (unsigned int)validModesForFontPanel:(NSFontPanel *)fontPanel;
+- (void)terminate:(_Nullable id)sender;
+
 
 @end

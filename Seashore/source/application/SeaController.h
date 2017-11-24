@@ -163,6 +163,9 @@
 */
 - (void)applicationWillTerminate:(NSNotification *)notification;
 
+
+- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication*)application;
+
 /*!
 	@method		applicationShouldOpenUntitledFile:
 	@discussion	Returns whether a new document should be created when the

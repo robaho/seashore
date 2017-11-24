@@ -83,10 +83,6 @@
 	// Is the document initing from the pasteboard or plug-in?
 	int specialStart;
 	
-	// File types with Cocoa can be difficult
-	BOOL restoreOldType;
-	NSString *oldType;
-	
 	// Is the file the current version?
 	BOOL current;
 	
@@ -509,31 +505,6 @@
 	@result		YES if the menu item should be enabled, NO otherwise.
 */
 - (BOOL)validateMenuItem:(id)menuItem;
-
-/*!
-	@method		runModalSavePanelForSaveOperation:delegate:didSaveSelector:contextInfo:
-	@discussion	Runs the save panel for the given save operation.
-	@param		saveOperation
-				The save operation.
-	@param		delegate
-				The save panel's delegate.
-	@param		didSaveSelector
-				The callback selector once the save panel is complete.
-	@param		contextInfo
-				The pointer to pass to the callback method.
-*/
-- (void)runModalSavePanelForSaveOperation:(NSSaveOperationType)saveOperation delegate:(id)delegate didSaveSelector:(SEL)didSaveSelector contextInfo:(void *)contextInfo;
-
-/*!
-	@method		document:didSave:contextInfo:
-	@param		doc
-				The document being saved.
-	@param		didSave
-				Whether the document was saved.
-	@param		contextInfo
-				A pointer to pass to the callback method.
-*/
-- (void)document:(NSDocument *)doc didSave:(BOOL)didSave contextInfo:(void *)contextInfo;
 
 /*!
 	@method		fileTypeFromLastRunSavePanel

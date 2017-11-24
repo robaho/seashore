@@ -246,6 +246,11 @@ id seaController;
 	return NO;
 }
 
+- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)application
+{
+    return NSTerminateNow;
+}
+
 - (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)app
 {
 	return [seaPrefs openUntitled];
