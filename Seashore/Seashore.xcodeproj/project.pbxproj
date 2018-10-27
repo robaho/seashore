@@ -1499,6 +1499,10 @@
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		2B2EDA101FA4220200A6ED4E /* XCFQuickLook.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = XCFQuickLook.xcodeproj; path = ../XCFQuickLook/XCFQuickLook.xcodeproj; sourceTree = "<group>"; };
+		2BDB907921836088000D7803 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/SeaDocument.nib; sourceTree = "<group>"; };
+		2BDB907A21836089000D7803 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/MainMenu.nib; sourceTree = "<group>"; };
+		2BDB907B21836089000D7803 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/CocoaContent.nib; sourceTree = "<group>"; };
+		2BDB907C2183608A000D7803 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/SVGContent.nib; sourceTree = "<group>"; };
 		35B156DC0A2C00D0005B688F /* GIMPCore.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GIMPCore.xcodeproj; path = ../GIMPCore/GIMPCore.xcodeproj; sourceTree = SOURCE_ROOT; };
 		35B156E30A2C00E0005B688F /* TIFF.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TIFF.xcodeproj; path = ../TIFF/TIFF.xcodeproj; sourceTree = SOURCE_ROOT; };
 		35B156EA0A2C0116005B688F /* Sharpen.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Sharpen.xcodeproj; path = "../Plug-ins/Sharpen/Sharpen.xcodeproj"; sourceTree = SOURCE_ROOT; };
@@ -1525,7 +1529,6 @@
 		A80C4C860C39FAA900CCE612 /* CISunbeams.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CISunbeams.xcodeproj; path = "../CoreImage Plug-ins/CISunbeams/CISunbeams.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		A80EB8A5086F05E300369324 /* JP2 Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "JP2 Icon.icns"; sourceTree = "<group>"; };
 		A8116D91041090B700266C88 /* swap-invert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "swap-invert.png"; sourceTree = "<group>"; };
-		A81240C607E81A7A00F275BF /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/SVGContent.nib; sourceTree = "<group>"; };
 		A8138D650CEFD5FA00C2F880 /* English */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = English; path = "English.lproj/Seashore Effects Guide.pdf"; sourceTree = "<group>"; };
 		A813C41E0C37429F000CF1C5 /* CILineScreen.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CILineScreen.xcodeproj; path = "../CoreImage Plug-ins/CILineScreen/CILineScreen.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		A813C5CA0C374675000CF1C5 /* CIEdgeWork.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CIEdgeWork.xcodeproj; path = "../CoreImage Plug-ins/CIEdgeWork/CIEdgeWork.xcodeproj"; sourceTree = SOURCE_ROOT; };
@@ -1622,9 +1625,6 @@
 		A87DDE3F0694ED7400A80207 /* GradientOptions.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = GradientOptions.h; sourceTree = "<group>"; };
 		A87DDE400694ED7400A80207 /* GradientOptions.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = GradientOptions.m; sourceTree = "<group>"; };
 		A87E672606D1F4A000A5C89A /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = English.lproj/Credits.rtf; sourceTree = "<group>"; };
-		A87E672806D1F4A000A5C89A /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/SeaDocument.nib; sourceTree = "<group>"; };
-		A87E672C06D1F4A000A5C89A /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
-		A87E672E06D1F4A000A5C89A /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/CocoaContent.nib; sourceTree = "<group>"; };
 		A87F84B004B6B29D00A80207 /* gradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gradient.png; sourceTree = "<group>"; };
 		A87F84B804B6C93400A80207 /* crosspoint-cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crosspoint-cursor.png"; sourceTree = "<group>"; };
 		A881AC6E09EFC6E400B176A8 /* CloneOptions.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CloneOptions.h; sourceTree = "<group>"; };
@@ -1736,7 +1736,7 @@
 		A8C47DA4045285AE00A80207 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
 		A8C728710C1BD04400222AE2 /* CIMonochrome.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CIMonochrome.xcodeproj; path = "../CoreImage Plug-ins/CIMonochrome/CIMonochrome.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		A8CA3D820B8A91510032D3B4 /* effect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = effect.png; sourceTree = "<group>"; };
-		A8CA47A406D82C10006F0681 /* English */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A8CA47A406D82C10006F0681 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A8CA58EB07936EBF004BE921 /* PluginData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PluginData.h; sourceTree = "<group>"; };
 		A8CA58EC07936EBF004BE921 /* PluginData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PluginData.m; sourceTree = "<group>"; };
 		A8CA87AB09D3F8CA00A9DF1D /* hand-cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hand-cursor.png"; sourceTree = "<group>"; };
@@ -3662,7 +3662,7 @@
 		2A37F4A9FDCFA73011CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 1000;
 			};
 			buildConfigurationList = A8D01E0D09BD8EA3007CFE76 /* Build configuration list for PBXProject "Seashore" */;
 			compatibilityVersion = "Xcode 8.0";
@@ -3673,6 +3673,7 @@
 				Japanese,
 				French,
 				German,
+				Base,
 			);
 			mainGroup = 2A37F4AAFDCFA73011CA2CEA /* Seashore */;
 			projectDirPath = "";
@@ -5287,7 +5288,7 @@
 		A81240C507E81A7A00F275BF /* SVGContent.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				A81240C607E81A7A00F275BF /* English */,
+				2BDB907C2183608A000D7803 /* Base */,
 			);
 			name = SVGContent.nib;
 			sourceTree = "<group>";
@@ -5319,7 +5320,7 @@
 		A87E672706D1F4A000A5C89A /* SeaDocument.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				A87E672806D1F4A000A5C89A /* English */,
+				2BDB907921836088000D7803 /* Base */,
 			);
 			name = SeaDocument.nib;
 			sourceTree = "<group>";
@@ -5327,7 +5328,7 @@
 		A87E672B06D1F4A000A5C89A /* MainMenu.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				A87E672C06D1F4A000A5C89A /* English */,
+				2BDB907A21836089000D7803 /* Base */,
 			);
 			name = MainMenu.nib;
 			sourceTree = "<group>";
@@ -5335,7 +5336,7 @@
 		A87E672D06D1F4A000A5C89A /* CocoaContent.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				A87E672E06D1F4A000A5C89A /* English */,
+				2BDB907B21836089000D7803 /* Base */,
 			);
 			name = CocoaContent.nib;
 			sourceTree = "<group>";
@@ -5354,6 +5355,7 @@
 		A89B83CE0A426D4500AD6941 /* Development (Native) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "Seashore Disk Image";
 			};
 			name = "Development (Native)";
@@ -5361,6 +5363,7 @@
 		A89B83CF0A426D4500AD6941 /* Deployment (Universal) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "Seashore Disk Image";
 			};
 			name = "Deployment (Universal)";
@@ -5368,6 +5371,7 @@
 		A89B83D00A426D4500AD6941 /* Deployment (Native) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "Seashore Disk Image";
 			};
 			name = "Deployment (Native)";
@@ -5375,9 +5379,9 @@
 		A8D01E0A09BD8EA3007CFE76 /* Development (Native) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(FRAMEWORK_SEARCH_PATHS)";
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -5389,11 +5393,11 @@
 				GCC_VERSION = "";
 				GCC_VERSION_i386 = 4.0;
 				GCC_VERSION_ppc = 4.0;
+				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_LDFLAGS = "-lz";
-				PREBINDING = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore;
 				PRODUCT_NAME = Seashore;
 				WARNING_CFLAGS = (
@@ -5409,6 +5413,7 @@
 		A8D01E0B09BD8EA3007CFE76 /* Deployment (Universal) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(FRAMEWORK_SEARCH_PATHS)";
 				GCC_AUTO_VECTORIZATION = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
@@ -5421,11 +5426,11 @@
 				GCC_VERSION = "";
 				GCC_VERSION_i386 = 4.0;
 				GCC_VERSION_ppc = 4.0;
+				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_LDFLAGS = "-lz";
-				PREBINDING = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore;
 				PRODUCT_NAME = Seashore;
 				WARNING_CFLAGS = (
@@ -5440,6 +5445,7 @@
 		A8D01E0C09BD8EA3007CFE76 /* Deployment (Native) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(FRAMEWORK_SEARCH_PATHS)";
 				GCC_AUTO_VECTORIZATION = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
@@ -5452,11 +5458,11 @@
 				GCC_VERSION = "";
 				GCC_VERSION_i386 = 4.0;
 				GCC_VERSION_ppc = 4.0;
+				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_LDFLAGS = "-lz";
-				PREBINDING = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore;
 				PRODUCT_NAME = Seashore;
 				WARNING_CFLAGS = (
@@ -5476,11 +5482,13 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
@@ -5498,7 +5506,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
-				PREBINDING = NO;
 				SDKROOT = macosx;
 			};
 			name = "Development (Native)";
@@ -5511,11 +5518,13 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
@@ -5531,7 +5540,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				PREBINDING = NO;
 				SDKROOT = macosx;
 			};
 			name = "Deployment (Universal)";
@@ -5544,11 +5552,13 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
@@ -5564,7 +5574,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				PREBINDING = NO;
 				SDKROOT = macosx;
 			};
 			name = "Deployment (Native)";
