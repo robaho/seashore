@@ -76,6 +76,10 @@ static inline void rotate_bytes(unsigned char *data, int pos1, int pos2)
 	data[pos2] = tmp;
 }
 
+CMError CMGetProfileHeader (
+                            CMProfileRef prof,
+                            CMAppleProfileHeader *header
+                            );
 /*
 	Gray -> Gray
 	RGB -> RGB
@@ -85,7 +89,7 @@ static inline void rotate_bytes(unsigned char *data, int pos1, int pos2)
 	RGB -> Gray
 */
 
-void covertBitmapColorSync(unsigned char *dbitmap, int dspp, int dspace, unsigned char *ibitmap, int width, int height, int ispp, int ispace, int ibps, CMProfileLocation *iprofile)
+void convertBitmapColorSync(unsigned char *dbitmap, int dspp, int dspace, unsigned char *ibitmap, int width, int height, int ispp, int ispace, int ibps, CMProfileLocation *iprofile)
 {
 	CMProfileRef srcProf, destProf;
 	CMBitmap srcBitmap, destBitmap;
@@ -114,7 +118,7 @@ void covertBitmapColorSync(unsigned char *dbitmap, int dspp, int dspace, unsigne
 		destBitmap.space = cmGrayA16Space;
 		
 		// Execute the conversion
-		CMOpenProfile(&srcProf, iprofile);
+		CMNewProfile(&srcProf, iprofile);
 		CMGetDefaultProfileBySpace(cmGrayData, &destProf);
 		NCWNewColorWorld(&cw, srcProf, destProf);
 		CWMatchBitmap(cw, &srcBitmap, NULL, 0, &destBitmap);
@@ -144,7 +148,14 @@ void covertBitmapColorSync(unsigned char *dbitmap, int dspp, int dspace, unsigne
 		destBitmap.space = cmRGBA32Space;
 		
 		// Execute the conversion
-		CMOpenProfile(&srcProf, iprofile);
+        CMNewProfile(&srcProf, iprofile);
+        CMAppleProfileHeader header;
+        CMGetProfileHeader(srcProf,&header);
+        if(header.cm2.dataColorSpace==0){
+            // did not read profile correctly, use monitor profile
+            // the error from CMNewProfile is still 0 for some reason...
+            OpenDisplayProfile(&srcProf);
+        }
 		OpenDisplayProfile(&destProf);
 		NCWNewColorWorld(&cw, srcProf, destProf);
 		CWMatchBitmap(cw, &srcBitmap, NULL, 0, &destBitmap);
@@ -177,7 +188,7 @@ void covertBitmapColorSync(unsigned char *dbitmap, int dspp, int dspace, unsigne
 			mustClose = NO;
 		}
 		else {
-			CMOpenProfile(&srcProf, iprofile);
+			CMNewProfile(&srcProf, iprofile);
 			mustClose = YES;
 		}
 		OpenDisplayProfile(&destProf);
@@ -214,7 +225,7 @@ void covertBitmapColorSync(unsigned char *dbitmap, int dspp, int dspace, unsigne
 			mustClose = NO;
 		}
 		else {
-			CMOpenProfile(&srcProf, iprofile);
+			CMNewProfile(&srcProf, iprofile);
 			mustClose = YES;
 		}
 		OpenDisplayProfile(&destProf);
@@ -249,7 +260,7 @@ void covertBitmapColorSync(unsigned char *dbitmap, int dspp, int dspace, unsigne
 		destBitmap.space = cmRGBA32Space;
 		
 		// Execute the conversion
-		CMOpenProfile(&srcProf, iprofile);
+		CMNewProfile(&srcProf, iprofile);
 		OpenDisplayProfile(&destProf);
 		NCWNewColorWorld(&cw, srcProf, destProf);
 		CWMatchBitmap(cw, &srcBitmap, NULL, 0, &destBitmap);
@@ -280,7 +291,7 @@ void covertBitmapColorSync(unsigned char *dbitmap, int dspp, int dspace, unsigne
 		destBitmap.space = cmGrayA16Space;
 		
 		// Execute the conversion
-		CMOpenProfile(&srcProf, iprofile);
+		CMNewProfile(&srcProf, iprofile);
 		CMGetDefaultProfileBySpace(cmGrayData, &destProf);
 		NCWNewColorWorld(&cw, srcProf, destProf);
 		CWMatchBitmap(cw, &srcBitmap, NULL, 0, &destBitmap);
@@ -297,7 +308,7 @@ void covertBitmapColorSync(unsigned char *dbitmap, int dspp, int dspace, unsigne
 	RGB -> Gray
 */
 
-void covertBitmapNoColorSync(unsigned char *dbitmap, int dspp, int dspace, unsigned char *ibitmap, int width, int height, int ispp, int ispace, int ibps)
+void convertBitmapNoColorSync(unsigned char *dbitmap, int dspp, int dspace, unsigned char *ibitmap, int width, int height, int ispp, int ispace, int ibps)
 {
 	int i, j;
 	
@@ -501,12 +512,12 @@ unsigned char *convertBitmap(int dspp, int dspace, int dbps, unsigned char *ibit
 	if (iprofile || ispace == kCMYKColorSpace) {
 		pbitmap = getPtr(ptrs);
 		bitmap = mallocPtr(&ptrs, width * height * dspp);
-		covertBitmapColorSync(bitmap, dspp, dspace, pbitmap, width, height, ispp, ispace, ibps, iprofile);
+		convertBitmapColorSync(bitmap, dspp, dspace, pbitmap, width, height, ispp, ispace, ibps, iprofile);
 	}
 	else {
 		pbitmap = getPtr(ptrs);
 		bitmap = mallocPtr(&ptrs, width * height * dspp);
-		covertBitmapNoColorSync(bitmap, dspp, dspace, pbitmap, width, height, ispp, ispace, ibps);
+		convertBitmapNoColorSync(bitmap, dspp, dspace, pbitmap, width, height, ispp, ispace, ibps);
 	}
 	
 	// Add in alpha (not 16-bit friendly)

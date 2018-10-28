@@ -85,7 +85,7 @@ unsigned char *mallocPtr(PtrRecord *ptrs, int size)
 	RGB -> Gray
 */
 
-void covertBitmapColorSync(unsigned char *dbitmap, int dspp, int dspace, unsigned char *ibitmap, int width, int height, int ispp, int ispace, int ibps, CMProfileLocation *iprofile)
+void convertBitmapColorSync(unsigned char *dbitmap, int dspp, int dspace, unsigned char *ibitmap, int width, int height, int ispp, int ispace, int ibps, CMProfileLocation *iprofile)
 {
 	CMProfileRef srcProf, destProf;
 	CMBitmap srcBitmap, destBitmap;
@@ -297,7 +297,7 @@ void covertBitmapColorSync(unsigned char *dbitmap, int dspp, int dspace, unsigne
 	RGB -> Gray
 */
 
-void covertBitmapNoColorSync(unsigned char *dbitmap, int dspp, int dspace, unsigned char *ibitmap, int width, int height, int ispp, int ispace, int ibps)
+void convertBitmapNoColorSync(unsigned char *dbitmap, int dspp, int dspace, unsigned char *ibitmap, int width, int height, int ispp, int ispace, int ibps)
 {
 	int i, j;
 	
@@ -503,12 +503,12 @@ unsigned char *convertBitmap(int dspp, int dspace, int dbps, unsigned char *ibit
 	if (iprofile || ispace == kCMYKColorSpace) {
 		pbitmap = getPtr(ptrs);
 		bitmap = mallocPtr(&ptrs, width * height * dspp);
-		covertBitmapColorSync(bitmap, dspp, dspace, pbitmap, width, height, ispp, ispace, ibps, iprofile);
+		convertBitmapColorSync(bitmap, dspp, dspace, pbitmap, width, height, ispp, ispace, ibps, iprofile);
 	}
 	else {
 		pbitmap = getPtr(ptrs);
 		bitmap = mallocPtr(&ptrs, width * height * dspp);
-		covertBitmapNoColorSync(bitmap, dspp, dspace, pbitmap, width, height, ispp, ispace, ibps);
+		convertBitmapNoColorSync(bitmap, dspp, dspace, pbitmap, width, height, ispp, ispace, ibps);
 	}
 	
 	// Add in alpha (not 16-bit friendly)
