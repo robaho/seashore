@@ -218,7 +218,6 @@
 		A8EDF148078959C80022BB31 /* PNGExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = A8585EEB06D4F27D008D4CCA /* PNGExporter.m */; };
 		A8EDF14A078959C80022BB31 /* SeaPlugins.m in Sources */ = {isa = PBXBuildFile; fileRef = A8537AEC0788D9F5004EF3B7 /* SeaPlugins.m */; };
 		A8EDF14C078959C80022BB31 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
-		A8EDF14D078959C80022BB31 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5CE25B003D7112D013D2EC9 /* ApplicationServices.framework */; };
 		A8F0FFD10A35E06300259FD6 /* GIFExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F0FFCF0A35E06200259FD6 /* GIFExporter.m */; };
 		A8F22EDB07EA9871005AD30E /* SVGImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F22ED907EA9871005AD30E /* SVGImporter.m */; };
 		A8F984D80BEEB83700375C73 /* MovePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F984D60BEEB83600375C73 /* MovePanel.m */; };
@@ -1499,6 +1498,8 @@
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		2B2EDA101FA4220200A6ED4E /* XCFQuickLook.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = XCFQuickLook.xcodeproj; path = ../XCFQuickLook/XCFQuickLook.xcodeproj; sourceTree = "<group>"; };
+		2B4046692185672100BCC2A2 /* ColorSync.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ColorSync.framework; path = System/Library/Frameworks/ColorSync.framework; sourceTree = SDKROOT; };
+		2B40466A2185672300BCC2A2 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		2BDB907921836088000D7803 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/SeaDocument.nib; sourceTree = "<group>"; };
 		2BDB907A21836089000D7803 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		2BDB907B21836089000D7803 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/CocoaContent.nib; sourceTree = "<group>"; };
@@ -2029,7 +2030,6 @@
 		F5CE259403D6FD67013D2EC9 /* SeaProxy.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SeaProxy.h; sourceTree = "<group>"; };
 		F5CE259903D709B1013D2EC9 /* SeaPrefs.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SeaPrefs.h; sourceTree = "<group>"; };
 		F5CE259A03D709B1013D2EC9 /* SeaPrefs.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = SeaPrefs.m; sourceTree = "<group>"; };
-		F5CE25B003D7112D013D2EC9 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
 		F5DEAE1303C5C847010475F1 /* XCFLayer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = XCFLayer.h; sourceTree = "<group>"; };
 		F5DEAE1403C5C847010475F1 /* XCFLayer.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = XCFLayer.m; sourceTree = "<group>"; };
 		F5DEAE1903C5CCBC010475F1 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
@@ -2051,7 +2051,6 @@
 				A84E106408E7A4FB0084BCB7 /* IOKit.framework in Frameworks */,
 				A8BF652708E6FEAB006E9BFC /* Carbon.framework in Frameworks */,
 				A8EDF14C078959C80022BB31 /* Cocoa.framework in Frameworks */,
-				A8EDF14D078959C80022BB31 /* ApplicationServices.framework in Frameworks */,
 				A8EB480509C5AE58007B9A41 /* GIMPCore.framework in Frameworks */,
 				A8EB480B09C5AE65007B9A41 /* TIFF.framework in Frameworks */,
 			);
@@ -2063,10 +2062,11 @@
 		1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2B40466A2185672300BCC2A2 /* ApplicationServices.framework */,
+				2B4046692185672100BCC2A2 /* ColorSync.framework */,
 				A84E106308E7A4FB0084BCB7 /* IOKit.framework */,
 				A8BF652608E6FEAB006E9BFC /* Carbon.framework */,
 				1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */,
-				F5CE25B003D7112D013D2EC9 /* ApplicationServices.framework */,
 				A8EB480409C5AE58007B9A41 /* GIMPCore.framework */,
 				A8EB480A09C5AE65007B9A41 /* TIFF.framework */,
 			);
