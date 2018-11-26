@@ -426,6 +426,7 @@ static NSString*	SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar Item 
 	int xoff, yoff, width, height, lwidth, lheight;
 	BOOL useSelection, special, intermediate;
 	int curToolIndex = (int)[(ToolboxUtility *)[(UtilitiesManager *)[SeaController utilitiesManager] toolboxUtilityFor:document] tool];
+    AbstractTool* curTool = [[document tools] getTool: curToolIndex];
 	NSBezierPath *tempPath;
 	NSImage *maskImage;
 	int radius = 0;
@@ -499,20 +500,20 @@ static NSString*	SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar Item 
 	special = NO;
 	if (curToolIndex == kRectSelectTool) {
 		radius = [(RectSelectOptions *)[[[SeaController utilitiesManager] optionsUtilityFor:document] currentOptions] radius];
-		tempSelectRect = [(RectSelectTool *)[[document tools] currentTool] selectionRect];
+		tempSelectRect = [(RectSelectTool *)curTool selectionRect];
 		special = tempSelectRect.size.width < 2 * radius && tempSelectRect.size.height < 2 * radius;
 	}
 	
 	// Check to see if the user is currently dragging a selection
 	intermediate = NO;
 	if(curToolIndex >= kFirstSelectionTool && curToolIndex <= kLastSelectionTool){
-		intermediate =  [(AbstractScaleTool *)[[document tools] getTool: curToolIndex] intermediate] && ! [(AbstractScaleTool *)[[document tools] getTool: curToolIndex] isMovingOrScaling];
+		intermediate =  [(AbstractScaleTool *)curTool intermediate] && ! [(AbstractScaleTool *)curTool isMovingOrScaling];
 	}
 	
 	[cursorsManager setCloseRect:NSMakeRect(0, 0, 0, 0)];
-	if (intermediate && curToolIndex == kEllipseSelectTool || special) {
+	if ((intermediate && (curToolIndex == kEllipseSelectTool)) || special) {
 		// The ellipse tool is currently being dragged, so draw its marching ants
-		tempSelectRect = [(EllipseSelectTool *)[[document tools] currentTool] selectionRect];
+		tempSelectRect = [(EllipseSelectTool *)curTool selectionRect];
 		tempRect = IntRectMakeNSRect(tempSelectRect);
 		tempRect.origin.x += xoff; tempRect.origin.y += yoff;
 		tempRect.origin.x *= xScale; tempRect.origin.y *= yScale; tempRect.size.width *= xScale; tempRect.size.height *= yScale; 
@@ -528,7 +529,7 @@ static NSString*	SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar Item 
 	}
 	else if (curToolIndex == kRectSelectTool && intermediate) {
 		// The rectangle tool is being dragged, so draw its marching ants
-		tempSelectRect = [(RectSelectTool *)[[document tools] currentTool] selectionRect];
+		tempSelectRect = [(RectSelectTool *)curTool selectionRect];
 		tempRect = IntRectMakeNSRect(tempSelectRect);
 		tempRect.origin.x += xoff; tempRect.origin.y += yoff;		
 		tempRect.origin.x *= xScale; tempRect.origin.y *= yScale; tempRect.size.width *= xScale; tempRect.size.height *= yScale; 
@@ -576,7 +577,7 @@ static NSString*	SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar Item 
 		
 		LassoPoints lassoPoints;
 		NSPoint start;
-		lassoPoints = [(LassoTool *)[[document tools] currentTool] currentPoints];
+		lassoPoints = [(LassoTool *)curTool currentPoints];
 		start = NSMakePoint((lassoPoints.points[0].x + xoff) *xScale , (lassoPoints.points[0].y + yoff) * yScale );
 	
 		// Create a special start point for the polygonal lasso tool
