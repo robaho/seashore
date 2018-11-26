@@ -341,11 +341,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.6.4</string>
+	<string>0.6.5</string>
 	<key>CFBundleSignature</key>
 	<string>SeSh</string>
 	<key>CFBundleVersion</key>
-	<string>20181026</string>
+	<string>20181126</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright (c) 1995-2010 Mark Pazolli et al.
 GNU General Public License v2.0</string>
