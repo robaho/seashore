@@ -119,6 +119,13 @@ void convertBitmapColorSync(unsigned char *dbitmap, int dspp, int dspace, unsign
 		
 		// Execute the conversion
 		CMNewProfile(&srcProf, iprofile);
+        CMAppleProfileHeader header;
+        CMGetProfileHeader(srcProf,&header);
+        if(header.cm2.dataColorSpace==0){
+            // did not read profile correctly, use monitor profile
+            // the error from CMNewProfile is still 0 for some reason...
+            CMGetDefaultProfileBySpace(cmGrayData, &srcProf);
+        }
 		CMGetDefaultProfileBySpace(cmGrayData, &destProf);
 		NCWNewColorWorld(&cw, srcProf, destProf);
 		CWMatchBitmap(cw, &srcBitmap, NULL, 0, &destBitmap);
@@ -442,7 +449,7 @@ unsigned char *convertBitmap(int dspp, int dspace, int dbps, unsigned char *ibit
 	
 	// Remove redundant bits and bytes
 	if (ibps == 8) {
-		if (ibipp != ispp * 8 || ibypr != width * ispp) {
+		if ((ibipp != ispp * 8) || (ibypr != width * ispp)) {
 			pbitmap = getPtr(ptrs);
 			bitmap = mallocPtr(&ptrs, width * height * ispp);
 			for (j = 0; j < height; j++) {
