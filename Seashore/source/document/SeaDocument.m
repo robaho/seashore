@@ -73,6 +73,12 @@ enum {
 	dheight = [(SeaDocumentController *)[NSDocumentController sharedDocumentController] height];
 	dres = [(SeaDocumentController *)[NSDocumentController sharedDocumentController] resolution];
 	dopaque = [(SeaDocumentController *)[NSDocumentController sharedDocumentController] opaque];
+    
+    if (dres==0) {
+        return NULL;
+    }
+    
+    
 	contents = [[SeaContent alloc] initWithDocument:self type:dtype width:dwidth height:dheight res:dres opaque:dopaque];
 	
 	return self;
