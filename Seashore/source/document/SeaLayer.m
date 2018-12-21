@@ -156,7 +156,7 @@
 	
 	if (name) [name autorelease];
 	if (oldNames) [oldNames autorelease];
-	if (data) free(data);
+    if (data) free(data);
 	if (thumbnail) [thumbnail autorelease];
 	if (thumbData) free(thumbData);
 	if (seaLayerUndo) [seaLayerUndo autorelease];
@@ -422,7 +422,6 @@
 	NSBitmapImageRep *in_rep, *final_rep;
 	NSPoint point[4], minPoint, maxPoint, transformPoint;
 	int i, oldHeight, oldWidth;
-	int ispp, bipp, bypr, ispace, ibps;
 	
 	// Define the rotation
 	at = [NSAffineTransform transform];
@@ -486,17 +485,11 @@
 	
 	// Make the swap
 	srcData = [final_rep bitmapData];
-	ispp = [final_rep samplesPerPixel];
-	bipp = [final_rep bitsPerPixel];
-	bypr = [final_rep bytesPerRow];
-	ispace = (ispp > 2) ? kRGBColorSpace : kGrayColorSpace;
-	ibps = [final_rep bitsPerPixel] / [final_rep samplesPerPixel];
-	data = convertBitmap(spp, (spp == 4) ? kRGBColorSpace : kGrayColorSpace, 8, srcData, width, height, ispp, bipp, bypr, ispace, NULL, ibps, 0); 
+    data = convertImageRep(final_rep,spp);
 	
 	// Clean up
 	[final_rep autorelease];
 	[image_out autorelease];
-	unpremultiplyBitmap(spp, data, data, width * height);
 		
 	// Make margin changes
 	if (trim) [self trimLayer];

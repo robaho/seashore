@@ -500,16 +500,16 @@ unsigned char *convertBitmap(int dspp, int dspace, int dbps, unsigned char *ibit
 	}
 
 	// Convert colour space
-	if (iprofile || ispace == kCMYKColorSpace) {
-		pbitmap = getPtr(ptrs);
-		bitmap = mallocPtr(&ptrs, width * height * dspp);
-		convertBitmapColorSync(bitmap, dspp, dspace, pbitmap, width, height, ispp, ispace, ibps, iprofile);
-	}
-	else {
+//    if (iprofile || ispace == kCMYKColorSpace) {
+//        pbitmap = getPtr(ptrs);
+//        bitmap = mallocPtr(&ptrs, width * height * dspp);
+//        convertBitmapColorSync(bitmap, dspp, dspace, pbitmap, width, height, ispp, ispace, ibps, iprofile);
+//    }
+//    else {
 		pbitmap = getPtr(ptrs);
 		bitmap = mallocPtr(&ptrs, width * height * dspp);
 		convertBitmapNoColorSync(bitmap, dspp, dspace, pbitmap, width, height, ispp, ispace, ibps);
-	}
+//    }
 	
 	// Add in alpha (not 16-bit friendly)
 	s_hasalpha = (ispace == kRGBColorSpace && ispp == 4) || (ispace == kGrayColorSpace && ispp == 2);

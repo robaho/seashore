@@ -63,10 +63,7 @@ static NSString*	DuplicateSelectionToolbarItemIdentifier = @"Duplicate Selection
 	NSData *imageRepData;
 	NSBitmapImageRep *imageRep;
 	NSImage *image;
-	int sspp, dspp, space;
-	id profile;
-	CMProfileLocation cmProfileLoc;
-	int bipp, bypr, bps;
+	int dspp;
 	unsigned char *data;
 	
 	// Get the data from the pasteboard
@@ -100,51 +97,31 @@ static NSString*	DuplicateSelectionToolbarItemIdentifier = @"Duplicate Selection
 	document = doc;
 	
 	// Determine the color space of the pasteboard image and the type
-	space = -1;
 	if ([[imageRep colorSpaceName] isEqualToString:NSCalibratedWhiteColorSpace] || [[imageRep colorSpaceName] isEqualToString:NSDeviceWhiteColorSpace]) {
-		space = kGrayColorSpace;
 		type = XCF_GRAY_IMAGE;
 	}
 	if ([[imageRep colorSpaceName] isEqualToString:NSCalibratedBlackColorSpace] || [[imageRep colorSpaceName] isEqualToString:NSDeviceBlackColorSpace]) {
-		space = kInvertedGrayColorSpace;
 		type = XCF_GRAY_IMAGE;
 	}
 	if ([[imageRep colorSpaceName] isEqualToString:NSCalibratedRGBColorSpace] || [[imageRep colorSpaceName] isEqualToString:NSDeviceRGBColorSpace]) {
-		space = kRGBColorSpace;
 		type = XCF_RGB_IMAGE;
 	}
 	if ([[imageRep colorSpaceName] isEqualToString:NSDeviceCMYKColorSpace]) {
-		space = kCMYKColorSpace;
 		type = XCF_RGB_IMAGE;
-	}
-	if (space == -1) {
-		NSLog(@"Color space %@ not yet handled.", [imageRep colorSpaceName]);
-		return NULL;
-	}
-	
-	// Extract color profile
-	profile = [imageRep valueForProperty:NSImageColorSyncProfileData];
-	if (profile) {
-		cmProfileLoc.locType = cmBufferBasedProfile;
-		cmProfileLoc.u.bufferLoc.buffer = (Ptr)[profile bytes];
 	}
 	
 	// Put it in a nice form
-	sspp = [imageRep samplesPerPixel];
-	bps = [imageRep bitsPerSample];
-	bipp = [imageRep bitsPerPixel];
-	bypr = [imageRep bytesPerRow];
 	if (type == XCF_RGB_IMAGE)
 		dspp = 4;
 	else
 		dspp = 2;
-	data = convertBitmap(dspp, (dspp == 4) ? kRGBColorSpace : kGrayColorSpace, 8, [imageRep bitmapData], width, height, sspp, bipp, bypr, space, (profile) ? &cmProfileLoc : NULL, bps, 0);
+    
+    data = convertImageRep(imageRep,dspp);
 	if (!data) {
 		NSLog(@"Required conversion not supported.");
 		[imageRep autorelease];
 		return NULL;
 	}
-	unpremultiplyBitmap(dspp, data, data, width * height);
 	[imageRep autorelease];
 	
 	// Add layer
@@ -729,11 +706,8 @@ static NSString*	DuplicateSelectionToolbarItemIdentifier = @"Duplicate Selection
 	NSImage *image;
 	IntRect rect;
 	id layer;
-	unsigned char *data, *tdata;
-	int i, spp = [[document contents] spp], sspp, dspp, space;
-	CMProfileLocation cmProfileLoc;
-	int bipp, bypr, bps;
-	id profile;
+	unsigned char *data;
+	int i, spp = [[document contents] spp], dspp;
 	NSPoint centerPoint;
 	
 	// Get the data from the pasteboard
@@ -750,28 +724,6 @@ static NSString*	DuplicateSelectionToolbarItemIdentifier = @"Duplicate Selection
 		imageRep = [[NSBitmapImageRep alloc] initWithData:imageRepData];
 	}
 	
-	// Determine the color space of pasteboard image
-	space = -1;
-	if ([[imageRep colorSpaceName] isEqualToString:NSCalibratedWhiteColorSpace] || [[imageRep colorSpaceName] isEqualToString:NSDeviceWhiteColorSpace])
-		space = kGrayColorSpace;
-	if ([[imageRep colorSpaceName] isEqualToString:NSCalibratedBlackColorSpace] || [[imageRep colorSpaceName] isEqualToString:NSDeviceBlackColorSpace])
-		space = kInvertedGrayColorSpace;
-	if ([[imageRep colorSpaceName] isEqualToString:NSCalibratedRGBColorSpace] || [[imageRep colorSpaceName] isEqualToString:NSDeviceRGBColorSpace])
-		space = kRGBColorSpace;
-	if ([[imageRep colorSpaceName] isEqualToString:NSDeviceCMYKColorSpace])
-		space = kCMYKColorSpace;
-	if (space == -1) {
-		NSLog(@"Color space %@ not yet handled.", [imageRep colorSpaceName]);
-		return;
-	}
-	
-	// Extract color profile
-	profile = [imageRep valueForProperty:NSImageColorSyncProfileData];
-	if (profile) {
-		cmProfileLoc.locType = cmBufferBasedProfile;
-		cmProfileLoc.u.bufferLoc.buffer = (Ptr)[profile bytes];
-	}
-	
 	// Work out the correct center point
 	if (height > 64 && width > 64 && [imageRep pixelsHigh] > height - 12 && [imageRep pixelsWide] > width - 12) { 
 		rect = IntMakeRect(width / 2 - [imageRep pixelsWide] / 2, height / 2 - [imageRep pixelsHigh] / 2, [imageRep pixelsWide], [imageRep pixelsHigh]);
@@ -783,36 +735,19 @@ static NSString*	DuplicateSelectionToolbarItemIdentifier = @"Duplicate Selection
 		rect = IntMakeRect(centerPoint.x - [imageRep pixelsWide] / 2, centerPoint.y - [imageRep pixelsHigh] / 2, [imageRep pixelsWide], [imageRep pixelsHigh]);
 	}
 	
-	// Put it in a nice form
-	sspp = [imageRep samplesPerPixel];
-	bps = [imageRep bitsPerSample];
-	bipp = [imageRep bitsPerPixel];
-	bypr = [imageRep bytesPerRow];
 	dspp = spp;
+    
 	if (spp == 4 && selectedChannel == kAlphaChannel) {
 		dspp = 2;
 	}
-	data = convertBitmap(dspp, (dspp == 4) ? kRGBColorSpace : kGrayColorSpace, 8, [imageRep bitmapData], rect.size.width, rect.size.height, sspp, bipp, bypr, space, (profile) ? &cmProfileLoc : NULL, bps, 0);
+    
+    data = convertImageRep(imageRep,dspp);
 	if (!data) {
 		NSLog(@"Required conversion not supported.");
 		[imageRep autorelease];
 		return;
 	}
-	unpremultiplyBitmap(dspp, data, data, rect.size.width * rect.size.height);
 	[imageRep autorelease];
-	
-	// Handle the special case where a GGGA graphic is wanted
-	if (spp == 4 && dspp == 2) {
-		tdata = malloc(make_128(rect.size.width * rect.size.height * 4));
-		for (i = 0; i < rect.size.width * rect.size.height; i++) {
-			tdata[i * 4] = data[i * 2];
-			tdata[i * 4 + 1] = data[i * 2];
-			tdata[i * 4 + 2] = data[i * 2];
-			tdata[i * 4 + 3] = data[i * 2 + 1];
-		}
-		free(data);
-		data = tdata;
-	}
 	
 	// Inform the helpers we will change the layer
 	[[document helpers] activeLayerWillChange];
@@ -1110,11 +1045,8 @@ static NSString*	DuplicateSelectionToolbarItemIdentifier = @"Duplicate Selection
 	IntRect rect;
 	id pboard = [NSPasteboard generalPasteboard];
 	id layer;
-	unsigned char *data, *tdata;
-	int i, spp = [[document contents] spp], sspp, dspp, space;
-	CMProfileLocation cmProfileLoc;
-	int bipp, bypr, bps;
-	id profile;
+	unsigned char *data;
+	int i, spp = [[document contents] spp],dspp;
 	NSPoint centerPoint;
 	IntPoint sel_point;
 	IntSize sel_size;
@@ -1137,36 +1069,6 @@ static NSString*	DuplicateSelectionToolbarItemIdentifier = @"Duplicate Selection
 		imageRep = [[NSBitmapImageRep alloc] initWithData:imageRepData];
 	}
 	
-	// Determine the color space of pasteboard image
-	space = -1;
-	if ([[imageRep colorSpaceName] isEqualToString:NSCalibratedWhiteColorSpace] || [[imageRep colorSpaceName] isEqualToString:NSDeviceWhiteColorSpace])
-		space = kGrayColorSpace;
-	if ([[imageRep colorSpaceName] isEqualToString:NSCalibratedBlackColorSpace] || [[imageRep colorSpaceName] isEqualToString:NSDeviceBlackColorSpace])
-		space = kInvertedGrayColorSpace;
-	if ([[imageRep colorSpaceName] isEqualToString:NSCalibratedRGBColorSpace] || [[imageRep colorSpaceName] isEqualToString:NSDeviceRGBColorSpace])
-		space = kRGBColorSpace;
-	if ([[imageRep colorSpaceName] isEqualToString:NSDeviceCMYKColorSpace])
-		space = kCMYKColorSpace;
-	if (space == -1) {
-		NSLog(@"Color space %@ not yet handled.", [imageRep colorSpaceName]);
-		return;
-	}
-	
-	// Do not extract color profile
-	profile = NULL;
-	
-	/*
-	Here the reason we don't extract the profile data is because data on the pasteboard is already
-	 in the proper color profile. By applying that profile again we're apparently double-converting.
-	 There should be a better way to do this but this works for now.
-	 
-	 profile = [imageRep valueForProperty:NSImageColorSyncProfileData];
-	if (profile) {
-		cmProfileLoc.locType = cmPtrBasedProfile;
-		cmProfileLoc.u.ptrLoc.p = (Ptr)[profile bytes];
-	}
-	 */
-	
 	// Work out the correct center point
 	sel_size = IntMakeSize([imageRep pixelsWide], [imageRep pixelsHigh]);
 	if ([[document selection] selectionSizeMatch:sel_size]) {
@@ -1183,35 +1085,17 @@ static NSString*	DuplicateSelectionToolbarItemIdentifier = @"Duplicate Selection
 		rect = IntMakeRect(centerPoint.x - sel_size.width / 2, centerPoint.y - sel_size.height / 2, sel_size.width, sel_size.height);
 	}
 	
-	// Put it in a nice form
-	sspp = [imageRep samplesPerPixel];
-	bps = [imageRep bitsPerSample];
-	bipp = [imageRep bitsPerPixel];
-	bypr = [imageRep bytesPerRow];
-	dspp = spp;
+    dspp = spp;
 	if (spp == 4 && selectedChannel == kAlphaChannel) {
 		dspp = 2;
 	}
-	data = convertBitmap(dspp, (dspp == 4) ? kRGBColorSpace : kGrayColorSpace, 8, [imageRep bitmapData], rect.size.width, rect.size.height, sspp, bipp, bypr, space, (profile) ? &cmProfileLoc : NULL, bps, 0);
+    
+    data = convertImageRep(imageRep,dspp);
 	if (!data) {
 		NSLog(@"Required conversion not supported.");
 		return;
 	}
-	unpremultiplyBitmap(dspp, data, data, rect.size.width * rect.size.height);
 	[imageRep autorelease];
-	
-	// Handle the special case where a GGGA graphic is wanted
-	if (spp == 4 && dspp == 2) {
-		tdata = malloc(make_128(rect.size.width * rect.size.height * 4));
-		for (i = 0; i < rect.size.width * rect.size.height; i++) {
-			tdata[i * 4] = data[i * 2];
-			tdata[i * 4 + 1] = data[i * 2];
-			tdata[i * 4 + 2] = data[i * 2];
-			tdata[i * 4 + 3] = data[i * 2 + 1];
-		}
-		free(data);
-		data = tdata;
-	}
 	
 	// Inform the helpers we will change the layer
 	[[document helpers] activeLayerWillChange];
