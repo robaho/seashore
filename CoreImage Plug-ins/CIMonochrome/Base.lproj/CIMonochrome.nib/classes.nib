@@ -1,0 +1,19 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {apply = id; cancel = id; preview = id; update = id; }; 
+            CLASS = BlurClass; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {intensityLabel = id; intensitySlider = id; mainColorWell = id; panel = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            CLASS = MonochromeColorWell; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {ciMonochrome = id; }; 
+            SUPERCLASS = NSColorWell; 
+        }
+    ); 
+    IBVersion = 1; 
+}
