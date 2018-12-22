@@ -32,7 +32,7 @@
 	unsigned char *srcData, *destData;
 	NSBitmapImageRep *imageRep;
 	NSData *imageData;
-	BOOL hasAlpha = NO;
+	BOOL hasAlpha = true;
 	
 	// Get the data to write
 	srcData = [(SeaWhiteboard *)[document whiteboard] data];

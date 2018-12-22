@@ -75,8 +75,7 @@
 {
 	int width, height, spp, xres, yres;
 	unsigned char *srcData,*destData;
-	//NSBitmapImageRep *imageRep;
-	BOOL hasAlpha = NO;
+	BOOL hasAlpha = true;
 
 	// Get the data to write
 	srcData = [(SeaWhiteboard *)[document whiteboard] data];
