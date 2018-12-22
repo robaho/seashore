@@ -76,6 +76,7 @@
 	int width, height, spp, xres, yres;
 	unsigned char *srcData,*destData;
 	BOOL hasAlpha = true;
+    NSDictionary *exifData;
 
 	// Get the data to write
 	srcData = [(SeaWhiteboard *)[document whiteboard] data];
@@ -93,6 +94,8 @@
     
     NSBitmapImageRep* imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&destData pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:hasAlpha isPlanar:NO colorSpaceName:(spp == 4) ? NSDeviceRGBColorSpace : NSDeviceWhiteColorSpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
     
+    [imageRep autorelease];
+    
 	// Behave differently if we are targeting a CMYK file
 	if ([[document contents] cmykSave] && spp == 4) {
         
@@ -108,17 +111,18 @@
     
     [imageRep setSize:newSize];
     
+    exifData = [[document contents] exifData];
+    if (exifData) [imageRep setProperty:@"NSImageEXIFData" withValue:exifData];
+    
     NSData *imageData = [imageRep representationUsingType:NSBitmapImageFileTypeTIFF properties:imageProps];
 
-    [imageData writeToFile:path atomically:YES];
-    [imageRep autorelease];
+    [imageData writeToFile:path atomically:NO];
 
     // If the destination data is not equivalent to the source data free the former
     if (destData != srcData)
         free(destData);
     
     return YES;
-
 }
 
 @end

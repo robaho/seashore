@@ -142,8 +142,8 @@
 	[realImageView setImage:realImage];
 	compressImage = [[NSImage alloc] initWithData:[realImageRep representationUsingType:NSJPEGFileType properties:[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:[self reviseCompression]] forKey:NSImageCompressionFactor]]];
 	[compressImage setSize:NSMakeSize(160, 160)];
+    [compressImage autorelease];
 	[compressImageView setImage:compressImage];
-	[compressImage autorelease];
 	
 	// Display the options dialog
 	[panel center];
@@ -157,6 +157,7 @@
 	else
 		[gUserDefaults setInteger:printCompression forKey:@"jpeg print compression"];
 	free(sampleData);
+    
 	[realImageRep autorelease];
 	[realImage autorelease];
 }
@@ -194,6 +195,7 @@
 		[compressSlider setIntValue:webCompression];
 	else
 		[compressSlider setIntValue:printCompression];
+    
 	value = [self reviseCompression];
 	compressImage = [[NSImage alloc] initWithData:[realImageRep representationUsingType:NSJPEGFileType properties:[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:[self reviseCompression]] forKey:NSImageCompressionFactor]]];
 	[compressImage setSize:NSMakeSize(160, 160)];
@@ -249,14 +251,16 @@
     }
 	
 	// Make an image representation from the data
-	imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&destData pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:hasAlpha isPlanar:NO colorSpaceName:(spp > 2) ? NSCalibratedRGBColorSpace : NSCalibratedWhiteColorSpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
+	imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&destData pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:hasAlpha isPlanar:NO
+                                                   colorSpaceName:(spp > 2) ? NSCalibratedRGBColorSpace : NSCalibratedWhiteColorSpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
+    [imageRep autorelease];
     
     if (targetWeb) {
         NSColorSpace* cs;
         if(spp>2) {
-            cs = [NSColorSpace deviceRGBColorSpace];
+            cs = NSColorSpace.deviceRGBColorSpace;
         } else {
-            cs = [NSColorSpace deviceGrayColorSpace];
+            cs = NSColorSpace.deviceGrayColorSpace;
         }
         imageRep = [imageRep bitmapImageRepByConvertingToColorSpace:cs renderingIntent:NSColorRenderingIntentDefault];
     }
@@ -275,9 +279,8 @@
 	imageData = [imageRep representationUsingType:NSJPEGFileType properties:[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:[self reviseCompression]] forKey:NSImageCompressionFactor]];
 	
 	// Save our file and let's go
-	[imageData writeToFile:path atomically:YES];
-	[imageRep autorelease];
-	
+	[imageData writeToFile:path atomically:NO];
+
 	// If the destination data is not equivalent to the source data free the former
 	if (destData != srcData)
 		free(destData);

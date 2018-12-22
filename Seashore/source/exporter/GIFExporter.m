@@ -56,7 +56,7 @@
 	
 	// Save to a file
 	NSData* imageData = [imageRep representationUsingType: NSGIFFileType properties: gifProperties];
-	[imageData writeToFile: path atomically: YES];
+	[imageData writeToFile: path atomically: NO];
 	
 	// Cleanup
 	[imageRep autorelease];

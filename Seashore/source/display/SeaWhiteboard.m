@@ -731,11 +731,13 @@ extern IntPoint gScreenResolution;
 		}
 	}
 	else {
-		imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO colorSpaceName:(spp == 4) ? NSDeviceRGBColorSpace : NSDeviceWhiteColorSpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
+		imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO colorSpaceName:(spp == 4) ? NSCalibratedRGBColorSpace : NSCalibratedWhiteColorSpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
 	}
     
+    [imageRep autorelease];
+    
     if (CMYKPreview) {
-        NSColorSpace* cs = [NSColorSpace deviceCMYKColorSpace];
+        NSColorSpace* cs = [NSColorSpace genericCMYKColorSpace];
         imageRep = [imageRep bitmapImageRepByConvertingToColorSpace:cs renderingIntent:NSColorRenderingIntentDefault];
     }
     
@@ -751,6 +753,7 @@ extern IntPoint gScreenResolution;
 	if (image) [image autorelease];
 	image = [[NSImage alloc] init];
 	imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO colorSpaceName:(spp == 4) ? NSDeviceRGBColorSpace : NSDeviceWhiteColorSpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
+    [imageRep autorelease];
 	[image addRepresentation:imageRep];
 	
 	return image;

@@ -28,7 +28,9 @@ unsigned char *convertImageRep(NSImageRep *imageRep,int spp) {
     [NSGraphicsContext setCurrentContext:ctx];
     [imageRep draw];
     [NSGraphicsContext restoreGraphicsState];
-    return [bitmapWhoseFormatIKnow bitmapData];
+    
+    [bitmapWhoseFormatIKnow autorelease];
+    return buffer;
 }
 
 unsigned char *stripAlpha(unsigned char *srcData,int width,int height,int spp) {

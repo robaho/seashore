@@ -260,6 +260,18 @@
 
 	// Make an image representation from the data
 	imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&destData pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:hasAlpha isPlanar:NO colorSpaceName:(spp > 2) ? NSDeviceRGBColorSpace : NSDeviceWhiteColorSpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
+    
+    [imageRep autorelease];
+    
+    if (targetWeb) {
+        NSColorSpace* cs;
+        if(spp>2) {
+            cs = NSColorSpace.deviceRGBColorSpace;
+        } else {
+            cs = NSColorSpace.deviceGrayColorSpace;
+        }
+        imageRep = [imageRep bitmapImageRepByConvertingToColorSpace:cs renderingIntent:NSColorRenderingIntentDefault];
+    }
 	
 //    // Embed ColorSync profile
 //    if (!targetWeb) {
@@ -287,7 +299,6 @@
 	
 	// Save our file and let's go
 	[imageData writeToFile:path atomically:YES];
-	[imageRep autorelease];
 	
 	// If the destination data is not equivalent to the source data free the former
 	if (destData != srcData)
