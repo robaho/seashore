@@ -21,6 +21,8 @@ unsigned char *convertImageRep(NSImageRep *imageRep,int spp) {
                                                                                    colorSpaceName:csname bytesPerRow:width*spp
                                                                                      bitsPerPixel:8*spp];
     
+    [bitmapWhoseFormatIKnow setSize:[imageRep size]];
+    
     [NSGraphicsContext saveGraphicsState];
     NSGraphicsContext *ctx = [NSGraphicsContext graphicsContextWithBitmapImageRep:bitmapWhoseFormatIKnow];
     [NSGraphicsContext setCurrentContext:ctx];
