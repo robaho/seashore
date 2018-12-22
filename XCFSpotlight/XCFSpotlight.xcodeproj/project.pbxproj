@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2BC964C221CE0E48004B22DB /* Rects.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BC964BE21CE0E48004B22DB /* Rects.m */; };
+		2BC964C321CE0E48004B22DB /* RLE.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BC964C121CE0E48004B22DB /* RLE.m */; };
 		8D576314048677EA00EA77CD /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */; };
 		8D5B49A804867FD3000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8D5B49A704867FD3000E48DA /* InfoPlist.strings */; };
 		C86B05270671AA6E00DD9006 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C86B05260671AA6E00DD9006 /* CoreServices.framework */; };
@@ -14,10 +16,6 @@
 		DC0D53B51041FFB30037378A /* GetMetadataForFile.m in Sources */ = {isa = PBXBuildFile; fileRef = DC0D53A51041FFB30037378A /* GetMetadataForFile.m */; };
 		DC0D53B61041FFB30037378A /* Globals.h in Headers */ = {isa = PBXBuildFile; fileRef = DC0D53A61041FFB30037378A /* Globals.h */; };
 		DC0D53B71041FFB30037378A /* Constants.h in Headers */ = {isa = PBXBuildFile; fileRef = DC0D53A71041FFB30037378A /* Constants.h */; };
-		DC0D53B81041FFB30037378A /* Rects.m in Sources */ = {isa = PBXBuildFile; fileRef = DC0D53A81041FFB30037378A /* Rects.m */; };
-		DC0D53B91041FFB30037378A /* Rects.h in Headers */ = {isa = PBXBuildFile; fileRef = DC0D53A91041FFB30037378A /* Rects.h */; };
-		DC0D53BA1041FFB30037378A /* RLE.m in Sources */ = {isa = PBXBuildFile; fileRef = DC0D53AA1041FFB30037378A /* RLE.m */; };
-		DC0D53BB1041FFB30037378A /* RLE.h in Headers */ = {isa = PBXBuildFile; fileRef = DC0D53AB1041FFB30037378A /* RLE.h */; };
 		DC0D53BC1041FFB30037378A /* SeaContent.h in Headers */ = {isa = PBXBuildFile; fileRef = DC0D53AC1041FFB30037378A /* SeaContent.h */; };
 		DC0D53BD1041FFB30037378A /* SeaContent.m in Sources */ = {isa = PBXBuildFile; fileRef = DC0D53AD1041FFB30037378A /* SeaContent.m */; };
 		DC0D53BE1041FFB30037378A /* XCFContent.h in Headers */ = {isa = PBXBuildFile; fileRef = DC0D53AE1041FFB30037378A /* XCFContent.h */; };
@@ -32,6 +30,10 @@
 /* Begin PBXFileReference section */
 		089C167EFE841241C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
+		2BC964BE21CE0E48004B22DB /* Rects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Rects.m; path = ../Seashore/source/extra/Rects.m; sourceTree = "<group>"; };
+		2BC964BF21CE0E48004B22DB /* Rects.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Rects.h; path = ../Seashore/source/extra/Rects.h; sourceTree = "<group>"; };
+		2BC964C021CE0E48004B22DB /* RLE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RLE.h; path = ../Seashore/source/extra/RLE.h; sourceTree = "<group>"; };
+		2BC964C121CE0E48004B22DB /* RLE.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RLE.m; path = ../Seashore/source/extra/RLE.m; sourceTree = "<group>"; };
 		8D576316048677EA00EA77CD /* XCFSpotlight.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XCFSpotlight.mdimporter; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D576317048677EA00EA77CD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C86B05260671AA6E00DD9006 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
@@ -41,10 +43,6 @@
 		DC0D53A51041FFB30037378A /* GetMetadataForFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetMetadataForFile.m; sourceTree = "<group>"; };
 		DC0D53A61041FFB30037378A /* Globals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Globals.h; sourceTree = "<group>"; };
 		DC0D53A71041FFB30037378A /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
-		DC0D53A81041FFB30037378A /* Rects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Rects.m; sourceTree = "<group>"; };
-		DC0D53A91041FFB30037378A /* Rects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rects.h; sourceTree = "<group>"; };
-		DC0D53AA1041FFB30037378A /* RLE.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLE.m; sourceTree = "<group>"; };
-		DC0D53AB1041FFB30037378A /* RLE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLE.h; sourceTree = "<group>"; };
 		DC0D53AC1041FFB30037378A /* SeaContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeaContent.h; sourceTree = "<group>"; };
 		DC0D53AD1041FFB30037378A /* SeaContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeaContent.m; sourceTree = "<group>"; };
 		DC0D53AE1041FFB30037378A /* XCFContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCFContent.h; sourceTree = "<group>"; };
@@ -105,14 +103,14 @@
 		08FB77AFFE84173DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				2BC964C021CE0E48004B22DB /* RLE.h */,
+				2BC964C121CE0E48004B22DB /* RLE.m */,
+				2BC964BF21CE0E48004B22DB /* Rects.h */,
+				2BC964BE21CE0E48004B22DB /* Rects.m */,
 				DC0D53A41041FFB30037378A /* main.m */,
 				DC0D53A51041FFB30037378A /* GetMetadataForFile.m */,
 				DC0D53A61041FFB30037378A /* Globals.h */,
 				DC0D53A71041FFB30037378A /* Constants.h */,
-				DC0D53A81041FFB30037378A /* Rects.m */,
-				DC0D53A91041FFB30037378A /* Rects.h */,
-				DC0D53AA1041FFB30037378A /* RLE.m */,
-				DC0D53AB1041FFB30037378A /* RLE.h */,
 				DC0D53AC1041FFB30037378A /* SeaContent.h */,
 				DC0D53AD1041FFB30037378A /* SeaContent.m */,
 				DC0D53AE1041FFB30037378A /* XCFContent.h */,
@@ -142,8 +140,6 @@
 			files = (
 				DC0D53B61041FFB30037378A /* Globals.h in Headers */,
 				DC0D53B71041FFB30037378A /* Constants.h in Headers */,
-				DC0D53B91041FFB30037378A /* Rects.h in Headers */,
-				DC0D53BB1041FFB30037378A /* RLE.h in Headers */,
 				DC0D53BC1041FFB30037378A /* SeaContent.h in Headers */,
 				DC0D53BE1041FFB30037378A /* XCFContent.h in Headers */,
 				DC0D53C01041FFB30037378A /* SeaLayer.h in Headers */,
@@ -225,9 +221,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC0D53B41041FFB30037378A /* main.m in Sources */,
+				2BC964C321CE0E48004B22DB /* RLE.m in Sources */,
 				DC0D53B51041FFB30037378A /* GetMetadataForFile.m in Sources */,
-				DC0D53B81041FFB30037378A /* Rects.m in Sources */,
-				DC0D53BA1041FFB30037378A /* RLE.m in Sources */,
+				2BC964C221CE0E48004B22DB /* Rects.m in Sources */,
 				DC0D53BD1041FFB30037378A /* SeaContent.m in Sources */,
 				DC0D53BF1041FFB30037378A /* XCFContent.m in Sources */,
 				DC0D53C11041FFB30037378A /* SeaLayer.m in Sources */,
