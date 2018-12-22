@@ -4,8 +4,6 @@
 #import "SeaDocument.h"
 #import "SeaWhiteboard.h"
 #import "Bitmap.h"
-#import <TIFF/tiff.h>
-#import <TIFF/tiffio.h>
 
 @implementation TIFFExporter
 
@@ -75,7 +73,7 @@
 
 - (BOOL)writeDocument:(id)document toFile:(NSString *)path
 {
-	int i, j, width, height, spp, xres, yres;
+	int width, height, spp, xres, yres;
 	unsigned char *srcData,*destData;
 	//NSBitmapImageRep *imageRep;
 	BOOL hasAlpha = NO;

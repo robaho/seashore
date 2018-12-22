@@ -84,9 +84,7 @@
 		A8E30CC109A3F4BC00B67097 /* SeaDocRotation.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E30CBF09A3F4BB00B67097 /* SeaDocRotation.m */; };
 		A8E57D0E09EFE9200009FCE2 /* cross.png in Resources */ = {isa = PBXBuildFile; fileRef = A8E57D0D09EFE9200009FCE2 /* cross.png */; };
 		A8EB480509C5AE58007B9A41 /* GIMPCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8EB480409C5AE58007B9A41 /* GIMPCore.framework */; };
-		A8EB480B09C5AE65007B9A41 /* TIFF.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8EB480A09C5AE65007B9A41 /* TIFF.framework */; };
 		A8EB481309C5AE79007B9A41 /* GIMPCore.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A8EB480409C5AE58007B9A41 /* GIMPCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		A8EB481409C5AE79007B9A41 /* TIFF.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A8EB480A09C5AE65007B9A41 /* TIFF.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		A8EDF0B9078959C80022BB31 /* duplicate.png in Resources */ = {isa = PBXBuildFile; fileRef = F5FE2C7203C43530013856BA /* duplicate.png */; };
 		A8EDF0BA078959C80022BB31 /* new.png in Resources */ = {isa = PBXBuildFile; fileRef = F5FE2C7303C43530013856BA /* new.png */; };
 		A8EDF0BF078959C80022BB31 /* expansion.png in Resources */ = {isa = PBXBuildFile; fileRef = F5FD458E03F416ED012349CA /* expansion.png */; };
@@ -381,13 +379,6 @@
 			remoteGlobalIDString = A8A7BDE207C1E06C006AB467;
 			remoteInfo = GIMPCore;
 		};
-		35B156E80A2C00E0005B688F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 35B156E30A2C00E0005B688F /* TIFF.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
-			remoteInfo = TIFF;
-		};
 		35B1570D0A2C0116005B688F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 35B156EA0A2C0116005B688F /* Sharpen.xcodeproj */;
@@ -457,13 +448,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = A8A7BDC907C1E06C006AB467;
 			remoteInfo = GIMPCore;
-		};
-		35B157390A2C015E005B688F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 35B156E30A2C00E0005B688F /* TIFF.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
-			remoteInfo = TIFF;
 		};
 		35B158690A2C089A005B688F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1466,7 +1450,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				A8EB481309C5AE79007B9A41 /* GIMPCore.framework in CopyFiles */,
-				A8EB481409C5AE79007B9A41 /* TIFF.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1505,7 +1488,6 @@
 		2BDB907B21836089000D7803 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/CocoaContent.nib; sourceTree = "<group>"; };
 		2BDB907C2183608A000D7803 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/SVGContent.nib; sourceTree = "<group>"; };
 		35B156DC0A2C00D0005B688F /* GIMPCore.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GIMPCore.xcodeproj; path = ../GIMPCore/GIMPCore.xcodeproj; sourceTree = SOURCE_ROOT; };
-		35B156E30A2C00E0005B688F /* TIFF.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TIFF.xcodeproj; path = ../TIFF/TIFF.xcodeproj; sourceTree = SOURCE_ROOT; };
 		35B156EA0A2C0116005B688F /* Sharpen.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Sharpen.xcodeproj; path = "../Plug-ins/Sharpen/Sharpen.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		35B156ED0A2C0116005B688F /* Threshold.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Threshold.xcodeproj; path = "../Plug-ins/Threshold/Threshold.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		35B156F30A2C0116005B688F /* HSV.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HSV.xcodeproj; path = "../Plug-ins/HSV/HSV.xcodeproj"; sourceTree = SOURCE_ROOT; };
@@ -1785,7 +1767,6 @@
 		A8E57D0D09EFE9200009FCE2 /* cross.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cross.png; sourceTree = "<group>"; };
 		A8E94E7E0C0D8E7B008A39FD /* CINoiseReduction.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CINoiseReduction.xcodeproj; path = "../CoreImage Plug-ins/CINoiseReduction/CINoiseReduction.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		A8EB480409C5AE58007B9A41 /* GIMPCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GIMPCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A8EB480A09C5AE65007B9A41 /* TIFF.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TIFF.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8EC3F210BDB56DE00EF2B55 /* CIWhitePointAdjust.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CIWhitePointAdjust.xcodeproj; path = "../CoreImage Plug-ins/CIWhitePointAdjust/CIWhitePointAdjust.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		A8EC63FA0422D5D900FE1D39 /* brush-cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "brush-cursor.png"; sourceTree = "<group>"; };
 		A8EDF154078959C80022BB31 /* Seashore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Seashore.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2052,7 +2033,6 @@
 				A8BF652708E6FEAB006E9BFC /* Carbon.framework in Frameworks */,
 				A8EDF14C078959C80022BB31 /* Cocoa.framework in Frameworks */,
 				A8EB480509C5AE58007B9A41 /* GIMPCore.framework in Frameworks */,
-				A8EB480B09C5AE65007B9A41 /* TIFF.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2068,7 +2048,6 @@
 				A8BF652608E6FEAB006E9BFC /* Carbon.framework */,
 				1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */,
 				A8EB480409C5AE58007B9A41 /* GIMPCore.framework */,
-				A8EB480A09C5AE65007B9A41 /* TIFF.framework */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";
@@ -2213,14 +2192,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		35B156E40A2C00E0005B688F /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				35B156E90A2C00E0005B688F /* TIFF.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		35B156EB0A2C0116005B688F /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -2320,7 +2291,6 @@
 			isa = PBXGroup;
 			children = (
 				35B156DC0A2C00D0005B688F /* GIMPCore.xcodeproj */,
-				35B156E30A2C00E0005B688F /* TIFF.xcodeproj */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -3577,7 +3547,6 @@
 			dependencies = (
 				2B2EDA181FA4277E00A6ED4E /* PBXTargetDependency */,
 				35B157380A2C015A005B688F /* PBXTargetDependency */,
-				35B1573A0A2C015E005B688F /* PBXTargetDependency */,
 				A8080D600C07C5D50026D06E /* PBXTargetDependency */,
 				A8080D620C07C5D50026D06E /* PBXTargetDependency */,
 				A8080D640C07C5D50026D06E /* PBXTargetDependency */,
@@ -3971,10 +3940,6 @@
 					ProjectRef = 35B156ED0A2C0116005B688F /* Threshold.xcodeproj */;
 				},
 				{
-					ProductGroup = 35B156E40A2C00E0005B688F /* Products */;
-					ProjectRef = 35B156E30A2C00E0005B688F /* TIFF.xcodeproj */;
-				},
-				{
 					ProductGroup = A83DE5ED0C45207E000FEEA8 /* Products */;
 					ProjectRef = A83DE5EC0C45207E000FEEA8 /* VertStripes.xcodeproj */;
 				},
@@ -4008,13 +3973,6 @@
 			fileType = wrapper.framework;
 			path = GIMPCore.framework;
 			remoteRef = 35B156E10A2C00D0005B688F /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		35B156E90A2C00E0005B688F /* TIFF.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = TIFF.framework;
-			remoteRef = 35B156E80A2C00E0005B688F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		35B1570E0A2C0116005B688F /* Sharpen.bundle */ = {
@@ -4911,11 +4869,6 @@
 			isa = PBXTargetDependency;
 			name = GIMPCore;
 			targetProxy = 35B157370A2C015A005B688F /* PBXContainerItemProxy */;
-		};
-		35B1573A0A2C015E005B688F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = TIFF;
-			targetProxy = 35B157390A2C015E005B688F /* PBXContainerItemProxy */;
 		};
 		A80105870C3D150D00826C24 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
