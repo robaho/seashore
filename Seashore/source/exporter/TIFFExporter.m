@@ -75,8 +75,8 @@
 
 - (BOOL)writeDocument:(id)document toFile:(NSString *)path
 {
-	int i, width, height, spp, xres, yres;
-	unsigned char *srcData;
+	int i, j, width, height, spp, xres, yres;
+	unsigned char *srcData,*destData;
 	//NSBitmapImageRep *imageRep;
 	BOOL hasAlpha = NO;
 
@@ -88,14 +88,26 @@
 	xres = [[document contents] xres];
 	yres = [[document contents] yres];
     
-    NSBitmapImageRep* imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&srcData pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO colorSpaceName:(spp == 4) ? NSDeviceRGBColorSpace : NSDeviceWhiteColorSpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
-    
-	// Determine whether or not an alpha channel would be redundant
+    // Determine whether or not an alpha channel would be redundant
 	for (i = 0; i < width * height && hasAlpha == NO; i++) {
 		if (srcData[(i + 1) * spp - 1] != 255)
 			hasAlpha = YES;
 	}
-	
+    
+    // Strip the alpha channel if necessary
+    if (!hasAlpha) {
+        spp--;
+        destData = malloc(width * height * spp);
+        for (i = 0; i < width * height; i++) {
+            for (j = 0; j < spp; j++)
+                destData[i * spp + j] = srcData[i * (spp + 1) + j];
+        }
+    }
+    else
+        destData = srcData;
+    
+    NSBitmapImageRep* imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&destData pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:hasAlpha isPlanar:NO colorSpaceName:(spp == 4) ? NSDeviceRGBColorSpace : NSDeviceWhiteColorSpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
+    
 	// Behave differently if we are targeting a CMYK file
 	if ([[document contents] cmykSave] && spp == 4) {
         
