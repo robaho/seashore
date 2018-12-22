@@ -12,8 +12,6 @@
 #import "SeaController.h"
 #import "UtilitiesManager.h"
 
-extern BOOL useAltiVec;
-
 extern IntPoint gScreenResolution;
 
 @implementation SeaWhiteboard
@@ -22,23 +20,12 @@ extern IntPoint gScreenResolution;
 {
 	CMProfileRef destProf;
 	int layerWidth, layerHeight;
-	NSString *pluginPath;
-	NSBundle *bundle;
 	
 	// Remember the document we are representing
 	document = doc;
 	
 	// Initialize the compostior
 	compositor = NULL;
-	if (useAltiVec) {
-		pluginPath = [NSString stringWithFormat:@"%@/CompositorAV.bundle", [gMainBundle builtInPlugInsPath]];
-		if ([gFileManager fileExistsAtPath:pluginPath]) {
-			bundle = [NSBundle bundleWithPath:pluginPath];
-			if (bundle && [bundle principalClass]) {
-				compositor = [[bundle principalClass] alloc];
-			}
-		}
-	}
 	if (compositor == NULL)	compositor = [SeaCompositor alloc];
 	[compositor initWithDocument:document];
 	

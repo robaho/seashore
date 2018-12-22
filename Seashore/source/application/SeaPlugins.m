@@ -9,8 +9,6 @@
 #import "UtilitiesManager.h"
 #import "OptionsUtility.h"
 
-extern BOOL useAltiVec;
-
 @implementation SeaPlugins
 
 int plugin_sort(id obj1, id obj2, void *context)
