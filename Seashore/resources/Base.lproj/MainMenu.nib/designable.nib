@@ -1744,6 +1744,7 @@ DQ
         </window>
         <customObject id="2281" userLabel="SeaDocumentController" customClass="SeaDocumentController">
             <connections>
+                <outlet property="backgroundCheckbox" destination="2900" id="o75-YY-kO0"/>
                 <outlet property="heightInput" destination="2899" id="2929"/>
                 <outlet property="heightUnits" destination="2905" id="2937"/>
                 <outlet property="modeMenu" destination="2901" id="2933"/>
@@ -2082,7 +2083,7 @@ DQ
                     </textFieldCell>
                 </textField>
             </subviews>
-            <point key="canvasLocation" x="2" y="-252.5"/>
+            <point key="canvasLocation" x="114" y="-442"/>
         </customView>
         <window title="New Image" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="2877" userLabel="New Image" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
@@ -2302,7 +2303,7 @@ DQ
             <connections>
                 <outlet property="initialFirstResponder" destination="2906" id="2917"/>
             </connections>
-            <point key="canvasLocation" x="131.5" y="161"/>
+            <point key="canvasLocation" x="540" y="-456"/>
         </window>
         <customView id="3676" userLabel="Color Prefs">
             <rect key="frame" x="0.0" y="0.0" width="431" height="359"/>
