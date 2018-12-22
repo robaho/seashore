@@ -232,7 +232,7 @@
 	NSBitmapImageRep *imageRep;
 	NSData *imageData;
 	NSDictionary *exifData;
-    bool hasAlpha;
+    bool hasAlpha=true;
 	
 	// Get the data to write
 	srcData = [(SeaWhiteboard *)[document whiteboard] data];
@@ -249,27 +249,22 @@
     }
 	
 	// Make an image representation from the data
-	imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&destData pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:hasAlpha isPlanar:NO colorSpaceName:(spp > 2) ? NSDeviceRGBColorSpace : NSDeviceWhiteColorSpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
+	imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&destData pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:hasAlpha isPlanar:NO colorSpaceName:(spp > 2) ? NSCalibratedRGBColorSpace : NSCalibratedWhiteColorSpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
+    
+    if (targetWeb) {
+        NSColorSpace* cs;
+        if(spp>2) {
+            cs = [NSColorSpace deviceRGBColorSpace];
+        } else {
+            cs = [NSColorSpace deviceGrayColorSpace];
+        }
+        imageRep = [imageRep bitmapImageRepByConvertingToColorSpace:cs renderingIntent:NSColorRenderingIntentDefault];
+    }
 	
 	// Add EXIF data
 	exifData = [[document contents] exifData];
 	if (exifData) [imageRep setProperty:@"NSImageEXIFData" withValue:exifData];
 	
-	// Embed ColorSync profile
-//    if (!targetWeb) {
-//        if (spp < 3)
-//            CMGetDefaultProfileBySpace(cmGrayData, &cmProfile);
-//        else
-//            OpenDisplayProfile(&cmProfile);
-//        cmData = NULL;
-//        CMFlattenProfile(cmProfile, 0, (CMFlattenUPP)&getcm, NULL, &cmmNotFound);
-//        if (cmData) {
-//            [imageRep setProperty:NSImageColorSyncProfileData withValue:[NSData dataWithBytes:cmData length:cmLen]];
-//            free(cmData);
-//        }
-//        if (spp >= 3) CloseDisplayProfile(cmProfile);
-//    }
-    
     NSSize newSize;
     newSize.width = [imageRep pixelsWide] * 72.0 / xres;  // x-resolution
     newSize.height = [imageRep pixelsHigh] * 72.0 / yres;  // y-resolution

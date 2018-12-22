@@ -6,7 +6,7 @@
  */
 unsigned char *convertImageRep(NSImageRep *imageRep,int spp) {
     
-    NSColorSpaceName csname = NSDeviceRGBColorSpace;
+    NSColorSpaceName csname = NSCalibratedRGBColorSpace;
     if (spp==2) {
         csname = NSCalibratedWhiteColorSpace;
     }
