@@ -9,6 +9,7 @@
 ## Build generated
 build/
 DerivedData/
+Index/
 
 ## Various settings
 *.pbxuser
@@ -25,6 +26,7 @@ xcuserdata/
 *.moved-aside
 *.xccheckout
 *.xcscmblueprint
+.DS_Store
 
 ### Xcode Patch ###
 *.xcodeproj/*
