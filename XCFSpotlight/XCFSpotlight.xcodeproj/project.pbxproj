@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		2BC964C221CE0E48004B22DB /* Rects.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BC964BE21CE0E48004B22DB /* Rects.m */; };
 		2BC964C321CE0E48004B22DB /* RLE.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BC964C121CE0E48004B22DB /* RLE.m */; };
+		2BC9674621CEE01A004B22DB /* SeaLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BC9673F21CEE019004B22DB /* SeaLayer.m */; };
+		2BC9674721CEE01A004B22DB /* XCFLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BC9674321CEE01A004B22DB /* XCFLayer.m */; };
+		2BC9674821CEE01A004B22DB /* SeaContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BC9674421CEE01A004B22DB /* SeaContent.m */; };
+		2BC9674921CEE01A004B22DB /* XCFContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BC9674521CEE01A004B22DB /* XCFContent.m */; };
 		8D576314048677EA00EA77CD /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */; };
 		8D5B49A804867FD3000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8D5B49A704867FD3000E48DA /* InfoPlist.strings */; };
 		C86B05270671AA6E00DD9006 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C86B05260671AA6E00DD9006 /* CoreServices.framework */; };
@@ -16,14 +20,6 @@
 		DC0D53B51041FFB30037378A /* GetMetadataForFile.m in Sources */ = {isa = PBXBuildFile; fileRef = DC0D53A51041FFB30037378A /* GetMetadataForFile.m */; };
 		DC0D53B61041FFB30037378A /* Globals.h in Headers */ = {isa = PBXBuildFile; fileRef = DC0D53A61041FFB30037378A /* Globals.h */; };
 		DC0D53B71041FFB30037378A /* Constants.h in Headers */ = {isa = PBXBuildFile; fileRef = DC0D53A71041FFB30037378A /* Constants.h */; };
-		DC0D53BC1041FFB30037378A /* SeaContent.h in Headers */ = {isa = PBXBuildFile; fileRef = DC0D53AC1041FFB30037378A /* SeaContent.h */; };
-		DC0D53BD1041FFB30037378A /* SeaContent.m in Sources */ = {isa = PBXBuildFile; fileRef = DC0D53AD1041FFB30037378A /* SeaContent.m */; };
-		DC0D53BE1041FFB30037378A /* XCFContent.h in Headers */ = {isa = PBXBuildFile; fileRef = DC0D53AE1041FFB30037378A /* XCFContent.h */; };
-		DC0D53BF1041FFB30037378A /* XCFContent.m in Sources */ = {isa = PBXBuildFile; fileRef = DC0D53AF1041FFB30037378A /* XCFContent.m */; };
-		DC0D53C01041FFB30037378A /* SeaLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = DC0D53B01041FFB30037378A /* SeaLayer.h */; };
-		DC0D53C11041FFB30037378A /* SeaLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DC0D53B11041FFB30037378A /* SeaLayer.m */; };
-		DC0D53C21041FFB30037378A /* XCFLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = DC0D53B21041FFB30037378A /* XCFLayer.h */; };
-		DC0D53C31041FFB30037378A /* XCFLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DC0D53B31041FFB30037378A /* XCFLayer.m */; };
 		DC0D54CB104200B40037378A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC0D54CA104200B40037378A /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -34,6 +30,14 @@
 		2BC964BF21CE0E48004B22DB /* Rects.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Rects.h; path = ../Seashore/source/extra/Rects.h; sourceTree = "<group>"; };
 		2BC964C021CE0E48004B22DB /* RLE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RLE.h; path = ../Seashore/source/extra/RLE.h; sourceTree = "<group>"; };
 		2BC964C121CE0E48004B22DB /* RLE.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RLE.m; path = ../Seashore/source/extra/RLE.m; sourceTree = "<group>"; };
+		2BC9673E21CEE019004B22DB /* XCFContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XCFContent.h; path = ../XCFQuickLook/XCFContent.h; sourceTree = "<group>"; };
+		2BC9673F21CEE019004B22DB /* SeaLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SeaLayer.m; path = ../XCFQuickLook/SeaLayer.m; sourceTree = "<group>"; };
+		2BC9674021CEE019004B22DB /* SeaContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SeaContent.h; path = ../XCFQuickLook/SeaContent.h; sourceTree = "<group>"; };
+		2BC9674121CEE01A004B22DB /* SeaLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SeaLayer.h; path = ../XCFQuickLook/SeaLayer.h; sourceTree = "<group>"; };
+		2BC9674221CEE01A004B22DB /* XCFLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XCFLayer.h; path = ../XCFQuickLook/XCFLayer.h; sourceTree = "<group>"; };
+		2BC9674321CEE01A004B22DB /* XCFLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XCFLayer.m; path = ../XCFQuickLook/XCFLayer.m; sourceTree = "<group>"; };
+		2BC9674421CEE01A004B22DB /* SeaContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SeaContent.m; path = ../XCFQuickLook/SeaContent.m; sourceTree = "<group>"; };
+		2BC9674521CEE01A004B22DB /* XCFContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XCFContent.m; path = ../XCFQuickLook/XCFContent.m; sourceTree = "<group>"; };
 		8D576316048677EA00EA77CD /* XCFSpotlight.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XCFSpotlight.mdimporter; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D576317048677EA00EA77CD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C86B05260671AA6E00DD9006 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
@@ -43,14 +47,6 @@
 		DC0D53A51041FFB30037378A /* GetMetadataForFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetMetadataForFile.m; sourceTree = "<group>"; };
 		DC0D53A61041FFB30037378A /* Globals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Globals.h; sourceTree = "<group>"; };
 		DC0D53A71041FFB30037378A /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
-		DC0D53AC1041FFB30037378A /* SeaContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeaContent.h; sourceTree = "<group>"; };
-		DC0D53AD1041FFB30037378A /* SeaContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeaContent.m; sourceTree = "<group>"; };
-		DC0D53AE1041FFB30037378A /* XCFContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCFContent.h; sourceTree = "<group>"; };
-		DC0D53AF1041FFB30037378A /* XCFContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCFContent.m; sourceTree = "<group>"; };
-		DC0D53B01041FFB30037378A /* SeaLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeaLayer.h; sourceTree = "<group>"; };
-		DC0D53B11041FFB30037378A /* SeaLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeaLayer.m; sourceTree = "<group>"; };
-		DC0D53B21041FFB30037378A /* XCFLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCFLayer.h; sourceTree = "<group>"; };
-		DC0D53B31041FFB30037378A /* XCFLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCFLayer.m; sourceTree = "<group>"; };
 		DC0D54CA104200B40037378A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -111,14 +107,14 @@
 				DC0D53A51041FFB30037378A /* GetMetadataForFile.m */,
 				DC0D53A61041FFB30037378A /* Globals.h */,
 				DC0D53A71041FFB30037378A /* Constants.h */,
-				DC0D53AC1041FFB30037378A /* SeaContent.h */,
-				DC0D53AD1041FFB30037378A /* SeaContent.m */,
-				DC0D53AE1041FFB30037378A /* XCFContent.h */,
-				DC0D53AF1041FFB30037378A /* XCFContent.m */,
-				DC0D53B01041FFB30037378A /* SeaLayer.h */,
-				DC0D53B11041FFB30037378A /* SeaLayer.m */,
-				DC0D53B21041FFB30037378A /* XCFLayer.h */,
-				DC0D53B31041FFB30037378A /* XCFLayer.m */,
+				2BC9674021CEE019004B22DB /* SeaContent.h */,
+				2BC9674421CEE01A004B22DB /* SeaContent.m */,
+				2BC9673E21CEE019004B22DB /* XCFContent.h */,
+				2BC9674521CEE01A004B22DB /* XCFContent.m */,
+				2BC9674121CEE01A004B22DB /* SeaLayer.h */,
+				2BC9673F21CEE019004B22DB /* SeaLayer.m */,
+				2BC9674221CEE01A004B22DB /* XCFLayer.h */,
+				2BC9674321CEE01A004B22DB /* XCFLayer.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -140,10 +136,6 @@
 			files = (
 				DC0D53B61041FFB30037378A /* Globals.h in Headers */,
 				DC0D53B71041FFB30037378A /* Constants.h in Headers */,
-				DC0D53BC1041FFB30037378A /* SeaContent.h in Headers */,
-				DC0D53BE1041FFB30037378A /* XCFContent.h in Headers */,
-				DC0D53C01041FFB30037378A /* SeaLayer.h in Headers */,
-				DC0D53C21041FFB30037378A /* XCFLayer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,14 +212,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2BC9674821CEE01A004B22DB /* SeaContent.m in Sources */,
 				DC0D53B41041FFB30037378A /* main.m in Sources */,
 				2BC964C321CE0E48004B22DB /* RLE.m in Sources */,
+				2BC9674921CEE01A004B22DB /* XCFContent.m in Sources */,
 				DC0D53B51041FFB30037378A /* GetMetadataForFile.m in Sources */,
+				2BC9674621CEE01A004B22DB /* SeaLayer.m in Sources */,
 				2BC964C221CE0E48004B22DB /* Rects.m in Sources */,
-				DC0D53BD1041FFB30037378A /* SeaContent.m in Sources */,
-				DC0D53BF1041FFB30037378A /* XCFContent.m in Sources */,
-				DC0D53C11041FFB30037378A /* SeaLayer.m in Sources */,
-				DC0D53C31041FFB30037378A /* XCFLayer.m in Sources */,
+				2BC9674721CEE01A004B22DB /* XCFLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

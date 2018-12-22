@@ -178,6 +178,7 @@ static NSString*	DuplicateSelectionToolbarItemIdentifier = @"Duplicate Selection
 		free(parasites);
 	}
 	if (exifData) [exifData autorelease];
+    if (cs) [cs autorelease];
 	if (lostprops) free(lostprops);
 	if (layers) {
 		for (i = 0; i < [layers count]; i++) {
@@ -443,6 +444,12 @@ static NSString*	DuplicateSelectionToolbarItemIdentifier = @"Duplicate Selection
 {
 	return exifData;
 }
+
+- (NSColorSpace *)cs
+{
+    return cs;
+}
+
 
 - (id)layer:(int)index
 {

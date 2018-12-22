@@ -234,6 +234,7 @@
 	NSBitmapImageRep *imageRep;
 	NSData *imageData;
 	NSDictionary *exifData;
+    NSColorSpace *cs;
     bool hasAlpha=true;
 	
 	// Get the data to write
@@ -243,7 +244,8 @@
 	spp = [(SeaContent *)[document contents] spp];
 	xres = [[document contents] xres];
 	yres = [[document contents] yres];
-	
+    cs = [(SeaContent *)[document contents] cs];
+
     destData = stripAlpha(srcData,width,height,spp);
     if (destData!=srcData) {
         spp--;
@@ -256,13 +258,17 @@
     [imageRep autorelease];
     
     if (targetWeb) {
-        NSColorSpace* cs;
         if(spp>2) {
             cs = NSColorSpace.deviceRGBColorSpace;
         } else {
             cs = NSColorSpace.deviceGrayColorSpace;
         }
         imageRep = [imageRep bitmapImageRepByConvertingToColorSpace:cs renderingIntent:NSColorRenderingIntentDefault];
+    } else {
+        // convert to original color space
+//        if (cs) {
+//            imageRep = [imageRep bitmapImageRepByConvertingToColorSpace:cs renderingIntent:NSColorRenderingIntentDefault];
+//        }
     }
 	
 	// Add EXIF data

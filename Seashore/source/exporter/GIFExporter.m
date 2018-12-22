@@ -47,7 +47,7 @@
 			samplesPerPixel: spp
 			hasAlpha: NO 
 			isPlanar: NO 
-			colorSpaceName: (spp > 2) ? NSDeviceRGBColorSpace : NSDeviceWhiteColorSpace 
+			colorSpaceName: (spp > 2) ? NSCalibratedRGBColorSpace : NSCalibratedWhiteColorSpace 
 			bytesPerRow:width * spp 
 			bitsPerPixel: 8 * spp];
 	

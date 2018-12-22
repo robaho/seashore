@@ -76,6 +76,9 @@ typedef struct {
 	
 	// The EXIF data associated with this image
 	NSDictionary *exifData;
+    
+    // The color space retrieved from the original file load, or NULL
+    NSColorSpace *cs;
 	
 }
 
@@ -403,6 +406,15 @@ typedef struct {
 				such data exists.
 */
 - (NSDictionary *)exifData;
+
+/*!
+ @method        cs
+ @discussion    Returns the color space for this document.
+ @result        Returns an NSColorSpace or NULL
+ such data exists.
+ */
+- (NSColorSpace *)cs;
+
 
 // LAYER METHODS
 
