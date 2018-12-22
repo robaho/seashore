@@ -29,6 +29,32 @@ unsigned char *convertImageRep(NSImageRep *imageRep,int spp) {
     return [bitmapWhoseFormatIKnow bitmapData];
 }
 
+unsigned char *stripAlpha(unsigned char *srcData,int width,int height,int spp) {
+    int i,j;
+    bool hasAlpha;
+    unsigned char *destData;
+    
+    // Determine whether or not an alpha channel would be redundant
+    for (i = 0; i < width * height && hasAlpha == NO; i++) {
+        if (srcData[(i + 1) * spp - 1] != 255)
+            hasAlpha = YES;
+    }
+    
+    // Strip the alpha channel if necessary
+    if (!hasAlpha) {
+        spp--;
+        destData = malloc(width * height * spp);
+        for (i = 0; i < width * height; i++) {
+            for (j = 0; j < spp; j++)
+                destData[i * spp + j] = srcData[i * (spp + 1) + j];
+        }
+        return destData;
+    }
+    else
+        return srcData;
+
+}
+
 inline void stripAlphaToWhite(int spp, unsigned char *output, unsigned char *input, int length)
 {
 	const int alphaPos = spp - 1;
@@ -138,37 +164,4 @@ inline unsigned char averagedComponentValue(int spp, unsigned char *data, int wi
 	}
 		
 	return (total / count);
-}
-
-inline void OpenDisplayProfile(CMProfileRef *profile)
-{
-	CMDeviceID device;
-	CMDeviceProfileID deviceID;
-	CMProfileLocation profileLoc;
-
-	// Actually, maybe we don't need the generic profile after all
-    /*OSStatus StatusError = noErr;
-    
-    // build up a profile location for ColorSync
-    profileLoc.locType        = cmPathBasedProfile;
-    strcpy(profileLoc.u.pathLoc.path, "/System/Library/ColorSync/Profiles/Generic RGB Profile.icc");
-    
-    // Open the pro	file with ColourSync
-    StatusError = CMOpenProfile(profile, &profileLoc);
-	
-	if (StatusError != noErr) {*/
-		CMGetDefaultDevice(cmDisplayDeviceClass, &device);
-		CMGetDeviceDefaultProfileID(cmDisplayDeviceClass, device, &deviceID);
-		CMGetDeviceProfile(cmDisplayDeviceClass, device, deviceID, &profileLoc);
-		CMOpenProfile(profile, &profileLoc);
-	//}
-}
-
-void CloseDisplayProfile(CMProfileRef profile)
-{
-	CMCloseProfile(profile);
-}
-
-void CMFlattenProfile(CMProfileRef pref, int flags, CMFlattenUPP *cmFlattenUPP, void * refcon, Boolean *cmmNotFound){
-    
 }

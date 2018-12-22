@@ -103,21 +103,7 @@ void unpremultiplyBitmap(int spp, unsigned char *destPtr, unsigned char *srcPtr,
 */
 unsigned char averagedComponentValue(int spp, unsigned char *data, int width, int height, int component, int radius, IntPoint where);
 
-
-/*!
-	@function	OpenDisplayProfile
-	@discussion	Returns the ColorSync profile for the default display.
-	@param		profile
-				The profile to make the default display's profile.
-*/
-void OpenDisplayProfile(CMProfileRef *profile);
-
-/*!
-	@function	CloseDisplayProfile
-	@discussion	Releases the ColorSync profile for the default display.
-	@param		profile
-				The profile to make the default display's profile.
-*/
-void CloseDisplayProfile(CMProfileRef profile);
-
-void CMFlattenProfile(CMProfileRef pref, int flags, CMFlattenUPP *cmFlattenUPP, void * refcon, Boolean *cmmNotFound);
+/*
+ return data with alpha stripped if alpha not used, otherwise just return the source data
+ */
+unsigned char *stripAlpha(unsigned char *srcData,int width,int height,int spp);

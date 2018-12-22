@@ -7,25 +7,6 @@
 #import "SeaDocument.h"
 #import "Bitmap.h"
 
-static unsigned char *cmData;
-static unsigned int cmLen;
-
-static OSErr getcm(SInt32 command, SInt32 *size, void *data, void *refCon)
-{
-	if (cmData == NULL) {
-		cmData = malloc(*size);
-		memcpy(cmData, data, *size);
-		cmLen = *size;
-	}
-	else {
-		cmData = realloc(cmData, cmLen + *size);
-		memcpy(&(cmData[cmLen]), data, *size);
-		cmLen += *size;
-	}
-	
-	return 0;
-}
-
 @implementation JP2Exporter
 
 - (id)init
@@ -67,11 +48,7 @@ static OSErr getcm(SInt32 command, SInt32 *size, void *data, void *refCon)
 
 - (BOOL)hasOptions
 {
-#ifdef MACOS_10_4_COMPILE
 	return YES;
-#else
-	return NO;
-#endif
 }
 
 - (float)reviseCompression
@@ -126,7 +103,6 @@ static OSErr getcm(SInt32 command, SInt32 *size, void *data, void *refCon)
 
 - (void)showOptions:(id)document
 {
-#ifdef MACOS_10_4_COMPILE
 	unsigned char *data;
 	int width = [(SeaContent *)[document contents] width], height = [(SeaContent *)[document contents] height], spp = [[document contents] spp];
 	int i, j, k, x, y;
@@ -193,12 +169,10 @@ static OSErr getcm(SInt32 command, SInt32 *size, void *data, void *refCon)
 	free(sampleData);
 	[realImageRep autorelease];
 	[realImage autorelease];
-#endif
 }
 
 - (IBAction)compressionChanged:(id)sender
 {
-#ifdef MACOS_10_4_COMPILE
 	id compressImage;
 	float value;
 	
@@ -212,12 +186,10 @@ static OSErr getcm(SInt32 command, SInt32 *size, void *data, void *refCon)
 	[compressImage autorelease];
 	[compressImageView setImage:compressImage];
 	[compressImageView display];
-#endif
 }
 
 - (IBAction)targetChanged:(id)sender
 {
-#ifdef MACOS_10_4_COMPILE
 	id compressImage;
 	float value;
 	
@@ -238,14 +210,11 @@ static OSErr getcm(SInt32 command, SInt32 *size, void *data, void *refCon)
 	[compressImage autorelease];
 	[compressImageView setImage:compressImage];
 	[compressImageView display];
-#endif
 }
 
 - (IBAction)endPanel:(id)sender
 {
-#ifdef MACOS_10_4_COMPILE
 	[NSApp stopModal];
-#endif
 }
 
 - (NSString *)title
@@ -268,58 +237,51 @@ static OSErr getcm(SInt32 command, SInt32 *size, void *data, void *refCon)
 
 - (BOOL)writeDocument:(id)document toFile:(NSString *)path
 {
-#ifdef MACOS_10_4_COMPILE
-	int width, height, spp;
+	int width, height, spp, xres, yres;
 	unsigned char *srcData, *destData;
 	NSBitmapImageRep *imageRep;
 	NSData *imageData;
-	CMProfileRef cmProfile;
-	Boolean cmmNotFound;
 	BOOL hasAlpha = NO;
-	int i, j;
 	
 	// Get the data to write
 	srcData = [(SeaWhiteboard *)[document whiteboard] data];
 	width = [(SeaContent *)[document contents] width];
 	height = [(SeaContent *)[document contents] height];
 	spp = [(SeaContent *)[document contents] spp];
-	
-	// Determine whether or not an alpha channel would be redundant
-	for (i = 0; i < width * height && hasAlpha == NO; i++) {
-		if (srcData[(i + 1) * spp - 1] != 255)
-			hasAlpha = YES;
-	}
-	
-	// Strip the alpha channel if necessary
-	if (!hasAlpha) {
-		spp--;
-		destData = malloc(width * height * spp);
-		for (i = 0; i < width * height; i++) {
-			for (j = 0; j < spp; j++)
-				destData[i * spp + j] = srcData[i * (spp + 1) + j];
-		}
-	}
-	else
-		destData = srcData;
+    xres = [[document contents] xres];
+    yres = [[document contents] yres];
+
+    // Strip the alpha channel if necessary
+    destData = stripAlpha(srcData,width,height,spp);
+    if (destData!=srcData) {
+        spp--;
+        hasAlpha=false;
+    }
 
 	// Make an image representation from the data
 	imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&destData pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:hasAlpha isPlanar:NO colorSpaceName:(spp > 2) ? NSDeviceRGBColorSpace : NSDeviceWhiteColorSpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
 	
-	// Embed ColorSync profile
-	if (!targetWeb) {
-		if (spp < 3)
-			CMGetDefaultProfileBySpace(cmGrayData, &cmProfile);
-		else
-			OpenDisplayProfile(&cmProfile);
-		cmData = NULL;
-		CMFlattenProfile(cmProfile, 0, (CMFlattenUPP)&getcm, NULL, &cmmNotFound);
-		if (cmData) {
-			[imageRep setProperty:NSImageColorSyncProfileData withValue:[NSData dataWithBytes:cmData length:cmLen]];
-			free(cmData);
-		}
-		if (spp >= 3) CloseDisplayProfile(cmProfile);
-	}
+//    // Embed ColorSync profile
+//    if (!targetWeb) {
+//        if (spp < 3)
+//            CMGetDefaultProfileBySpace(cmGrayData, &cmProfile);
+//        else
+//            OpenDisplayProfile(&cmProfile);
+//        cmData = NULL;
+//        CMFlattenProfile(cmProfile, 0, (CMFlattenUPP)&getcm, NULL, &cmmNotFound);
+//        if (cmData) {
+//            [imageRep setProperty:NSImageColorSyncProfileData withValue:[NSData dataWithBytes:cmData length:cmLen]];
+//            free(cmData);
+//        }
+//        if (spp >= 3) CloseDisplayProfile(cmProfile);
+//    }
 	
+    NSSize newSize;
+    newSize.width = [imageRep pixelsWide] * 72.0 / xres;  // x-resolution
+    newSize.height = [imageRep pixelsHigh] * 72.0 / yres;  // y-resolution
+    
+    [imageRep setSize:newSize];
+
 	// Finally build the JPEG 2000 data
 	imageData = [imageRep representationUsingType:NSJPEG2000FileType properties:[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:[self reviseCompression]] forKey:NSImageCompressionFactor]];
 	
@@ -332,9 +294,6 @@ static OSErr getcm(SInt32 command, SInt32 *size, void *data, void *refCon)
 		free(destData);
 	
 	return YES;
-#else
-	return NO;
-#endif
 }
 
 @end

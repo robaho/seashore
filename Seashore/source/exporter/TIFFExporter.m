@@ -88,23 +88,11 @@
 	xres = [[document contents] xres];
 	yres = [[document contents] yres];
     
-    // Determine whether or not an alpha channel would be redundant
-	for (i = 0; i < width * height && hasAlpha == NO; i++) {
-		if (srcData[(i + 1) * spp - 1] != 255)
-			hasAlpha = YES;
-	}
-    
-    // Strip the alpha channel if necessary
-    if (!hasAlpha) {
+    destData = stripAlpha(srcData,width,height,spp);
+    if (destData!=srcData) {
         spp--;
-        destData = malloc(width * height * spp);
-        for (i = 0; i < width * height; i++) {
-            for (j = 0; j < spp; j++)
-                destData[i * spp + j] = srcData[i * (spp + 1) + j];
-        }
+        hasAlpha=false;
     }
-    else
-        destData = srcData;
     
     NSBitmapImageRep* imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&destData pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:hasAlpha isPlanar:NO colorSpaceName:(spp == 4) ? NSDeviceRGBColorSpace : NSDeviceWhiteColorSpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
     
@@ -125,7 +113,12 @@
     
     NSData *imageData = [imageRep representationUsingType:NSBitmapImageFileTypeTIFF properties:imageProps];
 
-    [imageData writeToFile:path atomically:NO];
+    [imageData writeToFile:path atomically:YES];
+    [imageRep autorelease];
+
+    // If the destination data is not equivalent to the source data free the former
+    if (destData != srcData)
+        free(destData);
     
     return YES;
 

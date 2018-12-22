@@ -927,97 +927,30 @@
 
 - (void)convertFromType:(int)srcType to:(int)destType
 {
-	CMBitmap srcBitmap, destBitmap;
-	CMProfileRef srcProf, destProf;
-	CMWorldRef cw;
-	unsigned char *newData, *oldData;
-	int i;
-	
 	// Destroy the thumbnail data
 	if (thumbnail) [thumbnail autorelease];
 	if (thumbData) free(thumbData);
 	thumbnail = NULL; thumbData = NULL;
-
+    
 	// Don't do anything if there is nothing to do
 	if (srcType == destType)
 		return;
+    
+    unsigned char *newdata;
+    
+    NSBitmapImageRep *imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:TRUE isPlanar:NO colorSpaceName:(spp == 4) ? NSDeviceRGBColorSpace : NSDeviceWhiteColorSpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
 		
 	if (srcType == XCF_RGB_IMAGE && destType == XCF_GRAY_IMAGE) {
-	
-		// Create colour world
-		OpenDisplayProfile(&srcProf);
-		CMGetDefaultProfileBySpace(cmGrayData, &destProf);
-		NCWNewColorWorld(&cw, srcProf, destProf);
-	
-		// Define the source
-		oldData = data;
-		srcBitmap.image = (char *)oldData;
-		srcBitmap.width = width;
-		srcBitmap.height = height;
-		srcBitmap.rowBytes = width * 4;
-		srcBitmap.pixelSize = 8 * 4;
-		srcBitmap.space = cmRGBA32Space;
-	
-		// Define the destination
-		newData = malloc(make_128(width * height * 2));
-		destBitmap.image = (char *)newData;
-		destBitmap.width = width;
-		destBitmap.height = height;
-		destBitmap.rowBytes = width * 2;
-		destBitmap.pixelSize = 8 * 2;
-		destBitmap.space = cmGrayA16Space;
-		
-		// Execute the conversion
-		CWMatchBitmap(cw, &srcBitmap, NULL, 0, &destBitmap);
-		for (i = 0; i < width * height; i++)
-			newData[i * 2 + 1] = oldData[i * 4 + 3];
-		data = newData;
-		free(oldData);
-		spp = 2;
-		
-		// Get rid of the colour world - we no longer need it
-		CWDisposeColorWorld(cw);
-		CloseDisplayProfile(srcProf);
-		
-	}
-	else if (srcType == XCF_GRAY_IMAGE && destType == XCF_RGB_IMAGE) {
-	
-		// Create colour world
-		CMGetDefaultProfileBySpace(cmGrayData, &srcProf);
-		OpenDisplayProfile(&destProf);
-		NCWNewColorWorld(&cw, srcProf, destProf);
-	
-		// Define the source
-		oldData = data;
-		srcBitmap.image = (char *)oldData;
-		srcBitmap.width = width;
-		srcBitmap.height = height;
-		srcBitmap.rowBytes = width * 2;
-		srcBitmap.pixelSize = 8 * 2;
-		srcBitmap.space = cmGrayA16Space;
-	
-		// Define the destination
-		newData = malloc(make_128(width * height * 4));
-		destBitmap.image = (char *)newData;
-		destBitmap.width = width;
-		destBitmap.height = height;
-		destBitmap.rowBytes = width * 4;
-		destBitmap.pixelSize = 8 * 4;
-		destBitmap.space = cmRGBA32Space;
-		
-		// Execute the conversion
-		CWMatchBitmap(cw, &srcBitmap, NULL, 0, &destBitmap);
-		for (i = 0; i < width * height; i++)
-			newData[i * 4 + 3] = oldData[i * 2 + 1];
-		data = newData;
-		free(oldData);
-		spp = 4;
-		
-		// Get rid of the colour world - we no longer need it
-		CWDisposeColorWorld(cw);
-		CloseDisplayProfile(destProf);
-		
-	}
+        spp=2;
+    } else {
+        spp=4;
+    }
+    
+    newdata = convertImageRep(imageRep,spp);
+
+    free(data);
+    
+    data = newdata;
 }
 
 @end

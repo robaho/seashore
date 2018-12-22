@@ -9,7 +9,6 @@
 
 - (id)initWithContent:(SeaContent *)cont
 {
-	CMProfileRef destProf;
 	int layerWidth, layerHeight;
 	
 	gScreenResolution = IntMakePoint(1024, 768);
@@ -43,12 +42,6 @@
 	memset(replace, 0, layerWidth * layerHeight);
 	altData = NULL;
 	
-	// Create the colour world
-	OpenDisplayProfile(&displayProf);
-	cgDisplayProf = CGColorSpaceCreateWithPlatformColorSpace(displayProf);
-	CMGetDefaultProfileBySpace(cmCMYKData, &destProf);
-	NCWNewColorWorld(&cw, displayProf, destProf);
-	
 	// Set the locking thread to NULL
 	lockingThread = NULL;
 	
@@ -62,11 +55,9 @@
 - (void)dealloc
 {	
 	// Free the room we took for everything else
-	if (displayProf) CloseDisplayProfile(displayProf);
 	if (cgDisplayProf) CGColorSpaceRelease(cgDisplayProf);
 	if (compositor) [compositor autorelease];
 	if (image) [image autorelease];
-	if (cw) CWDisposeColorWorld(cw);
 	if (data) free(data);
 	if (overlay) free(overlay);
 	if (replace) free(replace);
@@ -631,21 +622,6 @@
 	else {
 		[[document docView] setNeedsDisplayInRect:displayUpdateRect];
 	}*/
-}
-
-- (void)updateColorWorld
-{
-	CMProfileRef srcProf, destProf;
-	
-	if (cw) CWDisposeColorWorld(cw);
-	if (displayProf) CloseDisplayProfile(displayProf);
-	if (cgDisplayProf) CGColorSpaceRelease(cgDisplayProf);
-	OpenDisplayProfile(&displayProf);
-	cgDisplayProf = CGColorSpaceCreateWithPlatformColorSpace(displayProf);
-	CMGetDefaultProfileBySpace(cmCMYKData, &destProf);
-	NCWNewColorWorld(&cw, srcProf, destProf);
-	if ([self CMYKPreview])
-		[self update];
 }
 
 - (IntRect)imageRect

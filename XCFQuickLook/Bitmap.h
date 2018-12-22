@@ -140,18 +140,3 @@ unsigned char *convertBitmap(int dspp, int dspace, int dbps, unsigned char *ibit
  unsigned char averagedComponentValue(int spp, unsigned char *data, int width, int height, int component, int radius, IntPoint where);
 
 
-/*!
-	@function	OpenDisplayProfile
-	@discussion	Returns the ColorSync profile for the default display.
-	@param		profile
-				The profile to make the default display's profile.
-*/
- void OpenDisplayProfile(CMProfileRef *profile);
-
-/*!
-	@function	CloseDisplayProfile
-	@discussion	Releases the ColorSync profile for the default display.
-	@param		profile
-				The profile to make the default display's profile.
-*/
- void CloseDisplayProfile(CMProfileRef profile);
