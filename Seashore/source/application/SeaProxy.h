@@ -111,9 +111,6 @@
 - (IBAction)swapColors:(id)sender;
 - (IBAction)defaultColors:(id)sender;
 
-// To ColorSync API...
-- (IBAction)openColorSyncPanel:(id)sender;
-
 // To crashing...
 - (IBAction)crash:(id)sender;
 

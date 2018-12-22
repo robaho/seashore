@@ -380,11 +380,6 @@
 	[[[[SeaController utilitiesManager] toolboxUtilityFor:gCurrentDocument] colorView] defaultColors: sender];
 }
 
-- (IBAction)openColorSyncPanel:(id)sender
-{
-	CMLaunchControlPanel(0);
-}
-
 - (BOOL)validateMenuItem:(id)menuItem
 {
 	id document = gCurrentDocument;
