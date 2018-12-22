@@ -18,7 +18,6 @@ extern IntPoint gScreenResolution;
 
 - (id)initWithDocument:(id)doc
 {
-	CMProfileRef destProf;
 	int layerWidth, layerHeight;
 	
 	// Remember the document we are representing
@@ -50,12 +49,6 @@ extern IntPoint gScreenResolution;
 	memset(replace, 0, layerWidth * layerHeight);
 	altData = NULL;
 	
-	// Create the colour world
-	OpenDisplayProfile(&displayProf);
-	cgDisplayProf = CGColorSpaceCreateWithPlatformColorSpace(displayProf);
-	CMGetDefaultProfileBySpace(cmCMYKData, &destProf);
-	NCWNewColorWorld(&cw, displayProf, destProf);
-	
 	// Set the locking thread to NULL
 	lockingThread = NULL;
 	
@@ -69,11 +62,9 @@ extern IntPoint gScreenResolution;
 - (void)dealloc
 {	
 	// Free the room we took for everything else
-	if (displayProf) CloseDisplayProfile(displayProf);
 	if (cgDisplayProf) CGColorSpaceRelease(cgDisplayProf);
 	if (compositor) [compositor autorelease];
 	if (image) [image autorelease];
-	if (cw) CWDisposeColorWorld(cw);
 	if (data) free(data);
 	if (overlay) free(overlay);
 	if (replace) free(replace);
@@ -368,12 +359,6 @@ extern IntPoint gScreenResolution;
 		xheight = [(SeaLayer *)layer height];
 		altData = malloc(make_128(xwidth * xheight));
 	}
-	else if (CMYKPreview && spp == 4) {
-		viewType = kCMYKPreviewView;
-		xwidth = [(SeaContent *)contents width];
-		xheight = [(SeaContent *)contents height];
-		altData = malloc(make_128(xwidth * xheight * 4));
-	}
 	
 	// Update ourselves (if advised to)
 	if (update)
@@ -400,25 +385,6 @@ extern IntPoint gScreenResolution;
 	CMYKPreview = !CMYKPreview;
 	[self readjustAltData:YES];
 	[(ToolboxUtility *)[[SeaController utilitiesManager] toolboxUtilityFor:document] update:NO];
-}
-
-- (NSColor *)matchColor:(NSColor *)color
-{
-	CMColor cmColor;
-	NSColor *result;
-	
-	// Determine the RGB color
-	cmColor.rgb.red = ([color redComponent] * 65535.0);
-	cmColor.rgb.green = ([color greenComponent] * 65535.0);
-	cmColor.rgb.blue = ([color blueComponent] * 65535.0);
-	
-	// Match color
-	CWMatchColors(cw, &cmColor, 1);
-	
-	// Calculate result
-	result = [NSColor colorWithDeviceCyan:(float)cmColor.cmyk.cyan / 65536.0 magenta:(float)cmColor.cmyk.magenta / 65536.0 yellow:(float)cmColor.cmyk.yellow / 65536.0 black:(float)cmColor.cmyk.black / 65536.0 alpha:[color alphaComponent]];
-	
-	return result;
 }
 
 - (void)forcedChannelUpdate
@@ -595,70 +561,6 @@ extern IntPoint gScreenResolution;
 	}
 }
 
-- (void)forcedCMYKUpdate:(IntRect)majorUpdateRect
-{
-	unsigned char *tempData;
-	CMBitmap srcBitmap, destBitmap;
-	int i;
-
-	// Define the source
-	if (useUpdateRect) {
-		for (i = 0; i < majorUpdateRect.size.height; i++) {
-		
-			// Define the source
-			tempData = malloc(majorUpdateRect.size.width * 3);
-			stripAlphaToWhite(4, tempData, data + ((majorUpdateRect.origin.y + i) * width + majorUpdateRect.origin.x) * 4, majorUpdateRect.size.width);
-			srcBitmap.image = (char *)tempData;
-			srcBitmap.width = majorUpdateRect.size.width;
-			srcBitmap.height = 1;
-			srcBitmap.rowBytes = majorUpdateRect.size.width * 3;
-			srcBitmap.pixelSize = 8 * 3;
-			srcBitmap.space = cmRGB24Space;
-		
-			// Define the destination
-			destBitmap = srcBitmap;
-			destBitmap.image = (char *)altData + ((majorUpdateRect.origin.y + i) * width + majorUpdateRect.origin.x) * 4;
-			destBitmap.rowBytes = majorUpdateRect.size.width * 4;
-			destBitmap.pixelSize = 8 * 4;
-			destBitmap.space = cmCMYK32Space;
-			
-			// Execute the conversion
-			CWMatchBitmap(cw, &srcBitmap, NULL, 0, &destBitmap);
-			
-			// Clean up after ourselves
-			free(tempData);
-			
-		}
-	}
-	else {
-	
-		// Define the source
-		tempData = malloc(width * height * 3);
-		stripAlphaToWhite(4, tempData, data, width * height);
-		srcBitmap.image = (char *)tempData;
-		srcBitmap.width = width;
-		srcBitmap.height = height;
-		srcBitmap.rowBytes = width * 3;
-		srcBitmap.pixelSize = 8 * 3;
-		srcBitmap.space = cmRGB24Space;
-	
-		// Define the destination
-		destBitmap.image = (char *)altData;
-		destBitmap.width = width;
-		destBitmap.height = height;
-		destBitmap.rowBytes = width * 4;
-		destBitmap.pixelSize = 8 * 4;
-		destBitmap.space = cmCMYK32Space;
-		
-		// Execute the conversion
-		CWMatchBitmap(cw, &srcBitmap, NULL, 0, &destBitmap);
-
-		// Clean up after ourselves
-		free(tempData);
-
-	}
-}
-
 - (void)forcedUpdate
 {
 	int i, count = 0, layerCount = [[document contents] layerCount];
@@ -732,11 +634,6 @@ extern IntPoint gScreenResolution;
 	if (viewType == kPrimaryChannelsView || viewType == kAlphaChannelView) {
 		[self forcedChannelUpdate];
 	}
-	
-	// If the user has requested a CMYK preview take the extra steps necessary
-	if (viewType == kCMYKPreviewView) {
-		[self forcedCMYKUpdate:majorUpdateRect];
-	}
 }
 
 - (void)update
@@ -789,21 +686,6 @@ extern IntPoint gScreenResolution;
 	}
 }
 
-- (void)updateColorWorld
-{
-	CMProfileRef destProf;
-	
-	if (cw) CWDisposeColorWorld(cw);
-	if (displayProf) CloseDisplayProfile(displayProf);
-	if (cgDisplayProf) CGColorSpaceRelease(cgDisplayProf);
-	OpenDisplayProfile(&displayProf);
-	cgDisplayProf = CGColorSpaceCreateWithPlatformColorSpace(displayProf);
-	CMGetDefaultProfileBySpace(cmCMYKData, &destProf);
-	NCWNewColorWorld(&cw, displayProf, destProf);
-	if ([self CMYKPreview])
-		[self update];
-}
-
 - (IntRect)imageRect
 {
 	id layer;
@@ -823,7 +705,6 @@ extern IntPoint gScreenResolution;
 - (NSImage *)image
 {
 	NSBitmapImageRep *imageRep;
-	NSBitmapImageRep *altImageRep = NULL;
 	id contents = [document contents];
 	int xwidth, xheight;
 	id layer;
@@ -841,25 +722,25 @@ extern IntPoint gScreenResolution;
 		if (viewType == kPrimaryChannelsView) {
 			xwidth = [(SeaLayer *)layer width];
 			xheight = [(SeaLayer *)layer height];
-			altImageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&altData pixelsWide:xwidth pixelsHigh:xheight bitsPerSample:8 samplesPerPixel:spp - 1 hasAlpha:NO isPlanar:NO colorSpaceName:(spp == 4) ? NSDeviceRGBColorSpace : NSDeviceWhiteColorSpace bytesPerRow:xwidth * (spp - 1) bitsPerPixel:8 * (spp - 1)];
+			imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&altData pixelsWide:xwidth pixelsHigh:xheight bitsPerSample:8 samplesPerPixel:spp - 1 hasAlpha:NO isPlanar:NO colorSpaceName:(spp == 4) ? NSDeviceRGBColorSpace : NSDeviceWhiteColorSpace bytesPerRow:xwidth * (spp - 1) bitsPerPixel:8 * (spp - 1)];
 		}
 		else if (viewType == kAlphaChannelView) {
 			xwidth = [(SeaLayer *)layer width];
 			xheight = [(SeaLayer *)layer height];
-			altImageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&altData pixelsWide:xwidth pixelsHigh:xheight bitsPerSample:8 samplesPerPixel:1 hasAlpha:NO isPlanar:NO colorSpaceName:NSDeviceWhiteColorSpace bytesPerRow:xwidth * 1 bitsPerPixel:8];
+			imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&altData pixelsWide:xwidth pixelsHigh:xheight bitsPerSample:8 samplesPerPixel:1 hasAlpha:NO isPlanar:NO colorSpaceName:NSDeviceWhiteColorSpace bytesPerRow:xwidth * 1 bitsPerPixel:8];
 		}
-		else if (viewType == kCMYKPreviewView) {
-			xwidth = [(SeaContent *)contents width];
-			xheight = [(SeaContent *)contents height];
-			altImageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&altData pixelsWide:xwidth pixelsHigh:xheight bitsPerSample:8 samplesPerPixel:4 hasAlpha:NO isPlanar:NO colorSpaceName:NSDeviceCMYKColorSpace bytesPerRow:xwidth * 4 bitsPerPixel:8 * 4];
-		}
-		[image addRepresentation:altImageRep];
 	}
 	else {
 		imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO colorSpaceName:(spp == 4) ? NSDeviceRGBColorSpace : NSDeviceWhiteColorSpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
-		[image addRepresentation:imageRep];
 	}
-	
+    
+    if (CMYKPreview) {
+        NSColorSpace* cs = [NSColorSpace deviceCMYKColorSpace];
+        imageRep = [imageRep bitmapImageRepByConvertingToColorSpace:cs renderingIntent:NSColorRenderingIntentDefault];
+    }
+    
+    [image addRepresentation:imageRep];
+
 	return image;
 }
 

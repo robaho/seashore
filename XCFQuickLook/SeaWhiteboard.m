@@ -340,12 +340,6 @@
 		xheight = [(SeaLayer *)layer height];
 		altData = malloc(make_128(xwidth * xheight));
 	}
-	else if (CMYKPreview && spp == 4) {
-		viewType = kCMYKPreviewView;
-		xwidth = [(SeaContent *)contents width];
-		xheight = [(SeaContent *)contents height];
-		altData = malloc(make_128(xwidth * xheight * 4));
-	}
 	
 	// Update ourselves (if advised to)
 	if (update)
@@ -371,25 +365,6 @@
 	// Otherwise make the change
 	CMYKPreview = !CMYKPreview;
 	[self readjustAltData:YES];
-}
-
-- (NSColor *)matchColor:(NSColor *)color
-{
-	CMColor cmColor;
-	NSColor *result;
-	
-	// Determine the RGB color
-	cmColor.rgb.red = ([color redComponent] * 65535.0);
-	cmColor.rgb.green = ([color greenComponent] * 65535.0);
-	cmColor.rgb.blue = ([color blueComponent] * 65535.0);
-	
-	// Match color
-	CWMatchColors(cw, &cmColor, 1);
-	
-	// Calculate result
-	result = [NSColor colorWithDeviceCyan:(float)cmColor.cmyk.cyan / 65536.0 magenta:(float)cmColor.cmyk.magenta / 65536.0 yellow:(float)cmColor.cmyk.yellow / 65536.0 black:(float)cmColor.cmyk.black / 65536.0 alpha:[color alphaComponent]];
-	
-	return result;
 }
 
 - (void)forcedChannelUpdate

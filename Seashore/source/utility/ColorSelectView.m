@@ -81,10 +81,7 @@
 	if (document == NULL)
 		[[NSColor whiteColor] set];
 	else {
-		if ([[document whiteboard] CMYKPreview])
-			[[[document whiteboard] matchColor:[[document contents] background]] set];
-		else
-			[[[document contents] background] set];
+        [[[document contents] background] set];
 	}
 	[[NSBezierPath bezierPathWithRect:NSMakeRect(26, 8, 26, 16)] fill];
 
@@ -118,10 +115,7 @@
 		if (document == NULL)
 			[[NSColor blackColor] set];
 		else {
-			if ([[document whiteboard] CMYKPreview])
-				[[[document whiteboard] matchColor:[[document contents] foreground]] set];
-			else
-				[[[document contents] foreground] set];
+            [[[document contents] foreground] set];
 		}
 		[[NSBezierPath bezierPathWithRect:NSMakeRect(2, 2, 26, 16)] fill];
 	}

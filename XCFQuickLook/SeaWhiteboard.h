@@ -245,16 +245,6 @@ enum {
 */
 - (void)toggleCMYKPreview;
 
-/*!
-	@method		matchColor:
-	@discussion	Returns the appropriately matched colour given an unmatched
-				colour.
-	@param		color
-				The unmatched RGBA color.
-	@result		The matched RGBA color. 
-*/
-- (NSColor *)matchColor:(NSColor *)color;
-
 // UPDATING METHODS
 
 /*!

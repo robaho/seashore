@@ -81,9 +81,6 @@ enum {
 	// The opacity for the overlay
 	int overlayOpacity;
 	
-	// The colour world for colour space conversions
-	CMWorldRef cw;
-	
 	// The whiteboard's samples per pixel
 	int spp;
 	
@@ -103,10 +100,7 @@ enum {
 	// The thread that is locking or NULL otherwise
 	NSThread *lockingThread;
 	
-	// The display profile
-	CMProfileRef displayProf;
 	CGColorSpaceRef cgDisplayProf;
-	
 }
 
 // CREATION METHODS
@@ -240,16 +234,6 @@ enum {
 */
 - (void)toggleCMYKPreview;
 
-/*!
-	@method		matchColor:
-	@discussion	Returns the appropriately matched colour given an unmatched
-				colour.
-	@param		color
-				The unmatched RGBA color.
-	@result		The matched RGBA color. 
-*/
-- (NSColor *)matchColor:(NSColor *)color;
-
 // UPDATING METHODS
 
 /*!
@@ -267,14 +251,6 @@ enum {
 				YES if drawing should be done in thread, NO otherwise.
 */
 - (void)update:(IntRect)rect inThread:(BOOL)thread;
-
-/*!
-	@method		updateColorWorld
-	@discussion	Called to inform the whiteboard that the user has changed the
-				ColorSync system settings. Updates the CMYK preview to reflect
-				the changes.
-*/
-- (void)updateColorWorld;
 
 // ACCESSOR METHODS
 
