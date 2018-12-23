@@ -329,7 +329,7 @@
 	<key>CFBundleExecutable</key>
 	<string>Seashore</string>
 	<key>CFBundleGetInfoString</key>
-	<string>Seashore 0.6 - GNU General Public License</string>
+	<string>Seashore 1.0 - GNU General Public License</string>
 	<key>CFBundleIconFile</key>
 	<string>Main Icon.icns</string>
 	<key>CFBundleIdentifier</key>
@@ -341,13 +341,28 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.6.6</string>
+	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>SeSh</string>
 	<key>CFBundleVersion</key>
-	<string>20181219</string>
+	<string>20181222</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>seashore.sourceforge.net</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSTemporaryExceptionMinimumTLSVersion</key>
+				<string>TLSv1.1</string>
+			</dict>
+		</dict>
+	</dict>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright (c) 1995-2010 Mark Pazolli et al.
+	<string>Copyright (c) 1995-2019 Mark Pazolli et al.
 GNU General Public License v2.0</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>

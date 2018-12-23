@@ -26,15 +26,6 @@
 }
 
 /*!
-	@method		goEmail:
-	@discussion	Opens the default e-mail client with a message addressed to me
-				for feedback.
-	@param		sender
-				Ignored.
-*/
-- (IBAction)goEmail:(id)sender;
-
-/*!
 	@method		goSourceForge:
 	@discussion	Opens the default web browser with Seashore's SourceForge page
 				to allow users to submit feedback.
@@ -42,32 +33,6 @@
 				Ignored.
 */
 - (IBAction)goSourceForge:(id)sender;
-
-/*!
-	@method		goWebsite:
-	@discussion	Opens the default web browser with Seashore's web page to allow
-				users to see latest developments with the program.
-	@param		sender
-				Ignored.
-*/
-- (IBAction)goWebsite:(id)sender;
-
-/*!
-	@method		goSurvey:
-	@discussion	Opens the default web browser with Seashore's survey to allow
-				users to offer feedback on the program.
-	@param		sender
-				Ignored.
-*/
-- (IBAction)goSurvey:(id)sender;
-
-/*!
-	@method		openBugs:
-	@discussion	Opens the bug report and suggestions window.
-	@param		sender
-				Ignored.
-*/
-- (IBAction)openBugs:(id)sender;
 
 /*!
 	@method		openHelp:

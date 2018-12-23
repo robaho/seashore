@@ -2,31 +2,9 @@
 
 @implementation SeaHelp
 
-- (IBAction)goEmail:(id)sender
-{
-	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"mailto:cedarsx@gmail.com?subject=Seashore%20Comment"]];
-}
-
 - (IBAction)goSourceForge:(id)sender
 {
 	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://sourceforge.net/projects/seashore/"]];
-}
-
-- (IBAction)goWebsite:(id)sender
-{
-	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://seashore.sourceforge.net/"]];
-}
-
-- (IBAction)goSurvey:(id)sender
-{
-	NSString *url = [NSString stringWithFormat:@"http://seashore.sourceforge.net/survey.php?version=%@" , [[[NSBundle mainBundle] infoDictionary] valueForKey: @"CFBundleVersion"]];
-	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:url]];
-}
-
-- (IBAction)openBugs:(id)sender
-{
-	NSString *url = [NSString stringWithFormat:@"http://seashore.sourceforge.net/quick.php?version=%@" , [[[NSBundle mainBundle] infoDictionary] valueForKey: @"CFBundleVersion"]];
-	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:url]];
 }
 
 - (IBAction)openHelp:(id)sender

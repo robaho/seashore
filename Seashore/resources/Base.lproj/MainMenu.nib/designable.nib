@@ -909,24 +909,6 @@ CA
                             <menuItem isSeparatorItem="YES" id="3844">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Seashore Website" id="240">
-                                <connections>
-                                    <action selector="goWebsite:" target="235" id="241"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Seashore Feedback Survey" id="1672">
-                                <connections>
-                                    <action selector="goSurvey:" target="235" id="1673"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Report a Bug" id="246">
-                                <connections>
-                                    <action selector="openBugs:" target="235" id="247"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="245">
-                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                            </menuItem>
                             <menuItem title="Check for Updates" id="2158">
                                 <connections>
                                     <action selector="checkForUpdate:" target="235" id="2159"/>
