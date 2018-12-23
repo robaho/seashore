@@ -45,7 +45,7 @@
 - (void)drawRect:(NSRect)rect
 {
 	NSArray *textures = [master textures];
-	int textureCount =  [textures count];
+	int textureCount =  (int)[textures count];
 	int activeTextureIndex = [master activeTextureIndex];
 	int i, j, elemNo;
 	NSImage *thumbnail;
@@ -95,10 +95,11 @@
 - (void)update
 {
 	NSArray *textures = [master textures];
-	int textureCount =  [textures count];
+	int textureCount =  (int)[textures count];
 	NSSize size = NSMakeSize(kTexturePreviewSize * kTexturesPerRow + 1, ((textureCount % kTexturesPerRow == 0) ? (textureCount / kTexturesPerRow) : (textureCount / kTexturesPerRow + 1)) * kTexturePreviewSize);
 	
 	[self setFrameSize:size];
+    [self setNeedsDisplay:YES];
 }
 
 - (BOOL)isFlipped
