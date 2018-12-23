@@ -1,6 +1,6 @@
 # seashore
 
-![logo](doc/logo.png)
+![icon](doc/icon.png)
 
 download the latest DMGs from https://github.com/robaho/seashore/releases
 
