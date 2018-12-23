@@ -1,6 +1,6 @@
 # seashore
 
-[logo](doc/logo.png)
+![logo](doc/logo.png)
 
 download the latest DMGs from https://github.com/robaho/seashore/releases
 
@@ -12,6 +12,6 @@ If you are looking for an free, easy to use, "layers" image editing application,
 
 # screenshots
 
-[screenshot](doc/screenshot.png "screenshot")
+![screenshot](doc/screenshot.png "screenshot")
 
 
