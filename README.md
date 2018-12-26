@@ -1,6 +1,6 @@
 # seashore
 
-[logo](doc/logo.png)
+![icon](doc/icon.png)
 
 download the latest DMGs from https://github.com/robaho/seashore/releases
 
@@ -11,7 +11,4 @@ Primary motivation was to allow Seashore to work on OSX 10.6+, including Sierra,
 If you are looking for an free, easy to use, "layers" image editing application, this is the one.
 
 # screenshots
-
-[screenshot](doc/screenshot.png "screenshot")
-
-
+![screenshot](doc/screenshot.jpg)
