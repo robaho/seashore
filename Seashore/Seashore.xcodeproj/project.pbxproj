@@ -26,6 +26,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		2BC9679E21D00FE5004B22DB /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BC9679D21D00FE5004B22DB /* CoreImage.framework */; };
 		56C8A64D1055A1DA0056E36F /* normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 56C8A64C1055A1DA0056E36F /* normal.png */; };
 		A80983D70871420900F7412F /* JP2Exporter.m in Sources */ = {isa = PBXBuildFile; fileRef = A80983D50871420900F7412F /* JP2Exporter.m */; };
 		A80EB8A6086F05E300369324 /* JP2 Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A80EB8A5086F05E300369324 /* JP2 Icon.icns */; };
@@ -1380,20 +1381,6 @@
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = "GlassLozenge+";
 		};
-		A8F67D6F0C45F7C000CE8770 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A8F67D680C45F7C000CE8770 /* CIAffineTransform.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
-			remoteInfo = "AffineTransform+";
-		};
-		A8F67D740C45F7E100CE8770 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A8F67D680C45F7C000CE8770 /* CIAffineTransform.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
-			remoteInfo = "AffineTransform+";
-		};
 		A8F67D880C45F88E00CE8770 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A8F67D810C45F88E00CE8770 /* CIPerspectiveTransform.xcodeproj */;
@@ -1483,6 +1470,9 @@
 		2B2EDA101FA4220200A6ED4E /* XCFQuickLook.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = XCFQuickLook.xcodeproj; path = ../XCFQuickLook/XCFQuickLook.xcodeproj; sourceTree = "<group>"; };
 		2B4046692185672100BCC2A2 /* ColorSync.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ColorSync.framework; path = System/Library/Frameworks/ColorSync.framework; sourceTree = SDKROOT; };
 		2B40466A2185672300BCC2A2 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
+		2BC9679B21CFE20F004B22DB /* doc */ = {isa = PBXFileReference; lastKnownFileType = folder; name = doc; path = ../doc; sourceTree = "<group>"; };
+		2BC9679C21CFE229004B22DB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		2BC9679D21D00FE5004B22DB /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		2BDB907921836088000D7803 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/SeaDocument.nib; sourceTree = "<group>"; };
 		2BDB907A21836089000D7803 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		2BDB907B21836089000D7803 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/CocoaContent.nib; sourceTree = "<group>"; };
@@ -1778,7 +1768,6 @@
 		A8F0FFCF0A35E06200259FD6 /* GIFExporter.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = GIFExporter.m; sourceTree = "<group>"; };
 		A8F22ED907EA9871005AD30E /* SVGImporter.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = SVGImporter.m; path = source/importer/SVGImporter.m; sourceTree = SOURCE_ROOT; };
 		A8F22EDA07EA9871005AD30E /* SVGImporter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = SVGImporter.h; path = source/importer/SVGImporter.h; sourceTree = SOURCE_ROOT; };
-		A8F67D680C45F7C000CE8770 /* CIAffineTransform.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CIAffineTransform.xcodeproj; path = "../CoreImage Plug-ins/CIAffineTransform/CIAffineTransform.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		A8F67D810C45F88E00CE8770 /* CIPerspectiveTransform.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CIPerspectiveTransform.xcodeproj; path = "../CoreImage Plug-ins/CIPerspectiveTransform/CIPerspectiveTransform.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		A8F6B64806CA1BA0003A4C65 /* BMP Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "BMP Icon.icns"; sourceTree = "<group>"; };
 		A8F6B64C06CA1C10003A4C65 /* JPEG Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "JPEG Icon.icns"; sourceTree = "<group>"; };
@@ -2029,6 +2018,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2BC9679E21D00FE5004B22DB /* CoreImage.framework in Frameworks */,
 				A84E106408E7A4FB0084BCB7 /* IOKit.framework in Frameworks */,
 				A8BF652708E6FEAB006E9BFC /* Carbon.framework in Frameworks */,
 				A8EDF14C078959C80022BB31 /* Cocoa.framework in Frameworks */,
@@ -2074,6 +2064,8 @@
 		2A37F4AAFDCFA73011CA2CEA /* Seashore */ = {
 			isa = PBXGroup;
 			children = (
+				2BC9679C21CFE229004B22DB /* README.md */,
+				2BC9679B21CFE20F004B22DB /* doc */,
 				2A37F4ABFDCFA73011CA2CEA /* Application Classes */,
 				F50687FD039B9946016F7F19 /* Document Classes */,
 				F5B6B31B03D14DD701FCB9EC /* Display Classes */,
@@ -2158,6 +2150,7 @@
 		2A37F4C3FDCFA73011CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2BC9679D21D00FE5004B22DB /* CoreImage.framework */,
 				1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */,
 				1058C7A8FEA54F5311CA2CBB /* Other Frameworks */,
 			);
@@ -2573,7 +2566,6 @@
 			isa = PBXGroup;
 			children = (
 				A825EA610C38FE060017A3D1 /* CIAffineTile.xcodeproj */,
-				A8F67D680C45F7C000CE8770 /* CIAffineTransform.xcodeproj */,
 				A8B9AB870C131FFE0050D2A9 /* CIBloom.xcodeproj */,
 				A8E136950C40751800C8A848 /* CIBrightness.xcodeproj */,
 				A893EAF50C33CD91009D2D2E /* CIBump.xcodeproj */,
@@ -2998,14 +2990,6 @@
 			isa = PBXGroup;
 			children = (
 				A8F081790C3B822D0083E3D3 /* GlassLozenge+.bundle */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		A8F67D690C45F7C000CE8770 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				A8F67D700C45F7C000CE8770 /* AffineTransform+.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3616,7 +3600,6 @@
 				A83DE5950C451B58000FEEA8 /* PBXTargetDependency */,
 				A83DE5F60C4520AB000FEEA8 /* PBXTargetDependency */,
 				A83DE6430C4523D4000FEEA8 /* PBXTargetDependency */,
-				A8F67D750C45F7E100CE8770 /* PBXTargetDependency */,
 				A8F67D8D0C45F89B00CE8770 /* PBXTargetDependency */,
 			);
 			name = Seashore;
@@ -3662,10 +3645,6 @@
 				{
 					ProductGroup = A825EA620C38FE060017A3D1 /* Products */;
 					ProjectRef = A825EA610C38FE060017A3D1 /* CIAffineTile.xcodeproj */;
-				},
-				{
-					ProductGroup = A8F67D690C45F7C000CE8770 /* Products */;
-					ProjectRef = A8F67D680C45F7C000CE8770 /* CIAffineTransform.xcodeproj */;
 				},
 				{
 					ProductGroup = A8B9AB880C131FFE0050D2A9 /* Products */;
@@ -4472,13 +4451,6 @@
 			remoteRef = A8F081780C3B822D0083E3D3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		A8F67D700C45F7C000CE8770 /* AffineTransform+.bundle */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "AffineTransform+.bundle";
-			remoteRef = A8F67D6F0C45F7C000CE8770 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		A8F67D890C45F88E00CE8770 /* PerspectiveTransform+.bundle */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
@@ -5225,11 +5197,6 @@
 			name = "GlassLozenge+";
 			targetProxy = A8F0817D0C3B82570083E3D3 /* PBXContainerItemProxy */;
 		};
-		A8F67D750C45F7E100CE8770 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "AffineTransform+";
-			targetProxy = A8F67D740C45F7E100CE8770 /* PBXContainerItemProxy */;
-		};
 		A8F67D8D0C45F89B00CE8770 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "PerspectiveTransform+";
@@ -5542,7 +5509,7 @@
 				A89B83D00A426D4500AD6941 /* Deployment (Native) */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = "Deployment (Universal)";
+			defaultConfigurationName = "Deployment (Native)";
 		};
 		A8D01E0909BD8EA3007CFE76 /* Build configuration list for PBXNativeTarget "Seashore" */ = {
 			isa = XCConfigurationList;
@@ -5552,7 +5519,7 @@
 				A8D01E0C09BD8EA3007CFE76 /* Deployment (Native) */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = "Deployment (Universal)";
+			defaultConfigurationName = "Deployment (Native)";
 		};
 		A8D01E0D09BD8EA3007CFE76 /* Build configuration list for PBXProject "Seashore" */ = {
 			isa = XCConfigurationList;
@@ -5562,7 +5529,7 @@
 				A8D01E1009BD8EA3007CFE76 /* Deployment (Native) */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = "Deployment (Universal)";
+			defaultConfigurationName = "Deployment (Native)";
 		};
 /* End XCConfigurationList section */
 	};

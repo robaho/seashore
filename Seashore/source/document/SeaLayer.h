@@ -466,6 +466,12 @@
 - (NSImage *)thumbnail;
 
 /*!
+    @method image
+    @result returns an autorelease NSBitmapImageRep of the current layer
+ */
+ - (NSBitmapImageRep *)image;
+
+/*!
 	@method		updateThumbnail
 	@discussion	Updates the thumbnail so that it is up-to-date with the layer's
 				contents. This routine does not consider the overlay so it

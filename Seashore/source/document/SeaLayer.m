@@ -927,6 +927,13 @@
 	}
 }
 
+- (NSBitmapImageRep *)image
+{
+    NSBitmapImageRep *imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:TRUE isPlanar:NO colorSpaceName:(spp == 4) ? NSCalibratedRGBColorSpace : NSCalibratedWhiteColorSpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
+    [imageRep autorelease];
+    return imageRep;
+}
+
 - (void)convertFromType:(int)srcType to:(int)destType
 {
 	// Destroy the thumbnail data
@@ -940,7 +947,7 @@
     
     unsigned char *newdata;
     
-    NSBitmapImageRep *imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:TRUE isPlanar:NO colorSpaceName:(spp == 4) ? NSDeviceRGBColorSpace : NSDeviceWhiteColorSpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
+    NSBitmapImageRep *imageRep = [self image];
 		
 	if (srcType == XCF_RGB_IMAGE && destType == XCF_GRAY_IMAGE) {
         spp=2;
