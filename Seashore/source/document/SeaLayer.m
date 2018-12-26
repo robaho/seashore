@@ -900,6 +900,9 @@
     
     data = convertImageRep(imageRep,spp);
     
+    [inputImage release];
+    [at release];
+    
     // Determine the width and height of this layer
     newWidth = (int)[imageRep pixelsWide];
     newHeight = (int)[imageRep pixelsHigh];
