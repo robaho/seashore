@@ -469,7 +469,7 @@
     @method image
     @result returns an autorelease NSBitmapImageRep of the current layer
  */
- - (NSBitmapImageRep *)image;
+ - (NSBitmapImageRep *)bitmap;
 
 /*!
 	@method		updateThumbnail

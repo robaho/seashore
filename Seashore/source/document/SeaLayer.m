@@ -930,7 +930,7 @@
 	}
 }
 
-- (NSBitmapImageRep *)image
+- (NSBitmapImageRep *)bitmap
 {
     NSBitmapImageRep *imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:TRUE isPlanar:NO colorSpaceName:(spp == 4) ? NSCalibratedRGBColorSpace : NSCalibratedWhiteColorSpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
     [imageRep autorelease];
@@ -950,7 +950,7 @@
     
     unsigned char *newdata;
     
-    NSBitmapImageRep *imageRep = [self image];
+    NSBitmapImageRep *imageRep = [self bitmap];
 		
 	if (srcType == XCF_RGB_IMAGE && destType == XCF_GRAY_IMAGE) {
         spp=2;
