@@ -11,6 +11,7 @@
 #import "SeaPlugins.h"
 #import "CIAffineTransformClass.h"
 #import <ApplicationServices/ApplicationServices.h>
+#import <CoreImage/CoreImage.h>
 #import <sys/stat.h>
 #import <sys/mount.h>
 #import <GIMPCore/GIMPCore.h>
@@ -428,7 +429,6 @@
 	[at rotateByDegrees:degrees];
 	
 	// Determine the input image
-	premultiplyBitmap(spp, data, data, width * height);
 	in_rep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO colorSpaceName:(spp == 4) ? NSDeviceRGBColorSpace : NSDeviceWhiteColorSpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
 
 	// Determine the output size
@@ -459,7 +459,6 @@
 	
 	// Determine the output image
 	image_out = [[NSImage alloc] initWithSize:NSMakeSize(width, height)];
-	[image_out setCachedSeparately:YES];
 	[image_out recache];
 	[image_out lockFocus];
 	
@@ -497,54 +496,43 @@
 
 - (void)setCoreImageRotation:(float)degrees interpolation:(int)interpolation withTrim:(BOOL)trim
 {
-	unsigned char *newData;
-	NSAffineTransform *at;
-	int newWidth, newHeight, i;
-	NSPoint point[4], minPoint, maxPoint;
-
-	// Determine affine transform
-	at = [NSAffineTransform transform];
-	[at rotateByDegrees:degrees];
-	
-	// Determine the output size
-	point[0] = [at transformPoint:NSMakePoint(0.0, 0.0)];
-	point[1] = [at transformPoint:NSMakePoint(width, 0.0)];
-	point[2] = [at transformPoint:NSMakePoint(0.0, height)];
-	point[3] = [at transformPoint:NSMakePoint(width, height)];
-	minPoint = point[0];
-	for (i = 0; i < 4; i++) {
-		if (point[i].x < minPoint.x)
-			minPoint.x = point[i].x;
-		if (point[i].y < minPoint.y)
-			minPoint.y = point[i].y;
-	}
-	maxPoint = point[0];
-	for (i = 0; i < 4; i++) {
-		if (point[i].x > maxPoint.x)
-			maxPoint.x = point[i].x;
-		if (point[i].y > maxPoint.y)
-			maxPoint.y = point[i].y;
-	}
-	newWidth = ceilf(maxPoint.x - minPoint.x);
-	newHeight = ceilf(maxPoint.y - minPoint.y);
-	
-	// Run the transform
-	newData = [affinePlugin runAffineTransform:at withImage:data spp:spp width:width height:height opaque:NO newWidth:&newWidth newHeight:&newHeight];
-	
-	// Replace the old bitmap with the new bitmap
+    int bbr = width*spp;
+    
+    CGSize size = CGSizeMake(width,height);
+    CGColorSpaceRef cs = CGColorSpaceCreateWithName(spp > 2 ? kCGColorSpaceGenericRGB : kCGColorSpaceGenericGray);
+    CIFormat format = spp > 2 ? kCIFormatRGBA8 :kCIFormatLA8;
+    
+    NSData *idata = [NSData dataWithBytes:data length:(width*height*spp)];
+    
+    CIImage *inputImage = [[CIImage alloc] initWithBitmapData:idata bytesPerRow:bbr size:size format:format colorSpace:cs];
+    CIFilter *controlsFilter = [CIFilter filterWithName:@"CIAffineTransform"];
+    [controlsFilter setValue:inputImage forKey:kCIInputImageKey];
+    
+    NSAffineTransform *at = [NSAffineTransform transform];
+    [at rotateByDegrees:degrees];
+    [controlsFilter setValue:at forKey:@"inputTransform"];
+    CIImage *displayImage = [controlsFilter outputImage];
+    
+    NSCIImageRep *imageRep = [NSCIImageRep imageRepWithCIImage:displayImage];
+    
 	free(data);
-	data = newData;
-	xoff += width / 2 - newWidth / 2;
-	yoff += height / 2 - newHeight / 2;
-	width = newWidth; height = newHeight;
-	
+    
+    data = convertImageRep(imageRep,spp);
+    
+    int newWidth = (int)[imageRep pixelsWide];
+    int newHeight = (int)[imageRep pixelsHigh];
+    
+    xoff += width / 2 - newWidth / 2;
+    yoff += height / 2 - newHeight / 2;
+    width = newWidth; height = newHeight;
+
 	// Destroy the thumbnail data
 	if (thumbnail) [thumbnail autorelease];
 	if (thumbData) free(thumbData);
 	thumbnail = NULL; thumbData = NULL;
 	
 	// Make margin changes
-	if (trim) [self trimLayer];
+//    if (trim) [self trimLayer];
 }
 
 
@@ -891,25 +879,41 @@
 
 - (void)setCoreImageWidth:(int)newWidth height:(int)newHeight interpolation:(int)interpolation
 {
-	unsigned char *newData;
-	NSAffineTransform *at;
-	
-	// Determine affine transform
-	at = [NSAffineTransform transform];
-	[at scaleXBy:(float)newWidth / (float)width yBy:(float)newHeight / (float)height];
-	
-	// Run the transform
-	newData = [affinePlugin runAffineTransform:at withImage:data spp:spp width:width height:height opaque:!hasAlpha newWidth:&newWidth newHeight:&newHeight];
-	
-	// Replace the old bitmap with the new bitmap
-	free(data);
-	data = newData;
-	width = newWidth; height = newHeight;
-	
-	// Destroy the thumbnail data
-	if (thumbnail) [thumbnail autorelease];
-	if (thumbData) free(thumbData);
-	thumbnail = NULL; thumbData = NULL;
+    int bbr = width*spp;
+    
+    CGSize size = CGSizeMake(width,height);
+    CGColorSpaceRef cs = CGColorSpaceCreateWithName(spp > 2 ? kCGColorSpaceGenericRGB : kCGColorSpaceGenericGray);
+    CIFormat format = spp > 2 ? kCIFormatRGBA8 :kCIFormatLA8;
+    
+    NSData *idata = [NSData dataWithBytes:data length:(width*height*spp)];
+    
+    CIImage *inputImage = [[CIImage alloc] initWithBitmapData:idata bytesPerRow:bbr size:size format:format colorSpace:cs];
+    CIFilter *controlsFilter = [CIFilter filterWithName:@"CIAffineTransform"];
+    [controlsFilter setValue:inputImage forKey:kCIInputImageKey];
+    
+    NSAffineTransform *at = [NSAffineTransform transform];
+    [at scaleXBy:(float)newWidth / (float)width yBy:(float)newHeight / (float)height];
+    [controlsFilter setValue:at forKey:@"inputTransform"];
+    CIImage *displayImage = [controlsFilter outputImage];
+    
+    NSCIImageRep *imageRep = [NSCIImageRep imageRepWithCIImage:displayImage];
+    
+    free(data);
+    
+    data = convertImageRep(imageRep,spp);
+    
+    // Determine the width and height of this layer
+    newWidth = (int)[imageRep pixelsWide];
+    newHeight = (int)[imageRep pixelsHigh];
+    
+    xoff += width / 2 - newWidth / 2;
+    yoff += height / 2 - newHeight / 2;
+    width = newWidth; height = newHeight;
+    
+    // Destroy the thumbnail data
+    if (thumbnail) [thumbnail autorelease];
+    if (thumbData) free(thumbData);
+    thumbnail = NULL; thumbData = NULL;
 }
 
 

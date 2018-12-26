@@ -16,6 +16,8 @@ unsigned char *convertImageRep(NSImageRep *imageRep,int spp) {
     
     unsigned char *buffer = malloc(width*height*spp);
     
+    memset(buffer,0,width*height*spp);
+    
     NSBitmapImageRep *bitmapWhoseFormatIKnow = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&buffer pixelsWide:width pixelsHigh:height
                                                                                     bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO
                                                                                    colorSpaceName:csname bytesPerRow:width*spp
