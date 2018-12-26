@@ -70,10 +70,6 @@
 
 	// A path to the file we use for undoing
 	NSString *undoFilePath;
-	
-	// The affine transform plug-in (used to do CoreImage transforms)
-	id affinePlugin;
-
 }
 
 // CREATION METHODS

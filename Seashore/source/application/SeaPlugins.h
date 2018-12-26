@@ -76,14 +76,6 @@ enum {
 
 
 /*!
-	@method		affinePlugin
-	@discussion	Returns the plug-in to be used for Core Image affine transforms.
-	@results	Returns an instance of the plug-in to be used  for Core Image
-				affine transforms or NULL if no such instance exists.
-*/
-- (id)affinePlugin;
-
-/*!
 	@method		data
 	@discussion	Returns the address of a record shared between Seashore and the
 				plug-in.

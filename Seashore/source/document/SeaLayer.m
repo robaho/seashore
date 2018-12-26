@@ -36,7 +36,6 @@
 		name = [[NSString alloc] initWithFormat:LOCALSTR(@"layer title", @"Layer %d"), uniqueLayerID];
 	oldNames = [[NSArray alloc] init];
 	undoFilePath = [[NSString alloc] initWithFormat:@"/tmp/seaundo-d%d-l%d", [document uniqueDocID], [self uniqueLayerID]];
-	affinePlugin = [[SeaController seaPlugins] affinePlugin];
 	
 	return self;
 }
@@ -140,7 +139,6 @@
 	compressed = NO;
 	thumbnail = NULL; thumbData = NULL;
 	floating = YES;
-	affinePlugin = [[SeaController seaPlugins] affinePlugin];
 	
 	// Setup for undoing
 	seaLayerUndo = [[SeaLayerUndo alloc] initWithDocument:doc forLayer:self];
@@ -538,7 +536,7 @@
 
 - (void)setRotation:(float)degrees interpolation:(int)interpolation withTrim:(BOOL)trim
 {
-	if (affinePlugin && [[SeaController seaPrefs] useCoreImage]) {
+	if ([[SeaController seaPrefs] useCoreImage]) {
 		[self setCoreImageRotation:degrees interpolation:interpolation withTrim:trim];
 	}
 	else {
@@ -921,7 +919,7 @@
 {
 	// The issue here is it looks like we're not smart enough to pass anything
 	// to the affine plugin besides cubic, so if we're not cupbic we have to use cocoa
-	if (affinePlugin && [[SeaController seaPrefs] useCoreImage] && interpolation == GIMP_INTERPOLATION_CUBIC) {
+	if ([[SeaController seaPrefs] useCoreImage] && interpolation == GIMP_INTERPOLATION_CUBIC) {
 		[self setCoreImageWidth:newWidth height:newHeight interpolation:interpolation];
 	}
 	else {

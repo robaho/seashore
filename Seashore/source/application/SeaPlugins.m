@@ -261,14 +261,6 @@ BOOL checkRun(NSString *path, NSString *file)
 	[gUserDefaults setInteger:[[[[SeaController utilitiesManager] optionsUtilityFor:gCurrentDocument] getOptions: kEffectTool] selectedRow] forKey:@"effectIndex"];
 }
 
-- (id)affinePlugin
-{
-	if (ciAffineTransformIndex >= 0)
-		return [plugins objectAtIndex:ciAffineTransformIndex];
-	else
-		return NULL;
-}
-
 - (id)data
 {
 	return [gCurrentDocument pluginData];
