@@ -33,97 +33,86 @@
 
 - (void)run
 {
-	PluginData *pluginData;
-	IntRect selection;
-	unsigned char *data, *overlay, *replace;
-	int pos, i, j, k, width, spp, channel;
-	CMBitmap srcBitmap, destBitmap;
-	CMProfileRef srcProf, destProf;
-	CMDeviceID device;
-	CMDeviceProfileID deviceID;
-	CMProfileLocation profileLoc;
-	CMProfileRef *profile;
-	CMWorldRef cw, scw;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
-	[pluginData setOverlayOpacity:255];
-	[pluginData setOverlayBehaviour:kReplacingBehaviour];
-	selection = [pluginData selection];
-	spp = [pluginData spp];
-	width = [pluginData width];
-	data = [pluginData data];
-	overlay = [pluginData overlay];
-	replace = [pluginData replace];
-	
-	CMGetDefaultDevice(cmDisplayDeviceClass, &device);
-	CMGetDeviceDefaultProfileID(cmDisplayDeviceClass, device, &deviceID);
-	CMGetDeviceProfile(cmDisplayDeviceClass, device, deviceID, &profileLoc);
-	CMOpenProfile(&srcProf, &profileLoc);
-	CMGetDefaultProfileBySpace(cmCMYKData, &destProf);
-	NCWNewColorWorld(&cw, srcProf, destProf);
-	NCWNewColorWorld(&scw, destProf, srcProf);
-	
-	for (j = selection.origin.y; j < selection.origin.y + selection.size.height; j++) {
+    PluginData *pluginData;
+    IntRect selection;
+    
+    unsigned char *data, *overlay, *replace;
+    int width, height, spp, channel;
+    
+    pluginData = [(SeaPlugins *)seaPlugins data];
+    [pluginData setOverlayOpacity:255];
+    [pluginData setOverlayBehaviour:kReplacingBehaviour];
+    selection = [pluginData selection];
+    
+    spp = [pluginData spp];
+    
+    width = [pluginData width];
+    height = [pluginData height];
+    
+    data = [pluginData data];
+    overlay = [pluginData overlay];
+    replace = [pluginData replace];
+    
+    int selwidth = selection.size.width;
+    int selheight = selection.size.height;
+    
+    int sely = height-(selection.origin.y+selheight); // need to reverse coordinates
+    
+    NSRect to = NSMakeRect(0,0,selwidth,selheight);
+    NSRect from = NSMakeRect(selection.origin.x,sely,selwidth,selheight);
+    
+    NSBitmapImageRep *imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height
+                                                                      bitsPerSample:8 samplesPerPixel:spp hasAlpha:TRUE isPlanar:NO
+                                                                     colorSpaceName:(spp == 4) ? NSCalibratedRGBColorSpace : NSCalibratedWhiteColorSpace
+                                                                        bytesPerRow:width * spp bitsPerPixel:8 * spp];
+    
 
-		pos = j * width + selection.origin.x;
+    NSColorSpaceName csname = NSDeviceCMYKColorSpace;
+    int dspp = 4;
+    
+    unsigned char *buffer = malloc(selwidth*selheight*dspp);
+    
+    memset(buffer,0,selwidth*selheight*dspp);
+    
+    NSBitmapImageRep *tmp = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&buffer pixelsWide:selwidth pixelsHigh:selheight
+                                                                 bitsPerSample:8 samplesPerPixel:dspp hasAlpha:FALSE isPlanar:NO
+                                                                colorSpaceName:csname
+                                                                   bytesPerRow:selwidth*dspp bitsPerPixel:8*dspp];
+    
+    NSGraphicsContext *ctx = [NSGraphicsContext graphicsContextWithBitmapImageRep:tmp];
+    
+    [NSGraphicsContext saveGraphicsState];
+    [NSGraphicsContext setCurrentContext:ctx];
+    
+    [imageRep drawInRect:to fromRect:from operation:NSCompositingOperationCopy fraction:1 respectFlipped:NO hints:NULL];
+    
+    // now draw image back into overlay buffer
+    
+    NSBitmapImageRep *overlayRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&overlay pixelsWide:width pixelsHigh:height
+                                                                        bitsPerSample:8 samplesPerPixel:spp hasAlpha:TRUE isPlanar:NO
+                                                                       colorSpaceName:(spp == 4) ? NSCalibratedRGBColorSpace : NSCalibratedWhiteColorSpace
+                                                                          bytesPerRow:width * spp bitsPerPixel:8 * spp];
+    
+    ctx = [NSGraphicsContext graphicsContextWithBitmapImageRep:overlayRep];
+    
+    [NSGraphicsContext setCurrentContext:ctx];
+    
+    [tmp drawAtPoint:from.origin];
+    
+    [NSGraphicsContext restoreGraphicsState];
+    
+    [tmp autorelease];
+    [overlayRep autorelease];
+    [imageRep autorelease];
+    
+    int j,pos;
+    
+    for (j = selection.origin.y; j < selection.origin.y + selection.size.height; j++) {
+        pos = j * width + selection.origin.x;
+        memset(replace+pos,255,selection.size.width);
+    }
 
-		if (channel == kPrimaryChannels) {
-			srcBitmap.image = (char *)&(data[pos * 3]);
-			srcBitmap.width = selection.size.width;
-			srcBitmap.height = 1;
-			srcBitmap.rowBytes = selection.size.width * 3;
-			srcBitmap.pixelSize = 8 * 3;
-			srcBitmap.space = cmRGB24Space;
-		}
-		else {
-			srcBitmap.image = (char *)&(data[pos * 4]);
-			srcBitmap.width = selection.size.width;
-			srcBitmap.height = 1;
-			srcBitmap.rowBytes = selection.size.width * 4;
-			srcBitmap.pixelSize = 8 * 4;
-			srcBitmap.space = cmRGBA32Space;
-		}
-
-		destBitmap.image = (char *)&(overlay[pos * 4]);
-		destBitmap.width = selection.size.width;
-		destBitmap.height = 1;
-		destBitmap.rowBytes = selection.size.width * 4;
-		destBitmap.pixelSize = 8 * 4;
-		destBitmap.space = cmCMYK32Space;
-		
-		CWMatchBitmap(cw, &srcBitmap, NULL, 0, &destBitmap);
-		
-		srcBitmap.image = (char *)&(overlay[pos * 4]);
-		srcBitmap.width = selection.size.width;
-		srcBitmap.height = 1;
-		srcBitmap.rowBytes = selection.size.width * 4;
-		srcBitmap.pixelSize = 8 * 4;
-		srcBitmap.space = cmCMYK32Space;
-		
-		destBitmap.image = (char *)&(overlay[pos * 4]);
-		destBitmap.width = selection.size.width;
-		srcBitmap.height = 1;
-		destBitmap.rowBytes = selection.size.width * 4;
-		destBitmap.pixelSize = 8 * 4;
-		destBitmap.space = cmRGBA32Space;
-		
-		CWMatchBitmap(scw, &srcBitmap, NULL, 0, &destBitmap);
-		
-		for (i = selection.size.width; i >= 0; i--) {
-			if (channel == kPrimaryChannels)
-				overlay[(pos + i) * 4 + 3] = 255;
-			else
-				overlay[(pos + i) * 4 + 3] = data[(pos + i) * 4 + 3];
-			replace[pos + i] = 255;
-		}
-		
-	}
-	
-	CWDisposeColorWorld(cw);
-	CWDisposeColorWorld(scw);
-	CMCloseProfile(srcProf);
-	
-	[pluginData apply];
+    [pluginData apply];
 }
 
 - (void)reapply
