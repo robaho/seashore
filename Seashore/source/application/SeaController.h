@@ -121,14 +121,6 @@
 - (IBAction)editLastSaved:(id)sender;
 
 /*!
-	@method		colorSyncChanged:
-	@discussion	Notifies all documents when the ColorSync preferences change.
-	@param		notification
-				Ignored.
-*/
-- (void)colorSyncChanged:(NSNotification *)notification;
-
-/*!
 	@method		showLicense:
 	@discussion	Shows the license for Seashore.
 	@param		sender

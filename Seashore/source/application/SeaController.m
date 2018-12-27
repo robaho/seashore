@@ -24,9 +24,6 @@ id seaController;
 	
 	// Specify ourselves as NSApp's delegate
     [NSApp setDelegate:seaController];
-
-	// We want to know when ColorSync changes
-	[[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(colorSyncChanged:) name:@"AppleColorSyncPreferencesChangedNotification" object:NULL];
 	
 	return self;
 }
@@ -186,17 +183,6 @@ id seaController;
 	
 	// Finally remove the file we just created
 	[gFileManager removeFileAtPath:new_path handler:NULL];
-}
-
-- (void)colorSyncChanged:(NSNotification *)notification
-{
-	NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
-	int i;
-	
-	// Tell all documents to update there colour worlds
-	for (i = 0; i < [documents count]; i++) {
-		[[[documents objectAtIndex:i] whiteboard] updateColorWorld];
-	}
 }
 
 - (IBAction)showLicense:(id)sender

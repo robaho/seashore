@@ -263,14 +263,6 @@ enum {
 */
 - (void)update:(IntRect)rect inThread:(BOOL)thread;
 
-/*!
-	@method		updateColorWorld
-	@discussion	Called to inform the whiteboard that the user has changed the
-				ColorSync system settings. Updates the CMYK preview to reflect
-				the changes.
-*/
-- (void)updateColorWorld;
-
 // ACCESSOR METHODS
 
 /*!
