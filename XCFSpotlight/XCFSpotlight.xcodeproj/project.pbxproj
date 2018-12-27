@@ -18,8 +18,6 @@
 		C86B05270671AA6E00DD9006 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C86B05260671AA6E00DD9006 /* CoreServices.framework */; };
 		DC0D53B41041FFB30037378A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DC0D53A41041FFB30037378A /* main.m */; };
 		DC0D53B51041FFB30037378A /* GetMetadataForFile.m in Sources */ = {isa = PBXBuildFile; fileRef = DC0D53A51041FFB30037378A /* GetMetadataForFile.m */; };
-		DC0D53B61041FFB30037378A /* Globals.h in Headers */ = {isa = PBXBuildFile; fileRef = DC0D53A61041FFB30037378A /* Globals.h */; };
-		DC0D53B71041FFB30037378A /* Constants.h in Headers */ = {isa = PBXBuildFile; fileRef = DC0D53A71041FFB30037378A /* Constants.h */; };
 		DC0D54CB104200B40037378A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC0D54CA104200B40037378A /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +36,9 @@
 		2BC9674321CEE01A004B22DB /* XCFLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XCFLayer.m; path = ../XCFQuickLook/XCFLayer.m; sourceTree = "<group>"; };
 		2BC9674421CEE01A004B22DB /* SeaContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SeaContent.m; path = ../XCFQuickLook/SeaContent.m; sourceTree = "<group>"; };
 		2BC9674521CEE01A004B22DB /* XCFContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XCFContent.m; path = ../XCFQuickLook/XCFContent.m; sourceTree = "<group>"; };
+		2BCE761421D551070088257A /* Bitmap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Bitmap.h; path = /Users/robertengels/seashore/XCFQuickLook/../Seashore/source/extra/Bitmap.h; sourceTree = "<absolute>"; };
+		2BCE761621D551780088257A /* Globals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Globals.h; path = ../XCFQuickLook/Globals.h; sourceTree = "<group>"; };
+		2BCE761721D551780088257A /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = ../XCFQuickLook/Constants.h; sourceTree = "<group>"; };
 		8D576316048677EA00EA77CD /* XCFSpotlight.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XCFSpotlight.mdimporter; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D576317048677EA00EA77CD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C86B05260671AA6E00DD9006 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
@@ -45,8 +46,6 @@
 		C88FB7DB0674470F006EBB30 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/schema.strings; sourceTree = "<group>"; };
 		DC0D53A41041FFB30037378A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DC0D53A51041FFB30037378A /* GetMetadataForFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetMetadataForFile.m; sourceTree = "<group>"; };
-		DC0D53A61041FFB30037378A /* Globals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Globals.h; sourceTree = "<group>"; };
-		DC0D53A71041FFB30037378A /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		DC0D54CA104200B40037378A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -99,14 +98,15 @@
 		08FB77AFFE84173DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				2BCE761621D551780088257A /* Globals.h */,
+				2BCE761721D551780088257A /* Constants.h */,
+				2BCE761421D551070088257A /* Bitmap.h */,
 				2BC964C021CE0E48004B22DB /* RLE.h */,
 				2BC964C121CE0E48004B22DB /* RLE.m */,
 				2BC964BF21CE0E48004B22DB /* Rects.h */,
 				2BC964BE21CE0E48004B22DB /* Rects.m */,
 				DC0D53A41041FFB30037378A /* main.m */,
 				DC0D53A51041FFB30037378A /* GetMetadataForFile.m */,
-				DC0D53A61041FFB30037378A /* Globals.h */,
-				DC0D53A71041FFB30037378A /* Constants.h */,
 				2BC9674021CEE019004B22DB /* SeaContent.h */,
 				2BC9674421CEE01A004B22DB /* SeaContent.m */,
 				2BC9673E21CEE019004B22DB /* XCFContent.h */,
@@ -134,8 +134,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC0D53B61041FFB30037378A /* Globals.h in Headers */,
-				DC0D53B71041FFB30037378A /* Constants.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
