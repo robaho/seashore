@@ -136,7 +136,7 @@
 	free(temp);
 	
 	// Now make an image for the view
-	realImageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&sampleData pixelsWide:40 pixelsHigh:40 bitsPerSample:8 samplesPerPixel:3 hasAlpha:NO isPlanar:NO colorSpaceName:NSDeviceRGBColorSpace bytesPerRow:40 * 3 bitsPerPixel:8 * 3];
+	realImageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&sampleData pixelsWide:40 pixelsHigh:40 bitsPerSample:8 samplesPerPixel:3 hasAlpha:NO isPlanar:NO colorSpaceName:MyRGBSpace bytesPerRow:40 * 3 bitsPerPixel:8 * 3];
 	realImage = [[NSImage alloc] initWithSize:NSMakeSize(160, 160)];
 	[realImage addRepresentation:realImageRep];
 	[realImageView setImage:realImage];
@@ -254,7 +254,7 @@
 	
 	// Make an image representation from the data
 	imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&destData pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:hasAlpha isPlanar:NO
-                                                   colorSpaceName:(spp > 2) ? NSCalibratedRGBColorSpace : NSCalibratedWhiteColorSpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
+                                                   colorSpaceName:(spp > 2) ? MyRGBSpace : MyGraySpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
     [imageRep autorelease];
     
     if (targetWeb) {

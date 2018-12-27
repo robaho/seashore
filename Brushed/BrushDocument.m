@@ -72,9 +72,9 @@ typedef struct {
 	
 	// Create the representation
 	if (usePixmap)
-		tempRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&pixmap pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:4 hasAlpha:YES isPlanar:NO colorSpaceName:NSCalibratedRGBColorSpace bytesPerRow:width * 4 bitsPerPixel:32];
+		tempRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&pixmap pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:4 hasAlpha:YES isPlanar:NO colorSpaceName:MyRGBSpace bytesPerRow:width * 4 bitsPerPixel:32];
 	else
-		tempRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&mask pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:1 hasAlpha:NO isPlanar:NO colorSpaceName:NSCalibratedBlackColorSpace bytesPerRow:width bitsPerPixel:8];
+		tempRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&mask pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:1 hasAlpha:NO isPlanar:NO colorSpaceName:MyGraySpace bytesPerRow:width bitsPerPixel:8];
 	
 	// Wrap it up in an NSImage
 	brushImage = [[NSImage alloc] initWithSize:NSMakeSize(width, height)];
@@ -114,11 +114,11 @@ typedef struct {
 		return NO;
 		
 	// Fill out isRGB and invert booleans
-	if ([[newImage colorSpaceName] isEqualToString:NSCalibratedWhiteColorSpace] || [[newImage colorSpaceName] isEqualToString:NSDeviceWhiteColorSpace]) {
+	if ([[newImage colorSpaceName] isEqualToString:MyGraySpace] || [[newImage colorSpaceName] isEqualToString:MyGraySpaceColorSpace]) {
 		isRGB = NO; invert = YES;
 	} else if ([[newImage colorSpaceName] isEqualToString:NSCalibratedBlackColorSpace] || [[newImage colorSpaceName] isEqualToString:NSDeviceBlackColorSpace]) {
 		isRGB = NO; invert = NO;
-	} else if ([[newImage colorSpaceName] isEqualToString:NSCalibratedRGBColorSpace] || [[newImage colorSpaceName] isEqualToString:NSDeviceRGBColorSpace]) {
+	} else if ([[newImage colorSpaceName] isEqualToString:MyRGBSpace] || [[newImage colorSpaceName] isEqualToString:MyRGBSpace]) {
 		isRGB = YES; invert = NO;
 	} else {
 		return NO;

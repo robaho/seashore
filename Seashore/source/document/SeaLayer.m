@@ -932,7 +932,7 @@
 
 - (NSBitmapImageRep *)bitmap
 {
-    NSBitmapImageRep *imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:TRUE isPlanar:NO colorSpaceName:(spp == 4) ? NSCalibratedRGBColorSpace : NSCalibratedWhiteColorSpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
+    NSBitmapImageRep *imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:TRUE isPlanar:NO colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
     [imageRep autorelease];
     return imageRep;
 }

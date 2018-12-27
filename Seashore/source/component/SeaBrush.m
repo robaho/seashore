@@ -227,7 +227,7 @@ extern void determineBrushMask(unsigned char *input, unsigned char *output, int 
 	
 	// Create the representation
 	if (usePixmap)
-		tempRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&prePixmap pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:4 hasAlpha:YES isPlanar:NO colorSpaceName:NSDeviceRGBColorSpace bytesPerRow:width * 4 bitsPerPixel:8 * 4];
+		tempRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&prePixmap pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:4 hasAlpha:YES isPlanar:NO colorSpaceName:MyRGBSpace bytesPerRow:width * 4 bitsPerPixel:8 * 4];
 	else
 		tempRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&mask pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:1 hasAlpha:NO isPlanar:NO colorSpaceName:NSDeviceBlackColorSpace bytesPerRow:width * 1 bitsPerPixel:8 * 1];
 	

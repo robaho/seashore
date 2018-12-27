@@ -85,7 +85,7 @@
 	}
 	
 	// Create the representation
-	tempRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&colorTexture pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:3 hasAlpha:NO isPlanar:NO colorSpaceName:NSCalibratedRGBColorSpace bytesPerRow:width * 3 bitsPerPixel:8 * 3];
+	tempRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&colorTexture pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:3 hasAlpha:NO isPlanar:NO colorSpaceName:MyRGBSpace bytesPerRow:width * 3 bitsPerPixel:8 * 3];
 
 	// Wrap it up in an NSImage
 	thumbnail = [[NSImage alloc] initWithSize:NSMakeSize(thumbWidth, thumbHeight)];
@@ -125,9 +125,9 @@
 	image = [[NSImage alloc] initWithSize:NSMakeSize(width, height)];
 	
 	if (color)
-		rep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&colorTexture pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:3 hasAlpha:NO isPlanar:NO colorSpaceName:NSDeviceRGBColorSpace bytesPerRow:width * 3 bitsPerPixel:24];
+		rep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&colorTexture pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:3 hasAlpha:NO isPlanar:NO colorSpaceName:MyRGBSpace bytesPerRow:width * 3 bitsPerPixel:24];
 	else
-		rep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&greyTexture pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:1 hasAlpha:NO isPlanar:NO colorSpaceName:NSDeviceWhiteColorSpace bytesPerRow:width bitsPerPixel:8];
+		rep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&greyTexture pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:1 hasAlpha:NO isPlanar:NO colorSpaceName:MyGraySpace bytesPerRow:width bitsPerPixel:8];
 	
 	[image addRepresentation:rep];
 	[image autorelease];

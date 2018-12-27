@@ -410,11 +410,11 @@ static NSString*	DuplicateSelectionToolbarItemIdentifier = @"Duplicate Selection
 	
 	foreground = [[[SeaController utilitiesManager] toolboxUtilityFor:document] foreground];
 	if (type == XCF_RGB_IMAGE && selectedChannel != kAlphaChannel)
-		return [foreground colorUsingColorSpaceName:NSDeviceRGBColorSpace];
+		return [foreground colorUsingColorSpaceName:MyRGBSpace];
 	else if (type == XCF_GRAY_IMAGE)
-		return [foreground colorUsingColorSpaceName:NSDeviceWhiteColorSpace];
+		return [foreground colorUsingColorSpaceName:MyGraySpace];
 	else
-		return [[foreground colorUsingColorSpaceName:NSDeviceWhiteColorSpace] colorUsingColorSpaceName:NSDeviceRGBColorSpace];
+		return [[foreground colorUsingColorSpaceName:MyGraySpace] colorUsingColorSpaceName:MyRGBSpace];
 }
 
 - (NSColor *)background
@@ -423,11 +423,11 @@ static NSString*	DuplicateSelectionToolbarItemIdentifier = @"Duplicate Selection
 	
 	background = [[[SeaController utilitiesManager] toolboxUtilityFor:document] background];
 	if (type == XCF_RGB_IMAGE && selectedChannel != kAlphaChannel)
-		return [background colorUsingColorSpaceName:NSDeviceRGBColorSpace];
+		return [background colorUsingColorSpaceName:MyRGBSpace];
 	else if (type == XCF_GRAY_IMAGE)
-		return [background colorUsingColorSpaceName:NSDeviceWhiteColorSpace];
+		return [background colorUsingColorSpaceName:MyGraySpace];
 	else
-		return [[background colorUsingColorSpaceName:NSDeviceWhiteColorSpace] colorUsingColorSpaceName:NSDeviceRGBColorSpace];
+		return [[background colorUsingColorSpaceName:MyGraySpace] colorUsingColorSpaceName:MyRGBSpace];
 }
 
 - (void)setCMYKSave:(BOOL)value

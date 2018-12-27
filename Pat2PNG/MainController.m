@@ -70,11 +70,11 @@ typedef struct {
 		
 		// Make an image based on the pattern data
 		if (header.bytes == 3) {
-			colorSpace = NSCalibratedRGBColorSpace;
+			colorSpace = MyRGBSpace;
 			spp = 3;
 		}
 		else {
-			colorSpace = NSCalibratedWhiteColorSpace;
+			colorSpace = MyGraySpace;
 			spp = 1;
 		}
 		bitmapImage = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:header.width pixelsHigh:header.height bitsPerSample:8 samplesPerPixel:spp hasAlpha:NO isPlanar:NO colorSpaceName:colorSpace bytesPerRow:0 bitsPerPixel:0];

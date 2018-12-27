@@ -1477,6 +1477,12 @@
 		2BDB907A21836089000D7803 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		2BDB907B21836089000D7803 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/CocoaContent.nib; sourceTree = "<group>"; };
 		2BDB907C2183608A000D7803 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/SVGContent.nib; sourceTree = "<group>"; };
+		2BF172DA21D561A000579D9D /* Common */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Common; path = "../Plug-ins/Common"; sourceTree = "<group>"; };
+		2BF173C721D58A5000579D9D /* Rects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rects.h; sourceTree = "<group>"; };
+		2BF173C821D58A5000579D9D /* Rects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Rects.m; sourceTree = "<group>"; };
+		2BF173C921D58A5100579D9D /* PluginData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PluginData.h; sourceTree = "<group>"; };
+		2BF173CA21D58A5100579D9D /* SeaPlugins.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeaPlugins.h; sourceTree = "<group>"; };
+		2BF173CD21D58AB400579D9D /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		35B156DC0A2C00D0005B688F /* GIMPCore.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GIMPCore.xcodeproj; path = ../GIMPCore/GIMPCore.xcodeproj; sourceTree = SOURCE_ROOT; };
 		35B156EA0A2C0116005B688F /* Sharpen.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Sharpen.xcodeproj; path = "../Plug-ins/Sharpen/Sharpen.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		35B156ED0A2C0116005B688F /* Threshold.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Threshold.xcodeproj; path = "../Plug-ins/Threshold/Threshold.xcodeproj"; sourceTree = SOURCE_ROOT; };
@@ -2002,7 +2008,6 @@
 		F5CE259A03D709B1013D2EC9 /* SeaPrefs.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = SeaPrefs.m; sourceTree = "<group>"; };
 		F5DEAE1303C5C847010475F1 /* XCFLayer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = XCFLayer.h; sourceTree = "<group>"; };
 		F5DEAE1403C5C847010475F1 /* XCFLayer.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = XCFLayer.m; sourceTree = "<group>"; };
-		F5DEAE1903C5CCBC010475F1 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		F5EB5C4103DBA493012231A0 /* TIFFExporter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = TIFFExporter.h; sourceTree = "<group>"; };
 		F5EB5C4203DBA493012231A0 /* TIFFExporter.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = TIFFExporter.m; sourceTree = "<group>"; };
 		F5FD051903F3E5EF01FC7B57 /* SeaScale.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SeaScale.h; sourceTree = "<group>"; };
@@ -2119,7 +2124,7 @@
 		2A37F4AFFDCFA73011CA2CEA /* Main Sources */ = {
 			isa = PBXGroup;
 			children = (
-				F5DEAE1903C5CCBC010475F1 /* Constants.h */,
+				2BF173CD21D58AB400579D9D /* Constants.h */,
 				F50687FB039B950A016F7F19 /* Globals.h */,
 				2A37F4B0FDCFA73011CA2CEA /* main.m */,
 			);
@@ -2163,6 +2168,18 @@
 				2B2EDA151FA4220200A6ED4E /* XCFQuickLook.qlgenerator */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		2BF173C521D58A4300579D9D /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				2BF173C921D58A5100579D9D /* PluginData.h */,
+				2BF173C721D58A5000579D9D /* Rects.h */,
+				2BF173C821D58A5000579D9D /* Rects.m */,
+				2BF173CA21D58A5100579D9D /* SeaPlugins.h */,
+			);
+			name = Common;
+			path = "../CoreImage Plug-ins/Common";
 			sourceTree = "<group>";
 		};
 		35B156C70A2C0092005B688F /* Projects */ = {
@@ -2260,6 +2277,7 @@
 		35B157F80A2C04F9005B688F /* Universal Plug-ins */ = {
 			isa = PBXGroup;
 			children = (
+				2BF172DA21D561A000579D9D /* Common */,
 				35B156EA0A2C0116005B688F /* Sharpen.xcodeproj */,
 				35B156ED0A2C0116005B688F /* Threshold.xcodeproj */,
 				35B156F60A2C0116005B688F /* Brightness.xcodeproj */,
@@ -2565,6 +2583,7 @@
 		A856AC800BD0A2470001257F /* CoreImage Plug-ins */ = {
 			isa = PBXGroup;
 			children = (
+				2BF173C521D58A4300579D9D /* Common */,
 				A825EA610C38FE060017A3D1 /* CIAffineTile.xcodeproj */,
 				A8B9AB870C131FFE0050D2A9 /* CIBloom.xcodeproj */,
 				A8E136950C40751800C8A848 /* CIBrightness.xcodeproj */,

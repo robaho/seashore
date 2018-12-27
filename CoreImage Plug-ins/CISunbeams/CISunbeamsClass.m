@@ -73,7 +73,7 @@
 	[contrastSlider setFloatValue:contrast];
 	
 	if (mainNSColor) [mainNSColor autorelease];
-	mainNSColor = [[mainColorWell color] colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+	mainNSColor = [[mainColorWell color] colorUsingColorSpaceName:MyRGBSpace];
 	[mainNSColor retain];
 	
 	refresh = YES;
@@ -162,7 +162,7 @@
 	PluginData *pluginData;
 	
 	if (mainNSColor) [mainNSColor autorelease];
-	mainNSColor = [color colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+	mainNSColor = [color colorUsingColorSpaceName:MyRGBSpace];
 	[mainNSColor retain];
 	if (running) {
 		refresh = YES;

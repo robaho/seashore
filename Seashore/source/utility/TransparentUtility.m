@@ -59,7 +59,7 @@
 	[color autorelease];
 	color = [sender color];
 	if (![[color colorSpaceName] isEqualToString:NSNamedColorSpace])
-		[[sender color] colorUsingColorSpaceName:NSDeviceRGBColorSpace];
+		[[sender color] colorUsingColorSpaceName:MyRGBSpace];
 	[color retain];
 	
 	// Call for all documents' views to respond to the change

@@ -248,3 +248,6 @@ enum {
 	@discussion	Specifies the minimum resolution of an image.
 */
 #define kMinResolution 18
+
+#define MyRGBSpace NSDeviceRGBColorSpace
+#define MyGraySpace NSDeviceWhiteColorSpace

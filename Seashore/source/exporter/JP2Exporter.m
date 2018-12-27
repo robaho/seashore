@@ -146,7 +146,7 @@
 	premultiplyBitmap(4, sampleData, sampleData, 40 * 40);
 	
 	// Now make an image for the view
-	realImageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&sampleData pixelsWide:40 pixelsHigh:40 bitsPerSample:8 samplesPerPixel:4 hasAlpha:YES isPlanar:NO colorSpaceName:MyRGBSpace bytesPerRow:40 * 4 bitsPerPixel:8 * 4];
+	realImageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&sampleData pixelsWide:40 pixelsHigh:40 bitsPerSample:8 samplesPerPixel:4 hasAlpha:YES isPlanar:NO colorSpaceName:NSDeviceRGBColorSpace bytesPerRow:40 * 4 bitsPerPixel:8 * 4];
 	realImage = [[NSImage alloc] initWithSize:NSMakeSize(160, 160)];
 	[realImage addRepresentation:realImageRep];
 	[realImageView setImage:realImage];
@@ -250,6 +250,13 @@
 	spp = [(SeaContent *)[document contents] spp];
     xres = [[document contents] xres];
     yres = [[document contents] yres];
+
+    // Strip the alpha channel if necessary
+    destData = stripAlpha(srcData,width,height,spp);
+    if (destData!=srcData) {
+        spp--;
+        hasAlpha=false;
+    }
 
 	// Make an image representation from the data
 	imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&destData pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:hasAlpha isPlanar:NO colorSpaceName:(spp > 2) ? MyRGBSpace : MyGraySpace bytesPerRow:width * spp bitsPerPixel:8 * spp];

@@ -63,7 +63,7 @@
 
     NSBitmapImageRep *imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height
                                                                       bitsPerSample:8 samplesPerPixel:spp hasAlpha:TRUE isPlanar:NO
-                                                                     colorSpaceName:(spp == 4) ? NSCalibratedRGBColorSpace : NSCalibratedWhiteColorSpace
+                                                                     colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace
                                                                         bytesPerRow:width * spp bitsPerPixel:8 * spp];
     
     NSColorSpaceName csname = NSDeviceWhiteColorSpace;
@@ -89,7 +89,7 @@
     
     NSBitmapImageRep *overlayRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&overlay pixelsWide:width pixelsHigh:height
                                                                         bitsPerSample:8 samplesPerPixel:spp hasAlpha:TRUE isPlanar:NO
-                                                                       colorSpaceName:(spp == 4) ? NSCalibratedRGBColorSpace : NSCalibratedWhiteColorSpace
+                                                                       colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace
                                                                           bytesPerRow:width * spp bitsPerPixel:8 * spp];
     
     ctx = [NSGraphicsContext graphicsContextWithBitmapImageRep:overlayRep];

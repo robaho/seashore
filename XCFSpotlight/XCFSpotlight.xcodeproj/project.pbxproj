@@ -39,6 +39,7 @@
 		2BCE761421D551070088257A /* Bitmap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Bitmap.h; path = /Users/robertengels/seashore/XCFQuickLook/../Seashore/source/extra/Bitmap.h; sourceTree = "<absolute>"; };
 		2BCE761621D551780088257A /* Globals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Globals.h; path = ../XCFQuickLook/Globals.h; sourceTree = "<group>"; };
 		2BCE761721D551780088257A /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = ../XCFQuickLook/Constants.h; sourceTree = "<group>"; };
+		2BF173CE21D58AFE00579D9D /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = /Users/robertengels/seashore/XCFQuickLook/../Seashore/source/main/Constants.h; sourceTree = "<absolute>"; };
 		8D576316048677EA00EA77CD /* XCFSpotlight.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XCFSpotlight.mdimporter; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D576317048677EA00EA77CD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C86B05260671AA6E00DD9006 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
@@ -98,6 +99,7 @@
 		08FB77AFFE84173DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				2BF173CE21D58AFE00579D9D /* Constants.h */,
 				2BCE761621D551780088257A /* Globals.h */,
 				2BCE761721D551780088257A /* Constants.h */,
 				2BCE761421D551070088257A /* Bitmap.h */,

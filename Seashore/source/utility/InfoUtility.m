@@ -133,13 +133,13 @@
 	color = [[[document tools] getTool:kEyedropTool] getColor];
 	if (color) {
 		[colorWell setColor:color];
-		if ([[color colorSpaceName] isEqualToString:NSDeviceRGBColorSpace]) {
+		if ([[color colorSpaceName] isEqualToString:MyRGBSpace]) {
 			[redValue setIntValue:[color redComponent] * 255.0];
 			[greenValue setIntValue:[color greenComponent] * 255.0];
 			[blueValue setIntValue:[color blueComponent] * 255.0];
 			[alphaValue setIntValue:[color alphaComponent] * 255.0];
 		}
-		else if ([[color colorSpaceName] isEqualToString:NSDeviceWhiteColorSpace]) {
+		else if ([[color colorSpaceName] isEqualToString:MyGraySpace]) {
 			[redValue setIntValue:[color whiteComponent] * 255.0];
 			[greenValue setIntValue:[color whiteComponent] * 255.0];
 			[blueValue setIntValue:[color whiteComponent] * 255.0];

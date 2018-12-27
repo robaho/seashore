@@ -6,9 +6,9 @@
  */
 unsigned char *convertImageRep(NSImageRep *imageRep,int spp) {
     
-    NSColorSpaceName csname = NSCalibratedRGBColorSpace;
+    NSColorSpaceName csname = MyRGBSpace;
     if (spp==2) {
-        csname = NSCalibratedWhiteColorSpace;
+        csname = MyGraySpace;
     }
     
     int width = (int)[imageRep pixelsWide];
