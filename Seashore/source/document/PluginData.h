@@ -103,30 +103,18 @@
 /*!
 	@method		foreColor
 	@discussion	Return the active foreground colour.
-	@param		calibrated
-				YES if the colour is to be calibrated (usually bad), NO otherwise.
 	@result		Returns an NSColor representing the active foreground
 				colour.
 */
-- (NSColor *)foreColor:(BOOL)calibrated;
+- (NSColor *)foreColor;
 
 /*!
 	@method		backColor
 	@discussion	Return the active background colour.
-	@param		calibrated
-				YES if the colour is to be calibrated (usually bad), NO otherwise.
 	@result		Returns an NSColor representing the active background
 				colour.
 */
-- (NSColor *)backColor:(BOOL)calibrated;
-
-/*!
-	@method		displayProf
-	@discussion	Returns the current display profile.
-	@result		Returns a CGColorSpaceRef representing the ColorSync display profile
-				Seashore is using.
-*/
-- (CGColorSpaceRef)displayProf;
+- (NSColor *)backColor;
 
 /*!
 	@method		window

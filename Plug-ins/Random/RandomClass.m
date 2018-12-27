@@ -71,13 +71,13 @@ static inline void specialMerge(int spp, unsigned char *destPtr, int destLoc, un
 	opaque = ![pluginData hasAlpha];
 	if (opaque) {
 		if (spp == 2) {
-			background[0] = [[pluginData backColor:NO] whiteComponent] * 255;
+			background[0] = [[pluginData backColor] whiteComponent] * 255;
 			background[1] = 255;
 		}
 		else {
-			background[0] = [[pluginData backColor:NO] redComponent] * 255;
-			background[1] = [[pluginData backColor:NO] greenComponent] * 255;
-			background[2] = [[pluginData backColor:NO] blueComponent] * 255;
+			background[0] = [[pluginData backColor] redComponent] * 255;
+			background[1] = [[pluginData backColor] greenComponent] * 255;
+			background[2] = [[pluginData backColor] blueComponent] * 255;
 			background[3] = 255;
 		}
 	}

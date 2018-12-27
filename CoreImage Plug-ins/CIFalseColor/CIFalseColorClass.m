@@ -321,15 +321,15 @@
 	
 	// Find colors
 	if ([pluginData spp] == 4) {
-		foreNSColor = [pluginData foreColor:YES];
+		foreNSColor = [pluginData foreColor];
 		foreColor = [CIColor colorWithRed:[foreNSColor redComponent] green:[foreNSColor greenComponent] blue:[foreNSColor blueComponent]];
-		backNSColor = [pluginData backColor:YES];
+		backNSColor = [pluginData backColor];
 		backColor = [CIColor colorWithRed:[backNSColor redComponent] green:[backNSColor greenComponent] blue:[backNSColor blueComponent]];
 	}
 	else {
-		foreNSColor = [pluginData foreColor:YES];
+		foreNSColor = [pluginData foreColor];
 		foreColor = [CIColor colorWithRed:[foreNSColor whiteComponent] green:[foreNSColor whiteComponent] blue:[foreNSColor whiteComponent]];
-		backNSColor = [pluginData backColor:YES];
+		backNSColor = [pluginData backColor];
 		backColor = [CIColor colorWithRed:[backNSColor whiteComponent] green:[backNSColor whiteComponent] blue:[backNSColor whiteComponent]];
 	}
 	

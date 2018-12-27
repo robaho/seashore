@@ -436,8 +436,8 @@
 	
 	// Check if image is opaque
 	opaque = ![pluginData hasAlpha];
-	if (opaque && [pluginData spp] == 4) backColor = [CIColor colorWithRed:[[pluginData backColor:YES] redComponent] green:[[pluginData backColor:YES] greenComponent] blue:[[pluginData backColor:YES] blueComponent]];
-	else if (opaque) backColor = [CIColor colorWithRed:[[pluginData backColor:YES] whiteComponent] green:[[pluginData backColor:YES] whiteComponent] blue:[[pluginData backColor:YES] whiteComponent]];
+	if (opaque && [pluginData spp] == 4) backColor = [CIColor colorWithRed:[[pluginData backColor] redComponent] green:[[pluginData backColor] greenComponent] blue:[[pluginData backColor] blueComponent]];
+	else if (opaque) backColor = [CIColor colorWithRed:[[pluginData backColor] whiteComponent] green:[[pluginData backColor] whiteComponent] blue:[[pluginData backColor] whiteComponent]];
 		
 	// Find core image context
 	context = [CIContext contextWithCGContext:[[NSGraphicsContext currentContext] graphicsPort] options:[NSDictionary dictionaryWithObjectsAndKeys:(id)[pluginData displayProf], kCIContextWorkingColorSpace, (id)[pluginData displayProf], kCIContextOutputColorSpace, NULL]];

@@ -73,31 +73,14 @@
 	return [[[document tools] getTool:kEffectTool] point:index];
 }
 
-- (NSColor *)foreColor:(BOOL)calibrated
+- (NSColor *)foreColor
 {
-	if (calibrated)
-		if ([[document contents] spp] == 2)
-			return [[[document contents] foreground] colorUsingColorSpaceName:NSCalibratedWhiteColorSpace];
-		else
-			return [[[document contents] foreground] colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
-	else
-		return [[document contents] foreground];
+    return [[document contents] foreground];
 }
 
-- (NSColor *)backColor:(BOOL)calibrated
+- (NSColor *)backColor
 {
-	if (calibrated)
-		if ([[document contents] spp] == 2)
-			return [[[document contents] background] colorUsingColorSpaceName:NSCalibratedWhiteColorSpace];
-		else
-			return [[[document contents] background] colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
-	else
-		return [[document contents] background];
-}
-
-- (CGColorSpaceRef)displayProf
-{
-	return [[document whiteboard] displayProf];
+    return [[document contents] background];
 }
 
 - (id)window

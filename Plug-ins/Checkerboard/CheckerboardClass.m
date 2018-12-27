@@ -83,21 +83,21 @@ static inline specmod(int a, int b)
 	
 	// Get colors
 	if (spp == 4) {
-		foreColorAlpha[0] = [[pluginData foreColor:YES] redComponent] * 255;
-		foreColorAlpha[1] = [[pluginData foreColor:YES] greenComponent] * 255;
-		foreColorAlpha[2] = [[pluginData foreColor:YES] blueComponent] * 255;
-		foreColorAlpha[3] = [[pluginData foreColor:YES] alphaComponent] * 255;
-		backColorAlpha[0] = [[pluginData backColor:YES] redComponent] * 255;
-		backColorAlpha[1] = [[pluginData backColor:YES] greenComponent] * 255;
-		backColorAlpha[2] = [[pluginData backColor:YES] blueComponent] * 255;
-		backColorAlpha[3] = [[pluginData backColor:YES] alphaComponent] * 255;
+		foreColorAlpha[0] = [[pluginData foreColor] redComponent] * 255;
+		foreColorAlpha[1] = [[pluginData foreColor] greenComponent] * 255;
+		foreColorAlpha[2] = [[pluginData foreColor] blueComponent] * 255;
+		foreColorAlpha[3] = [[pluginData foreColor] alphaComponent] * 255;
+		backColorAlpha[0] = [[pluginData backColor] redComponent] * 255;
+		backColorAlpha[1] = [[pluginData backColor] greenComponent] * 255;
+		backColorAlpha[2] = [[pluginData backColor] blueComponent] * 255;
+		backColorAlpha[3] = [[pluginData backColor] alphaComponent] * 255;
 
 	}
 	else {
-		foreColorAlpha[0] = [[pluginData foreColor:YES] whiteComponent] * 255;
-		foreColorAlpha[1] = [[pluginData foreColor:YES] alphaComponent] * 255;
-		backColorAlpha[0] = [[pluginData backColor:YES] whiteComponent] * 255;
-		backColorAlpha[1] = [[pluginData backColor:YES] alphaComponent] * 255;
+		foreColorAlpha[0] = [[pluginData foreColor] whiteComponent] * 255;
+		foreColorAlpha[1] = [[pluginData foreColor] alphaComponent] * 255;
+		backColorAlpha[0] = [[pluginData backColor] whiteComponent] * 255;
+		backColorAlpha[1] = [[pluginData backColor] alphaComponent] * 255;
 	}
 	
 	// Run checkboard

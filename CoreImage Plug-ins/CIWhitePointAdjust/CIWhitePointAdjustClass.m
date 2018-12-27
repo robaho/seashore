@@ -321,11 +321,11 @@
 	
 	// Find colors
 	if ([pluginData spp] == 4) {
-		foreNSColor = [pluginData foreColor:YES];
+		foreNSColor = [pluginData foreColor];
 		foreColor = [CIColor colorWithRed:[foreNSColor redComponent] green:[foreNSColor greenComponent] blue:[foreNSColor blueComponent]];
 	}
 	else {
-		foreNSColor = [pluginData foreColor:YES];
+		foreNSColor = [pluginData foreColor];
 		foreColor = [CIColor colorWithRed:[foreNSColor whiteComponent] green:[foreNSColor whiteComponent] blue:[foreNSColor whiteComponent]];
 	}
 	

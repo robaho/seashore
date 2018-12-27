@@ -164,10 +164,10 @@
 	int amount;
 	
 	// Get colors
-	if ([pluginData spp] == 4) foreColorAlpha = [CIColor colorWithRed:[[pluginData foreColor:YES] redComponent] green:[[pluginData foreColor:YES] greenComponent] blue:[[pluginData foreColor:YES] blueComponent] alpha:[[pluginData foreColor:YES] alphaComponent]];
-	else  foreColorAlpha = [CIColor colorWithRed:[[pluginData foreColor:YES] whiteComponent] green:[[pluginData foreColor:YES] whiteComponent] blue:[[pluginData foreColor:YES] whiteComponent] alpha:[[pluginData foreColor:YES] alphaComponent]];
-	if ([pluginData spp] == 4) backColorAlpha = [CIColor colorWithRed:[[pluginData backColor:YES] redComponent] green:[[pluginData backColor:YES] greenComponent] blue:[[pluginData backColor:YES] blueComponent] alpha:[[pluginData backColor:YES] alphaComponent]];
-	else  backColorAlpha = [CIColor colorWithRed:[[pluginData backColor:YES] whiteComponent] green:[[pluginData backColor:YES] whiteComponent] blue:[[pluginData backColor:YES] whiteComponent] alpha:[[pluginData backColor:YES] alphaComponent]];
+	if ([pluginData spp] == 4) foreColorAlpha = [CIColor colorWithRed:[[pluginData foreColor] redComponent] green:[[pluginData foreColor] greenComponent] blue:[[pluginData foreColor] blueComponent] alpha:[[pluginData foreColor] alphaComponent]];
+	else  foreColorAlpha = [CIColor colorWithRed:[[pluginData foreColor] whiteComponent] green:[[pluginData foreColor] whiteComponent] blue:[[pluginData foreColor] whiteComponent] alpha:[[pluginData foreColor] alphaComponent]];
+	if ([pluginData spp] == 4) backColorAlpha = [CIColor colorWithRed:[[pluginData backColor] redComponent] green:[[pluginData backColor] greenComponent] blue:[[pluginData backColor] blueComponent] alpha:[[pluginData backColor] alphaComponent]];
+	else  backColorAlpha = [CIColor colorWithRed:[[pluginData backColor] whiteComponent] green:[[pluginData backColor] whiteComponent] blue:[[pluginData backColor] whiteComponent] alpha:[[pluginData backColor] alphaComponent]];
 	
 	// Find core image context
 	context = [CIContext contextWithCGContext:[[NSGraphicsContext currentContext] graphicsPort] options:[NSDictionary dictionaryWithObjectsAndKeys:(id)[pluginData displayProf], kCIContextWorkingColorSpace, (id)[pluginData displayProf], kCIContextOutputColorSpace, NULL]];

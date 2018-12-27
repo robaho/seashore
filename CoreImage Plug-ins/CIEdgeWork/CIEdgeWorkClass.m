@@ -397,12 +397,12 @@
 	
 	// Check if image is opaque
 	opaque = ![pluginData hasAlpha];
-	if (opaque && [pluginData spp] == 4) backColor = [CIColor colorWithRed:[[pluginData backColor:YES] redComponent] green:[[pluginData backColor:YES] greenComponent] blue:[[pluginData backColor:YES] blueComponent]];
-	else if (opaque) backColor = [CIColor colorWithRed:[[pluginData backColor:YES] whiteComponent] green:[[pluginData backColor:YES] whiteComponent] blue:[[pluginData backColor:YES] whiteComponent]];
+	if (opaque && [pluginData spp] == 4) backColor = [CIColor colorWithRed:[[pluginData backColor] redComponent] green:[[pluginData backColor] greenComponent] blue:[[pluginData backColor] blueComponent]];
+	else if (opaque) backColor = [CIColor colorWithRed:[[pluginData backColor] whiteComponent] green:[[pluginData backColor] whiteComponent] blue:[[pluginData backColor] whiteComponent]];
 	
 	// Get foreground color
-	if ([pluginData spp] == 4) foreColor = [CIColor colorWithRed:[[pluginData foreColor:YES] redComponent] green:[[pluginData foreColor:YES] greenComponent] blue:[[pluginData foreColor:YES] blueComponent] alpha:[[pluginData foreColor:YES] alphaComponent]];
-	else foreColor = [CIColor colorWithRed:[[pluginData foreColor:YES] whiteComponent] green:[[pluginData foreColor:YES] whiteComponent] blue:[[pluginData foreColor:YES] whiteComponent] alpha:[[pluginData foreColor:YES] alphaComponent]];
+	if ([pluginData spp] == 4) foreColor = [CIColor colorWithRed:[[pluginData foreColor] redComponent] green:[[pluginData foreColor] greenComponent] blue:[[pluginData foreColor] blueComponent] alpha:[[pluginData foreColor] alphaComponent]];
+	else foreColor = [CIColor colorWithRed:[[pluginData foreColor] whiteComponent] green:[[pluginData foreColor] whiteComponent] blue:[[pluginData foreColor] whiteComponent] alpha:[[pluginData foreColor] alphaComponent]];
 	
 	// Find core image context
 	context = [CIContext contextWithCGContext:[[NSGraphicsContext currentContext] graphicsPort] options:[NSDictionary dictionaryWithObjectsAndKeys:(id)[pluginData displayProf], kCIContextWorkingColorSpace, (id)[pluginData displayProf], kCIContextOutputColorSpace, NULL]];
