@@ -1,5 +1,6 @@
 #import "Globals.h"
 #import "SeaDocument.h"
+#import "SeaController.h"
 
 /*!
 	@enum		k...Plugin
@@ -42,10 +43,6 @@ enum {
 	
 	// The last effect applied
 	int lastEffect;
-	
-	// Stores the index of the "CIAffineTransform" plug-in - this plug-in handles Seashore CoreImage manipulation
-	int ciAffineTransformIndex;
-	
 }
 
 /*!

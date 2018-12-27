@@ -140,8 +140,7 @@ BOOL checkRun(NSString *path, NSString *file)
 	}
 	
 	// Check added plug-ins
-	ciAffineTransformIndex = -1;
-	for (i = 0; i < [files count]; i++) {		
+	for (i = 0; i < [files count]; i++) {
 		bundle = [NSBundle bundleWithPath:[NSString stringWithFormat:@"%@/%@", pluginsPath, [files objectAtIndex:i]]];
 		if (bundle && [bundle principalClass]) {
 			success = NO;
@@ -165,19 +164,6 @@ BOOL checkRun(NSString *path, NSString *file)
 	plugins = [plugins sortedArrayUsingFunction:plugin_sort context:NULL];
 	[plugins retain];
 
-	// Determine affine transform plug-in
-	for (i = 0; i < [plugins count]; i++) {
-		plugin = [plugins objectAtIndex:i];
-		if ([plugin respondsToSelector:@selector(runAffineTransform:withImage:spp:width:height:opaque:newWidth:newHeight:)]) {
-			if (ciAffineTransformIndex == -1) {
-				ciAffineTransformIndex = i;
-			}
-			else {
-				NSLog(@"Multiple plug-ins are affine transform capable (using first): %@ %@", [files objectAtIndex:ciAffineTransformIndex], [files objectAtIndex:i]);
-			}
-		}
-	}
-	
 	return self;
 }
 
