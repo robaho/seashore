@@ -62,7 +62,6 @@ extern IntPoint gScreenResolution;
 - (void)dealloc
 {	
 	// Free the room we took for everything else
-	if (cgDisplayProf) CGColorSpaceRelease(cgDisplayProf);
 	if (compositor) [compositor autorelease];
 	if (image) [image autorelease];
 	if (data) free(data);
@@ -769,9 +768,28 @@ extern IntPoint gScreenResolution;
 	return altData;
 }
 
-- (CGColorSpaceRef)displayProf
+- (NSColorSpace*)displayProf
 {
-	return cgDisplayProf;
+    NSColorSpaceName csname;
+    if (spp>2) {
+        csname = MyRGBSpace;
+    } else {
+        csname = MyGraySpace;
+    }
+    
+    if (csname == NSDeviceRGBColorSpace) {
+        return NSColorSpace.deviceRGBColorSpace;
+    }
+    if (csname == NSCalibratedRGBColorSpace) {
+        return NSColorSpace.genericRGBColorSpace;
+    }
+    if (csname == NSDeviceWhiteColorSpace) {
+        return NSColorSpace.deviceGrayColorSpace;
+    }
+    if (csname == NSCalibratedRGBColorSpace) {
+        return NSColorSpace.genericGrayColorSpace;
+    }
+    return NSColorSpace.deviceRGBColorSpace;
 }
 
 @end

@@ -99,8 +99,6 @@ enum {
 	
 	// The thread that is locking or NULL otherwise
 	NSThread *lockingThread;
-	
-	CGColorSpaceRef cgDisplayProf;
 }
 
 // CREATION METHODS
@@ -302,6 +300,6 @@ enum {
 	@result		Returns a CMProfileRef representing the ColorSync display profile
 				Seashore is using.
 */
-- (CGColorSpaceRef)displayProf;
+- (NSColorSpace*)displayProf;
 
 @end
