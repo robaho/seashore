@@ -114,11 +114,11 @@ typedef struct {
 		return NO;
 		
 	// Fill out isRGB and invert booleans
-	if ([[newImage colorSpaceName] isEqualToString:MyGraySpace] || [[newImage colorSpaceName] isEqualToString:MyGraySpaceColorSpace]) {
+	if ([[newImage colorSpaceName] isEqualToString:NSCalibratedWhiteColorSpace] || [[newImage colorSpaceName] isEqualToString:NSDeviceWhiteColorSpace]) {
 		isRGB = NO; invert = YES;
 	} else if ([[newImage colorSpaceName] isEqualToString:NSCalibratedBlackColorSpace] || [[newImage colorSpaceName] isEqualToString:NSDeviceBlackColorSpace]) {
 		isRGB = NO; invert = NO;
-	} else if ([[newImage colorSpaceName] isEqualToString:MyRGBSpace] || [[newImage colorSpaceName] isEqualToString:MyRGBSpace]) {
+	} else if ([[newImage colorSpaceName] isEqualToString:NSCalibratedRGBColorSpace] || [[newImage colorSpaceName] isEqualToString:NSDeviceRGBColorSpace]) {
 		isRGB = YES; invert = NO;
 	} else {
 		return NO;

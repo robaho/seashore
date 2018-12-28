@@ -9,3 +9,6 @@
 */
 
 #import <Cocoa/Cocoa.h>
+
+#define MyRGBSpace NSDeviceRGBColorSpace
+#define MyGraySpace NSDeviceWhiteColorSpace

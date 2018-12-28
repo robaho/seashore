@@ -10,6 +10,9 @@
 
 #import <Cocoa/Cocoa.h>
 
+#define MyRGBSpace NSDeviceRGBColorSpace
+#define MyGraySpace NSDeviceWhiteColorSpace
+
 #define INT_MULT(a,b,t)  ((t) = (a) * (b) + 0x80, ((((t) >> 8) + (t)) >> 8))
 
 // Premultiplies the alpha channel of an image - destPtr's memory may intersect srcPtr's
