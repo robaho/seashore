@@ -10,12 +10,12 @@
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
 #import <CoreGraphics/CoreGraphics.h>
-#import "SeaPlugins.h"
+#import <Plugins/PluginClass.h>
 
-@interface CIPerspectiveTransformClass : NSObject {
+@interface CIPerspectiveTransformClass : NSObject <PluginClass> {
 
 	// The plug-in's manager
-	id seaPlugins;
+	SeaPlugins *seaPlugins;
 
 	// YES if the application succeeded
 	BOOL success;

@@ -26,7 +26,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		2BC9679E21D00FE5004B22DB /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BC9679D21D00FE5004B22DB /* CoreImage.framework */; };
+		2B1F696321D70B3700D6F371 /* GIMPCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35B156E20A2C00D0005B688F /* GIMPCore.framework */; };
+		2B1F6C9E21D7E43200D6F371 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1F696421D70B4C00D6F371 /* CoreImage.framework */; };
 		56C8A64D1055A1DA0056E36F /* normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 56C8A64C1055A1DA0056E36F /* normal.png */; };
 		A80983D70871420900F7412F /* JP2Exporter.m in Sources */ = {isa = PBXBuildFile; fileRef = A80983D50871420900F7412F /* JP2Exporter.m */; };
 		A80EB8A6086F05E300369324 /* JP2 Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A80EB8A5086F05E300369324 /* JP2 Icon.icns */; };
@@ -84,8 +85,6 @@
 		A8D7CC5B0A20A74300FFC6A4 /* SeaDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8D7CC590A20A74300FFC6A4 /* SeaDocumentController.m */; };
 		A8E30CC109A3F4BC00B67097 /* SeaDocRotation.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E30CBF09A3F4BB00B67097 /* SeaDocRotation.m */; };
 		A8E57D0E09EFE9200009FCE2 /* cross.png in Resources */ = {isa = PBXBuildFile; fileRef = A8E57D0D09EFE9200009FCE2 /* cross.png */; };
-		A8EB480509C5AE58007B9A41 /* GIMPCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8EB480409C5AE58007B9A41 /* GIMPCore.framework */; };
-		A8EB481309C5AE79007B9A41 /* GIMPCore.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A8EB480409C5AE58007B9A41 /* GIMPCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		A8EDF0B9078959C80022BB31 /* duplicate.png in Resources */ = {isa = PBXBuildFile; fileRef = F5FE2C7203C43530013856BA /* duplicate.png */; };
 		A8EDF0BA078959C80022BB31 /* new.png in Resources */ = {isa = PBXBuildFile; fileRef = F5FE2C7303C43530013856BA /* new.png */; };
 		A8EDF0BF078959C80022BB31 /* expansion.png in Resources */ = {isa = PBXBuildFile; fileRef = F5FD458E03F416ED012349CA /* expansion.png */; };
@@ -352,6 +351,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		2B1F69F921D75F0200D6F371 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2B1F695D21D70B1900D6F371 /* Plugins.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2B1F683421D6F43800D6F371;
+			remoteInfo = Plugins;
+		};
 		2B2EDA141FA4220200A6ED4E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2B2EDA101FA4220200A6ED4E /* XCFQuickLook.xcodeproj */;
@@ -1436,7 +1442,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				A8EB481309C5AE79007B9A41 /* GIMPCore.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1467,21 +1472,17 @@
 		2A37F4B0FDCFA73011CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		2B1F695D21D70B1900D6F371 /* Plugins.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Plugins.xcodeproj; path = ../Plugins/Plugins.xcodeproj; sourceTree = "<group>"; };
+		2B1F696421D70B4C00D6F371 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		2B2EDA101FA4220200A6ED4E /* XCFQuickLook.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = XCFQuickLook.xcodeproj; path = ../XCFQuickLook/XCFQuickLook.xcodeproj; sourceTree = "<group>"; };
 		2B4046692185672100BCC2A2 /* ColorSync.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ColorSync.framework; path = System/Library/Frameworks/ColorSync.framework; sourceTree = SDKROOT; };
 		2B40466A2185672300BCC2A2 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		2BC9679B21CFE20F004B22DB /* doc */ = {isa = PBXFileReference; lastKnownFileType = folder; name = doc; path = ../doc; sourceTree = "<group>"; };
 		2BC9679C21CFE229004B22DB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		2BC9679D21D00FE5004B22DB /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		2BDB907921836088000D7803 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/SeaDocument.nib; sourceTree = "<group>"; };
 		2BDB907A21836089000D7803 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		2BDB907B21836089000D7803 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/CocoaContent.nib; sourceTree = "<group>"; };
 		2BDB907C2183608A000D7803 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/SVGContent.nib; sourceTree = "<group>"; };
-		2BF172DA21D561A000579D9D /* Common */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Common; path = "../Plug-ins/Common"; sourceTree = "<group>"; };
-		2BF173C721D58A5000579D9D /* Rects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rects.h; sourceTree = "<group>"; };
-		2BF173C821D58A5000579D9D /* Rects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Rects.m; sourceTree = "<group>"; };
-		2BF173C921D58A5100579D9D /* PluginData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PluginData.h; sourceTree = "<group>"; };
-		2BF173CA21D58A5100579D9D /* SeaPlugins.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeaPlugins.h; sourceTree = "<group>"; };
 		2BF173CD21D58AB400579D9D /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		35B156DC0A2C00D0005B688F /* GIMPCore.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GIMPCore.xcodeproj; path = ../GIMPCore/GIMPCore.xcodeproj; sourceTree = SOURCE_ROOT; };
 		35B156EA0A2C0116005B688F /* Sharpen.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Sharpen.xcodeproj; path = "../Plug-ins/Sharpen/Sharpen.xcodeproj"; sourceTree = SOURCE_ROOT; };
@@ -1762,7 +1763,6 @@
 		A8E5085904576FB200A80207 /* OptionsUtility.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = OptionsUtility.m; sourceTree = "<group>"; };
 		A8E57D0D09EFE9200009FCE2 /* cross.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cross.png; sourceTree = "<group>"; };
 		A8E94E7E0C0D8E7B008A39FD /* CINoiseReduction.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CINoiseReduction.xcodeproj; path = "../CoreImage Plug-ins/CINoiseReduction/CINoiseReduction.xcodeproj"; sourceTree = SOURCE_ROOT; };
-		A8EB480409C5AE58007B9A41 /* GIMPCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GIMPCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8EC3F210BDB56DE00EF2B55 /* CIWhitePointAdjust.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CIWhitePointAdjust.xcodeproj; path = "../CoreImage Plug-ins/CIWhitePointAdjust/CIWhitePointAdjust.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		A8EC63FA0422D5D900FE1D39 /* brush-cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "brush-cursor.png"; sourceTree = "<group>"; };
 		A8EDF154078959C80022BB31 /* Seashore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Seashore.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2023,11 +2023,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2BC9679E21D00FE5004B22DB /* CoreImage.framework in Frameworks */,
+				2B1F6C9E21D7E43200D6F371 /* CoreImage.framework in Frameworks */,
+				2B1F696321D70B3700D6F371 /* GIMPCore.framework in Frameworks */,
 				A84E106408E7A4FB0084BCB7 /* IOKit.framework in Frameworks */,
 				A8BF652708E6FEAB006E9BFC /* Carbon.framework in Frameworks */,
 				A8EDF14C078959C80022BB31 /* Cocoa.framework in Frameworks */,
-				A8EB480509C5AE58007B9A41 /* GIMPCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2037,12 +2037,12 @@
 		1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2B1F696421D70B4C00D6F371 /* CoreImage.framework */,
 				2B40466A2185672300BCC2A2 /* ApplicationServices.framework */,
 				2B4046692185672100BCC2A2 /* ColorSync.framework */,
 				A84E106308E7A4FB0084BCB7 /* IOKit.framework */,
 				A8BF652608E6FEAB006E9BFC /* Carbon.framework */,
 				1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */,
-				A8EB480409C5AE58007B9A41 /* GIMPCore.framework */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";
@@ -2155,11 +2155,18 @@
 		2A37F4C3FDCFA73011CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2BC9679D21D00FE5004B22DB /* CoreImage.framework */,
 				1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */,
 				1058C7A8FEA54F5311CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2B1F69F621D75F0200D6F371 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2B1F69FA21D75F0200D6F371 /* Plugins.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		2B2EDA111FA4220200A6ED4E /* Products */ = {
@@ -2168,18 +2175,6 @@
 				2B2EDA151FA4220200A6ED4E /* XCFQuickLook.qlgenerator */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		2BF173C521D58A4300579D9D /* Common */ = {
-			isa = PBXGroup;
-			children = (
-				2BF173C921D58A5100579D9D /* PluginData.h */,
-				2BF173C721D58A5000579D9D /* Rects.h */,
-				2BF173C821D58A5000579D9D /* Rects.m */,
-				2BF173CA21D58A5100579D9D /* SeaPlugins.h */,
-			);
-			name = Common;
-			path = "../CoreImage Plug-ins/Common";
 			sourceTree = "<group>";
 		};
 		35B156C70A2C0092005B688F /* Projects */ = {
@@ -2277,7 +2272,6 @@
 		35B157F80A2C04F9005B688F /* Universal Plug-ins */ = {
 			isa = PBXGroup;
 			children = (
-				2BF172DA21D561A000579D9D /* Common */,
 				35B156EA0A2C0116005B688F /* Sharpen.xcodeproj */,
 				35B156ED0A2C0116005B688F /* Threshold.xcodeproj */,
 				35B156F60A2C0116005B688F /* Brightness.xcodeproj */,
@@ -2301,6 +2295,7 @@
 		35B158190A2C0595005B688F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2B1F695D21D70B1900D6F371 /* Plugins.xcodeproj */,
 				35B156DC0A2C00D0005B688F /* GIMPCore.xcodeproj */,
 			);
 			name = Frameworks;
@@ -2583,7 +2578,6 @@
 		A856AC800BD0A2470001257F /* CoreImage Plug-ins */ = {
 			isa = PBXGroup;
 			children = (
-				2BF173C521D58A4300579D9D /* Common */,
 				A825EA610C38FE060017A3D1 /* CIAffineTile.xcodeproj */,
 				A8B9AB870C131FFE0050D2A9 /* CIBloom.xcodeproj */,
 				A8E136950C40751800C8A848 /* CIBrightness.xcodeproj */,
@@ -3548,8 +3542,8 @@
 			buildRules = (
 			);
 			dependencies = (
-				2B2EDA181FA4277E00A6ED4E /* PBXTargetDependency */,
 				35B157380A2C015A005B688F /* PBXTargetDependency */,
+				2B2EDA181FA4277E00A6ED4E /* PBXTargetDependency */,
 				A8080D600C07C5D50026D06E /* PBXTargetDependency */,
 				A8080D620C07C5D50026D06E /* PBXTargetDependency */,
 				A8080D640C07C5D50026D06E /* PBXTargetDependency */,
@@ -3633,7 +3627,7 @@
 		2A37F4A9FDCFA73011CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1000;
+				LastUpgradeCheck = 1010;
 			};
 			buildConfigurationList = A8D01E0D09BD8EA3007CFE76 /* Build configuration list for PBXProject "Seashore" */;
 			compatibilityVersion = "Xcode 8.0";
@@ -3918,6 +3912,10 @@
 					ProjectRef = A8956C480C2E569D006069EE /* Pixellate.xcodeproj */;
 				},
 				{
+					ProductGroup = 2B1F69F621D75F0200D6F371 /* Products */;
+					ProjectRef = 2B1F695D21D70B1900D6F371 /* Plugins.xcodeproj */;
+				},
+				{
 					ProductGroup = 35B156FA0A2C0116005B688F /* Products */;
 					ProjectRef = 35B156F90A2C0116005B688F /* Posterize.xcodeproj */;
 				},
@@ -3959,6 +3957,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		2B1F69FA21D75F0200D6F371 /* Plugins.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Plugins.framework;
+			remoteRef = 2B1F69F921D75F0200D6F371 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		2B2EDA151FA4220200A6ED4E /* XCFQuickLook.qlgenerator */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
@@ -4691,7 +4696,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\n# Change to build products directory\ncd \"$BUILT_PRODUCTS_DIR\"\n\n# Copy in plug-ins\ncp -r Sharpen.bundle Seashore.app/Contents/PlugIns/\n\ncp -r Threshold.bundle Seashore.app/Contents/PlugIns/\n\ncp -r HSV.bundle Seashore.app/Contents/PlugIns/\n\ncp -r Brightness.bundle Seashore.app/Contents/PlugIns/\n\ncp -r Posterize.bundle Seashore.app/Contents/PlugIns/\n\ncp -r CMYK.bundle Seashore.app/Contents/PlugIns/\n\ncp -r Gaussian.bundle Seashore.app/Contents/PlugIns/\n\ncp -r Invert.bundle Seashore.app/Contents/PlugIns/\n\ncp -r Greyscale.bundle Seashore.app/Contents/PlugIns/\n\ncp -r \"Kaleidoscope+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"SpotLight+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Gaussian+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"GlassDistortion+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Posterize+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Sunbeams+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"LineScreen+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"EdgeWork+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"TriangleTile+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"ParallelogramTile+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"CircularScreen+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"DotScreen+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Sepia+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"AffineTile+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Pixellate+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"CMYKHalftone+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Random+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r Median.bundle Seashore.app/Contents/PlugIns/\n\ncp -r \"Pointillize+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"FalseColor+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"DisplacementDistortion+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Median+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r Checkerboard.bundle Seashore.app/Contents/PlugIns/\n\ncp -r VertStripes.bundle Seashore.app/Contents/PlugIns/\n\ncp -r HorizStripes.bundle Seashore.app/Contents/PlugIns/\n\ncp -r \"Starshine+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Exposure+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Crystallize+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"CircularWrap+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"TorusLens+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"UnsharpMask+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r Random.bundle Seashore.app/Contents/PlugIns/\n\ncp -r \"GammaAdjust+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"ZoomBlur+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r Sepia.bundle Seashore.app/Contents/PlugIns/\n\ncp -r \"Invert+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Twirl+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Vortex+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"MotionBlur+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Bump+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Pinch+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Hole+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r Pixellate.bundle Seashore.app/Contents/PlugIns/\n\ncp -r \"HatchedScreen+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"CircleSplash+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Bloom+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Gloom+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"VertStripes+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"HorizStripes+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Monochrome+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Edges+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Brightness+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Sharpen+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"LenticularHalo+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Checkerboard+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"OpTile+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"PerspectiveTile+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"NoiseReduction+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"WhitePointAdjust+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"GlassLozenge+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"AffineTransform+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"PerspectiveTransform+.bundle\" Seashore.app/Contents/PlugIns/\n\nmkdir -p Seashore.app/Contents/Library/QuickLook\n\ncp -r \"../Release/XCFQuickLook.qlgenerator\" Seashore.app/Contents/Library/QuickLook/\n";
+			shellScript = "\n# Change to build products directory\ncd \"$BUILT_PRODUCTS_DIR\"\n\n# Copy in plug-ins\ncp -r Sharpen.bundle Seashore.app/Contents/PlugIns/\n\ncp -r Threshold.bundle Seashore.app/Contents/PlugIns/\n\ncp -r HSV.bundle Seashore.app/Contents/PlugIns/\n\ncp -r Brightness.bundle Seashore.app/Contents/PlugIns/\n\ncp -r Posterize.bundle Seashore.app/Contents/PlugIns/\n\ncp -r CMYK.bundle Seashore.app/Contents/PlugIns/\n\ncp -r Gaussian.bundle Seashore.app/Contents/PlugIns/\n\ncp -r Invert.bundle Seashore.app/Contents/PlugIns/\n\ncp -r Greyscale.bundle Seashore.app/Contents/PlugIns/\n\ncp -r \"Kaleidoscope+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"SpotLight+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Gaussian+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"GlassDistortion+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Posterize+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Sunbeams+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"LineScreen+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"EdgeWork+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"TriangleTile+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"ParallelogramTile+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"CircularScreen+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"DotScreen+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Sepia+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"AffineTile+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Pixellate+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"CMYKHalftone+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Random+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r Median.bundle Seashore.app/Contents/PlugIns/\n\ncp -r \"Pointillize+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"FalseColor+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"DisplacementDistortion+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Median+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r Checkerboard.bundle Seashore.app/Contents/PlugIns/\n\ncp -r VertStripes.bundle Seashore.app/Contents/PlugIns/\n\ncp -r HorizStripes.bundle Seashore.app/Contents/PlugIns/\n\ncp -r \"Starshine+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Exposure+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Crystallize+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"CircularWrap+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"TorusLens+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"UnsharpMask+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r Random.bundle Seashore.app/Contents/PlugIns/\n\ncp -r \"GammaAdjust+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"ZoomBlur+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r Sepia.bundle Seashore.app/Contents/PlugIns/\n\ncp -r \"Invert+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Twirl+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Vortex+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"MotionBlur+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Bump+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Pinch+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Hole+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r Pixellate.bundle Seashore.app/Contents/PlugIns/\n\ncp -r \"HatchedScreen+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"CircleSplash+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Bloom+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Gloom+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"VertStripes+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"HorizStripes+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Monochrome+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Edges+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Brightness+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Sharpen+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"LenticularHalo+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Checkerboard+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"OpTile+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"PerspectiveTile+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"NoiseReduction+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"WhitePointAdjust+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"GlassLozenge+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"AffineTransform+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"PerspectiveTransform+.bundle\" Seashore.app/Contents/PlugIns/\n\nmkdir -p Seashore.app/Contents/Library/QuickLook\n\ncp -r \"XCFQuickLook.qlgenerator\" Seashore.app/Contents/Library/QuickLook/\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -5291,129 +5296,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		A89B83CE0A426D4500AD6941 /* Development (Native) */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				PRODUCT_NAME = "Seashore Disk Image";
-			};
-			name = "Development (Native)";
-		};
-		A89B83CF0A426D4500AD6941 /* Deployment (Universal) */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				PRODUCT_NAME = "Seashore Disk Image";
-			};
-			name = "Deployment (Universal)";
-		};
-		A89B83D00A426D4500AD6941 /* Deployment (Native) */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				PRODUCT_NAME = "Seashore Disk Image";
-			};
-			name = "Deployment (Native)";
-		};
-		A8D01E0A09BD8EA3007CFE76 /* Development (Native) */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(FRAMEWORK_SEARCH_PATHS)";
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					DEBUG,
-					USE_CENTERING_CLIPVIEW,
-					MACOS_10_4_COMPILE,
-					MAIN_COMPILE,
-				);
-				GCC_VERSION = "";
-				GCC_VERSION_i386 = 4.0;
-				GCC_VERSION_ppc = 4.0;
-				HEADER_SEARCH_PATHS = .;
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OTHER_LDFLAGS = "-lz";
-				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore;
-				PRODUCT_NAME = Seashore;
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-				WRAPPER_EXTENSION = app;
-				ZERO_LINK = YES;
-			};
-			name = "Development (Native)";
-		};
-		A8D01E0B09BD8EA3007CFE76 /* Deployment (Universal) */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(FRAMEWORK_SEARCH_PATHS)";
-				GCC_AUTO_VECTORIZATION = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_OPTIMIZATION_LEVEL = 3;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_CENTERING_CLIPVIEW,
-					MACOS_10_4_COMPILE,
-					MAIN_COMPILE,
-				);
-				GCC_VERSION = "";
-				GCC_VERSION_i386 = 4.0;
-				GCC_VERSION_ppc = 4.0;
-				HEADER_SEARCH_PATHS = .;
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OTHER_LDFLAGS = "-lz";
-				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore;
-				PRODUCT_NAME = Seashore;
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-				WRAPPER_EXTENSION = app;
-			};
-			name = "Deployment (Universal)";
-		};
-		A8D01E0C09BD8EA3007CFE76 /* Deployment (Native) */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(FRAMEWORK_SEARCH_PATHS)";
-				GCC_AUTO_VECTORIZATION = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_OPTIMIZATION_LEVEL = 3;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_CENTERING_CLIPVIEW,
-					MACOS_10_4_COMPILE,
-					MAIN_COMPILE,
-				);
-				GCC_VERSION = "";
-				GCC_VERSION_i386 = 4.0;
-				GCC_VERSION_ppc = 4.0;
-				HEADER_SEARCH_PATHS = .;
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OTHER_LDFLAGS = "-lz";
-				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore;
-				PRODUCT_NAME = Seashore;
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-				WRAPPER_EXTENSION = app;
-			};
-			name = "Deployment (Native)";
-		};
-		A8D01E0E09BD8EA3007CFE76 /* Development (Native) */ = {
+		2B1F696B21D70C0700D6F371 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -5447,9 +5330,51 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
-			name = "Development (Native)";
+			name = Debug;
 		};
-		A8D01E0F09BD8EA3007CFE76 /* Deployment (Universal) */ = {
+		2B1F696C21D70C0700D6F371 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(FRAMEWORK_SEARCH_PATHS)";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					DEBUG,
+					USE_CENTERING_CLIPVIEW,
+					MACOS_10_4_COMPILE,
+					MAIN_COMPILE,
+				);
+				GCC_VERSION = "";
+				GCC_VERSION_i386 = 4.0;
+				GCC_VERSION_ppc = 4.0;
+				HEADER_SEARCH_PATHS = .;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OTHER_LDFLAGS = "-lz";
+				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore;
+				PRODUCT_NAME = Seashore;
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		2B1F696D21D70C0700D6F371 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				PRODUCT_NAME = "Seashore Disk Image";
+			};
+			name = Debug;
+		};
+		2B1F696E21D70C0F00D6F371 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -5481,41 +5406,47 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				SDKROOT = macosx;
 			};
-			name = "Deployment (Universal)";
+			name = Release;
 		};
-		A8D01E1009BD8EA3007CFE76 /* Deployment (Native) */ = {
+		2B1F696F21D70C0F00D6F371 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(FRAMEWORK_SEARCH_PATHS)";
+				GCC_AUTO_VECTORIZATION = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					USE_CENTERING_CLIPVIEW,
+					MACOS_10_4_COMPILE,
+					MAIN_COMPILE,
+				);
+				GCC_VERSION = "";
+				GCC_VERSION_i386 = 4.0;
+				GCC_VERSION_ppc = 4.0;
+				HEADER_SEARCH_PATHS = .;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				SDKROOT = macosx;
+				OTHER_LDFLAGS = "-lz";
+				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore;
+				PRODUCT_NAME = Seashore;
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = app;
 			};
-			name = "Deployment (Native)";
+			name = Release;
+		};
+		2B1F697021D70C0F00D6F371 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				PRODUCT_NAME = "Seashore Disk Image";
+			};
+			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
@@ -5523,32 +5454,29 @@
 		A89B83CD0A426D4500AD6941 /* Build configuration list for PBXAggregateTarget "Seashore Disk Image" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A89B83CE0A426D4500AD6941 /* Development (Native) */,
-				A89B83CF0A426D4500AD6941 /* Deployment (Universal) */,
-				A89B83D00A426D4500AD6941 /* Deployment (Native) */,
+				2B1F696D21D70C0700D6F371 /* Debug */,
+				2B1F697021D70C0F00D6F371 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = "Deployment (Native)";
+			defaultConfigurationName = Release;
 		};
 		A8D01E0909BD8EA3007CFE76 /* Build configuration list for PBXNativeTarget "Seashore" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A8D01E0A09BD8EA3007CFE76 /* Development (Native) */,
-				A8D01E0B09BD8EA3007CFE76 /* Deployment (Universal) */,
-				A8D01E0C09BD8EA3007CFE76 /* Deployment (Native) */,
+				2B1F696C21D70C0700D6F371 /* Debug */,
+				2B1F696F21D70C0F00D6F371 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = "Deployment (Native)";
+			defaultConfigurationName = Release;
 		};
 		A8D01E0D09BD8EA3007CFE76 /* Build configuration list for PBXProject "Seashore" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A8D01E0E09BD8EA3007CFE76 /* Development (Native) */,
-				A8D01E0F09BD8EA3007CFE76 /* Deployment (Universal) */,
-				A8D01E1009BD8EA3007CFE76 /* Deployment (Native) */,
+				2B1F696B21D70C0700D6F371 /* Debug */,
+				2B1F696E21D70C0F00D6F371 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = "Deployment (Native)";
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

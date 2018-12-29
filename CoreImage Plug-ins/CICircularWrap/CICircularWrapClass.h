@@ -10,12 +10,12 @@
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
 #import <CoreGraphics/CoreGraphics.h>
-#import "SeaPlugins.h"
+#import <Plugins/PluginClass.h>
 
-@interface CICircularWrapClass : NSObject {
+@interface CICircularWrapClass : NSObject <PluginClass> {
 
 	// The plug-in's manager
-	id seaPlugins;
+	SeaPlugins *seaPlugins;
 
 	// The label displaying the angle
 	IBOutlet id angleLabel;

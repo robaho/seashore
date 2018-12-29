@@ -135,4 +135,57 @@ inline NSRect IntRectMakeNSRect(IntRect rect)
 	return newRect;
 }
 
+inline void premultiplyBitmap(int spp, unsigned char *output, unsigned char *input, int length)
+{
+    int i, j, alphaPos, temp;
+    
+    for (i = 0; i < length; i++) {
+        alphaPos = (i + 1) * spp - 1;
+        if (input[alphaPos] == 255) {
+            for (j = 0; j < spp; j++)
+                output[i * spp + j] = input[i * spp + j];
+        }
+        else {
+            if (input[alphaPos] != 0) {
+                for (j = 0; j < spp - 1; j++)
+                    output[i * spp + j] = int_mult(input[i * spp + j], input[alphaPos], temp);
+                output[alphaPos] = input[alphaPos];
+            }
+            else {
+                for (j = 0; j < spp; j++)
+                    output[i * spp + j] = 0;
+            }
+        }
+    }
+}
+
+inline void unpremultiplyBitmap(int spp, unsigned char *output, unsigned char *input, int length)
+{
+    int i, j, alphaPos, newValue;
+    double alphaRatio;
+    
+    for (i = 0; i < length; i++) {
+        alphaPos = (i + 1) * spp - 1;
+        if (input[alphaPos] == 255) {
+            for (j = 0; j < spp; j++)
+                output[i * spp + j] = input[i * spp + j];
+        }
+        else {
+            if (input[alphaPos] != 0) {
+                alphaRatio = 255.0 / input[alphaPos];
+                for (j = 0; j < spp - 1; j++) {
+                    newValue = 0.5 + input[i * spp + j] * alphaRatio;
+                    newValue = MIN(newValue, 255);
+                    output[i * spp + j] = newValue;
+                }
+                output[alphaPos] = input[alphaPos];
+            }
+            else {
+                for (j = 0; j < spp; j++)
+                    output[i * spp + j] = 0;
+            }
+        }
+    }
+}
+
 
