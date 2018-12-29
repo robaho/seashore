@@ -497,7 +497,7 @@
     int bbr = width*spp;
     
     CGSize size = CGSizeMake(width,height);
-    CGColorSpaceRef cs = CGColorSpaceCreateWithName(spp > 2 ? kCGColorSpaceGenericRGB : kCGColorSpaceGenericGray);
+    CGColorSpaceRef cs = spp > 2 ? MyRGBCS.CGColorSpace : MyGrayCS.CGColorSpace;
     CIFormat format = spp > 2 ? kCIFormatRGBA8 :kCIFormatLA8;
     
     NSData *idata = [NSData dataWithBytesNoCopy:data length:(width*height*spp)];
@@ -878,7 +878,7 @@
     int bbr = width*spp;
     
     CGSize size = CGSizeMake(width,height);
-    CGColorSpaceRef cs = CGColorSpaceCreateWithName(spp > 2 ? kCGColorSpaceGenericRGB : kCGColorSpaceGenericGray);
+    CGColorSpaceRef cs = spp > 2 ? MyRGBCS.CGColorSpace : MyGrayCS.CGColorSpace;
     CIFormat format = spp > 2 ? kCIFormatRGBA8 :kCIFormatLA8;
     
     NSData *idata = [NSData dataWithBytesNoCopy:data length:(width*height*spp)];

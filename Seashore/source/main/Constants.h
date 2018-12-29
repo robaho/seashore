@@ -251,3 +251,6 @@ enum {
 
 #define MyRGBSpace NSDeviceRGBColorSpace
 #define MyGraySpace NSDeviceWhiteColorSpace
+
+#define MyRGBCS NSColorSpace.deviceRGBColorSpace
+#define MyGrayCS NSColorSpace.deviceGrayColorSpace
