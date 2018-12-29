@@ -8,7 +8,7 @@
 */
 
 #import <Cocoa/Cocoa.h>
-#import "PluginData.h"
+#import <Plugins/PluginData.h>
 
 @interface ThresholdView : NSView
 {

@@ -8,13 +8,12 @@
 */
 
 #import <Cocoa/Cocoa.h>
-#import "SeaPlugins.h"
-#import "PluginClass.h"
+#import <Plugins/PluginClass.h>
 
 @interface ThresholdClass : NSObject <PluginClass> {
 
 	// The plug-in's manager
-	id seaPlugins;
+	SeaPlugins *seaPlugins;
 
 	// The threshold range
 	IBOutlet id rangeLabel;
@@ -43,12 +42,6 @@
 }
 
 /*!
-	@method		adjust
-	@discussion	Executes the adjustments.
-*/
-- (void)adjust;
-
-/*!
 	@method		topValue
 	@discussion	Returns the value of the top slider.
 	@result		Returns an integer representing value of the top slider.
@@ -61,15 +54,5 @@
 	@result		Returns an integer representing value of the bottom slider.
 */
 - (int)bottomValue;
-
-/*!
-	@method		validateMenuItem:
-	@discussion	Determines whether a given menu item should be enabled or
-				disabled.
-	@param		menuItem
-				The menu item to be validated.
-	@result		YES if the menu item should be enabled, NO otherwise.
-*/
-- (BOOL)validateMenuItem:(id)menuItem;
 
 @end

@@ -9,8 +9,7 @@
 */
 
 #import <Cocoa/Cocoa.h>
-#import "PluginClass.h"
-#import "SeaPlugins.h"
+#import <Plugins/PluginClass.h>
 
 @interface SharpenClass : NSObject <PluginClass> {
 
