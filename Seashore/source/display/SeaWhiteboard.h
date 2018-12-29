@@ -300,6 +300,6 @@ enum {
 	@result		Returns a CMProfileRef representing the ColorSync display profile
 				Seashore is using.
 */
-- (NSColorSpace*)displayProf;
+- (CGColorSpaceRef)displayProf;
 
 @end

@@ -768,28 +768,13 @@ extern IntPoint gScreenResolution;
 	return altData;
 }
 
-- (NSColorSpace*)displayProf
+- (CGColorSpaceRef)displayProf
 {
-    NSColorSpaceName csname;
     if (spp>2) {
-        csname = MyRGBSpace;
+        return MyRGBCS.CGColorSpace;
     } else {
-        csname = MyGraySpace;
+        return MyGrayCS.CGColorSpace;
     }
-    
-    if (csname == NSDeviceRGBColorSpace) {
-        return NSColorSpace.deviceRGBColorSpace;
-    }
-    if (csname == NSCalibratedRGBColorSpace) {
-        return NSColorSpace.genericRGBColorSpace;
-    }
-    if (csname == NSDeviceWhiteColorSpace) {
-        return NSColorSpace.deviceGrayColorSpace;
-    }
-    if (csname == NSCalibratedRGBColorSpace) {
-        return NSColorSpace.genericGrayColorSpace;
-    }
-    return NSColorSpace.deviceRGBColorSpace;
 }
 
 @end
