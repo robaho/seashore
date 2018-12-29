@@ -21,14 +21,4 @@
 */
 - (PluginData *)data;
 
-/*!
-	@method		validateMenuItem:
-	@discussion	Determines whether a given menu item should be enabled or
-				disabled.
-	@param		menuItem
-				The menu item to be validated.
-	@result		YES if the menu item should be enabled, NO otherwise.
-*/
-- (BOOL)validateMenuItem:(id)menuItem;
-
 @end
