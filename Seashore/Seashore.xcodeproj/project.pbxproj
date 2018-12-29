@@ -28,6 +28,8 @@
 /* Begin PBXBuildFile section */
 		2B1F696321D70B3700D6F371 /* GIMPCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35B156E20A2C00D0005B688F /* GIMPCore.framework */; };
 		2B1F6C9E21D7E43200D6F371 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1F696421D70B4C00D6F371 /* CoreImage.framework */; };
+		2B1F6DEE21D807C100D6F371 /* GIMPCore.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 35B156E20A2C00D0005B688F /* GIMPCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B1F6DEF21D807D400D6F371 /* Plugins.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B1F69FA21D75F0200D6F371 /* Plugins.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		56C8A64D1055A1DA0056E36F /* normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 56C8A64C1055A1DA0056E36F /* normal.png */; };
 		A80983D70871420900F7412F /* JP2Exporter.m in Sources */ = {isa = PBXBuildFile; fileRef = A80983D50871420900F7412F /* JP2Exporter.m */; };
 		A80EB8A6086F05E300369324 /* JP2 Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A80EB8A5086F05E300369324 /* JP2 Icon.icns */; };
@@ -358,12 +360,19 @@
 			remoteGlobalIDString = 2B1F683421D6F43800D6F371;
 			remoteInfo = Plugins;
 		};
-		2B1F6D8D21D7F26E00D6F371 /* PBXContainerItemProxy */ = {
+		2B1F6DE821D8074200D6F371 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2B1F695D21D70B1900D6F371 /* Plugins.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 2B1F683321D6F43800D6F371;
 			remoteInfo = Plugins;
+		};
+		2B1F6DEC21D8074200D6F371 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 35B156DC0A2C00D0005B688F /* GIMPCore.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A8A7BDC907C1E06C006AB467;
+			remoteInfo = GIMPCore;
 		};
 		2B2EDA141FA4220200A6ED4E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -455,13 +464,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = Greyscale;
-		};
-		35B157370A2C015A005B688F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 35B156DC0A2C00D0005B688F /* GIMPCore.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A8A7BDC907C1E06C006AB467;
-			remoteInfo = GIMPCore;
 		};
 		35B158690A2C089A005B688F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1443,21 +1445,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A8EDF14F078959C80022BB31 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 12;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		DC48A369104219BD00A803AE /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = Contents/Library/Spotlight;
-			dstSubfolderSpec = 1;
+			dstPath = "";
+			dstSubfolderSpec = 10;
 			files = (
+				2B1F6DEF21D807D400D6F371 /* Plugins.framework in CopyFiles */,
+				2B1F6DEE21D807C100D6F371 /* GIMPCore.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3541,7 +3536,6 @@
 				A8EDF0B7078959C80022BB31 /* Resources */,
 				A8EDF0F2078959C80022BB31 /* Sources */,
 				A8EDF14B078959C80022BB31 /* Frameworks */,
-				A8EDF14F078959C80022BB31 /* CopyFiles */,
 				DC48A369104219BD00A803AE /* CopyFiles */,
 				DC48A37110421B1F00A803AE /* CopyFiles */,
 				A89E71910EB455E100F30C05 /* ShellScript */,
@@ -3549,8 +3543,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				2B1F6D8E21D7F26E00D6F371 /* PBXTargetDependency */,
-				35B157380A2C015A005B688F /* PBXTargetDependency */,
 				2B2EDA181FA4277E00A6ED4E /* PBXTargetDependency */,
 				A8080D600C07C5D50026D06E /* PBXTargetDependency */,
 				A8080D620C07C5D50026D06E /* PBXTargetDependency */,
@@ -3622,6 +3614,8 @@
 				A83DE5F60C4520AB000FEEA8 /* PBXTargetDependency */,
 				A83DE6430C4523D4000FEEA8 /* PBXTargetDependency */,
 				A8F67D8D0C45F89B00CE8770 /* PBXTargetDependency */,
+				2B1F6DE921D8074200D6F371 /* PBXTargetDependency */,
+				2B1F6DED21D8074200D6F371 /* PBXTargetDependency */,
 			);
 			name = Seashore;
 			productInstallPath = "$(HOME)/Applications";
@@ -4704,7 +4698,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\n# Change to build products directory\ncd \"$BUILT_PRODUCTS_DIR\"\n\n# Copy in plug-ins\ncp -r Sharpen.bundle Seashore.app/Contents/PlugIns/\n\ncp -r Threshold.bundle Seashore.app/Contents/PlugIns/\n\ncp -r HSV.bundle Seashore.app/Contents/PlugIns/\n\ncp -r Brightness.bundle Seashore.app/Contents/PlugIns/\n\ncp -r Posterize.bundle Seashore.app/Contents/PlugIns/\n\ncp -r CMYK.bundle Seashore.app/Contents/PlugIns/\n\ncp -r Gaussian.bundle Seashore.app/Contents/PlugIns/\n\ncp -r Invert.bundle Seashore.app/Contents/PlugIns/\n\ncp -r Greyscale.bundle Seashore.app/Contents/PlugIns/\n\ncp -r \"Kaleidoscope+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"SpotLight+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Gaussian+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"GlassDistortion+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Posterize+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Sunbeams+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"LineScreen+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"EdgeWork+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"TriangleTile+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"ParallelogramTile+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"CircularScreen+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"DotScreen+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Sepia+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"AffineTile+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Pixellate+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"CMYKHalftone+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Random+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r Median.bundle Seashore.app/Contents/PlugIns/\n\ncp -r \"Pointillize+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"FalseColor+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"DisplacementDistortion+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Median+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r Checkerboard.bundle Seashore.app/Contents/PlugIns/\n\ncp -r VertStripes.bundle Seashore.app/Contents/PlugIns/\n\ncp -r HorizStripes.bundle Seashore.app/Contents/PlugIns/\n\ncp -r \"Starshine+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Exposure+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Crystallize+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"CircularWrap+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"TorusLens+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"UnsharpMask+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r Random.bundle Seashore.app/Contents/PlugIns/\n\ncp -r \"GammaAdjust+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"ZoomBlur+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r Sepia.bundle Seashore.app/Contents/PlugIns/\n\ncp -r \"Invert+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Twirl+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Vortex+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"MotionBlur+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Bump+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Pinch+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Hole+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r Pixellate.bundle Seashore.app/Contents/PlugIns/\n\ncp -r \"HatchedScreen+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"CircleSplash+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Bloom+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Gloom+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"VertStripes+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"HorizStripes+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Monochrome+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Edges+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Brightness+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Sharpen+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"LenticularHalo+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Checkerboard+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"OpTile+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"PerspectiveTile+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"NoiseReduction+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"WhitePointAdjust+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"GlassLozenge+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"AffineTransform+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"PerspectiveTransform+.bundle\" Seashore.app/Contents/PlugIns/\n\nmkdir -p Seashore.app/Contents/Library/QuickLook\n\ncp -r \"XCFQuickLook.qlgenerator\" Seashore.app/Contents/Library/QuickLook/\n";
+			shellScript = "\n# Change to build products directory\ncd \"$BUILT_PRODUCTS_DIR\"\n\nmkdir -p Seashore.app/Contents/PlugIns\n\n# Copy in plug-ins\ncp -r Sharpen.bundle Seashore.app/Contents/PlugIns/\n\ncp -r Threshold.bundle Seashore.app/Contents/PlugIns/\n\ncp -r HSV.bundle Seashore.app/Contents/PlugIns/\n\ncp -r Brightness.bundle Seashore.app/Contents/PlugIns/\n\ncp -r Posterize.bundle Seashore.app/Contents/PlugIns/\n\ncp -r CMYK.bundle Seashore.app/Contents/PlugIns/\n\ncp -r Gaussian.bundle Seashore.app/Contents/PlugIns/\n\ncp -r Invert.bundle Seashore.app/Contents/PlugIns/\n\ncp -r Greyscale.bundle Seashore.app/Contents/PlugIns/\n\ncp -r \"Kaleidoscope+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"SpotLight+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Gaussian+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"GlassDistortion+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Posterize+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Sunbeams+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"LineScreen+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"EdgeWork+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"TriangleTile+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"ParallelogramTile+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"CircularScreen+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"DotScreen+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Sepia+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"AffineTile+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Pixellate+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"CMYKHalftone+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Random+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r Median.bundle Seashore.app/Contents/PlugIns/\n\ncp -r \"Pointillize+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"FalseColor+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"DisplacementDistortion+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Median+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r Checkerboard.bundle Seashore.app/Contents/PlugIns/\n\ncp -r VertStripes.bundle Seashore.app/Contents/PlugIns/\n\ncp -r HorizStripes.bundle Seashore.app/Contents/PlugIns/\n\ncp -r \"Starshine+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Exposure+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Crystallize+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"CircularWrap+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"TorusLens+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"UnsharpMask+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r Random.bundle Seashore.app/Contents/PlugIns/\n\ncp -r \"GammaAdjust+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"ZoomBlur+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r Sepia.bundle Seashore.app/Contents/PlugIns/\n\ncp -r \"Invert+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Twirl+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Vortex+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"MotionBlur+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Bump+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Pinch+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Hole+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r Pixellate.bundle Seashore.app/Contents/PlugIns/\n\ncp -r \"HatchedScreen+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"CircleSplash+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Bloom+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Gloom+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"VertStripes+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"HorizStripes+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Monochrome+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Edges+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Brightness+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Sharpen+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"LenticularHalo+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Checkerboard+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"OpTile+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"PerspectiveTile+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"NoiseReduction+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"WhitePointAdjust+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"GlassLozenge+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"AffineTransform+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"PerspectiveTransform+.bundle\" Seashore.app/Contents/PlugIns/\n\nmkdir -p Seashore.app/Contents/Library/QuickLook\n\ncp -r \"XCFQuickLook.qlgenerator\" Seashore.app/Contents/Library/QuickLook/\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -4859,10 +4853,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		2B1F6D8E21D7F26E00D6F371 /* PBXTargetDependency */ = {
+		2B1F6DE921D8074200D6F371 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Plugins;
-			targetProxy = 2B1F6D8D21D7F26E00D6F371 /* PBXContainerItemProxy */;
+			targetProxy = 2B1F6DE821D8074200D6F371 /* PBXContainerItemProxy */;
+		};
+		2B1F6DED21D8074200D6F371 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GIMPCore;
+			targetProxy = 2B1F6DEC21D8074200D6F371 /* PBXContainerItemProxy */;
 		};
 		2B2EDA181FA4277E00A6ED4E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -4873,11 +4872,6 @@
 			isa = PBXTargetDependency;
 			target = A8EDF05C078959C80022BB31 /* Seashore */;
 			targetProxy = 2BF5DB9D1FA0FA7E00EAFFDA /* PBXContainerItemProxy */;
-		};
-		35B157380A2C015A005B688F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = GIMPCore;
-			targetProxy = 35B157370A2C015A005B688F /* PBXContainerItemProxy */;
 		};
 		A80105870C3D150D00826C24 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -5365,6 +5359,10 @@
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_LDFLAGS = "-lz";
 				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore;
@@ -5440,6 +5438,10 @@
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_LDFLAGS = "-lz";
 				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore;

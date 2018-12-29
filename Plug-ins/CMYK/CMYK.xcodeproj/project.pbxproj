@@ -185,7 +185,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		2B1F69A221D74FAD00D6F371 /* Relese */ = {
+		2B1F69A221D74FAD00D6F371 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
@@ -215,9 +215,9 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				SDKROOT = macosx;
 			};
-			name = Relese;
+			name = Release;
 		};
-		2B1F69A321D74FAD00D6F371 /* Relese */ = {
+		2B1F69A321D74FAD00D6F371 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -233,7 +233,7 @@
 				PRODUCT_NAME = CMYK;
 				WRAPPER_EXTENSION = bundle;
 			};
-			name = Relese;
+			name = Release;
 		};
 		2B1F69A421D74FB600D6F371 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -296,7 +296,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2B1F69A521D74FB600D6F371 /* Debug */,
-				2B1F69A321D74FAD00D6F371 /* Relese */,
+				2B1F69A321D74FAD00D6F371 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -305,7 +305,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2B1F69A421D74FB600D6F371 /* Debug */,
-				2B1F69A221D74FAD00D6F371 /* Relese */,
+				2B1F69A221D74FAD00D6F371 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

@@ -309,7 +309,7 @@
 				2B1F697C21D70C8600D6F371 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		A8090BF509BD8F23006BC0DE /* Build configuration list for PBXProject "Sharpen" */ = {
 			isa = XCConfigurationList;
@@ -318,7 +318,7 @@
 				2B1F697B21D70C8600D6F371 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};
