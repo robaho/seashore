@@ -3,11 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2B1F698E21D70D7900D6F371 /* Plugins.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1F698D21D70D7900D6F371 /* Plugins.framework */; };
+		2B1F6D9621D7F34A00D6F371 /* Plugins.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1F6D9521D7F34A00D6F371 /* Plugins.framework */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		A831E1410789471D0009080F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A831E13F0789471D0009080F /* Localizable.strings */; };
 		A8B11B6E0788D0F200082B8E /* CMYKClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B11B6C0788D0F200082B8E /* CMYKClass.m */; };
@@ -18,7 +18,7 @@
 		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
-		2B1F698D21D70D7900D6F371 /* Plugins.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Plugins.framework; path = ../../Seashore/Build/Products/Debug/Plugins.framework; sourceTree = "<group>"; };
+		2B1F6D9521D7F34A00D6F371 /* Plugins.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Plugins.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B6048680CD000E48DA /* CMYK.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CMYK.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A831E1400789471D0009080F /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -33,7 +33,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */,
-				2B1F698E21D70D7900D6F371 /* Plugins.framework in Frameworks */,
+				2B1F6D9621D7F34A00D6F371 /* Plugins.framework in Frameworks */,
 				A8E8772C07ACF590008ABD7E /* ApplicationServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -82,7 +82,7 @@
 		1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2B1F698D21D70D7900D6F371 /* Plugins.framework */,
+				2B1F6D9521D7F34A00D6F371 /* Plugins.framework */,
 				A8E8772B07ACF590008ABD7E /* ApplicationServices.framework */,
 				1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */,
 			);
@@ -136,7 +136,7 @@
 				LastUpgradeCheck = 1000;
 			};
 			buildConfigurationList = A85333AC09BD8F1100B34B95 /* Build configuration list for PBXProject "CMYK" */;
-			compatibilityVersion = "Xcode 2.4";
+			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (

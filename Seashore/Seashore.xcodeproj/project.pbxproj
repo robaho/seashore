@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -356,6 +356,13 @@
 			containerPortal = 2B1F695D21D70B1900D6F371 /* Plugins.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 2B1F683421D6F43800D6F371;
+			remoteInfo = Plugins;
+		};
+		2B1F6D8D21D7F26E00D6F371 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2B1F695D21D70B1900D6F371 /* Plugins.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 2B1F683321D6F43800D6F371;
 			remoteInfo = Plugins;
 		};
 		2B2EDA141FA4220200A6ED4E /* PBXContainerItemProxy */ = {
@@ -3542,6 +3549,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				2B1F6D8E21D7F26E00D6F371 /* PBXTargetDependency */,
 				35B157380A2C015A005B688F /* PBXTargetDependency */,
 				2B2EDA181FA4277E00A6ED4E /* PBXTargetDependency */,
 				A8080D600C07C5D50026D06E /* PBXTargetDependency */,
@@ -3630,7 +3638,7 @@
 				LastUpgradeCheck = 1010;
 			};
 			buildConfigurationList = A8D01E0D09BD8EA3007CFE76 /* Build configuration list for PBXProject "Seashore" */;
-			compatibilityVersion = "Xcode 8.0";
+			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -4851,6 +4859,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		2B1F6D8E21D7F26E00D6F371 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Plugins;
+			targetProxy = 2B1F6D8D21D7F26E00D6F371 /* PBXContainerItemProxy */;
+		};
 		2B2EDA181FA4277E00A6ED4E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = XCFQuickLook;
