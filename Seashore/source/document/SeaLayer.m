@@ -500,7 +500,7 @@
     CGColorSpaceRef cs = CGColorSpaceCreateWithName(spp > 2 ? kCGColorSpaceGenericRGB : kCGColorSpaceGenericGray);
     CIFormat format = spp > 2 ? kCIFormatRGBA8 :kCIFormatLA8;
     
-    NSData *idata = [NSData dataWithBytes:data length:(width*height*spp)];
+    NSData *idata = [NSData dataWithBytesNoCopy:data length:(width*height*spp)];
     
     CIImage *inputImage = [[CIImage alloc] initWithBitmapData:idata bytesPerRow:bbr size:size format:format colorSpace:cs];
     CIFilter *controlsFilter = [CIFilter filterWithName:@"CIAffineTransform"];
@@ -512,8 +512,6 @@
     CIImage *displayImage = [controlsFilter outputImage];
     
     NSCIImageRep *imageRep = [NSCIImageRep imageRepWithCIImage:displayImage];
-    
-	free(data);
     
     data = convertImageRep(imageRep,spp);
     
@@ -883,7 +881,7 @@
     CGColorSpaceRef cs = CGColorSpaceCreateWithName(spp > 2 ? kCGColorSpaceGenericRGB : kCGColorSpaceGenericGray);
     CIFormat format = spp > 2 ? kCIFormatRGBA8 :kCIFormatLA8;
     
-    NSData *idata = [NSData dataWithBytes:data length:(width*height*spp)];
+    NSData *idata = [NSData dataWithBytesNoCopy:data length:(width*height*spp)];
     
     CIImage *inputImage = [[CIImage alloc] initWithBitmapData:idata bytesPerRow:bbr size:size format:format colorSpace:cs];
     CIFilter *controlsFilter = [CIFilter filterWithName:@"CIAffineTransform"];
@@ -895,8 +893,6 @@
     CIImage *displayImage = [controlsFilter outputImage];
     
     NSCIImageRep *imageRep = [NSCIImageRep imageRepWithCIImage:displayImage];
-    
-    free(data);
     
     data = convertImageRep(imageRep,spp);
     
