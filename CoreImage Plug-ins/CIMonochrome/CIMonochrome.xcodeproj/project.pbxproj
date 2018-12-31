@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B1F6E9A21DA98F100D6F371 /* Plugins.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1F6B7F21D7D34100D6F371 /* Plugins.framework */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		A831E1410789471D0009080F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A831E13F0789471D0009080F /* Localizable.strings */; };
 		A89CC2C409A9DF410072B19D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A89CC2C309A9DF410072B19D /* QuartzCore.framework */; };
@@ -38,6 +39,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B1F6E9A21DA98F100D6F371 /* Plugins.framework in Frameworks */,
 				8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */,
 				A89CC2C409A9DF410072B19D /* QuartzCore.framework in Frameworks */,
 				A89CC46909A9E07A0072B19D /* ApplicationServices.framework in Frameworks */,
@@ -54,6 +56,7 @@
 				089C167CFE841241C02AAC07 /* Resources */,
 				089C1671FE841209C02AAC07 /* Frameworks and Libraries */,
 				19C28FB8FE9D52D311CA2CBB /* Products */,
+				2B1F6E9921DA98F100D6F371 /* Frameworks */,
 			);
 			name = CIMonochrome;
 			sourceTree = "<group>";
@@ -114,6 +117,13 @@
 				8D5B49B6048680CD000E48DA /* Monochrome+.bundle */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		2B1F6E9921DA98F100D6F371 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

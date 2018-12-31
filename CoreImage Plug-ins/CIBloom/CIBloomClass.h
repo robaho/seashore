@@ -45,8 +45,5 @@
 	// YES if the application succeeded
 	BOOL success;
 	
-	// Some temporary space we need preallocated for greyscale data
-	unsigned char *newdata;
-
 }
 @end

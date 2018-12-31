@@ -46,9 +46,5 @@
 	
 	// The extent of the refraction
 	float refraction;
-	
-	// Some temporary space we need preallocated for greyscale data
-	unsigned char *newdata;
-
 }
 @end

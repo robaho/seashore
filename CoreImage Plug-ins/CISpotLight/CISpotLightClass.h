@@ -66,9 +66,6 @@
 	
 	// The srcHeight and destHeight
 	int srcHeight, destHeight;
-	
-	// Some temporary space we need preallocated for greyscale data
-	unsigned char *newdata;
 
 	// YES if the plug-in is running
 	BOOL running;

@@ -37,9 +37,6 @@
 	
 	// The angle of the twirl
 	float angle;
-	
-	// Some temporary space we need preallocated for greyscale data
-	unsigned char *newdata;
 
 }
 @end

@@ -29,9 +29,6 @@
 	// The panel for the plug-in
 	IBOutlet id panel;
 	
-	// Some temporary space we need preallocated for greyscale data
-	unsigned char *newdata;
-	
 	// YES if the effect must be refreshed
 	BOOL refresh;
 	

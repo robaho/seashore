@@ -1,8 +1,5 @@
 #import "Rects.h"
 
-#define MyRGBSpace NSDeviceRGBColorSpace
-#define MyGraySpace NSDeviceWhiteColorSpace
-
 /*!
 	@enum		Overlay behaviours
 	@constant	kNormalBehaviour

@@ -39,9 +39,6 @@
 	// YES if the application succeeded
 	BOOL success;
 	
-	// Some temporary space we need preallocated for greyscale data
-	unsigned char *newdata;
-	
 	// The path of the texture to be used
 	NSString *texturePath;
 

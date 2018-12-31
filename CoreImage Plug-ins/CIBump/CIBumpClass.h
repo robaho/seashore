@@ -34,9 +34,5 @@
 	
 	// The scale of the bump
 	float scale;
-	
-	// Some temporary space we need preallocated for greyscale data
-	unsigned char *newdata;
-
 }
 @end

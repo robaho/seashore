@@ -12,6 +12,7 @@
 		2B1F684C21D6F47F00D6F371 /* Rects.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B1F684821D6F47F00D6F371 /* Rects.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2B1F684D21D6F47F00D6F371 /* SeaPlugins.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B1F684921D6F47F00D6F371 /* SeaPlugins.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2B1F685021D6F49E00D6F371 /* Rects.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1F684F21D6F49E00D6F371 /* Rects.m */; };
+		2B1F6E8D21D9550D00D6F371 /* PluginClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1F6E8C21D9550D00D6F371 /* PluginClass.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		2B1F684821D6F47F00D6F371 /* Rects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rects.h; sourceTree = "<group>"; };
 		2B1F684921D6F47F00D6F371 /* SeaPlugins.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeaPlugins.h; sourceTree = "<group>"; };
 		2B1F684F21D6F49E00D6F371 /* Rects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Rects.m; sourceTree = "<group>"; };
+		2B1F6E8C21D9550D00D6F371 /* PluginClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PluginClass.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 			isa = PBXGroup;
 			children = (
 				2B1F684F21D6F49E00D6F371 /* Rects.m */,
+				2B1F6E8C21D9550D00D6F371 /* PluginClass.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -152,6 +155,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2B1F685021D6F49E00D6F371 /* Rects.m in Sources */,
+				2B1F6E8D21D9550D00D6F371 /* PluginClass.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -167,7 +171,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -230,7 +234,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -289,6 +293,7 @@
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore.plugins;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -307,6 +312,7 @@
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore.plugins;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;

@@ -1,9 +1,15 @@
 #import <Cocoa/Cocoa.h>
 #import "SeaPlugins.h"
 
+#define MyRGBSpace NSDeviceRGBColorSpace
+#define MyGraySpace NSDeviceWhiteColorSpace
+
+#define MyRGBCS NSColorSpace.deviceRGBColorSpace
+#define MyGrayCS NSColorSpace.deviceGrayColorSpace
+
 /*!
-	@class		PluginClass
-	@abstract	A basic class from which to build plug-ins.
+	@protocol	PluginClass
+	@abstract	required methods of a plugin with Seashore
 	@discussion	This class is in the public domain allowing plug-ins of any
 				license to be made compatible with Seashore.
 				<br><br>
@@ -112,3 +118,88 @@
 - (IBAction)cancel:(id)sender;
 
 @end
+
+/*!
+ @discussion apply a core image filter to the current plugin data - modifies the overlay and replace entries. Do not set the image on the filter.
+ */
+void applyFilter(PluginData *pluginData,CIFilter *filter);
+
+/*!
+ @discussion apply a core image filter to the current plugin data - modifies the overlay and replace entries. Do not set the image on the filter.
+ */
+void applyFilters(PluginData *pluginData,CIFilter *filterA,CIFilter *filterB);
+
+
+/*!
+ @discussion apply a core image filter with a constant background to the current plugin data - modifies the overlay and replace entries. Do not set the image on the filter.
+ */
+void applyFilterFG(PluginData *pluginData,CIFilter *filter);
+
+/*!
+ @discussion apply a core image filter with a constant background to the current plugin data - modifies the overlay and replace entries. Do not set the image on the filter.
+ */
+void applyFilterBG(PluginData *pluginData,CIFilter *filter);
+
+/*!
+ @discussion apply a core image filter with a using foreground and background to colorize the current plugin data - modifies the overlay and replace entries. Do not set the image on the filter.
+ */
+void applyFilterFGBG(PluginData *pluginData,CIFilter *filter);
+
+
+/*!
+ @discussion create a CIImage that represents the source plugin data
+ */
+CIImage *createCIImage(PluginData *plugin);
+
+/*!
+ @discussion render a CIImage into the plugin overlay, and set the replace mask
+ */
+void renderCIImage(PluginData *plugin,CIImage *image);
+
+/*!
+ @defined    int_mult(a, b, t)
+ @discussion    A macro that when given two unsigned characters (bytes)
+ determines the product of the two. The returned value is scaled
+ so it is between 0 and 255. A third argument,  a temporary
+ integer, must also be passed to allow the calculation to
+ complete.
+ */
+#define int_mult(a,b,t)  ((t) = (a) * (b) + 0x80, ((((t) >> 8) + (t)) >> 8))
+
+#define PI 3.14159265
+
+/*!
+ @function    premultiplyBitmap
+ @discussion    Given a bitmap this function premultiplies the primary channels
+ and places the result in the output. The output and input can
+ both point to the same block of memory.
+ @param        spp
+ The samples per pixel of the original bitmap.
+ @param        destPtr
+ The block of memory in which to place the premultiplied bitmap.
+ @param        srcPtr
+ The block of memory containing the original bitmap.
+ @param        length
+ The length of the bitmap in terms of pixels (not bytes).
+ */
+void premultiplyBitmap(int spp, unsigned char *destPtr, unsigned char *srcPtr, int length);
+
+/*!
+ @function    unpremultiplyBitmap
+ @discussion    Given a bitmap this function tries to reverse the
+ premultiplication of the primary channels and places the result
+ in the output. The output and input can  both point to the same
+ block of memory.
+ @param        spp
+ The samples per pixel of the original bitmap.
+ @param        destPtr
+ The block of memory in which to place the premultiplied bitmap.
+ @param        srcPtr
+ The block of memory containing the original bitmap.
+ @param        length
+ The length of the bitmap in terms of pixels (not bytes).
+ */
+void unpremultiplyBitmap(int spp, unsigned char *destPtr, unsigned char *srcPtr, int length);
+
+float calculateAngle(IntPoint point,IntPoint apoint);
+int calculateRadius(IntPoint point,IntPoint apoint);
