@@ -98,17 +98,12 @@ CIImage *createCIImage(PluginData *pluginData){
     int width = [pluginData width];
     int height = [pluginData height];
     
-    int bbr = width*spp;
-    
     unsigned char *data = [pluginData data];
     
-    CGSize size = CGSizeMake(width,height);
-    CGColorSpaceRef cs = spp > 2 ? MyRGBCS.CGColorSpace : MyGrayCS.CGColorSpace;
-    CIFormat format = spp > 2 ? kCIFormatRGBA8 :kCIFormatLA8;
+    NSBitmapImageRep *imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:TRUE isPlanar:NO colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
+    [imageRep autorelease];
     
-    NSData *idata = [NSData dataWithBytes:data length:(width*height*spp)];
-    
-    CIImage *inputImage = [[CIImage alloc] initWithBitmapData:idata bytesPerRow:bbr size:size format:format colorSpace:cs];
+    CIImage *inputImage = [[CIImage alloc] initWithBitmapImageRep:imageRep];
     
     return inputImage;
 }
