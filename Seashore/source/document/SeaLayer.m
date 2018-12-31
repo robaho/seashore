@@ -494,15 +494,7 @@
 
 - (void)setCoreImageRotation:(float)degrees interpolation:(int)interpolation withTrim:(BOOL)trim
 {
-    int bbr = width*spp;
-    
-    CGSize size = CGSizeMake(width,height);
-    CGColorSpaceRef cs = spp > 2 ? MyRGBCS.CGColorSpace : MyGrayCS.CGColorSpace;
-    CIFormat format = spp > 2 ? kCIFormatRGBA8 :kCIFormatLA8;
-    
-    NSData *idata = [NSData dataWithBytesNoCopy:data length:(width*height*spp)];
-    
-    CIImage *inputImage = [[CIImage alloc] initWithBitmapData:idata bytesPerRow:bbr size:size format:format colorSpace:cs];
+    CIImage *inputImage = [[CIImage alloc] initWithBitmapImageRep:[self bitmap]];
     CIFilter *controlsFilter = [CIFilter filterWithName:@"CIAffineTransform"];
     [controlsFilter setValue:inputImage forKey:kCIInputImageKey];
     
@@ -875,15 +867,7 @@
 
 - (void)setCoreImageWidth:(int)newWidth height:(int)newHeight interpolation:(int)interpolation
 {
-    int bbr = width*spp;
-    
-    CGSize size = CGSizeMake(width,height);
-    CGColorSpaceRef cs = spp > 2 ? MyRGBCS.CGColorSpace : MyGrayCS.CGColorSpace;
-    CIFormat format = spp > 2 ? kCIFormatRGBA8 :kCIFormatLA8;
-    
-    NSData *idata = [NSData dataWithBytesNoCopy:data length:(width*height*spp)];
-    
-    CIImage *inputImage = [[CIImage alloc] initWithBitmapData:idata bytesPerRow:bbr size:size format:format colorSpace:cs];
+    CIImage *inputImage = [[CIImage alloc] initWithBitmapImageRep:[self bitmap]];
     CIFilter *controlsFilter = [CIFilter filterWithName:@"CIAffineTransform"];
     [controlsFilter setValue:inputImage forKey:kCIInputImageKey];
     
@@ -897,7 +881,6 @@
     data = convertImageRep(imageRep,spp);
     
     [inputImage release];
-    [at release];
     
     // Determine the width and height of this layer
     newWidth = (int)[imageRep pixelsWide];
