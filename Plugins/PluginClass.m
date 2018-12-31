@@ -256,4 +256,97 @@ int calculateRadius(IntPoint point,IntPoint apoint) {
     return radius;
 }
 
+CGRect determineContentBorders(PluginData *pluginData) {
+    int contentLeft, contentRight, contentTop, contentBottom;
+    int width, height;
+    int spp;
+    unsigned char *data;
+    int i, j;
+    
+    // Start out with invalid content borders
+    contentLeft = contentRight = contentTop = contentBottom =  -1;
+    
+    // Select the appropriate data for working out the content borders
+    data = [pluginData data];
+    width = [pluginData width];
+    height = [pluginData height];
+    spp = [pluginData spp];
+    
+    // Determine left content margin
+    for (i = 0; i < width && contentLeft == -1; i++) {
+        for (j = 0; j < height && contentLeft == -1; j++) {
+            if (data[j * width * spp + i * spp + (spp - 1)] != 0) {
+                contentLeft = i;
+            }
+        }
+    }
+    
+    // Determine right content margin
+    for (i = width - 1; i >= 0 && contentRight == -1; i--) {
+        for (j = 0; j < height && contentRight == -1; j++) {
+            if (data[j * width * spp + i * spp + (spp - 1)] != 0) {
+                contentRight = i;
+            }
+        }
+    }
+    
+    // Determine top content margin
+    for (j = 0; j < height && contentTop == -1; j++) {
+        for (i = 0; i < width && contentTop == -1; i++) {
+            if (data[j * width * spp + i * spp + (spp - 1)] != 0) {
+                contentTop = j;
+            }
+        }
+    }
+    
+    // Determine bottom content margin
+    for (j = height - 1; j >= 0 && contentBottom == -1; j--) {
+        for (i = 0; i < width && contentBottom == -1; i++) {
+            if (data[j * width * spp + i * spp + (spp - 1)] != 0) {
+                contentBottom = j;
+            }
+        }
+    }
+    
+    if (contentLeft != -1 && contentTop != -1 && contentRight != -1 && contentBottom != -1) {
+        CGRect bounds;
+        
+        bounds.origin.x = contentLeft;
+        bounds.origin.y = contentTop;
+        bounds.size.width = contentRight - contentLeft + 1;
+        bounds.size.height = contentBottom - contentTop + 1;
+        
+        return bounds;
+    }
+    else {
+        return CGRectNull;
+    }
+}
+
+CIImage *croppedCIImage(PluginData *pluginData,CGRect bounds) {
+    CIImage *image = createCIImage(pluginData);
+    [image autorelease];
+    
+    if(CGRectIsNull(bounds)){
+        return image;
+    }
+    
+    int height = [pluginData height];
+    
+    CIFilter *filter = [CIFilter filterWithName:@"CICrop"];
+    [filter setDefaults];
+    [filter setValue:image forKey:@"inputImage"];
+    [filter setValue:[CIVector vectorWithX:bounds.origin.x Y:height - bounds.size.height - bounds.origin.y Z:bounds.size.width W:bounds.size.height] forKey:@"inputRectangle"];
+    CIImage *output = [filter valueForKey:@"outputImage"];
+    
+    // Offset properly
+    filter = [CIFilter filterWithName:@"CIAffineTransform"];
+    [filter setDefaults];
+    [filter setValue:output forKey:@"inputImage"];
+    NSAffineTransform *offsetTransform = [NSAffineTransform transform];
+    [offsetTransform translateXBy:-bounds.origin.x yBy:-height + bounds.origin.y + bounds.size.height];
+    [filter setValue:offsetTransform forKey:@"inputTransform"];
+    return [filter valueForKey:@"outputImage"];
+}
+
 

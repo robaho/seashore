@@ -19,15 +19,5 @@
 
 	// YES if the application succeeded
 	BOOL success;
-
-	// Some temporary space we need preallocated for greyscale data
-	unsigned char *newdata;
-	
-	// Determines the boundaries of the layer
-	CGRect bounds;
-	
-	// Signals whether the bounds rectangle is valid
-	BOOL boundsValid;
-
 }
 @end

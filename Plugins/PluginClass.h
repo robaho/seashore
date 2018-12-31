@@ -203,3 +203,10 @@ void unpremultiplyBitmap(int spp, unsigned char *destPtr, unsigned char *srcPtr,
 
 float calculateAngle(IntPoint point,IntPoint apoint);
 int calculateRadius(IntPoint point,IntPoint apoint);
+
+CGRect determineContentBorders(PluginData *pluginData);
+
+/*!
+ @discussion return a possibly cropped CIImage, the image is already marked autorelease
+ */
+CIImage *croppedCIImage(PluginData *pluginData,CGRect bounds);
