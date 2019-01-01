@@ -213,7 +213,7 @@ extern id gNewFont;
 	// End the panel
 	[[document whiteboard] clearOverlay];
 	if (previewRect.size.width != 0) {
-		[[document helpers] overlayChanged:previewRect inThread:NO];
+		[[document helpers] overlayChanged:previewRect];
 	}
 	running = NO;
 	[NSApp stopModal];
@@ -227,11 +227,11 @@ extern id gNewFont;
 	if (running) {
 		[[document whiteboard] clearOverlay];
 		if (previewRect.size.width != 0) {
-			[[document helpers] overlayChanged:previewRect inThread:NO];
+			[[document helpers] overlayChanged:previewRect];
 		}
 		if ([[[textbox textStorage] string] length] > 0) {
 			previewRect = [self drawOverlay];
-			[[document helpers] overlayChanged:previewRect inThread:NO];
+			[[document helpers] overlayChanged:previewRect];
 		}
 	}
 }

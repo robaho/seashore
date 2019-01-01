@@ -156,7 +156,7 @@
 	rect = IntConstrainRect(rect, IntMakeRect(0, 0, [(SeaLayer *)layer width], [(SeaLayer *)layer height]));
 	if (rect.size.width > 0 && rect.size.height > 0) {
 		[self smudgeWithBrush:curBrush at:temp];
-		[[document helpers] overlayChanged:rect inThread:NO];
+		[[document helpers] overlayChanged:rect];
 	}
 	
 	// Record the position as the last point
@@ -274,7 +274,7 @@
 		rect = IntConstrainRect(rect, IntMakeRect(0, 0, layerWidth, layerHeight));
 		if (rect.size.width > 0 && rect.size.height > 0) {
 			[self smudgeWithBrush:curBrush at:temp];
-			[[document helpers] overlayChanged:rect inThread:NO];
+			[[document helpers] overlayChanged:rect];
 		}
 	}
 	

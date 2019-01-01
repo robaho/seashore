@@ -152,17 +152,17 @@
 	rect = [(SeaWhiteboard *)[document whiteboard] applyOverlay];
 	layer = [contents activeLayer];
 	[layer updateThumbnail];
-	[(SeaWhiteboard *)[document whiteboard] update:rect inThread:NO];
+	[(SeaWhiteboard *)[document whiteboard] update:rect];
 	[(PegasusUtility *)[[SeaController utilitiesManager] pegasusUtilityFor:document] update:kPegasusUpdateLayerView];
 }
 
-- (void)overlayChanged:(IntRect)rect inThread:(BOOL)thread
+- (void)overlayChanged:(IntRect)rect
 {
 	id contents = [document contents];
 	
 	rect.origin.x += [[contents activeLayer] xoff];
 	rect.origin.y += [[contents activeLayer] yoff];
-	[(SeaWhiteboard *)[document whiteboard] update:rect inThread:thread];
+	[(SeaWhiteboard *)[document whiteboard] update:rect];
 }
 
 - (void)layerAttributesChanged:(int)index hold:(BOOL)hold
@@ -181,7 +181,7 @@
 		default:
 			layer = [contents layer:index];
 			rect = IntMakeRect([layer xoff], [layer yoff], [(SeaLayer *)layer width], [(SeaLayer *)layer height]);
-			[(SeaWhiteboard *)[document whiteboard] update:rect inThread:NO];
+			[(SeaWhiteboard *)[document whiteboard] update:rect];
 		break;
 	}
 	
@@ -251,7 +251,7 @@
 			layer = [contents layer:index];
 			rect = IntMakeRect([layer xoff], [layer yoff], [(SeaLayer *)layer width], [(SeaLayer *)layer height]);
 			[layer updateThumbnail];
-			[(SeaWhiteboard *)[document whiteboard] update:rect inThread:NO];
+			[(SeaWhiteboard *)[document whiteboard] update:rect];
 		break;
 	}
 	
@@ -286,11 +286,11 @@
 			rectB = IntMakeRect(oldOffsets.x, oldOffsets.y, [(SeaLayer *)layer width], [(SeaLayer *)layer height]);
 			rectC = IntMakeRect(xoff, yoff, [(SeaLayer *)layer width], [(SeaLayer *)layer height]);
 			if (rectA.size.width * rectA.size.height < rectB.size.width * rectB.size.height + rectC.size.width * rectC.size.height) {
-				[(SeaWhiteboard *)[document whiteboard] update:rectA inThread:NO];
+				[(SeaWhiteboard *)[document whiteboard] update:rectA];
 			}
 			else {
-				[(SeaWhiteboard *)[document whiteboard] update:rectB inThread:NO];
-				[(SeaWhiteboard *)[document whiteboard] update:rectC inThread:NO];
+				[(SeaWhiteboard *)[document whiteboard] update:rectB];
+				[(SeaWhiteboard *)[document whiteboard] update:rectC];
 			}
 		break;
 	}
@@ -316,7 +316,7 @@
 		default:
 			layer = [contents layer:index];
 			rect = IntMakeRect([layer xoff], [layer yoff], [(SeaLayer *)layer width], [(SeaLayer *)layer height]);
-			[(SeaWhiteboard *)[document whiteboard] update:rect inThread:NO];
+			[(SeaWhiteboard *)[document whiteboard] update:rect];
 		break;
 	}
 	[(LayerDataSource *)[document dataSource] update];
@@ -330,7 +330,7 @@
 	layer = [[document contents] layer:index];
 	rect.origin.x += [layer xoff];
 	rect.origin.y += [layer yoff];
-	[(SeaWhiteboard *)[document whiteboard] update:rect inThread:NO];
+	[(SeaWhiteboard *)[document whiteboard] update:rect];
 	[layer updateThumbnail];
 	[(PegasusUtility *)[[SeaController utilitiesManager] pegasusUtilityFor:document] update:kPegasusUpdateLayerView];
 }

@@ -128,10 +128,8 @@ enum {
 	@param		rect
 				The rectangle containing the changed region in the overlay's
 				co-ordinates.
-	@param		thread
-				YES if drawing should be done in thread, NO otherwise.
 */
-- (void)overlayChanged:(IntRect)rect inThread:(BOOL)thread;
+- (void)overlayChanged:(IntRect)rect;
 
 /*!
 	@method		layerAttributesChanged:hold:

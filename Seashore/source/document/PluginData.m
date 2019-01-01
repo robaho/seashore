@@ -129,13 +129,13 @@
 
 - (void)preview
 {
-	[(SeaHelpers *)[document helpers] overlayChanged:[self selection] inThread:NO];
+	[(SeaHelpers *)[document helpers] overlayChanged:[self selection]];
 }
 
 - (void)cancel
 {
 	[(SeaWhiteboard *)[document whiteboard] clearOverlay];
-	[(SeaHelpers *)[document helpers] overlayChanged:[self selection] inThread:NO];
+	[(SeaHelpers *)[document helpers] overlayChanged:[self selection]];
 }
 
 @end

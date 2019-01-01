@@ -1,5 +1,6 @@
 #import "Globals.h"
 #import "SeaContent.h"
+#import "SeaWhiteboard.h"
 
 /*!
 	@class		SeaDocument
@@ -16,7 +17,7 @@
 	SeaContent *contents;
 	
 	// The whiteboard that represents this document
-	id whiteboard;
+	SeaWhiteboard *whiteboard;
 	
 	// The selection manager for this document
 	id selection;
@@ -167,14 +168,14 @@
 	@discussion	Returns the contents of the document.
 	@result		Returns an instance of SeaContent.
 */
-- (id)contents;
+- (SeaContent*)contents;
 
 /*!
 	@method		whiteboard
 	@discussion	Returns the whiteboard of the document.
 	@result		Returns an instance of SeaWhiteboard.
 */
-- (id)whiteboard;
+- (SeaWhiteboard*)whiteboard;
 
 /*!
 	@method		selection

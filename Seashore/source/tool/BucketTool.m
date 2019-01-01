@@ -54,7 +54,7 @@
 	int width = [(SeaLayer *)layer width], height = [(SeaLayer *)layer height];
 	
 	[[document whiteboard] clearOverlay];
-	[[document helpers] overlayChanged:rect inThread:NO];
+	[[document helpers] overlayChanged:rect];
 
 	if (where.x < 0 || where.y < 0 || where.x >= width || where.y >= height) {
 		rect.size.width = rect.size.height = 0;
@@ -73,7 +73,7 @@
 	BOOL optionDown = [(BucketOptions*)options modifier] == kAltModifier;
 	
 	[[document whiteboard] clearOverlay];
-	[[document helpers] overlayChanged:rect inThread:NO];
+	[[document helpers] overlayChanged:rect];
 
 	if (where.x < 0 || where.y < 0 || where.x >= width || where.y >= height) {
 		rect.size.width = rect.size.height = 0;
@@ -154,7 +154,7 @@
 	
 	// Do the update
 	if (delay)
-		[[document helpers] overlayChanged:rect inThread:NO];
+		[[document helpers] overlayChanged:rect];
 	else
 		[(SeaHelpers *)[document helpers] applyOverlay];
 }

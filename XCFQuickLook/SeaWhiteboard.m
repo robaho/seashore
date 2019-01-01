@@ -104,7 +104,7 @@
 {
 	NSBitmapImageRep *imageRep;
 
-	image = [[NSImage alloc] init];
+	NSImage *image = [[NSImage alloc] init];
 	imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO colorSpaceName:(spp == 4) ? NSDeviceRGBColorSpace : NSDeviceWhiteColorSpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
 	[image addRepresentation:imageRep];
 	

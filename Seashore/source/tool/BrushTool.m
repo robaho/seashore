@@ -180,7 +180,7 @@
         [self plotBrush:curBrush at:temp pressure:pressure];
         if ([options useTextures] && ![options brushIsErasing] && ![curBrush usePixmap])
             textureFill(spp, rect, [[document whiteboard] overlay], [(SeaLayer *)layer width], [(SeaLayer *)layer height], [activeTexture texture:(spp == 4)], [(SeaTexture *)activeTexture width], [(SeaTexture *)activeTexture height]);
-        [[document helpers] overlayChanged:rect inThread:YES];
+        [[document helpers] overlayChanged:rect];
     }
     
     // Record the position as the last point
@@ -240,7 +240,7 @@ next:
             curPoint = IntPointMakeNSPoint(points[drawingPos].point);
             origPressure = points[drawingPos].pressure;
             if (points[drawingPos].special == 2) {
-                if (bigRect.size.width != 0) [[document helpers] overlayChanged:bigRect inThread:YES];
+                if (bigRect.size.width != 0) [[document helpers] overlayChanged:bigRect];
                 drawingDone = YES;
                 return;
             }
@@ -375,7 +375,7 @@ next:
         
         }
         
-        [[document helpers] overlayChanged:bigRect inThread:YES];
+        [[document helpers] overlayChanged:bigRect];
         
     } while (false /* multithreaded */);
 }

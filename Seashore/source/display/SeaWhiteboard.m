@@ -49,9 +49,6 @@ extern IntPoint gScreenResolution;
 	memset(replace, 0, layerWidth * layerHeight);
 	altData = NULL;
 	
-	// Set the locking thread to NULL
-	lockingThread = NULL;
-	
 	return self;
 }
 
@@ -287,7 +284,7 @@ extern IntPoint gScreenResolution;
 	// Revise the data
 	if (data) free(data);
 	data = malloc(make_128(width * height * spp));
-
+    
 	// Adjust the alternate data as necessary
 	[self readjustAltData:NO];
 	
@@ -332,7 +329,7 @@ extern IntPoint gScreenResolution;
 	viewType = kAllChannelsView;
 	if (altData) free(altData);
 	altData = NULL;
-	
+    
 	// Change layer if appropriate
 	if ([[document selection] floating]) {
 		layer = [contents layer:[contents activeLayerIndex] + 1];
@@ -638,7 +635,7 @@ extern IntPoint gScreenResolution;
 	[[document docView] setNeedsDisplay:YES];
 }
 
-- (void)update:(IntRect)rect inThread:(BOOL)thread
+- (void)update:(IntRect)rect
 {
 	NSRect displayUpdateRect = IntRectMakeNSRect(rect);
 	float zoom = [[document docView] zoom];
@@ -667,18 +664,7 @@ extern IntPoint gScreenResolution;
 	useUpdateRect = YES;
 	updateRect = rect;
 	[self forcedUpdate];
-	if (thread) {
-		threadUpdateRect = displayUpdateRect;
-		[[document docView] lockFocus];
-		[NSBezierPath clipRect:threadUpdateRect];
-		[[document docView] drawRect:threadUpdateRect];
-		//[[NSGraphicsContext currentContext] flushGraphics];
-		[[document docView] setNeedsDisplayInRect:displayUpdateRect];
-		[[document docView] unlockFocus];
-	}
-	else {
-		[[document docView] setNeedsDisplayInRect:displayUpdateRect];
-	}
+    [[document docView] setNeedsDisplayInRect:displayUpdateRect];
 }
 
 - (IntRect)imageRect
@@ -700,12 +686,12 @@ extern IntPoint gScreenResolution;
 - (NSImage *)image
 {
 	NSBitmapImageRep *imageRep;
-	id contents = [document contents];
+	SeaContent *contents = [document contents];
 	int xwidth, xheight;
 	id layer;
-	
-	image = [[NSImage alloc] init];
-	
+    
+	NSImage *image = [[NSImage alloc] init];
+    
 	if (altData) {
 		if ([[document selection] floating]) {
 			layer = [contents layer:[contents activeLayerIndex] + 1];
@@ -742,7 +728,7 @@ extern IntPoint gScreenResolution;
 {
 	NSBitmapImageRep *imageRep;
 	
-	image = [[NSImage alloc] init];
+	NSImage *image = [[NSImage alloc] init];
 	imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO colorSpaceName:(spp == 4) ? NSDeviceRGBColorSpace : NSDeviceWhiteColorSpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
 	[image addRepresentation:imageRep];
 	

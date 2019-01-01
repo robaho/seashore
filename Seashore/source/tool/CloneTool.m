@@ -233,7 +233,7 @@
 				spt.y = sourcePoint.y + (rect.origin.y - startPoint.y) - 1;
 				cloneFill(spp, rect, [[document whiteboard] overlay], [[document whiteboard] replace], [(SeaLayer *)layer width], [(SeaLayer *)layer height], sourceData, sourceWidth, sourceHeight, spt);
 			}
-			[[document helpers] overlayChanged:rect inThread:YES];
+			[[document helpers] overlayChanged:rect];
 		}
 		
 		// Record the position as the last point
@@ -301,7 +301,7 @@ next:
 			curPoint = IntPointMakeNSPoint(points[drawingPos].point);
 			origPressure = points[drawingPos].pressure;
 			if (points[drawingPos].special == 2) {
-				if (bigRect.size.width != 0) [[document helpers] overlayChanged:bigRect inThread:YES];
+				if (bigRect.size.width != 0) [[document helpers] overlayChanged:bigRect];
 				drawingDone = YES;
 				return;
 			}
@@ -432,7 +432,7 @@ next:
 		
 		}
 		
-        [[document helpers] overlayChanged:bigRect inThread:YES];
+        [[document helpers] overlayChanged:bigRect];
 	} while (false /*multithreaded*/);
 }
 

@@ -66,9 +66,6 @@ enum {
 	unsigned char *data;
 	unsigned char *altData;
 	
-	// The whiteboard's images
-	NSImage *image;
-	
 	// The overlay for the current layer
 	unsigned char *overlay;
 	
@@ -93,12 +90,6 @@ enum {
 	// The rectangle the update is needed in (useUpdateRect may be NO in which case the entire whiteboard is updated)
 	BOOL useUpdateRect;
 	IntRect updateRect;
-	
-	// Used for multi-threading
-	NSRect threadUpdateRect;
-	
-	// The thread that is locking or NULL otherwise
-	NSThread *lockingThread;
 }
 
 // CREATION METHODS
@@ -241,14 +232,12 @@ enum {
 - (void)update;
 
 /*!
-	@method		update:inThread:
+	@method		update:rect
 	@discussion	Updates a specified rectangle of the whiteboard.
 	@param		rect
 				The rectangle to be updated.
-	@param		thread
-				YES if drawing should be done in thread, NO otherwise.
 */
-- (void)update:(IntRect)rect inThread:(BOOL)thread;
+- (void)update:(IntRect)rect;
 
 // ACCESSOR METHODS
 

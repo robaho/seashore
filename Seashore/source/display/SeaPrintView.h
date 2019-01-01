@@ -26,12 +26,6 @@
 - (id)initWithDocument:(id)doc;
 
 /*!
-	@method		dealloc
-	@discussion	Frees memory occupied by an instance of this class.
-*/
-- (void)dealloc;
-
-/*!
 	@method		drawRect:
 	@discussion	Draws the contents of the view within the given rectangle.
 	@param		rect

@@ -117,7 +117,7 @@
 		// Do the update
 		if ([options useTextures] && ![options pencilIsErasing])
 			textureFill(spp, rect, [[document whiteboard] overlay], [(SeaLayer *)layer width], [(SeaLayer *)layer height], [activeTexture texture:(spp == 4)], [(SeaTexture *)activeTexture width], [(SeaTexture *)activeTexture height]);
-		[[document helpers] overlayChanged:rect inThread:NO];
+		[[document helpers] overlayChanged:rect];
 	
 	}
 	
@@ -173,7 +173,7 @@
 		
 			if ([options useTextures] && ![options pencilIsErasing])
 				textureFill(spp, rect, [[document whiteboard] overlay], [(SeaLayer *)layer width], [(SeaLayer *)layer height], [activeTexture texture:(spp == 4)], [(SeaTexture *)activeTexture width], [(SeaTexture *)activeTexture height]);
-			[[document helpers] overlayChanged:rect inThread:NO];
+			[[document helpers] overlayChanged:rect];
 		}
 		newLastPoint = curPoint;
 	}

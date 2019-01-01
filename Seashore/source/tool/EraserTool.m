@@ -156,7 +156,7 @@
 	rect = IntConstrainRect(rect, IntMakeRect(0, 0, [(SeaLayer *)layer width], [(SeaLayer *)layer height]));
 	if (rect.size.width > 0 && rect.size.height > 0) {
 		[self plotBrush:curBrush at:temp pressure:pressure];
-		[[document helpers] overlayChanged:rect inThread:YES];
+		[[document helpers] overlayChanged:rect];
 	}
 	
 	// Record the position as the last point
@@ -216,7 +216,7 @@ next:
 			curPoint = IntPointMakeNSPoint(points[drawingPos].point);
 			origPressure = points[drawingPos].pressure;
 			if (points[drawingPos].special == 2) {
-				if (bigRect.size.width != 0) [[document helpers] overlayChanged:bigRect inThread:YES];
+				if (bigRect.size.width != 0) [[document helpers] overlayChanged:bigRect];
 				drawingDone = YES;
 				return;
 			}
@@ -345,7 +345,7 @@ next:
 		
 		}
 		
-        [[document helpers] overlayChanged:bigRect inThread:YES];
+        [[document helpers] overlayChanged:bigRect];
 		
 	} while (false /*multithreaded*/);
 }

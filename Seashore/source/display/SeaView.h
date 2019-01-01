@@ -1,4 +1,5 @@
 #import "Globals.h"
+#import "SeaDocument.h"
 
 /*!
 	@enum		k...HandleType
@@ -39,7 +40,7 @@ enum {
 @interface SeaView : NSView {
 	
 	// The document associated with this view
-	id document;
+	SeaDocument *document;
 	
 	// The cursors manager for this view
 	id cursorsManager;

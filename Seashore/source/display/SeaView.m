@@ -293,6 +293,8 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
     image = [[document whiteboard] image];
     srcRect = destRect = rect;
     
+//    NSLog(@"%@",NSStringFromRect(rect));
+    
     // Set the background color
     if ([[document whiteboard] whiteboardIsLayerSpecific]) {
         [[NSColor colorWithCalibratedWhite:0.6667 alpha:1.0] set];
