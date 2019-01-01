@@ -29,6 +29,8 @@ unsigned char *convertImageRep(NSImageRep *imageRep,int spp) {
     [imageRep draw];
     [NSGraphicsContext restoreGraphicsState];
     
+    unpremultiplyBitmap(spp,buffer,buffer,width*height);
+    
     return buffer;
 }
 

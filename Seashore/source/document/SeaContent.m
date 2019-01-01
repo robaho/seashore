@@ -413,14 +413,14 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
 }
 
 
-- (id)layer:(int)index
+- (SeaLayer*)layer:(int)index
 {
     return [layers objectAtIndex:index];
 }
 
 - (int)layerCount
 {
-    return [layers count];
+    return (int)[layers count];
 }
 
 - (SeaLayer*)activeLayer

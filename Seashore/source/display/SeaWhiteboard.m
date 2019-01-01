@@ -49,8 +49,6 @@ extern IntPoint gScreenResolution;
 	memset(replace, 0, layerWidth * layerHeight);
 	altData = NULL;
     
-    cachedImage=NULL;
-	
 	return self;
 }
 
@@ -287,8 +285,6 @@ extern IntPoint gScreenResolution;
 	if (data) free(data);
 	data = malloc(make_128(width * height * spp));
     
-    cachedImage=NULL;
-    
 	// Adjust the alternate data as necessary
 	[self readjustAltData:NO];
 	
@@ -333,8 +329,6 @@ extern IntPoint gScreenResolution;
 	viewType = kAllChannelsView;
 	if (altData) free(altData);
 	altData = NULL;
-    
-    cachedImage=NULL;
     
 	// Change layer if appropriate
 	if ([[document selection] floating]) {
@@ -693,12 +687,8 @@ extern IntPoint gScreenResolution;
 {
 	NSBitmapImageRep *imageRep;
 	SeaContent *contents = [document contents];
+    SeaLayer *layer;
 	int xwidth, xheight;
-	id layer;
-    
-    if(cachedImage){
-        return cachedImage;
-    }
     
 	NSImage *image = [[NSImage alloc] init];
     
@@ -710,18 +700,18 @@ extern IntPoint gScreenResolution;
 			layer = [contents activeLayer];
 		}
 		if (viewType == kPrimaryChannelsView) {
-			xwidth = [(SeaLayer *)layer width];
-			xheight = [(SeaLayer *)layer height];
+			xwidth = [layer width];
+			xheight = [layer height];
 			imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&altData pixelsWide:xwidth pixelsHigh:xheight bitsPerSample:8 samplesPerPixel:spp - 1 hasAlpha:NO isPlanar:NO colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace bytesPerRow:xwidth * (spp - 1) bitsPerPixel:8 * (spp - 1)];
 		}
 		else if (viewType == kAlphaChannelView) {
-			xwidth = [(SeaLayer *)layer width];
-			xheight = [(SeaLayer *)layer height];
+			xwidth = [layer width];
+			xheight = [layer height];
 			imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&altData pixelsWide:xwidth pixelsHigh:xheight bitsPerSample:8 samplesPerPixel:1 hasAlpha:NO isPlanar:NO colorSpaceName:MyGraySpace bytesPerRow:xwidth * 1 bitsPerPixel:8];
 		}
 	}
 	else {
-		imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
+        imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace bitmapFormat:NSBitmapFormatAlphaNonpremultiplied bytesPerRow:width * spp bitsPerPixel:8 * spp];
 	}
     
     if (CMYKPreview) {
@@ -730,10 +720,8 @@ extern IntPoint gScreenResolution;
     }
     
     [image addRepresentation:imageRep];
-
-    cachedImage = image;
     
-	return image;
+    return image;
 }
 
 - (NSImage *)printableImage
