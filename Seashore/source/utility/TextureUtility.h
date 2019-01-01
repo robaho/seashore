@@ -1,5 +1,6 @@
 #import "Globals.h"
 #import "AbstractPanelUtility.h"
+#import "SeaDocument.h"
 
 /*!
 	@class		TextureUtility
@@ -29,7 +30,7 @@
 	IBOutlet id opacityLabel;
 	
 	// The document which is the focus of this utility
-	IBOutlet id document;
+	IBOutlet SeaDocument *document;
 	
 	// An dictionary of all brushes known to Seashore
 	NSDictionary *textures;

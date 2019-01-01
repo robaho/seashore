@@ -19,11 +19,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[super dealloc];
-}
-
 - (BOOL)acceptsFirstMouse:(NSEvent *)event
 {
 	return YES;

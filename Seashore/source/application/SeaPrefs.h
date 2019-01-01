@@ -1,4 +1,5 @@
 #import "Globals.h"
+#import "SeaController.h"
 
 /*!
 	@enum		k...Color
@@ -31,7 +32,7 @@ enum {
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
 
-@interface SeaPrefs : NSObject {
+@interface SeaPrefs : NSObject <SeaTerminate> {
 	
 	// The SeaController object
 	IBOutlet id controller;

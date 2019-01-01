@@ -1,5 +1,11 @@
 #import "Globals.h"
 
+
+@protocol SeaTerminate
+-(void)terminate;
+@end
+
+
 /*!
 	@class		SeaController
 	@abstract	Handles a number of special duties relating to the application's
@@ -36,7 +42,7 @@
 	IBOutlet id licenseWindow;
 	
 	// An array of objects wishing to recieve the terminate message
-	NSArray *terminationObjects;
+	NSArray<SeaTerminate> *terminationObjects;
 
 }
 
@@ -144,7 +150,7 @@
 				The object that wishes to recieve a termination message (the
 				object is not retained).
 */
-- (void)registerForTermination:(id)object;
+- (void)registerForTermination:(id<SeaTerminate>)object;
 
 /*!
 	@method		applicationWillTerminate:

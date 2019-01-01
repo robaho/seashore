@@ -29,7 +29,6 @@
 		free(undoRecords[i].rects);
 	}
 	free(undoRecords);
-	[super dealloc];
 }
 
 - (void)run:(BOOL)global
@@ -518,7 +517,6 @@
 			if (availableType) {
 				image = [[NSImage alloc] initWithData:[pboard dataForType:availableType]];
 				size = NSSizeMakeIntSize([image size]);
-				[image autorelease];
 			}
 			else {
 				NSBeep();

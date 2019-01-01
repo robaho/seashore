@@ -34,12 +34,16 @@
 	return (translating || scalingDir > kNoDir);
 }
 
+- (AbstractScaleOptions*)scaleOptions {
+    return (AbstractScaleOptions*)[self getOptions];
+}
+
 - (void)mouseDownAt:(IntPoint)localPoint forRect:(IntRect)globalRect andMask:(unsigned char *)mask
 {
 	translating = NO;
 	scalingDir = kNoDir;
 	
-	if([options ignoresMove]){
+	if([[self scaleOptions] ignoresMove]){
 		return;
 	}
 	
@@ -92,9 +96,9 @@
 
 		BOOL usesAspect = NO;
 		NSSize ratio = NSZeroSize;
-		if([options aspectType] == kRatioAspectType){
+		if([[self scaleOptions] aspectType] == kRatioAspectType){
 			usesAspect = YES;
-			ratio = [options ratio];
+			ratio = [[self scaleOptions] ratio];
 		}
 		
 		float newHeight = preScaledRect.size.height;

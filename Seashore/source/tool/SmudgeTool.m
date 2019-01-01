@@ -21,12 +21,6 @@
 	return kSmudgeTool;
 }
 
-
-- (void)dealloc
-{
-	[super dealloc];
-}
-
 - (BOOL)useMouseCoalescing
 {
 	return NO;
@@ -313,5 +307,15 @@
 {
 	[self mouseUpAt:where withEvent:NULL];
 }
+
+- (AbstractOptions*)getOptions
+{
+    return options;
+}
+- (void)setOptions:(AbstractOptions*)newoptions
+{
+    options = (SmudgeOptions*)newoptions;
+}
+
 
 @end

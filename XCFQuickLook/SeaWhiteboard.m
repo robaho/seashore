@@ -42,10 +42,7 @@
 - (void)dealloc
 {	
 	// Free the room we took for everything else
-	if (compositor) [compositor autorelease];
-	if (image) [image autorelease];
 	if (data) free(data);
-	[super dealloc];
 }
 
 - (void)forcedUpdate
@@ -107,7 +104,6 @@
 {
 	NSBitmapImageRep *imageRep;
 
-	if (image) [image autorelease];
 	image = [[NSImage alloc] init];
 	imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO colorSpaceName:(spp == 4) ? NSDeviceRGBColorSpace : NSDeviceWhiteColorSpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
 	[image addRepresentation:imageRep];

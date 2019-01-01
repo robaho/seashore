@@ -59,7 +59,6 @@
 	[imageData writeToFile: path atomically: NO];
 	
 	// Cleanup
-	[imageRep autorelease];
 	free(destData);
 	
 	return YES;

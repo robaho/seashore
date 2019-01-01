@@ -100,10 +100,6 @@
 
     [NSGraphicsContext restoreGraphicsState];
     
-    [tmp autorelease];
-    [overlayRep autorelease];
-    [imageRep autorelease];
-
     int j,pos;
     
     for (j = selection.origin.y; j < selection.origin.y + selection.size.height; j++) {

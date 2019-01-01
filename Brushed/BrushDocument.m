@@ -50,7 +50,6 @@ typedef struct {
 {
 	int i;
 	
-	if (pastNames) [pastNames autorelease];
 	if (undoRecords) {
 		for (i = 0; i < undoRecordsSize; i++) {
 			if (undoRecords[i].mask) free(undoRecords[i].mask);
@@ -79,7 +78,6 @@ typedef struct {
 	// Wrap it up in an NSImage
 	brushImage = [[NSImage alloc] initWithSize:NSMakeSize(width, height)];
 	[brushImage addRepresentation:tempRep];
-	[tempRep autorelease];
 	
 	return brushImage;
 }
@@ -198,8 +196,7 @@ typedef struct {
 		
 		// Store new name and remember last names for undo
 		name = [NSString stringWithString:[nameTextField stringValue]];
-		[pastNames autorelease];
-		pastNames = [[pastNames arrayByAddingObject:name] retain];
+        pastNames = [pastNames arrayByAddingObject:name];
 	
 	}
 }
@@ -236,7 +233,6 @@ typedef struct {
 	int nameLen, tempSize;
 	
 	// Set variables appropriately
-	if (pastNames) [pastNames autorelease];
 	if (undoRecords) free(undoRecords);
 	undoRecords = NULL;
 	undoRecordsSize = curUndoPos = 0;
@@ -426,7 +422,6 @@ typedef struct {
 	[openPanel setAllowsMultipleSelection:NO];
 	[openPanel setPrompt:@"Import"];
 	[openPanel beginSheetForDirectory:nil file:nil types:[NSArray arrayWithObjects:@"tiff", @"tif", @"jpeg", @"jpg", @"png", nil] modalForWindow:window modalDelegate:self didEndSelector:@selector(importPanelDidEnd:returnCode:contextInfo:) contextInfo:NULL];
-	[openPanel autorelease];
 }
 
 - (void)importPanelDidEnd:(NSOpenPanel *)openPanel returnCode:(int)returnCode contextInfo:(void  *)contextInfo
@@ -447,7 +442,6 @@ typedef struct {
 	[savePanel setPrompt:@"Export"];
 	[savePanel setRequiredFileType:@"tiff"];
 	[savePanel beginSheetForDirectory:nil file:@"Untitled" modalForWindow:window modalDelegate:self didEndSelector:@selector(exportPanelDidEnd:returnCode:contextInfo:) contextInfo:NULL];
-	[savePanel autorelease];
 }
 
 - (void)exportPanelDidEnd:(NSOpenPanel *)savePanel returnCode:(int)returnCode contextInfo:(void  *)contextInfo

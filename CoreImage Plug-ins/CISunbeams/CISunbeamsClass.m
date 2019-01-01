@@ -8,180 +8,176 @@
 
 - (id)initWithManager:(SeaPlugins *)manager
 {
-	seaPlugins = manager;
-	[NSBundle loadNibNamed:@"CISunbeams" owner:self];
-	mainNSColor = NULL;
-	running = NO;
-	
-	return self;
+    seaPlugins = manager;
+    [NSBundle loadNibNamed:@"CISunbeams" owner:self];
+    mainNSColor = NULL;
+    running = NO;
+    
+    return self;
 }
 
 - (int)type
 {
-	return 1;
+    return 1;
 }
 
 - (int)points
 {
-	return 3;
+    return 3;
 }
 
 - (NSString *)name
 {
-	return [gOurBundle localizedStringForKey:@"name" value:@"Sunbeams" table:NULL];
+    return [gOurBundle localizedStringForKey:@"name" value:@"Sunbeams" table:NULL];
 }
 
 - (NSString *)groupName
 {
-	return [gOurBundle localizedStringForKey:@"groupName" value:@"Generate" table:NULL];
+    return [gOurBundle localizedStringForKey:@"groupName" value:@"Generate" table:NULL];
 }
 
 - (NSString *)instruction
 {
-	return [gOurBundle localizedStringForKey:@"instruction" value:@"Needs localization." table:NULL];
+    return [gOurBundle localizedStringForKey:@"instruction" value:@"Needs localization." table:NULL];
 }
 
 - (NSString *)sanity
 {
-	return @"Seashore Approved (Bobo)";
+    return @"Seashore Approved (Bobo)";
 }
 
 - (void)run
 {
-	PluginData *pluginData;
-	
-	if ([gUserDefaults objectForKey:@"CISunbeams.strength"])
-		strength = [gUserDefaults floatForKey:@"CISunbeams.strength"];
-	else
-		strength = 0.5;
-	if ([gUserDefaults objectForKey:@"CISunbeams.contrast"])
-		contrast = [gUserDefaults floatForKey:@"CISunbeams.contrast"];
-	else
-		contrast = 1.0;
-	
-	if (strength < 0.0 || strength > 3.0)
-		strength = 0.5;
-	if (contrast < 0.0 || contrast > 5.0)
-		contrast = 1.0;
-	
-	[strengthLabel setStringValue:[NSString stringWithFormat:@"%.1f", strength]];
-	[strengthSlider setFloatValue:strength];
-	[contrastLabel setStringValue:[NSString stringWithFormat:@"%.1f", contrast]];
-	[contrastSlider setFloatValue:contrast];
-	
-	if (mainNSColor) [mainNSColor autorelease];
-	mainNSColor = [[mainColorWell color] colorUsingColorSpaceName:MyRGBSpace];
-	[mainNSColor retain];
-	
-	refresh = YES;
-	success = NO;
-	running = YES;
-	pluginData = [(SeaPlugins *)seaPlugins data];
-	[self preview:self];
-	if ([pluginData window])
-		[NSApp beginSheet:panel modalForWindow:[pluginData window] modalDelegate:NULL didEndSelector:NULL contextInfo:NULL];
-	else
-		[NSApp runModalForWindow:panel];
-	// Nothing to go here
+    PluginData *pluginData;
+    
+    if ([gUserDefaults objectForKey:@"CISunbeams.strength"])
+        strength = [gUserDefaults floatForKey:@"CISunbeams.strength"];
+    else
+        strength = 0.5;
+    if ([gUserDefaults objectForKey:@"CISunbeams.contrast"])
+        contrast = [gUserDefaults floatForKey:@"CISunbeams.contrast"];
+    else
+        contrast = 1.0;
+    
+    if (strength < 0.0 || strength > 3.0)
+        strength = 0.5;
+    if (contrast < 0.0 || contrast > 5.0)
+        contrast = 1.0;
+    
+    [strengthLabel setStringValue:[NSString stringWithFormat:@"%.1f", strength]];
+    [strengthSlider setFloatValue:strength];
+    [contrastLabel setStringValue:[NSString stringWithFormat:@"%.1f", contrast]];
+    [contrastSlider setFloatValue:contrast];
+    
+    mainNSColor = [[mainColorWell color] colorUsingColorSpaceName:MyRGBSpace];
+    
+    refresh = YES;
+    success = NO;
+    running = YES;
+    pluginData = [(SeaPlugins *)seaPlugins data];
+    [self preview:self];
+    if ([pluginData window])
+        [NSApp beginSheet:panel modalForWindow:[pluginData window] modalDelegate:NULL didEndSelector:NULL contextInfo:NULL];
+    else
+        [NSApp runModalForWindow:panel];
+    // Nothing to go here
 }
 
 - (IBAction)apply:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
-	if (refresh) [self execute];
-	[pluginData apply];
-	
-	[panel setAlphaValue:1.0];
-	
-	[NSApp stopModal];
-	if ([pluginData window]) [NSApp endSheet:panel];
-	[panel orderOut:self];
-	success = YES;
-	running = NO;
-	
-	[gUserDefaults setFloat:strength forKey:@"CISunbeams.strength"];
-	[gUserDefaults setFloat:contrast forKey:@"CISunbeams.contrast"];
-	
-	[gColorPanel orderOut:self];
+    PluginData *pluginData;
+    
+    pluginData = [(SeaPlugins *)seaPlugins data];
+    if (refresh) [self execute];
+    [pluginData apply];
+    
+    [panel setAlphaValue:1.0];
+    
+    [NSApp stopModal];
+    if ([pluginData window]) [NSApp endSheet:panel];
+    [panel orderOut:self];
+    success = YES;
+    running = NO;
+    
+    [gUserDefaults setFloat:strength forKey:@"CISunbeams.strength"];
+    [gUserDefaults setFloat:contrast forKey:@"CISunbeams.contrast"];
+    
+    [gColorPanel orderOut:self];
 
 }
 
 - (void)reapply
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
-	[self execute];
-	[pluginData apply];
+    PluginData *pluginData;
+    
+    pluginData = [(SeaPlugins *)seaPlugins data];
+    [self execute];
+    [pluginData apply];
 }
 
 - (BOOL)canReapply
 {
-	return NO;
+    return NO;
 }
 
 - (IBAction)preview:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
-	if (refresh) [self execute];
-	[pluginData preview];
-	refresh = NO;
+    PluginData *pluginData;
+    
+    pluginData = [(SeaPlugins *)seaPlugins data];
+    if (refresh) [self execute];
+    [pluginData preview];
+    refresh = NO;
 }
 
 - (IBAction)cancel:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
-	[pluginData cancel];
-	
-	[panel setAlphaValue:1.0];
-	
-	[NSApp stopModal];
-	[NSApp endSheet:panel];
-	[panel orderOut:self];
-	success = NO;
-	running = NO;
-	[gColorPanel orderOut:self];
+    PluginData *pluginData;
+    
+    pluginData = [(SeaPlugins *)seaPlugins data];
+    [pluginData cancel];
+    
+    [panel setAlphaValue:1.0];
+    
+    [NSApp stopModal];
+    [NSApp endSheet:panel];
+    [panel orderOut:self];
+    success = NO;
+    running = NO;
+    [gColorPanel orderOut:self];
 }
 
 - (void)setColor:(NSColor *)color
 {
-	PluginData *pluginData;
-	
-	if (mainNSColor) [mainNSColor autorelease];
-	mainNSColor = [color colorUsingColorSpaceName:MyRGBSpace];
-	[mainNSColor retain];
-	if (running) {
-		refresh = YES;
-		[self preview:self];
-		pluginData = [(SeaPlugins *)seaPlugins data];
-		if ([pluginData window]) [panel setAlphaValue:0.4];
-	}
+    PluginData *pluginData;
+    
+    mainNSColor = [color colorUsingColorSpaceName:MyRGBSpace];
+    if (running) {
+        refresh = YES;
+        [self preview:self];
+        pluginData = [(SeaPlugins *)seaPlugins data];
+        if ([pluginData window]) [panel setAlphaValue:0.4];
+    }
 }
 
 - (IBAction)update:(id)sender
 {
-	PluginData *pluginData;
-	
-	strength = [strengthSlider floatValue];
-	contrast = [contrastSlider floatValue];
-	
-	[panel setAlphaValue:1.0];
-	
-	[strengthLabel setStringValue:[NSString stringWithFormat:@"%.1f", strength]];
-	[contrastLabel setStringValue:[NSString stringWithFormat:@"%.1f", contrast]];
-	
-	refresh = YES;
-	if ([[NSApp currentEvent] type] == NSLeftMouseUp) { 
-		[self preview:self];
-		pluginData = [(SeaPlugins *)seaPlugins data];
-		if ([pluginData window]) [panel setAlphaValue:0.4];
-	}
+    PluginData *pluginData;
+    
+    strength = [strengthSlider floatValue];
+    contrast = [contrastSlider floatValue];
+    
+    [panel setAlphaValue:1.0];
+    
+    [strengthLabel setStringValue:[NSString stringWithFormat:@"%.1f", strength]];
+    [contrastLabel setStringValue:[NSString stringWithFormat:@"%.1f", contrast]];
+    
+    refresh = YES;
+    if ([[NSApp currentEvent] type] == NSLeftMouseUp) { 
+        [self preview:self];
+        pluginData = [(SeaPlugins *)seaPlugins data];
+        if ([pluginData window]) [panel setAlphaValue:0.4];
+    }
 }
 
 - (void)execute
@@ -216,7 +212,7 @@
     filter = [CIFilter filterWithName:@"CISourceOverCompositing"];
     [filter setDefaults];
     [filter setValue:halo forKey:@"inputImage"];
-    [filter setValue:[createCIImage(pluginData) autorelease] forKey:@"inputBackgroundImage"];
+    [filter setValue:createCIImage(pluginData) forKey:@"inputBackgroundImage"];
     CIImage *output = [filter valueForKey: @"outputImage"];
                       
     renderCIImage(pluginData,output);
@@ -224,21 +220,21 @@
 
 - (BOOL)validateMenuItem:(id)menuItem
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
-	
-	if (pluginData != NULL) {
+    PluginData *pluginData;
+    
+    pluginData = [(SeaPlugins *)seaPlugins data];
+    
+    if (pluginData != NULL) {
 
-		if ([pluginData channel] == kAlphaChannel)
-			return NO;
-		
-		if ([pluginData spp] == 2)
-			return NO;
-	
-	}
-	
-	return YES;
+        if ([pluginData channel] == kAlphaChannel)
+            return NO;
+        
+        if ([pluginData spp] == 2)
+            return NO;
+    
+    }
+    
+    return YES;
 }
 
 @end

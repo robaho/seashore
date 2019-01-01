@@ -24,11 +24,6 @@
 	return kPencilTool;
 }
 
-- (void)dealloc
-{
-	[super dealloc];
-}
-
 - (BOOL)acceptsLineDraws
 {
 	return YES;
@@ -93,7 +88,7 @@
 	}
 	else {
 		if ([options useTextures])
-			[[document whiteboard] setOverlayOpacity:[[[SeaController utilitiesManager] textureUtilityFor:document] opacity]];
+			[[document whiteboard] setOverlayOpacity:[(TextureUtility*)[[SeaController utilitiesManager] textureUtilityFor:document] opacity]];
 		else
 			[[document whiteboard] setOverlayOpacity:[color alphaComponent] * 255.0];
 	}
@@ -206,5 +201,15 @@
 {
 	[self mouseUpAt:where withEvent:NULL];
 }
+
+- (AbstractOptions*)getOptions
+{
+    return options;
+}
+- (void)setOptions:(AbstractOptions*)newoptions
+{
+    options = (PencilOptions*)newoptions;
+}
+
 
 @end

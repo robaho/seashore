@@ -4,6 +4,7 @@
 #import "UtilitiesManager.h"
 #import "BrushUtility.h"
 #import "TextureUtility.h"
+#import "SeaDocument.h"
 
 @implementation AbstractPaintOptions
 - (IBAction)toggleTextures:(id)sender

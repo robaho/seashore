@@ -17,11 +17,6 @@
 	return kGradientTool;
 }
 
-- (void)dealloc
-{
-	[super dealloc];
-}
-
 - (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event
 {
 	startPoint = where;
@@ -123,5 +118,15 @@
 {
 	return tempNSPoint;
 }
+
+- (AbstractOptions*)getOptions
+{
+    return options;
+}
+- (void)setOptions:(AbstractOptions*)newoptions
+{
+    options = (GradientOptions*)newoptions;
+}
+
 
 @end

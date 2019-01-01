@@ -22,7 +22,7 @@
 				  andMask: [(SeaSelection*)[document selection] mask]];
 		
 		// Also, we universally float the selection if alt is down
-		if(![self isMovingOrScaling] && [(AbstractOptions*)options modifier] == kAltModifier) {
+        if(![self isMovingOrScaling] && [[self getOptions] modifier] == kAltModifier) {
 			[[document contents] makeSelectionFloat:NO];
 		}
 	}	

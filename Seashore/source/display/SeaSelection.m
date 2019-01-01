@@ -30,8 +30,7 @@
 - (void)dealloc
 {
 	if (mask) free(mask);
-	if (maskBitmap) { free(maskBitmap); [maskImage autorelease]; }
-	[super dealloc];
+	if (maskBitmap) { free(maskBitmap); }
 }
 
 - (BOOL)active
@@ -133,7 +132,6 @@
 		maskBitmapRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&maskBitmap pixelsWide:rect.size.width pixelsHigh:rect.size.height bitsPerSample:8 samplesPerPixel:4 hasAlpha:YES isPlanar:NO colorSpaceName:MyRGBSpace bytesPerRow:rect.size.width * 4 bitsPerPixel:8 * 4];
 		maskImage = [[NSImage alloc] init];
 		[maskImage addRepresentation:maskBitmapRep];
-		[maskBitmapRep autorelease];
 	}
 }
 
@@ -229,7 +227,7 @@
 		
 	// Free previous mask information 
 	if (mask) { free(mask); mask = NULL; }
-	if (maskBitmap) { free(maskBitmap); maskBitmap = NULL; [maskImage autorelease]; maskImage = NULL; }
+	if (maskBitmap) { free(maskBitmap); maskBitmap = NULL; maskImage = NULL; }
 
 	// Commit the new stuff
 	rect.origin.x += [layer xoff];
@@ -351,7 +349,7 @@
 		
 	// Free previous mask information 
 	if (mask) { free(mask); mask = NULL; }
-	if (maskBitmap) { free(maskBitmap); maskBitmap = NULL; [maskImage autorelease]; maskImage = NULL; }
+	if (maskBitmap) { free(maskBitmap); maskBitmap = NULL;  maskImage = NULL; }
 
 	// Commit the new stuff
 	rect.origin.x += [layer xoff];
@@ -505,7 +503,7 @@
 		
 	// Free previous mask information 
 	if (mask) { free(mask); mask = NULL; }
-	if (maskBitmap) { free(maskBitmap); maskBitmap = NULL; [maskImage autorelease]; maskImage = NULL; }
+	if (maskBitmap) { free(maskBitmap); maskBitmap = NULL; maskImage = NULL; }
 
 	// Commit the new stuff
 	rect.origin.x += [layer xoff];
@@ -615,7 +613,7 @@
 	
 	// Free previous mask information 
 	if (mask) { free(mask); mask = NULL; }
-	if (maskBitmap) { free(maskBitmap); maskBitmap = NULL; [maskImage autorelease]; maskImage = NULL; }
+	if (maskBitmap) { free(maskBitmap); maskBitmap = NULL; maskImage = NULL; }
 
 	// Commit the new stuff
 	rect.origin.x += [layer xoff];
@@ -642,7 +640,7 @@
 
 	// Free previous mask information
 	if (mask) { free(mask); mask = NULL; }
-	if (maskBitmap) { free(maskBitmap); maskBitmap = NULL; [maskImage autorelease]; maskImage = NULL; }
+	if (maskBitmap) { free(maskBitmap); maskBitmap = NULL; maskImage = NULL; }
 	
 	// Adjust the rectangle
 	rect = IntMakeRect([layer xoff], [layer yoff], [(SeaLayer *)layer width], [(SeaLayer *)layer height]);
@@ -699,7 +697,7 @@
 	if (![self floating]) {
 		active = NO;
 		if (mask) { free(mask); mask = NULL; }
-		if (maskBitmap) { free(maskBitmap); maskBitmap = NULL; [maskImage autorelease]; maskImage = NULL; }
+		if (maskBitmap) { free(maskBitmap); maskBitmap = NULL; maskImage = NULL; }
 		[[document helpers] selectionChanged];
 	}
 }
@@ -767,7 +765,7 @@
 	globalRect = rect;
 	if (rect.size.width > 0 && rect.size.height > 0) {
 		active = YES;
-		if (maskBitmap) { free(maskBitmap); maskBitmap = NULL; [maskImage autorelease]; maskImage = NULL; }
+		if (maskBitmap) { free(maskBitmap); maskBitmap = NULL; maskImage = NULL; }
 		[self trimSelection];
 		[self updateMaskImage];
 	}
@@ -808,7 +806,7 @@
 			}
 		}
 		
-		if (maskBitmap) { free(maskBitmap); maskBitmap = NULL; [maskImage autorelease]; maskImage = NULL; }
+		if (maskBitmap) { free(maskBitmap); maskBitmap = NULL; maskImage = NULL; }
 		[self trimSelection];
 		[self updateMaskImage];
 		[[document helpers] selectionChanged];
@@ -911,7 +909,6 @@
 		// Add it to the pasteboard
 		imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:globalRect.size.width pixelsHigh:globalRect.size.height bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO colorSpaceName:(spp == 4) ? NSDeviceRGBColorSpace : NSDeviceWhiteColorSpace bytesPerRow:globalRect.size.width * spp bitsPerPixel:8 * spp];
 		[pboard setData:[imageRep TIFFRepresentation] forType:NSTIFFPboardType]; 
-		[imageRep autorelease];
 		
 		// Stores the point of the last copied selection and its size
 		sel_point = globalRect.origin;
@@ -1021,7 +1018,7 @@
 		rect = newRect;
 		[self readjustSelection];
 		if (mask) {
-			if (maskBitmap) { free(maskBitmap); maskBitmap = NULL; [maskImage autorelease]; maskImage = NULL; }
+			if (maskBitmap) { free(maskBitmap); maskBitmap = NULL;  maskImage = NULL; }
 			[self updateMaskImage];
 		}
 		[[document docView] setNeedsDisplay: YES];

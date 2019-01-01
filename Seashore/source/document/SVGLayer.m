@@ -23,7 +23,6 @@
     data = convertImageRep(imageRep,spp);
 	if (!data) {
 		NSLog(@"Required conversion not supported.");
-		[self autorelease];
 		return NULL;
 	}
     

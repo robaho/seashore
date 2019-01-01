@@ -30,11 +30,6 @@
 	draggedNodes = nil;
 }
 
-- (void)dealloc
-{
-	[super dealloc];
-}
-
 - (NSArray *)draggedNodes { return draggedNodes; }
 - (NSArray *)selectedNodes { return [outlineView allSelectedItems]; }
 
@@ -232,7 +227,6 @@ NSFileHandle *NewFileHandleForWritingFile(NSString *dirpath, NSString *basename,
         NSFileHandle *fileHandle = NewFileHandleForWritingFile([dropDestination path], [layer name], @"tif", &filename);
         if (fileHandle) {
             [fileHandle writeData: [layer TIFFRepresentation]];
-            [fileHandle release];
             fileHandle = nil;
             [filenames addObject: filename];
         }

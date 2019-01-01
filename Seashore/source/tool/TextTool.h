@@ -1,4 +1,5 @@
 #import "Globals.h"
+#import "TextOptions.h"
 #import "AbstractTool.h"
 
 /*!
@@ -32,14 +33,10 @@
 	
 	// Is the tool running?
 	BOOL running;
+    
+    TextOptions *options;
 	
 }
-
-/*!
-	@method		dealloc
-	@discussion	Frees memory occupied by an instance of this class.
-*/
-- (void)dealloc;
 
 /*!
 	@method		mouseUpAt:withEvent:

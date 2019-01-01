@@ -11,7 +11,6 @@
 	
 	// Check if file is a directory
 	if ([gFileManager fileExistsAtPath:path isDirectory:&isDir] && isDir) {
-		[self autorelease];
 		return NULL;
 	}
 	
@@ -43,7 +42,7 @@
     free(dataWithAlpha);
 
 	// Remember the texture name
-	name = [[[path lastPathComponent] stringByDeletingPathExtension] retain];
+    name = [[path lastPathComponent] stringByDeletingPathExtension];
 
 	return self;
 }
@@ -52,8 +51,6 @@
 {
 	if (colorTexture) free(colorTexture);
 	if (greyTexture) free(greyTexture);
-	if (name) [name autorelease];
-	[super dealloc];
 }
 
 - (void)activate
@@ -90,8 +87,6 @@
 	// Wrap it up in an NSImage
 	thumbnail = [[NSImage alloc] initWithSize:NSMakeSize(thumbWidth, thumbHeight)];
 	[thumbnail addRepresentation:tempRep];
-	[tempRep autorelease];
-	[thumbnail autorelease];
 	
 	return thumbnail;
 }
@@ -130,8 +125,6 @@
 		rep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&greyTexture pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:1 hasAlpha:NO isPlanar:NO colorSpaceName:MyGraySpace bytesPerRow:width bitsPerPixel:8];
 	
 	[image addRepresentation:rep];
-	[image autorelease];
-	[rep autorelease];
 	
 	nsColor = [NSColor colorWithPatternImage:image];
 	

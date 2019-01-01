@@ -33,11 +33,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[super dealloc];
-}
-
 - (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event
 {
 	id contents = [document contents];
@@ -124,7 +119,7 @@
 	float original, current;
 	
 	// Vary behaviour based on function
-	switch ([options  toolFunction]) {
+	switch ([options toolFunction]) {
 		case kMovingLayer:
 			
 			// If the active layer is linked we have to move all associated layers
@@ -226,5 +221,15 @@
 	[layer setOffsets:origin];
 	[[document helpers] layerOffsetsChanged:index from:oldOffsets];
 }
+
+- (AbstractOptions*)getOptions
+{
+    return options;
+}
+- (void)setOptions:(AbstractOptions*)newoptions
+{
+    options = (PositionOptions*)newoptions;
+}
+
 
 @end

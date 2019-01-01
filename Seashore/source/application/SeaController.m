@@ -28,12 +28,6 @@ id seaController;
 	return self;
 }
 
-- (void)dealloc
-{
-	if (terminationObjects) [terminationObjects autorelease];
-	[super dealloc];
-}
-
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
 	NSString *crashReport = [NSString stringWithFormat:@"%@/Library/Logs/CrashReporter/Seashore.crash.log", NSHomeDirectory()];
@@ -64,7 +58,7 @@ id seaController;
 	}
 }
 
-- (id)utilitiesManager
+- (UtilitiesManager*)utilitiesManager
 {
 	return utilitiesManager;
 }
@@ -94,7 +88,7 @@ id seaController;
 	return seaWarning;
 }
 
-+ (id)utilitiesManager
++ (UtilitiesManager*)utilitiesManager
 {
 	return [seaController utilitiesManager];
 }
@@ -206,13 +200,11 @@ id seaController;
 	[[NSDocumentController sharedDocumentController] addDocument:document];
 	[document makeWindowControllers];
 	[document showWindows];
-	[document autorelease];
 }
 
 - (void)registerForTermination:(id)object
 {
-	[terminationObjects autorelease];
-	terminationObjects = [[terminationObjects arrayByAddingObject:object] retain];
+    terminationObjects = [terminationObjects arrayByAddingObject:object];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)notification
@@ -220,8 +212,10 @@ id seaController;
 	int i;
 	
 	// Inform those that wish to know
-	for (i = 0; i < [terminationObjects count]; i++)
-		[[terminationObjects objectAtIndex:i] terminate];
+    for (i = 0; i < [terminationObjects count]; i++) {
+        id<SeaTerminate> t = [terminationObjects objectAtIndex:i];
+		[t terminate];
+    }
 	
 	// Save the changes in preferences
 	[gUserDefaults synchronize];

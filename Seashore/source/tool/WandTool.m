@@ -59,7 +59,7 @@
 			for (k = 0; k < spp - 1; k++)
 				basePixel[k] = 0;
 			basePixel[spp - 1] = 255;
-			tolerance = [(WandOptions*)options tolerance];
+			tolerance = [options tolerance];
 			int mode = [options selectionMode];
 			int intervals = [options numIntervals];
 			
@@ -97,5 +97,15 @@
 {
 	return currentNSPoint;
 }
+
+- (AbstractOptions*)getOptions
+{
+    return options;
+}
+- (void)setOptions:(AbstractOptions*)newoptions
+{
+    options = (WandOptions*)newoptions;
+}
+
 
 @end

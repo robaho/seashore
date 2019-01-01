@@ -162,8 +162,6 @@ static inline void fix_endian_read(int *input, int size)
 		if (offset != 0) {
 			layer = [[XCFLayer alloc] initWithFile:file offset:offset document:doc sharedInfo:&info];
 			if (layer == NULL) {
-				for (i = 0; i < [layers count]; i++)
-					[[layers objectAtIndex:i] autorelease];
 				fclose(file);
 				return NO;
 			}

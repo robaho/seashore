@@ -31,11 +31,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[super dealloc];
-}
-
 - (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event
 {
 	startPoint = where;
@@ -123,7 +118,7 @@
 	}
 		
 	
-	int intervals = [options numIntervals];
+	int intervals = [(BucketOptions*)options numIntervals];
 	
 	IntPoint* seeds = malloc(sizeof(IntPoint) * (intervals + 1));
 	
@@ -173,5 +168,15 @@
 {
 	return currentNSPoint;
 }
+
+- (AbstractOptions*)getOptions
+{
+    return options;
+}
+- (void)setOptions:(AbstractOptions*)newoptions
+{
+    options = (BucketOptions*)newoptions;
+}
+
 
 @end

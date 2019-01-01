@@ -77,7 +77,7 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
     return err;
 }
 
-@implementation SeaPrefs
+@implementation SeaPrefs 
 
 - (id)init
 {
@@ -186,12 +186,12 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	
 	// Determine the initial color (from preferences if possible)
 	if ([gUserDefaults objectForKey:@"windowBackColor"] == NULL) {
-		windowBackColor = [[NSColor colorWithCalibratedRed:0.6667 green:0.6667 blue:0.6667 alpha:1.0] retain];
+        windowBackColor = [NSColor colorWithCalibratedRed:0.6667 green:0.6667 blue:0.6667 alpha:1.0];
 	}
 	else {
 		tempData = [gUserDefaults dataForKey:@"windowBackColor"];
 		if (tempData != nil)
-			windowBackColor = [(NSColor *)[NSUnarchiver unarchiveObjectWithData:tempData] retain];
+            windowBackColor = (NSColor *)[NSUnarchiver unarchiveObjectWithData:tempData];
 	}
 	
 	// Get the default document size
@@ -301,7 +301,7 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	}
 
 	// Create the toolbar instance, and attach it to our document window 
-    toolbar = [[[NSToolbar alloc] initWithIdentifier: PrefsToolbarIdentifier] autorelease];
+    toolbar = [[NSToolbar alloc] initWithIdentifier: PrefsToolbarIdentifier];
     
     // Set up toolbar properties: Allow customization, give a default display mode, and remember state in user defaults 
     [toolbar setAllowsUserCustomization: YES];
@@ -366,11 +366,11 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	NSToolbarItem *toolbarItem = nil;
 
     if ([itemIdent isEqual: GeneralPrefsIdentifier]) {
-        toolbarItem = [[[ImageToolbarItem alloc] initWithItemIdentifier: GeneralPrefsIdentifier label: LOCALSTR(@"general", @"General") image: @"GeneralPrefsIcon" toolTip: LOCALSTR(@"general prefs tooltip", @"General application settings") target: self selector: @selector(generalPrefs)] autorelease];
+        toolbarItem = [[ImageToolbarItem alloc] initWithItemIdentifier: GeneralPrefsIdentifier label: LOCALSTR(@"general", @"General") image: @"GeneralPrefsIcon" toolTip: LOCALSTR(@"general prefs tooltip", @"General application settings") target: self selector: @selector(generalPrefs)];
 	} else if ([itemIdent isEqual: NewPrefsIdentifier]) {
-		toolbarItem = [[[ImageToolbarItem alloc] initWithItemIdentifier: NewPrefsIdentifier label: LOCALSTR(@"new images", @"New Images") image: @"NewPrefsIcon" toolTip: LOCALSTR(@"new prefs tooltip", @"Settings for new images") target: self selector: @selector(newPrefs)] autorelease];
+        toolbarItem = [[ImageToolbarItem alloc] initWithItemIdentifier: NewPrefsIdentifier label: LOCALSTR(@"new images", @"New Images") image: @"NewPrefsIcon" toolTip: LOCALSTR(@"new prefs tooltip", @"Settings for new images") target: self selector: @selector(newPrefs)];
 	} else if ([itemIdent isEqual: ColorPrefsIdentifier]) {
-		toolbarItem = [[[ImageToolbarItem alloc] initWithItemIdentifier: ColorPrefsIdentifier label: LOCALSTR(@"color", @"Colors") image: @"ColorPrefsIcon" toolTip: LOCALSTR(@"color prefs tooltip", @"Display colors") target: self selector: @selector(colorPrefs)] autorelease];
+        toolbarItem = [[ImageToolbarItem alloc] initWithItemIdentifier: ColorPrefsIdentifier label: LOCALSTR(@"color", @"Colors") image: @"ColorPrefsIcon" toolTip: LOCALSTR(@"color prefs tooltip", @"Display colors") target: self selector: @selector(colorPrefs)];
 	}
 	return toolbarItem;
 }
@@ -707,8 +707,7 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
 	int i;
 
-	[windowBackColor autorelease];
-	windowBackColor = [[NSColor colorWithCalibratedRed:0.6667 green:0.6667 blue:0.6667 alpha:1.0] retain];
+    windowBackColor = [NSColor colorWithCalibratedRed:0.6667 green:0.6667 blue:0.6667 alpha:1.0];
 	[windowBackWell setInitialColor:windowBackColor];
 	for (i = 0; i < [documents count]; i++) {
 		[[documents objectAtIndex:i] updateWindowColor];
@@ -721,8 +720,7 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
 	int i;
 
-	[windowBackColor autorelease];
-	windowBackColor = [[windowBackWell color] retain];
+    windowBackColor = [windowBackWell color];
 	for (i = 0; i < [documents count]; i++) {
 		[[documents objectAtIndex:i] updateWindowColor];
 		[[[[documents objectAtIndex:i] docView] superview] setNeedsDisplay:YES];

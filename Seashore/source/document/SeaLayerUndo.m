@@ -62,9 +62,6 @@ extern BOOL userWarnedOnDiskSpace;
 	
 	// Free the record of the memory cache
 	if (records) free(records);
-	
-	// Call the super
-	[super dealloc];
 }
 
 - (BOOL)checkDiskSpace

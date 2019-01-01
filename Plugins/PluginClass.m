@@ -89,8 +89,6 @@ void convertImageRep(NSImageRep *imageRep,unsigned char *dest,int width,int heig
     [NSGraphicsContext setCurrentContext:ctx];
     [imageRep drawInRect:rect fromRect:rect operation:NSCompositingOperationCopy fraction:1.0 respectFlipped:NO hints:NULL];
     [NSGraphicsContext restoreGraphicsState];
-    
-    [bitmapWhoseFormatIKnow autorelease];
 }
 
 CIImage *createCIImage(PluginData *pluginData){
@@ -101,7 +99,6 @@ CIImage *createCIImage(PluginData *pluginData){
     unsigned char *data = [pluginData data];
     
     NSBitmapImageRep *imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:TRUE isPlanar:NO colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
-    [imageRep autorelease];
     
     CIImage *inputImage = [[CIImage alloc] initWithBitmapImageRep:imageRep];
     
@@ -139,7 +136,6 @@ void renderCIImage(PluginData *pluginData,CIImage *image){
 
 void applyFilter(PluginData *pluginData,CIFilter *filter) {
     CIImage *inputImage = createCIImage(pluginData);
-    [inputImage autorelease];
 
     [filter setValue:inputImage forKey:@"inputImage"];
     CIImage *outputImage = [filter valueForKey: @"outputImage"];
@@ -149,7 +145,6 @@ void applyFilter(PluginData *pluginData,CIFilter *filter) {
 
 void applyFilters(PluginData *pluginData,CIFilter *filterA,CIFilter *filterB) {
     CIImage *inputImage = createCIImage(pluginData);
-    [inputImage autorelease];
     
     [filterA setValue:inputImage forKey:@"inputImage"];
     CIImage *outputImage = [filterA valueForKey: @"outputImage"];
@@ -161,7 +156,6 @@ void applyFilters(PluginData *pluginData,CIFilter *filterA,CIFilter *filterB) {
 
 void applyFilterBG(PluginData *pluginData,CIFilter *filter) {
     CIImage *inputImage = createCIImage(pluginData);
-    [inputImage autorelease];
     
     CIColor *backColor = [CIColor colorWithCGColor:[[pluginData backColor] CGColor]];
 
@@ -183,7 +177,6 @@ void applyFilterBG(PluginData *pluginData,CIFilter *filter) {
 
 void applyFilterFG(PluginData *pluginData,CIFilter *filter) {
     CIImage *inputImage = createCIImage(pluginData);
-    [inputImage autorelease];
     
     CIColor *foreColor = [CIColor colorWithCGColor:[[pluginData foreColor] CGColor]];
     
@@ -206,7 +199,6 @@ void applyFilterFG(PluginData *pluginData,CIFilter *filter) {
 
 void applyFilterFGBG(PluginData *pluginData,CIFilter *filter) {
     CIImage *inputImage = createCIImage(pluginData);
-    [inputImage autorelease];
     
     CIColor *foreColor = [CIColor colorWithCGColor:[[pluginData foreColor] CGColor]];
     CIColor *backColor = [CIColor colorWithCGColor:[[pluginData backColor] CGColor]];
@@ -325,7 +317,6 @@ CGRect determineContentBorders(PluginData *pluginData) {
 
 CIImage *croppedCIImage(PluginData *pluginData,CGRect bounds) {
     CIImage *image = createCIImage(pluginData);
-    [image autorelease];
     
     if(CGRectIsNull(bounds)){
         return image;

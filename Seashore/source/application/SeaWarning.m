@@ -11,17 +11,10 @@
 {
 	self = [super init];
 	if(self){
-		documentQueues = [[NSMutableDictionary dictionary] retain];
-		appQueue = [[NSMutableArray array] retain];
+        documentQueues = [NSMutableDictionary dictionary];
+        appQueue = [NSMutableArray array];
 	}
 	return self;
-}
-
-- (void)dealloc
-{
-	[documentQueues release];
-	[appQueue release];
-	[super dealloc];
 }
 
 - (void)addMessage:(NSString *)message level:(int)level

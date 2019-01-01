@@ -60,7 +60,6 @@ inline static int parse_value(char *input, char *value)
 	// Fail if something went wrong
 	if (info.width == -1 || info.height == -1) {
 		fclose(file);
-		[self autorelease];
 		return NULL;
 	}
 	
@@ -77,7 +76,6 @@ inline static int parse_value(char *input, char *value)
 	// Fail if something went wrong
 	if (ferror(file) || feof(file)) {
 		fclose(file);
-		[self autorelease];
 		return NULL;
 	}
 
@@ -86,11 +84,9 @@ inline static int parse_value(char *input, char *value)
 	layer = [[XBMLayer alloc] initWithFile:file offset:ftell(file) document:doc sharedInfo:&info];
 	if (layer == NULL) {
 		fclose(file);
-		[self autorelease];
 		return NULL;
 	}
 	layers = [NSArray arrayWithObject:layer];
-	[layers retain];
 
 	// Close the file
 	fclose(file);

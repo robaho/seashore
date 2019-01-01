@@ -38,11 +38,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[super dealloc];
-}
-
 - (BOOL)acceptsLineDraws
 {
 	return NO;
@@ -262,7 +257,6 @@
 
 - (void)drawThread:(id)object
 {	
-	NSAutoreleasePool *pool = NULL;
 	NSPoint curPoint;
 	id layer;
 	int layerWidth, layerHeight;
@@ -281,11 +275,6 @@
 	unsigned char *sourceData;
 	int sourceWidth, sourceHeight;
 	IntPoint spt;
-
-	// Create autorelease pool if needed
-	if (multithreaded) {
-		pool = [[NSAutoreleasePool alloc] init];
-	}
 
 	// Set-up variables
 	layer = [[document contents] activeLayer];
@@ -322,7 +311,6 @@ next:
 			if (points[drawingPos].special == 2) {
 				if (bigRect.size.width != 0) [[document helpers] overlayChanged:bigRect inThread:YES];
 				drawingDone = YES;
-				if (multithreaded) [pool release];
 				return;
 			}
 			drawingPos++;
@@ -596,5 +584,15 @@ next:
 {
 	[self mouseUpAt:where withEvent:NULL];
 }
+
+- (AbstractOptions*)getOptions
+{
+    return options;
+}
+- (void)setOptions:(AbstractOptions*)newoptions
+{
+    options = (CloneOptions*)newoptions;
+}
+
 
 @end

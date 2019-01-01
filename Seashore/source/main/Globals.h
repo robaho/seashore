@@ -83,7 +83,7 @@
 	@defined	gCurrentDocument
 	@discussion	Allows quick reference to the current document.
 */
-#define gCurrentDocument [[NSDocumentController sharedDocumentController] currentDocument]
+#define gCurrentDocument ((SeaDocument*)[[NSDocumentController sharedDocumentController] currentDocument])
 
 /*!
 	@defined	LOCALSTR(x, y)

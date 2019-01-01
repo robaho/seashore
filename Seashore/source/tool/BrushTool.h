@@ -1,4 +1,5 @@
 #import "Globals.h"
+#import "BrushOptions.h"
 #import "AbstractTool.h"
 
 /*!
@@ -69,13 +70,9 @@ typedef struct {
 	
 	// The last pressure value
 	int lastPressure;
+    
+    BrushOptions *options;
 }
-
-/*!
-	@method		dealloc
-	@discussion	Frees memory occupied by an instance of this class.
-*/
-- (void)dealloc;
 
 /*!
 	@method		acceptsLineDraws

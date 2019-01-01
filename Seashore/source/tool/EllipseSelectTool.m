@@ -154,4 +154,15 @@
 	selectionRect = IntMakeRect(0,0,0,0);
 	[super cancelSelection];
 }
+
+- (AbstractOptions*)getOptions
+{
+    return options;
+}
+- (void)setOptions:(AbstractOptions*)newoptions
+{
+    options = (EllipseSelectOptions*)newoptions;
+}
+
+
 @end

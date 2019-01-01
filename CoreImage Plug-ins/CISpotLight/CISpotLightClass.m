@@ -91,9 +91,7 @@
 	[destHeightLabel setStringValue:[NSString stringWithFormat:@"%d", destHeight]];
 	[destHeightSlider setIntValue:destHeight];
 	
-	if (mainNSColor) [mainNSColor autorelease];
 	mainNSColor = [[mainColorWell color] colorUsingColorSpaceName:MyRGBSpace];
-	[mainNSColor retain];
 	
 	refresh = YES;
 	success = NO;
@@ -176,9 +174,7 @@
 {
 	PluginData *pluginData;
 	
-	if (mainNSColor) [mainNSColor autorelease];
 	mainNSColor = [color colorUsingColorSpaceName:MyRGBSpace];
-	[mainNSColor retain];
 	if (running) {
 		refresh = YES;
 		[self preview:self];

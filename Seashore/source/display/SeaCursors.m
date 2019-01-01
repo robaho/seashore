@@ -93,30 +93,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	if (crosspointCursor) [crosspointCursor autorelease];
-	if (wandCursor) [wandCursor autorelease];
-	if (zoomCursor) [zoomCursor autorelease];
-	if (pencilCursor) [pencilCursor autorelease];
-	if (brushCursor) [brushCursor autorelease];
-	if (bucketCursor) [bucketCursor autorelease];
-	if (eyedropCursor) [eyedropCursor autorelease];
-	if (moveCursor) [moveCursor autorelease];
-	if (eraserCursor) [eraserCursor autorelease];
-	if (smudgeCursor) [smudgeCursor autorelease];
-	if (noopCursor) [noopCursor autorelease];
-	if (addCursor) [addCursor autorelease];
-	if (subtractCursor) [subtractCursor autorelease];
-	if (closeCursor) [closeCursor autorelease];
-	if (resizeCursor) [resizeCursor autorelease];
-	if (rotateCursor) [rotateCursor autorelease];
-	if (anchorCursor) [anchorCursor autorelease];
-	if (urdlCursor) [urdlCursor autorelease];
-	if (urdlCursor) [urdlCursor autorelease];
-	[super dealloc];
-}
-
 - (void)addCursorRect:(NSRect)rect cursor:(NSCursor *)cursor
 {
 	NSScrollView *scrollView = (NSScrollView *)[[view superview] superview];

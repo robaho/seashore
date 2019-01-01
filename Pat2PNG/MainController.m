@@ -82,8 +82,6 @@ typedef struct {
 		// Save the pattern as a PNG file
 		[[bitmapImage representationUsingType:NSPNGFileType properties:[NSDictionary dictionary]] writeToFile:[[path stringByDeletingLastPathComponent] stringByAppendingFormat:@"/%@.png", name] atomically:YES];
 		
-		// And finally free everything
-		[bitmapImage autorelease];
 		free(data);
 		
 	}

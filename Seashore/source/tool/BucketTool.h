@@ -1,4 +1,5 @@
 #import "Globals.h"
+#import "BucketOptions.h"
 #import "AbstractTool.h"
 
 /*!
@@ -29,13 +30,9 @@
 	
 	// You can preview by holding down shift, so we need to track that
 	BOOL isPreviewing;
+    
+    BucketOptions *options;
 }
-
-/*!
-	@method		dealloc
-	@discussion	Frees memory occupied by an instance of this class.
-*/
-- (void)dealloc;
 
 /*!
 	@method		mouseDownAt:withEvent:

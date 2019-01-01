@@ -66,7 +66,6 @@ extern IntSize getDocumentSize(char *path);
 	// Open the image
 	image = [[NSImage alloc] initByReferencingFile:path_out];
 	if (image == NULL) {
-		[image autorelease];
 		return NO;
 	}
 	
@@ -79,14 +78,12 @@ extern IntSize getDocumentSize(char *path);
 		}
 	}
 	if (imageRep == NULL) {
-		[image autorelease];
 		return NO;
 	}
 		
 	// Create the layer
 	layer = [[CocoaLayer alloc] initWithImageRep:imageRep document:doc spp:[[doc contents] spp]];
 	if (layer == NULL) {
-		[image autorelease];
 		return NO;
 	}
 	
@@ -95,9 +92,6 @@ extern IntSize getDocumentSize(char *path);
 	
 	// Add the layer
 	[[doc contents] addLayerObject:layer];
-	
-	// Now forget the NSImage
-	[image autorelease];
 	
 	// Position the new layer correctly
 	[[(SeaOperations *)[doc operations] seaAlignment] centerLayerHorizontally:NULL];

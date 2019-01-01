@@ -35,11 +35,6 @@ extern id gNewFont;
 	return self;
 }
 
-- (void)dealloc
-{
-	[super dealloc];
-}
-
 - (void)mouseUpAt:(IntPoint)iwhere withEvent:(NSEvent *)theEvent
 {
 	// Display the preview text box
@@ -88,7 +83,6 @@ extern id gNewFont;
 		attributes = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, color, NSForegroundColorAttributeName, paraStyle, NSParagraphStyleAttributeName, [NSNumber numberWithInt:outline], NSStrokeWidthAttributeName, NULL];
 	else
 		attributes = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, color, NSForegroundColorAttributeName, paraStyle, NSParagraphStyleAttributeName, NULL];
-	[paraStyle autorelease];
 	text = [[textbox textStorage] string];
 	fontSize = NSSizeMakeIntSize([text sizeWithAttributes:attributes]);
 	fontSize.width += [[NSString stringWithString:@"x"] sizeWithAttributes:attributes].width;
@@ -191,15 +185,6 @@ extern id gNewFont;
 		}
 	}
 	
-	// Clean-up everything
-	[image autorelease];
-	[imageRep autorelease];
-	[initRep autorelease];
-	if ([options allowFringe]) {
-		[image2 autorelease];
-		[imageRep2 autorelease];
-		[initRep2 autorelease];
-	}
 	free(initData);
 	
 	return IntMakeRect(pos.x, pos.y, fontSize.width, fontSize.height);
@@ -326,5 +311,15 @@ extern id gNewFont;
 	where.y = height / 2 + [font ascender] - fontSize.height / 2;
 	[self preview:NULL];
 }
+
+- (AbstractOptions*)getOptions
+{
+    return options;
+}
+- (void)setOptions:(AbstractOptions*)newoptions
+{
+    options = (TextOptions*)newoptions;
+}
+
 
 @end

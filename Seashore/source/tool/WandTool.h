@@ -1,4 +1,5 @@
 #import "Globals.h"
+#import "WandOptions.h"
 #import "AbstractSelectTool.h"
 
 /*!
@@ -20,6 +21,8 @@
 	
 	// The end point of the selection (at the moment)
 	NSPoint currentNSPoint;
+    
+    WandOptions *options;
 }
 
 

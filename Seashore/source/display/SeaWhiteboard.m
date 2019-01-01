@@ -61,14 +61,10 @@ extern IntPoint gScreenResolution;
 
 - (void)dealloc
 {	
-	// Free the room we took for everything else
-	if (compositor) [compositor autorelease];
-	if (image) [image autorelease];
 	if (data) free(data);
 	if (overlay) free(overlay);
 	if (replace) free(replace);
 	if (altData) free(altData);
-	[super dealloc];
 }
 
 - (void)setOverlayBehaviour:(int)value
@@ -105,7 +101,7 @@ extern IntPoint gScreenResolution;
 	lheight = [(SeaLayer *)layer height];
 	xoff = [layer xoff];
 	yoff = [layer yoff];
-	mask = [[document selection] mask];
+	mask = [(SeaSelection*)[document selection] mask];
 	maskOffset = [[document selection] maskOffset];
 	trueMaskOffset = IntMakePoint(maskOffset.x - selectRect.origin.x, maskOffset.y -  selectRect.origin.y);
 	maskSize = [[document selection] maskSize];
@@ -417,7 +413,7 @@ extern IntPoint gScreenResolution;
 		else {
 			selectRect = [[document selection] globalRect];
 		}
-		mask = [[document selection] mask];
+		mask = [(SeaSelection*)[document selection] mask];
 		maskOffset = [[document selection] maskOffset];
 		maskSize = [[document selection] maskSize];
 	}
@@ -708,7 +704,6 @@ extern IntPoint gScreenResolution;
 	int xwidth, xheight;
 	id layer;
 	
-	if (image) [image autorelease];
 	image = [[NSImage alloc] init];
 	
 	if (altData) {
@@ -733,8 +728,6 @@ extern IntPoint gScreenResolution;
 		imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
 	}
     
-    [imageRep autorelease];
-    
     if (CMYKPreview) {
         NSColorSpace* cs = [NSColorSpace genericCMYKColorSpace];
         imageRep = [imageRep bitmapImageRepByConvertingToColorSpace:cs renderingIntent:NSColorRenderingIntentDefault];
@@ -749,10 +742,8 @@ extern IntPoint gScreenResolution;
 {
 	NSBitmapImageRep *imageRep;
 	
-	if (image) [image autorelease];
 	image = [[NSImage alloc] init];
 	imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO colorSpaceName:(spp == 4) ? NSDeviceRGBColorSpace : NSDeviceWhiteColorSpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
-    [imageRep autorelease];
 	[image addRepresentation:imageRep];
 	
 	return image;

@@ -1,4 +1,5 @@
 #import "Globals.h"
+#import "EraserOptions.h"
 #import "AbstractTool.h"
 
 /*!
@@ -66,13 +67,10 @@ typedef struct {
 
 	// The last where recorded
 	IntPoint lastWhere;
+    
+    EraserOptions *options;
 	
 }
-/*!
-	@method		dealloc
-	@discussion	Frees memory occupied by an instance of this class.
-*/
-- (void)dealloc;
 
 /*!
 	@method		acceptsLineDraws

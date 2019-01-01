@@ -23,7 +23,7 @@
 
 	NSRect shadowRect = NSMakeRect(-scrollRect.origin.x + areRulersVisible * 22, -scrollRect.origin.y + [scrollView hasHorizontalScroller] * 15, scrollRect.size.width + 2 * scrollRect.origin.x , scrollRect.size.height + 2 * scrollRect.origin.y);
 	
-	NSShadow *shadow = [[[NSShadow alloc] init] autorelease];
+    NSShadow *shadow = [[NSShadow alloc] init];
 	
 	[shadow setShadowOffset: NSMakeSize(3, -3)];
 	[shadow setShadowBlurRadius: 5];

@@ -38,11 +38,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-	[super dealloc];
-}
-
 - (void)drawRect:(NSRect)rect
 {
 	NSRect srcRect = rect, destRect = rect;

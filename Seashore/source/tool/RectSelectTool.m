@@ -167,4 +167,13 @@
 	return IntMakeRect(0, 0, 0, 0);
 }
 
+- (AbstractOptions*)getOptions
+{
+    return options;
+}
+- (void)setOptions:(AbstractOptions*)newoptions
+{
+    options = (RectSelectOptions*)newoptions;
+}
+
 @end

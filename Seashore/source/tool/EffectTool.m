@@ -46,13 +46,13 @@
 		count = 0;
 	}
 	
-	[(EffectOptions *)options updateClickCount:self];
+	[options updateClickCount:self];
 }
 
 - (void)reset
 {
 	count = 0;
-	[(EffectOptions *)options updateClickCount:self];
+	[options updateClickCount:self];
 }
 
 - (IntPoint)point:(int)index
@@ -70,5 +70,15 @@
 	NSLog(@"Effect tool invalidly getting asked its selection rect");
 	return IntMakeRect(0, 0, 0, 0);
 }
+
+- (AbstractOptions*)getOptions
+{
+    return options;
+}
+- (void)setOptions:(AbstractOptions*)newoptions
+{
+    options = (EffectOptions*)newoptions;
+}
+
 
 @end

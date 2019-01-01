@@ -19,8 +19,8 @@
 - (void)awakeFromNib
 {
 	int i;
-	editableTypes = [[NSMutableDictionary dictionary] retain];
-	viewableTypes = [[NSMutableDictionary dictionary] retain];
+    editableTypes = [NSMutableDictionary dictionary];
+    viewableTypes = [NSMutableDictionary dictionary];
 	
 	// The document controller is responsible for tracking document types
 	// In addition, as it's in control of open, it also must know the types for import and export
@@ -44,15 +44,6 @@
 			[viewableTypes setObject:assembly forKey: key];
 		}
 	}
-}
-
-- (void)dealloc
-{
-	// Then get rid of stuff that's no longer needed
-	if (editableTypes) [editableTypes autorelease];
-	if (viewableTypes) [viewableTypes autorelease];
-	// Finally call the super
-	[super dealloc];
 }
 
 - (IBAction)newDocument:(id)sender
@@ -179,7 +170,6 @@
 			if (availableType) {
 				image = [[NSImage alloc] initWithData:[pboard dataForType:availableType]];
 				size = NSSizeMakeIntSize([image size]);
-				[image autorelease];
 			}
 			else {
 				NSBeep();

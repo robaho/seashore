@@ -29,12 +29,6 @@
 	return kEraserTool;
 }
 
-
-- (void)dealloc
-{
-	[super dealloc];
-}
-
 - (BOOL)acceptsLineDraws
 {
 	return YES;
@@ -116,15 +110,15 @@
 	int spp = [[document contents] spp];
 	int pressure;
 	BOOL ignoreFirstTouch;
-	id boptions;
+	BrushOptions *boptions;
 	
 	// Determine whether operation should continue
 	lastWhere.x = where.x;
 	lastWhere.y = where.y;
-	boptions = [[[SeaController utilitiesManager] optionsUtilityFor:document] getOptions:kBrushTool];
+	boptions = (BrushOptions*)[[[SeaController utilitiesManager] optionsUtilityFor:document] getOptions:kBrushTool];
 	multithreaded = [[SeaController seaPrefs] multithreaded];
 	ignoreFirstTouch = [[SeaController seaPrefs] ignoreFirstTouch];
-	if (ignoreFirstTouch && ([event type] == NSLeftMouseDown || [event type] == NSRightMouseDown) && [options pressureSensitive] && !([(EraserOptions*)options modifier] == kShiftModifier)) {
+	if (ignoreFirstTouch && ([event type] == NSLeftMouseDown || [event type] == NSRightMouseDown) && !([options modifier] == kShiftModifier)) {
 		firstTouchDone = NO;
 		return;
 	}
@@ -152,7 +146,7 @@
 	// Set the appropriate overlay opacity
 	if (hasAlpha)
 		[[document whiteboard] setOverlayBehaviour:kErasingBehaviour];
-	[[document whiteboard] setOverlayOpacity:[(EraserOptions*)options opacity]];
+	[[document whiteboard] setOverlayOpacity:[options opacity]];
 	
 	// Plot the initial point
 	rect.size.width = [(SeaBrush *)curBrush fakeWidth] + 1;
@@ -183,7 +177,6 @@
 
 - (void)drawThread:(id)object
 {	
-	NSAutoreleasePool *pool = NULL;
 	NSPoint curPoint;
 	id layer;
 	int layerWidth, layerHeight;
@@ -204,11 +197,6 @@
 	NSDate *lastDate;
 	id boptions;
 	
-   // Create autorelease pool if needed
-   if (multithreaded) {
-		pool = [[NSAutoreleasePool alloc] init];
-   }
-   
    // Set-up variables
    layer = [[document contents] activeLayer];
    curBrush = [[[SeaController utilitiesManager] brushUtilityFor:document] activeBrush];
@@ -237,7 +225,6 @@ next:
 			if (points[drawingPos].special == 2) {
 				if (bigRect.size.width != 0) [[document helpers] overlayChanged:bigRect inThread:YES];
 				drawingDone = YES;
-				if (multithreaded) [pool release];
 				return;
 			}
 			drawingPos++;
@@ -467,5 +454,15 @@ next:
 {
 	[self mouseUpAt:where withEvent:NULL];
 }
+
+- (AbstractOptions*)getOptions
+{
+    return options;
+}
+- (void)setOptions:(AbstractOptions*)newoptions
+{
+    options = (EraserOptions*)newoptions;
+}
+
 
 @end

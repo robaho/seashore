@@ -25,7 +25,6 @@
 - (void)dealloc
 {
 	free(undoRecords);
-	[super dealloc];
 }
 
 - (void)determineContentBorders
@@ -573,7 +572,6 @@
 			if (availableType) {
 				image = [[NSImage alloc] initWithData:[pboard dataForType:availableType]];
 				size = NSSizeMakeIntSize([image size]);
-				[image autorelease];
 			}
 			else {
 				NSBeep();

@@ -24,7 +24,7 @@ enum {
 				<b>Copyright:</b> N/A
 */
 
-@interface SeaPlugins : NSObject {
+@interface SeaPlugins : NSObject <SeaTerminate> {
 
 	// The SeaController object
 	IBOutlet id controller;
@@ -57,12 +57,6 @@ enum {
 	@discussion	Adds plug-ins to the menu.
 */
 - (void)awakeFromNib;
-
-/*!
-	@method		dealloc
-	@discussion	Frees memory occupied by an instance of this class.
-*/
-- (void)dealloc;
 
 /*!
 	@method		terminate

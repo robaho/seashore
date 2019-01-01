@@ -21,15 +21,8 @@
 		if (tempData != nil)
 			color = (NSColor *)[NSUnarchiver unarchiveObjectWithData:tempData];
 	}
-	[color retain];
 	
 	return self;
-}
-
-- (void)dealloc
-{
-	if (color) [color autorelease];
-	[super dealloc];
 }
 
 - (IBAction)toggle:(id)sender
@@ -56,11 +49,9 @@
 	int i;
 	
 	// Change the colour
-	[color autorelease];
 	color = [sender color];
 	if (![[color colorSpaceName] isEqualToString:NSNamedColorSpace])
 		[[sender color] colorUsingColorSpaceName:MyRGBSpace];
-	[color retain];
 	
 	// Call for all documents' views to respond to the change
 	for (i = 0; i < [documents count]; i++) {

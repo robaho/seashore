@@ -7,13 +7,6 @@
   return [self isEnabled];
 }
 
-- (void)dealloc
-{
-  [saveBackgroundColors release];
-  [saveTextColors release];
-  [super dealloc];
-}
-
 - (void)saveState
 {
   NSEnumerator *e = [[self tableColumns] objectEnumerator];

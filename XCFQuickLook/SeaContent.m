@@ -15,9 +15,9 @@
 	parasites = NULL; parasites_count = 0;
 	exifData = NULL;
 	layers = NULL; activeLayerIndex = 0;
-	layersToUndo = [[NSMutableArray array] retain];
-	layersToRedo = [[NSMutableArray array] retain];
-	orderings = [[NSMutableArray array] retain];
+    layersToUndo = [NSMutableArray array];
+    layersToRedo = [NSMutableArray array];
+    orderings = [NSMutableArray array];
 	deletedLayers = [[NSArray alloc] init];
 	selectedChannel = kAllChannels; trueView = NO;
 	cmykSave = NO;
@@ -32,44 +32,11 @@
 	
 	if (parasites) {
 		for (i = 0; i < parasites_count; i++) {
-			[parasites[i].name autorelease];
 			free(parasites[i].data);
 		}
 		free(parasites);
 	}
-	if (exifData) [exifData autorelease];
 	if (lostprops) free(lostprops);
-	if (layers) {
-		for (i = 0; i < [layers count]; i++) {
-			[[layers objectAtIndex:i] autorelease];
-		}
-		[layers autorelease];
-	}
-	if (layersToUndo) {
-		for (i = 0; i < [layersToUndo count]; i++) {
-			[[layersToUndo objectAtIndex:i] autorelease];
-		}
-		[layersToUndo autorelease];
-	}
-	if (layersToRedo) {
-		for (i = 0; i < [layersToRedo count]; i++) {
-			[[layersToRedo objectAtIndex:i] autorelease];
-		}
-		[layersToRedo autorelease];
-	}
-	if (deletedLayers) {
-		for (i = 0; i < [deletedLayers count]; i++) {
-			[[deletedLayers objectAtIndex:i] autorelease];
-		}
-		[deletedLayers autorelease];
-	}
-	if(orderings){
-		for (i = 0; i < [orderings count]; i++) {
-			[[orderings objectAtIndex:i] autorelease];
-		}
-		[orderings autorelease];
-	}
-	[super dealloc];
 }
 
 - (int)type
@@ -187,7 +154,6 @@
 	if (x != -1) {
 		
 		// Destroy it
-		[parasites[x].name autorelease];
 		free(parasites[x].data);
 	
 		// Update the parasites list

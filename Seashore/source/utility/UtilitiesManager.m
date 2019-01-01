@@ -4,6 +4,7 @@
 #import "OptionsUtility.h"
 #import "InfoUtility.h"
 #import "SeaController.h"
+#import "TextureUtility.h"
 
 @implementation UtilitiesManager
 
@@ -29,14 +30,6 @@
 
 - (void)terminate
 {
-	[pegasusUtilities autorelease];
-	[toolboxUtilities autorelease];
-	[brushUtilities autorelease];
-	[optionsUtilities autorelease];
-	[textureUtilities autorelease];
-	[infoUtilities autorelease];
-	[statusUtilities autorelease];
-	
 	// Force such information to be written to the hard disk
 	[gUserDefaults synchronize];
 }
@@ -79,7 +72,7 @@
 	return transparentUtility;
 }
 
-- (id)toolboxUtilityFor:(id)doc
+- (ToolboxUtility*)toolboxUtilityFor:(id)doc
 {
 	return [toolboxUtilities objectForKey: [NSNumber numberWithLong:(long)doc]];
 }
@@ -89,12 +82,12 @@
 	return [brushUtilities objectForKey:[NSNumber numberWithLong:(long)doc]];
 }
 
-- (id)textureUtilityFor:(id)doc
+- (TextureUtility*)textureUtilityFor:(id)doc
 {
 	return [textureUtilities objectForKey:[NSNumber numberWithLong:(long)doc]];
 }
 
-- (id)optionsUtilityFor:(id)doc
+- (OptionsUtility*)optionsUtilityFor:(id)doc
 {
 	return [optionsUtilities objectForKey: [NSNumber numberWithLong:(long)doc]];
 }

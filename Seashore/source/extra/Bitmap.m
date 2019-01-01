@@ -31,7 +31,6 @@ unsigned char *convertImageRep(NSImageRep *imageRep,int spp) {
     [imageRep draw];
     [NSGraphicsContext restoreGraphicsState];
     
-    [bitmapWhoseFormatIKnow autorelease];
     return buffer;
 }
 

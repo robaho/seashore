@@ -1,4 +1,5 @@
 #import "Globals.h"
+#import "GradientOptions.h"
 #import "AbstractTool.h"
 
 /*!
@@ -20,14 +21,10 @@
 	
 	// The temporary point we've dragged to
 	NSPoint tempNSPoint;
+    
+    GradientOptions *options;
 	
 }
-
-/*!
-	@method		dealloc
-	@discussion	Frees memory occupied by an instance of this class.
-*/
-- (void)dealloc;
 
 /*!
 	@method		mouseDownAt:withEvent:

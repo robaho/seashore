@@ -1,4 +1,5 @@
 #import "Globals.h"
+#import "CropOptions.h"
 #import "AbstractScaleTool.h"
 
 /*!
@@ -20,6 +21,8 @@
 	
 	// Are we using the one-to-one ratio?
 	BOOL oneToOne;
+    
+    CropOptions *options;
 
 }
 

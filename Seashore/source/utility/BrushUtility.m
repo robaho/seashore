@@ -80,22 +80,6 @@
 	[[SeaController utilitiesManager] setBrushUtility: self for:document];
 }
 
-- (void)dealloc
-{
-	int i;
-	
-	// Release any existing brushes
-	if (brushes) {
-		for (i = 0; i < [brushes count]; i++)
-			[[[brushes allValues] objectAtIndex:i] autorelease];
-		[brushes autorelease];
-	}
-	if (groups) [groups autorelease];
-	if (groupNames) [groupNames autorelease];
-	if ([view documentView]) [[view documentView] autorelease];
-	[super dealloc];
-}
-
 - (void)shutdown
 {
 	[gUserDefaults setInteger:activeBrushIndex forKey:@"active brush"];
@@ -135,14 +119,6 @@
 	id tempBrush;
 	int i, j;
 	
-	// Release any existing brushes
-	if (brushes) {
-		for (i = 0; i < [brushes count]; i++)
-			[[[brushes allValues] objectAtIndex:i] autorelease];
-		[brushes autorelease];
-	}
-	if (groups) [groups autorelease];
-	if (groupNames) [groupNames autorelease];
 	
 	// Create a dictionary of all brushes
 	brushes = [NSDictionary dictionary];
@@ -158,7 +134,6 @@
 			}
 		}
 	}
-	[brushes retain];
 	
 	// Create the all group
 	tempBrushArray = [[brushes allValues] sortedArrayUsingSelector:@selector(compare:)];
@@ -211,10 +186,6 @@
 			}
 		}
 	}
-	
-	// Retain the groups and groupNames
-	[groups retain];
-	[groupNames retain];
 	
 	// Update utility if requested
 	if (update) [self update];

@@ -42,11 +42,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[super dealloc];
-}
-
 - (BOOL)hasOptions
 {
 	return YES;
@@ -142,7 +137,6 @@
 	[realImageView setImage:realImage];
 	compressImage = [[NSImage alloc] initWithData:[realImageRep representationUsingType:NSJPEGFileType properties:[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:[self reviseCompression]] forKey:NSImageCompressionFactor]]];
 	[compressImage setSize:NSMakeSize(160, 160)];
-    [compressImage autorelease];
 	[compressImageView setImage:compressImage];
 	
 	// Display the options dialog
@@ -157,9 +151,6 @@
 	else
 		[gUserDefaults setInteger:printCompression forKey:@"jpeg print compression"];
 	free(sampleData);
-    
-	[realImageRep autorelease];
-	[realImage autorelease];
 }
 
 - (IBAction)compressionChanged:(id)sender
@@ -174,7 +165,6 @@
 	value = [self reviseCompression];
 	compressImage = [[NSImage alloc] initWithData:[realImageRep representationUsingType:NSJPEGFileType properties:[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:[self reviseCompression]] forKey:NSImageCompressionFactor]]];
 	[compressImage setSize:NSMakeSize(160, 160)];
-	[compressImage autorelease];
 	[compressImageView setImage:compressImage];
 	[compressImageView display];
 }
@@ -199,7 +189,6 @@
 	value = [self reviseCompression];
 	compressImage = [[NSImage alloc] initWithData:[realImageRep representationUsingType:NSJPEGFileType properties:[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:[self reviseCompression]] forKey:NSImageCompressionFactor]]];
 	[compressImage setSize:NSMakeSize(160, 160)];
-	[compressImage autorelease];
 	[compressImageView setImage:compressImage];
 	[compressImageView display];
 }
@@ -255,7 +244,6 @@
 	// Make an image representation from the data
 	imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&destData pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:hasAlpha isPlanar:NO
                                                    colorSpaceName:(spp > 2) ? MyRGBSpace : MyGraySpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
-    [imageRep autorelease];
     
     if (targetWeb) {
         if(spp>2) {

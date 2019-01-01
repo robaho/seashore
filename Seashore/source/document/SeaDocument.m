@@ -143,7 +143,6 @@ enum {
 		[self setFileType:type];
 	}
 	else {
-		[self autorelease];
 		return NULL;
 	}
 	
@@ -196,7 +195,6 @@ enum {
 					 tiffExporter,
 					 xcfExporter,
 					 NULL];
-		[exporters retain];
 		
 		// Create a fresh whiteboard and selection manager
 		whiteboard = [[SeaWhiteboard alloc] initWithDocument:self];
@@ -208,10 +206,8 @@ enum {
 		#ifdef USE_CENTERING_CLIPVIEW
 		newClipView = [[CenteringClipView alloc] initWithFrame:[[view contentView] frame]];
 		[(NSScrollView *)view setContentView:newClipView];
-		[newClipView autorelease];
 		#endif
 		[view setDocumentView:seaView];
-		[seaView autorelease];
 		[view setDrawsBackground:NO];
 		
 		// set the frame of the window
@@ -222,18 +218,6 @@ enum {
 	}
 	
 	[docWindow setAcceptsMouseMovedEvents:YES];
-}
-
-- (void)dealloc
-{
-	// Then get rid of stuff that's no longer needed
-	if (selection) [selection autorelease];
-	if (whiteboard) [whiteboard autorelease];
-	if (contents) [contents autorelease];
-	if (exporters) [exporters autorelease];
-		
-	// Finally call the super
-	[super dealloc];
 }
 
 - (IBAction)saveDocument:(id)sender
@@ -248,7 +232,7 @@ enum {
 	[super saveDocumentAs:sender];
 }
 
-- (id)contents
+- (SeaContent*)contents
 {
 	return contents;
 }
@@ -405,8 +389,6 @@ enum {
 	[op setShowPanels:showPanels];
     [self runModalPrintOperation:op delegate:NULL didRunSelector:NULL contextInfo:NULL];
 
-	// Release print view
-	[printView autorelease];
 }
 
 

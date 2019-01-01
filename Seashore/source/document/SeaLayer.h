@@ -1,4 +1,5 @@
 #import "Globals.h"
+#import "SeaDocument.h"
 
 /*!
 	@class		SeaLayer
@@ -13,7 +14,7 @@
 @interface SeaLayer : NSObject {
 	
 	// The document that contains this layer
-	id document;
+	SeaDocument *document;
 	
 	// The object responsible for changes to our bitmap
 	id seaLayerUndo;

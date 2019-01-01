@@ -32,7 +32,6 @@
 		
 		// Fail if something went wrong
 		if (ferror(file) || feof(file)) {
-			[self autorelease];
 			return NULL;
 		}
 		
@@ -46,7 +45,6 @@
 		
 		// Fail if something went wrong
 		if (ferror(file) || feof(file)) {
-			[self autorelease];
 			return NULL;
 		}
 		

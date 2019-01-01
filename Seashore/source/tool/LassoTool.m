@@ -188,4 +188,14 @@
 	return result;
 }
 
+- (AbstractOptions*)getOptions
+{
+    return options;
+}
+- (void)setOptions:(AbstractOptions*)newoptions
+{
+    options = (LassoOptions*)newoptions;
+}
+
+
 @end

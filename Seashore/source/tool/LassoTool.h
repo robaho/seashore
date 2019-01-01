@@ -1,4 +1,5 @@
 #import "Globals.h"
+#import "LassoOptions.h"
 #import "AbstractSelectTool.h"
 
 /*!
@@ -39,7 +40,8 @@ typedef struct {
 	
 	// The current position in the list
 	int pos;
-
+    
+    LassoOptions *options;
 }
 
 /*!

@@ -1,4 +1,5 @@
 #import "Globals.h"
+#import "EyedropOptions.h"
 #import "AbstractTool.h"
 
 /*!
@@ -13,15 +14,8 @@
 */
 
 @interface EyedropTool : AbstractTool {
-
+    EyedropOptions *options;
 }
-
-
-/*!
-	@method		dealloc
-	@discussion	Frees memory occupied by an instance of this class.
-*/
-- (void)dealloc;
 
 /*!
 	@method		sampleSize

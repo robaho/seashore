@@ -22,11 +22,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[super dealloc];
-}
-
 - (void)compositeLayer:(SeaLayer *)layer withOptions:(CompositorOptions)options
 {
 	[self compositeLayer: layer withOptions: options andData: NULL];
@@ -72,7 +67,7 @@
 	if(!destPtr) destPtr = [(SeaWhiteboard *)[document whiteboard] data];
 	overlay = [(SeaWhiteboard *)[document whiteboard] overlay];
 	replace = [(SeaWhiteboard *)[document whiteboard] replace];
-	mask = [[document selection] mask];
+	mask = [(SeaSelection*)[document selection] mask];
 	maskOffset = [[document selection] maskOffset];
 	trueMaskOffset = IntMakePoint(maskOffset.x - selectRect.origin.x, maskOffset.y -  selectRect.origin.y);
 	maskSize = [[document selection] maskSize];
@@ -242,7 +237,7 @@
 	destPtr = [(SeaWhiteboard *)[document whiteboard] data];
 	overlay = [(SeaWhiteboard *)[document whiteboard] overlay];
 	replace = [(SeaWhiteboard *)[document whiteboard] replace];
-	mask = [[document selection] mask];
+	mask = [(SeaSelection*)[document selection] mask];
 	maskOffset = [[document selection] maskOffset];
 	trueMaskOffset = IntMakePoint(maskOffset.x - selectRect.origin.x, maskOffset.y -  selectRect.origin.y);
 	maskSize = [[document selection] maskSize];

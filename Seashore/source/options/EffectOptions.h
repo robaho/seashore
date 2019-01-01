@@ -12,7 +12,7 @@
 
 @interface EffectOptions : AbstractOptions {
 	// The table listing all effects
-	IBOutlet id effectTable;
+	IBOutlet NSTableView *effectTable;
 	
 	// The instruction for those effects
 	IBOutlet id effectTableInstruction;

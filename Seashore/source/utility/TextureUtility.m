@@ -81,22 +81,6 @@
 	[[SeaController utilitiesManager] setTextureUtility: self for:document];
 }
 
-- (void)dealloc
-{
-	int i;
-	
-	// Release any existing textures
-	if (textures) {
-		for (i = 0; i < [textures count]; i++)
-			[[[textures allValues] objectAtIndex:i] autorelease];
-		[textures autorelease];
-	}
-	if (groups) [groups autorelease];
-	if (groupNames) [groupNames autorelease];
-	if ([view documentView]) [[view documentView] autorelease];
-	[super dealloc];
-}
-
 - (void)activate:(id)sender
 {
 	document = sender;
@@ -133,16 +117,7 @@
 	BOOL isDirectory;
 	id texture;
 	int i, j;
-	
-	// Release any existing textures
-	if (textures) {
-		for (i = 0; i < [textures count]; i++)
-			[[[textures allValues] objectAtIndex:i] autorelease];
-		[textures autorelease];
-	}
-	if (groups) [groups autorelease];
-	if (groupNames) [groupNames autorelease];
-	
+		
 	// Create a dictionary of all textures
 	textures = [NSDictionary dictionary];
 	files = [gFileManager subpathsAtPath:[[gMainBundle resourcePath] stringByAppendingString:@"/textures"]];
@@ -155,7 +130,6 @@
 			textures = [NSDictionary dictionaryWithObjects:newValues forKeys:newKeys];
 		}
 	}
-	[textures retain];
 	
 	// Create the all group
 	array = [[textures allValues] sortedArrayUsingSelector:@selector(compare:)];
@@ -186,10 +160,6 @@
 		}
 	}
 	
-	// Retain the groups and groupNames
-	[groups retain];
-	[groupNames retain];
-	
 	// Update utility if requested
 	if (update) [self update];
 }
@@ -202,12 +172,6 @@
 	id texture;
 	int i, j;
 	
-	// Release any existing textures
-	if (groups) [groups autorelease];
-	if (groupNames) [groupNames autorelease];
-	
-	// Update dictionary of all textures
-	[textures autorelease];
 	if ([textures objectForKey:path]) {
 		newKeys = [NSArray array];
 		newValues = [NSArray array];
@@ -230,7 +194,6 @@
 		newValues = [newValues arrayByAddingObject:texture];
 		textures = [NSDictionary dictionaryWithObjects:newValues forKeys:newKeys];
 	}
-	[textures retain];
 	
 	// Create the all group
 	array = [[textures allValues] sortedArrayUsingSelector:@selector(compare:)];
@@ -260,10 +223,6 @@
 			}
 		}
 	}
-	
-	// Retain the groups and groupNames
-	[groups retain];
-	[groupNames retain];
 	
 	// Configure the pop-up menu
 	[textureGroupPopUp removeAllItems];
@@ -331,7 +290,7 @@
 		[textureNameLabel setStringValue:[newTexture name]];
 		[opacitySlider setEnabled:YES];
 		[newTexture activate];
-		[[[SeaController utilitiesManager] toolboxUtilityFor:document] update:NO];
+		[(ToolboxUtility*)[[SeaController utilitiesManager] toolboxUtilityFor:document] update:NO];
 		[(TextTool *)[[document tools] getTool:kTextTool] preview:NULL];
 	}
 }

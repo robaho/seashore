@@ -24,7 +24,6 @@
 - (void)dealloc
 {
 	free(undoRecords);
-	[super dealloc];
 }
 
 - (void)run

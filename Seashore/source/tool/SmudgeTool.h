@@ -1,4 +1,5 @@
 #import "Globals.h"
+#import "SmudgeOptions.h"
 #import "AbstractTool.h"
 
 /*!
@@ -24,14 +25,10 @@
 	
 	// The last where recorded
 	IntPoint lastWhere;
+    
+    SmudgeOptions *options;
 	
 }
-
-/*!
-	@method		dealloc
-	@discussion	Frees memory occupied by an instance of this class.
-*/
-- (void)dealloc;
 
 /*!
 	@method		useMouseCoalescing

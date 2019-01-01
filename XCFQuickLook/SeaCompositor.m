@@ -21,11 +21,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[super dealloc];
-}
-
 - (void)compositeLayer:(id)layer withOptions:(CompositorOptions)options
 {
 	[self compositeLayer: layer withOptions: options andData: NULL];

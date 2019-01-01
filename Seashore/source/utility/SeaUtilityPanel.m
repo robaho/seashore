@@ -1,4 +1,5 @@
 #import "SeaUtilityPanel.h"
+#import "SeaDocument.h"
 
 @implementation SeaUtilityPanel
 
@@ -27,14 +28,12 @@
 		frame.size.height = priorShadeHeight;
 		[self setFrame:frame display:YES animate:YES];
 		[self setContentView:priorContentView];
-		[priorContentView autorelease];
 	}
 	else {
 		priorShadeHeight = frame.size.height;
 		frame.origin.y += frame.size.height - 16;
 		frame.size.height = 16;
 		priorContentView = [self contentView];
-		[priorContentView retain];
 		if (nullView) [self setContentView:nullView];
 		[self setFrame:frame display:YES animate:NO];
 	}

@@ -26,12 +26,6 @@
 	[[SeaController utilitiesManager] setPegasusUtility: self for:document];
 }
 
-- (void)dealloc
-{
-	//if ([layersView documentView]) [[layersView documentView] autorelease];
-	[super dealloc];
-}
-
 - (void)activate
 {
 	// Get the LayersView and LayerSettings to activate

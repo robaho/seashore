@@ -1,6 +1,7 @@
 #import "Globals.h"
 #import "AbstractTool.h"
 #import "SeaPlugins.h"
+#import "EffectOptions.h"
 
 /*!
 	@defined	kMaxEffectToolPoints
@@ -28,7 +29,8 @@
 
 	// A count of the points so far registered
 	int count;
-
+    
+    EffectOptions *options;
 }
 
 /*!

@@ -63,12 +63,6 @@
 - (void)awakeFromNib;
 
 /*!
-	@method		dealloc
-	@discussion	Frees memory occupied by an instance of this class.
-*/
-- (void)dealloc;
-
-/*!
 	@method		activate
 	@discussion	Activates this utility with its document.
 */

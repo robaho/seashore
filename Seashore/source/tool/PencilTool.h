@@ -1,4 +1,5 @@
 #import "Globals.h"
+#import "PencilOptions.h"
 #import "AbstractTool.h"
 
 /*!
@@ -23,14 +24,10 @@
 	
 	// The set of pixels upon which to base the pencil block
 	unsigned char basePixel[4];
+    
+    PencilOptions *options;
 	
 }
-
-/*!
-	@method		dealloc
-	@discussion	Frees memory occupied by an instance of this class.
-*/
-- (void)dealloc;
 
 /*!
 	@method		acceptsLineDraws

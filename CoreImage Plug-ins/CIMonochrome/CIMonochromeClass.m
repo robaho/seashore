@@ -53,9 +53,7 @@
 	
 	[intensitySlider setFloatValue:intensity];
 	
-	if (mainNSColor) [mainNSColor autorelease];
 	mainNSColor = [[mainColorWell color] colorUsingColorSpaceName:MyRGBSpace];
-	[mainNSColor retain];
 	
 	success = NO;
 	running = YES;
@@ -133,9 +131,7 @@
 {
 	PluginData *pluginData;
 	
-	if (mainNSColor) [mainNSColor autorelease];
 	mainNSColor = [color colorUsingColorSpaceName:MyRGBSpace];
-	[mainNSColor retain];
 	if (running) {
 		refresh = YES;
 		[self preview:self];

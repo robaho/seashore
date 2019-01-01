@@ -1,4 +1,5 @@
 #import "Globals.h"
+#import "SeaController.h"
 
 /*!
 	@class		UtilitiesManager
@@ -9,7 +10,7 @@
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
 
-@interface UtilitiesManager : NSObject {
+@interface UtilitiesManager : NSObject <SeaTerminate> {
 	
 	// The controller object
 	IBOutlet id controller;

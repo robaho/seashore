@@ -207,14 +207,12 @@ static inline void fix_endian_read(int *input, int size)
 	// Open the file
 	file = fopen([path fileSystemRepresentation], "rb");
 	if (file == NULL) {
-		[self autorelease];
 		return NULL;
 	}
 	
 	// Read the header
 	if ([self readHeader:file] == NO) {
 		fclose(file);
-		[self autorelease];
 		return NULL;
 	}
 	
@@ -227,7 +225,6 @@ static inline void fix_endian_read(int *input, int size)
 	// Read properties
 	if ([self readProperties:file sharedInfo:&info] == NO) {
 		fclose(file);
-		[self autorelease];
 		return NULL;
 	}
 	
@@ -252,8 +249,6 @@ static inline void fix_endian_read(int *input, int size)
 			layer = [[XCFLayer alloc] initWithFile:file offset:offset document:doc sharedInfo:&info];
 			if (layer == NULL) {
 				fclose(file);
-				[layers retain];
-				[self autorelease];
 				return NULL;
 			}
 			layers = [layers arrayByAddingObject:layer];
@@ -264,7 +259,6 @@ static inline void fix_endian_read(int *input, int size)
 		
 		i++;
 	} while (offset != 0);
-	[layers retain];
 	
 	// Check for channels
 	fseek(file, layerOffsets + i * sizeof(int), SEEK_SET);
@@ -281,7 +275,6 @@ static inline void fix_endian_read(int *input, int size)
 	if ( xres < kMinResolution || yres < kMinResolution || xres > kMaxResolution || yres > kMaxResolution)
 		xres = yres = 72;
 	if (width < kMinImageSize || height < kMinImageSize || width > kMaxImageSize || height > kMaxImageSize) {
-		[self autorelease];
 		return NULL;
 	}
 	
@@ -301,7 +294,6 @@ static inline void fix_endian_read(int *input, int size)
 	if (exifParasite) {
 		exifContainer = [NSData dataWithBytesNoCopy:exifParasite->data length:exifParasite->size freeWhenDone:NO];
 		exifData = [NSPropertyListSerialization propertyListFromData:exifContainer mutabilityOption:NSPropertyListImmutable format:NULL errorDescription:&errorString];
-		[exifData retain];
 	}
 	[self deleteParasiteWithName:@"exif-plist"];
 	

@@ -1,4 +1,5 @@
 #import "Globals.h"
+#import "SeaContent.h"
 
 /*!
 	@class		SeaDocument
@@ -12,7 +13,7 @@
 @interface SeaDocument : NSDocument {
 
 	// The contents of the document (a subclass of SeaContent)
-	id contents;
+	SeaContent *contents;
 	
 	// The whiteboard that represents this document
 	id whiteboard;

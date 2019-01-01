@@ -12,11 +12,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[super dealloc];
-}
-
 - (BOOL)hasOptions
 {
 	return YES;
@@ -93,8 +88,6 @@
     }
     
     NSBitmapImageRep* imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&destData pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:hasAlpha isPlanar:NO colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
-    
-    [imageRep autorelease];
     
 	// Behave differently if we are targeting a CMYK file
 	if ([[document contents] cmykSave] && spp == 4) {

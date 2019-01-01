@@ -14,18 +14,14 @@
 
 OSStatus GenerateThumbnailForURL(void *thisInterface, QLThumbnailRequestRef thumbnail, CFURLRef url, CFStringRef contentTypeUTI, CFDictionaryRef options, CGSize maxSize)
 {
-    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-
-	XCFContent *contents = [[XCFContent alloc] initWithContentsOfFile: [(NSURL *)url path]];
+	XCFContent *contents = [[XCFContent alloc] initWithContentsOfFile: [(__bridge NSURL *)url path]];
 	SeaWhiteboard *whiteboard = [[SeaWhiteboard alloc] initWithContent:contents];
 	[whiteboard update];
     
     NSImage *image = [whiteboard printableImage];
     NSData* tiff = image.TIFFRepresentation;
 	
-	QLThumbnailRequestSetImageWithData(thumbnail,(CFDataRef)tiff, NULL);
-	
-	[pool release];
+	QLThumbnailRequestSetImageWithData(thumbnail,(__bridge CFDataRef)tiff, NULL);
     return noErr;
 }
 

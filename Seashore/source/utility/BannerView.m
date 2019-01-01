@@ -8,16 +8,10 @@
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        bannerText = [[NSString string] retain];
+        bannerText = [NSString string];
 		bannerImportance = kVeryLowImportance;
     }
     return self;
-}
-
-- (void)dealloc
-{
-	[bannerText release];
-	[super dealloc];
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
@@ -37,7 +31,7 @@
 	
 	[background drawInRect:NSMakeRect(0, 0, [self frame].size.width, [self frame].size.height) fromRect: NSZeroRect operation: NSCompositeSourceOver fraction: 1.0]; 
 	[NSGraphicsContext saveGraphicsState];
-	NSShadow *shadow = [[[NSShadow alloc] init] autorelease];
+    NSShadow *shadow = [[NSShadow alloc] init];
 	[shadow setShadowOffset: NSMakeSize(0, 1)];
 	[shadow setShadowBlurRadius:0];
 	[shadow setShadowColor:[NSColor colorWithCalibratedWhite:0.0 alpha:0.5]];
@@ -63,8 +57,7 @@
 
 - (void)setBannerText:(NSString *)text defaultButtonText:(NSString *)dText alternateButtonText:(NSString *)aText andImportance:(int)importance
 {
-	[bannerText release];
-	bannerText = [text retain];
+    bannerText = text;
 	bannerImportance = importance;
 	
 	if(dText){

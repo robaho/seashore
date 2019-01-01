@@ -1,4 +1,5 @@
 #import "Globals.h"
+#import "EllipseSelectOptions.h"
 #import "AbstractSelectTool.h"
 
 /*!
@@ -21,6 +22,8 @@
 	
 	// Make the selection one-to-one
 	BOOL oneToOne;
+    
+    EllipseSelectOptions *options;
 }
 
 /*!

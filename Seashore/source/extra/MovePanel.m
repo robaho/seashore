@@ -4,6 +4,7 @@
 #import "OptionsUtility.h"
 #import "TextTool.h"
 #import "SeaTools.h"
+#import "SeaDocument.h"
 
 @implementation MovePanel
 

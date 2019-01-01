@@ -194,5 +194,15 @@
 	[[document helpers] selectionChanged];
 }
 
+- (AbstractOptions*)getOptions
+{
+    return options;
+}
+- (void)setOptions:(AbstractOptions*)newoptions
+{
+    options = (CropOptions*)newoptions;
+}
+
+
 
 @end

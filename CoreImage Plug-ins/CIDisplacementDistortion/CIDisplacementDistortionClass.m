@@ -156,18 +156,15 @@
 	int retval;
 
 	pluginData = [seaPlugins data];
-	if (texturePath) { [texturePath autorelease]; texturePath = NULL; }
 	openPanel = [NSOpenPanel openPanel];
 	[openPanel setTreatsFilePackagesAsDirectories:YES];
 	[openPanel setDelegate:self];
 	path = [NSString stringWithFormat:@"%@/textures/", [[NSBundle mainBundle] resourcePath]];
 	if ([pluginData window]) [panel setAlphaValue:0.4];
 	retval = [openPanel runModalForDirectory:path file:NULL types:[NSImage imageFileTypes]];
-	if (texturePath) { [texturePath autorelease]; texturePath = NULL; }
 	[panel setAlphaValue:1.0];
 	if (retval == NSOKButton) {
 		texturePath = [[openPanel filenames] objectAtIndex:0];
-		[texturePath retain];
 		localStr = [gOurBundle localizedStringForKey:@"texture label" value:@"Texture: %@" table:NULL];
 		[textureLabel setStringValue:[NSString stringWithFormat:localStr, [[texturePath lastPathComponent] stringByDeletingPathExtension]]];
 	}

@@ -58,10 +58,7 @@ Boolean GetMetadataForFile(void* thisInterface,
     /* Return the attribute keys and attribute values in the dict */
     /* Return true if successful, false if there was no data provided */
     Boolean success=NO;
-    NSAutoreleasePool *pool;
 	
-    // Don't assume that there is an autorelease pool around the calling of this function.
-    pool = [[NSAutoreleasePool alloc] init];
     // load the document at the specified location
 	XCFContent *contents = [[XCFContent alloc] initWithContentsOfFile: (NSString *)pathToFile];
 	if(contents)
@@ -160,6 +157,5 @@ Boolean GetMetadataForFile(void* thisInterface,
 		// release the loaded document
 		[tempDict release];
     }*/
-    [pool release];
     return success;
 }

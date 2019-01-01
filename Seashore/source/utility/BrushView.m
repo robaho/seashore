@@ -15,11 +15,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[super dealloc];
-}
-
 - (void)mouseDown:(NSEvent *)event
 {
 	NSPoint clickPoint = [self convertPoint:[event locationInWindow] fromView:NULL];
