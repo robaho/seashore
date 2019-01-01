@@ -90,6 +90,8 @@ enum {
 	// The rectangle the update is needed in (useUpdateRect may be NO in which case the entire whiteboard is updated)
 	BOOL useUpdateRect;
 	IntRect updateRect;
+    
+    NSImage *cachedImage;
 }
 
 // CREATION METHODS

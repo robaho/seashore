@@ -48,6 +48,8 @@ extern IntPoint gScreenResolution;
 	replace = malloc(make_128(layerWidth * layerHeight));
 	memset(replace, 0, layerWidth * layerHeight);
 	altData = NULL;
+    
+    cachedImage=NULL;
 	
 	return self;
 }
@@ -285,6 +287,8 @@ extern IntPoint gScreenResolution;
 	if (data) free(data);
 	data = malloc(make_128(width * height * spp));
     
+    cachedImage=NULL;
+    
 	// Adjust the alternate data as necessary
 	[self readjustAltData:NO];
 	
@@ -329,6 +333,8 @@ extern IntPoint gScreenResolution;
 	viewType = kAllChannelsView;
 	if (altData) free(altData);
 	altData = NULL;
+    
+    cachedImage=NULL;
     
 	// Change layer if appropriate
 	if ([[document selection] floating]) {
@@ -690,6 +696,10 @@ extern IntPoint gScreenResolution;
 	int xwidth, xheight;
 	id layer;
     
+    if(cachedImage){
+        return cachedImage;
+    }
+    
 	NSImage *image = [[NSImage alloc] init];
     
 	if (altData) {
@@ -721,6 +731,8 @@ extern IntPoint gScreenResolution;
     
     [image addRepresentation:imageRep];
 
+    cachedImage = image;
+    
 	return image;
 }
 
