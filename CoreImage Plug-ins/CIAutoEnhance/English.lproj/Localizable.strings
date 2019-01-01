@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>author</key>
+	<string>Robert Engels</string>
+	<key>copyright</key>
+	<string>Public Domain 2019</string>
+	<key>description</key>
+	<string>Adjusts the selection using Core Image auto enhancement filter set.</string>
+	<key>groupName</key>
+	<string>Enhance</string>
+	<key>license</key>
+	<string>Public Domain</string>
+	<key>name</key>
+	<string>Auto Enhance</string>
+</dict>
+</plist>
