@@ -2189,7 +2189,7 @@
 		2B1F6EF721DBC51700D6F371 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2B1F6EFB21DBC52000D6F371 /* Median+.bundle */,
+				2B1F6EFB21DBC52000D6F371 /* AutoEnhance+.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3995,10 +3995,10 @@
 			remoteRef = 2B1F69F921D75F0200D6F371 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		2B1F6EFB21DBC52000D6F371 /* Median+.bundle */ = {
+		2B1F6EFB21DBC52000D6F371 /* AutoEnhance+.bundle */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = "Median+.bundle";
+			path = "AutoEnhance+.bundle";
 			remoteRef = 2B1F6EFA21DBC52000D6F371 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
