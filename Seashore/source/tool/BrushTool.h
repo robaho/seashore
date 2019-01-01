@@ -59,9 +59,6 @@ typedef struct {
 	// Have we finished drawing?
 	BOOL drawingDone;
 	
-	// Is drawing multithreaded?
-	BOOL multithreaded;
-	
 	// Has the first touch been done?
 	BOOL firstTouchDone;
 	

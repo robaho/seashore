@@ -224,18 +224,11 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	if ([gUserDefaults objectForKey:@"resolutionHandling"])
 		resolutionHandling = [gUserDefaults integerForKey:@"resolutionHandling"];
 
-	//  Get the multithreaded
 	if ([gUserDefaults objectForKey:@"transparentBackground"])
 		transparentBackground = [gUserDefaults boolForKey:@"transparentBackground"];
 	else
 		transparentBackground = NO;
 
-	//  Get the multithreaded
-	if ([gUserDefaults objectForKey:@"multithreaded"])
-		multithreaded = [gUserDefaults boolForKey:@"multithreaded"];
-	else
-		multithreaded = YES;
-		
 	//  Get the ignoreFirstTouch
 	if ([gUserDefaults objectForKey:@"ignoreFirstTouch"])
 		ignoreFirstTouch = [gUserDefaults boolForKey:@"ignoreFirstTouch"];
@@ -337,7 +330,6 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	[gUserDefaults setObject:(effectsPanel ? @"YES" : @"NO") forKey:@"effectsPanel"];
 	[gUserDefaults setObject:(smartInterpolation ? @"YES" : @"NO") forKey:@"smartInterpolation"];
 	[gUserDefaults setObject:(openUntitled ? @"YES" : @"NO") forKey:@"openUntitled"];
-	[gUserDefaults setObject:(multithreaded ? @"YES" : @"NO") forKey:@"multithreaded"];
 	[gUserDefaults setObject:(ignoreFirstTouch ? @"YES" : @"NO") forKey:@"ignoreFirstTouch"];
 	[gUserDefaults setObject:(mouseCoalescing ? @"YES" : @"NO") forKey:@"newMouseCoalescing"];
 	[gUserDefaults setObject:(checkForUpdates ? @"YES" : @"NO") forKey:@"checkForUpdates"];
@@ -417,7 +409,6 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	[effectsPanelCheckbox setState:effectsPanel];
 	[smartInterpolationCheckbox setState:smartInterpolation];
 	[openUntitledCheckbox setState:openUntitled];
-	[multithreadedCheckbox setState:multithreaded];
 	[ignoreFirstTouchCheckbox setState:ignoreFirstTouch];
 	[coalescingCheckbox setState:mouseCoalescing];
 	[checkForUpdatesCheckbox setState:checkForUpdates];
@@ -426,10 +417,6 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_3) {
 		[useCoreImageCheckbox setState:NO];
 		[useCoreImageCheckbox setEnabled:NO];
-	}
-	if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_2) {
-		[multithreadedCheckbox setState:NO];
-		[multithreadedCheckbox setEnabled:NO];
 	}
 	[selectionColorMenu selectItemAtIndex:[selectionColorMenu indexOfItemWithTag:selectionColor + 280]];
 	[guideColorMenu selectItemAtIndex:[guideColorMenu indexOfItemWithTag:guideColor + 290]];
@@ -531,12 +518,6 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 -(IBAction)setOpenUntitled:(id)sender
 {
 	openUntitled = [openUntitledCheckbox state];
-	[self apply: self];
-}
-
--(IBAction)setMultithreaded:(id)sender
-{
-	multithreaded = [multithreadedCheckbox state];
 	[self apply: self];
 }
 
@@ -840,18 +821,6 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	
 	// Set the selection colour correctly
 	[selectionColorMenu selectItemAtIndex:[selectionColorMenu indexOfItemWithTag:selectionColor + 280]];
-}
-
-- (BOOL)multithreaded
-{
-/*
-	BOOL good_os;
-	
-	good_os = !(floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_2);
-
-	return multithreaded && good_os;
-*/
-	return NO;
 }
 
 - (BOOL)ignoreFirstTouch

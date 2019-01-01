@@ -106,9 +106,6 @@ enum {
 	// A checkbox which when checked indicates the first pressure sensitive touch should be ignored
 	IBOutlet id ignoreFirstTouchCheckbox;
 	
-	// A checkbox which when checked indicates drawing should be multithreaded
-	IBOutlet id multithreadedCheckbox;
-	
 	// A checkbox which when checked indicates mouse coalescing should always be on
 	IBOutlet id coalescingCheckbox;
 	
@@ -198,9 +195,6 @@ enum {
 	
 	// The time of the last check
 	NSTimeInterval lastCheck;
-	
-	// Whether drawing should be multithreaded
-	BOOL multithreaded;
 	
 	// Whether the first pressure-sensitive touch should be ignored
 	BOOL ignoreFirstTouch;
@@ -357,14 +351,6 @@ enum {
 				Ignored.
 */
 -(IBAction)setOpenUntitled:(id)sender;
-
-/*!
-	@method		setMultithreaded:
-	@discussion	Sets if multithreaded.
-	@param		sender
-				Ignored.
-*/
--(IBAction)setMultithreaded:(id)sender;
 
 /*!
 	@method		setIgnoreFirstTouch:
@@ -624,13 +610,6 @@ enum {
 				tag should equal the desired guide colour plus 290.
  */
 - (IBAction)guideColorChanged:(id)sender;
-
-/*!
-	@method		multithreaded
-	@discussion	Returns whether drawing should be multithreaded.
-	@result		Returns YES if drawing should be multithreaded, NO otherwise.
-*/
-- (BOOL)multithreaded;
 
 /*!
 	@method		ignoreFirstTouch

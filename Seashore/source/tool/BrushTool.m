@@ -115,7 +115,6 @@
     // Determine whether operation should continue
     lastWhere.x = where.x;
     lastWhere.y = where.y;
-    multithreaded = [[SeaController seaPrefs] multithreaded];
     ignoreFirstTouch = [[SeaController seaPrefs] ignoreFirstTouch];
     if (ignoreFirstTouch && ([event type] == NSLeftMouseDown || [event type] == NSRightMouseDown) && [options pressureSensitive] && (modifier != kShiftModifier && modifier != kShiftControlModifier)) { 
         firstTouchDone = NO;
@@ -193,11 +192,6 @@
     pos = drawingPos = 0;
     lastPressure = -1;
     
-    // Detach the thread
-    if (multithreaded) {
-        drawingDone = NO;
-        [NSThread detachNewThreadSelector:@selector(drawThread:) toTarget:self withObject:NULL];
-    }
 }
 
 - (void)drawThread:(id)object
@@ -256,10 +250,7 @@ next:
             deltaX = curPoint.x - lastPoint.x;
             deltaY = curPoint.y - lastPoint.y;
             if (deltaX == 0.0 && deltaY == 0.0) {
-                if (multithreaded)
-                    goto next;
-                else
-                    return;
+                return;
             }
             
             // Determine the number of brush strokes in the x and y directions
@@ -296,10 +287,7 @@ next:
             
                 // We can't draw any points - this does actually get called albeit once in a blue moon
                 lastPoint = curPoint;
-                if (multithreaded)
-                    goto next;
-                else
-                    return;
+                return;
                 
             }
             else {
@@ -386,23 +374,10 @@ next:
             lastPoint.y = lastPoint.y + deltaY; 
         
         }
-        else {
-            if (multithreaded) [NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.01]];
-        }
         
-        // Update periodically
-        if (multithreaded) {
-            if (bigRect.size.width != 0 && [[NSDate date] timeIntervalSinceDate:lastDate] > 0.02) {
-                [[document helpers] overlayChanged:bigRect inThread:YES];
-                lastDate = [NSDate date];
-                bigRect = IntMakeRect(0, 0, 0, 0);
-            }
-        }
-        else {
-            [[document helpers] overlayChanged:bigRect inThread:YES];
-        }
+        [[document helpers] overlayChanged:bigRect inThread:YES];
         
-    } while (multithreaded);
+    } while (false /* multithreaded */);
 }
 
 - (void)mouseDraggedTo:(IntPoint)where withEvent:(NSEvent *)event
@@ -432,10 +407,7 @@ next:
         pos++;
     }
     
-    // Draw if drawing is not multithreaded
-    if (!multithreaded) {
-        [self drawThread:NULL];
-    }
+    [self drawThread:NULL];
 }
 
 - (void)endLineDrawing
@@ -446,15 +418,7 @@ next:
         pos++;
     }
 
-    // If multithreaded, wait until the other thread finishes
-    if (multithreaded) {
-        while (!drawingDone) {
-            [NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
-        }
-    }
-    else {
-        [self drawThread:NULL];
-    }
+    [self drawThread:NULL];
 }
 
 - (void)mouseUpAt:(IntPoint)where withEvent:(NSEvent *)event
