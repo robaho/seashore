@@ -423,7 +423,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     return [layers count];
 }
 
-- (id)activeLayer
+- (SeaLayer*)activeLayer
 {
     return (activeLayerIndex < 0) ? NULL : [layers objectAtIndex:activeLayerIndex];
 }

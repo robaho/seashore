@@ -50,7 +50,7 @@ extern id gNewFont;
 
 - (IntRect)drawOverlay
 {
-	int i, j, k, width, height, spp = [[document contents] spp], ispp, ispp2 = 0;
+	int i, j, k, width, height, spp = [[document contents] spp];
 	NSFont *font;
 	IntSize fontSize;
 	NSDictionary *attributes;
@@ -59,9 +59,9 @@ extern id gNewFont;
 	NSColor *color;
 	NSString *text;
 	IntPoint pos, off;
-	id layer, activeTexture = [[[SeaController utilitiesManager] textureUtilityFor:document] activeTexture];
-	NSBitmapImageRep *initRep, *initRep2 = NULL, *imageRep, *imageRep2 = NULL;
-	NSImage *image, *image2 = NULL;
+    SeaLayer *layer;
+    id activeTexture = [[[SeaController utilitiesManager] textureUtilityFor:document] activeTexture];
+    NSBitmapImageRep *initRep, *initRep2 = NULL;
 	NSMutableParagraphStyle *paraStyle;
 	int slantWidth;
 	int outline = [options outline];
@@ -85,16 +85,16 @@ extern id gNewFont;
 		attributes = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, color, NSForegroundColorAttributeName, paraStyle, NSParagraphStyleAttributeName, NULL];
 	text = [[textbox textStorage] string];
 	fontSize = NSSizeMakeIntSize([text sizeWithAttributes:attributes]);
-	fontSize.width += [[NSString stringWithString:@"x"] sizeWithAttributes:attributes].width;
+	fontSize.width += [@"x" sizeWithAttributes:attributes].width;
 	slantWidth = ceil(MAX(sin([font italicAngle]) * [font pointSize], 0.0));
 	if (outline) slantWidth += (outline + 1) / 2;
 	fontSize.width += slantWidth * 2;
 	overlay = [[document whiteboard] overlay];
 	replace = [[document whiteboard] replace];
 	layer = [[document contents] activeLayer];
-	data = [(SeaLayer *)layer data];
-	width = [(SeaLayer *)layer width];
-	height = [(SeaLayer *)layer height];
+	data = [layer data];
+	width = [layer width];
+	height = [layer height];
 	
 	// Determine the position
 	switch([options alignment]){
@@ -109,13 +109,15 @@ extern id gNewFont;
 			break;
 	}
 	pos.y = where.y - [font ascender];
-	off.x = [(SeaLayer *)layer xoff];
-	off.y = [(SeaLayer *)layer yoff];
+	off.x = [layer xoff];
+	off.y = [layer yoff];
+    
+    initData2 = NULL;
 	
 	// Create the initial data
 	if ([options allowFringe]) {
 		initData = [[document contents] bitmapUnderneath:IntMakeRect(off.x + pos.x, off.y + pos.y, fontSize.width, fontSize.height)];
-		initData2 = calloc(fontSize.width * fontSize.height * spp, sizeof(unsigned char));
+        initData2 = calloc(fontSize.width * fontSize.height * spp,sizeof(unsigned char));
 	}
 	else {
 		initData = malloc(fontSize.width * fontSize.height * spp);
@@ -132,47 +134,41 @@ extern id gNewFont;
 			}
 		}
 	}
-	
+    
 	// Draw the text
-	if (![options allowFringe]) premultiplyBitmap(spp, initData, initData, fontSize.height * fontSize.width);
-	initRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&initData pixelsWide:fontSize.width pixelsHigh:fontSize.height bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO colorSpaceName:(spp == 4) ? NSDeviceRGBColorSpace : NSDeviceWhiteColorSpace bytesPerRow:fontSize.width * spp bitsPerPixel:8 * spp];
-	image = [[NSImage alloc] initWithSize:IntSizeMakeNSSize(fontSize)];
-	[image addRepresentation:initRep];
-	[image lockFocus];
-	[text drawInRect:NSMakeRect(slantWidth, 0.0, fontSize.width - slantWidth, fontSize.height) withAttributes:attributes];
-	imageRep = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect(0.0, 0.0, [(NSImage *)image size].width, [(NSImage *)image size].height)];
-	[image unlockFocus];
-	ispp = [imageRep samplesPerPixel];
-	bitmapData = [imageRep bitmapData];
-	if (ispp == 4) unpremultiplyBitmap(ispp, bitmapData, bitmapData, fontSize.height * fontSize.width);
-	if ([options allowFringe]) unpremultiplyBitmap(spp, initData, initData, fontSize.height * fontSize.width);
-	
+	initRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&initData pixelsWide:fontSize.width pixelsHigh:fontSize.height bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace bytesPerRow:fontSize.width * spp bitsPerPixel:8 * spp];
+    
+    [NSGraphicsContext saveGraphicsState];
+    NSGraphicsContext *ctx = [NSGraphicsContext graphicsContextWithBitmapImageRep:initRep];
+    ctx.shouldAntialias=TRUE;
+    [NSGraphicsContext setCurrentContext:ctx];
+
+    [text drawInRect:NSMakeRect(slantWidth, 0.0, fontSize.width - slantWidth, fontSize.height) withAttributes:attributes];
+    
 	// Calculate fringe mask
 	if ([options allowFringe]) {
-		initRep2 = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&initData2 pixelsWide:fontSize.width pixelsHigh:fontSize.height bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO colorSpaceName:(spp == 4) ? NSDeviceRGBColorSpace : NSDeviceWhiteColorSpace bytesPerRow:fontSize.width * spp bitsPerPixel:8 * spp];
-		image2 = [[NSImage alloc] initWithSize:IntSizeMakeNSSize(fontSize)];
-		[image2 addRepresentation:initRep2];
-		[image2 lockFocus];
+		initRep2 = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&initData2 pixelsWide:fontSize.width pixelsHigh:fontSize.height bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace bytesPerRow:fontSize.width * spp bitsPerPixel:8 * spp];
+        NSGraphicsContext *ctx = [NSGraphicsContext graphicsContextWithBitmapImageRep:initRep2];
+        ctx.shouldAntialias=TRUE;
+        [NSGraphicsContext setCurrentContext:ctx];
 		[text drawInRect:NSMakeRect(slantWidth, 0.0, fontSize.width - slantWidth, fontSize.height) withAttributes:attributes];
-		imageRep2 = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect(0.0, 0.0, [(NSImage *)image2 size].width, [(NSImage *)image2 size].height)];
-		[image2 unlockFocus];
-		ispp2 = [imageRep2 samplesPerPixel];
-		bitmapData2 = [imageRep2 bitmapData];
-		if (ispp2 == 4) unpremultiplyBitmap(ispp2, bitmapData2, bitmapData2, fontSize.height * fontSize.width);
 	}
-	
+    
+    [NSGraphicsContext restoreGraphicsState];
+    
+    bitmapData = initData;
+    bitmapData2 = initData2;
+
 	// Go through all pixels and change them
 	basePixel[spp - 1] = 0xFF;
 	for (j = 0; j < fontSize.height; j++) {
 		for (i = 0; i < fontSize.width; i++) {
 			if (pos.x + i >= 0 && pos.y + j >= 0 && pos.x + i < width && pos.y + j < height) {
-				for (k = 0; k < ispp; k++)
-					basePixel[k] = bitmapData[(j * fontSize.width + i) * ispp + k];
 				for (k = 0; k < spp; k++)
-					overlay[((pos.y + j) * width + pos.x + i) * spp + k] = basePixel[k];
+					overlay[((pos.y + j) * width + pos.x + i) * spp + k] = bitmapData[(j * fontSize.width + i) * spp + k];
 				
-				if ([options allowFringe] && (ispp2 == 2 || ispp2 == 4)) {
-					if (bitmapData2[(j * fontSize.width + i + 1) * ispp2 - 1] == 0)
+				if ([options allowFringe]) {
+					if (bitmapData2[(j * fontSize.width + i + 1) * spp - 1] == 0)
 						replace[(pos.y + j) * width + pos.x + i] = 0;
 					else
 						replace[(pos.y + j) * width + pos.x + i] = 255;
@@ -180,12 +176,13 @@ extern id gNewFont;
 				else {
 					replace[(pos.y + j) * width + pos.x + i] = 255;
 				}
-			
 			}
 		}
 	}
-	
 	free(initData);
+    if(initData2){
+        free(initData2);
+    }
 	
 	return IntMakeRect(pos.x, pos.y, fontSize.width, fontSize.height);
 }
