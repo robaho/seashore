@@ -11,7 +11,7 @@
 
 @implementation SeaPlugins
 
-int plugin_sort(id obj1, id obj2, void *context)
+NSInteger plugin_sort(PluginClass *obj1,PluginClass *obj2, void *context)
 {
     int result;
     
