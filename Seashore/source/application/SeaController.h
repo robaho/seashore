@@ -54,12 +54,6 @@
 - (id)init;
 
 /*!
-	@method		dealloc
-	@discussion	Frees memory occupied by an instance of this class.
-*/
-- (void)dealloc;
-
-/*!
 	@method		applicationDidFinishLaunching:
 	@discussion	Called when the application finishes launching.
 	@param		notification
