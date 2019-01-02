@@ -142,6 +142,8 @@ extern id gNewFont;
     NSGraphicsContext *ctx = [NSGraphicsContext graphicsContextWithBitmapImageRep:initRep];
     ctx.shouldAntialias=TRUE;
     [NSGraphicsContext setCurrentContext:ctx];
+    
+    unpremultiplyBitmap(spp,initData,initData,fontSize.width*fontSize.height);
 
     [text drawInRect:NSMakeRect(slantWidth, 0.0, fontSize.width - slantWidth, fontSize.height) withAttributes:attributes];
     

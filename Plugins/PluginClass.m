@@ -89,6 +89,8 @@ void convertImageRep(NSImageRep *imageRep,unsigned char *dest,int width,int heig
     [NSGraphicsContext setCurrentContext:ctx];
     [imageRep drawInRect:rect fromRect:rect operation:NSCompositingOperationCopy fraction:1.0 respectFlipped:NO hints:NULL];
     [NSGraphicsContext restoreGraphicsState];
+    
+    unpremultiplyBitmap(spp,dest,dest,width*height);
 }
 
 CIImage *createCIImage(PluginData *pluginData){
