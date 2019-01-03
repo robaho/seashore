@@ -693,7 +693,7 @@ extern IntPoint gScreenResolution;
 		if (viewType == kPrimaryChannelsView) {
 			xwidth = [layer width];
 			xheight = [layer height];
-			imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&altData pixelsWide:xwidth pixelsHigh:xheight bitsPerSample:8 samplesPerPixel:spp - 1 hasAlpha:NO isPlanar:NO colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace bytesPerRow:xwidth * (spp - 1) bitsPerPixel:8 * (spp - 1)];
+            imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&altData pixelsWide:xwidth pixelsHigh:xheight bitsPerSample:8 samplesPerPixel:spp - 1 hasAlpha:NO isPlanar:NO colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace bitmapFormat:NSBitmapFormatAlphaNonpremultiplied bytesPerRow:xwidth * (spp - 1) bitsPerPixel:8 * (spp - 1)];
 		}
 		else if (viewType == kAlphaChannelView) {
 			xwidth = [layer width];
@@ -719,7 +719,7 @@ extern IntPoint gScreenResolution;
 	NSBitmapImageRep *imageRep;
 	
 	NSImage *image = [[NSImage alloc] init];
-	imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO colorSpaceName:(spp == 4) ? NSDeviceRGBColorSpace : NSDeviceWhiteColorSpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
+    imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace bitmapFormat:NSBitmapFormatAlphaNonpremultiplied                                                     bytesPerRow:width * spp bitsPerPixel:8 * spp];
 	[image addRepresentation:imageRep];
 	
 	return image;

@@ -223,7 +223,6 @@
 	NSBitmapImageRep *imageRep;
 	NSData *imageData;
 	NSDictionary *exifData;
-    NSColorSpace *cs;
     bool hasAlpha=true;
 	
 	// Get the data to write
@@ -233,32 +232,22 @@
 	spp = [(SeaContent *)[document contents] spp];
 	xres = [[document contents] xres];
 	yres = [[document contents] yres];
-    cs = [(SeaContent *)[document contents] cs];
-
+    
     destData = stripAlpha(srcData,width,height,spp);
     if (destData!=srcData) {
         spp--;
         hasAlpha=false;
     }
-	
-	// Make an image representation from the data
-	imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&destData pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:hasAlpha isPlanar:NO
-                                                   colorSpaceName:(spp > 2) ? MyRGBSpace : MyGraySpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
+
+    NSBitmapFormat bmf = 0;
     
-    if (targetWeb) {
-        if(spp>2) {
-            cs = NSColorSpace.deviceRGBColorSpace;
-        } else {
-            cs = NSColorSpace.deviceGrayColorSpace;
-        }
-        imageRep = [imageRep bitmapImageRepByConvertingToColorSpace:cs renderingIntent:NSColorRenderingIntentDefault];
-    } else {
-        // convert to original color space
-//        if (cs) {
-//            imageRep = [imageRep bitmapImageRepByConvertingToColorSpace:cs renderingIntent:NSColorRenderingIntentDefault];
-//        }
+    if(hasAlpha){
+        bmf = NSBitmapFormatAlphaNonpremultiplied;
     }
-	
+    
+    // Make an image representation from the data
+    imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&destData pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:hasAlpha isPlanar:NO colorSpaceName:(spp > 2) ? MyRGBSpace : MyGraySpace bitmapFormat:bmf bytesPerRow:width * spp bitsPerPixel:8 * spp];
+
 	// Add EXIF data
 	exifData = [[document contents] exifData];
 	if (exifData) [imageRep setProperty:@"NSImageEXIFData" withValue:exifData];

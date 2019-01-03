@@ -61,12 +61,6 @@
 - (id)init;
 
 /*!
-	@method		dealloc
-	@discussion	Frees memory occupied by an instance of this class.
-*/
-- (void)dealloc;
-
-/*!
 	@method		compressionChanged:
 	@discussion	Called when the user adjusts the compression slider.
 	@param		sender

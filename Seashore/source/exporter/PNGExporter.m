@@ -47,17 +47,23 @@
         spp--;
         hasAlpha=false;
     }
+    
+    NSBitmapFormat bmf = 0;
+    
+    if(hasAlpha){
+        bmf = NSBitmapFormatAlphaNonpremultiplied;
+    }
 	
 	// Make an image representation from the data
-	imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&destData pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:hasAlpha isPlanar:NO colorSpaceName:(spp > 2) ? MyRGBSpace : MyGraySpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
+    imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&destData pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:hasAlpha isPlanar:NO colorSpaceName:(spp > 2) ? MyRGBSpace : MyGraySpace bitmapFormat:bmf bytesPerRow:width * spp bitsPerPixel:8 * spp];
     
     NSSize newSize;
     newSize.width = [imageRep pixelsWide] * 72.0 / xres;  // x-resolution
     newSize.height = [imageRep pixelsHigh] * 72.0 / yres;  // y-resolution
     
     [imageRep setSize:newSize];
-
-	imageData = [imageRep representationUsingType:NSPNGFileType properties:NULL];
+    
+	imageData = [imageRep representationUsingType:NSPNGFileType properties:[NSDictionary alloc]];
 		
 	// Save our file and let's go
 	[imageData writeToFile:path atomically:NO];
