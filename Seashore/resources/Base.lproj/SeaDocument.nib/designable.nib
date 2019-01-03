@@ -2193,7 +2193,7 @@ DQ
                                 </buttonCell>
                             </column>
                             <column>
-                                <buttonCell type="radio" title="Print (with CM)" imagePosition="leading" alignment="left" controlSize="small" enabled="NO" toolTip="Create an image with an ICC Profile" inset="2" id="810">
+                                <buttonCell type="radio" title="Print (with CM)" imagePosition="leading" alignment="left" controlSize="small" toolTip="Create an image with an ICC Profile" inset="2" id="810">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="smallSystem"/>
                                 </buttonCell>
