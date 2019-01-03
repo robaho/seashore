@@ -220,7 +220,7 @@ DQ
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <clipView key="contentView" id="sE3-sQ-GEf">
                                             <rect key="frame" x="0.0" y="0.0" width="198" height="294"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="39" indentationPerLevel="16" autoresizesOutlineColumn="YES" outlineTableColumn="9834" id="7811" customClass="SeaOutlineView">
                                                     <rect key="frame" x="0.0" y="0.0" width="198" height="294"/>
@@ -2004,7 +2004,7 @@ DQ
                     </textField>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="3" y="106.5"/>
+            <point key="canvasLocation" x="21" y="-55"/>
         </window>
         <window title="Rotate" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="744" userLabel="Rotate" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES"/>
@@ -2624,7 +2624,7 @@ Gw
                     </textFieldCell>
                 </textField>
             </subviews>
-            <point key="canvasLocation" x="-3" y="186"/>
+            <point key="canvasLocation" x="231" y="404"/>
         </customView>
         <customView id="1886" userLabel="Ellipse Select Options">
             <rect key="frame" x="0.0" y="0.0" width="896" height="26"/>
@@ -4855,6 +4855,7 @@ DQ
                     </button>
                 </subviews>
             </view>
+            <point key="canvasLocation" x="421" y="44"/>
         </window>
         <customObject id="7818" userLabel="Layer Data Source" customClass="LayerDataSource">
             <connections>
@@ -4876,7 +4877,7 @@ DQ
                         <autoresizingMask key="autoresizingMask"/>
                         <clipView key="contentView" id="lgO-ZC-m12">
                             <rect key="frame" x="1" y="1" width="199" height="160"/>
-                            <autoresizingMask key="autoresizingMask"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="14" id="11980">
                                     <rect key="frame" x="0.0" y="0.0" width="199" height="160"/>
@@ -4899,6 +4900,7 @@ DQ
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
+                                        <action trigger="doubleAction" selector="closeEffects:" target="1879" id="DPj-Ty-gRn"/>
                                         <outlet property="dataSource" destination="1879" id="11983"/>
                                         <outlet property="delegate" destination="1879" id="11984"/>
                                     </connections>
@@ -4930,6 +4932,7 @@ DQ
                     </button>
                 </subviews>
             </view>
+            <point key="canvasLocation" x="-374" y="603"/>
         </window>
         <customObject id="14766" userLabel="Status Utility" customClass="StatusUtility">
             <connections>

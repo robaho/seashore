@@ -38,12 +38,6 @@
 - (id)initWithMaster:(id)sender;
 
 /*!
-	@method		dealloc
-	@discussion	Frees memory occupied by an instance of this class.
-*/
-- (void)dealloc;
-
-/*!
 	@method		mouseDown:
 	@discussion	Handles mouse down events inside the view.
 	@param		theEvent

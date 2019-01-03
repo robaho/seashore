@@ -48,7 +48,7 @@
 	return [effectTable selectedRow];
 }
 
-- (IBAction)updateClickCount:(id)sender
+- (void)updateClickCount:(id)sender
 {
 	[clickCountLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"click count", @"Clicks remaining: %d"), [[[[SeaController seaPlugins] pointPlugins] objectAtIndex:[effectTable selectedRow]] points] - [[[gCurrentDocument tools] getTool:kEffectTool] clickCount]]];
 }

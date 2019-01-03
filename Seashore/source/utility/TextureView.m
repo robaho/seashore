@@ -35,6 +35,10 @@
 		[master setActiveTextureIndex:elemNo];
 		[self setNeedsDisplay:YES];
 	}
+    
+    if(event.clickCount>1){
+        [master closePanel:self];
+    }
 }
 
 - (void)drawRect:(NSRect)rect
