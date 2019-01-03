@@ -256,7 +256,7 @@ enum {
 	return tools;
 }
 
-- (id)helpers
+- (SeaHelpers*)helpers
 {
 	return helpers;
 }

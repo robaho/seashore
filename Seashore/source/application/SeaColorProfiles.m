@@ -8,6 +8,7 @@
 #import <Foundation/Foundation.h>
 #import "SeaColorProfiles.h"
 #import "SeaDocument.h"
+#import "SeaHelpers.h"
 
 @implementation SeaColorProfile
 @end
@@ -79,16 +80,14 @@ static bool profileIterate (CFDictionaryRef profileInfo, void *refCon)
 
 - (BOOL)validateMenuItem:(SeaColorMenuItem*)menuItem
 {
-    id document = gCurrentDocument;
+    SeaDocument *document = gCurrentDocument;
     
     // Never when there is no document
     if (document == NULL)
         return NO;
     
-    // End the line drawing
-//    [[document helpers] endLineDrawing];
+    [[document helpers] endLineDrawing];
     
-    // Never when the document is locked
     if ([document locked])
         return NO;
     
