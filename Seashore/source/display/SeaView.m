@@ -53,6 +53,9 @@ static NSString*    SelectAllToolbarItemIdentifier = @"Select All Toolbar Item I
 static NSString*    SelectInverseToolbarItemIdentifier = @"Select Inverse Toolbar Item Identifier";
 static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar Item Identifier";
 
+static CGFloat black[4] = {0,.5,2,3.5};
+static CGFloat white[4] = {0,3.5,2,.5};
+
 @implementation SeaView
 
 - (id)initWithDocument:(id)doc 
@@ -423,7 +426,7 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
     NSImage *maskImage;
     int radius = 0;
     float revCurveRadius, f;
-
+    
     selectRect = [[document selection] globalRect];
     useSelection = [[document selection] active];
     xoff = [[[document contents] activeLayer] xoff];
@@ -510,16 +513,15 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
         tempRect.origin.x += xoff; tempRect.origin.y += yoff;
         tempRect.origin.x *= xScale; tempRect.origin.y *= yScale; tempRect.size.width *= xScale; tempRect.size.height *= yScale; 
         tempPath = [NSBezierPath bezierPathWithOvalInRect:tempRect];
-        float black[4] = {0,.5,2,3.5};
         [[NSColor blackColor] set];
         [tempPath setLineDash: black count: 4 phase: 0.0];
         [tempPath stroke];
-        float white[4] = {0,3.5,2,.5};
         [[NSColor whiteColor] set];
         [tempPath setLineDash: white count: 4 phase: 0.0];
         [tempPath stroke];
     }
     else if (curToolIndex == kRectSelectTool && intermediate) {
+        
         // The rectangle tool is being dragged, so draw its marching ants
         tempSelectRect = [(RectSelectTool *)curTool selectionRect];
         tempRect = IntRectMakeNSRect(tempSelectRect);
@@ -554,12 +556,9 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
             tempPath = [NSBezierPath bezierPathWithRect:tempRect];        
         }
         
-        // The marching ants themselves
-        float black[4] = {0,.5,2,3.5};
         [[NSColor blackColor] set];
         [tempPath setLineDash: black count: 4 phase: 0.0];
         [tempPath stroke];
-        float white[4] = {0,3.5,2,.5};
         [[NSColor whiteColor] set];
         [tempPath setLineDash: white count: 4 phase: 0.0];
         [tempPath stroke];
@@ -588,11 +587,9 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
             [tempPath lineToPoint:NSMakePoint((thisPoint.x + xoff) * xScale , (thisPoint.y + yoff) * yScale )];
         }
         
-        float black[4] = {0,.5,2,3.5};
         [[NSColor blackColor] set];
         [tempPath setLineDash: black count: 4 phase: 0.0];
         [tempPath stroke];
-        float white[4] = {0,3.5,2,.5};
         [[NSColor whiteColor] set];
         [tempPath setLineDash: white count: 4 phase: 0.0];
         [tempPath stroke];

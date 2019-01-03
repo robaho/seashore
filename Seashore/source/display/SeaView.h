@@ -130,12 +130,6 @@ enum {
 - (id)initWithDocument:(id)doc;
 
 /*!
-	@method		dealloc
-	@discussion	Frees memory occupied by an instance of this class.
-*/
-- (void)dealloc;
-
-/*!
 	@method		changeSpecialFont:
 	@discussion	Responds to a font change by fowarding the message to the
 				text tool.
