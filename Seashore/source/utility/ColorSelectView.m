@@ -115,9 +115,10 @@
 		[[NSBezierPath bezierPathWithRect:NSMakeRect(2, 2, 26, 16)] fill];
 	}
 	
-	
+    NSImage *image = [NSImage imageNamed:@"swap"];
+    [image setFlipped:YES];
 	// Draw the images
-    [[NSImage imageNamed:@"swap"] drawAtPoint:NSMakePoint(18,27) fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:1.0];
+    [image drawAtPoint:NSMakePoint(18,21) fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:1.0];
 }
 
 - (IBAction)activateForegroundColor:(id)sender
