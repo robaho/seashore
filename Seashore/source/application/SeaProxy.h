@@ -24,7 +24,7 @@
 - (IBAction)zoomOut:(id)sender;
 
 // To methods in SeaWhiteboard...
-- (IBAction)toggleCMYKPreview:(id)sender;
+- (IBAction)toggleSoftProof:(id)sender;
 #ifdef PERFORMANCE
 - (IBAction)resetPerformance:(id)sender;
 #endif

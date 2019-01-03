@@ -9,6 +9,7 @@
 #import "SeaSelection.h"
 #import "Bitmap.h"
 #import "ToolboxUtility.h"
+#import "StatusUtility.h"
 #import "SeaController.h"
 #import "UtilitiesManager.h"
 
@@ -39,7 +40,7 @@ extern IntPoint gScreenResolution;
 	
 	// Set the view type to show all channels
 	viewType = kAllChannelsView;
-	CMYKPreview = NO;
+    proofProfile = NULL;
 	
 	// Allocate the whiteboard data
 	data = malloc(make_128(width * height * spp));
@@ -278,7 +279,6 @@ extern IntPoint gScreenResolution;
 	if (spp != [[document contents] spp]) {
 		spp = [[document contents] spp];
 		viewType = kAllChannelsView;
-		CMYKPreview = NO;
 	}
 	
 	// Revise the data
@@ -357,26 +357,17 @@ extern IntPoint gScreenResolution;
 		[self update];
 }
 
-- (BOOL)CMYKPreview
+- (SeaColorProfile*)proofProfile
 {
-	return CMYKPreview;
+	return proofProfile;
 }
 
-- (BOOL)canToggleCMYKPreview
+- (void)toggleSoftProof:(SeaColorProfile*)profile
 {
-	return spp == 4;
-}
-
-- (void)toggleCMYKPreview
-{
-	// Do nothing if we can't do anything
-	if (![self canToggleCMYKPreview])
-		return;
-		
-	// Otherwise make the change
-	CMYKPreview = !CMYKPreview;
+    proofProfile = profile;
 	[self readjustAltData:YES];
 	[(ToolboxUtility *)[[SeaController utilitiesManager] toolboxUtilityFor:document] update:NO];
+    [(StatusUtility *)[[SeaController utilitiesManager] statusUtilityFor:document] update];
 }
 
 - (void)forcedChannelUpdate
@@ -714,9 +705,8 @@ extern IntPoint gScreenResolution;
         imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace bitmapFormat:NSBitmapFormatAlphaNonpremultiplied bytesPerRow:width * spp bitsPerPixel:8 * spp];
 	}
     
-    if (CMYKPreview) {
-        NSColorSpace* cs = [NSColorSpace genericCMYKColorSpace];
-        imageRep = [imageRep bitmapImageRepByConvertingToColorSpace:cs renderingIntent:NSColorRenderingIntentDefault];
+    if (proofProfile && viewType!=kAlphaChannelView && proofProfile.cs!=NULL) {
+        imageRep = [imageRep bitmapImageRepByConvertingToColorSpace:proofProfile.cs renderingIntent:NSColorRenderingIntentDefault];
     }
     
     [image addRepresentation:imageRep];

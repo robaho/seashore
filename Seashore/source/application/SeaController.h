@@ -19,7 +19,6 @@
 */
 
 @interface SeaController : NSObject {
-	
 	// An outlet to the utilities manager of the application
 	IBOutlet id utilitiesManager;
 	
@@ -41,7 +40,9 @@
 	// The window containing the GNU General Public License
 	IBOutlet id licenseWindow;
 	
-	// An array of objects wishing to recieve the terminate message
+    IBOutlet id seaColorProfiles;
+    
+    // An array of objects wishing to recieve the terminate message
 	NSArray<SeaTerminate> *terminationObjects;
 
 }

@@ -288,7 +288,7 @@ DQ
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <clipView key="contentView" id="sE3-sQ-GEf">
                                             <rect key="frame" x="0.0" y="0.0" width="198" height="543"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="39" indentationPerLevel="16" autoresizesOutlineColumn="YES" outlineTableColumn="9834" id="7811" customClass="SeaOutlineView">
                                                     <rect key="frame" x="0.0" y="0.0" width="198" height="543"/>
@@ -670,6 +670,7 @@ DQ
                 <outlet property="delegate" destination="-2" id="4559"/>
                 <outlet property="initialFirstResponder" destination="63" id="16753"/>
             </connections>
+            <point key="canvasLocation" x="-12" y="645"/>
         </window>
         <customView id="70" userLabel="Accessory View">
             <rect key="frame" x="0.0" y="0.0" width="320" height="28"/>
@@ -1524,15 +1525,15 @@ Gw
                         <rect key="frame" x="20" y="34" width="440" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <clipView key="contentView" drawsBackground="NO" id="zX2-tZ-Cdx">
-                            <rect key="frame" x="1" y="1" width="423" height="54"/>
-                            <autoresizingMask key="autoresizingMask"/>
+                            <rect key="frame" x="1" y="1" width="427" height="54"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" usesFontPanel="YES" usesRuler="YES" spellingCorrection="YES" smartInsertDelete="YES" id="1007" customClass="NSTextViewRedirect">
-                                    <rect key="frame" x="0.0" y="0.0" width="427" height="54"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="431" height="54"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                    <size key="minSize" width="423" height="54"/>
+                                    <size key="minSize" width="427" height="54"/>
                                     <size key="maxSize" width="466" height="10000000"/>
                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <connections>

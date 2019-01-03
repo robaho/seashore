@@ -1,5 +1,6 @@
 #import "Globals.h"
 #import "SeaCompositor.h"
+#import "SeaColorProfiles.h"
 
 /*!
 	@enum		k...ChannelsView
@@ -82,7 +83,7 @@ enum {
 	int spp;
 	
 	// Remembers whether is or is not active
-	BOOL CMYKPreview;
+    SeaColorProfile *proofProfile;
 	
 	// One of the above constants to specify what is seen by the user
 	int viewType;
@@ -199,29 +200,22 @@ enum {
 */
 - (void)readjustAltData:(BOOL)update;
 
-// CMYK PREVIEWING METHODS
+// ColorSync PREVIEWING METHODS
 
 /*!
-	@method		CMYKPreview
-	@discussion	Returns whether or not CMYK previewing is active.
-	@result		Returns YES if the CMYK previewing is active, NO otherwise.
-*/
-- (BOOL)CMYKPreview;
-
-
-/*!
-	@method		canToggleCMYKPreview
-	@discussion	Returns whether or not CMYK previewing can be toggled for this
-				document.
-	@result		Returns YES if CMYK previewing can be toggled, NO otherwise.
-*/
-- (BOOL)canToggleCMYKPreview;
+ @method        proofProfile
+ @discussion    Returns the selected proof profile, or NULL
+ @result        Returns a SeaColorProfile or NULL
+ */
+- (SeaColorProfile*)proofProfile;
 
 /*!
-	@method		toggleCMYKPreview
-	@discussion	Toggles whether or not CMYK previewing is active.
+	@method		toggleSoftProof
+	@discussion	sets the color profile for proof
+    @param      sender
+                the profile or null
 */
-- (void)toggleCMYKPreview;
+- (void)toggleSoftProof:(SeaColorProfile*)profile;
 
 // UPDATING METHODS
 
@@ -290,5 +284,6 @@ enum {
 				Seashore is using.
 */
 - (CGColorSpaceRef)displayProf;
+
 
 @end

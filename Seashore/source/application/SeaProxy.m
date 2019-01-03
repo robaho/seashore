@@ -46,9 +46,9 @@
 	[[gCurrentDocument docView] zoomOut:sender];
 }
 
-- (IBAction)toggleCMYKPreview:(id)sender
+- (IBAction)toggleSoftProof:(id)sender
 {
-	[[gCurrentDocument whiteboard] toggleCMYKPreview];
+    [[gCurrentDocument whiteboard] toggleSoftProof:(ColorSyncProfileRef)NULL];
 }
 
 #ifdef PERFORMANCE
@@ -454,11 +454,6 @@
 		break;
 		case 220:
 			if ([contents canFlatten] == NO)
-				return NO;
-		break;
-		case 230:
-			[menuItem setState:[[document whiteboard] CMYKPreview]];
-			if (![[document whiteboard] canToggleCMYKPreview])
 				return NO;
 		break;
 		case 232:

@@ -1,6 +1,7 @@
 #import "UtilitiesManager.h"
 #import "PegasusUtility.h"
 #import "ToolboxUtility.h"
+#import "StatusUtility.h"
 #import "OptionsUtility.h"
 #import "InfoUtility.h"
 #import "SeaController.h"
@@ -97,7 +98,7 @@
 	return [infoUtilities objectForKey:[NSNumber numberWithLong:(long)doc]];
 }
 
-- (id)statusUtilityFor:(id)doc
+- (StatusUtility*)statusUtilityFor:(id)doc
 {
 	return [statusUtilities objectForKey:[NSNumber numberWithLong:(long)doc]];
 }

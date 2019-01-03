@@ -467,14 +467,9 @@ Gw
                                     </items>
                                 </menu>
                             </menuItem>
-                            <menuItem title="ColorSync" id="1531">
-                                <menu key="submenu" title="ColorSync" id="1532">
+                            <menuItem title="Soft Proof with Profile" id="1531">
+                                <menu key="submenu" title="Soft Proof with Profile" id="1532">
                                     <items>
-                                        <menuItem title="CMYK Preview" tag="230" id="1536">
-                                            <connections>
-                                                <action selector="toggleCMYKPreview:" target="501" id="1541"/>
-                                            </connections>
-                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="2011">
                                             <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                         </menuItem>
@@ -484,6 +479,9 @@ Gw
                                             </connections>
                                         </menuItem>
                                     </items>
+                                    <connections>
+                                        <binding destination="X1R-xm-eP3" name="font" keyPath="values.proofMenu" id="27c-Ae-obN"/>
+                                    </connections>
                                 </menu>
                             </menuItem>
                             <menuItem title="Units" id="3827">
@@ -1485,27 +1483,45 @@ This General Public License does not permit incorporating your program into prop
                 </subviews>
             </view>
         </window>
-        <customObject id="235" userLabel="SeaHelp" customClass="SeaHelp">
-            <connections>
-                <outlet property="instantHelpLabel" destination="918" id="920"/>
-                <outlet property="instantHelpWindow" destination="912" id="919"/>
-            </connections>
-        </customObject>
         <customObject id="437" userLabel="UtilitiesManager" customClass="UtilitiesManager">
             <connections>
                 <outlet property="controller" destination="448" id="1289"/>
                 <outlet property="transparentUtility" destination="6652" id="6653"/>
             </connections>
         </customObject>
+        <customObject id="6652" userLabel="Transparent Utility" customClass="TransparentUtility"/>
+        <customObject id="235" userLabel="SeaHelp" customClass="SeaHelp">
+            <connections>
+                <outlet property="instantHelpLabel" destination="918" id="920"/>
+                <outlet property="instantHelpWindow" destination="912" id="919"/>
+            </connections>
+        </customObject>
         <customObject id="448" userLabel="SeaController" customClass="SeaController">
             <connections>
                 <outlet property="licenseWindow" destination="204" id="1836"/>
+                <outlet property="seaColorProfiles" destination="c2e-tx-zg5" id="vmx-dW-TcW"/>
                 <outlet property="seaHelp" destination="235" id="1243"/>
                 <outlet property="seaPlugins" destination="1723" id="1724"/>
                 <outlet property="seaPrefs" destination="507" id="509"/>
                 <outlet property="seaProxy" destination="501" id="3526"/>
                 <outlet property="seaWarning" destination="1244" id="1245"/>
                 <outlet property="utilitiesManager" destination="437" id="449"/>
+            </connections>
+        </customObject>
+        <customObject id="2281" userLabel="SeaDocumentController" customClass="SeaDocumentController">
+            <connections>
+                <outlet property="backgroundCheckbox" destination="2900" id="o75-YY-kO0"/>
+                <outlet property="heightInput" destination="2899" id="2929"/>
+                <outlet property="heightUnits" destination="2905" id="2937"/>
+                <outlet property="modeMenu" destination="2901" id="2933"/>
+                <outlet property="newPanel" destination="2877" id="2927"/>
+                <outlet property="recentMenu" destination="7277" id="7282"/>
+                <outlet property="resMenu" destination="2890" id="2931"/>
+                <outlet property="seaPrefs" destination="507" id="2283"/>
+                <outlet property="templatesMenu" destination="2881" id="2930"/>
+                <outlet property="unitsMenu" destination="2908" id="2932"/>
+                <outlet property="widthInput" destination="2906" id="2928"/>
+                <outlet property="widthUnits" destination="2908" id="2938"/>
             </connections>
         </customObject>
         <customObject id="501" userLabel="SeaProxy" customClass="SeaProxy"/>
@@ -1724,22 +1740,6 @@ DQ
                 </subviews>
             </view>
         </window>
-        <customObject id="2281" userLabel="SeaDocumentController" customClass="SeaDocumentController">
-            <connections>
-                <outlet property="backgroundCheckbox" destination="2900" id="o75-YY-kO0"/>
-                <outlet property="heightInput" destination="2899" id="2929"/>
-                <outlet property="heightUnits" destination="2905" id="2937"/>
-                <outlet property="modeMenu" destination="2901" id="2933"/>
-                <outlet property="newPanel" destination="2877" id="2927"/>
-                <outlet property="recentMenu" destination="7277" id="7282"/>
-                <outlet property="resMenu" destination="2890" id="2931"/>
-                <outlet property="seaPrefs" destination="507" id="2283"/>
-                <outlet property="templatesMenu" destination="2881" id="2930"/>
-                <outlet property="unitsMenu" destination="2908" id="2932"/>
-                <outlet property="widthInput" destination="2906" id="2928"/>
-                <outlet property="widthUnits" destination="2908" id="2938"/>
-            </connections>
-        </customObject>
         <customView id="2708" userLabel="General Prefs">
             <rect key="frame" x="0.0" y="0.0" width="431" height="359"/>
             <autoresizingMask key="autoresizingMask"/>
@@ -2518,7 +2518,12 @@ DQ
                 </textField>
             </subviews>
         </customView>
-        <customObject id="6652" userLabel="Transparent Utility" customClass="TransparentUtility"/>
+        <userDefaultsController representsSharedInstance="YES" id="X1R-xm-eP3"/>
+        <customObject id="c2e-tx-zg5" userLabel="SeaColorProfiles" customClass="SeaColorProfiles">
+            <connections>
+                <outlet property="proofMenu" destination="1532" id="eSx-RV-beN"/>
+            </connections>
+        </customObject>
     </objects>
     <resources>
         <image name="help-big" width="48" height="48"/>

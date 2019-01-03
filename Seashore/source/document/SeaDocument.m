@@ -184,7 +184,7 @@ enum {
 	#ifdef USE_CENTERING_CLIPVIEW
 	id newClipView;
 	#endif
-	
+    
 	// Believe it or not sometimes this function is called after it has already run
 	if (whiteboard == NULL) {
 		exporters = [NSArray arrayWithObjects:
@@ -210,13 +210,12 @@ enum {
 		[view setDocumentView:seaView];
 		[view setDrawsBackground:NO];
 		
-		// set the frame of the window
 		[docWindow setFrame:[self standardFrame] display:YES];
 		
 		// Finally, if the doc has any warnings we are ready for them
 		[(SeaWarning *)[SeaController seaWarning] triggerQueue: self];
 	}
-	
+    
 	[docWindow setAcceptsMouseMovedEvents:YES];
 }
 

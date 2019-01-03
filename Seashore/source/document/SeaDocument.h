@@ -140,12 +140,6 @@
 - (void)awakeFromNib;
 
 /*!
-	@method		dealloc
-	@discussion	Frees memory occupied by an instance of this class.
-*/
-- (void)dealloc;
-
-/*!
 	@method		saveDocument:
 	@discussion Called to save a document (makes current).
 	@param		sender

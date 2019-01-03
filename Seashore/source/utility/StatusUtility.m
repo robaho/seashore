@@ -102,6 +102,11 @@
 		if([view frame].size.width > 575){
 			statusString = [statusString stringByAppendingFormat: @" %@ %@", divider, [contents type] ? @"Grayscale" : @"Full Color"];
 		}
+        
+        SeaColorProfile *cp = [[document whiteboard] proofProfile];
+        if(cp!=NULL) {
+            statusString = [statusString stringByAppendingFormat: @" %@ %@", divider, [cp desc]];
+        }
 		
 		[dimensionLabel setStringValue: statusString];		
 
