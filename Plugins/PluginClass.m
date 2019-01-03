@@ -100,7 +100,9 @@ CIImage *createCIImage(PluginData *pluginData){
     
     unsigned char *data = [pluginData data];
     
-    NSBitmapImageRep *imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:TRUE isPlanar:NO colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
+    NSBitmapFormat bmf = NSBitmapFormatAlphaNonpremultiplied;
+    
+    NSBitmapImageRep *imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:TRUE isPlanar:NO colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace bitmapFormat:bmf bytesPerRow:width * spp bitsPerPixel:8 * spp];
     
     CIImage *inputImage = [[CIImage alloc] initWithBitmapImageRep:imageRep];
     
