@@ -129,34 +129,6 @@ DQ
                                                     <action selector="zoomNormal:" target="14766" id="16610"/>
                                                 </connections>
                                             </button>
-                                            <popUpButton imageHugsTitle="YES" id="16420">
-                                                <rect key="frame" x="21" y="-4" width="43" height="30"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                <popUpButtonCell key="cell" type="bevel" title="Ch. Ed." bezelStyle="regularSquare" alignment="left" lineBreakMode="truncatingTail" borderStyle="bezel" inset="2" pullsDown="YES" preferredEdge="maxY" selectedItem="16426" id="16791">
-                                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                    <font key="font" metaFont="menu"/>
-                                                    <menu key="menu" title="OtherViews" id="16422">
-                                                        <items>
-                                                            <menuItem title="Ch. Ed." hidden="YES" id="16426"/>
-                                                            <menuItem title="Edit All Channels" id="16604">
-                                                                <connections>
-                                                                    <action selector="channelChanged:" target="14766" id="16605"/>
-                                                                </connections>
-                                                            </menuItem>
-                                                            <menuItem title="Edit Primary Channel Only" tag="1" id="16587">
-                                                                <connections>
-                                                                    <action selector="channelChanged:" target="14766" id="16606"/>
-                                                                </connections>
-                                                            </menuItem>
-                                                            <menuItem title="Edit Alpha Channel Only" tag="2" id="16588">
-                                                                <connections>
-                                                                    <action selector="channelChanged:" target="14766" id="16607"/>
-                                                                </connections>
-                                                            </menuItem>
-                                                        </items>
-                                                    </menu>
-                                                </popUpButtonCell>
-                                            </popUpButton>
                                             <textField verticalHuggingPriority="750" id="14781">
                                                 <rect key="frame" x="167" y="5" width="425" height="13"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
@@ -245,7 +217,7 @@ DQ
                                                 </connections>
                                             </textField>
                                             <button toolTip="Display all channels when editing the document" imageHugsTitle="YES" id="14779">
-                                                <rect key="frame" x="0.0" y="0.0" width="32" height="23"/>
+                                                <rect key="frame" x="0.0" y="1" width="36" height="23"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                                                 <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="trueview-not" imagePosition="leading" alignment="left" inset="2" id="16784">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -255,6 +227,34 @@ DQ
                                                     <action selector="trueViewChanged:" target="14766" id="15207"/>
                                                 </connections>
                                             </button>
+                                            <popUpButton imageHugsTitle="YES" id="16420">
+                                                <rect key="frame" x="20" y="0.0" width="47" height="27"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" alignment="left" lineBreakMode="truncatingTail" borderStyle="bezel" inset="2" pullsDown="YES" arrowPosition="noArrow" preferredEdge="maxY" selectedItem="16426" id="16791">
+                                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="menu"/>
+                                                    <menu key="menu" title="OtherViews" id="16422">
+                                                        <items>
+                                                            <menuItem image="channels-menu" hidden="YES" id="16426"/>
+                                                            <menuItem title="Edit All Channels" id="16604">
+                                                                <connections>
+                                                                    <action selector="channelChanged:" target="14766" id="16605"/>
+                                                                </connections>
+                                                            </menuItem>
+                                                            <menuItem title="Edit Primary Channel Only" tag="1" id="16587">
+                                                                <connections>
+                                                                    <action selector="channelChanged:" target="14766" id="16606"/>
+                                                                </connections>
+                                                            </menuItem>
+                                                            <menuItem title="Edit Alpha Channel Only" tag="2" id="16588">
+                                                                <connections>
+                                                                    <action selector="channelChanged:" target="14766" id="16607"/>
+                                                                </connections>
+                                                            </menuItem>
+                                                        </items>
+                                                    </menu>
+                                                </popUpButtonCell>
+                                            </popUpButton>
                                         </subviews>
                                         <connections>
                                             <outlet property="statusUtility" destination="14766" id="16405"/>
@@ -670,7 +670,7 @@ DQ
                 <outlet property="delegate" destination="-2" id="4559"/>
                 <outlet property="initialFirstResponder" destination="63" id="16753"/>
             </connections>
-            <point key="canvasLocation" x="-487" y="150"/>
+            <point key="canvasLocation" x="-487" y="149.5"/>
         </window>
         <customView id="70" userLabel="Accessory View">
             <rect key="frame" x="0.0" y="0.0" width="505" height="21"/>
@@ -5264,6 +5264,7 @@ DQ
         <image name="8-not" width="35" height="27"/>
         <image name="9-not" width="35" height="27"/>
         <image name="center-align" width="19" height="13"/>
+        <image name="channels-menu" width="32" height="23"/>
         <image name="delete" width="32" height="23"/>
         <image name="done" width="63" height="19"/>
         <image name="duplicate" width="32" height="23"/>

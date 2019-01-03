@@ -15,31 +15,7 @@
 - (void)awakeFromNib
 {
 	[[SeaController utilitiesManager] setStatusUtility: self for:document];
-	
 	[(LayerControlView *)view setHasResizeThumb: NO];
-	
-	// This is how you're SUPPOSED to change these things
-	[[channelSelectionPopup itemAtIndex: 0] setTitle: @""];
-	[[channelSelectionPopup itemAtIndex: 0] setImage: [NSImage imageNamed: @"channels-menu"]];
-	// But this is what apparently works in 10.4
-	[channelSelectionPopup setTitle: @""];
-	[channelSelectionPopup setImage: [NSImage imageNamed: @"channels-menu"]];
-	
-	/*
-	 
-	// Stub function calls for when this feature is implemented
-	 
-	if([(SeaContent *)[document contents] type] == 0){	
-		[(WebSlider *)redSlider setSliderType: kRedSlider];
-		[(WebSlider *)greenSlider setSliderType: kGreenSlider];
-		[(WebSlider *)blueSlider setSliderType: kBlueSlider];
-	}else{
-		[(WebSlider *)redSlider setSliderType: kGraySlider];
-		[(WebSlider *)greenSlider setSliderType: kGraySlider];
-		[(WebSlider *)blueSlider setSliderType: kGraySlider];
-	}
-	[(WebSlider *)alphaSlider setSliderType:kAlphaSlider];
-	*/
 	
 	[self update];
 }
