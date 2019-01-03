@@ -73,12 +73,6 @@ typedef struct {
 - (id)initWithContents:(SeaContent *)cont andWhiteboard:(SeaWhiteboard *)board;
 
 /*!
-	@method		dealloc
-	@discussion	Frees memory occupied by an instance of this class.
-*/
-- (void)dealloc;
-
-/*!
 	@method		compositeLayer:withOptions:
 	@discussion	Composites a layer on to the document's whiteboard using the
 				specified options.
