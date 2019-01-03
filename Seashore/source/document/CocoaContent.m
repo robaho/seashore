@@ -171,7 +171,7 @@
 	// Store EXIF data
 	exifData = [(NSBitmapImageRep*)imageRep valueForProperty:@"NSImageEXIFData"];
     
-    cs = [(NSBitmapImageRep*)imageRep colorSpace];
+    fileColorSpace = [(NSBitmapImageRep*)imageRep colorSpace];
 	
 	// Create the layer
 	layer = [[CocoaLayer alloc] initWithImageRep:imageRep document:doc spp:(type == XCF_RGB_IMAGE) ? 4 : 2];

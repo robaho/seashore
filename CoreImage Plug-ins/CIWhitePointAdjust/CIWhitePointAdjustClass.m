@@ -55,7 +55,7 @@
 {
     PluginData *pluginData = [seaPlugins data];
     
-    CIColor *foreColor = [CIColor colorWithCGColor:[[pluginData foreColor] CGColor]];
+    CIColor *foreColor = createCIColor([pluginData foreColor]);
     
     CIFilter *filter = [CIFilter filterWithName:@"CIWhitePointAdjust"];
     if (filter == NULL) {

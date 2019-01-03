@@ -32,12 +32,6 @@
 - (id)initWithFrame:(NSRect)frame;
 
 /*!
-	@method		dealloc
-	@discussion	Frees memory occupied by an instance of this class.
-*/
-- (void)dealloc;
-
-/*!
 	@method		setDocument:
 	@discussion	Sets the view and its associated panels to reflect the colours
 				of the given document.

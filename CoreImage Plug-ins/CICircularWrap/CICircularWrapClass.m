@@ -183,7 +183,7 @@
     bool opaque = ![pluginData hasAlpha];
     
     if (opaque) {
-        CIColor *backColor = [CIColor colorWithCGColor:[[pluginData backColor] CGColor]];
+        CIColor *backColor = createCIColor([pluginData backColor]);
 
         filter = [CIFilter filterWithName:@"CIConstantColorGenerator"];
         [filter setDefaults];

@@ -150,14 +150,6 @@ enum {
 - (NSColor *)backColor;
 
 /*!
-	@method		displayProf
-	@discussion	Returns the current display profile.
-	@result		Returns a CGColorSpaceRef representing the ColorSync display profile
-				Seashore is using.
-*/
-- (CGColorSpaceRef)displayProf;
-
-/*!
 	@method		window
 	@discussion	Returns the window to use for the plug-in's panel.
 	@result		Returns the window to use for the plug-in's panel.

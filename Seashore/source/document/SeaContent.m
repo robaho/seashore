@@ -370,11 +370,11 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     
     foreground = [[[SeaController utilitiesManager] toolboxUtilityFor:document] foreground];
     if (type == XCF_RGB_IMAGE && selectedChannel != kAlphaChannel)
-        return [foreground colorUsingColorSpaceName:MyRGBSpace];
+        return [foreground colorUsingColorSpace:MyRGBCS];
     else if (type == XCF_GRAY_IMAGE)
-        return [foreground colorUsingColorSpaceName:MyGraySpace];
+        return [foreground colorUsingColorSpace:MyGrayCS];
     else
-        return [[foreground colorUsingColorSpaceName:MyGraySpace] colorUsingColorSpaceName:MyRGBSpace];
+        return [[foreground colorUsingColorSpace:MyGrayCS] colorUsingColorSpace:MyRGBCS];
 }
 
 - (NSColor *)background
@@ -383,11 +383,11 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     
     background = [[[SeaController utilitiesManager] toolboxUtilityFor:document] background];
     if (type == XCF_RGB_IMAGE && selectedChannel != kAlphaChannel)
-        return [background colorUsingColorSpaceName:MyRGBSpace];
+        return [background colorUsingColorSpace:MyRGBCS];
     else if (type == XCF_GRAY_IMAGE)
-        return [background colorUsingColorSpaceName:MyGraySpace];
+        return [background colorUsingColorSpace:MyGrayCS];
     else
-        return [[background colorUsingColorSpaceName:MyGraySpace] colorUsingColorSpaceName:MyRGBSpace];
+        return [[background colorUsingColorSpace:MyGrayCS] colorUsingColorSpace:MyRGBCS];
 }
 
 - (NSDictionary *)exifData
@@ -397,7 +397,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
 
 - (NSColorSpace *)cs
 {
-    return cs;
+    return fileColorSpace;
 }
 
 

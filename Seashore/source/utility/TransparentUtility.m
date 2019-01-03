@@ -51,7 +51,7 @@
 	// Change the colour
 	color = [sender color];
 	if (![[color colorSpaceName] isEqualToString:NSNamedColorSpace])
-		[[sender color] colorUsingColorSpaceName:MyRGBSpace];
+		[[sender color] colorUsingColorSpace:MyRGBCS];
 	
 	// Call for all documents' views to respond to the change
 	for (i = 0; i < [documents count]; i++) {

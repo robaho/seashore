@@ -735,13 +735,4 @@ extern IntPoint gScreenResolution;
 	return altData;
 }
 
-- (CGColorSpaceRef)displayProf
-{
-    if (spp>2) {
-        return MyRGBCS.CGColorSpace;
-    } else {
-        return MyGrayCS.CGColorSpace;
-    }
-}
-
 @end

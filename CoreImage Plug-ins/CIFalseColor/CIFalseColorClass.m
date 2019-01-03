@@ -55,8 +55,8 @@
 {
     PluginData *pluginData = [seaPlugins data];
     
-    CIColor *foreColor = [CIColor colorWithCGColor:[[pluginData foreColor] CGColor]];
-    CIColor *backColor = [CIColor colorWithCGColor:[[pluginData backColor] CGColor]];
+    CIColor *foreColor = createCIColor([pluginData foreColor]);
+    CIColor *backColor = createCIColor([pluginData backColor]);
     
     CIFilter *filter = [CIFilter filterWithName:@"CIFalseColor"];
     if (filter == NULL) {

@@ -117,10 +117,7 @@
 	
 	
 	// Draw the images
-	[[NSImage imageNamed:@"swap"] compositeToPoint:NSMakePoint(18, 27) operation:NSCompositeSourceOver];
-	//[[NSImage imageNamed:@"samp"] compositeToPoint:NSMakePoint(0, 27) operation:NSCompositeSourceOver];
-	//[[NSImage imageNamed:@"def"] compositeToPoint:NSMakePoint(44, 6) operation:NSCompositeSourceOver];
-	
+    [[NSImage imageNamed:@"swap"] drawAtPoint:NSMakePoint(18,27) fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:1.0];
 }
 
 - (IBAction)activateForegroundColor:(id)sender

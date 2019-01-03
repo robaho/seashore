@@ -83,12 +83,6 @@
     return [[document contents] background];
 }
 
-- (CGColorSpaceRef)displayProf
-{
-    return [[document whiteboard] displayProf];
-}
-
-
 - (id)window
 {
 	if ([[SeaController seaPrefs] effectsPanel])

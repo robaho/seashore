@@ -210,3 +210,5 @@ CGRect determineContentBorders(PluginData *pluginData);
  @discussion return a possibly cropped CIImage, the image is already marked autorelease
  */
 CIImage *croppedCIImage(PluginData *pluginData,CGRect bounds);
+
+CIColor *createCIColor(NSColor *color);

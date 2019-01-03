@@ -277,13 +277,5 @@ enum {
 */
 - (unsigned char *)altData;
 
-/*!
-	@method		displayProf
-	@discussion	Returns the current display profile.
-	@result		Returns a CMProfileRef representing the ColorSync display profile
-				Seashore is using.
-*/
-- (CGColorSpaceRef)displayProf;
-
 
 @end

@@ -159,7 +159,7 @@ void applyFilters(PluginData *pluginData,CIFilter *filterA,CIFilter *filterB) {
 void applyFilterBG(PluginData *pluginData,CIFilter *filter) {
     CIImage *inputImage = createCIImage(pluginData);
     
-    CIColor *backColor = [CIColor colorWithCGColor:[[pluginData backColor] CGColor]];
+    CIColor *backColor = createCIColor([pluginData backColor]);
 
     [filter setValue:inputImage forKey:@"inputImage"];
     CIImage *outputImage = [filter valueForKey: @"outputImage"];
@@ -180,8 +180,8 @@ void applyFilterBG(PluginData *pluginData,CIFilter *filter) {
 void applyFilterFG(PluginData *pluginData,CIFilter *filter) {
     CIImage *inputImage = createCIImage(pluginData);
     
-    CIColor *foreColor = [CIColor colorWithCGColor:[[pluginData foreColor] CGColor]];
-    
+    CIColor *foreColor = createCIColor([pluginData foreColor]);
+
     [filter setValue:inputImage forKey:@"inputImage"];
     CIImage *outputImage = [filter valueForKey: @"outputImage"];
     
@@ -202,8 +202,8 @@ void applyFilterFG(PluginData *pluginData,CIFilter *filter) {
 void applyFilterFGBG(PluginData *pluginData,CIFilter *filter) {
     CIImage *inputImage = createCIImage(pluginData);
     
-    CIColor *foreColor = [CIColor colorWithCGColor:[[pluginData foreColor] CGColor]];
-    CIColor *backColor = [CIColor colorWithCGColor:[[pluginData backColor] CGColor]];
+    CIColor *foreColor = createCIColor([pluginData foreColor]);
+    CIColor *backColor = createCIColor([pluginData backColor]);
     
     [filter setValue:inputImage forKey:@"inputImage"];
     CIImage *outputImage = [filter valueForKey: @"outputImage"];
@@ -340,6 +340,16 @@ CIImage *croppedCIImage(PluginData *pluginData,CGRect bounds) {
     [offsetTransform translateXBy:-bounds.origin.x yBy:-height + bounds.origin.y + bounds.size.height];
     [filter setValue:offsetTransform forKey:@"inputTransform"];
     return [filter valueForKey:@"outputImage"];
+}
+
+CIColor *createCIColor(NSColor *color) {
+    CIColor *ci = [ [CIColor alloc] initWithColor:color];
+    if(ci==NULL){
+        // some conversions cannot work, so convert to rgb
+        NSColor *rgb = [color colorUsingColorSpace:MyRGBCS];
+        ci = [CIColor colorWithCGColor:[rgb CGColor]];
+    }
+    return ci;
 }
 
 

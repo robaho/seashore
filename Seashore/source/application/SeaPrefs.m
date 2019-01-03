@@ -732,7 +732,7 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 			result = [NSColor colorWithCalibratedWhite:0.0 alpha:alpha];
 		break;
 	}
-	result = [result colorUsingColorSpaceName:MyRGBSpace];
+	result = [result colorUsingColorSpace:MyRGBCS];
 	
 	return result;
 }
@@ -788,7 +788,7 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 			result = [NSColor colorWithCalibratedWhite:0.0 alpha:alpha];
 			break;
 	}
-	result = [result colorUsingColorSpaceName:MyRGBSpace];
+	result = [result colorUsingColorSpace:MyRGBCS];
 	
 	return result;
 }

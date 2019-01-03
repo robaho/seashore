@@ -69,9 +69,9 @@
     IntPoint point = [pluginData point:0];
     IntPoint apoint = [pluginData point:1];
     
-    CIColor *foreColor = [CIColor colorWithCGColor:[[pluginData foreColor] CGColor]];
-    CIColor *backColor = [CIColor colorWithCGColor:[[pluginData backColor] CGColor]];
-    
+    CIColor *foreColor = createCIColor([pluginData foreColor]);
+    CIColor *backColor = createCIColor([pluginData backColor]);
+
     int amount = abs(apoint.x - point.x);
 
     CIFilter *filter = [CIFilter filterWithName:@"CIStripesGenerator"];

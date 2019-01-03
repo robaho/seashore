@@ -69,7 +69,7 @@
     [contrastLabel setStringValue:[NSString stringWithFormat:@"%.1f", contrast]];
     [contrastSlider setFloatValue:contrast];
     
-    mainNSColor = [[mainColorWell color] colorUsingColorSpaceName:MyRGBSpace];
+    mainNSColor = [mainColorWell color];
     
     refresh = YES;
     success = NO;
@@ -151,7 +151,7 @@
 {
     PluginData *pluginData;
     
-    mainNSColor = [color colorUsingColorSpaceName:MyRGBSpace];
+    mainNSColor = color;
     if (running) {
         refresh = YES;
         [self preview:self];
@@ -192,7 +192,7 @@
     int halo_radius = calculateRadius(point2,point3);
     int halo_width = abs(calculateRadius(point1,point3) - halo_radius);
     
-    CIColor *mainColor = [CIColor colorWithRed:[mainNSColor redComponent] green:[mainNSColor greenComponent] blue:[mainNSColor blueComponent] alpha:[mainNSColor alphaComponent]];
+    CIColor *mainColor = createCIColor(mainNSColor);
 
     CIFilter *filter = [CIFilter filterWithName:@"CISunbeamsGenerator"];
     if (filter == NULL) {

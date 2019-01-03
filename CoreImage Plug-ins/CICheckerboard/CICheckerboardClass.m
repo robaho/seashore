@@ -73,12 +73,9 @@
     int height = [pluginData height];
     int amount = MAX(abs(apoint.x - point.x), abs(apoint.y - point.y));
 
-    // Get colors
-    if ([pluginData spp] == 4) foreColorAlpha = [CIColor colorWithRed:[[pluginData foreColor] redComponent] green:[[pluginData foreColor] greenComponent] blue:[[pluginData foreColor] blueComponent] alpha:[[pluginData foreColor] alphaComponent]];
-    else  foreColorAlpha = [CIColor colorWithRed:[[pluginData foreColor] whiteComponent] green:[[pluginData foreColor] whiteComponent] blue:[[pluginData foreColor] whiteComponent] alpha:[[pluginData foreColor] alphaComponent]];
-    if ([pluginData spp] == 4) backColorAlpha = [CIColor colorWithRed:[[pluginData backColor] redComponent] green:[[pluginData backColor] greenComponent] blue:[[pluginData backColor] blueComponent] alpha:[[pluginData backColor] alphaComponent]];
-    else  backColorAlpha = [CIColor colorWithRed:[[pluginData backColor] whiteComponent] green:[[pluginData backColor] whiteComponent] blue:[[pluginData backColor] whiteComponent] alpha:[[pluginData backColor] alphaComponent]];
-    
+    backColorAlpha = createCIColor([pluginData backColor]);
+    foreColorAlpha = createCIColor([pluginData foreColor]);
+
     CIFilter *filter = [CIFilter filterWithName:@"CICheckerboardGenerator"];
     if (filter == NULL) {
         @throw [NSException exceptionWithName:@"CoreImageFilterNotFoundException" reason:[NSString stringWithFormat:@"The Core Image filter named \"%@\" was not found.", @"CICircleSplash"] userInfo:NULL];

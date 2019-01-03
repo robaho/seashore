@@ -53,7 +53,7 @@
 	
 	[intensitySlider setFloatValue:intensity];
 	
-	mainNSColor = [[mainColorWell color] colorUsingColorSpaceName:MyRGBSpace];
+    mainNSColor = [mainColorWell color];
 	
 	success = NO;
 	running = YES;
@@ -131,7 +131,7 @@
 {
 	PluginData *pluginData;
 	
-	mainNSColor = [color colorUsingColorSpaceName:MyRGBSpace];
+    mainNSColor = color;
 	if (running) {
 		refresh = YES;
 		[self preview:self];
@@ -167,7 +167,7 @@
     int radius = (apoint.x - point.x) * (apoint.x - point.x) + (apoint.y - point.y) * (apoint.y - point.y);
     radius = sqrt(radius);
     
-    CIColor *mainColor = [CIColor colorWithRed:[mainNSColor redComponent] green:[mainNSColor greenComponent] blue:[mainNSColor blueComponent]];
+    CIColor *mainColor = createCIColor(mainNSColor);
     
     // Run filter
     CIFilter *filter = [CIFilter filterWithName:@"CIColorMonochrome"];

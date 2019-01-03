@@ -91,7 +91,7 @@
 	[destHeightLabel setStringValue:[NSString stringWithFormat:@"%d", destHeight]];
 	[destHeightSlider setIntValue:destHeight];
 	
-	mainNSColor = [[mainColorWell color] colorUsingColorSpaceName:MyRGBSpace];
+    mainNSColor = [mainColorWell color];
 	
 	refresh = YES;
 	success = NO;
@@ -174,7 +174,7 @@
 {
 	PluginData *pluginData;
 	
-	mainNSColor = [color colorUsingColorSpaceName:MyRGBSpace];
+    mainNSColor = color;
 	if (running) {
 		refresh = YES;
 		[self preview:self];
@@ -215,7 +215,7 @@
     IntPoint point = [pluginData point:0];
     IntPoint apoint = [pluginData point:1];
     
-    CIColor *mainColor = [CIColor colorWithRed:[mainNSColor redComponent] green:[mainNSColor greenComponent] blue:[mainNSColor blueComponent] alpha:[mainNSColor alphaComponent]];
+    CIColor *mainColor = createCIColor(mainNSColor);
     
     CIFilter *filter = [CIFilter filterWithName:@"CISpotLight"];
     if (filter == NULL) {

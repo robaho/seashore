@@ -77,7 +77,7 @@
     [widthLabel setStringValue:[NSString stringWithFormat:@"%.1f", star_width]];
     [widthSlider setFloatValue:star_width];
     
-    mainNSColor = [[mainColorWell color] colorUsingColorSpaceName:MyRGBSpace];
+    mainNSColor = [mainColorWell color];
     
     refresh = YES;
     success = NO;
@@ -160,7 +160,7 @@
 {
     PluginData *pluginData;
     
-    mainNSColor = [color colorUsingColorSpaceName:MyRGBSpace];
+    mainNSColor = color;
     if (running) {
         refresh = YES;
         [self preview:self];
@@ -202,7 +202,7 @@
     
     int radius = calculateRadius(point,apoint);
     
-    CIColor *mainColor = [CIColor colorWithRed:[mainNSColor redComponent] green:[mainNSColor greenComponent] blue:[mainNSColor blueComponent] alpha:[mainNSColor alphaComponent]];
+    CIColor *mainColor = createCIColor(mainNSColor);
     float angle = calculateAngle(point,apoint);
     
     CIFilter *filter = [CIFilter filterWithName:@"CIStarShineGenerator"];

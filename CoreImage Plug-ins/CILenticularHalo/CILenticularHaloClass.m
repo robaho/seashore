@@ -77,7 +77,7 @@
     [contrastLabel setStringValue:[NSString stringWithFormat:@"%.1f", contrast]];
     [contrastSlider setFloatValue:contrast];
     
-    mainNSColor = [[mainColorWell color] colorUsingColorSpaceName:MyRGBSpace];
+    mainNSColor = [mainColorWell color];
     
     refresh = YES;
     success = NO;
@@ -160,7 +160,7 @@
 {
     PluginData *pluginData;
     
-    mainNSColor = [color colorUsingColorSpaceName:MyRGBSpace];
+    mainNSColor = color;
     if (running) {
         refresh = YES;
         [self preview:self];
@@ -201,7 +201,7 @@
     IntPoint point2 = [pluginData point:1];
     IntPoint point3 = [pluginData point:2];
     
-    CIColor *mainColor = [CIColor colorWithRed:[mainNSColor redComponent] green:[mainNSColor greenComponent] blue:[mainNSColor blueComponent] alpha:[mainNSColor alphaComponent]];
+    CIColor *mainColor = createCIColor(mainNSColor);
     
     float halo_radius = abs(point2.x - point1.x) * abs(point2.x - point1.x) + abs(point2.y - point1.y) * abs(point2.y - point1.y);
     halo_radius = sqrt(halo_radius);
