@@ -23,7 +23,7 @@ static bool profileIterate (CFDictionaryRef profileInfo, void *refCon)
 {
     NSDictionary *dict = (__bridge NSDictionary*)profileInfo;
     
-    NSLog(@"%@",dict);
+//    NSLog(@"%@",dict);
     
     NSMutableArray* array = (__bridge NSMutableArray*) refCon;
     
@@ -49,9 +49,6 @@ static bool profileIterate (CFDictionaryRef profileInfo, void *refCon)
     
     ColorSyncIterateInstalledProfiles(profileIterate,&seed,(__bridge void*)profiles,&error);
     
-    NSLog(@"%@",profiles);
-    
-
     return self;
 }
 
