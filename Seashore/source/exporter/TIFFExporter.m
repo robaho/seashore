@@ -14,12 +14,6 @@
 
 - (BOOL)hasOptions
 {
-    // Work things out
-    if ([[idocument contents] saveProofProfile])
-        [targetRadios selectCellAtRow:2 column:0];
-    else
-        [targetRadios selectCellAtRow:0 column:0];
-    
 	return YES;
 }
 
@@ -52,7 +46,9 @@
 
 - (NSString *)optionsString
 {
-    SeaColorProfile *cp = [[idocument whiteboard] proofProfile];
+    SeaColorProfile *proof = [[idocument whiteboard] proofProfile];
+    NSColorSpace *monitor = [[[[idocument docView] window] screen] colorSpace];
+    NSString *csname = (__bridge NSString*)ColorSyncProfileCopyDescriptionString((ColorSyncProfileRef)[monitor colorSyncProfile]);
                            
     switch ([targetRadios selectedRow]) {
         case 0:
@@ -60,10 +56,12 @@
         case 1:
             return @"CMYK";
         case 2:
-            if(cp!=NULL && cp.cs!=NULL){
-                return cp.desc;
+            if(proof!=NULL && proof.cs!=NULL){
+                return proof.desc;
             }
-            return @"RGB/RGBA";
+            // fall through to monitor if proof is none, yet selected
+        case 3:
+            return csname;
     }
     return @"Unknown";
 }
@@ -111,6 +109,10 @@
                 }
             }
             break;
+        case 3: {
+            NSColorSpace *cs = [[[[idocument docView] window] screen] colorSpace];
+            imageRep = [imageRep bitmapImageRepByConvertingToColorSpace:cs renderingIntent:NSColorRenderingIntentDefault];
+        }
     }
     
     NSDictionary *imageProps = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:NSTIFFCompressionLZW] forKey:NSImageCompressionMethod];

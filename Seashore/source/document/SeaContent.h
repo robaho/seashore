@@ -71,9 +71,6 @@ typedef struct {
 	ParasiteData *parasites;
 	int parasites_count;
 	
-	// embed the 'proof profile' when saving
-    BOOL saveProofProfile;
-	
 	// The EXIF data associated with this image
 	NSDictionary *exifData;
     
@@ -373,24 +370,6 @@ typedef struct {
 	@result		Returns a NSColor representing the background colour.
 */
 - (NSColor *)background;
-
-/*!
-	@method		setSaveProofProfile
-	@discussion	Sets whether TIFF files should be saved using the proof color profile
-	@param		value
-				YES if TIFF files should be saved using the proof color profile
-				NO otherwise.
-*/
-- (void)setSaveProofProfile:(BOOL)value;
-
-/*!
-	@method		saveProofProfile
-	@discussion	Returns whether TIFF files should be saved using the proof profile colour
-				space.
-	@result		YES if TIFF files should be saved using the CMYK colour space,
-				NO otherwise.
-*/
-- (BOOL)saveProofProfile;
 
 /*!
 	@method		exifData

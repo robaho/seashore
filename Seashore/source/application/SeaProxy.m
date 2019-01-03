@@ -173,13 +173,6 @@
 	[[gCurrentDocument contents] makeSelectionFloat: YES];
 }
 
-- (IBAction)toggleSaveProofProfile:(id)sender
-{
-	SeaContent *contents = [gCurrentDocument contents];
-	
-	[contents setSaveProofProfile:![contents saveProofProfile]];
-}
-
 - (IBAction)toggleLayerAlpha:(id)sender
 {
 	[[[gCurrentDocument contents] activeLayer] toggleAlpha];
@@ -455,9 +448,6 @@
 		case 220:
 			if ([contents canFlatten] == NO)
 				return NO;
-		break;
-		case 232:
-			[menuItem setState:[[document contents] saveProofProfile]];
 		break;
 		case 240:
 		case 241:

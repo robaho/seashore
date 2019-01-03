@@ -49,7 +49,6 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     orderings = [NSMutableArray array];
     deletedLayers = [[NSArray alloc] init];
     selectedChannel = kAllChannels; trueView = NO;
-    saveProofProfile = NO;
     keeper = allocKeeper();
     document = doc;
     
@@ -91,7 +90,6 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     orderings = [NSMutableArray array];
     deletedLayers = [[NSArray alloc] init];
     selectedChannel = kAllChannels; trueView = NO;
-    saveProofProfile = NO;
     keeper = allocKeeper();
     document = doc;
     
@@ -390,16 +388,6 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
         return [background colorUsingColorSpaceName:MyGraySpace];
     else
         return [[background colorUsingColorSpaceName:MyGraySpace] colorUsingColorSpaceName:MyRGBSpace];
-}
-
-- (void)setSaveProofProfile:(BOOL)value
-{
-    saveProofProfile = value;
-}
-
-- (BOOL)saveProofProfile
-{
-    return saveProofProfile;
 }
 
 - (NSDictionary *)exifData

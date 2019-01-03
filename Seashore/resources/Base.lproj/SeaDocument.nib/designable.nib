@@ -1935,17 +1935,17 @@ Gw
         <window title="TIFF Options" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="694" userLabel="TIFF Options" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="702" y="566" width="270" height="159"/>
+            <rect key="contentRect" x="702" y="566" width="270" height="167"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="695">
-                <rect key="frame" x="0.0" y="0.0" width="270" height="159"/>
+                <rect key="frame" x="0.0" y="0.0" width="270" height="167"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" autosizesCells="NO" id="697">
-                        <rect key="frame" x="20" y="60" width="98" height="58"/>
+                        <rect key="frame" x="20" y="60" width="111" height="78"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        <size key="cellSize" width="98" height="18"/>
+                        <size key="cellSize" width="111" height="18"/>
                         <size key="intercellSpacing" width="4" height="2"/>
                         <buttonCell key="prototype" type="radio" title="Radio" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="ERn-OY-cvr">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1962,6 +1962,10 @@ Gw
                                     <font key="font" metaFont="smallSystem"/>
                                 </buttonCell>
                                 <buttonCell type="radio" title="Proof Profile" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="auA-Z5-eKy" userLabel="Proof Profile">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <buttonCell type="radio" title="Monitor Profile" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="KZM-9W-mub">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -1990,7 +1994,7 @@ DQ
                         <autoresizingMask key="autoresizingMask"/>
                     </box>
                     <textField verticalHuggingPriority="750" id="699">
-                        <rect key="frame" x="10" y="135" width="172" height="14"/>
+                        <rect key="frame" x="10" y="144" width="172" height="14"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="left" title="Please select the target:" id="16833">
                             <font key="font" metaFont="smallSystem"/>
@@ -2000,7 +2004,7 @@ DQ
                     </textField>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="3" y="102.5"/>
+            <point key="canvasLocation" x="3" y="106.5"/>
         </window>
         <window title="Rotate" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="744" userLabel="Rotate" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES"/>

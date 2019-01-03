@@ -469,16 +469,6 @@ Gw
                             </menuItem>
                             <menuItem title="Soft Proof with Profile" id="1531">
                                 <menu key="submenu" title="Soft Proof with Profile" id="1532">
-                                    <items>
-                                        <menuItem isSeparatorItem="YES" id="2011">
-                                            <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                                        </menuItem>
-                                        <menuItem title="Save TIFF using Profile" tag="232" id="2010">
-                                            <connections>
-                                                <action selector="toggleSaveProofProfile:" target="501" id="H2D-Xh-D7f"/>
-                                            </connections>
-                                        </menuItem>
-                                    </items>
                                     <connections>
                                         <binding destination="X1R-xm-eP3" name="font" keyPath="values.proofMenu" id="27c-Ae-obN"/>
                                     </connections>

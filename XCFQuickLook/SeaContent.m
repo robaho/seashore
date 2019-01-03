@@ -20,7 +20,6 @@
     orderings = [NSMutableArray array];
 	deletedLayers = [[NSArray alloc] init];
 	selectedChannel = kAllChannels; trueView = NO;
-	saveProofProfile = NO;
 	gScreenResolution = IntMakePoint(1024, 768);
 
 	return self;
@@ -192,16 +191,6 @@
 - (void)setTrueView:(BOOL)value
 {
 	trueView = value;
-}
-
-- (void)setSaveProofProfile:(BOOL)value
-{
-	saveProofProfile = value;
-}
-
-- (BOOL)saveProofProfile
-{
-	return saveProofProfile;
 }
 
 - (NSDictionary *)exifData
