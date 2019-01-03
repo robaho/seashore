@@ -35,29 +35,29 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="5" userLabel="Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" topStrut="YES"/>
-            <rect key="contentRect" x="267" y="-225" width="960" height="724"/>
+            <rect key="contentRect" x="267" y="-225" width="960" height="475"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="6" customClass="SeaWindowContent">
-                <rect key="frame" x="0.0" y="0.0" width="960" height="724"/>
+                <rect key="frame" x="0.0" y="0.0" width="960" height="475"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <customView id="2200" customClass="SeaOptionsView">
-                        <rect key="frame" x="0.0" y="697" width="960" height="27"/>
+                        <rect key="frame" x="0.0" y="448" width="960" height="27"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <connections>
                             <outlet property="window" destination="5" id="2881"/>
                         </connections>
                     </customView>
                     <customView id="16667">
-                        <rect key="frame" x="0.0" y="0.0" width="960" height="697"/>
+                        <rect key="frame" x="0.0" y="0.0" width="960" height="448"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <customView id="2730">
-                                <rect key="frame" x="199" y="0.0" width="761" height="697"/>
+                                <rect key="frame" x="199" y="0.0" width="761" height="448"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <customView id="16661" customClass="BannerView">
-                                        <rect key="frame" x="0.0" y="661" width="761" height="36"/>
+                                        <rect key="frame" x="0.0" y="412" width="761" height="36"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                         <subviews>
                                             <button verticalHuggingPriority="750" imageHugsTitle="YES" id="16691">
@@ -261,18 +261,18 @@ DQ
                                         </connections>
                                     </customView>
                                     <customView id="14765">
-                                        <rect key="frame" x="0.0" y="23" width="761" height="638"/>
+                                        <rect key="frame" x="0.0" y="23" width="761" height="389"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
                                             <customView id="1381" customClass="SeaShadowView">
-                                                <rect key="frame" x="0.0" y="0.0" width="761" height="638"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="761" height="389"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <connections>
                                                     <outlet property="scrollView" destination="63" id="1488"/>
                                                 </connections>
                                             </customView>
                                             <customView id="63" customClass="NSScrollView">
-                                                <rect key="frame" x="0.0" y="0.0" width="761" height="638"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="761" height="389"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             </customView>
                                         </subviews>
@@ -280,18 +280,18 @@ DQ
                                 </subviews>
                             </customView>
                             <customView id="2729">
-                                <rect key="frame" x="0.0" y="0.0" width="199" height="697"/>
+                                <rect key="frame" x="0.0" y="0.0" width="199" height="448"/>
                                 <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
                                 <subviews>
                                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="42" horizontalPageScroll="10" verticalLineScroll="42" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="7808">
-                                        <rect key="frame" x="0.0" y="155" width="198" height="543"/>
+                                        <rect key="frame" x="0.0" y="155" width="198" height="294"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <clipView key="contentView" id="sE3-sQ-GEf">
-                                            <rect key="frame" x="0.0" y="0.0" width="198" height="543"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="198" height="294"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="39" indentationPerLevel="16" autoresizesOutlineColumn="YES" outlineTableColumn="9834" id="7811" customClass="SeaOutlineView">
-                                                    <rect key="frame" x="0.0" y="0.0" width="198" height="543"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="198" height="294"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <size key="intercellSpacing" width="2" height="3"/>
                                                     <color key="backgroundColor" red="0.89411770999999995" green="0.91764712000000004" blue="0.94509810000000005" alpha="1" colorSpace="deviceRGB"/>
@@ -644,7 +644,7 @@ DQ
                                         </subviews>
                                     </customView>
                                     <box horizontalHuggingPriority="750" boxType="separator" id="7358">
-                                        <rect key="frame" x="196" y="0.0" width="5" height="735"/>
+                                        <rect key="frame" x="196" y="0.0" width="5" height="486"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
                                     </box>
                                 </subviews>
@@ -670,7 +670,7 @@ DQ
                 <outlet property="delegate" destination="-2" id="4559"/>
                 <outlet property="initialFirstResponder" destination="63" id="16753"/>
             </connections>
-            <point key="canvasLocation" x="-58" y="42"/>
+            <point key="canvasLocation" x="-487" y="150"/>
         </window>
         <customView id="70" userLabel="Accessory View">
             <rect key="frame" x="0.0" y="0.0" width="505" height="21"/>
@@ -849,7 +849,6 @@ Gw
                                 </textField>
                             </subviews>
                         </view>
-                        <font key="titleFont" metaFont="message" size="11"/>
                     </box>
                 </subviews>
             </view>
@@ -1153,7 +1152,6 @@ Gw
                                 </popUpButton>
                             </subviews>
                         </view>
-                        <font key="titleFont" metaFont="message" size="11"/>
                     </box>
                     <popUpButton toolTip="Various predefined sizes" imageHugsTitle="YES" id="658">
                         <rect key="frame" x="17" y="18" width="90" height="22"/>
@@ -1427,7 +1425,6 @@ Gw
                                 </popUpButton>
                             </subviews>
                         </view>
-                        <font key="titleFont" metaFont="message" size="11"/>
                     </box>
                     <popUpButton toolTip="Various predefined sizes" imageHugsTitle="YES" id="583">
                         <rect key="frame" x="17" y="18" width="90" height="22"/>
@@ -2158,7 +2155,6 @@ Gw
                                 </textField>
                             </subviews>
                         </view>
-                        <font key="titleFont" metaFont="message" size="11"/>
                     </box>
                 </subviews>
             </view>
@@ -2393,9 +2389,7 @@ Gw
                 <outlet property="document" destination="-2" id="1608"/>
                 <outlet property="duplicateButton" destination="1614" id="1673"/>
                 <outlet property="layerSettings" destination="2891" id="2892"/>
-                <outlet property="leftPane" destination="2729" id="4926"/>
                 <outlet property="newButton" destination="1611" id="1672"/>
-                <outlet property="rightPane" destination="2730" id="4925"/>
             </connections>
         </customObject>
         <customObject id="1596" userLabel="TransparentUtility" customClass="TransparentUtility"/>
@@ -2440,12 +2434,10 @@ Gw
                 <outlet property="eyedropOptions" destination="1880" id="2798"/>
                 <outlet property="gradientOptions" destination="1873" id="2795"/>
                 <outlet property="lassoOptions" destination="1876" id="2785"/>
-                <outlet property="leftPane" destination="2729" id="7000"/>
                 <outlet property="pencilOptions" destination="1870" id="2788"/>
                 <outlet property="polygonLassoOptions" destination="1884" id="2792"/>
                 <outlet property="positionOptions" destination="1868" id="2787"/>
                 <outlet property="rectSelectOptions" destination="1875" id="2782"/>
-                <outlet property="rightPane" destination="2730" id="7001"/>
                 <outlet property="smudgeOptions" destination="1872" id="2790"/>
                 <outlet property="textOptions" destination="1882" id="2797"/>
                 <outlet property="toolboxUtility" destination="1598" id="2800"/>
@@ -2480,7 +2472,6 @@ Gw
                 <outlet property="redValue" destination="2668" id="2725"/>
                 <outlet property="toggleButton" destination="3577" id="4923"/>
                 <outlet property="view" destination="2666" id="4562"/>
-                <outlet property="viewAbove" destination="7808" id="13709"/>
                 <outlet property="widthValue" destination="2675" id="2726"/>
                 <outlet property="xValue" destination="2679" id="2727"/>
                 <outlet property="yValue" destination="2680" id="2728"/>
@@ -5015,7 +5006,6 @@ DQ
                 <outlet property="redBox" destination="14795" id="15204"/>
                 <outlet property="trueViewCheckbox" destination="14779" id="15191"/>
                 <outlet property="view" destination="14768" id="14771"/>
-                <outlet property="viewAbove" destination="14765" id="14770"/>
                 <outlet property="zoomSlider" destination="15205" id="15218"/>
             </connections>
         </customObject>
