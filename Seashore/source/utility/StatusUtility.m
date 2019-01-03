@@ -108,37 +108,6 @@
 	}
 }
 
--(void)updateQuickColor
-{
-	if(document){
-		SeaContent *contents = [document contents];
-		NSColor *foreground = [contents foreground];
-		// REMEBER, FIRST WE NEED TO GET THE APPROPRIATE COLOR SPACE
-		if(![contents type]){
-			[redBox setIntValue: (int)round([foreground redComponent] * 255)];
-			[blueBox setIntValue: (int)round([foreground blueComponent] * 255)];
-			[greenBox setIntValue: (int)round([foreground greenComponent] * 255)];
-		}else{
-			[redBox setIntValue: (int)round([foreground whiteComponent] * 255)];
-			[blueBox setIntValue: (int)round([foreground whiteComponent] * 255)];
-			[greenBox setIntValue: (int)round([foreground whiteComponent] * 255)];
-		}
-		[alphaBox setIntValue: (int)round([foreground alphaComponent] * 255)];
-		
-		/*[redSlider setNeedsDisplay: YES];
-		[greenSlider setNeedsDisplay: YES];
-		[blueSlider setNeedsDisplay:YES];
-		[alphaSlider setNeedsDisplay:YES];*/
-		
-	}else{
-		
-		[redBox setIntValue: 0];
-		[blueBox setIntValue: 0];
-		[greenBox setIntValue: 0];
-		[alphaBox setIntValue: 0];
-		
-	}
-}
 
 - (IBAction)changeChannel:(id)sender
 {
@@ -156,19 +125,6 @@
 	[[document contents] setTrueView:![[document contents] trueView]];
 	[[document helpers] channelChanged];	
 	[self update];
-}
-
-- (IBAction)quickColorChange:(id)sender
-{
-	ToolboxUtility *util = (ToolboxUtility *)[[SeaController utilitiesManager] toolboxUtilityFor:document];
-	
-	//NSLog(@"red value %d set to color value %f (which currently is %f or %d)",[redBox intValue], (float)[redBox intValue] / 255.0, ([foreground redComponent]), (int)round([foreground redComponent] * 255));
-	if([(SeaContent *)[document contents] type]){
-		[util setForeground: [NSColor colorWithCalibratedWhite:[sender intValue] / 255.0 alpha:[alphaBox intValue] /255.0]];
-	}else{
-		[util setForeground: [NSColor colorWithCalibratedRed:[redBox intValue] / 255.0 + 1.0/512.0 green:[greenBox intValue] / 255.0 blue:[blueBox intValue]/255.0 alpha:[alphaBox intValue] /255.0]];
-	}
-	[util update:YES];
 }
 
 - (IBAction)changeZoom:(id)sender

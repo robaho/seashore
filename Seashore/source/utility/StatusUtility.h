@@ -26,16 +26,6 @@
 	// The actual view that is the status bar
 	IBOutlet id view;
 
-	// The text fields that have the colors
-	IBOutlet id redBox;
-	IBOutlet id greenBox;
-	IBOutlet id blueBox;
-	IBOutlet id alphaBox;
-	IBOutlet id redSlider;
-	IBOutlet id greenSlider;
-	IBOutlet id blueSlider;
-	IBOutlet id alphaSlider;
-	
 	// The slider that controls the zoom
 	IBOutlet id zoomSlider;
 }

@@ -148,74 +148,6 @@ DQ
                                                     <action selector="changeZoom:" target="14766" id="15219"/>
                                                 </connections>
                                             </slider>
-                                            <textField hidden="YES" toolTip="The decimal value for the red compontent of the foreground color" verticalHuggingPriority="750" id="14795">
-                                                <rect key="frame" x="577" y="3" width="35" height="16"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
-                                                <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="0" drawsBackground="YES" id="16789">
-                                                    <numberFormatter key="formatter" formatterBehavior="custom10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="14797">
-                                                        <nil key="negativeInfinitySymbol"/>
-                                                        <nil key="positiveInfinitySymbol"/>
-                                                    </numberFormatter>
-                                                    <font key="font" metaFont="miniSystem"/>
-                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                </textFieldCell>
-                                                <connections>
-                                                    <action selector="quickColorChange:" target="14766" id="15211"/>
-                                                    <outlet property="formatter" destination="14786" id="14801"/>
-                                                </connections>
-                                            </textField>
-                                            <textField hidden="YES" toolTip="The decimal value for the green compontent of the foreground color" verticalHuggingPriority="750" id="14792">
-                                                <rect key="frame" x="620" y="3" width="35" height="16"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
-                                                <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="0" drawsBackground="YES" id="16788">
-                                                    <numberFormatter key="formatter" formatterBehavior="custom10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="14794">
-                                                        <nil key="negativeInfinitySymbol"/>
-                                                        <nil key="positiveInfinitySymbol"/>
-                                                    </numberFormatter>
-                                                    <font key="font" metaFont="miniSystem"/>
-                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                </textFieldCell>
-                                                <connections>
-                                                    <action selector="quickColorChange:" target="14766" id="15210"/>
-                                                    <outlet property="formatter" destination="14786" id="14800"/>
-                                                </connections>
-                                            </textField>
-                                            <textField hidden="YES" toolTip="The decimal value for the blue compontent of the foreground color" verticalHuggingPriority="750" id="14789">
-                                                <rect key="frame" x="663" y="3" width="35" height="16"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
-                                                <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="0" drawsBackground="YES" id="16787">
-                                                    <numberFormatter key="formatter" formatterBehavior="custom10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="14791">
-                                                        <nil key="negativeInfinitySymbol"/>
-                                                        <nil key="positiveInfinitySymbol"/>
-                                                    </numberFormatter>
-                                                    <font key="font" metaFont="miniSystem"/>
-                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                </textFieldCell>
-                                                <connections>
-                                                    <action selector="quickColorChange:" target="14766" id="15209"/>
-                                                    <outlet property="formatter" destination="14786" id="14799"/>
-                                                </connections>
-                                            </textField>
-                                            <textField hidden="YES" toolTip="The decimal value for the alpha compontent of the foreground color" verticalHuggingPriority="750" id="14783">
-                                                <rect key="frame" x="706" y="3" width="35" height="16"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
-                                                <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="255" drawsBackground="YES" id="16786">
-                                                    <numberFormatter key="formatter" formatterBehavior="custom10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="14785">
-                                                        <nil key="negativeInfinitySymbol"/>
-                                                        <nil key="positiveInfinitySymbol"/>
-                                                    </numberFormatter>
-                                                    <font key="font" metaFont="miniSystem"/>
-                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                </textFieldCell>
-                                                <connections>
-                                                    <action selector="quickColorChange:" target="14766" id="15208"/>
-                                                    <outlet property="formatter" destination="14786" id="14798"/>
-                                                </connections>
-                                            </textField>
                                             <button toolTip="Display all channels when editing the document" imageHugsTitle="YES" id="14779">
                                                 <rect key="frame" x="0.0" y="1" width="36" height="23"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
@@ -4997,13 +4929,9 @@ DQ
         </window>
         <customObject id="14766" userLabel="Status Utility" customClass="StatusUtility">
             <connections>
-                <outlet property="alphaBox" destination="14783" id="15201"/>
-                <outlet property="blueBox" destination="14789" id="15202"/>
                 <outlet property="channelSelectionPopup" destination="16420" id="16611"/>
                 <outlet property="dimensionLabel" destination="14781" id="15192"/>
                 <outlet property="document" destination="-2" id="14772"/>
-                <outlet property="greenBox" destination="14792" id="15203"/>
-                <outlet property="redBox" destination="14795" id="15204"/>
                 <outlet property="trueViewCheckbox" destination="14779" id="15191"/>
                 <outlet property="view" destination="14768" id="14771"/>
                 <outlet property="zoomSlider" destination="15205" id="15218"/>
