@@ -68,12 +68,6 @@
 - (void)updateZoom;
 
 /*!
-	@method		updateQuickColor
-	@discussion	Updates the utility to reflect the current foreground color
-*/
-- (void)updateQuickColor;
-
-/*!
 	@method		changeChannel:
 	@discussion	Called when the user wants to change the channels.
 	@param		sender
@@ -96,14 +90,6 @@
 					Ignored.
 */
 - (IBAction)trueViewChanged:(id)sender;
-
-/*!
-	@method		quickColorChange:
-	@discussion	Called when the text in the quickcolor boxes are changed.
-	@param		sender
-				Igonred.
-*/
-- (IBAction)quickColorChange:(id)sender;
 
 /*!
 	@method		changeZoom:

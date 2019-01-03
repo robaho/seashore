@@ -246,7 +246,6 @@ static NSString*	SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar Item 
 		[delay_timer invalidate];
 	}
 	delay_timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:[[document tools] getTool:kTextTool]  selector:@selector(preview:) userInfo:NULL repeats:NO];
-	[(StatusUtility *)[[SeaController utilitiesManager] statusUtilityFor:document] updateQuickColor];
 }
 
 - (void)setBackground:(NSColor *)color

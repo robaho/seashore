@@ -141,7 +141,6 @@
 	[[document whiteboard] readjust];
 	[self layerContentsChanged:kAllLayers];
 	[[[SeaController utilitiesManager] statusUtilityFor:document] update];
-	[[[SeaController utilitiesManager] statusUtilityFor:document] updateQuickColor];
 }
 
 - (void)applyOverlay

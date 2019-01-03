@@ -25,7 +25,6 @@
 	[[[document window] contentView] setVisibility: YES forRegion: kStatusBar];
 	[self update];
 	[self updateZoom];
-	[self updateQuickColor];
 }
 
 - (IBAction)hide:(id)sender
