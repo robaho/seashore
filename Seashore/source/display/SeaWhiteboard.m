@@ -705,7 +705,7 @@ extern IntPoint gScreenResolution;
         imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace bitmapFormat:NSBitmapFormatAlphaNonpremultiplied bytesPerRow:width * spp bitsPerPixel:8 * spp];
 	}
     
-    if (proofProfile && viewType!=kAlphaChannelView && proofProfile.cs!=NULL) {
+    if (proofProfile && viewType!=kAlphaChannelView && proofProfile!=NULL && proofProfile.cs!=NULL) {
         imageRep = [imageRep bitmapImageRepByConvertingToColorSpace:proofProfile.cs renderingIntent:NSColorRenderingIntentDefault];
     }
     

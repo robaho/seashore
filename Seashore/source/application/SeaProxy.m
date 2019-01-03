@@ -173,11 +173,11 @@
 	[[gCurrentDocument contents] makeSelectionFloat: YES];
 }
 
-- (IBAction)toggleCMYKSave:(id)sender
+- (IBAction)toggleSaveProofProfile:(id)sender
 {
-	id contents = [gCurrentDocument contents];
+	SeaContent *contents = [gCurrentDocument contents];
 	
-	[contents setCMYKSave:![contents cmykSave]];
+	[contents setSaveProofProfile:![contents saveProofProfile]];
 }
 
 - (IBAction)toggleLayerAlpha:(id)sender
@@ -457,7 +457,7 @@
 				return NO;
 		break;
 		case 232:
-			[menuItem setState:[[document contents] cmykSave]];
+			[menuItem setState:[[document contents] saveProofProfile]];
 		break;
 		case 240:
 		case 241:

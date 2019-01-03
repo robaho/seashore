@@ -104,7 +104,7 @@
 		}
         
         SeaColorProfile *cp = [[document whiteboard] proofProfile];
-        if(cp!=NULL) {
+        if(cp!=NULL && cp.cs!=NULL) {
             statusString = [statusString stringByAppendingFormat: @" %@ %@", divider, [cp desc]];
         }
 		

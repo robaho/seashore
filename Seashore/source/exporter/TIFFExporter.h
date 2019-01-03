@@ -31,12 +31,6 @@
 - (id)init;
 
 /*!
-	@method		dealloc
-	@discussion	Frees memory occupied by an instance of this class.
-*/
-- (void)dealloc;
-
-/*!
 	@method		targetChanged:
 	@discussion	Called when the user adjusts the media target.
 	@param		sender

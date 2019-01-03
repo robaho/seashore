@@ -66,8 +66,8 @@ typedef struct {
 	ParasiteData *parasites;
 	int parasites_count;
 	
-	// Save as a CMYK TIFF file
-	BOOL cmykSave;
+	// embed the "proof profile" when saving
+	BOOL saveProofProfile;
 	
 	// The EXIF data associated with this image
 	NSDictionary *exifData;
@@ -255,22 +255,21 @@ typedef struct {
 
 /*!
 	@method		setCMYKSave
-	@discussion	Sets whether TIFF files should be saved using the CMYK colour
-				space.
+	@discussion	Sets whether TIFF files should be saved using the proof profile
 	@param		value
-				YES if TIFF files should be saved using the CMYK colour space,
+				YES if TIFF files should be saved using the proof colour space,
 				NO otherwise.
 */
-- (void)setCMYKSave:(BOOL)value;
+- (void)setSaveProofProfilee:(BOOL)value;
 
 /*!
 	@method		cmykSave
-	@discussion	Returns whether TIFF files should be saved using the CMYK colour
+	@discussion	Returns whether TIFF files should be saved using the proof colour
 				space.
-	@result		YES if TIFF files should be saved using the CMYK colour space,
+	@result		YES if TIFF files should be saved using the proof colour space,
 				NO otherwise.
 */
-- (BOOL)cmykSave;
+- (BOOL)saveProofProfile;
 
 /*!
 	@method		exifData

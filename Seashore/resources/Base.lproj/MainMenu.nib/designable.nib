@@ -473,9 +473,9 @@ Gw
                                         <menuItem isSeparatorItem="YES" id="2011">
                                             <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                         </menuItem>
-                                        <menuItem title="Save using CMYK" tag="232" id="2010">
+                                        <menuItem title="Save TIFF using Profile" tag="232" id="2010">
                                             <connections>
-                                                <action selector="toggleCMYKSave:" target="501" id="2012"/>
+                                                <action selector="toggleSaveProofProfile:" target="501" id="H2D-Xh-D7f"/>
                                             </connections>
                                         </menuItem>
                                     </items>

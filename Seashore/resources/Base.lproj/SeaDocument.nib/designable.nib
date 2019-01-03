@@ -670,23 +670,14 @@ DQ
                 <outlet property="delegate" destination="-2" id="4559"/>
                 <outlet property="initialFirstResponder" destination="63" id="16753"/>
             </connections>
-            <point key="canvasLocation" x="-12" y="645"/>
+            <point key="canvasLocation" x="-58" y="42"/>
         </window>
         <customView id="70" userLabel="Accessory View">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="28"/>
+            <rect key="frame" x="0.0" y="0.0" width="505" height="21"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
-                <textField verticalHuggingPriority="750" id="692">
-                    <rect key="frame" x="235" y="6" width="80" height="13"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" id="16799">
-                        <font key="font" metaFont="label"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <button verticalHuggingPriority="750" imageHugsTitle="YES" id="74">
-                    <rect key="frame" x="146" y="-4" width="90" height="32"/>
+                    <rect key="frame" x="139" y="-7" width="90" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
                     <buttonCell key="cell" type="push" title="Options" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" inset="2" id="16798">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -697,7 +688,7 @@ DQ
                     </connections>
                 </button>
                 <popUpButton verticalHuggingPriority="750" imageHugsTitle="YES" id="71">
-                    <rect key="frame" x="5" y="0.0" width="142" height="26"/>
+                    <rect key="frame" x="-2" y="-3" width="142" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                     <popUpButtonCell key="cell" type="push" title="Unknown" bezelStyle="rounded" alignment="left" lineBreakMode="clipping" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="73" id="16797">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -712,7 +703,17 @@ DQ
                         <action selector="exporterChanged:" target="-2" id="77"/>
                     </connections>
                 </popUpButton>
+                <textField verticalHuggingPriority="750" id="692">
+                    <rect key="frame" x="229" y="-3" width="271" height="19"/>
+                    <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" id="16799">
+                        <font key="font" metaFont="label"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
+            <point key="canvasLocation" x="15.5" y="791.5"/>
         </customView>
         <window title="Resolution..." allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="87" userLabel="Resolution" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES"/>
@@ -848,6 +849,7 @@ Gw
                                 </textField>
                             </subviews>
                         </view>
+                        <font key="titleFont" metaFont="message" size="11"/>
                     </box>
                 </subviews>
             </view>
@@ -1151,6 +1153,7 @@ Gw
                                 </popUpButton>
                             </subviews>
                         </view>
+                        <font key="titleFont" metaFont="message" size="11"/>
                     </box>
                     <popUpButton toolTip="Various predefined sizes" imageHugsTitle="YES" id="658">
                         <rect key="frame" x="17" y="18" width="90" height="22"/>
@@ -1424,6 +1427,7 @@ Gw
                                 </popUpButton>
                             </subviews>
                         </view>
+                        <font key="titleFont" metaFont="message" size="11"/>
                     </box>
                     <popUpButton toolTip="Various predefined sizes" imageHugsTitle="YES" id="583">
                         <rect key="frame" x="17" y="18" width="90" height="22"/>
@@ -1525,15 +1529,15 @@ Gw
                         <rect key="frame" x="20" y="34" width="440" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <clipView key="contentView" drawsBackground="NO" id="zX2-tZ-Cdx">
-                            <rect key="frame" x="1" y="1" width="427" height="54"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <rect key="frame" x="1" y="1" width="423" height="54"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" usesFontPanel="YES" usesRuler="YES" spellingCorrection="YES" smartInsertDelete="YES" id="1007" customClass="NSTextViewRedirect">
                                     <rect key="frame" x="0.0" y="0.0" width="431" height="54"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                    <size key="minSize" width="427" height="54"/>
+                                    <size key="minSize" width="423" height="54"/>
                                     <size key="maxSize" width="466" height="10000000"/>
                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <connections>
@@ -2002,19 +2006,19 @@ Gw
         <window title="TIFF Options" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="694" userLabel="TIFF Options" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="702" y="566" width="207" height="139"/>
+            <rect key="contentRect" x="702" y="566" width="270" height="159"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="695">
-                <rect key="frame" x="0.0" y="0.0" width="207" height="139"/>
+                <rect key="frame" x="0.0" y="0.0" width="270" height="159"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" autosizesCells="NO" id="697">
-                        <rect key="frame" x="18" y="58" width="170" height="38"/>
+                        <rect key="frame" x="20" y="60" width="98" height="58"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        <size key="cellSize" width="170" height="18"/>
+                        <size key="cellSize" width="98" height="18"/>
                         <size key="intercellSpacing" width="4" height="2"/>
-                        <buttonCell key="prototype" type="radio" title="Radio" imagePosition="leading" alignment="left" inset="2" id="17040">
+                        <buttonCell key="prototype" type="radio" title="Radio" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="ERn-OY-cvr">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -2028,23 +2032,18 @@ Gw
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="smallSystem"/>
                                 </buttonCell>
+                                <buttonCell type="radio" title="Proof Profile" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="auA-Z5-eKy" userLabel="Proof Profile">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
                             </column>
                         </cells>
                         <connections>
                             <action selector="targetChanged:" target="330" id="707"/>
                         </connections>
                     </matrix>
-                    <textField verticalHuggingPriority="750" id="699">
-                        <rect key="frame" x="17" y="105" width="172" height="14"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="left" title="Please select the target:" id="16833">
-                            <font key="font" metaFont="smallSystem"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
                     <button verticalHuggingPriority="750" imageHugsTitle="YES" id="700">
-                        <rect key="frame" x="97" y="12" width="96" height="32"/>
+                        <rect key="frame" x="87" y="12" width="96" height="32"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="16834">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -2061,8 +2060,18 @@ DQ
                         <rect key="frame" x="12" y="49" width="175" height="5"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </box>
+                    <textField verticalHuggingPriority="750" id="699">
+                        <rect key="frame" x="10" y="135" width="172" height="14"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="left" title="Please select the target:" id="16833">
+                            <font key="font" metaFont="smallSystem"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
             </view>
+            <point key="canvasLocation" x="3" y="102.5"/>
         </window>
         <window title="Rotate" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="744" userLabel="Rotate" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES"/>
@@ -2149,6 +2158,7 @@ Gw
                                 </textField>
                             </subviews>
                         </view>
+                        <font key="titleFont" metaFont="message" size="11"/>
                     </box>
                 </subviews>
             </view>

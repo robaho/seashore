@@ -236,7 +236,7 @@ enum {
 	return contents;
 }
 
-- (id)whiteboard
+- (SeaWhiteboard*)whiteboard
 {
 	return whiteboard;
 }

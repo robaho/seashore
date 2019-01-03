@@ -14,17 +14,17 @@
 
 - (BOOL)hasOptions
 {
+    // Work things out
+    if ([[idocument contents] saveProofProfile])
+        [targetRadios selectCellAtRow:2 column:0];
+    else
+        [targetRadios selectCellAtRow:0 column:0];
+    
 	return YES;
 }
 
 - (IBAction)showOptions:(id)sender
 {
-	// Work things out
-	if ([[idocument contents] cmykSave])
-		[targetRadios selectCellAtRow:1 column:0];
-	else
-		[targetRadios selectCellAtRow:0 column:0];
-	
 	// Display the options dialog
 	[panel center];
 	[NSApp runModalForWindow:panel];
@@ -33,14 +33,6 @@
 
 - (IBAction)targetChanged:(id)sender
 {
-	switch ([targetRadios selectedRow]) {
-		case 0:
-			[[idocument contents] setCMYKSave:NO];
-		break;
-		case 1:
-			[[idocument contents] setCMYKSave:YES];
-		break;
-	}
 }
 
 - (IBAction)endPanel:(id)sender
@@ -60,10 +52,20 @@
 
 - (NSString *)optionsString
 {
-	if ([[idocument contents] cmykSave])
-		return @"CMYK";
-	else
-		return @"RGB/RGBA";
+    SeaColorProfile *cp = [[idocument whiteboard] proofProfile];
+                           
+    switch ([targetRadios selectedRow]) {
+        case 0:
+            return @"RGB/RGBA";
+        case 1:
+            return @"CMYK";
+        case 2:
+            if(cp!=NULL && cp.cs!=NULL){
+                return cp.desc;
+            }
+            return @"RGB/RGBA";
+    }
+    return @"Unknown";
 }
 
 - (BOOL)writeDocument:(id)document toFile:(NSString *)path
@@ -89,11 +91,19 @@
     
     NSBitmapImageRep* imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&destData pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:hasAlpha isPlanar:NO colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
     
-	// Behave differently if we are targeting a CMYK file
-	if ([[document contents] cmykSave] && spp == 4) {
-        
-        NSColorSpace* cs = [NSColorSpace deviceCMYKColorSpace];
-        imageRep = [imageRep bitmapImageRepByConvertingToColorSpace:cs renderingIntent:NSColorRenderingIntentDefault];
+    switch([targetRadios selectedRow]) {
+        case 1: {
+                NSColorSpace* cs = [NSColorSpace deviceCMYKColorSpace];
+                imageRep = [imageRep bitmapImageRepByConvertingToColorSpace:cs renderingIntent:NSColorRenderingIntentDefault];
+            }
+            break;
+        case 2:{
+                SeaColorProfile *cp = [[document whiteboard] proofProfile];
+                if(cp!=NULL && cp.cs!=NULL){
+                    imageRep = [imageRep bitmapImageRepByConvertingToColorSpace:cp.cs renderingIntent:NSColorRenderingIntentDefault];
+                }
+            }
+            break;
     }
     
     NSDictionary *imageProps = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:NSTIFFCompressionLZW] forKey:NSImageCompressionMethod];

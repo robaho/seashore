@@ -49,7 +49,7 @@
 - (IBAction)clearAllLinks:(id)sender;
 - (IBAction)toggleFloatingSelection:(id)sender;
 - (IBAction)duplicate:(id)sender;
-- (IBAction)toggleCMYKSave:(id)sender;
+- (IBAction)toggleSaveProofProfile:(id)sender;
 - (IBAction)changeSelectedChannel:(id)sender;
 - (IBAction)changeTrueView:(id)sender;
 

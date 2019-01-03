@@ -20,7 +20,7 @@
     orderings = [NSMutableArray array];
 	deletedLayers = [[NSArray alloc] init];
 	selectedChannel = kAllChannels; trueView = NO;
-	cmykSave = NO;
+	saveProofProfile = NO;
 	gScreenResolution = IntMakePoint(1024, 768);
 
 	return self;
@@ -194,14 +194,14 @@
 	trueView = value;
 }
 
-- (void)setCMYKSave:(BOOL)value
+- (void)setSaveProofProfile:(BOOL)value
 {
-	cmykSave = value;
+	saveProofProfile = value;
 }
 
-- (BOOL)cmykSave
+- (BOOL)saveProofProfile
 {
-	return cmykSave;
+	return saveProofProfile;
 }
 
 - (NSDictionary *)exifData
