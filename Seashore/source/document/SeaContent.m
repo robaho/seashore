@@ -843,7 +843,8 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
         }
     }
     
-    
+    layers = tempArray;
+
     // Create a new array of lost layers with the removed layer replaced with "BLANK"
     tempArray = [NSArray array];
     for (i = 0; i < [deletedLayers count]; i++) {
