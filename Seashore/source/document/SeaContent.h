@@ -6,7 +6,7 @@
 	@discussion	A record containing arbitrary data that will be saved with the
 				image using the XCF file format.
 	@field		name
-				The name of the parasite.
+				The null terminated name of the parasite.
 	@field		flags
 				Any flags associated with the parasite.
 	@field		size
@@ -15,7 +15,7 @@
 				The parasite's data.
 */
 typedef struct {
-	NSString *name;
+	char *name;
 	unsigned int flags;
 	unsigned int size;
 	unsigned char *data;
@@ -313,7 +313,7 @@ typedef struct {
 	@result		Returns a pointer to the ParasiteData record with the requested
 				name or NULL if no parasites match.
 */
-- (ParasiteData *)parasiteWithName:(NSString *)name;
+- (ParasiteData *)parasiteWithName:(char *)name;
 
 /*!
 	@method		deleteParasiteWithName:
@@ -321,7 +321,7 @@ typedef struct {
 	@param		name
 				The name of the parasite to delete.
 */
-- (void)deleteParasiteWithName:(NSString *)name;
+- (void)deleteParasiteWithName:(char *)name;
 
 /*!
 	@method		addParasite:

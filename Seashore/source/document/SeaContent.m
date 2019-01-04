@@ -167,6 +167,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     freeKeeper(&keeper);
     if (parasites) {
         for (i = 0; i < parasites_count; i++) {
+            free(parasites[i].name);
             free(parasites[i].data);
         }
         free(parasites);
@@ -298,32 +299,33 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     return parasites_count;
 }
 
-- (ParasiteData *)parasiteWithName:(NSString *)name
+- (ParasiteData *)parasiteWithName:(char *)name
 {
     int i;
     
     for (i = 0; i < parasites_count; i++) {
-        if ([name isEqualToString:parasites[i].name])
+        if (strcmp(name,parasites[i].name)==0)
             return &(parasites[i]);
     }
     
     return NULL;
 }
 
-- (void)deleteParasiteWithName:(NSString *)name
+- (void)deleteParasiteWithName:(char *)name
 {
     int i, x;
     
     // Find the parasite to delete
     x = -1;
     for (i = 0; i < parasites_count && x == -1; i++) {
-        if ([name isEqualToString:parasites[i].name])
+        if (strcmp(name,parasites[i].name)==0)
             x = i;
     }
     
     if (x != -1) {
         
         // Destroy it
+        free(parasites[x].name);
         free(parasites[x].data);
     
         // Update the parasites list

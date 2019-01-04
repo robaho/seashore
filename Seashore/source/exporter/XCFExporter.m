@@ -123,10 +123,10 @@ static inline void fix_endian_write(int *input, int size)
 		parasites = [contents parasites];
 		for (i = 0; i < count; i++) {
 			parasite = parasites[i];
-			tempIntString[0] = strlen([parasite.name UTF8String]) + 1;
+			tempIntString[0] = strlen(parasite.name) + 1;
 			fix_endian_write(tempIntString, 1);
 			fwrite(tempIntString, sizeof(int), 1, file);
-			fwrite([parasite.name UTF8String], sizeof(char), strlen([parasite.name UTF8String]) + 1, file);
+			fwrite(parasite.name, sizeof(char), strlen(parasite.name) + 1, file);
 			tempIntString[0] = parasite.flags;
 			tempIntString[1] = parasite.size;
 			fix_endian_write(tempIntString, 2);
@@ -410,7 +410,7 @@ static inline void fix_endian_write(int *input, int size)
 	if ([[document contents] exifData]) {
 		exifContainer = [NSPropertyListSerialization dataFromPropertyList:[[document contents] exifData] format:NSPropertyListXMLFormat_v1_0 errorDescription:&errorString];
 		if (exifContainer) {
-			exifParasite.name = @"exif-plist";
+			exifParasite.name = strdup("exif-plist");
 			exifParasite.flags = 0;
 			exifParasite.size = [exifContainer length];
 			exifParasite.data = malloc(exifParasite.size);
@@ -472,7 +472,7 @@ static inline void fix_endian_write(int *input, int size)
 	
 	// Remove EXIF parasite
 	if ([[document contents] exifData]) {
-		[[document contents] deleteParasiteWithName:@"exif-plist"];
+		[[document contents] deleteParasiteWithName:"exif-plist"];
 	}
 	
 	return YES;
