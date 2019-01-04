@@ -20,6 +20,7 @@ extern BOOL userWarnedOnDiskSpace;
 	document = doc;
 	layer = ilayer;
 	memoryCacheSize = (unsigned long)[[SeaController seaPrefs] memoryCacheSize];
+    useDiskCache = (bool)[[SeaController seaPrefs] useDiskCacheAtStart];
 	
 	// Allocate the initial records size
 	records = malloc(kNumberOfUndoRecordsPerMalloc * sizeof(UndoRecord));
@@ -55,6 +56,10 @@ extern BOOL userWarnedOnDiskSpace;
 				unlink(tempFileName);
 			}
 		}
+        if(!useDiskCache && records[i].data!=NULL){
+            free(records[i].data);
+            records[i].data=NULL;
+        }
 	}
 	
 	// Free the memory cache
@@ -62,6 +67,10 @@ extern BOOL userWarnedOnDiskSpace;
 	
 	// Free the record of the memory cache
 	if (records) free(records);
+}
+
+- (BOOL)useDiskCache {
+    return useDiskCache;
 }
 
 - (BOOL)checkDiskSpace
@@ -119,7 +128,7 @@ extern BOOL userWarnedOnDiskSpace;
 	int fileNo, i;
 
 	// Check we actually have something to write to disk
-	if (memory_cache_pos > 0) {
+	if (memory_cache_pos > 0 && useDiskCache) {
 
 		// Check we have sufficient disk space
 		if ([self checkDiskSpace]) {
@@ -260,7 +269,7 @@ extern BOOL userWarnedOnDiskSpace;
 	}
 	
 	// Check that the memory cache has space to handle this snapshot (otherwise write it to disk and start afresh)
-	if (memory_cache_pos + sectionSize + 4 * sizeof(int) > memory_cache_len) {
+	if (useDiskCache && memory_cache_pos + sectionSize + 4 * sizeof(int) > memory_cache_len) {
 		[self writeMemoryCache];
 		memory_cache_len = MAX(sectionSize + 4 * sizeof(int), memoryCacheSize * 1024);
 		memory_cache = malloc(memory_cache_len);
@@ -268,7 +277,11 @@ extern BOOL userWarnedOnDiskSpace;
 	}
 	
 	// Record the details
-	temp_ptr = (unsigned char*)memory_cache + memory_cache_pos;
+    if(useDiskCache){
+        temp_ptr = (unsigned char*)memory_cache + memory_cache_pos;
+    } else {
+        temp_ptr = malloc(sectionSize+4*sizeof(int));
+    }
 	int_ptr = (int *)temp_ptr;
 	int_ptr[0] = rect.origin.x;
 	int_ptr[1] = rect.origin.y;
@@ -288,7 +301,7 @@ extern BOOL userWarnedOnDiskSpace;
 		temp_ptr += rect.size.width * spp;
 	}
 	records[records_len].fileNumber = -1;
-	records[records_len].data = (unsigned char*)memory_cache + memory_cache_pos;
+    records[records_len].data = (unsigned char *)int_ptr;
 	
 	// Increase the memory cache position
 	memory_cache_pos += sectionSize + rectSize;
@@ -297,7 +310,7 @@ extern BOOL userWarnedOnDiskSpace;
 	records_len++;
 	
 	// Check that the memory cache has space to handle this snapshot (otherwise write it to disk and start afresh)
-	if (memory_cache_pos >= memory_cache_len) {
+	if (useDiskCache && memory_cache_pos >= memory_cache_len ) {
 		[self writeMemoryCache];
 		memory_cache_len = memoryCacheSize * 1024;
 		memory_cache = malloc(memory_cache_len);

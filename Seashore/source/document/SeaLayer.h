@@ -1,6 +1,9 @@
 #import "Globals.h"
 #import "SeaDocument.h"
 
+
+@class SeaLayerUndo;
+
 /*!
 	@class		SeaLayer
 	@abstract	Represents a layer of the document.
@@ -10,14 +13,13 @@
 				<b>License:</b> GNU General Public License<br>
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
-
 @interface SeaLayer : NSObject {
 	
 	// The document that contains this layer
 	SeaDocument *document;
 	
 	// The object responsible for changes to our bitmap
-	id seaLayerUndo;
+	SeaLayerUndo *seaLayerUndo;
 	
 	// The layer's height, width and mode
 	int height, width, mode;

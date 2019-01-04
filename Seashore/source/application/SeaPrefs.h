@@ -117,6 +117,10 @@ enum {
 	
 	// A checkbox which when checks indicates CoreImage should be used for scaling/rotation
 	IBOutlet id useCoreImageCheckbox;
+    
+    // A checkbox which when checks indicates slower disk cache should be used undo
+    IBOutlet id useDiskCacheCheckbox;
+
 	
 	// Stores whether or not layer boundaries are visible
 	BOOL layerBounds;
@@ -138,7 +142,13 @@ enum {
 	
 	// Stores the memory cache size
 	int memoryCacheSize;
-	
+    
+    // whether the disk caching is disabled
+    bool useDiskCache;
+    
+    // whether the disk caching is disabled, setting at time of start
+    bool useDiskCacheAtStart;
+
 	// Whether textures should be used
 	BOOL useTextures;
 		
@@ -394,6 +404,15 @@ enum {
 - (IBAction)setUseCoreImage:(id)sender;
 
 /*!
+ @method        setUseDIskCache:
+ @discussion    Sets if slower disk cache should be used for undo
+ @param        sender
+ Ignored.
+ */
+- (IBAction)setUseDiskCache:(id)sender;
+
+
+/*!
 	@method		apply:
 	@discussion	Applies the settings of the preferences panel.
 	@param		sender
@@ -444,10 +463,23 @@ enum {
 	@discussion	Returns the minimum size of the undo data for a paticular layer
 				that should be stored in memory before it is written to disk.
 				This is known as the memory cache size for that layer.
-	@result		Returns an integer representing the memory cache size in  bytes
+	@result		Returns an integer representing the memory cache size in mega bytes
 				for any layer.
 */
 - (int)memoryCacheSize;
+
+/*!
+ @method        useDiskCache
+ @discussion    Returns if the disk caching should be disabled
+ */
+- (bool)useDiskCache;
+
+/*!
+ @method        useDiskCache
+ @discussion    Returns the useDiskCache setting as set during program start
+ */
+- (bool)useDiskCacheAtStart;
+
 
 /*!
 	@method		warningLevel

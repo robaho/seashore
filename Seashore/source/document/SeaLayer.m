@@ -165,7 +165,7 @@
 	FILE *file;
 	
 	// If the image data is not already compressed
-	if (data) {
+	if (data && ![seaLayerUndo useDiskCache]) {
 		
 		// Do a check of the disk space
 		if ([seaLayerUndo checkDiskSpace]) {
@@ -652,7 +652,7 @@
 	return floating;
 }
 
-- (id)seaLayerUndo
+- (SeaLayerUndo*)seaLayerUndo
 {
 	return seaLayerUndo;
 }

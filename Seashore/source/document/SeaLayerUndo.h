@@ -46,8 +46,9 @@ typedef struct {
 	int records_len;
 	int records_max_len;
 	
-	// The minimum size of the memory cache
+	// The maximum size of the memory cache
 	unsigned long memoryCacheSize;
+    bool useDiskCache;
 	
 	// The big block of memory which we use to record new data
 	char *memory_cache;
@@ -83,6 +84,14 @@ typedef struct {
 				otherwise.
 */
 - (BOOL)checkDiskSpace;
+
+/*!
+ @method        useDiskCache
+ @discussion    Returns whether the disk cache should be disabled for increased performane
+ @result        YES if the diska cache is disabled
+ */
+- (BOOL)useDiskCache;
+
 
 /*!
 	@method		takeSanpshot:automatic:
