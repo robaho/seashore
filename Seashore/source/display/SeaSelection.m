@@ -135,391 +135,154 @@
 	}
 }
 
+- (void)updateMaskFromPath:(NSBezierPath*)path selectionRect:(IntRect)selectionRect mode:(int)mode {
+    id layer = [[document contents] activeLayer];
+    int width = [(SeaLayer *)layer width], height = [(SeaLayer *)layer height];
+    unsigned char *newMask, *tempMask, oldMaskPoint, newMaskPoint;
+    IntRect newRect, oldRect, tempRect;
+    int tempMaskPoint, tempMaskProduct;
+    int i, j;
+    
+    if(!mask)
+        mode = kDefaultMode;
+    
+    // Get the rectangles
+    if(mode){
+        oldRect = [self localRect];
+        newRect = selectionRect;
+        rect = IntSumRects(oldRect, newRect);
+    } else {
+        newRect = rect = selectionRect;
+    }
+    
+    active = NO;
+    
+    int mwidth = rect.size.width;
+    int mheight = rect.size.height;
+    
+    newMask = malloc(mwidth*mheight);
+    memset(newMask,0,mwidth*mheight);
+    
+    if(mwidth>0 && mheight>0) {
+        NSBitmapImageRep *maskRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&newMask pixelsWide:mwidth pixelsHigh:mheight bitsPerSample:8 samplesPerPixel:1 hasAlpha:NO isPlanar:NO colorSpaceName:MyGraySpace bytesPerRow:mwidth bitsPerPixel:8];
+
+        [NSGraphicsContext saveGraphicsState];
+        NSGraphicsContext *ctx = [NSGraphicsContext graphicsContextWithBitmapImageRep:maskRep];
+        [NSGraphicsContext setCurrentContext:ctx];
+        [[NSColor whiteColor] setFill];
+        [path fill];
+        [NSGraphicsContext restoreGraphicsState];
+    }
+    
+    // Constrain to the layer
+    if(rect.origin.x + rect.size.width > width || rect.origin.y + rect.size.height > height || rect.origin.x < 0 || rect.origin.y < 0){
+        tempRect = IntConstrainRect(rect, IntMakeRect(0, 0, width, height));
+        tempMask = malloc(tempRect.size.width * tempRect.size.height);
+        memset(tempMask, 0x00, tempRect.size.width * tempRect.size.height);
+        
+        for (i = 0; i < tempRect.size.width; i++) {
+            for (j = 0; j < tempRect.size.height; j++) {
+                tempMask[(j  * tempRect.size.width + i)] =  newMask[(j - rect.origin.y + tempRect.origin.y) * rect.size.width + i - rect.origin.x + tempRect.origin.x];
+            }
+        }
+        
+        rect = tempRect;
+        free(newMask);
+        newMask = tempMask;
+    }
+    
+    if(mode){
+        for (i = 0; i < rect.size.width; i++) {
+            for (j = 0; j < rect.size.height; j++) {
+                newMaskPoint = newMask[j * rect.size.width + i];
+                
+                // If we are in the rect of the old mask
+                if(j >= oldRect.origin.y - rect.origin.y && j < oldRect.origin.y - rect.origin.y + oldRect.size.height
+                   && i >= oldRect.origin.x - rect.origin.x && i < oldRect.origin.x - rect.origin.x + oldRect.size.width)
+                    oldMaskPoint = mask[(j - oldRect.origin.y + rect.origin.y) * oldRect.size.width + (i - oldRect.origin.x + rect.origin.x)];
+                else
+                    oldMaskPoint = 0x00;
+                
+                // Do the math
+                switch(mode){
+                    case kAddMode:
+                        tempMaskPoint = oldMaskPoint + newMaskPoint;
+                        if(tempMaskPoint > 0xFF)
+                            tempMaskPoint = 0xFF;
+                        newMaskPoint = (unsigned char)tempMaskPoint;
+                        break;
+                    case kSubtractMode:
+                        tempMaskPoint = oldMaskPoint - newMaskPoint;
+                        if(tempMaskPoint < 0x00)
+                            tempMaskPoint = 0x00;
+                        newMaskPoint = (unsigned char)tempMaskPoint;
+                        break;
+                    case kMultiplyMode:
+                        tempMaskPoint = oldMaskPoint * newMaskPoint;
+                        tempMaskPoint /= 0xFF;
+                        newMaskPoint = (unsigned char)tempMaskPoint;
+                        break;
+                    case kSubtractProductMode:
+                        tempMaskProduct = oldMaskPoint * newMaskPoint;
+                        tempMaskProduct /= 0xFF;
+                        tempMaskPoint = oldMaskPoint + newMaskPoint;
+                        if(tempMaskPoint > 0xFF)
+                            tempMaskPoint = 0xFF;
+                        tempMaskPoint -= tempMaskProduct;
+                        if(tempMaskPoint < 0x00)
+                            tempMaskPoint = 0x00;
+                        newMaskPoint = (unsigned char)tempMaskPoint;
+                        break;
+                    default:
+                        NSLog(@"Selection mode not supported.");
+                        break;
+                }
+                newMask[j * rect.size.width + i] = newMaskPoint;
+                if(newMaskPoint > 0x00)
+                    active=YES;
+            }
+        }
+    } else {
+        if (rect.size.width > 0 && rect.size.height > 0)
+            active = YES;
+    }
+    
+    // Free previous mask information
+    if (mask) { free(mask); mask = NULL; }
+    if (maskBitmap) { free(maskBitmap); maskBitmap = NULL; maskImage = NULL; }
+    
+    // Commit the new stuff
+    rect.origin.x += [layer xoff];
+    rect.origin.y += [layer yoff];
+    globalRect = rect;
+    
+    if(active){
+        mask = newMask;
+        [self trimSelection];
+        [self updateMaskImage];
+    }else{
+        free(newMask);
+    }
+    
+    // Update the changes
+    [[document helpers] selectionChanged];
+}
+
 - (void)selectRect:(IntRect)selectionRect mode:(int)mode
 {
-	id layer = [[document contents] activeLayer];
-	int width = [(SeaLayer *)layer width], height = [(SeaLayer *)layer height];
-	unsigned char *newMask, oldMaskPoint, newMaskPoint;
-	IntRect newRect, oldRect;
-	int tempMaskPoint, tempMaskProduct;
-	int i, j;
-
-	if(!mask)
-		mode = kDefaultMode;
-	
-	// Get the rectangles
-	if(mode){
-		oldRect = [self localRect];
-		newRect = IntConstrainRect(selectionRect, IntMakeRect(0, 0, width, height));
-		rect = IntSumRects(oldRect, newRect);
-	} else {
-		rect = IntConstrainRect(selectionRect, IntMakeRect(0, 0, width, height));
-	}
-
-	active = NO;
-	
-	// Draw the circle
-	newMask = malloc(rect.size.width * rect.size.height);
-
-	if(mode){
-		memset(newMask, 0x00, rect.size.width * rect.size.height);
-		for (i = 0; i < rect.size.width; i++) {
-			for (j = 0; j < rect.size.height; j++) {
-				// If we are in the rectangle of the new selection
-				if(j >= newRect.origin.y - rect.origin.y && j < newRect.origin.y - rect.origin.y + newRect.size.height
-				&& i >= newRect.origin.x - rect.origin.x && i < newRect.origin.x - rect.origin.x + newRect.size.width)
-					newMaskPoint = 0xFF;
-				else
-					newMaskPoint = 0x00;
-
-				// If we are in the rect of the old mask
-				if(j >= oldRect.origin.y - rect.origin.y && j < oldRect.origin.y - rect.origin.y + oldRect.size.height
-				&& i >= oldRect.origin.x - rect.origin.x && i < oldRect.origin.x - rect.origin.x + oldRect.size.width)
-					oldMaskPoint = mask[(j - oldRect.origin.y + rect.origin.y) * oldRect.size.width + (i - oldRect.origin.x + rect.origin.x)];
-				else
-					oldMaskPoint = 0x00;
-				
-				
-				// Do the math
-				switch(mode){
-					case kAddMode:
-						tempMaskPoint = oldMaskPoint + newMaskPoint;
-						if(tempMaskPoint > 0xFF)
-							tempMaskPoint = 0xFF;
-						newMaskPoint = (unsigned char)tempMaskPoint;
-					break;
-					case kSubtractMode:
-						tempMaskPoint = oldMaskPoint - newMaskPoint;
-						if(tempMaskPoint < 0x00)
-							tempMaskPoint = 0x00;
-						newMaskPoint = (unsigned char)tempMaskPoint;
-					break;
-					case kMultiplyMode:
-						tempMaskPoint = oldMaskPoint * newMaskPoint;
-						tempMaskPoint /= 0xFF;
-						newMaskPoint = (unsigned char)tempMaskPoint;
-					break;
-					case kSubtractProductMode:
-						tempMaskProduct = oldMaskPoint * newMaskPoint;
-						tempMaskProduct /= 0xFF;
-						tempMaskPoint = oldMaskPoint + newMaskPoint;
-						if(tempMaskPoint > 0xFF)
-							tempMaskPoint = 0xFF;
-						tempMaskPoint -= tempMaskProduct;	
-						if(tempMaskPoint < 0x00)
-							tempMaskPoint = 0x00;
-						newMaskPoint = (unsigned char)tempMaskPoint;
-					break;
-					default:
-						NSLog(@"Selection mode not supported.");
-					break;
-				}
-				newMask[j * rect.size.width + i] = newMaskPoint;
-				if(newMaskPoint > 0x00)
-					active=YES;
-			}
-		}
-	} else {
-		memset(newMask, 0xFF, rect.size.width * rect.size.height);
-		if (rect.size.width > 0 && rect.size.height > 0)
-			active = YES;
-	}
-		
-	// Free previous mask information 
-	if (mask) { free(mask); mask = NULL; }
-	if (maskBitmap) { free(maskBitmap); maskBitmap = NULL; maskImage = NULL; }
-
-	// Commit the new stuff
-	rect.origin.x += [layer xoff];
-	rect.origin.y += [layer yoff];
-	globalRect = rect;
-		
-	if(active){
-		mask = newMask;
-		[self trimSelection];
-		[self updateMaskImage];
-	}else{
-		free(newMask);
-	}
-
-	// Update the changes
-	[[document helpers] selectionChanged];
+    [self selectRoundedRect:selectionRect radius:0 mode:mode];
 }
 
 - (void)selectEllipse:(IntRect)selectionRect mode:(int)mode
 {
-	id layer = [[document contents] activeLayer];
-	int width = [(SeaLayer *)layer width], height = [(SeaLayer *)layer height];
-	unsigned char *newMask, *tempMask, oldMaskPoint, newMaskPoint;
-	IntRect newRect, oldRect, tempRect;
-	int tempMaskPoint, tempMaskProduct;
-	int i, j;
-
-	if(!mask)
-		mode = kDefaultMode;
-
-	// Get the rectangles
-	if(mode){
-		oldRect = [self localRect];
-		newRect = selectionRect;
-		rect = IntSumRects(oldRect, newRect);
-	} else {
-		rect = selectionRect;
-	}
-
-	active = NO;
-	
-	// Draw the circle
-	newMask = malloc(rect.size.width * rect.size.height);
-	memset(newMask, 0x00, rect.size.width * rect.size.height);
-	GCDrawEllipse(newMask, rect.size.width, rect.size.height, IntMakeRect(selectionRect.origin.x-rect.origin.x, selectionRect.origin.y-rect.origin.y, selectionRect.size.width, selectionRect.size.height), YES);
-	
-	// Constrain to the layer
-	if(rect.origin.x + rect.size.width > width || rect.origin.y + rect.size.height > height || rect.origin.x < 0 || rect.origin.y < 0){
-		tempRect = IntConstrainRect(rect, IntMakeRect(0, 0, width, height));
-		tempMask = malloc(tempRect.size.width * tempRect.size.height);
-		memset(tempMask, 0x00, tempRect.size.width * tempRect.size.height);
-	
-		for (i = 0; i < tempRect.size.width; i++) {
-			for (j = 0; j < tempRect.size.height; j++) {
-				tempMask[(j  * tempRect.size.width + i)] =  newMask[(j - rect.origin.y + tempRect.origin.y) * rect.size.width + i - rect.origin.x + tempRect.origin.x];
-			}
-		}
-		
-		rect = tempRect;
-		free(newMask);		
-		newMask = tempMask;
-	}
-
-	if(mode){
-		for (i = 0; i < rect.size.width; i++) {
-			for (j = 0; j < rect.size.height; j++) {
-				newMaskPoint = newMask[j * rect.size.width + i];
-				
-				// If we are in the rect of the old mask
-				if(j >= oldRect.origin.y - rect.origin.y && j < oldRect.origin.y - rect.origin.y + oldRect.size.height
-				&& i >= oldRect.origin.x - rect.origin.x && i < oldRect.origin.x - rect.origin.x + oldRect.size.width)
-					oldMaskPoint = mask[(j - oldRect.origin.y + rect.origin.y) * oldRect.size.width + (i - oldRect.origin.x + rect.origin.x)];
-				else
-					oldMaskPoint = 0x00;
-				
-				// Do the math
-				switch(mode){
-					case kAddMode:
-						tempMaskPoint = oldMaskPoint + newMaskPoint;
-						if(tempMaskPoint > 0xFF)
-							tempMaskPoint = 0xFF;
-						newMaskPoint = (unsigned char)tempMaskPoint;
-					break;
-					case kSubtractMode:
-						tempMaskPoint = oldMaskPoint - newMaskPoint;
-						if(tempMaskPoint < 0x00)
-							tempMaskPoint = 0x00;
-						newMaskPoint = (unsigned char)tempMaskPoint;
-					break;
-					case kMultiplyMode:
-						tempMaskPoint = oldMaskPoint * newMaskPoint;
-						tempMaskPoint /= 0xFF;
-						newMaskPoint = (unsigned char)tempMaskPoint;
-					break;
-					case kSubtractProductMode:
-						tempMaskProduct = oldMaskPoint * newMaskPoint;
-						tempMaskProduct /= 0xFF;
-						tempMaskPoint = oldMaskPoint + newMaskPoint;
-						if(tempMaskPoint > 0xFF)
-							tempMaskPoint = 0xFF;
-						tempMaskPoint -= tempMaskProduct;	
-						if(tempMaskPoint < 0x00)
-							tempMaskPoint = 0x00;
-						newMaskPoint = (unsigned char)tempMaskPoint;
-					break;
-					default:
-						NSLog(@"Selection mode not supported.");
-					break;
-				}
-				newMask[j * rect.size.width + i] = newMaskPoint;
-				if(newMaskPoint > 0x00)
-					active=YES;
-			}
-		}
-	} else {
-		if (rect.size.width > 0 && rect.size.height > 0)
-			active = YES;
-	}
-		
-	// Free previous mask information 
-	if (mask) { free(mask); mask = NULL; }
-	if (maskBitmap) { free(maskBitmap); maskBitmap = NULL;  maskImage = NULL; }
-
-	// Commit the new stuff
-	rect.origin.x += [layer xoff];
-	rect.origin.y += [layer yoff];
-	globalRect = rect;
-	
-	if(active){
-		mask = newMask;
-		[self trimSelection];
-		[self updateMaskImage];
-	}else{
-		free(newMask);
-	}
-
-	// Update the changes
-	[[document helpers] selectionChanged];
+    NSBezierPath *path = [NSBezierPath bezierPathWithOvalInRect:NSMakeRect(0,0,selectionRect.size.width, selectionRect.size.height)];
+    [self updateMaskFromPath:path selectionRect:selectionRect mode:mode];
 }
 
 - (void)selectRoundedRect:(IntRect)selectionRect radius:(int)radius mode:(int)mode
 {
-	id layer = [[document contents] activeLayer];
-	int width = [(SeaLayer *)layer width], height = [(SeaLayer *)layer height];
-	unsigned char *newMask, *tempMask, oldMaskPoint, newMaskPoint;
-	IntRect newRect, oldRect, tempRect, trect;
-	int tempMaskPoint, tempMaskProduct;
-	int i, j;
-
-	if(!mask)
-		mode = kDefaultMode;
-
-	// Get the rectangles
-	if(mode){
-		oldRect = [self localRect];
-		newRect = selectionRect;
-		rect = IntSumRects(oldRect, newRect);
-	} else {
-		newRect = rect = selectionRect;
-	}
-
-	active = NO;
-	
-	// Draw the circle
-	newMask = malloc(rect.size.width * rect.size.height);
-	memset(newMask, 0x00, rect.size.width * rect.size.height);
-
-	if (newRect.size.width < 2 * radius && newRect.size.height < 2 * radius) {
-		GCDrawEllipse(newMask, rect.size.width, rect.size.height, IntMakeRect(newRect.origin.x-rect.origin.x, newRect.origin.y-rect.origin.y, newRect.size.width, newRect.size.height), YES);
-	}
-	else if (newRect.size.height < 2 * radius) {
-		trect = IntMakeRect(newRect.origin.x-rect.origin.x, newRect.origin.y-rect.origin.y, newRect.size.height, newRect.size.height);
-		GCDrawEllipse(newMask, rect.size.width, rect.size.height, trect, YES);
-		trect = IntMakeRect(newRect.origin.x + newRect.size.width - newRect.size.height - rect.origin.x, newRect.origin.y-rect.origin.y, newRect.size.height, newRect.size.height);
-		GCDrawEllipse(newMask, rect.size.width, rect.size.height, trect, YES);
-		for (i = newRect.origin.y - rect.origin.y; i < newRect.size.height + newRect.origin.y - rect.origin.y; i++) memset(newMask + i * rect.size.width + newRect.size.height / 2 + newRect.origin.x - rect.origin.x, 0xFF, newRect.size.width - newRect.size.height);
-	}
-	else if (newRect.size.width < 2 * radius) {
-		trect = IntMakeRect(newRect.origin.x-rect.origin.x, newRect.origin.y-rect.origin.y, newRect.size.width, newRect.size.width);
-		GCDrawEllipse(newMask, rect.size.width, rect.size.height, trect, YES);
-		trect = IntMakeRect(newRect.origin.x-rect.origin.x, newRect.origin.y + newRect.size.height - newRect.size.width-rect.origin.y, newRect.size.width, newRect.size.width);
-		GCDrawEllipse(newMask, rect.size.width, rect.size.height, trect, YES);
-		for (i = newRect.size.width / 2 + newRect.origin.y - rect.origin.y; i < newRect.size.height - newRect.size.width / 2; i++) memset(newMask + i * rect.size.width + newRect.origin.x - rect.origin.x, 0xFF, newRect.size.width);
-	}
-	else {
-		trect = IntMakeRect(newRect.origin.x-rect.origin.x, newRect.origin.y-rect.origin.y, 2 * radius, 2 * radius);
-		GCDrawEllipse(newMask, rect.size.width, rect.size.height, trect, YES);
-		trect = IntMakeRect(newRect.size.width - 2 * radius + newRect.origin.x - rect.origin.x, newRect.origin.y -rect.origin.y, 2 * radius, 2 * radius);
-		GCDrawEllipse(newMask, rect.size.width, rect.size.height, trect, YES);
-		trect = IntMakeRect(newRect.origin.x - rect.origin.x, newRect.size.height - 2 * radius + newRect.origin.y - rect.origin.y, 2 * radius, 2 * radius);
-		GCDrawEllipse(newMask, rect.size.width, rect.size.height, trect, YES);
-		trect = IntMakeRect(newRect.size.width - 2 * radius + newRect.origin.x -rect.origin.x, newRect.size.height - 2 * radius + newRect.origin.y - rect.origin.y, 2 * radius, 2 * radius);
-		GCDrawEllipse(newMask, rect.size.width, rect.size.height, trect, YES);
-		for (i = newRect.origin.y - rect.origin.y; i < newRect.size.height + newRect.origin.y - rect.origin.y; i++) memset(newMask + i * rect.size.width + radius + newRect.origin.x - rect.origin.x, 0xFF, newRect.size.width - 2 * radius);
-		for (i = radius + newRect.origin.y - rect.origin.y; i < newRect.size.height - radius + newRect.origin.y - rect.origin.y; i++) {
-			memset(newMask + i * rect.size.width + newRect.origin.x - rect.origin.x, 0xFF, radius);
-			memset(newMask + i * rect.size.width + newRect.size.width - radius + newRect.origin.x - rect.origin.x, 0xFF, radius);
-		}
-	}
-	
-	// Constrain to the layer
-	if(rect.origin.x + rect.size.width > width || rect.origin.y + rect.size.height > height || rect.origin.x < 0 || rect.origin.y < 0){
-		tempRect = IntConstrainRect(rect, IntMakeRect(0, 0, width, height));
-		tempMask = malloc(tempRect.size.width * tempRect.size.height);
-		memset(tempMask, 0x00, tempRect.size.width * tempRect.size.height);
-	
-		for (i = 0; i < tempRect.size.width; i++) {
-			for (j = 0; j < tempRect.size.height; j++) {
-				tempMask[(j  * tempRect.size.width + i)] =  newMask[(j - rect.origin.y + tempRect.origin.y) * rect.size.width + i - rect.origin.x + tempRect.origin.x];
-			}
-		}
-		
-		rect = tempRect;
-		free(newMask);		
-		newMask = tempMask;
-	}
-
-	if(mode){
-		for (i = 0; i < rect.size.width; i++) {
-			for (j = 0; j < rect.size.height; j++) {
-				newMaskPoint = newMask[j * rect.size.width + i];
-				
-				// If we are in the rect of the old mask
-				if(j >= oldRect.origin.y - rect.origin.y && j < oldRect.origin.y - rect.origin.y + oldRect.size.height
-				&& i >= oldRect.origin.x - rect.origin.x && i < oldRect.origin.x - rect.origin.x + oldRect.size.width)
-					oldMaskPoint = mask[(j - oldRect.origin.y + rect.origin.y) * oldRect.size.width + (i - oldRect.origin.x + rect.origin.x)];
-				else
-					oldMaskPoint = 0x00;
-				
-				// Do the math
-				switch(mode){
-					case kAddMode:
-						tempMaskPoint = oldMaskPoint + newMaskPoint;
-						if(tempMaskPoint > 0xFF)
-							tempMaskPoint = 0xFF;
-						newMaskPoint = (unsigned char)tempMaskPoint;
-					break;
-					case kSubtractMode:
-						tempMaskPoint = oldMaskPoint - newMaskPoint;
-						if(tempMaskPoint < 0x00)
-							tempMaskPoint = 0x00;
-						newMaskPoint = (unsigned char)tempMaskPoint;
-					break;
-					case kMultiplyMode:
-						tempMaskPoint = oldMaskPoint * newMaskPoint;
-						tempMaskPoint /= 0xFF;
-						newMaskPoint = (unsigned char)tempMaskPoint;
-					break;
-					case kSubtractProductMode:
-						tempMaskProduct = oldMaskPoint * newMaskPoint;
-						tempMaskProduct /= 0xFF;
-						tempMaskPoint = oldMaskPoint + newMaskPoint;
-						if(tempMaskPoint > 0xFF)
-							tempMaskPoint = 0xFF;
-						tempMaskPoint -= tempMaskProduct;	
-						if(tempMaskPoint < 0x00)
-							tempMaskPoint = 0x00;
-						newMaskPoint = (unsigned char)tempMaskPoint;
-					break;
-					default:
-						NSLog(@"Selection mode not supported.");
-					break;
-				}
-				newMask[j * rect.size.width + i] = newMaskPoint;
-				if(newMaskPoint > 0x00)
-					active=YES;
-			}
-		}
-	} else {
-		if (rect.size.width > 0 && rect.size.height > 0)
-			active = YES;
-	}
-		
-	// Free previous mask information 
-	if (mask) { free(mask); mask = NULL; }
-	if (maskBitmap) { free(maskBitmap); maskBitmap = NULL; maskImage = NULL; }
-
-	// Commit the new stuff
-	rect.origin.x += [layer xoff];
-	rect.origin.y += [layer yoff];
-	globalRect = rect;
-	
-	if(active){
-		mask = newMask;
-		[self trimSelection];
-		[self updateMaskImage];
-	}else{
-		free(newMask);
-	}
-
-	// Update the changes
-	[[document helpers] selectionChanged];
+    NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:NSMakeRect(0,0,selectionRect.size.width, selectionRect.size.height) xRadius:radius yRadius:radius];
+    [self updateMaskFromPath:path selectionRect:selectionRect mode:mode];
 }
 
 - (void)selectOverlay:(BOOL)destructively inRect:(IntRect)selectionRect mode:(int)mode
@@ -907,7 +670,7 @@
 		[pboard declareTypes:[NSArray arrayWithObject:NSTIFFPboardType] owner:NULL];
 		
 		// Add it to the pasteboard
-		imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:globalRect.size.width pixelsHigh:globalRect.size.height bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO colorSpaceName:(spp == 4) ? NSDeviceRGBColorSpace : NSDeviceWhiteColorSpace bytesPerRow:globalRect.size.width * spp bitsPerPixel:8 * spp];
+		imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:globalRect.size.width pixelsHigh:globalRect.size.height bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace bytesPerRow:globalRect.size.width * spp bitsPerPixel:8 * spp];
 		[pboard setData:[imageRep TIFFRepresentation] forType:NSTIFFPboardType]; 
 		
 		// Stores the point of the last copied selection and its size
