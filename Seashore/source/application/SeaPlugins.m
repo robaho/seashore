@@ -41,36 +41,6 @@ BOOL checkRun(NSString *path, NSString *file)
         }
     }
     
-    // Check PPC
-#ifndef __ppc__
-    value = [infoDict objectForKey:@"PPCOnly"];
-    if (value != NULL) {
-        if ([value isEqualToString:@"YES"] || [value isEqualToString:@"yes"] || [value isEqualToString:@"1"]) {
-            canRun = NO;
-        }
-    }
-#endif
-    
-    // Check Intel
-#ifndef __i386__
-    value = [infoDict objectForKey:@"IntelOnly"];
-    if (value != NULL) {
-        if ([value isEqualToString:@"YES"] || [value isEqualToString:@"yes"] || [value isEqualToString:@"1"]) {
-            canRun = NO;
-        }
-    }
-#endif
-    
-    // Check AltiVec or SSE
-#ifdef __ppc__
-    value = [infoDict objectForKey:@"AltiVecOrSSERequired"];
-    if (value != NULL) {
-        if ([value isEqualToString:@"YES"] || [value isEqualToString:@"yes"] || [value isEqualToString:@"1"]) {
-            if (useAltiVec == NO) canRun = NO;
-        }
-    }
-#endif
-    
     // Check system version
     value = [infoDict objectForKey:@"MinSystemVersion"];
     if (value != NULL) {
