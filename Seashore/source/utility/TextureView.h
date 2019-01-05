@@ -26,7 +26,7 @@
 @interface TextureView : NSView {
 	
 	// The TextureUtility controlling this view
-	id master;
+	__weak id master;
 	
 }
 

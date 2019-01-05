@@ -15,8 +15,8 @@
 
 @interface SeaCursors : NSObject {
 	// Other Important Objects
-	SeaDocument *document;
-	SeaView *view;
+	__weak SeaDocument *document;
+	__weak SeaView *view;
 	
 	// The various cursors used by the toolbox
 	NSCursor *crosspointCursor, *wandCursor, *zoomCursor, *pencilCursor, *brushCursor, *bucketCursor, *eyedropCursor, *moveCursor, *eraserCursor, *smudgeCursor, *effectCursor, *addCursor, *subtractCursor, *noopCursor;

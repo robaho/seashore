@@ -12,7 +12,7 @@
 @interface ColorSelectView : NSView {
 
 	// The document associated with this colour selection view
-	id document;
+	__weak id document;
 
 	// YES if the mouse is down on the swap button
 	BOOL mouseDownOnSwap;

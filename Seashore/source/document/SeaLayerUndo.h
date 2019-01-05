@@ -36,10 +36,10 @@ typedef struct {
 @interface SeaLayerUndo : NSObject {
 	
 	// The document associated with this oject
-	id document;
+	__weak id document;
 	
 	// The layer associated with this oject
-	id layer;
+	__weak id layer;
 
 	// The records of all changes to the layer
 	UndoRecord *records;

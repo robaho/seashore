@@ -18,8 +18,8 @@
 	NSPoint oldPoint;
 	
 	// The other views in the window
-	IBOutlet id leftPane;
-	IBOutlet id rightPane;
+	__weak IBOutlet id leftPane;
+	__weak IBOutlet id rightPane;
 	
 	// The buttons
 	IBOutlet id newButton;

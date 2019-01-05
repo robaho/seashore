@@ -30,7 +30,7 @@
 	IBOutlet id opacityLabel;
 	
 	// The document which is the focus of this utility
-	IBOutlet SeaDocument *document;
+	__weak IBOutlet SeaDocument *document;
 	
 	// An dictionary of all brushes known to Seashore
 	NSDictionary *textures;

@@ -11,7 +11,7 @@
 
 @interface BannerView : NSView {
 	// Reference to the document this banner is in
-	IBOutlet id document;
+	__weak IBOutlet id document;
 	
 	// The text to display
 	NSString *bannerText;

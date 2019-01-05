@@ -14,7 +14,7 @@
 @interface SeaOptionsView : NSView {
 	// A connection to the host window is needed so that when the window gains / stops being
 	// key this view's background can change.
-	IBOutlet id window;
+	__weak IBOutlet id window;
 }
 
 @end

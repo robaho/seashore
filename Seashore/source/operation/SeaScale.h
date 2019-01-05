@@ -67,7 +67,7 @@ typedef struct {
 @interface SeaScale : NSObject {
 
 	// The document and sheet associated with this object
-    IBOutlet id document;
+    __weak IBOutlet id document;
 	IBOutlet id sheet;
 	
 	// The working index associated with this object

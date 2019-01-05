@@ -12,7 +12,7 @@
 
 @interface StatusUtility : NSObject {
 	// The document that owns the utility
-	IBOutlet id document;
+	__weak IBOutlet id document;
 	
 	// The pop-up men that reflect the currently active channel
 	IBOutlet id channelSelectionPopup;
@@ -24,7 +24,7 @@
 	IBOutlet id dimensionLabel;
 	
 	// The actual view that is the status bar
-	IBOutlet id view;
+	__weak IBOutlet id view;
 
 	// The slider that controls the zoom
 	IBOutlet id zoomSlider;
@@ -60,6 +60,8 @@
 					 associated data.
 */
 - (void)update;
+
+- (void)shutdown;
 
 /*!
 	@method		updateZoom

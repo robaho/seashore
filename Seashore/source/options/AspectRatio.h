@@ -32,10 +32,10 @@ enum {
 
 @interface AspectRatio : NSObject {
 	// The host document
-	IBOutlet id document;
+	__weak IBOutlet id document;
 
 	// The controlling object
-	id master;
+	__weak id master;
 
 	// The controlling object's identifier (used for preferences)
 	id prefString;

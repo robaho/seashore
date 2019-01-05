@@ -38,7 +38,7 @@ enum {
 	IBOutlet id layerSettingsPanel;
 	
 	// The object for handling layer settings
-	IBOutlet id layerSettings;
+	__weak IBOutlet id layerSettings;
 	
 	// The colour select view (this needs to be updated when the channel is changed on an RGBA image)
 	IBOutlet id colorSelectView;
@@ -51,7 +51,7 @@ enum {
 	IBOutlet id deleteButton;
 	
 	// The document which is the focus of this utility
-	IBOutlet id document;
+	__weak IBOutlet id document;
 	
 	// Whether or not the utility is enabled
 	BOOL enabled;

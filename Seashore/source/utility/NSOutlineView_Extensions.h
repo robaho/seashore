@@ -15,7 +15,7 @@
 
 @interface SeaOutlineView : NSOutlineView{
 	// The document the outline view is in
-	IBOutlet id document;
+	__weak IBOutlet id document;
 	
 	// Whether or not the view is the first responder
 	BOOL isFirst;

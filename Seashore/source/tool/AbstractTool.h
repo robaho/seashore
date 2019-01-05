@@ -13,7 +13,7 @@
 @interface AbstractTool : NSObject {
 
 	// The document associated with this tool
-	IBOutlet id document;
+	__weak IBOutlet id document;
 	
 	// Is the selection being made
 	BOOL intermediate;

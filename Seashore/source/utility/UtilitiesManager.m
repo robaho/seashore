@@ -53,6 +53,10 @@
 	
 	[[self infoUtilityFor:doc] shutdown];
 	[infoUtilities  removeObjectForKey:key];
+    
+    [[self statusUtilityFor:doc] shutdown];
+    [statusUtilities  removeObjectForKey:key];
+
 }
 
 - (void)activate:(id)sender

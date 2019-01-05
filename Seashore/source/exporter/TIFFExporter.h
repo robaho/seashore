@@ -13,7 +13,7 @@
 @interface TIFFExporter : AbstractExporter {
 	
 	// The associated document
-	IBOutlet id idocument;
+	__weak IBOutlet id idocument;
 	
 	// The panel allowing colour space choice
 	IBOutlet id panel;

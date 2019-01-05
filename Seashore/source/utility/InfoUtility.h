@@ -28,7 +28,7 @@ enum {
 @interface InfoUtility : NSObject {
 	
 	// The document which is the focus of this utility
-	IBOutlet id document;
+	__weak IBOutlet id document;
 	
 	// Displays the red, green, blue and alpha value of the focused pixel
 	IBOutlet id redValue;

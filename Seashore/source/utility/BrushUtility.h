@@ -26,7 +26,7 @@
     IBOutlet id view;
 		
 	// The document which is the focus of this utility
-	IBOutlet id document;
+	__weak IBOutlet id document;
 	
 	// An dictionary of all brushes known to Seashore
 	NSDictionary *brushes;

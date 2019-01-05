@@ -24,7 +24,7 @@
 @interface BrushView : NSView {
 	
 	// The BrushUtility controlling this view
-	id master;
+	__weak id master;
 	
 }
 

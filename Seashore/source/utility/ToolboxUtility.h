@@ -14,7 +14,7 @@
 @interface ToolboxUtility : NSObject {
 
 	// The document which is the focus of this utility
-	IBOutlet SeaDocument *document;
+	__weak IBOutlet SeaDocument *document;
 
 	// The proxy object
 	IBOutlet id seaProxy;
@@ -29,7 +29,7 @@
 	IBOutlet id toolbox;
 	
 	// The options utility object
-	IBOutlet id optionsUtility;
+	__weak IBOutlet id optionsUtility;
 	
 	// The tag of the currently selected tool
 	int tool;

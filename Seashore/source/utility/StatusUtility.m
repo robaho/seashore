@@ -20,6 +20,10 @@
 	[self update];
 }
 
+- (void)shutdown
+{
+}
+
 - (IBAction)show:(id)sender
 {
 	[[[document window] contentView] setVisibility: YES forRegion: kStatusBar];

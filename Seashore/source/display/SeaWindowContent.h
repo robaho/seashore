@@ -27,7 +27,7 @@ enum
 @class BannerView;
 
 @interface SeaWindowContent : NSView {
-	IBOutlet SeaDocument *document;
+	__weak IBOutlet SeaDocument *document;
 
 	IBOutlet SeaOptionsView* optionsBar;
 	IBOutlet NSView *nonOptionsBar;

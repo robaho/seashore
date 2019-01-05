@@ -15,7 +15,7 @@
 
 @interface WarningsUtility : NSObject {
 	// The host for the utility
-	IBOutlet id document;
+	__weak IBOutlet id document;
 	
 	// We need the content to show or hide the banner
 	IBOutlet SeaWindowContent *windowContent;

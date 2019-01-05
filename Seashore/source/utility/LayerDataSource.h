@@ -11,7 +11,7 @@
 
 @interface LayerDataSource : NSObject {
 	// The document this data source is connected to
-	IBOutlet id document;
+	__weak IBOutlet id document;
 
 	// The nodes that are being dragged (if any)
 	// This should be null during no dragging

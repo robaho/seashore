@@ -25,7 +25,7 @@ enum {
 {
 
 	// The document associated with this object
-    IBOutlet id document;
+    __weak IBOutlet id document;
 	
 }
 

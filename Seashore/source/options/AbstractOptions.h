@@ -48,7 +48,7 @@ enum {
 	IBOutlet id modifierPopup;
 	
 	// The document associated
-	id document;
+	__weak id document;
 	
 }
 

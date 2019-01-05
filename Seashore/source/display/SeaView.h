@@ -40,10 +40,10 @@ enum {
 @interface SeaView : NSView {
 	
 	// The document associated with this view
-	SeaDocument *document;
+	__weak SeaDocument *document;
 	
 	// The cursors manager for this view
-	id cursorsManager;
+	__weak id cursorsManager;
 	
 	// The current zoom of the view
 	float zoom;

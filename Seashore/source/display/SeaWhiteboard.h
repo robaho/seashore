@@ -55,7 +55,7 @@ enum {
 @interface SeaWhiteboard : NSObject {
 
 	// The document associated with this whiteboard
-	id document;
+	__weak id document;
 	
 	// The compositor for this whiteboard
 	id compositor;

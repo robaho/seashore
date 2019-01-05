@@ -17,7 +17,7 @@
 	id lastView;
 
 	// The document which is the focus of this utility
-	IBOutlet id document;
+	__weak IBOutlet id document;
 	
 	// The view to show when no document is active
 	IBOutlet id blankView;
@@ -43,7 +43,7 @@
 	IBOutlet id effectOptions;
 	
 	// The toolbox utility object
-	IBOutlet id toolboxUtility;
+	__weak IBOutlet id toolboxUtility;
 	
 	// The currently active tool - not a reliable indication (see code)
 	int currentTool;

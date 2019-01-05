@@ -36,7 +36,7 @@ enum {
 @interface SeaSelection : NSObject {
 
 	// The document associated with this object
-	id document;
+	__weak id document;
 
 	// The current selection rectangle
 	IntRect rect, globalRect;

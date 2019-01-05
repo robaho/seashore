@@ -17,7 +17,7 @@
 	IBOutlet id panel;
 	
 	// The move panel
-	IBOutlet id movePanel;
+	__weak IBOutlet id movePanel;
 	
 	// The preview text box
 	IBOutlet id textbox;

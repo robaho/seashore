@@ -34,7 +34,7 @@ typedef struct {
 @interface SeaContent : NSObject {
 	
 	// The document associated with this object
-	id document;
+	__weak id document;
 	
 	// The document's x and y resolution
 	int xres, yres;

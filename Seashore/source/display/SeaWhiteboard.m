@@ -25,9 +25,7 @@ extern IntPoint gScreenResolution;
 	document = doc;
 	
 	// Initialize the compostior
-	compositor = NULL;
-	if (compositor == NULL)	compositor = [SeaCompositor alloc];
-	[compositor initWithDocument:document];
+	compositor = [[SeaCompositor alloc] init];
 	
 	// Record the width, height and use of greys
 	width = [(SeaContent *)[document contents] width];

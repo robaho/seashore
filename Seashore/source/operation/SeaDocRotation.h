@@ -13,7 +13,7 @@
 {
 
 	// The document and sheet associated with this object
-    IBOutlet id document;
+    __weak IBOutlet id document;
 	
 }
 

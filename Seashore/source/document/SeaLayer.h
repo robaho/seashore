@@ -16,7 +16,7 @@
 @interface SeaLayer : NSObject {
 	
 	// The document that contains this layer
-	SeaDocument *document;
+	__weak SeaDocument *document;
 	
 	// The object responsible for changes to our bitmap
 	SeaLayerUndo *seaLayerUndo;

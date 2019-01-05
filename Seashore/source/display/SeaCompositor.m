@@ -7,19 +7,16 @@
 
 @implementation SeaCompositor
 
-- (id)initWithDocument:(id)doc
+- (id)init
 {
 	int i;
-	
-	// Remember the document we are compositing for
-	document = doc;
 	
 	// Work out the random table for the dissolve effect
 	srandom(RANDOM_SEED);
 	for (i = 0; i < 4096; i++)
 		randomTable[i] = random();
 	
-	return self;
+    return [super init];
 }
 
 - (void)compositeLayer:(SeaLayer *)layer withOptions:(CompositorOptions)options
@@ -29,6 +26,8 @@
 
 - (void)compositeLayer:(SeaLayer *)layer withOptions:(CompositorOptions)options andData:(unsigned char *)destPtr
 {
+    SeaDocument *document = [layer document];
+    
 	unsigned char *srcPtr, *overlay, *mask, *replace;
 	int lwidth = [layer width], lheight = [layer height], mode = [layer mode];
 	int opacity = [layer opacity];
@@ -197,6 +196,8 @@
 
 - (void)compositeLayer:(SeaLayer *)layer withFloat:(SeaLayer *)floatingLayer andOptions:(CompositorOptions)options
 {
+    SeaDocument *document = [layer document];
+
 	unsigned char *srcPtr, *floatPtr, *destPtr, *overlay, *mask, *replace;
 	int lwidth = [layer width], lheight = [layer height], mode = [layer mode];
 	int lfwidth = [floatingLayer width], lfheight = [floatingLayer height];
