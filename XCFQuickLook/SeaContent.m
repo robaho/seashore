@@ -31,6 +31,7 @@
 	
 	if (parasites) {
 		for (i = 0; i < parasites_count; i++) {
+            free(parasites[i].name);
 			free(parasites[i].data);
 		}
 		free(parasites);
@@ -127,48 +128,49 @@
 	return parasites_count;
 }
 
-- (ParasiteData *)parasiteWithName:(NSString *)name
+- (ParasiteData *)parasiteWithName:(char *)name
 {
-	int i;
-	
-	for (i = 0; i < parasites_count; i++) {
-		if ([name isEqualToString:parasites[i].name])
-			return &(parasites[i]);
-	}
-	
-	return NULL;
+    int i;
+    
+    for (i = 0; i < parasites_count; i++) {
+        if (strcmp(name,parasites[i].name)==0)
+            return &(parasites[i]);
+    }
+    
+    return NULL;
 }
 
-- (void)deleteParasiteWithName:(NSString *)name
+- (void)deleteParasiteWithName:(char *)name
 {
-	int i, x;
-	
-	// Find the parasite to delete
-	x = -1;
-	for (i = 0; i < parasites_count && x == -1; i++) {
-		if ([name isEqualToString:parasites[i].name])
-			x = i;
-	}
-	
-	if (x != -1) {
-		
-		// Destroy it
-		free(parasites[x].data);
-	
-		// Update the parasites list
-		parasites_count--;
-		if (parasites_count > 0) {
-			for (i = x; i < parasites_count; i++) {
-				parasites[i] = parasites[i + 1];
-			}
-			parasites = realloc(parasites, sizeof(ParasiteData) * parasites_count);
-		}
-		else {
-			free(parasites);
-			parasites = NULL;
-		}
-	
-	}
+    int i, x;
+    
+    // Find the parasite to delete
+    x = -1;
+    for (i = 0; i < parasites_count && x == -1; i++) {
+        if (strcmp(name,parasites[i].name)==0)
+            x = i;
+    }
+    
+    if (x != -1) {
+        
+        // Destroy it
+        free(parasites[x].name);
+        free(parasites[x].data);
+        
+        // Update the parasites list
+        parasites_count--;
+        if (parasites_count > 0) {
+            for (i = x; i < parasites_count; i++) {
+                parasites[i] = parasites[i + 1];
+            }
+            parasites = realloc(parasites, sizeof(ParasiteData) * parasites_count);
+        }
+        else {
+            free(parasites);
+            parasites = NULL;
+        }
+        
+    }
 }
 
 - (void)addParasite:(ParasiteData)parasite

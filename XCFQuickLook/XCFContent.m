@@ -130,11 +130,10 @@ static inline void fix_endian_read(int *input, int size)
 								i++;
 							}
 						} while (nameString[i - 1] != 0 && !ferror(file));
-						parasites[pos].name = [[NSString alloc] initWithUTF8String:nameString];
-						free (nameString);
+                        parasites[pos].name = nameString;
 					}
 					else {
-						parasites[pos].name = [[NSString alloc] initWithString:@"unnamed"];
+						parasites[pos].name = strdup("unnamed");
 					}
 					
 					// Remember flags and data size
@@ -265,12 +264,12 @@ static inline void fix_endian_read(int *input, int size)
 	}
 
 	// Store EXIF data
-	exifParasite = [self parasiteWithName:@"exif-plist"];
+	exifParasite = [self parasiteWithName:"exif-plist"];
 	if (exifParasite) {
 		exifContainer = [NSData dataWithBytesNoCopy:exifParasite->data length:exifParasite->size freeWhenDone:NO];
 		exifData = [NSPropertyListSerialization propertyListFromData:exifContainer mutabilityOption:NSPropertyListImmutable format:NULL errorDescription:&errorString];
 	}
-	[self deleteParasiteWithName:@"exif-plist"];
+	[self deleteParasiteWithName:"exif-plist"];
 	
 	return self;
 }

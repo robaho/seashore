@@ -13,7 +13,7 @@
 				The parasite's data.
 */
 typedef struct {
-	NSString *name;
+	char *name;
 	unsigned int flags;
 	unsigned int size;
 	unsigned char *data;
@@ -203,22 +203,22 @@ typedef struct {
 - (int)parasites_count;
 
 /*!
-	@method		parasiteWithName:
-	@discussion	Returns a pointer to the parasite with the given name.
-	@param		name
-				The name of the parasite.
-	@result		Returns a pointer to the ParasiteData record with the requested
-				name or NULL if no parasites match.
-*/
-- (ParasiteData *)parasiteWithName:(NSString *)name;
+ @method        parasiteWithName:
+ @discussion    Returns a pointer to the parasite with the given name.
+ @param        name
+ The name of the parasite.
+ @result        Returns a pointer to the ParasiteData record with the requested
+ name or NULL if no parasites match.
+ */
+- (ParasiteData *)parasiteWithName:(char *)name;
 
 /*!
-	@method		deleteParasiteWithName:
-	@discussion	Deletes the parasite with the given name.
-	@param		name
-				The name of the parasite to delete.
-*/
-- (void)deleteParasiteWithName:(NSString *)name;
+ @method        deleteParasiteWithName:
+ @discussion    Deletes the parasite with the given name.
+ @param        name
+ The name of the parasite to delete.
+ */
+- (void)deleteParasiteWithName:(char *)name;
 
 /*!
 	@method		addParasite:
