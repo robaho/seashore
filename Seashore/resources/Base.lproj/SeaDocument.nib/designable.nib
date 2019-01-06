@@ -220,7 +220,7 @@ DQ
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <clipView key="contentView" id="sE3-sQ-GEf">
                                             <rect key="frame" x="0.0" y="0.0" width="198" height="294"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="39" indentationPerLevel="16" autoresizesOutlineColumn="YES" outlineTableColumn="9834" id="7811" customClass="SeaOutlineView">
                                                     <rect key="frame" x="0.0" y="0.0" width="198" height="294"/>
@@ -2624,7 +2624,7 @@ Gw
                     </textFieldCell>
                 </textField>
             </subviews>
-            <point key="canvasLocation" x="231" y="404"/>
+            <point key="canvasLocation" x="268" y="469"/>
         </customView>
         <customView id="1886" userLabel="Ellipse Select Options">
             <rect key="frame" x="0.0" y="0.0" width="896" height="26"/>

@@ -11,10 +11,7 @@
 
 @interface SeaHelp : NSObject {
 	
-	// The bugs and suggestions window
-    IBOutlet id bugsWindow;
-	
-	// The instant help window 
+	// The instant help window
 	IBOutlet id instantHelpWindow;
 	
 	// The label for displaying the instant help text
@@ -24,15 +21,6 @@
 	BOOL adviseFailure;
 	
 }
-
-/*!
-	@method		goSourceForge:
-	@discussion	Opens the default web browser with Seashore's SourceForge page
-				to allow users to submit feedback.
-	@param		sender
-				Ignored.
-*/
-- (IBAction)goSourceForge:(id)sender;
 
 /*!
 	@method		openHelp:
