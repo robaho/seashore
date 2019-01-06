@@ -14,3 +14,4 @@ If you are looking for an free, easy to use, image editing application with "lay
 
 # screenshots
 ![screenshot](doc/screenshot.jpg)
+![screenshot](doc/screenshot-hi.png)
