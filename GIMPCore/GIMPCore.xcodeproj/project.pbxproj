@@ -344,6 +344,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
@@ -357,6 +360,7 @@
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore.gimpcore;
 				PRODUCT_NAME = GIMPCore;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -403,6 +407,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
@@ -416,6 +423,7 @@
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore.gimpcore;
 				PRODUCT_NAME = GIMPCore;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				WARNING_CFLAGS = (
 					"-Wmost",

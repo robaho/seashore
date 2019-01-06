@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>LSMinimumSystemVersion</key>
+	<string>10.7.0</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleDocumentTypes</key>
@@ -328,8 +330,6 @@
 	</array>
 	<key>CFBundleExecutable</key>
 	<string>Seashore</string>
-	<key>CFBundleGetInfoString</key>
-	<string>Seashore 1.0 - GNU General Public License</string>
 	<key>CFBundleIconFile</key>
 	<string>Main Icon.icns</string>
 	<key>CFBundleIdentifier</key>
@@ -346,6 +346,8 @@
 	<string>SeSh</string>
 	<key>CFBundleVersion</key>
 	<string>201901050</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.graphics-design</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>
