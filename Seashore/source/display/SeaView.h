@@ -1,5 +1,6 @@
 #import "Globals.h"
 #import "SeaDocument.h"
+#import "SeaCursors.h"
 
 /*!
 	@enum		k...HandleType
@@ -43,7 +44,7 @@ enum {
 	__weak SeaDocument *document;
 	
 	// The cursors manager for this view
-	__weak id cursorsManager;
+	SeaCursors* cursorsManager;
 	
 	// The current zoom of the view
 	float zoom;
