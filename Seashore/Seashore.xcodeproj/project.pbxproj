@@ -26,6 +26,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		2B08E5BF21E281F90011037C /* current.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2B08E5BE21E281F90011037C /* current.xml */; };
 		2B1F696321D70B3700D6F371 /* GIMPCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35B156E20A2C00D0005B688F /* GIMPCore.framework */; };
 		2B1F6C9E21D7E43200D6F371 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1F696421D70B4C00D6F371 /* CoreImage.framework */; };
 		2B1F6DEE21D807C100D6F371 /* GIMPCore.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 35B156E20A2C00D0005B688F /* GIMPCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -1492,6 +1493,7 @@
 		2A37F4B0FDCFA73011CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		2B08E5BE21E281F90011037C /* current.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = current.xml; path = ../current.xml; sourceTree = "<group>"; };
 		2B1F695D21D70B1900D6F371 /* Plugins.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Plugins.xcodeproj; path = ../Plugins/Plugins.xcodeproj; sourceTree = "<group>"; };
 		2B1F696421D70B4C00D6F371 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		2B1F6EF621DBC51700D6F371 /* CIAutoEnhance.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CIAutoEnhance.xcodeproj; path = "../CoreImage Plug-ins/CIAutoEnhance/CIAutoEnhance.xcodeproj"; sourceTree = "<group>"; };
@@ -2099,6 +2101,7 @@
 		2A37F4AAFDCFA73011CA2CEA /* Seashore */ = {
 			isa = PBXGroup;
 			children = (
+				2B08E5BE21E281F90011037C /* current.xml */,
 				2BC9679C21CFE229004B22DB /* README.md */,
 				2BC9679B21CFE20F004B22DB /* doc */,
 				2A37F4ABFDCFA73011CA2CEA /* Application Classes */,
@@ -4615,6 +4618,7 @@
 				A8CA87AE09D3F8D300A9DF1D /* grab-cursor.png in Resources */,
 				A893606D09EFC34A006DF75E /* clone.png in Resources */,
 				A8E57D0E09EFE9200009FCE2 /* cross.png in Resources */,
+				2B08E5BF21E281F90011037C /* current.xml in Resources */,
 				A8D7CBC80A209AC400FFC6A4 /* intro-help.png in Resources */,
 				A8D7CBC90A209AC400FFC6A4 /* intro-new.png in Resources */,
 				A8D7CBCA0A209AC400FFC6A4 /* intro-open.png in Resources */,
