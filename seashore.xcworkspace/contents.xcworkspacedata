@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:current.xml">
+   </FileRef>
+   <FileRef
+      location = "container:Seashore/Seashore.xcodeproj">
+   </FileRef>
+   <Group
+      location = "container:"
+      name = "Documentation">
+      <FileRef
+         location = "group:README.md">
+      </FileRef>
+      <FileRef
+         location = "group:doc">
+      </FileRef>
+   </Group>
+   <Group
+      location = "container:"
+      name = "Frameworks">
+      <FileRef
+         location = "group:Seashore/../Plugins/Plugins.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:GIMPCore/GIMPCore.xcodeproj">
+      </FileRef>
+   </Group>
+   <Group
+      location = "container:"
+      name = "CoreImage Plug-ins">
+      <FileRef
+         location = "group:Seashore/../CoreImage Plug-ins/CIAutoEnhance/CIAutoEnhance.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIAffineTile/CIAffineTile.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIBloom/CIBloom.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIBrightness/CIBrightness.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIBump/CIBump.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CICheckerboard/CICheckerboard.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CICircularScreen/CICircularScreen.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CICircularWrap/CICircularWrap.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CICircleSplash/CICircleSplash.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CICMYKHalftone/CICMYKHalftone.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CICrystallize/CICrystallize.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIDisplacementDistortion/CIDisplacementDistortion.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIDotScreen/CIDotScreen.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIEdges/CIEdges.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIEdgeWork/CIEdgeWork.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIExposure/CIExposure.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIFalseColor/CIFalseColor.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIGammaAdjust/CIGammaAdjust.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIGaussianBlur/CIGaussianBlur.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIGlassDistortion/CIGlassDistortion.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIGlassLozenge/CIGlassLozenge.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIGloom/CIGloom.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIHatchedScreen/CIHatchedScreen.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIHole/CIHole.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIHorizStripes/CIHorizStripes.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIInvert/CIInvert.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIKaleidoscope/CIKaleidoscope.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CILenticularHalo/CILenticularHalo.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CILineScreen/CILineScreen.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIMedian/CIMedian.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIMonochrome/CIMonochrome.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIMotionBlur/CIMotionBlur.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CINoiseReduction/CINoiseReduction.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIOpTile/CIOpTile.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIParallelogramTile/CIParallelogramTile.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIPerspectiveTile/CIPerspectiveTile.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIPerspectiveTransform/CIPerspectiveTransform.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIPinch/CIPinch.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIPixellate/CIPixellate.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIPointillize/CIPointillize.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIPosterize/CIPosterize.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIRandom/CIRandom.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CISepia/CISepia.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CISharpen/CISharpen.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CISpotLight/CISpotLight.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIStarshine/CIStarshine.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CISunbeams/CISunbeams.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CITorusLens/CITorusLens.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CITriangleTile/CITriangleTile.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CITwirl/CITwirl.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIUnsharpMask/CIUnsharpMask.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIVertStripes/CIVertStripes.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIVortex/CIVortex.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIWhitePointAdjust/CIWhitePointAdjust.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIZoomBlur/CIZoomBlur.xcodeproj">
+      </FileRef>
+   </Group>
+   <Group
+      location = "container:"
+      name = "Universal Plug-ins">
+      <FileRef
+         location = "group:Plug-ins/Sharpen/Sharpen.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Plug-ins/Threshold/Threshold.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Plug-ins/Brightness/Brightness.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Plug-ins/Checkerboard/Checkerboard.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Plug-ins/CMYK/CMYK.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Plug-ins/Gaussian/Gaussian.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Plug-ins/Greyscale/Greyscale.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Plug-ins/HorizStripes/HorizStripes.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Plug-ins/HSV/HSV.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Plug-ins/Invert/Invert.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Plug-ins/Median/Median.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Plug-ins/Pixellate/Pixellate.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Plug-ins/Posterize/Posterize.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Plug-ins/Random/Random.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Plug-ins/Sepia/Sepia.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Plug-ins/VertStripes/VertStripes.xcodeproj">
+      </FileRef>
+   </Group>
+   <Group
+      location = "container:/Users/robertengels/seashore/Seashore"
+      name = "Other Plug-ins">
+      <FileRef
+         location = "container:Seashore/../XCFQuickLook/XCFQuickLook.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "container:XCFSpotlight/XCFSpotlight.xcodeproj">
+      </FileRef>
+   </Group>
+   <Group
+      location = "container:/Users/robertengels/seashore/Seashore"
+      name = "Other Applications">
+      <FileRef
+         location = "container:Brushed/Brushed.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "container:Pat2PNG/Pat2PNG.xcodeproj">
+      </FileRef>
+   </Group>
+</Workspace>

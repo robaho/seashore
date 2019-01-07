@@ -225,7 +225,6 @@
 				GCC_VERSION_i386 = 4.0;
 				GCC_VERSION_ppc = 4.0;
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore.Median;
 				PRODUCT_NAME = Median;
 				WRAPPER_EXTENSION = bundle;
@@ -277,7 +276,6 @@
 				GCC_VERSION_i386 = 4.0;
 				GCC_VERSION_ppc = 4.0;
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore.Median;
 				PRODUCT_NAME = Median;
 				WRAPPER_EXTENSION = bundle;
