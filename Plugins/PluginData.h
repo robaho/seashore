@@ -142,8 +142,6 @@ enum {
 /*!
 	@method		backColor
 	@discussion	Return the active background colour.
-	@param		calibrated
-				YES if the colour is to be calibrated (usually bad), NO otherwise.
 	@result		Returns an NSColor representing the active background
 				colour.
 */

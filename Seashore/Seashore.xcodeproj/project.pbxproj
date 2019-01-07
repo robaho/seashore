@@ -35,6 +35,78 @@
 		2B1F70E221DC969500D6F371 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1F70E121DC969400D6F371 /* CoreGraphics.framework */; };
 		2B1F70E821DC983500D6F371 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1F70E721DC983500D6F371 /* CoreServices.framework */; };
 		2B1F70EB21DD472B00D6F371 /* SeaColorProfiles.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1F70EA21DD472B00D6F371 /* SeaColorProfiles.m */; };
+		2BA4C20721E2CF62001C5DD6 /* AutoEnhance+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B1F6EFB21DBC52000D6F371 /* AutoEnhance+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C20821E2CF62001C5DD6 /* AffineTile+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A825EA660C38FE060017A3D1 /* AffineTile+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C20921E2CF62001C5DD6 /* Bloom+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A8B9AB8D0C131FFF0050D2A9 /* Bloom+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C20A21E2CF62001C5DD6 /* Brightness+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A8E1369D0C40751800C8A848 /* Brightness+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C20B21E2CF62001C5DD6 /* Bump+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A893EAFA0C33CD91009D2D2E /* Bump+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C20C21E2CF62001C5DD6 /* Checkerboard+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A8E1FBAE0C34ABC50095BB45 /* Checkerboard+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C20D21E2CF62001C5DD6 /* CircularScreen+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A819F5E80C3518EC00F06FD5 /* CircularScreen+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C20E21E2CF62001C5DD6 /* CircularWrap+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A84C317E0C1C363300EE1E6C /* CircularWrap+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C20F21E2CF62001C5DD6 /* CircleSplash+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A8B66F710C2F6FCF004F2FDB /* CircleSplash+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C21021E2CF62001C5DD6 /* CMYKHalftone+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A82ED5DD0C2D059B00EB75C0 /* CMYKHalftone+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C21121E2CF62001C5DD6 /* Crystallize+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A8487CB00BD1F11800755EE4 /* Crystallize+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C21221E2CF62001C5DD6 /* DisplacementDistortion+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A835D2BC0C4388320076DF2D /* DisplacementDistortion+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C21321E2CF62001C5DD6 /* DotScreen+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A819FA1E0C351FD500F06FD5 /* DotScreen+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C21421E2CF62001C5DD6 /* Edges+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A8D637070C2526740073FAE0 /* Edges+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C21521E2CF62001C5DD6 /* EdgeWork+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A813C5CF0C374675000CF1C5 /* EdgeWork+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C21621E2CF62001C5DD6 /* Exposure+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A840514E0C17E25B0099DBA3 /* Exposure+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C21721E2CF63001C5DD6 /* FalseColor+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A8357D270C2E9172000983AB /* FalseColor+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C21821E2CF63001C5DD6 /* GammaAdjust+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A86E1BCB0BF215B600CCFBB8 /* GammaAdjust+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C21921E2CF63001C5DD6 /* Gaussian+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A8080C100C07C27C0026D06E /* Gaussian+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C21A21E2CF63001C5DD6 /* GlassDistortion+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A8080F6F0C07CF550026D06E /* GlassDistortion+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C21B21E2CF63001C5DD6 /* GlassLozenge+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A8F081790C3B822D0083E3D3 /* GlassLozenge+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C21C21E2CF63001C5DD6 /* Gloom+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A8BE6E880C2E8B5F002F031C /* Gloom+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C21D21E2CF63001C5DD6 /* HatchedScreen+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A89CD5DA0C34F80200D96AA5 /* HatchedScreen+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C21E21E2CF63001C5DD6 /* Hole+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A893EE160C33D2D7009D2D2E /* Hole+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C21F21E2CF63001C5DD6 /* HorizStripes+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A8C026310C34CFC300330695 /* HorizStripes+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C22021E2CF63001C5DD6 /* Invert+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A8753E380C1FC7AC00EBA9B2 /* Invert+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C22121E2CF63001C5DD6 /* Kaleidoscope+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A80100500BF96F130048FCD7 /* Kaleidoscope+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C22221E2CF63001C5DD6 /* LenticularHalo+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A8E1C6260C37FFE200A7F07A /* LenticularHalo+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C22321E2CF63001C5DD6 /* LineScreen+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A813C4230C37429F000CF1C5 /* LineScreen+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C22421E2CF63001C5DD6 /* Median+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A8360C670C0931030050D855 /* Median+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C22521E2CF63001C5DD6 /* Monochrome+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A8C728760C1BD04400222AE2 /* Monochrome+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C22621E2CF63001C5DD6 /* MotionBlur+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A89096950C0D53BE0039D3DC /* MotionBlur+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C22721E2CF63001C5DD6 /* NoiseReduction+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A8E94E830C0D8E7B008A39FD /* NoiseReduction+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C22821E2CF63001C5DD6 /* OpTile+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A8E3FB390C379FDA0048DD8B /* OpTile+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C22921E2CF63001C5DD6 /* ParallelogramTile+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A813C8120C376CB3000CF1C5 /* ParallelogramTile+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C22A21E2CF63001C5DD6 /* PerspectiveTile+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A8E3FBB60C37A6000048DD8B /* PerspectiveTile+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C22B21E2CF63001C5DD6 /* PerspectiveTransform+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A8F67D890C45F88E00CE8770 /* PerspectiveTransform+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C22C21E2CF63001C5DD6 /* Pinch+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A893EDA10C33D025009D2D2E /* Pinch+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C22D21E2CF63001C5DD6 /* Pixellate+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A82E45F90C2E3A76003A0ACC /* Pixellate+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C22E21E2CF63001C5DD6 /* Pointillize+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A8357BBD0C2E8CCE000983AB /* Pointillize+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C22F21E2CF63001C5DD6 /* Posterize+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A80C4BF60C39F37900CCE612 /* Posterize+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C23021E2CF63001C5DD6 /* Random+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A8307DD40BF2B783000BD82C /* Random+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C23121E2CF63001C5DD6 /* Sepia+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A81FAA4F0C3E19F800897910 /* Sepia+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C23221E2CF63001C5DD6 /* Sharpen+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A8E13A6C0C407E5800C8A848 /* Sharpen+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C23321E2CF63001C5DD6 /* SpotLight+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A801057D0C3D14BD00826C24 /* SpotLight+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C23421E2CF63001C5DD6 /* Starshine+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A83F30F60C3A333800BCB83E /* Starshine+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C23521E2CF63001C5DD6 /* Sunbeams+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A80C4C8B0C39FAA900CCE612 /* Sunbeams+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C23621E2CF63001C5DD6 /* TorusLens+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A84E5C3F0C3C96C40003BC1B /* TorusLens+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C23721E2CF63001C5DD6 /* TriangleTile+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A813C69C0C3753F3000CF1C5 /* TriangleTile+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C23821E2CF63001C5DD6 /* Twirl+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A88766650C1B8CB800ADB8BE /* Twirl+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C23921E2CF63001C5DD6 /* UnsharpMask+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A85DA7770C3C9D660022B264 /* UnsharpMask+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C23A21E2CF63001C5DD6 /* VertStripes+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A8C025E20C34CD6600330695 /* VertStripes+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C23B21E2CF63001C5DD6 /* Vortex+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A88768D20C1B999C00ADB8BE /* Vortex+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C23C21E2CF63001C5DD6 /* WhitePointAdjust+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A8EC3F260BDB56DE00EF2B55 /* WhitePointAdjust+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C23D21E2CF63001C5DD6 /* ZoomBlur+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A874156E0C0E6D930043AD86 /* ZoomBlur+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C23E21E2CF63001C5DD6 /* Sharpen.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 35B1570E0A2C0116005B688F /* Sharpen.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C23F21E2CF63001C5DD6 /* Threshold.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 35B157120A2C0116005B688F /* Threshold.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C24021E2CF63001C5DD6 /* Brightness.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 35B1571E0A2C0116005B688F /* Brightness.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C24121E2CF63001C5DD6 /* Checkerboard.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A83DE58C0C451B37000FEEA8 /* Checkerboard.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C24221E2CF63001C5DD6 /* CMYK.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 35B157260A2C0116005B688F /* CMYK.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C24321E2CF63001C5DD6 /* Gaussian.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 35B1572A0A2C0116005B688F /* Gaussian.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C24421E2CF63001C5DD6 /* Greyscale.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 35B157360A2C0117005B688F /* Greyscale.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C24521E2CF63001C5DD6 /* HorizStripes.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A83DE63E0C4523AE000FEEA8 /* HorizStripes.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C24621E2CF63001C5DD6 /* HSV.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 35B1571A0A2C0116005B688F /* HSV.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C24721E2CF63001C5DD6 /* Invert.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 35B1572E0A2C0117005B688F /* Invert.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C24821E2CF63001C5DD6 /* Median.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A83316CD0C094D4400E1EBBE /* Median.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C24921E2CF63001C5DD6 /* Pixellate.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A8956C4D0C2E569D006069EE /* Pixellate.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C24A21E2CF63001C5DD6 /* Posterize.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 35B157220A2C0116005B688F /* Posterize.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C24B21E2CF63001C5DD6 /* Random.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A861D4810BF2C2840015E71C /* Random.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C24C21E2CF63001C5DD6 /* Sepia.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A8753A840C1FBE5E00EBA9B2 /* Sepia.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C24D21E2CF63001C5DD6 /* VertStripes.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = A83DE5F10C45207E000FEEA8 /* VertStripes.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BA4C24F21E2CFB9001C5DD6 /* XCFQuickLook.qlgenerator in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B2EDA151FA4220200A6ED4E /* XCFQuickLook.qlgenerator */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		56C8A64D1055A1DA0056E36F /* normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 56C8A64C1055A1DA0056E36F /* normal.png */; };
 		A80983D70871420900F7412F /* JP2Exporter.m in Sources */ = {isa = PBXBuildFile; fileRef = A80983D50871420900F7412F /* JP2Exporter.m */; };
 		A80EB8A6086F05E300369324 /* JP2 Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A80EB8A5086F05E300369324 /* JP2 Icon.icns */; };
@@ -1439,6 +1511,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		2BA4C24E21E2CF9E001C5DD6 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Library/Quicklook;
+			dstSubfolderSpec = 16;
+			files = (
+				2BA4C24F21E2CFB9001C5DD6 /* XCFQuickLook.qlgenerator in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A89B83C50A426D3B00AD6941 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1478,9 +1560,80 @@
 		DC48A37110421B1F00A803AE /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = Contents/Library/QuickLook;
-			dstSubfolderSpec = 1;
+			dstPath = "";
+			dstSubfolderSpec = 13;
 			files = (
+				2BA4C20721E2CF62001C5DD6 /* AutoEnhance+.bundle in CopyFiles */,
+				2BA4C20821E2CF62001C5DD6 /* AffineTile+.bundle in CopyFiles */,
+				2BA4C20921E2CF62001C5DD6 /* Bloom+.bundle in CopyFiles */,
+				2BA4C20A21E2CF62001C5DD6 /* Brightness+.bundle in CopyFiles */,
+				2BA4C20B21E2CF62001C5DD6 /* Bump+.bundle in CopyFiles */,
+				2BA4C20C21E2CF62001C5DD6 /* Checkerboard+.bundle in CopyFiles */,
+				2BA4C20D21E2CF62001C5DD6 /* CircularScreen+.bundle in CopyFiles */,
+				2BA4C20E21E2CF62001C5DD6 /* CircularWrap+.bundle in CopyFiles */,
+				2BA4C20F21E2CF62001C5DD6 /* CircleSplash+.bundle in CopyFiles */,
+				2BA4C21021E2CF62001C5DD6 /* CMYKHalftone+.bundle in CopyFiles */,
+				2BA4C21121E2CF62001C5DD6 /* Crystallize+.bundle in CopyFiles */,
+				2BA4C21221E2CF62001C5DD6 /* DisplacementDistortion+.bundle in CopyFiles */,
+				2BA4C21321E2CF62001C5DD6 /* DotScreen+.bundle in CopyFiles */,
+				2BA4C21421E2CF62001C5DD6 /* Edges+.bundle in CopyFiles */,
+				2BA4C21521E2CF62001C5DD6 /* EdgeWork+.bundle in CopyFiles */,
+				2BA4C21621E2CF62001C5DD6 /* Exposure+.bundle in CopyFiles */,
+				2BA4C21721E2CF63001C5DD6 /* FalseColor+.bundle in CopyFiles */,
+				2BA4C21821E2CF63001C5DD6 /* GammaAdjust+.bundle in CopyFiles */,
+				2BA4C21921E2CF63001C5DD6 /* Gaussian+.bundle in CopyFiles */,
+				2BA4C21A21E2CF63001C5DD6 /* GlassDistortion+.bundle in CopyFiles */,
+				2BA4C21B21E2CF63001C5DD6 /* GlassLozenge+.bundle in CopyFiles */,
+				2BA4C21C21E2CF63001C5DD6 /* Gloom+.bundle in CopyFiles */,
+				2BA4C21D21E2CF63001C5DD6 /* HatchedScreen+.bundle in CopyFiles */,
+				2BA4C21E21E2CF63001C5DD6 /* Hole+.bundle in CopyFiles */,
+				2BA4C21F21E2CF63001C5DD6 /* HorizStripes+.bundle in CopyFiles */,
+				2BA4C22021E2CF63001C5DD6 /* Invert+.bundle in CopyFiles */,
+				2BA4C22121E2CF63001C5DD6 /* Kaleidoscope+.bundle in CopyFiles */,
+				2BA4C22221E2CF63001C5DD6 /* LenticularHalo+.bundle in CopyFiles */,
+				2BA4C22321E2CF63001C5DD6 /* LineScreen+.bundle in CopyFiles */,
+				2BA4C22421E2CF63001C5DD6 /* Median+.bundle in CopyFiles */,
+				2BA4C22521E2CF63001C5DD6 /* Monochrome+.bundle in CopyFiles */,
+				2BA4C22621E2CF63001C5DD6 /* MotionBlur+.bundle in CopyFiles */,
+				2BA4C22721E2CF63001C5DD6 /* NoiseReduction+.bundle in CopyFiles */,
+				2BA4C22821E2CF63001C5DD6 /* OpTile+.bundle in CopyFiles */,
+				2BA4C22921E2CF63001C5DD6 /* ParallelogramTile+.bundle in CopyFiles */,
+				2BA4C22A21E2CF63001C5DD6 /* PerspectiveTile+.bundle in CopyFiles */,
+				2BA4C22B21E2CF63001C5DD6 /* PerspectiveTransform+.bundle in CopyFiles */,
+				2BA4C22C21E2CF63001C5DD6 /* Pinch+.bundle in CopyFiles */,
+				2BA4C22D21E2CF63001C5DD6 /* Pixellate+.bundle in CopyFiles */,
+				2BA4C22E21E2CF63001C5DD6 /* Pointillize+.bundle in CopyFiles */,
+				2BA4C22F21E2CF63001C5DD6 /* Posterize+.bundle in CopyFiles */,
+				2BA4C23021E2CF63001C5DD6 /* Random+.bundle in CopyFiles */,
+				2BA4C23121E2CF63001C5DD6 /* Sepia+.bundle in CopyFiles */,
+				2BA4C23221E2CF63001C5DD6 /* Sharpen+.bundle in CopyFiles */,
+				2BA4C23321E2CF63001C5DD6 /* SpotLight+.bundle in CopyFiles */,
+				2BA4C23421E2CF63001C5DD6 /* Starshine+.bundle in CopyFiles */,
+				2BA4C23521E2CF63001C5DD6 /* Sunbeams+.bundle in CopyFiles */,
+				2BA4C23621E2CF63001C5DD6 /* TorusLens+.bundle in CopyFiles */,
+				2BA4C23721E2CF63001C5DD6 /* TriangleTile+.bundle in CopyFiles */,
+				2BA4C23821E2CF63001C5DD6 /* Twirl+.bundle in CopyFiles */,
+				2BA4C23921E2CF63001C5DD6 /* UnsharpMask+.bundle in CopyFiles */,
+				2BA4C23A21E2CF63001C5DD6 /* VertStripes+.bundle in CopyFiles */,
+				2BA4C23B21E2CF63001C5DD6 /* Vortex+.bundle in CopyFiles */,
+				2BA4C23C21E2CF63001C5DD6 /* WhitePointAdjust+.bundle in CopyFiles */,
+				2BA4C23D21E2CF63001C5DD6 /* ZoomBlur+.bundle in CopyFiles */,
+				2BA4C23E21E2CF63001C5DD6 /* Sharpen.bundle in CopyFiles */,
+				2BA4C23F21E2CF63001C5DD6 /* Threshold.bundle in CopyFiles */,
+				2BA4C24021E2CF63001C5DD6 /* Brightness.bundle in CopyFiles */,
+				2BA4C24121E2CF63001C5DD6 /* Checkerboard.bundle in CopyFiles */,
+				2BA4C24221E2CF63001C5DD6 /* CMYK.bundle in CopyFiles */,
+				2BA4C24321E2CF63001C5DD6 /* Gaussian.bundle in CopyFiles */,
+				2BA4C24421E2CF63001C5DD6 /* Greyscale.bundle in CopyFiles */,
+				2BA4C24521E2CF63001C5DD6 /* HorizStripes.bundle in CopyFiles */,
+				2BA4C24621E2CF63001C5DD6 /* HSV.bundle in CopyFiles */,
+				2BA4C24721E2CF63001C5DD6 /* Invert.bundle in CopyFiles */,
+				2BA4C24821E2CF63001C5DD6 /* Median.bundle in CopyFiles */,
+				2BA4C24921E2CF63001C5DD6 /* Pixellate.bundle in CopyFiles */,
+				2BA4C24A21E2CF63001C5DD6 /* Posterize.bundle in CopyFiles */,
+				2BA4C24B21E2CF63001C5DD6 /* Random.bundle in CopyFiles */,
+				2BA4C24C21E2CF63001C5DD6 /* Sepia.bundle in CopyFiles */,
+				2BA4C24D21E2CF63001C5DD6 /* VertStripes.bundle in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1494,6 +1647,7 @@
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		2B08E5BE21E281F90011037C /* current.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = current.xml; path = ../current.xml; sourceTree = "<group>"; };
+		2B08E5C021E28C4C0011037C /* Seashore.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Seashore.entitlements; sourceTree = "<group>"; };
 		2B1F695D21D70B1900D6F371 /* Plugins.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Plugins.xcodeproj; path = ../Plugins/Plugins.xcodeproj; sourceTree = "<group>"; };
 		2B1F696421D70B4C00D6F371 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		2B1F6EF621DBC51700D6F371 /* CIAutoEnhance.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CIAutoEnhance.xcodeproj; path = "../CoreImage Plug-ins/CIAutoEnhance/CIAutoEnhance.xcodeproj"; sourceTree = "<group>"; };
@@ -2101,6 +2255,7 @@
 		2A37F4AAFDCFA73011CA2CEA /* Seashore */ = {
 			isa = PBXGroup;
 			children = (
+				2B08E5C021E28C4C0011037C /* Seashore.entitlements */,
 				2B08E5BE21E281F90011037C /* current.xml */,
 				2BC9679C21CFE229004B22DB /* README.md */,
 				2BC9679B21CFE20F004B22DB /* doc */,
@@ -3584,7 +3739,7 @@
 				A8EDF14B078959C80022BB31 /* Frameworks */,
 				DC48A369104219BD00A803AE /* CopyFiles */,
 				DC48A37110421B1F00A803AE /* CopyFiles */,
-				A89E71910EB455E100F30C05 /* ShellScript */,
+				2BA4C24E21E2CF9E001C5DD6 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -3677,6 +3832,18 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 1010;
+				TargetAttributes = {
+					A8EDF05C078959C80022BB31 = {
+						SystemCapabilities = {
+							com.apple.HardenedRuntime = {
+								enabled = 1;
+							};
+							com.apple.Sandbox = {
+								enabled = 1;
+							};
+						};
+					};
+				};
 			};
 			buildConfigurationList = A8D01E0D09BD8EA3007CFE76 /* Build configuration list for PBXProject "Seashore" */;
 			compatibilityVersion = "Xcode 9.3";
@@ -4744,20 +4911,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\n# Change to build products directory\ncd \"$BUILT_PRODUCTS_DIR\"\n\n# Remove old Seashore binary image directory\nif [ -d sea_bin_image ]\nthen\nrm -r sea_bin_image\nfi\nif [ -d /tmp/Seashore ]\nthen\nrm -r /tmp/Seashore\nfi\n\n# Remove old Seashore disk image\nif [ -f seashore-bin-x.x.x.dmg ]\nthen\nrm seashore-bin-x.x.x.dmg\nfi\n\n# Change to products directory\ncd \"$BUILT_PRODUCTS_DIR\"\n\n# Prepare disk image contents\nmkdir sea_bin_image\ncp -r Seashore.app sea_bin_image\nmkdir \"sea_bin_image/Seashore Extras\"\ncp -r \"Pat2PNG.app\" \"sea_bin_image/Seashore Extras\"\ncp -r \"Brushed.app\" \"sea_bin_image/Seashore Extras\"\ncp \"License.rtf\" sea_bin_image\ncp -r \"Pictures\" sea_bin_image\ncp \"Seashore Website.webloc\" sea_bin_image\nmv sea_bin_image /tmp/Seashore\n\n# Make disk image\nhdiutil create -fs HFS+ -srcfolder \"/tmp/Seashore\" \"seashore-bin-x.x.x.dmg\"\n\n\n";
-		};
-		A89E71910EB455E100F30C05 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\n# Change to build products directory\ncd \"$BUILT_PRODUCTS_DIR\"\n\nmkdir -p Seashore.app/Contents/PlugIns\n\n# Copy in plug-ins\ncp -r Sharpen.bundle Seashore.app/Contents/PlugIns/\n\ncp -r Threshold.bundle Seashore.app/Contents/PlugIns/\n\ncp -r HSV.bundle Seashore.app/Contents/PlugIns/\n\ncp -r Brightness.bundle Seashore.app/Contents/PlugIns/\n\ncp -r Posterize.bundle Seashore.app/Contents/PlugIns/\n\ncp -r CMYK.bundle Seashore.app/Contents/PlugIns/\n\ncp -r Gaussian.bundle Seashore.app/Contents/PlugIns/\n\ncp -r Invert.bundle Seashore.app/Contents/PlugIns/\n\ncp -r Greyscale.bundle Seashore.app/Contents/PlugIns/\n\ncp -r \"Kaleidoscope+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"SpotLight+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Gaussian+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"GlassDistortion+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Posterize+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Sunbeams+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"LineScreen+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"EdgeWork+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"TriangleTile+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"ParallelogramTile+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"CircularScreen+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"DotScreen+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Sepia+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"AffineTile+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Pixellate+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"CMYKHalftone+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Random+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r Median.bundle Seashore.app/Contents/PlugIns/\n\ncp -r \"Pointillize+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"FalseColor+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"DisplacementDistortion+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Median+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r Checkerboard.bundle Seashore.app/Contents/PlugIns/\n\ncp -r VertStripes.bundle Seashore.app/Contents/PlugIns/\n\ncp -r HorizStripes.bundle Seashore.app/Contents/PlugIns/\n\ncp -r \"Starshine+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Exposure+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Crystallize+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"CircularWrap+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"TorusLens+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"UnsharpMask+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r Random.bundle Seashore.app/Contents/PlugIns/\n\ncp -r \"GammaAdjust+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"ZoomBlur+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r Sepia.bundle Seashore.app/Contents/PlugIns/\n\ncp -r \"Invert+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Twirl+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Vortex+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"MotionBlur+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Bump+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Pinch+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Hole+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r Pixellate.bundle Seashore.app/Contents/PlugIns/\n\ncp -r \"HatchedScreen+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"CircleSplash+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Bloom+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Gloom+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"VertStripes+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"HorizStripes+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Monochrome+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Edges+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Brightness+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Sharpen+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"LenticularHalo+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"Checkerboard+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"OpTile+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"PerspectiveTile+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"NoiseReduction+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"WhitePointAdjust+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"GlassLozenge+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"PerspectiveTransform+.bundle\" Seashore.app/Contents/PlugIns/\n\ncp -r \"AutoEnhance+.bundle\" Seashore.app/Contents/PlugIns/\n\nmkdir -p Seashore.app/Contents/Library/QuickLook\n\ncp -r \"XCFQuickLook.qlgenerator\" Seashore.app/Contents/Library/QuickLook/\n";
+			shellScript = "\n# Change to build products directory\ncd \"$BUILT_PRODUCTS_DIR\"\n\n# Remove old Seashore binary image directory\nif [ -d sea_bin_image ]\nthen\nrm -r sea_bin_image\nfi\nif [ -d /tmp/Seashore ]\nthen\nrm -r /tmp/Seashore\nfi\n\n# Remove old Seashore disk image\nif [ -f seashore-bin-x.x.x.dmg ]\nthen\nrm seashore-bin-x.x.x.dmg\nfi\n\n# Change to products directory\ncd \"$BUILT_PRODUCTS_DIR\"\n\n# Prepare disk image contents\nmkdir sea_bin_image\ncp -r Seashore.app sea_bin_image\nmkdir \"sea_bin_image/Seashore Extras\"\ncp -r \"Pat2PNG.app\" \"sea_bin_image/Seashore Extras\"\ncp -r \"Brushed.app\" \"sea_bin_image/Seashore Extras\"\ncp \"License.rtf\" sea_bin_image\ncp -r \"Pictures\" sea_bin_image\ncp \"Seashore Website.webloc\" sea_bin_image\nmv sea_bin_image /tmp/Seashore\n\n# Make disk image\nhdiutil create -fs HFS+ -srcfolder \"/tmp/Seashore\" \"seashore-bin-x.x.x.dmg\"\n\ncodesign -s \"Developer ID Application: Robert Engels\" --deep seashore-bin-x.x.x.dmg\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -5409,10 +5563,12 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = Seashore.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
+				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(FRAMEWORK_SEARCH_PATHS)";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -5495,9 +5651,11 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_ENTITLEMENTS = Seashore.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
+				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(FRAMEWORK_SEARCH_PATHS)";
 				GCC_AUTO_VECTORIZATION = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
