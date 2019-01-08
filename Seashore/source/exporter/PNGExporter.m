@@ -63,7 +63,7 @@
     
     [imageRep setSize:newSize];
     
-	imageData = [imageRep representationUsingType:NSPNGFileType properties:[NSDictionary alloc]];
+	imageData = [imageRep representationUsingType:NSPNGFileType properties:[NSDictionary dictionary]];
 		
 	// Save our file and let's go
 	[imageData writeToFile:path atomically:NO];
