@@ -46,6 +46,8 @@
 */
 - (IBAction)checkForUpdate:(id)sender;
 
+- (IBAction)reportAProblem:(id)sender;
+
 /*!
 	@method		updateInstantHelp:
 	@discussion Updates the instant help window with the given string if and

@@ -56,6 +56,11 @@
                             }];
 }
 
+- (IBAction)reportAProblem:(id)sender {
+     NSURL * problem_url = [NSURL URLWithString:@"https://github.com/robaho/seashore/issues"];
+     [[NSWorkspace sharedWorkspace] openURL:problem_url];
+}
+
 - (void)displayInstantHelp:(int)stringID
 {
 	NSArray *instantHelpArray = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Instant" ofType:@"plist"]];

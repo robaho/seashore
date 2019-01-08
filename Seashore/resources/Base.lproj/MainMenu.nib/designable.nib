@@ -897,6 +897,13 @@ CA
                             <menuItem isSeparatorItem="YES" id="3844">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
+                            <menuItem title="Report a Problem" id="a28-E2-Fae">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="reportAProblem:" target="235" id="MQU-lE-2v3"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="3P3-AR-fHg"/>
                             <menuItem title="Check for Updates" id="2158">
                                 <connections>
                                     <action selector="checkForUpdate:" target="235" id="2159"/>
@@ -1484,6 +1491,7 @@ This General Public License does not permit incorporating your program into prop
             <connections>
                 <outlet property="instantHelpLabel" destination="918" id="920"/>
                 <outlet property="instantHelpWindow" destination="912" id="919"/>
+                <outlet property="reportAProblem" destination="a28-E2-Fae" id="040-M1-obI"/>
             </connections>
         </customObject>
         <customObject id="448" userLabel="SeaController" customClass="SeaController">
@@ -1566,10 +1574,10 @@ This General Public License does not permit incorporating your program into prop
         <window title="Instant Help" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="instant help window" animationBehavior="default" id="912" userLabel="Instant Help Win" customClass="SeaUtilityPanel">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" utility="YES" nonactivatingPanel="YES"/>
             <windowPositionMask key="initialPositionMask" rightStrut="YES" topStrut="YES"/>
-            <rect key="contentRect" x="1078" y="953" width="355" height="113"/>
+            <rect key="contentRect" x="1078" y="953" width="355" height="118"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="913">
-                <rect key="frame" x="0.0" y="0.0" width="355" height="113"/>
+                <rect key="frame" x="0.0" y="0.0" width="355" height="118"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView id="917">
@@ -1588,6 +1596,7 @@ This General Public License does not permit incorporating your program into prop
                     </textField>
                 </subviews>
             </view>
+            <point key="canvasLocation" x="16.5" y="-51"/>
         </window>
         <customObject id="1244" userLabel="SeaWarning" customClass="SeaWarning"/>
         <window title="Warnings" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="warning window" animationBehavior="default" id="1249" userLabel="Warning Win" customClass="SeaUtilityPanel">
