@@ -1491,7 +1491,6 @@ This General Public License does not permit incorporating your program into prop
             <connections>
                 <outlet property="instantHelpLabel" destination="918" id="920"/>
                 <outlet property="instantHelpWindow" destination="912" id="919"/>
-                <outlet property="reportAProblem" destination="a28-E2-Fae" id="040-M1-obI"/>
             </connections>
         </customObject>
         <customObject id="448" userLabel="SeaController" customClass="SeaController">
