@@ -229,7 +229,7 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				INFOPLIST_FILE = Info.plist;
-				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.xvfspotlight;
+				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore.xcfspotlight;
 				PRODUCT_NAME = XCFSpotlight;
 				WRAPPER_EXTENSION = mdimporter;
 			};
@@ -242,7 +242,7 @@
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				INFOPLIST_FILE = Info.plist;
-				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.xvfspotlight;
+				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore.xcfspotlight;
 				PRODUCT_NAME = XCFSpotlight;
 				WRAPPER_EXTENSION = mdimporter;
 			};

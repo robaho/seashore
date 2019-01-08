@@ -252,6 +252,9 @@
       location = "container:/Users/robertengels/seashore/Seashore"
       name = "Other Plug-ins">
       <FileRef
+         location = "group:../SamplePlugin/SamplePlugin.xcodeproj">
+      </FileRef>
+      <FileRef
          location = "container:Seashore/../XCFQuickLook/XCFQuickLook.xcodeproj">
       </FileRef>
       <FileRef

@@ -51,13 +51,6 @@
 - (NSString *)groupName;
 
 /*!
-	@method		sanity
-	@discussion	Returns a string to indicate this is a Seashore plug-in.
-	@result		Returns the NSString "Seashore Approved (Bobo)".
-*/
-- (NSString *)sanity;
-
-/*!
 	@method		run
 	@discussion	Runs the plug-in.
 */
@@ -97,6 +90,15 @@
  requires to operate.
  */
 - (int)points;
+
+/*!
+ @method        validateMenuItem
+ @discussion    return YES if the plugin can be run given the current layer conditions - obtained from the SeaPlugins reference
+ @result        return YES if it can be run, else NO
+ */
+- (BOOL)validateMenuItem:(id)menuItem;
+
+
 
 @end
 

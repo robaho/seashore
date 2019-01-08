@@ -1191,8 +1191,6 @@
 		2A37F4AAFDCFA73011CA2CEA /* Seashore */ = {
 			isa = PBXGroup;
 			children = (
-				2BD5924F21E3E7CF002D150B /* XCFSpotlight.mdimporter */,
-				2BD5924D21E3E7CF002D150B /* XCFQuickLook.qlgenerator */,
 				2BD5923B21E3DBEF002D150B /* EmbeddedBinaries */,
 				2BCA996C21E30C4F00E69BD5 /* Seashore.xcconfig */,
 				2B08E5C021E28C4C0011037C /* Seashore.entitlements */,
@@ -1296,6 +1294,8 @@
 		2BD5923B21E3DBEF002D150B /* EmbeddedBinaries */ = {
 			isa = PBXGroup;
 			children = (
+				2BD5924F21E3E7CF002D150B /* XCFSpotlight.mdimporter */,
+				2BD5924D21E3E7CF002D150B /* XCFQuickLook.qlgenerator */,
 				2BD591D021E3DBCB002D150B /* GlassLozenge+.bundle */,
 				2BD591CE21E3DBCB002D150B /* GlassDistortion+.bundle */,
 				2BD591CC21E3DBCB002D150B /* Gaussian+.bundle */,

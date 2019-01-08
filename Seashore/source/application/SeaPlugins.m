@@ -54,19 +54,17 @@ BOOL checkRun(NSString *path, NSString *file)
         }
     }
     
+    if(!canRun){
+        NSLog(@"Unable to load/run plugin %@ %@",path,file);
+    }
+    
     return canRun;
 }
 
 - (id)init
 {
-    NSString *pluginsPath, *pre_files_name, *files_name;
-    NSArray *pre_files;
-    NSMutableArray *files;
-    NSBundle *bundle;
-    id plugin;
-    int i, j, found_id;
-    BOOL success, found, can_run;
-    NSRange range, next_range;
+    NSString *pluginsPath;
+    NSArray *librarySearchPaths;
     
     // Set the last effect to nothing
     lastEffect = -1;
@@ -74,11 +72,47 @@ BOOL checkRun(NSString *path, NSString *file)
     // Add standard plug-ins
     plugins = [NSArray array];
     pluginsPath = [gMainBundle builtInPlugInsPath];
-    pre_files = [gFileManager directoryContentsAtPath:pluginsPath];
+    
+    [self loadPlugins:pluginsPath];
+    
+    librarySearchPaths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSAllDomainsMask - NSSystemDomainMask, YES);
+    
+    NSString *searchPath;
+    
+    for(searchPath in librarySearchPaths)
+    {
+        [self loadPlugins:[searchPath stringByAppendingPathComponent:@"Application Support/Seashore/PlugIns"]];
+    }
+    
+    // Sort and retain plug-ins
+    plugins = [plugins sortedArrayUsingFunction:plugin_sort context:NULL];
+
+    return self;
+}
+
+- (void)loadPlugins:(NSString*)pluginsPath
+{
+    NSArray *pre_files;
+    NSMutableArray *files;
+    NSBundle *bundle;
+    id plugin;
+    int i, j, found_id;
+    BOOL found, can_run;
+    NSRange range, next_range;
+    NSString *files_name, *pre_files_name;
+    
+    NSLog(@"Loading plugins from %@",pluginsPath);
+    NSError *error;
+
+    pre_files = [gFileManager contentsOfDirectoryAtPath:pluginsPath error:&error];
+    if(error!=nil && error.code!=260){
+        NSLog(@"unable to read directory %@",error);
+    }
     files = [NSMutableArray arrayWithCapacity:[pre_files count]];
     for (i = 0; i < [pre_files count]; i++) {
         pre_files_name = [pre_files objectAtIndex:i];
         if ([pre_files_name hasSuffix:@".bundle"] && ![pre_files_name hasSuffix:@"+.bundle"]) {
+            NSLog(@"checking plugin %@",pre_files_name);
             can_run = checkRun(pluginsPath, pre_files_name);
             if (can_run) [files addObject:pre_files_name];
         }
@@ -88,6 +122,7 @@ BOOL checkRun(NSString *path, NSString *file)
     for (i = 0; i < [pre_files count]; i++) {
         pre_files_name = [pre_files objectAtIndex:i];
         if ([pre_files_name hasSuffix:@"+.bundle"]) {
+            NSLog(@"checking plugin %@",pre_files_name);
             found = NO;
             range.location = 0;
             range.length = [pre_files_name length] - (sizeof("+.bundle") - 1);
@@ -113,24 +148,25 @@ BOOL checkRun(NSString *path, NSString *file)
     for (i = 0; i < [files count]; i++) {
         bundle = [NSBundle bundleWithPath:[NSString stringWithFormat:@"%@/%@", pluginsPath, [files objectAtIndex:i]]];
         if (bundle && [bundle principalClass]) {
-            success = NO;
             plugin = [[bundle principalClass] alloc];
             if (plugin) {
                 if ([plugin respondsToSelector:@selector(initWithManager:)]) {
-                    [plugin initWithManager:self];
-                    if ([plugin respondsToSelector:@selector(sanity)] && [[plugin sanity] isEqualToString:@"Seashore Approved (Bobo)"]) {
+                    plugin = [plugin initWithManager:self];
+                    // TODO check for system plugins only
+                    //                    if ([plugin respondsToSelector:@selector(sanity)] && [[plugin sanity] isEqualToString:@"Seashore Approved (Bobo)"]) {
+                    //                    }
+                    if(plugin){
                         plugins = [plugins arrayByAddingObject:plugin];
-                        success = YES;
-                    }        
+                    }
                 }
+            } else {
+                NSLog(@"unable to instantiate plugin class %@",[bundle principalClass]);
             }
+        } else {
+            NSLog(@"unable to open bundle %@",bundle);
         }
     }
-    
-    // Sort and retain plug-ins
-    plugins = [plugins sortedArrayUsingFunction:plugin_sort context:NULL];
 
-    return self;
 }
 
 - (void)awakeFromNib
