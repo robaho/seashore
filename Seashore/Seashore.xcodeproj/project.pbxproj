@@ -29,10 +29,6 @@
 		2B1F70E221DC969500D6F371 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1F70E121DC969400D6F371 /* CoreGraphics.framework */; };
 		2B1F70E821DC983500D6F371 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1F70E721DC983500D6F371 /* CoreServices.framework */; };
 		2B1F70EB21DD472B00D6F371 /* SeaColorProfiles.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1F70EA21DD472B00D6F371 /* SeaColorProfiles.m */; };
-		2BD5907021E3BCF5002D150B /* GIMPCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BD5906F21E3BCF5002D150B /* GIMPCore.framework */; };
-		2BD5907221E3BD70002D150B /* Plugins.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 2BD5906D21E3BCF0002D150B /* Plugins.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD5907421E3BD70002D150B /* GIMPCore.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 2BD5906F21E3BCF5002D150B /* GIMPCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD5910B21E3C582002D150B /* Plugins.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BD5906D21E3BCF0002D150B /* Plugins.framework */; };
 		2BD591A921E3DBCA002D150B /* AutoEnhance+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591A821E3DBCA002D150B /* AutoEnhance+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BD591AB21E3DBCA002D150B /* AffineTile+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591AA21E3DBCA002D150B /* AffineTile+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BD591AD21E3DBCA002D150B /* Bloom+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591AC21E3DBCA002D150B /* Bloom+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -106,6 +102,10 @@
 		2BD5923521E3DBCE002D150B /* VertStripes.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD5923421E3DBCE002D150B /* VertStripes.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BD5925221E3E894002D150B /* XCFQuickLook.qlgenerator in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD5924D21E3E7CF002D150B /* XCFQuickLook.qlgenerator */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BD5925621E3E910002D150B /* XCFSpotlight.mdimporter in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD5924F21E3E7CF002D150B /* XCFSpotlight.mdimporter */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BD5926121E43795002D150B /* Plugins.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BD5906D21E3BCF0002D150B /* Plugins.framework */; };
+		2BD5926221E43795002D150B /* Plugins.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2BD5906D21E3BCF0002D150B /* Plugins.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BD5926421E4379C002D150B /* GIMPCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BD5906F21E3BCF5002D150B /* GIMPCore.framework */; };
+		2BD5926521E4379C002D150B /* GIMPCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2BD5906F21E3BCF5002D150B /* GIMPCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		56C8A64D1055A1DA0056E36F /* normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 56C8A64C1055A1DA0056E36F /* normal.png */; };
 		A80983D70871420900F7412F /* JP2Exporter.m in Sources */ = {isa = PBXBuildFile; fileRef = A80983D50871420900F7412F /* JP2Exporter.m */; };
 		A80EB8A6086F05E300369324 /* JP2 Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A80EB8A5086F05E300369324 /* JP2 Icon.icns */; };
@@ -459,6 +459,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2BD5926321E43795002D150B /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				2BD5926521E4379C002D150B /* GIMPCore.framework in Embed Frameworks */,
+				2BD5926221E43795002D150B /* Plugins.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A89B83C50A426D3B00AD6941 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -482,18 +494,6 @@
 				A89B83F50A426E4800AD6941 /* Wilber.xcf in CopyFiles */,
 				A89B83F60A426E4800AD6941 /* Zipf.xcf in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DC48A369104219BD00A803AE /* Copy Files */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				2BD5907421E3BD70002D150B /* GIMPCore.framework in Copy Files */,
-				2BD5907221E3BD70002D150B /* Plugins.framework in Copy Files */,
-			);
-			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		DC48A37110421B1F00A803AE /* CopyFiles */ = {
@@ -1144,12 +1144,12 @@
 				2B1F70E821DC983500D6F371 /* CoreServices.framework in Frameworks */,
 				2B1F70E221DC969500D6F371 /* CoreGraphics.framework in Frameworks */,
 				2B1F6C9E21D7E43200D6F371 /* CoreImage.framework in Frameworks */,
+				2BD5926421E4379C002D150B /* GIMPCore.framework in Frameworks */,
 				A84E106408E7A4FB0084BCB7 /* IOKit.framework in Frameworks */,
 				A8BF652708E6FEAB006E9BFC /* Carbon.framework in Frameworks */,
 				A8EDF14C078959C80022BB31 /* Cocoa.framework in Frameworks */,
 				2B1F70DF21DC929A00D6F371 /* ColorSync.framework in Frameworks */,
-				2BD5907021E3BCF5002D150B /* GIMPCore.framework in Frameworks */,
-				2BD5910B21E3C582002D150B /* Plugins.framework in Frameworks */,
+				2BD5926121E43795002D150B /* Plugins.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2013,10 +2013,10 @@
 				A8EDF0B7078959C80022BB31 /* Resources */,
 				A8EDF0F2078959C80022BB31 /* Sources */,
 				A8EDF14B078959C80022BB31 /* Frameworks */,
-				DC48A369104219BD00A803AE /* Copy Files */,
 				DC48A37110421B1F00A803AE /* CopyFiles */,
 				2BD5925121E3E87E002D150B /* CopyFiles */,
 				2BD5925521E3E8FE002D150B /* CopyFiles */,
+				2BD5926321E43795002D150B /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
