@@ -855,12 +855,9 @@
     
     data = convertImageRep(imageRep,spp);
     
-    // Determine the width and height of this layer
     newWidth = (int)[imageRep pixelsWide];
     newHeight = (int)[imageRep pixelsHigh];
     
-    xoff += width / 2 - newWidth / 2;
-    yoff += height / 2 - newHeight / 2;
     width = newWidth; height = newHeight;
     
     if (thumbData) free(thumbData);
