@@ -339,11 +339,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.1.4</string>
+	<string>2.1.5</string>
 	<key>CFBundleSignature</key>
 	<string>SeSh</string>
 	<key>CFBundleVersion</key>
-	<string>201901060</string>
+	<string>201901070</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.graphics-design</string>
 	<key>LSMinimumSystemVersion</key>
