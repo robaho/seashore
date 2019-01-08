@@ -64,7 +64,6 @@ BOOL checkRun(NSString *path, NSString *file)
 - (id)init
 {
     NSString *pluginsPath;
-    NSArray *librarySearchPaths;
     
     // Set the last effect to nothing
     lastEffect = -1;
@@ -74,16 +73,8 @@ BOOL checkRun(NSString *path, NSString *file)
     pluginsPath = [gMainBundle builtInPlugInsPath];
     
     [self loadPlugins:pluginsPath];
-    
-    librarySearchPaths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSAllDomainsMask - NSSystemDomainMask, YES);
-    
-    NSString *searchPath;
-    
-    for(searchPath in librarySearchPaths)
-    {
-        [self loadPlugins:[searchPath stringByAppendingPathComponent:@"Application Support/Seashore/PlugIns"]];
-    }
-    
+    [self loadPlugins:[NSHomeDirectory() stringByAppendingPathComponent:@"Library/Application Support/Seashore/PlugIns"]];
+
     // Sort and retain plug-ins
     plugins = [plugins sortedArrayUsingFunction:plugin_sort context:NULL];
 
