@@ -291,14 +291,6 @@
 
 - (BOOL)type:(NSString *)aType isContainedInDocType:(NSString*) key
 {
-	// We need to special case these for some reason, I don't know why
-	if([key isEqual:@"Gimp image"] &&
-	   (![aType caseInsensitiveCompare:@"com.gimp.xcf"] ||
-	    ![aType caseInsensitiveCompare:@"org.gimp.xcf"] ||
-		![aType caseInsensitiveCompare:@"Gimp Document"])){
-		return YES;
-	}
-	
 	NSMutableSet *set = [editableTypes objectForKey:key];
 	if(!set){
 		set = [viewableTypes objectForKey:key];

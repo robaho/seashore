@@ -85,6 +85,10 @@
 	// Is the document initing from the pasteboard or plug-in?
 	int specialStart;
 	
+	// File types with Cocoa can be difficult
+	BOOL restoreOldType;
+	NSString *oldType;
+	
 	// Is the file the current version?
 	BOOL current;
 	

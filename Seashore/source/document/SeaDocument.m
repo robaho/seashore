@@ -61,6 +61,7 @@ enum {
 	
 	// Set data members appropriately
 	whiteboard = NULL;
+	restoreOldType = NO;
 	current = YES;
 	specialStart = kNormalStart;
 	
@@ -100,6 +101,7 @@ enum {
 	
 	// Set data members appropriately
 	whiteboard = NULL;
+	restoreOldType = NO;
 	current = YES;
 	specialStart = kPasteboardStart;
 	
@@ -131,6 +133,7 @@ enum {
 	
 	// Set data members appropriately
 	whiteboard = NULL;
+	restoreOldType = NO;
 	current = YES;
 	specialStart = kOpenStart;
 	
@@ -165,6 +168,7 @@ enum {
 	
 	// Set data members appropriately
 	whiteboard = NULL;
+	restoreOldType = NO;
 	current = YES;
 	contents = [[SeaContent alloc] initWithDocument:self data:data type:type width:width height:height res:72];
 	specialStart = kPlugInStart;
@@ -467,6 +471,17 @@ enum {
 	[(OptionsUtility *)[(UtilitiesManager *)[SeaController utilitiesManager] optionsUtilityFor:self] viewNeedsDisplay];
 }
 
+- (BOOL)windowShouldClose:(NSWindow *)sender
+{
+    bool isGIMP = [[SeaDocumentController sharedDocumentController] type: [self fileType] isContainedInDocType:@"GIMP image"];
+    if(contents.layerCount > 1 && !isGIMP) {
+        if (NSRunAlertPanel(LOCALSTR(@"savelayers title", @"Warning"), [NSString stringWithFormat:LOCALSTR(@"savelayers body", @"\"%@\" contains layers which are not supported by the current file type and will be lost. Are you sure you want to continue?"), [gCurrentDocument displayName]], LOCALSTR(@"cancel", @"Cancel"), LOCALSTR(@"continue", @"Continue"), NULL) == NSAlertDefaultReturn){
+            return false;
+        }
+    }
+    return true;
+}
+
 - (void)windowDidResignMain:(NSNotification *)notification
 {
 	NSPoint point;
@@ -644,6 +659,36 @@ enum {
 		return ![self locked] && [[self undoManager] canRedo];
 
 	return YES;
+}
+
+- (void)runModalSavePanelForSaveOperation:(NSSaveOperationType)saveOperation delegate:(id)delegate didSaveSelector:(SEL)didSaveSelector contextInfo:(void *)contextInfo
+{
+	// Remember the old type
+	oldType = [self fileType];
+	if (saveOperation == NSSaveToOperation) {
+		restoreOldType = YES;
+	}
+	
+	// Check we're not meant to call someone
+	if (delegate)
+		NSLog(@"Delegate specified for save panel");
+	
+	// Run the super's method calling our custom
+	[super runModalSavePanelForSaveOperation:saveOperation delegate:self didSaveSelector:@selector(document:didSave:contextInfo:) contextInfo:NULL];
+	
+}
+
+- (void)document:(NSDocument *)doc didSave:(BOOL)didSave contextInfo:(void *)contextInfo
+{
+	// Restore the old type
+	if (restoreOldType && didSave) {
+		[self setFileType:oldType];
+		restoreOldType = NO;
+	}
+	else if (!didSave) {
+		[self setFileType:oldType];
+		restoreOldType = NO;
+	}
 }
 
 - (NSString *)fileTypeFromLastRunSavePanel
