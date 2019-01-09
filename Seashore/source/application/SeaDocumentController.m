@@ -294,7 +294,7 @@
 	// We need to special case these for some reason, I don't know why
 	if([key isEqual:@"Gimp image"] &&
 	   (![aType caseInsensitiveCompare:@"com.gimp.xcf"] ||
-	    ![aType caseInsensitiveCompare:@"net.sourceforge.xcf"] ||
+	    ![aType caseInsensitiveCompare:@"org.gimp.xcf"] ||
 		![aType caseInsensitiveCompare:@"Gimp Document"])){
 		return YES;
 	}

@@ -11,7 +11,7 @@
 			<string>MDImporter</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>net.sourceforge.seashore.xcf</string>
+				<string>app.seashore.xcf</string>
 			</array>
 		</dict>
 	</array>
@@ -25,6 +25,8 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>CFPlugInDynamicRegisterFunction</key>

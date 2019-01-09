@@ -303,7 +303,7 @@
 				GCC_VERSION_ppc = 3.3;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore.brushed;
+				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.brushed;
 				PRODUCT_NAME = Brushed;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -360,7 +360,7 @@
 				GCC_VERSION_ppc = 3.3;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore.brushed;
+				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.brushed;
 				PRODUCT_NAME = Brushed;
 				WARNING_CFLAGS = (
 					"-Wmost",

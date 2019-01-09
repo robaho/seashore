@@ -267,7 +267,7 @@
 				GCC_VERSION_ppc = 4.0;
 				INFOPLIST_FILE = Info.plist;
 				OTHER_CFLAGS = "-DDEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore.SpotLightPlus;
+				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.SpotLightPlus;
 				PRODUCT_NAME = "SpotLight+";
 				WRAPPER_EXTENSION = bundle;
 				ZERO_LINK = YES;
@@ -320,7 +320,7 @@
 				GCC_VERSION_i386 = 4.0;
 				GCC_VERSION_ppc = 4.0;
 				INFOPLIST_FILE = Info.plist;
-				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore.SpotLightPlus;
+				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.SpotLightPlus;
 				PRODUCT_NAME = "SpotLight+";
 				WRAPPER_EXTENSION = bundle;
 			};

@@ -242,7 +242,7 @@
 				GCC_VERSION_i386 = 4.0;
 				GCC_VERSION_ppc = 4.0;
 				INFOPLIST_FILE = Info.plist;
-				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore.Sharpen;
+				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.Sharpen;
 				PRODUCT_NAME = Sharpen;
 				WRAPPER_EXTENSION = bundle;
 				ZERO_LINK = YES;
@@ -293,7 +293,7 @@
 				GCC_VERSION_i386 = 4.0;
 				GCC_VERSION_ppc = 4.0;
 				INFOPLIST_FILE = Info.plist;
-				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore.Sharpen;
+				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.Sharpen;
 				PRODUCT_NAME = Sharpen;
 				WRAPPER_EXTENSION = bundle;
 			};

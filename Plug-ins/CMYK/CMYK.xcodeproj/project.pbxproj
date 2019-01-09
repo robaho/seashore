@@ -229,7 +229,7 @@
 				GCC_VERSION_i386 = 4.0;
 				GCC_VERSION_ppc = 4.0;
 				INFOPLIST_FILE = Info.plist;
-				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore.CMYK;
+				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.CMYK;
 				PRODUCT_NAME = CMYK;
 				WRAPPER_EXTENSION = bundle;
 			};
@@ -282,7 +282,7 @@
 				GCC_VERSION_i386 = 4.0;
 				GCC_VERSION_ppc = 4.0;
 				INFOPLIST_FILE = Info.plist;
-				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore.CMYK;
+				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.CMYK;
 				PRODUCT_NAME = CMYK;
 				WRAPPER_EXTENSION = bundle;
 				ZERO_LINK = YES;

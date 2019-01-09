@@ -2557,7 +2557,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				OTHER_LDFLAGS = "-lz";
-				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore;
+				PRODUCT_BUNDLE_IDENTIFIER = app.seashore;
 				PRODUCT_NAME = Seashore;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				WARNING_CFLAGS = (
@@ -2641,7 +2641,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				OTHER_LDFLAGS = "-lz";
-				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore;
+				PRODUCT_BUNDLE_IDENTIFIER = app.seashore;
 				PRODUCT_NAME = Seashore;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				WARNING_CFLAGS = (

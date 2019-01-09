@@ -334,7 +334,7 @@
 				GCC_VERSION_ppc = 4.0;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore.gimpcore;
+				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.gimpcore;
 				PRODUCT_NAME = GIMPCore;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
@@ -395,7 +395,7 @@
 				GCC_VERSION_ppc = 4.0;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore.gimpcore;
+				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.gimpcore;
 				PRODUCT_NAME = GIMPCore;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;

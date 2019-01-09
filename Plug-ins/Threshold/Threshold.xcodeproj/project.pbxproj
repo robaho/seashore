@@ -225,7 +225,7 @@
 				GCC_VERSION_i386 = 4.0;
 				GCC_VERSION_ppc = 4.0;
 				INFOPLIST_FILE = Info.plist;
-				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore.Threshold;
+				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.Threshold;
 				PRODUCT_NAME = Threshold;
 				WRAPPER_EXTENSION = bundle;
 			};
@@ -277,7 +277,7 @@
 				GCC_VERSION_i386 = 4.0;
 				GCC_VERSION_ppc = 4.0;
 				INFOPLIST_FILE = Info.plist;
-				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore.Threshold;
+				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.Threshold;
 				PRODUCT_NAME = Threshold;
 				WRAPPER_EXTENSION = bundle;
 				ZERO_LINK = YES;

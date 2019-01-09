@@ -267,7 +267,7 @@
 				GCC_VERSION_ppc = 3.3;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore.pat2png;
+				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.pat2png;
 				PRODUCT_NAME = Pat2PNG;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -322,7 +322,7 @@
 				GCC_VERSION_ppc = 3.3;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore.pat2png;
+				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.pat2png;
 				PRODUCT_NAME = Pat2PNG;
 				WARNING_CFLAGS = (
 					"-Wmost",

@@ -258,7 +258,7 @@
 				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
 				INFOPLIST_FILE = SamplePlugin/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				PRODUCT_BUNDLE_IDENTIFIER = org.robaho.SamplePlugin;
+				PRODUCT_BUNDLE_IDENTIFIER = org.sample.SamplePlugin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = bundle;
@@ -273,7 +273,7 @@
 				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
 				INFOPLIST_FILE = SamplePlugin/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				PRODUCT_BUNDLE_IDENTIFIER = org.robaho.SamplePlugin;
+				PRODUCT_BUNDLE_IDENTIFIER = org.sample.SamplePlugin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = bundle;

@@ -236,7 +236,7 @@
 				GCC_VERSION_ppc = 4.0;
 				INFOPLIST_FILE = Info.plist;
 				OTHER_CFLAGS = "-DDEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore.Checkerboard;
+				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.Checkerboard;
 				PRODUCT_NAME = Checkerboard;
 				WRAPPER_EXTENSION = bundle;
 				ZERO_LINK = YES;
@@ -289,7 +289,7 @@
 				GCC_VERSION_i386 = 4.0;
 				GCC_VERSION_ppc = 4.0;
 				INFOPLIST_FILE = Info.plist;
-				PRODUCT_BUNDLE_IDENTIFIER = net.sourceforge.seashore.Checkerboard;
+				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.Checkerboard;
 				PRODUCT_NAME = Checkerboard;
 				WRAPPER_EXTENSION = bundle;
 			};
