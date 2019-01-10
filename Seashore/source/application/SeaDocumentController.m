@@ -116,14 +116,10 @@
                                                                                               copying:true
                                                                                           displayName:displayName
                                                                                                 error:&error];
-    [newDocument setCurrent:NO];
     [newDocument updateChangeCount:NSChangeCleared];
     [newDocument setFileURL:url0];
     
     NSString *title = [newDocument lastComponentOfFileName];
-    
-    [newDocument setFileURL:url];
-    
     NSWindow *win = (NSWindow*)[newDocument window];
     [win setTitle:title];
 
