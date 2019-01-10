@@ -579,6 +579,14 @@ enum {
 	return current;
 }
 
+//- (BOOL)isDocumentEdited
+//{
+//    if(!current){
+//        return false;
+//    }
+//    return [super isDocumentEdited];
+//}
+
 - (void)setCurrent:(BOOL)value
 {
 	current = value;

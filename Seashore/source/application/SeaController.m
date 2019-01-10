@@ -140,43 +140,8 @@ id seaController;
 
 - (IBAction)editLastSaved:(id)sender
 {
-	id originalDocument, currentDocument = gCurrentDocument;
-	NSString *old_path = [currentDocument fileName], *new_path = NULL;
-	int i;
-	BOOL done;
-	
-	// Find a unique new name
-	done = NO;
-	for (i = 1; i <= 64 && !done; i++) {
-		if (i == 1) {
-			new_path = [[old_path stringByDeletingPathExtension] stringByAppendingFormat:@" (Original).%@", [old_path pathExtension]];
-			if ([gFileManager fileExistsAtPath:new_path] == NO) {
-				done = YES;
-			}
-		}
-		else {
-			new_path = [[old_path stringByDeletingPathExtension] stringByAppendingFormat:@" (Original %d).%@", i, [old_path pathExtension]];
-			if ([gFileManager fileExistsAtPath:new_path] == NO) {
-				done = YES;
-			}
-		}
-	}
-	if (!done) {
-		NSLog(@"Can't find suitable filename (last tried: %@)", new_path);
-		return;
-	}
-	
-	// Copy the contents on disk and open so the last saved version can be edited
-	if ([gFileManager copyPath:old_path toPath:new_path handler:nil]) {
-		originalDocument = [(SeaDocumentController *)[NSDocumentController sharedDocumentController] openNonCurrentFile:new_path];
-	}
-	else {
-		NSRunAlertPanel(LOCALSTR(@"locked title", @"Operation Failed"), [NSString stringWithFormat:LOCALSTR(@"locked body", @"The \"Compare to Last Saved\" operation failed. The most likely cause for this is that the disk the original is kept on is full or read-only."), [gCurrentDocument displayName]], LOCALSTR(@"ok", @"OK"), NULL, NULL);
-		return;
-	}
-	
-	// Finally remove the file we just created
-	[gFileManager removeFileAtPath:new_path handler:NULL];
+    id currentDocument = gCurrentDocument;
+    [[NSDocumentController sharedDocumentController] openNonCurrentFile:[currentDocument fileName]];
 }
 
 - (IBAction)showLicense:(id)sender

@@ -101,12 +101,33 @@
 
 - (id)openNonCurrentFile:(NSString *)path
 {
-	id newDocument;
+	SeaDocument *newDocument;
 	
 	stopNotingRecentDocuments = YES;
-	newDocument = [[NSDocumentController sharedDocumentController] openDocumentWithContentsOfFile:path display:YES];
+    
+    NSURL *url = [NSURL fileURLWithPath:path];
+    
+    NSString *displayName = [path stringByAppendingString:@"(Original)"];
+    NSURL *url0 = [NSURL fileURLWithPath:displayName];
+
+    NSError *error;
+    
+    newDocument = [[NSDocumentController sharedDocumentController] duplicateDocumentWithContentsOfURL:url
+                                                                                              copying:true
+                                                                                          displayName:displayName
+                                                                                                error:&error];
+    [newDocument setCurrent:NO];
+    [newDocument updateChangeCount:NSChangeCleared];
+    [newDocument setFileURL:url0];
+    
+    NSString *title = [newDocument lastComponentOfFileName];
+    
+    [newDocument setFileURL:url];
+    
+    NSWindow *win = (NSWindow*)[newDocument window];
+    [win setTitle:title];
+
 	stopNotingRecentDocuments = NO;
-	[newDocument setCurrent:NO];
 	
 	return newDocument;
 }
