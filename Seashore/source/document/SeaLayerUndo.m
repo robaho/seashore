@@ -138,7 +138,11 @@ extern BOOL userWarnedOnDiskSpace;
 			tempFileCount++;
 			
 			// Open a file for writing the memory cache
-			file = fopen([[NSString stringWithFormat:@"/tmp/seaundo-%d", fileNo] fileSystemRepresentation], "w");
+            
+            NSString *tmp=[NSHomeDirectory() stringByAppendingPathComponent:@"Library/Caches/Seashore/"];
+            NSString *filename=[tmp stringByAppendingFormat:@"seaundo-%d", fileNo];
+
+			file = fopen([filename fileSystemRepresentation], "w");
             if(file==NULL){
                 NSLog(@"unable to open disk cache %s",sys_errlist[errno]);
             }
@@ -187,7 +191,6 @@ extern BOOL userWarnedOnDiskSpace;
 	FILE *file;
 	struct stat sb;
 	int i, fileNo, spp;
-	const char *fileName;
 	int *int_ptr;
 
 	// Set up variables
@@ -203,9 +206,11 @@ extern BOOL userWarnedOnDiskSpace;
 	// Otherwise write the current memory cache to disk
 	[self writeMemoryCache];
 	
+    NSString *tmp=[NSHomeDirectory() stringByAppendingPathComponent:@"Library/Caches/Seashore/"];
+    NSString *filename=[tmp stringByAppendingFormat:@"seaundo-%d", fileNo];
+
 	// Open the file associated with this record
-	fileName = [[NSString stringWithFormat:@"/tmp/seaundo-%d", fileNo] fileSystemRepresentation];
-	file = fopen(fileName, "r");
+	file = fopen([filename fileSystemRepresentation], "r");
 	if (file == NULL) return NO;
 	
 	// Read the whole file asssociated with this record into the memory cache
@@ -235,7 +240,7 @@ extern BOOL userWarnedOnDiskSpace;
 	fclose(file);
 	
 	// Delete the file (we have its contents in memory now)
-	unlink(fileName);
+	unlink([filename fileSystemRepresentation]);
 	
 	// Write debugging notices
 	#ifdef DEBUG

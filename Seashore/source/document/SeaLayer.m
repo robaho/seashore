@@ -35,7 +35,7 @@
 	else
 		name = [[NSString alloc] initWithFormat:LOCALSTR(@"layer title", @"Layer %d"), uniqueLayerID];
 	oldNames = [[NSArray alloc] init];
-	undoFilePath = [[NSString alloc] initWithFormat:@"/tmp/seaundo-d%d-l%d", [document uniqueDocID], [self uniqueLayerID]];
+    undoFilePath = [NSHomeDirectory() stringByAppendingFormat:@"Library/Caches/Seashore/seaundo-d%d-l%d",[document uniqueDocID], [self uniqueLayerID]];
 	
 	return self;
 }
@@ -142,7 +142,7 @@
 	seaLayerUndo = [[SeaLayerUndo alloc] initWithDocument:doc forLayer:self];
 	uniqueLayerID = [(SeaDocument *)doc uniqueFloatingLayerID];
 	name = NULL; oldNames = NULL;
-	undoFilePath = [[NSString alloc] initWithFormat:@"/tmp/seaundo-d%d-l%d", [self uniqueLayerID], [document uniqueDocID]];
+    undoFilePath = [NSHomeDirectory() stringByAppendingFormat:@"Library/Caches/Seashore/seaundo-d%d-l%d",[document uniqueDocID], [self uniqueLayerID]];
 	
 	return self;
 }
@@ -186,7 +186,9 @@
 				free(data);
 				data = NULL;
 				
-			}
+            } else {
+                NSLog(@"unable to open disk layer cache %s",sys_errlist[errno]);
+            }
 
 			// Get rid of the thumbnail
 			if (thumbData) free(thumbData);
@@ -907,6 +909,11 @@
     free(data);
     
     data = newdata;
+}
+
+- (NSString*)undoFilePath
+{
+    return undoFilePath;
 }
 
 @end

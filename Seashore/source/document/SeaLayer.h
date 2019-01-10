@@ -535,4 +535,6 @@
 */
 - (void)convertFromType:(int)srcType to:(int)destType;
 
+-(NSString*)undoFilePath;
+
 @end
