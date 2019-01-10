@@ -139,6 +139,9 @@ extern BOOL userWarnedOnDiskSpace;
 			
 			// Open a file for writing the memory cache
 			file = fopen([[NSString stringWithFormat:@"/tmp/seaundo-%d", fileNo] fileSystemRepresentation], "w");
+            if(file==NULL){
+                NSLog(@"unable to open disk cache %s",sys_errlist[errno]);
+            }
 			
 			// Write the memory cache
 			if (file != NULL) fwrite(memory_cache, sizeof(unsigned char), memory_cache_pos, file);
