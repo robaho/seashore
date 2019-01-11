@@ -4,7 +4,7 @@
 
 download the latest DMGs from https://github.com/robaho/seashore/releases
 
-**The current version requires 10.7+. If you are on an earlier OSX version, I suggest downloading the 0.6.6 binaries from seashore.sourceforge.net.**
+**The current version requires 10.7+. If you are on an earlier OSX version, I suggest downloading the 0.6.6 binaries from seashore.sourceforge.net. Most likely you need to download the "hfs" version in order to open on an older Mac.**
 
 Seashore was originally located at https://sourceforge.net/p/seashore
 
