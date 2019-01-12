@@ -39,18 +39,6 @@ id seaController;
 			[seaWarning addMessage:LOCALSTR(@"old crash report message", @"Seashore has moved its old crash report to the Trash so that it will be deleted next time you empty the trash.") level:kModerateImportance];
 		}
 	}
-	/*
-	[seaWarning addMessage:LOCALSTR(@"beta message", @"Seashore is still under development and may contain bugs. Please make sure to only work on copies of images as there is the potential for corruption. Also please report any bugs you find.") level:[seaPrefs firstRun] ? kHighImportance : kVeryLowImportance];
-	*/
-	
-	// Check run count
-	/*
-	if ([seaPrefs runCount] == 25) {
-		if (NSRunAlertPanel(LOCALSTR(@"feedback survey title", @"Seashore Feedback Survey"), LOCALSTR(@"feedback survey body", @"In order to improve the next release of Seashore we are asking users to participate in a survey. The survey is only one page long and can be accessed by clicking the \"Run Survey\" button. This message should not trouble you again."), LOCALSTR(@"feedback survey button", @"Run Survey"), LOCALSTR(@"cancel", @"Cancel"), NULL) == NSAlertDefaultReturn) {
-			[seaHelp goSurvey:NULL];
-		}
-	}
-	*/
 	
 	// Check for update
 	if ([seaPrefs checkForUpdates]) {
