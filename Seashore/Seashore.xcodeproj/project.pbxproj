@@ -24,13 +24,13 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		2B1F6C9E21D7E43200D6F371 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1F696421D70B4C00D6F371 /* CoreImage.framework */; };
 		2B1F70DF21DC929A00D6F371 /* ColorSync.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B4046692185672100BCC2A2 /* ColorSync.framework */; };
 		2B1F70E221DC969500D6F371 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1F70E121DC969400D6F371 /* CoreGraphics.framework */; };
 		2B1F70E821DC983500D6F371 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1F70E721DC983500D6F371 /* CoreServices.framework */; };
 		2B1F70EB21DD472B00D6F371 /* SeaColorProfiles.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1F70EA21DD472B00D6F371 /* SeaColorProfiles.m */; };
 		2B8BD34721EA565C00FD9AC5 /* SeaPrintOptionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8BD34521EA565C00FD9AC5 /* SeaPrintOptionsController.m */; };
 		2B8BD35221EA727500FD9AC5 /* PrintPanelAccessory.nib in Resources */ = {isa = PBXBuildFile; fileRef = 2B8BD35121EA6E1800FD9AC5 /* PrintPanelAccessory.nib */; };
+		2B8BD35621EC71EC00FD9AC5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B8BD35521EC71EC00FD9AC5 /* QuartzCore.framework */; };
 		2BD591A921E3DBCA002D150B /* AutoEnhance+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591A821E3DBCA002D150B /* AutoEnhance+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BD591AB21E3DBCA002D150B /* AffineTile+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591AA21E3DBCA002D150B /* AffineTile+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BD591AD21E3DBCA002D150B /* Bloom+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591AC21E3DBCA002D150B /* Bloom+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -588,7 +588,6 @@
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		2B08E5C021E28C4C0011037C /* Seashore.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Seashore.entitlements; sourceTree = "<group>"; };
-		2B1F696421D70B4C00D6F371 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		2B1F70E121DC969400D6F371 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		2B1F70E321DC972000D6F371 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2B1F70E521DC97C300D6F371 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -600,6 +599,7 @@
 		2B8BD34421EA565C00FD9AC5 /* SeaPrintOptionsController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaPrintOptionsController.h; sourceTree = "<group>"; };
 		2B8BD34521EA565C00FD9AC5 /* SeaPrintOptionsController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeaPrintOptionsController.m; sourceTree = "<group>"; };
 		2B8BD35121EA6E1800FD9AC5 /* PrintPanelAccessory.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = PrintPanelAccessory.nib; path = /Users/robertengels/seashore/Seashore/resources/PrintPanelAccessory.nib; sourceTree = "<absolute>"; };
+		2B8BD35521EC71EC00FD9AC5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		2BCA996C21E30C4F00E69BD5 /* Seashore.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Seashore.xcconfig; sourceTree = "<group>"; };
 		2BD5906D21E3BCF0002D150B /* Plugins.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Plugins.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BD5906F21E3BCF5002D150B /* GIMPCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GIMPCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1146,9 +1146,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B8BD35621EC71EC00FD9AC5 /* QuartzCore.framework in Frameworks */,
 				2B1F70E821DC983500D6F371 /* CoreServices.framework in Frameworks */,
 				2B1F70E221DC969500D6F371 /* CoreGraphics.framework in Frameworks */,
-				2B1F6C9E21D7E43200D6F371 /* CoreImage.framework in Frameworks */,
 				2BD5926821E53B74002D150B /* GIMPCore.framework in Frameworks */,
 				A84E106408E7A4FB0084BCB7 /* IOKit.framework in Frameworks */,
 				A8BF652708E6FEAB006E9BFC /* Carbon.framework in Frameworks */,
@@ -1164,7 +1164,6 @@
 		1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2B1F696421D70B4C00D6F371 /* CoreImage.framework */,
 				2B40466A2185672300BCC2A2 /* ApplicationServices.framework */,
 				2B4046692185672100BCC2A2 /* ColorSync.framework */,
 				A84E106308E7A4FB0084BCB7 /* IOKit.framework */,
@@ -1287,6 +1286,7 @@
 		2A37F4C3FDCFA73011CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2B8BD35521EC71EC00FD9AC5 /* QuartzCore.framework */,
 				2B1F70E721DC983500D6F371 /* CoreServices.framework */,
 				2B1F70E521DC97C300D6F371 /* CoreFoundation.framework */,
 				2B1F70E321DC972000D6F371 /* Foundation.framework */,
