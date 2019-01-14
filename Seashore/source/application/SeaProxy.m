@@ -15,6 +15,7 @@
 #import "ToolboxUtility.h"
 #import "SeaFlip.h"
 #import "TextureExporter.h"
+#import "BrushExporter.h"
 #import "SeaAlignment.h"
 #import "SeaPlugins.h"
 #import "SeaRotation.h"
@@ -30,6 +31,12 @@
 {
 	[[gCurrentDocument textureExporter] exportAsTexture:sender];
 }
+
+- (IBAction)exportAsBrush:(id)sender
+{
+    [[gCurrentDocument brushExporter] exportAsBrush:sender];
+}
+
 
 - (IBAction)zoomIn:(id)sender
 {

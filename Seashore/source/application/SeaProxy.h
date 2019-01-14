@@ -15,8 +15,8 @@
 @interface SeaProxy : NSObject {
 }
 
-// To methods in TextureExporter...
 - (IBAction)exportAsTexture:(id)sender;
+- (IBAction)exportAsBrush:(id)sender;
 
 // To methods in SeaView...
 - (IBAction)zoomIn:(id)sender;

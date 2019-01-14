@@ -1,5 +1,6 @@
 #import "Globals.h"
 #import "AbstractPanelUtility.h"
+#import "SeaBrush.h"
 
 /*!
 	@class		BrushUtility
@@ -29,7 +30,7 @@
 	__weak IBOutlet id document;
 	
 	// An dictionary of all brushes known to Seashore
-	NSDictionary *brushes;
+	NSDictionary<NSString*,SeaBrush*> *brushes;
 	
 	// An array of all groups (an array of an array SeaBrush's) and group names (an array of NSString's)
 	NSArray *groups;
@@ -74,6 +75,14 @@
 				the brushes (typical case), NO otherwise.
 */
 - (void)loadBrushes:(BOOL)update;
+
+/*!
+ @method        addBrushFromPath:toGroup:
+ @discussion    Loads a brush from the given path (handles updates).
+ @param        path
+ The path from which to load the brush.
+ */
+- (void)addBrushFromPath:(NSString *)path;
 
 /*!
 	@method		changeSpacing:
@@ -130,5 +139,12 @@
 				group. 
 */
 - (NSArray *)brushes;
+
+/*!
+ @method        groupNames
+ @discussion    Returns the textures' group names (excluding custom groups).
+ @result        Returns an NSArray containing the textures' group names.
+ */
+- (NSArray *)groupNames;
 
 @end

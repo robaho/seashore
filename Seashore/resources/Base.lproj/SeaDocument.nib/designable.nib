@@ -9,6 +9,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="SeaDocument">
             <connections>
                 <outlet property="accessoryView" destination="70" id="75"/>
+                <outlet property="brushExporter" destination="IbU-IZ-DpL" id="gdr-0h-j8r"/>
                 <outlet property="dataSource" destination="7818" id="9833"/>
                 <outlet property="docWindow" destination="5" id="56"/>
                 <outlet property="exportersPopUp" destination="71" id="76"/>
@@ -1729,14 +1730,14 @@ DQ
         <window title="Export as Texture" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="389" userLabel="Texture Export" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="396" y="162" width="314" height="342"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="contentRect" x="396" y="162" width="315" height="343"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
             <view key="contentView" id="390">
-                <rect key="frame" x="0.0" y="0.0" width="314" height="342"/>
+                <rect key="frame" x="0.0" y="0.0" width="315" height="343"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button toolTip="Adds texture to an existing category" imageHugsTitle="YES" id="394">
-                        <rect key="frame" x="18" y="228" width="278" height="32"/>
+                        <rect key="frame" x="19" y="229" width="278" height="32"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <buttonCell key="cell" type="radio" title="Add to existing category" bezelStyle="regularSquare" imagePosition="leading" alignment="left" inset="2" id="16825">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1747,7 +1748,7 @@ DQ
                         </connections>
                     </button>
                     <textField verticalHuggingPriority="750" id="397">
-                        <rect key="frame" x="17" y="305" width="146" height="17"/>
+                        <rect key="frame" x="18" y="306" width="146" height="17"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Export as Texture" id="16826">
                             <font key="font" metaFont="system"/>
@@ -1756,11 +1757,11 @@ DQ
                         </textFieldCell>
                     </textField>
                     <box verticalHuggingPriority="750" boxType="separator" id="398">
-                        <rect key="frame" x="20" y="294" width="274" height="5"/>
+                        <rect key="frame" x="21" y="295" width="274" height="5"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </box>
                     <button toolTip="Adds texture to a new category" imageHugsTitle="YES" id="402">
-                        <rect key="frame" x="18" y="88" width="278" height="32"/>
+                        <rect key="frame" x="19" y="89" width="278" height="32"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <buttonCell key="cell" type="radio" title="Add to new category" bezelStyle="regularSquare" imagePosition="leading" alignment="left" inset="2" id="16827">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1771,7 +1772,7 @@ DQ
                         </connections>
                     </button>
                     <textField toolTip="Text box for entering new category" verticalHuggingPriority="750" id="403">
-                        <rect key="frame" x="46" y="60" width="248" height="22"/>
+                        <rect key="frame" x="47" y="61" width="248" height="22"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" title="Untitled" drawsBackground="YES" id="16828">
                             <font key="font" metaFont="system"/>
@@ -1780,11 +1781,11 @@ DQ
                         </textFieldCell>
                     </textField>
                     <box verticalHuggingPriority="750" boxType="separator" id="405">
-                        <rect key="frame" x="20" y="49" width="274" height="5"/>
+                        <rect key="frame" x="21" y="50" width="274" height="5"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </box>
                     <button verticalHuggingPriority="750" imageHugsTitle="YES" id="408">
-                        <rect key="frame" x="204" y="12" width="96" height="32"/>
+                        <rect key="frame" x="205" y="13" width="96" height="32"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <buttonCell key="cell" type="push" title="Export" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="16829">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1798,7 +1799,7 @@ DQ
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" imageHugsTitle="YES" id="409">
-                        <rect key="frame" x="108" y="12" width="96" height="32"/>
+                        <rect key="frame" x="109" y="13" width="96" height="32"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="16830">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1812,11 +1813,11 @@ Gw
                         </connections>
                     </button>
                     <scrollView toolTip="Table for selecting existing category" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="416">
-                        <rect key="frame" x="46" y="126" width="248" height="96"/>
+                        <rect key="frame" x="47" y="127" width="248" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <clipView key="contentView" id="Soe-9G-BN0">
                             <rect key="frame" x="1" y="1" width="231" height="94"/>
-                            <autoresizingMask key="autoresizingMask"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" id="415" customClass="NSExtendedTableView">
                                     <rect key="frame" x="0.0" y="0.0" width="231" height="94"/>
@@ -1854,7 +1855,7 @@ Gw
                         </scroller>
                     </scrollView>
                     <textField verticalHuggingPriority="750" id="427">
-                        <rect key="frame" x="17" y="268" width="46" height="17"/>
+                        <rect key="frame" x="18" y="269" width="46" height="17"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Name" id="16831">
                             <font key="font" metaFont="system"/>
@@ -1863,7 +1864,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <textField toolTip="Name of the new texture" verticalHuggingPriority="750" id="428">
-                        <rect key="frame" x="68" y="266" width="226" height="22"/>
+                        <rect key="frame" x="69" y="268" width="226" height="22"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" title="Untitled" drawsBackground="YES" id="16832">
                             <font key="font" metaFont="system"/>
@@ -1873,6 +1874,7 @@ Gw
                     </textField>
                 </subviews>
             </view>
+            <point key="canvasLocation" x="-569" y="637"/>
         </window>
         <customObject id="421" userLabel="TextureExporter" customClass="TextureExporter">
             <connections>
@@ -1883,6 +1885,17 @@ Gw
                 <outlet property="nameTextbox" destination="428" id="433"/>
                 <outlet property="newCategoryRadio" destination="402" id="432"/>
                 <outlet property="sheet" destination="389" id="423"/>
+            </connections>
+        </customObject>
+        <customObject id="IbU-IZ-DpL" userLabel="BrushExporter" customClass="BrushExporter">
+            <connections>
+                <outlet property="categoryTable" destination="8wZ-Nr-BCs" id="FYz-ZF-j8N"/>
+                <outlet property="categoryTextbox" destination="vHe-2z-3fc" id="bVS-Vs-F4d"/>
+                <outlet property="document" destination="-2" id="mwC-YK-Ce2"/>
+                <outlet property="existingCategoryRadio" destination="2uC-RG-btB" id="xeT-f3-gVx"/>
+                <outlet property="nameTextbox" destination="xuJ-hD-wnh" id="vph-LQ-oOq"/>
+                <outlet property="newCategoryRadio" destination="YK1-Lg-K6Z" id="sib-Kf-gqC"/>
+                <outlet property="sheet" destination="TWH-fZ-9Wd" id="Ppb-2u-RJp"/>
             </connections>
         </customObject>
         <numberFormatter formatterBehavior="10_0" positiveFormat="0.######" negativeFormat="-0.######" localizesFormat="NO" hasThousandSeparators="NO" thousandSeparator="," id="523" userLabel="Decimal Formatter">
@@ -4877,7 +4890,7 @@ DQ
                         <autoresizingMask key="autoresizingMask"/>
                         <clipView key="contentView" id="lgO-ZC-m12">
                             <rect key="frame" x="1" y="1" width="199" height="160"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="14" id="11980">
                                     <rect key="frame" x="0.0" y="0.0" width="199" height="160"/>
@@ -5178,6 +5191,181 @@ DQ
                 <outlet property="windowContent" destination="6" id="16703"/>
             </connections>
         </customObject>
+        <window title="Export as Brush" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="TWH-fZ-9Wd" userLabel="Brush Export" customClass="NSPanel">
+            <windowStyleMask key="styleMask" titled="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="396" y="162" width="318" height="443"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
+            <view key="contentView" id="U7j-x6-d03">
+                <rect key="frame" x="0.0" y="0.0" width="318" height="443"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button toolTip="Adds texture to an existing category" imageHugsTitle="YES" id="2uC-RG-btB">
+                        <rect key="frame" x="19" y="321" width="278" height="32"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <buttonCell key="cell" type="radio" title="Add to existing category" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="QbG-Wd-i6z">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="existingCategoryClick:" target="IbU-IZ-DpL" id="i1w-YS-YRf"/>
+                        </connections>
+                    </button>
+                    <textField verticalHuggingPriority="750" id="SxK-IZ-Egz">
+                        <rect key="frame" x="18" y="406" width="146" height="17"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Export as Brush" id="vl1-BS-cZP">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <box verticalHuggingPriority="750" boxType="separator" id="veb-px-uQ2">
+                        <rect key="frame" x="21" y="395" width="274" height="5"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </box>
+                    <button toolTip="Adds texture to a new category" imageHugsTitle="YES" id="YK1-Lg-K6Z">
+                        <rect key="frame" x="19" y="173" width="278" height="32"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <buttonCell key="cell" type="radio" title="Add to new category" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="jzo-MA-nAr">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="newCategoryClick:" target="IbU-IZ-DpL" id="4mE-qQ-fK6"/>
+                        </connections>
+                    </button>
+                    <textField toolTip="Text box for entering new category" verticalHuggingPriority="750" id="vHe-2z-3fc">
+                        <rect key="frame" x="47" y="144" width="248" height="22"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" title="Untitled" drawsBackground="YES" id="gmd-jm-gDl">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <box verticalHuggingPriority="750" boxType="separator" id="2hV-E1-zPz">
+                        <rect key="frame" x="21" y="52" width="274" height="5"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </box>
+                    <button verticalHuggingPriority="750" imageHugsTitle="YES" id="cfh-BC-M5K">
+                        <rect key="frame" x="110" y="13" width="96" height="32"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="AQN-I1-NEv">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="cancel:" target="IbU-IZ-DpL" id="Npz-2V-vTn"/>
+                        </connections>
+                    </button>
+                    <scrollView toolTip="Table for selecting existing category" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="onp-kp-p1e">
+                        <rect key="frame" x="47" y="218" width="248" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <clipView key="contentView" id="5IG-Ux-tar">
+                            <rect key="frame" x="1" y="1" width="231" height="94"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" id="8wZ-Nr-BCs" customClass="NSExtendedTableView">
+                                    <rect key="frame" x="0.0" y="0.0" width="231" height="94"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <size key="intercellSpacing" width="3" height="2"/>
+                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                    <tableColumns>
+                                        <tableColumn editable="NO" width="228" minWidth="228" maxWidth="228" id="AGK-kY-XA5">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite"/>
+                                            </tableHeaderCell>
+                                            <textFieldCell key="dataCell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" alignment="left" id="QsI-rO-pGO">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </textFieldCell>
+                                        </tableColumn>
+                                    </tableColumns>
+                                    <connections>
+                                        <outlet property="dataSource" destination="IbU-IZ-DpL" id="ePI-C5-Eph"/>
+                                    </connections>
+                                </tableView>
+                            </subviews>
+                        </clipView>
+                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="mcS-97-qNq">
+                            <rect key="frame" x="-100" y="-100" width="231" height="15"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                        <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="RPX-PF-6fQ">
+                            <rect key="frame" x="232" y="1" width="15" height="94"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                    </scrollView>
+                    <textField verticalHuggingPriority="750" id="FXd-ZS-dnR">
+                        <rect key="frame" x="18" y="367" width="46" height="17"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Name" id="oIl-Fb-8cs">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField toolTip="Name of the new texture" verticalHuggingPriority="750" id="xuJ-hD-wnh">
+                        <rect key="frame" x="72" y="367" width="226" height="22"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" title="Untitled" drawsBackground="YES" id="hdl-Go-jPk">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" id="SoJ-1F-rbl">
+                        <rect key="frame" x="21" y="107" width="120" height="14"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Spacing - 100%" id="ReR-pH-LEt">
+                            <font key="font" metaFont="label"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <connections>
+                            <binding destination="IbU-IZ-DpL" name="displayPatternValue1" keyPath="self.spacing" id="sIL-N8-lLQ">
+                                <dictionary key="options">
+                                    <string key="NSDisplayPattern">Spacing - %{value1}@%</string>
+                                </dictionary>
+                            </binding>
+                        </connections>
+                    </textField>
+                    <slider verticalHuggingPriority="750" id="UHg-zH-hg9">
+                        <rect key="frame" x="19" y="75" width="219" height="25"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <sliderCell key="cell" continuous="YES" alignment="left" maxValue="1000" doubleValue="100" tickMarkPosition="below" numberOfTickMarks="11" sliderType="linear" id="Ak6-QP-LW3">
+                            <font key="font" size="12" name="Helvetica"/>
+                            <connections>
+                                <binding destination="IbU-IZ-DpL" name="value" keyPath="self.spacing" id="rxO-Tz-MOb"/>
+                            </connections>
+                        </sliderCell>
+                    </slider>
+                    <button verticalHuggingPriority="750" imageHugsTitle="YES" id="sBY-vA-g5d">
+                        <rect key="frame" x="205" y="13" width="96" height="32"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <buttonCell key="cell" type="push" title="Export" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="klA-t5-Mf4">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="apply:" target="IbU-IZ-DpL" id="Xa6-oe-Hlv"/>
+                        </connections>
+                    </button>
+                </subviews>
+            </view>
+            <point key="canvasLocation" x="-189" y="687"/>
+        </window>
     </objects>
     <resources>
         <image name="0-not" width="35" height="27"/>

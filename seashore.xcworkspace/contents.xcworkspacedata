@@ -264,11 +264,5 @@
    <Group
       location = "container:/Users/robertengels/seashore/Seashore"
       name = "Other Applications">
-      <FileRef
-         location = "container:Brushed/Brushed.xcodeproj">
-      </FileRef>
-      <FileRef
-         location = "container:Pat2PNG/Pat2PNG.xcodeproj">
-      </FileRef>
    </Group>
 </Workspace>

@@ -24,6 +24,9 @@ enum {
 {
 	NSArray *groupNames = [[[SeaController utilitiesManager] textureUtilityFor:document] groupNames];
 
+    if ([existingCategoryRadio state] == NSOnState && [categoryTable selectedRow]==-1) {
+        return;
+    }
 	// End the sheet
 	[NSApp stopModal];
 	[NSApp endSheet:sheet];

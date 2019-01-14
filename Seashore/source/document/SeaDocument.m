@@ -296,6 +296,11 @@ enum {
 	return textureExporter;
 }
 
+- (id)brushExporter
+{
+    return brushExporter;
+}
+
 - (BOOL)readFromFile:(NSString *)path ofType:(NSString *)type
 {	
 	BOOL readOnly = NO;
@@ -419,45 +424,6 @@ enum {
 
     [self runModalPrintOperation:op delegate:NULL didRunSelector:NULL contextInfo:NULL];
 }
-
-//- (void)printShowingPrintPanel:(BOOL)showPanels
-//{
-//    NSPrintInfo *copy = [[self printInfo] copy];
-//
-//        [copy setTopMargin:0];
-//        [copy setBottomMargin:0];
-//        [copy setLeftMargin:0];
-//        [copy setRightMargin:0];
-//
-//        [copy setVerticallyCentered:YES];
-//        [copy setHorizontallyCentered:YES];
-//
-//        [copy setHorizontalPagination:NSClipPagination];
-//        [copy setVerticalPagination:NSClipPagination];
-//
-//
-//    NSImage *image = [whiteboard printableImage];
-//    NSRect picRect = NSMakeRect(0,0,image.size.width,image.size.height);
-//
-//    NSImageView *imageView = [[NSImageView alloc] initWithFrame:picRect];
-//    [imageView setImage:image];
-//
-//    SeaPrintOptionsController *accessoryController = [[SeaPrintOptionsController alloc] initWithDocument:self];
-//    NSPrintOperation *op = [NSPrintOperation printOperationWithView:imageView printInfo:copy];
-//
-//    NSPrintPanel *pp = [NSPrintPanel printPanel];
-//    [pp setJobStyleHint:NSPrintPhotoJobStyleHint];
-//
-//    NSPrintPanelOptions options = NSPrintPanelShowsOrientation | NSPrintPanelShowsPreview | NSPrintPanelShowsCopies | NSPrintPanelShowsPaperSize;
-//    [pp setOptions:options];
-//
-//    [op setPrintPanel:pp];
-//
-//    [pp addAccessoryController:accessoryController];
-//
-//    [op setCanSpawnSeparateThread:YES];
-//    [op runOperation];
-//}
 
 - (BOOL)prepareSavePanel:(NSSavePanel *)savePanel
 {

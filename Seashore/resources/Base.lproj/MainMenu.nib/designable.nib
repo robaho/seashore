@@ -498,6 +498,11 @@ Gw
                                     <action selector="exportAsTexture:" target="501" id="1781"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Export as Brush..." tag="221" id="M9b-Ga-0hL">
+                                <connections>
+                                    <action selector="exportAsBrush:" target="501" id="q8e-6p-Iuz"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Flatten Image..." tag="220" id="575">
                                 <connections>
                                     <action selector="flatten:" target="501" id="576"/>

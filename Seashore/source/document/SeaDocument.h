@@ -46,8 +46,9 @@
 	// The exporters
 	IBOutlet id gifExporter, jpegExporter, jp2Exporter, pngExporter, tiffExporter, xcfExporter;
 	
-	// The special texture exporter
 	IBOutlet id textureExporter;
+    
+    IBOutlet id brushExporter;
 	
 	// An array of all possible exporters
 	id exporters;
@@ -244,6 +245,13 @@
 	@result		Returns an instance of TextureExporter.
 */
 - (id)textureExporter;
+
+/*!
+ @method        brushExporter
+ @discussion    Returns the brush exporter.
+ @result        Returns an instance of BrushExporter.
+ */
+- (id)brushExporter;
 
 // DOCUMENT METHODS
 
