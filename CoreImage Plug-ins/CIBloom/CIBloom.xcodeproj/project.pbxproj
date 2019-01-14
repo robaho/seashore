@@ -13,7 +13,6 @@
 		A86E1A9A0BF2132D00CCFBB8 /* CIBloomClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A86E1A990BF2132D00CCFBB8 /* CIBloomClass.m */; };
 		A86E1AAB0BF2138F00CCFBB8 /* CIBloom.nib in Resources */ = {isa = PBXBuildFile; fileRef = A86E1AA90BF2138F00CCFBB8 /* CIBloom.nib */; };
 		A89CC2C409A9DF410072B19D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A89CC2C309A9DF410072B19D /* QuartzCore.framework */; };
-		A89CC46909A9E07A0072B19D /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A89CC46809A9E07A0072B19D /* ApplicationServices.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,7 +38,6 @@
 				2B1F6AF521D763C000D6F371 /* Plugins.framework in Frameworks */,
 				8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */,
 				A89CC2C409A9DF410072B19D /* QuartzCore.framework in Frameworks */,
-				A89CC46909A9E07A0072B19D /* ApplicationServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
