@@ -12,7 +12,7 @@
 #import "SeaTools.h"
 
 #ifdef TODO
-#warning Make textures lazy, that is if they are not in the active group they are not memory
+#warning Make textures shared across all open documents
 #endif
 
 @implementation TextureUtility
@@ -115,7 +115,7 @@
 	// Create a dictionary of all textures
 	textures = [NSDictionary dictionary];
     [self loadTexturesFromPath:[[gMainBundle resourcePath] stringByAppendingPathComponent:@"/textures"]];
-    [self loadTexturesFromPath:[NSHomeDirectory() stringByAppendingPathComponent:@"Library/Application Support/Seashore/textures/"]];
+    [self loadTexturesFromPath:[NSHomeDirectory() stringByAppendingPathComponent:@"Library/Application Support/Seashore/textures"]];
     [self createGroups];
 	
 	// Update utility if requested

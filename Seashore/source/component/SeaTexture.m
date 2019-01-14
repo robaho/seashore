@@ -16,6 +16,9 @@
 	
 	// Get the image
 	tempBitmapRep = [NSBitmapImageRep imageRepWithData:[NSData dataWithContentsOfFile:path]];
+    if(!tempBitmapRep){
+        return NULL;
+    }
 	width = (int)[tempBitmapRep pixelsWide];
 	height = (int)[tempBitmapRep pixelsHigh];
 
