@@ -1,4 +1,6 @@
 #import "Globals.h"
+#import "SeaPrintOptionsController.h"
+#import "SeaDocument.h"
 
 /*!
 	@class		SeaView
@@ -12,9 +14,11 @@
 @interface SeaPrintView : NSView {
 
 	// The document associated with this view
-	id document;
+	SeaDocument *document;
 	
 }
+
+@property (assign) SeaPrintOptionsController *printOptionsController;
 
 /*!
 	@method		initWithDocument:
@@ -32,24 +36,6 @@
 				The rectangle containing the contents to be drawn.
 */
 - (void)drawRect:(NSRect)rect;
-
-/*!
-	@method		knowsPageRange:
-	@discussion	Sets the page range for the document.
-	@param		range
-				Returns the page range for the document.
-	@result		Returns YES.
-*/
-- (BOOL)knowsPageRange:(NSRangePointer)range;
-
-/*!
-	@method		rectForPage
-	@discussion	Returns the printing rectangle for the given page.
-	@param		page
-				The page for which to return the rectangle.
-	@result		Returns an NSRect indicating the printing rectangle.
-*/
-- (NSRect)rectForPage:(int)page;
 
 /*!
 	@method		isFlipped

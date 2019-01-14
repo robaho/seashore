@@ -25,6 +25,7 @@
 #import "Units.h"
 #import "OptionsUtility.h"
 #import "SeaWindowContent.h"
+#import "SeaPrintOptionsController.h"
 
 extern int globalUniqueDocID;
 
@@ -381,19 +382,82 @@ enum {
 
 - (void)printShowingPrintPanel:(BOOL)showPanels
 {
-	SeaPrintView *printView;
-	NSPrintOperation *op;
-    
-	// Create a print operation for the given view
-	printView = [[SeaPrintView alloc] initWithDocument:self];
-	op = [NSPrintOperation printOperationWithView:printView printInfo:[self printInfo]];
-	
-	// Insist the view be scaled to fit
-	[op setShowPanels:showPanels];
-    [self runModalPrintOperation:op delegate:NULL didRunSelector:NULL contextInfo:NULL];
+    SeaPrintView *printView;
 
+    // Create a print operation for the given view
+    printView = [[SeaPrintView alloc] initWithDocument:self];
+
+    NSPrintInfo *copy = [self printInfo];
+
+    [copy setTopMargin:0];
+    [copy setBottomMargin:0];
+    [copy setLeftMargin:0];
+    [copy setRightMargin:0];
+
+    [copy setVerticallyCentered:NO];
+    [copy setHorizontallyCentered:NO];
+
+    [copy setHorizontalPagination:NSClipPagination];
+    [copy setVerticalPagination:NSClipPagination];
+    [[copy dictionary] setValue:@TRUE forKey:NSPrintDetailedErrorReporting];
+
+    SeaPrintOptionsController *accessoryController = [[SeaPrintOptionsController alloc] initWithDocument:self];
+    NSPrintOperation *op = [NSPrintOperation printOperationWithView:printView printInfo:copy];
+
+    [op setShowsPrintPanel:showPanels];
+    [op setShowsProgressPanel:showPanels];
+
+    NSPrintPanel *pp = [NSPrintPanel printPanel];
+    [pp setJobStyleHint:NSPrintPhotoJobStyleHint];
+
+    NSPrintPanelOptions options = NSPrintPanelShowsOrientation | NSPrintPanelShowsPreview | NSPrintPanelShowsCopies | NSPrintPanelShowsPaperSize;
+    [pp setOptions:options];
+
+    [op setPrintPanel:pp];
+
+    [pp addAccessoryController:accessoryController];
+
+    [self runModalPrintOperation:op delegate:NULL didRunSelector:NULL contextInfo:NULL];
 }
 
+//- (void)printShowingPrintPanel:(BOOL)showPanels
+//{
+//    NSPrintInfo *copy = [[self printInfo] copy];
+//
+//        [copy setTopMargin:0];
+//        [copy setBottomMargin:0];
+//        [copy setLeftMargin:0];
+//        [copy setRightMargin:0];
+//
+//        [copy setVerticallyCentered:YES];
+//        [copy setHorizontallyCentered:YES];
+//
+//        [copy setHorizontalPagination:NSClipPagination];
+//        [copy setVerticalPagination:NSClipPagination];
+//
+//
+//    NSImage *image = [whiteboard printableImage];
+//    NSRect picRect = NSMakeRect(0,0,image.size.width,image.size.height);
+//
+//    NSImageView *imageView = [[NSImageView alloc] initWithFrame:picRect];
+//    [imageView setImage:image];
+//
+//    SeaPrintOptionsController *accessoryController = [[SeaPrintOptionsController alloc] initWithDocument:self];
+//    NSPrintOperation *op = [NSPrintOperation printOperationWithView:imageView printInfo:copy];
+//
+//    NSPrintPanel *pp = [NSPrintPanel printPanel];
+//    [pp setJobStyleHint:NSPrintPhotoJobStyleHint];
+//
+//    NSPrintPanelOptions options = NSPrintPanelShowsOrientation | NSPrintPanelShowsPreview | NSPrintPanelShowsCopies | NSPrintPanelShowsPaperSize;
+//    [pp setOptions:options];
+//
+//    [op setPrintPanel:pp];
+//
+//    [pp addAccessoryController:accessoryController];
+//
+//    [op setCanSpawnSeparateThread:YES];
+//    [op runOperation];
+//}
 
 - (BOOL)prepareSavePanel:(NSSavePanel *)savePanel
 {
@@ -578,14 +642,6 @@ enum {
 {
 	return current;
 }
-
-//- (BOOL)isDocumentEdited
-//{
-//    if(!current){
-//        return false;
-//    }
-//    return [super isDocumentEdited];
-//}
 
 - (void)setCurrent:(BOOL)value
 {

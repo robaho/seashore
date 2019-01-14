@@ -134,11 +134,6 @@
                             <menuItem isSeparatorItem="YES" id="74">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Page Setup..." keyEquivalent="P" id="77">
-                                <connections>
-                                    <action selector="runPageLayout:" target="-1" id="87"/>
-                                </connections>
-                            </menuItem>
                             <menuItem title="Print..." keyEquivalent="p" id="78">
                                 <connections>
                                     <action selector="printDocument:" target="-1" id="200"/>
@@ -928,7 +923,7 @@ CA
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <clipView key="contentView" drawsBackground="NO" id="Ux2-4C-9if">
                             <rect key="frame" x="1" y="1" width="423" height="288"/>
-                            <autoresizingMask key="autoresizingMask"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView editable="NO" importsGraphics="NO" verticallyResizable="YES" baseWritingDirection="leftToRight" usesFontPanel="YES" usesRuler="YES" spellingCorrection="YES" smartInsertDelete="YES" id="4078">
                                     <rect key="frame" x="0.0" y="-117" width="423" height="5850"/>
@@ -1569,6 +1564,7 @@ This General Public License does not permit incorporating your program into prop
                     </textFieldCell>
                 </textField>
             </subviews>
+            <point key="canvasLocation" x="19" y="359"/>
         </customView>
         <window title="Instant Help" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="instant help window" animationBehavior="default" id="912" userLabel="Instant Help Win" customClass="SeaUtilityPanel">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" utility="YES" nonactivatingPanel="YES"/>
@@ -1595,7 +1591,7 @@ This General Public License does not permit incorporating your program into prop
                     </textField>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="16.5" y="-51"/>
+            <point key="canvasLocation" x="-253" y="41"/>
         </window>
         <customObject id="1244" userLabel="SeaWarning" customClass="SeaWarning"/>
         <window title="Warnings" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="warning window" animationBehavior="default" id="1249" userLabel="Warning Win" customClass="SeaUtilityPanel">
@@ -1631,6 +1627,7 @@ This General Public License does not permit incorporating your program into prop
                     </button>
                 </subviews>
             </view>
+            <point key="canvasLocation" x="722" y="133"/>
         </window>
         <window title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="1329" userLabel="Preferences Win" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
@@ -1644,11 +1641,17 @@ This General Public License does not permit incorporating your program into prop
             <connections>
                 <outlet property="delegate" destination="507" id="2380"/>
             </connections>
+            <point key="canvasLocation" x="-246" y="-526"/>
         </window>
         <customObject id="1723" userLabel="SeaPlugins" customClass="SeaPlugins">
             <connections>
                 <outlet property="controller" destination="448" id="3563"/>
                 <outlet property="effectMenu" destination="1406" id="3675"/>
+            </connections>
+        </customObject>
+        <customObject id="c2e-tx-zg5" userLabel="SeaColorProfiles" customClass="SeaColorProfiles">
+            <connections>
+                <outlet property="proofMenu" destination="1532" id="eSx-RV-beN"/>
             </connections>
         </customObject>
         <numberFormatter formatterBehavior="10_0" positiveFormat="0" negativeFormat="-0" localizesFormat="NO" hasThousandSeparators="NO" thousandSeparator="," id="1788" userLabel="Integer Formatter">
@@ -1915,7 +1918,7 @@ DQ
                     </buttonCell>
                 </button>
             </subviews>
-            <point key="canvasLocation" x="54" y="513"/>
+            <point key="canvasLocation" x="34" y="726"/>
         </customView>
         <customView id="2726" userLabel="New Prefs">
             <rect key="frame" x="0.0" y="0.0" width="432" height="359"/>
@@ -2078,7 +2081,7 @@ DQ
                     </textFieldCell>
                 </textField>
             </subviews>
-            <point key="canvasLocation" x="114" y="-442"/>
+            <point key="canvasLocation" x="752" y="-548"/>
         </customView>
         <window title="New Image" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="2877" userLabel="New Image" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
@@ -2298,7 +2301,7 @@ DQ
             <connections>
                 <outlet property="initialFirstResponder" destination="2906" id="2917"/>
             </connections>
-            <point key="canvasLocation" x="540" y="-456"/>
+            <point key="canvasLocation" x="683" y="-155"/>
         </window>
         <customView id="3676" userLabel="Color Prefs">
             <rect key="frame" x="0.0" y="0.0" width="431" height="359"/>
@@ -2530,13 +2533,9 @@ DQ
                     </textFieldCell>
                 </textField>
             </subviews>
+            <point key="canvasLocation" x="250" y="-255"/>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="X1R-xm-eP3"/>
-        <customObject id="c2e-tx-zg5" userLabel="SeaColorProfiles" customClass="SeaColorProfiles">
-            <connections>
-                <outlet property="proofMenu" destination="1532" id="eSx-RV-beN"/>
-            </connections>
-        </customObject>
     </objects>
     <resources>
         <image name="help-big" width="48" height="48"/>

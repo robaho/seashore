@@ -29,6 +29,8 @@
 		2B1F70E221DC969500D6F371 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1F70E121DC969400D6F371 /* CoreGraphics.framework */; };
 		2B1F70E821DC983500D6F371 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1F70E721DC983500D6F371 /* CoreServices.framework */; };
 		2B1F70EB21DD472B00D6F371 /* SeaColorProfiles.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1F70EA21DD472B00D6F371 /* SeaColorProfiles.m */; };
+		2B8BD34721EA565C00FD9AC5 /* SeaPrintOptionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8BD34521EA565C00FD9AC5 /* SeaPrintOptionsController.m */; };
+		2B8BD35221EA727500FD9AC5 /* PrintPanelAccessory.nib in Resources */ = {isa = PBXBuildFile; fileRef = 2B8BD35121EA6E1800FD9AC5 /* PrintPanelAccessory.nib */; };
 		2BD591A921E3DBCA002D150B /* AutoEnhance+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591A821E3DBCA002D150B /* AutoEnhance+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BD591AB21E3DBCA002D150B /* AffineTile+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591AA21E3DBCA002D150B /* AffineTile+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BD591AD21E3DBCA002D150B /* Bloom+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591AC21E3DBCA002D150B /* Bloom+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -595,6 +597,9 @@
 		2B1F70EA21DD472B00D6F371 /* SeaColorProfiles.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeaColorProfiles.m; sourceTree = "<group>"; };
 		2B4046692185672100BCC2A2 /* ColorSync.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ColorSync.framework; path = System/Library/Frameworks/ColorSync.framework; sourceTree = SDKROOT; };
 		2B40466A2185672300BCC2A2 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
+		2B8BD34421EA565C00FD9AC5 /* SeaPrintOptionsController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaPrintOptionsController.h; sourceTree = "<group>"; };
+		2B8BD34521EA565C00FD9AC5 /* SeaPrintOptionsController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeaPrintOptionsController.m; sourceTree = "<group>"; };
+		2B8BD35121EA6E1800FD9AC5 /* PrintPanelAccessory.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = PrintPanelAccessory.nib; path = /Users/robertengels/seashore/Seashore/resources/PrintPanelAccessory.nib; sourceTree = "<absolute>"; };
 		2BCA996C21E30C4F00E69BD5 /* Seashore.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Seashore.xcconfig; sourceTree = "<group>"; };
 		2BD5906D21E3BCF0002D150B /* Plugins.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Plugins.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BD5906F21E3BCF5002D150B /* GIMPCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GIMPCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1240,6 +1245,8 @@
 				A8FEC68B0D9F64DB00F47425 /* SeaApplication.m */,
 				2B1F70E921DD471000D6F371 /* SeaColorProfiles.h */,
 				2B1F70EA21DD472B00D6F371 /* SeaColorProfiles.m */,
+				2B8BD34421EA565C00FD9AC5 /* SeaPrintOptionsController.h */,
+				2B8BD34521EA565C00FD9AC5 /* SeaPrintOptionsController.m */,
 			);
 			name = "Application Classes";
 			path = source/application;
@@ -1268,6 +1275,7 @@
 				A87E672B06D1F4A000A5C89A /* MainMenu.nib */,
 				A87E672D06D1F4A000A5C89A /* CocoaContent.nib */,
 				A81240C507E81A7A00F275BF /* SVGContent.nib */,
+				2B8BD35121EA6E1800FD9AC5 /* PrintPanelAccessory.nib */,
 				A843451C075893FB008C6517 /* Seashore Guide.pdf */,
 				A8138D640CEFD5FA00C2F880 /* Seashore Effects Guide.pdf */,
 				A8EDF16707895A9F0022BB31 /* Info.plist */,
@@ -2074,6 +2082,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B8BD35221EA727500FD9AC5 /* PrintPanelAccessory.nib in Resources */,
 				A8EDF0B9078959C80022BB31 /* duplicate.png in Resources */,
 				A8EDF0BA078959C80022BB31 /* new.png in Resources */,
 				A8EDF0BF078959C80022BB31 /* expansion.png in Resources */,
@@ -2361,6 +2370,7 @@
 				A849725C07C4BE750033BE1B /* NSExtendedTableView.m in Sources */,
 				A827DCE907D06EEB000E45A1 /* SeaAlignment.m in Sources */,
 				A8721E2607DAF1F000995290 /* SVGContent.m in Sources */,
+				2B8BD34721EA565C00FD9AC5 /* SeaPrintOptionsController.m in Sources */,
 				A8721E2C07DAF1FA00995290 /* SVGLayer.m in Sources */,
 				A8F22EDB07EA9871005AD30E /* SVGImporter.m in Sources */,
 				A8207A3807EEFEE800ED3D38 /* SeaPrintView.m in Sources */,

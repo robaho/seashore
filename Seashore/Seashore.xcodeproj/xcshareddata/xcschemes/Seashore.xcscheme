@@ -63,6 +63,12 @@
             ReferencedContainer = "container:Seashore.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "-NSBindingDebugLogLevel 1"
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "CGBITMAP_CONTEXT_LOG_ERRORS"
