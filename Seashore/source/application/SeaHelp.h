@@ -38,14 +38,6 @@
 */
 - (IBAction)openEffectsHelp:(id)sender;
 
-/*!
-	@method		checkForUpdate:
-	@discussion	Checks for an update to Seashore.
-	@param		sender
-				NULL if dialog box feedback should be supressed.
-*/
-- (IBAction)checkForUpdate:(id)sender;
-
 - (IBAction)reportAProblem:(id)sender;
 
 /*!

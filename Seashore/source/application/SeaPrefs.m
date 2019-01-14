@@ -243,16 +243,6 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	else
 		mouseCoalescing = YES;
 		
-	// Get the checkForUpdates
-	if ([gUserDefaults objectForKey:@"checkForUpdates"]) {
-		checkForUpdates = [gUserDefaults boolForKey:@"checkForUpdates"];
-		lastCheck = [[gUserDefaults objectForKey:@"lastCheck"] doubleValue];
-	}
-	else {
-		checkForUpdates = YES;
-		lastCheck = [[NSDate date] timeIntervalSinceReferenceDate];
-	}
-	
 	// Get the preciseCursor
 	if ([gUserDefaults objectForKey:@"preciseCursor"])
 		preciseCursor = [gUserDefaults boolForKey:@"preciseCursor"];
@@ -335,7 +325,6 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	[gUserDefaults setObject:(openUntitled ? @"YES" : @"NO") forKey:@"openUntitled"];
 	[gUserDefaults setObject:(ignoreFirstTouch ? @"YES" : @"NO") forKey:@"ignoreFirstTouch"];
 	[gUserDefaults setObject:(mouseCoalescing ? @"YES" : @"NO") forKey:@"newMouseCoalescing"];
-	[gUserDefaults setObject:(checkForUpdates ? @"YES" : @"NO") forKey:@"checkForUpdates"];
 	[gUserDefaults setObject:(preciseCursor ? @"YES" : @"NO") forKey:@"preciseCursor"];
 	[gUserDefaults setObject:(useCoreImage ? @"YES" : @"NO") forKey:@"useCoreImage"];
 	[gUserDefaults setObject:(transparentBackground ? @"YES" : @"NO") forKey:@"transparentBackground"];
@@ -353,7 +342,6 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	[gUserDefaults setInteger:runCount forKey:@"runCount"];
 	[gUserDefaults setObject:[font fontName] forKey:@"fontName"];
 	[gUserDefaults setFloat:[font pointSize] forKey:@"fontSize"];
-	[gUserDefaults setObject:[NSString stringWithFormat:@"%f", lastCheck] forKey:@"lastCheck"];
 }
 
 - (NSToolbarItem *) toolbar: (NSToolbar *)toolbar itemForItemIdentifier: (NSString *) itemIdent willBeInsertedIntoToolbar:(BOOL) willBeInserted
@@ -414,8 +402,7 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	[openUntitledCheckbox setState:openUntitled];
 	[ignoreFirstTouchCheckbox setState:ignoreFirstTouch];
 	[coalescingCheckbox setState:mouseCoalescing];
-	[checkForUpdatesCheckbox setState:checkForUpdates];
-	[preciseCursorCheckbox setState:preciseCursor];	
+	[preciseCursorCheckbox setState:preciseCursor];
 	[useCoreImageCheckbox setState:useCoreImage];
 	if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_3) {
 		[useCoreImageCheckbox setState:NO];
@@ -536,13 +523,6 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	mouseCoalescing = [coalescingCheckbox state];
 	[self apply: self];
 }	
-
-
--(IBAction)setCheckForUpdates:(id)sender
-{
-	checkForUpdates = [checkForUpdatesCheckbox state];
-	[self apply: self];
-}
 
 -(IBAction)setPreciseCursor:(id)sender
 {
@@ -851,16 +831,6 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 - (BOOL)mouseCoalescing
 {
 	return mouseCoalescing;
-}
-
-- (BOOL)checkForUpdates
-{
-	if ([[NSDate date] timeIntervalSinceReferenceDate] - lastCheck > 7.0 * 24.0 * 60.0 * 60.0) {
-		lastCheck = [[NSDate date] timeIntervalSinceReferenceDate];
-		return checkForUpdates;
-	}
-	
-	return NO;
 }
 
 - (BOOL)preciseCursor

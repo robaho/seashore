@@ -39,11 +39,6 @@ id seaController;
 			[seaWarning addMessage:LOCALSTR(@"old crash report message", @"Seashore has moved its old crash report to the Trash so that it will be deleted next time you empty the trash.") level:kModerateImportance];
 		}
 	}
-	
-	// Check for update
-	if ([seaPrefs checkForUpdates]) {
-		[seaHelp checkForUpdate:NULL];
-	}
 }
 
 - (UtilitiesManager*)utilitiesManager

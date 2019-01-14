@@ -109,9 +109,6 @@ enum {
 	// A checkbox which when checked indicates mouse coalescing should always be on
 	IBOutlet id coalescingCheckbox;
 	
-	// A checkbox which when checked indicates updates should be checked for weekly
-	IBOutlet id checkForUpdatesCheckbox;
-	
 	// A checkbox which when checks indicates the precise cursor should be used
 	IBOutlet id preciseCursorCheckbox;
 	
@@ -161,9 +158,6 @@ enum {
 	// Whether smart interpolation should be used
 	BOOL smartInterpolation;
 	
-	// Whether to check for updates weekly
-	BOOL checkForUpdates;
-	
 	// Whether to create a new document at start-up
 	BOOL openUntitled;
 	
@@ -202,9 +196,6 @@ enum {
 
 	// Stores the number of times this version of Seashore has been run
 	int runCount;
-	
-	// The time of the last check
-	NSTimeInterval lastCheck;
 	
 	// Whether the first pressure-sensitive touch should be ignored
 	BOOL ignoreFirstTouch;
@@ -378,14 +369,6 @@ enum {
 				Ignored.
 */
 -(IBAction)setMouseCoalescing:(id)sender;
-
-/*!
-	@method		setCheckForUpdates:
-	@discussion	Sets if updates should be checked for.
-	@param		sender
-				Ignored.
-*/
--(IBAction)setCheckForUpdates:(id)sender;
 
 /*!
 	@method		setPreciseCursor:
@@ -657,15 +640,6 @@ enum {
 	@result		Returns YES if it should always be on, NO otherwise.
 */
 - (BOOL)mouseCoalescing;
-
-/*!
-	@method		checkForUpdates
-	@discussion	Returns whether an application should check for updates. This
-				will only return YES if it's been more than a week since the
-				last update.
-	@result		Returns YES if Seashore should check for updates, NO otherwise.
-*/
-- (BOOL)checkForUpdates;
 
 /*!
 	@method		preciseCursor
