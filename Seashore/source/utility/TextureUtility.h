@@ -1,6 +1,7 @@
 #import "Globals.h"
 #import "AbstractPanelUtility.h"
 #import "SeaDocument.h"
+#import "SeaTexture.h"
 
 /*!
 	@class		TextureUtility
@@ -33,7 +34,7 @@
 	__weak IBOutlet SeaDocument *document;
 	
 	// An dictionary of all brushes known to Seashore
-	NSDictionary *textures;
+	NSDictionary<NSString*,SeaTexture*> *textures;
 	
 	// An array of all groups (an array of an array SeaTexture's) and group names (an array of NSString's)
 	NSArray *groups;

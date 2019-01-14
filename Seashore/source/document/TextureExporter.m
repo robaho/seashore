@@ -23,22 +23,23 @@ enum {
 - (IBAction)apply:(id)sender
 {
 	NSArray *groupNames = [[[SeaController utilitiesManager] textureUtilityFor:document] groupNames];
-	NSString *path;
 
 	// End the sheet
 	[NSApp stopModal];
 	[NSApp endSheet:sheet];
 	[sheet orderOut:self];
-	
+    
+    NSString *path = [NSHomeDirectory() stringByAppendingPathComponent:@"Library/Application Support/Seashore/textures/"];
+
 	// Determine the path
 	if ([existingCategoryRadio state] == NSOnState) {
-		path = [[[gMainBundle resourcePath] stringByAppendingString:@"/textures/"] stringByAppendingString:[groupNames objectAtIndex:[categoryTable selectedRow]]];
+		path = [path stringByAppendingPathComponent:[groupNames objectAtIndex:[categoryTable selectedRow]]];
 	}
 	else {
-		path = [[[gMainBundle resourcePath] stringByAppendingString:@"/textures/"] stringByAppendingString:[categoryTextbox stringValue]];
-		[gFileManager createDirectoryAtPath:path attributes:nil];
+		path = [path stringByAppendingPathComponent:[categoryTextbox stringValue]];
 	}
-	path = [path stringByAppendingFormat:@"/%@.png", [nameTextbox stringValue]];
+    [gFileManager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:0 error:NULL];
+	path = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png", [nameTextbox stringValue]]];
 	
 	// Write document
 	[document writeToFile:path ofType:@"Portable Network Graphics Image"];

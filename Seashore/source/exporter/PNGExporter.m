@@ -65,8 +65,11 @@
     
 	imageData = [imageRep representationUsingType:NSPNGFileType properties:[NSDictionary dictionary]];
 		
+    NSError *error;
 	// Save our file and let's go
-	[imageData writeToFile:path atomically:NO];
+    if([imageData writeToFile:path options:0 error:&error]==NO) {
+        NSLog(@"unable to write file %@",error);
+    }
 	
 	// If the destination data is not equivalent to the source data free the former
 	if (destData != srcData)
