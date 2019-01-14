@@ -7,18 +7,35 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2B1F698921D70D2800D6F371 /* Plugins.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1F698821D70D2800D6F371 /* Plugins.framework */; };
-		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
+		2B8BD4B921ECEB4500FD9AC5 /* ThresholdClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8BD4AA21ECEB4500FD9AC5 /* ThresholdClass.m */; };
+		2B8BD4BA21ECEB4500FD9AC5 /* ThresholdView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8BD4AB21ECEB4500FD9AC5 /* ThresholdView.m */; };
+		2B8BD4BB21ECEB4500FD9AC5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2B8BD4AC21ECEB4500FD9AC5 /* Localizable.strings */; };
+		2B8BD4BC21ECEB4500FD9AC5 /* Threshold.nib in Resources */ = {isa = PBXBuildFile; fileRef = 2B8BD4AE21ECEB4500FD9AC5 /* Threshold.nib */; };
+		2B8BD4BD21ECEB4500FD9AC5 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2B8BD4B221ECEB4500FD9AC5 /* Info.plist */; };
 		A831E1410789471D0009080F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A831E13F0789471D0009080F /* Localizable.strings */; };
 		A8A501AB079E0B6C00B1D609 /* Brightness.nib in Resources */ = {isa = PBXBuildFile; fileRef = A8A501A9079E0B6C00B1D609 /* Brightness.nib */; };
 		A8D55D7A0792124D00B6C7C8 /* BrightnessClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A8D55D780792124D00B6C7C8 /* BrightnessClass.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		2B8BD4B721ECEB4500FD9AC5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2B8BD4B321ECEB4500FD9AC5 /* Threshold.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
+			remoteInfo = Threshold;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
-		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
-		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
-		2B1F698821D70D2800D6F371 /* Plugins.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Plugins.framework; path = ../../Seashore/Build/Products/Debug/Plugins.framework; sourceTree = "<group>"; };
+		2B8BD4AA21ECEB4500FD9AC5 /* ThresholdClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThresholdClass.m; sourceTree = "<group>"; };
+		2B8BD4AB21ECEB4500FD9AC5 /* ThresholdView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThresholdView.m; sourceTree = "<group>"; };
+		2B8BD4AD21ECEB4500FD9AC5 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
+		2B8BD4AF21ECEB4500FD9AC5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/Threshold.nib; sourceTree = "<group>"; };
+		2B8BD4B021ECEB4500FD9AC5 /* ThresholdView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThresholdView.h; sourceTree = "<group>"; };
+		2B8BD4B121ECEB4500FD9AC5 /* ThresholdClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThresholdClass.h; sourceTree = "<group>"; };
+		2B8BD4B221ECEB4500FD9AC5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2B8BD4B321ECEB4500FD9AC5 /* Threshold.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = Threshold.xcodeproj; sourceTree = "<group>"; };
 		2BDB90A4218360A6000D7803 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/Brightness.nib; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* Brightness.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Brightness.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -32,8 +49,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */,
-				2B1F698921D70D2800D6F371 /* Plugins.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -45,19 +60,10 @@
 			children = (
 				08FB77AFFE84173DC02AAC07 /* Classes */,
 				089C167CFE841241C02AAC07 /* Resources */,
-				089C1671FE841209C02AAC07 /* Frameworks and Libraries */,
 				19C28FB8FE9D52D311CA2CBB /* Products */,
+				2B8BD4A921ECEB4500FD9AC5 /* Threshold */,
 			);
 			name = Brightness;
-			sourceTree = "<group>";
-		};
-		089C1671FE841209C02AAC07 /* Frameworks and Libraries */ = {
-			isa = PBXGroup;
-			children = (
-				1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */,
-				1058C7AEFEA557BF11CA2CBB /* Other Frameworks */,
-			);
-			name = "Frameworks and Libraries";
 			sourceTree = "<group>";
 		};
 		089C167CFE841241C02AAC07 /* Resources */ = {
@@ -79,28 +85,34 @@
 			name = Classes;
 			sourceTree = "<group>";
 		};
-		1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				2B1F698821D70D2800D6F371 /* Plugins.framework */,
-				1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */,
-			);
-			name = "Linked Frameworks";
-			sourceTree = "<group>";
-		};
-		1058C7AEFEA557BF11CA2CBB /* Other Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				089C1672FE841209C02AAC07 /* Foundation.framework */,
-				089C167FFE841241C02AAC07 /* AppKit.framework */,
-			);
-			name = "Other Frameworks";
-			sourceTree = "<group>";
-		};
 		19C28FB8FE9D52D311CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				8D5B49B6048680CD000E48DA /* Brightness.bundle */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2B8BD4A921ECEB4500FD9AC5 /* Threshold */ = {
+			isa = PBXGroup;
+			children = (
+				2B8BD4AA21ECEB4500FD9AC5 /* ThresholdClass.m */,
+				2B8BD4AB21ECEB4500FD9AC5 /* ThresholdView.m */,
+				2B8BD4AC21ECEB4500FD9AC5 /* Localizable.strings */,
+				2B8BD4AE21ECEB4500FD9AC5 /* Threshold.nib */,
+				2B8BD4B021ECEB4500FD9AC5 /* ThresholdView.h */,
+				2B8BD4B121ECEB4500FD9AC5 /* ThresholdClass.h */,
+				2B8BD4B221ECEB4500FD9AC5 /* Info.plist */,
+				2B8BD4B321ECEB4500FD9AC5 /* Threshold.xcodeproj */,
+			);
+			name = Threshold;
+			path = ../../Threshold;
+			sourceTree = "<group>";
+		};
+		2B8BD4B421ECEB4500FD9AC5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2B8BD4B821ECEB4500FD9AC5 /* Threshold.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -141,9 +153,16 @@
 			knownRegions = (
 				en,
 				Base,
+				English,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* Brightness */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 2B8BD4B421ECEB4500FD9AC5 /* Products */;
+					ProjectRef = 2B8BD4B321ECEB4500FD9AC5 /* Threshold.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				8D5B49AC048680CD000E48DA /* Brightness */,
@@ -151,12 +170,25 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		2B8BD4B821ECEB4500FD9AC5 /* Threshold.bundle */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = Threshold.bundle;
+			remoteRef = 2B8BD4B721ECEB4500FD9AC5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXResourcesBuildPhase section */
 		8D5B49AF048680CD000E48DA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				A831E1410789471D0009080F /* Localizable.strings in Resources */,
+				2B8BD4BC21ECEB4500FD9AC5 /* Threshold.nib in Resources */,
+				2B8BD4BB21ECEB4500FD9AC5 /* Localizable.strings in Resources */,
+				2B8BD4BD21ECEB4500FD9AC5 /* Info.plist in Resources */,
 				A8A501AB079E0B6C00B1D609 /* Brightness.nib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -168,13 +200,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B8BD4B921ECEB4500FD9AC5 /* ThresholdClass.m in Sources */,
 				A8D55D7A0792124D00B6C7C8 /* BrightnessClass.m in Sources */,
+				2B8BD4BA21ECEB4500FD9AC5 /* ThresholdView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		2B8BD4AC21ECEB4500FD9AC5 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2B8BD4AD21ECEB4500FD9AC5 /* English */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		2B8BD4AE21ECEB4500FD9AC5 /* Threshold.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2B8BD4AF21ECEB4500FD9AC5 /* Base */,
+			);
+			name = Threshold.nib;
+			sourceTree = "<group>";
+		};
 		A831E13F0789471D0009080F /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
