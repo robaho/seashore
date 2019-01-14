@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2B1F69DE21D7552300D6F371 /* Plugins.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1F69DD21D7552300D6F371 /* Plugins.framework */; };
-		2B1F69E021D7552A00D6F371 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1F69DF21D7552A00D6F371 /* Cocoa.framework */; };
+		2B8BD4C321ECEC8300FD9AC5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B8BD4C021ECEC8300FD9AC5 /* QuartzCore.framework */; };
+		2B8BD4C421ECEC8300FD9AC5 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B8BD4C121ECEC8300FD9AC5 /* Cocoa.framework */; };
+		2B8BD4C521ECEC8300FD9AC5 /* Plugins.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B8BD4C221ECEC8300FD9AC5 /* Plugins.framework */; };
 		A831E1410789471D0009080F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A831E13F0789471D0009080F /* Localizable.strings */; };
 		A88C6D45081CF74B006F33E8 /* ThresholdClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A88C6D43081CF74B006F33E8 /* ThresholdClass.m */; };
 		A88C6D4E081CFB17006F33E8 /* ThresholdView.m in Sources */ = {isa = PBXBuildFile; fileRef = A88C6D4C081CFB17006F33E8 /* ThresholdView.m */; };
@@ -16,8 +17,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2B1F69DD21D7552300D6F371 /* Plugins.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Plugins.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2B1F69DF21D7552A00D6F371 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		2B8BD4C021ECEC8300FD9AC5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		2B8BD4C121ECEC8300FD9AC5 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		2B8BD4C221ECEC8300FD9AC5 /* Plugins.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Plugins.framework; path = ../../Build/Products/Debug/Plugins.framework; sourceTree = "<group>"; };
 		2BDB90A3218360A6000D7803 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/Threshold.nib; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* Threshold.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Threshold.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -33,8 +35,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2B1F69E021D7552A00D6F371 /* Cocoa.framework in Frameworks */,
-				2B1F69DE21D7552300D6F371 /* Plugins.framework in Frameworks */,
+				2B8BD4C421ECEC8300FD9AC5 /* Cocoa.framework in Frameworks */,
+				2B8BD4C521ECEC8300FD9AC5 /* Plugins.framework in Frameworks */,
+				2B8BD4C321ECEC8300FD9AC5 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,8 +87,9 @@
 		2B1F69DC21D7552300D6F371 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2B1F69DF21D7552A00D6F371 /* Cocoa.framework */,
-				2B1F69DD21D7552300D6F371 /* Plugins.framework */,
+				2B8BD4C121ECEC8300FD9AC5 /* Cocoa.framework */,
+				2B8BD4C021ECEC8300FD9AC5 /* QuartzCore.framework */,
+				2B8BD4C221ECEC8300FD9AC5 /* Plugins.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
