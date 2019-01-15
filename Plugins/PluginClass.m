@@ -348,8 +348,8 @@ CIColor *createCIColor(NSColor *color) {
     CIColor *ci = [ [CIColor alloc] initWithColor:color];
     if(ci==NULL){
         // some conversions cannot work, so convert to rgb
-        NSColor *rgb = [color colorUsingColorSpace:MyRGBCS];
-        ci = [CIColor colorWithCGColor:[rgb CGColor]];
+        NSColor *rgb = [color colorUsingColorSpace:[NSColorSpace sRGBColorSpace]];
+        ci = [[CIColor alloc] initWithColor:rgb];
     }
     return ci;
 }
