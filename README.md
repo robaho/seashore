@@ -2,7 +2,12 @@
 
 ![icon](doc/icon.png)
 
-Seashore is now on the App Store !!! Obtain the latest certified release at [here](https://itunes.apple.com/us/app/seashore/id1448648921?mt=12)
+Seashore is now on the App Store !!! 
+
+<a href="https://geo.itunes.apple.com/us/app/seashore/id1448648921?mt=12&app=apps" style="display:inline-block;overflow:hidden;background:url(https://linkmaker.itunes.apple.com/en-us/badge-lrg.svg?releaseDate=2019-01-15T00:00:00Z&kind=desktopapp&bubble=macos_apps) no-repeat;width:165px;height:40px;"></a>
+
+<a href="https://geo.itunes.apple.com/us/app/seashore/id1448648921?mt=12&app=apps"><img src="https://linkmaker.itunes.apple.com/en-us/badge-lrg.svg?releaseDate=2019-01-15T00:00:00Z&kind=desktopapp&bubble=macos_apps" 
+/></a>
 
 You can also download the latest DMG releases [here](https://github.com/robaho/seashore/releases), but these will no longer perform "update checks" - since this requires the App Store.
 
