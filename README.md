@@ -2,7 +2,7 @@
 
 ![icon](doc/icon.png)
 
-Seashore is now on the App Store !!! 
+Seashore is now on the App Store !!! If you add your positive review there, it will do wonders for the proliferation of Seashore.
 
 <a href="https://geo.itunes.apple.com/us/app/seashore/id1448648921?mt=12&app=apps" style="display:inline-block;overflow:hidden;background:url(https://linkmaker.itunes.apple.com/en-us/badge-lrg.svg?releaseDate=2019-01-15T00:00:00Z&kind=desktopapp&bubble=macos_apps) no-repeat;width:165px;height:40px;"></a>
 
