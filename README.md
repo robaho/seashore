@@ -2,7 +2,14 @@
 
 ![icon](doc/icon.png)
 
-download the latest DMGs from https://github.com/robaho/seashore/releases
+Seashore is now on the App Store !!! If you add your positive review there, it will do wonders for the proliferation of Seashore.
+
+<a href="https://geo.itunes.apple.com/us/app/seashore/id1448648921?mt=12&app=apps" style="display:inline-block;overflow:hidden;background:url(https://linkmaker.itunes.apple.com/en-us/badge-lrg.svg?releaseDate=2019-01-15T00:00:00Z&kind=desktopapp&bubble=macos_apps) no-repeat;width:165px;height:40px;"></a>
+
+<a href="https://geo.itunes.apple.com/us/app/seashore/id1448648921?mt=12&app=apps"><img src="https://linkmaker.itunes.apple.com/en-us/badge-lrg.svg?releaseDate=2019-01-15T00:00:00Z&kind=desktopapp&bubble=macos_apps" 
+/></a>
+
+You can also download the latest DMG releases [here](https://github.com/robaho/seashore/releases), but these will no longer perform "update checks" - since this requires the App Store.
 
 **The current version requires 10.7+. If you are on an earlier OSX version, I suggest downloading the 0.6.6 binaries from seashore.sourceforge.net. Most likely you need to download the "hfs" version in order to open on an older Mac.**
 
