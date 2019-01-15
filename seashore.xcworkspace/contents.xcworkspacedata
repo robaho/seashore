@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:Seashore.xcconfig">
+   </FileRef>
+   <FileRef
       location = "group:current.xml">
    </FileRef>
    <FileRef
@@ -260,9 +263,5 @@
       <FileRef
          location = "container:XCFSpotlight/XCFSpotlight.xcodeproj">
       </FileRef>
-   </Group>
-   <Group
-      location = "container:/Users/robertengels/seashore/Seashore"
-      name = "Other Applications">
    </Group>
 </Workspace>

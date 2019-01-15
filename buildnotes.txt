@@ -1,0 +1,15 @@
+The workspace is designed to be built via the command line for distribution purposes.
+
+This is due to the shear number of projects because of the plugins. From the command you can use a default xcconfig file - this option does not appear when using the XCode UI builds.
+
+Here are the sample commands used (at the top-level directory)
+
+for building for the App Store
+
+xcodebuild archive -workspace seashore.xcworkspace/ -xcconfig Seashore.xcconfig -scheme "Seashore"
+
+for building the stand-alone DMG
+
+xcodebuild build -workspace seashore.xcworkspace/ -xcconfig Seashore.xcconfig -scheme "Seashore Disk Image"
+
+

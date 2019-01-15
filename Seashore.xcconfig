@@ -7,5 +7,4 @@
 
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
-CODE_SIGN_IDENTITY = OSX Developer
-DEVELOPMENT_TEAM = ABC123ABC
+MACOSX_DEPLOYMENT_TARGET = 10.7
