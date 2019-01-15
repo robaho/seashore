@@ -2,7 +2,9 @@
 
 ![icon](doc/icon.png)
 
-download the latest DMGs from https://github.com/robaho/seashore/releases
+Seashore have moved to the App Store !!! Obtain the certified release at [here](https://itunes.apple.com/us/app/seashore/id1448648921?mt=12)
+
+You can also download the latest DMG releases [here](https://github.com/robaho/seashore/releases), but these will no longer perform "update checks" - since this requires the App Store.
 
 **The current version requires 10.7+. If you are on an earlier OSX version, I suggest downloading the 0.6.6 binaries from seashore.sourceforge.net. Most likely you need to download the "hfs" version in order to open on an older Mac.**
 
