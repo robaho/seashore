@@ -109,6 +109,7 @@
 		2BD5926221E43795002D150B /* Plugins.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2BD5906D21E3BCF0002D150B /* Plugins.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BD5926821E53B74002D150B /* GIMPCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BD5906F21E3BCF5002D150B /* GIMPCore.framework */; };
 		2BD5926921E53B74002D150B /* GIMPCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2BD5906F21E3BCF5002D150B /* GIMPCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE76CD221EE937400B6C65F /* Seashore.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 2BE76CD121EE937400B6C65F /* Seashore.xcconfig */; };
 		56C8A64D1055A1DA0056E36F /* normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 56C8A64C1055A1DA0056E36F /* normal.png */; };
 		A80983D70871420900F7412F /* JP2Exporter.m in Sources */ = {isa = PBXBuildFile; fileRef = A80983D50871420900F7412F /* JP2Exporter.m */; };
 		A80EB8A6086F05E300369324 /* JP2 Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A80EB8A5086F05E300369324 /* JP2 Icon.icns */; };
@@ -603,7 +604,6 @@
 		2B8BD35521EC71EC00FD9AC5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		2B8BD58F21ED169B00FD9AC5 /* BrushExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrushExporter.h; sourceTree = "<group>"; };
 		2B8BD59021ED16AB00FD9AC5 /* BrushExporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrushExporter.m; sourceTree = "<group>"; };
-		2BCA996C21E30C4F00E69BD5 /* Seashore.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Seashore.xcconfig; sourceTree = "<group>"; };
 		2BD5906D21E3BCF0002D150B /* Plugins.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Plugins.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BD5906F21E3BCF5002D150B /* GIMPCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GIMPCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BD591A821E3DBCA002D150B /* AutoEnhance+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "AutoEnhance+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -683,6 +683,7 @@
 		2BDB907A21836089000D7803 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		2BDB907B21836089000D7803 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/CocoaContent.nib; sourceTree = "<group>"; };
 		2BDB907C2183608A000D7803 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/SVGContent.nib; sourceTree = "<group>"; };
+		2BE76CD121EE937400B6C65F /* Seashore.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Seashore.xcconfig; path = ../Seashore.xcconfig; sourceTree = "<group>"; };
 		2BF173CD21D58AB400579D9D /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		56C8A64C1055A1DA0056E36F /* normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = normal.png; sourceTree = "<group>"; };
 		A801053106945E1E00A80207 /* GradientTool.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = GradientTool.h; sourceTree = "<group>"; };
@@ -1198,8 +1199,8 @@
 		2A37F4AAFDCFA73011CA2CEA /* Seashore */ = {
 			isa = PBXGroup;
 			children = (
+				2BE76CD121EE937400B6C65F /* Seashore.xcconfig */,
 				2BD5923B21E3DBEF002D150B /* EmbeddedBinaries */,
-				2BCA996C21E30C4F00E69BD5 /* Seashore.xcconfig */,
 				2B08E5C021E28C4C0011037C /* Seashore.entitlements */,
 				2A37F4ABFDCFA73011CA2CEA /* Application Classes */,
 				F50687FD039B9946016F7F19 /* Document Classes */,
@@ -2201,6 +2202,7 @@
 				DCF804E90FC85D2700F72FB3 /* 2-not.png in Resources */,
 				DCF804EA0FC85D2700F72FB3 /* 1-not.png in Resources */,
 				DCF804EB0FC85D2700F72FB3 /* 1-sel.png in Resources */,
+				2BE76CD221EE937400B6C65F /* Seashore.xcconfig in Resources */,
 				DCF804EC0FC85D2700F72FB3 /* 0-sel.png in Resources */,
 				DCF804ED0FC85D2700F72FB3 /* 0-not.png in Resources */,
 				DCF804EE0FC85D2700F72FB3 /* 4-not.png in Resources */,
@@ -2510,6 +2512,7 @@
 /* Begin XCBuildConfiguration section */
 		2B1F696B21D70C0700D6F371 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2BE76CD121EE937400B6C65F /* Seashore.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
@@ -2593,6 +2596,7 @@
 		};
 		2B1F696E21D70C0F00D6F371 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2BE76CD121EE937400B6C65F /* Seashore.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
