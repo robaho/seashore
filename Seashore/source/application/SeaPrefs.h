@@ -112,12 +112,8 @@ enum {
 	// A checkbox which when checks indicates the precise cursor should be used
 	IBOutlet id preciseCursorCheckbox;
 	
-	// A checkbox which when checks indicates CoreImage should be used for scaling/rotation
-	IBOutlet id useCoreImageCheckbox;
-    
     // A checkbox which when checks indicates slower disk cache should be used undo
     IBOutlet id useDiskCacheCheckbox;
-
 	
 	// Stores whether or not layer boundaries are visible
 	BOOL layerBounds;
@@ -163,9 +159,6 @@ enum {
 	
 	// Whether the precise cursor should be used
 	BOOL preciseCursor;
-	
-	// Whether Core Image should be used for scaling/rotation
-	BOOL useCoreImage;
 	
 	// The current selection colour
 	int selectionColor;
@@ -377,14 +370,6 @@ enum {
 				Ignored.
 */
 -(IBAction)setPreciseCursor:(id)sender;
-
-/*!
-	@method		setUseCoreImage:
-	@discussion	Sets if CoreImage should be used for scaling/rotating.
-	@param		sender
-				Ignored.
-*/
-- (IBAction)setUseCoreImage:(id)sender;
 
 /*!
  @method        setUseDIskCache:
@@ -647,13 +632,6 @@ enum {
 	@result		Returns YES if the precise cursor should be used, NO otherwise.
 */
 - (BOOL)preciseCursor;
-
-/*!
-	@method		useCoreImage
-	@discussion	Returns whether Core Image should be used for scaling/rotation.
-	@result		Returns YES if Core Image should be used for scaling/rotation, NO otherwise.
-*/
-- (BOOL)useCoreImage;
 
 /*!
 	@method		delayOverlay

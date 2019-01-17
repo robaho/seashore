@@ -406,80 +406,6 @@
 	yoff = ox;
 }
 
-- (void)setCocoaRotation:(float)degrees interpolation:(int)interpolation withTrim:(BOOL)trim
-{
-	NSAffineTransform *at, *tat;
-	unsigned char *srcData;
-	NSImage *image_out;
-	NSBitmapImageRep *in_rep, *final_rep;
-	NSPoint point[4], minPoint, maxPoint, transformPoint;
-	int i, oldHeight, oldWidth;
-	
-	// Define the rotation
-	at = [NSAffineTransform transform];
-	[at rotateByDegrees:degrees];
-	
-	// Determine the input image
-	in_rep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO colorSpaceName:(spp == 4) ? NSDeviceRGBColorSpace : NSDeviceWhiteColorSpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
-
-	// Determine the output size
-	point[0] = [at transformPoint:NSMakePoint(0.0, 0.0)];
-	point[1] = [at transformPoint:NSMakePoint(width, 0.0)];
-	point[2] = [at transformPoint:NSMakePoint(0.0, height)];
-	point[3] = [at transformPoint:NSMakePoint(width, height)];
-	minPoint = point[0];
-	for (i = 0; i < 4; i++) {
-		if (point[i].x < minPoint.x)
-			minPoint.x = point[i].x;
-		if (point[i].y < minPoint.y)
-			minPoint.y = point[i].y;
-	}
-	maxPoint = point[0];
-	for (i = 0; i < 4; i++) {
-		if (point[i].x > maxPoint.x)
-			maxPoint.x = point[i].x;
-		if (point[i].y > maxPoint.y)
-			maxPoint.y = point[i].y;
-	}
-	oldWidth = width;
-	oldHeight = height;
-	width = ceilf(maxPoint.x - minPoint.x);
-	height = ceilf(maxPoint.y - minPoint.y);
-	xoff += oldWidth / 2 - width / 2;
-	yoff += oldHeight / 2 - height / 2;
-	
-	// Determine the output image
-	image_out = [[NSImage alloc] initWithSize:NSMakeSize(width, height)];
-	[image_out recache];
-	[image_out lockFocus];
-	
-	// Work out full transform
-	tat = [NSAffineTransform transform];
-	transformPoint.x = -minPoint.x;
-	transformPoint.y = -minPoint.y;
-	[tat translateXBy:transformPoint.x yBy:transformPoint.y];
-	[at appendTransform:tat];
-	
-	[[NSGraphicsContext currentContext] setImageInterpolation:interpolation];
-	[[NSAffineTransform transform] set];
-	[[NSBezierPath bezierPathWithRect:NSMakeRect(0, 0, width, height)] setClip];
-	[at set];
-	[in_rep drawAtPoint:NSMakePoint(0.0, 0.0)];
-	[[NSAffineTransform transform] set];
-	final_rep = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect(0.0, 0.0, width, height)];
-	[image_out unlockFocus];
-	
-	// Start clean up
-	free(data);
-	
-	// Make the swap
-	srcData = [final_rep bitmapData];
-    data = convertImageRep(final_rep,spp);
-	
-	// Make margin changes
-	if (trim) [self trimLayer];
-}
-
 - (void)setCoreImageRotation:(float)degrees interpolation:(int)interpolation withTrim:(BOOL)trim
 {
     CIImage *inputImage = [[CIImage alloc] initWithBitmapImageRep:[self bitmap]];
@@ -507,18 +433,12 @@
 	thumbnail = NULL; thumbData = NULL;
 	
 	// Make margin changes
-//    if (trim) [self trimLayer];
+    if (trim) [self trimLayer];
 }
-
 
 - (void)setRotation:(float)degrees interpolation:(int)interpolation withTrim:(BOOL)trim
 {
-	if ([[SeaController seaPrefs] useCoreImage]) {
-		[self setCoreImageRotation:degrees interpolation:interpolation withTrim:trim];
-	}
-	else {
-		[self setCocoaRotation:degrees interpolation:interpolation withTrim:trim];
-	}
+    [self setCoreImageRotation:degrees interpolation:interpolation withTrim:trim];
 }
 
 - (BOOL)visible
@@ -820,28 +740,6 @@
 	thumbnail = NULL; thumbData = NULL;
 }
 
-
-- (void)setCocoaWidth:(int)newWidth height:(int)newHeight interpolation:(int)interpolation
-{
-	unsigned char *newData;
-		
-	// Allocate an appropriate amount of memory for the new bitmap
-	newData = malloc(make_128(newWidth * newHeight * spp));
-	
-	// Do the scale
-	GCScalePixels(newData, newWidth, newHeight, data, width, height, interpolation, spp);
-	
-	// Replace the old bitmap with the new bitmap
-	free(data);
-	data = newData;
-	width = newWidth; height = newHeight;
-	
-	// Destroy the thumbnail data
-	if (thumbData) free(thumbData);
-	thumbnail = NULL; thumbData = NULL;
-}
-
-
 - (void)setCoreImageWidth:(int)newWidth height:(int)newHeight interpolation:(int)interpolation
 {
     CIImage *inputImage = [[CIImage alloc] initWithBitmapImageRep:[self bitmap]];
@@ -869,14 +767,7 @@
 
 - (void)setWidth:(int)newWidth height:(int)newHeight interpolation:(int)interpolation
 {
-	// The issue here is it looks like we're not smart enough to pass anything
-	// to the affine plugin besides cubic, so if we're not cupbic we have to use cocoa
-	if ([[SeaController seaPrefs] useCoreImage] && interpolation == GIMP_INTERPOLATION_CUBIC) {
-		[self setCoreImageWidth:newWidth height:newHeight interpolation:interpolation];
-	}
-	else {
-		[self setCocoaWidth:newWidth height:newHeight interpolation:interpolation];
-	}
+    [self setCoreImageWidth:newWidth height:newHeight interpolation:interpolation];
 }
 
 - (NSBitmapImageRep *)bitmap

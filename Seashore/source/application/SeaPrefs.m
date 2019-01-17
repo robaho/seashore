@@ -249,12 +249,6 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	else
 		preciseCursor = NO;
 
-	// Get the useCoreImage
-	if ([gUserDefaults objectForKey:@"useCoreImage"])
-		useCoreImage = [gUserDefaults boolForKey:@"useCoreImage"];
-	else
-		useCoreImage = YES;
-		
 	// Get the main screen resolution
 	if (GetMainDisplayDPI(&xdpi, &ydpi)) {
 		xdpi = ydpi = 72.0;
@@ -326,7 +320,6 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	[gUserDefaults setObject:(ignoreFirstTouch ? @"YES" : @"NO") forKey:@"ignoreFirstTouch"];
 	[gUserDefaults setObject:(mouseCoalescing ? @"YES" : @"NO") forKey:@"newMouseCoalescing"];
 	[gUserDefaults setObject:(preciseCursor ? @"YES" : @"NO") forKey:@"preciseCursor"];
-	[gUserDefaults setObject:(useCoreImage ? @"YES" : @"NO") forKey:@"useCoreImage"];
 	[gUserDefaults setObject:(transparentBackground ? @"YES" : @"NO") forKey:@"transparentBackground"];
 	[gUserDefaults setObject:(useCheckerboard ? @"YES" : @"NO") forKey:@"useCheckerboard"];
 	[gUserDefaults setObject:[NSArchiver archivedDataWithRootObject:windowBackColor] forKey:@"windowBackColor"];
@@ -403,7 +396,6 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	[ignoreFirstTouchCheckbox setState:ignoreFirstTouch];
 	[coalescingCheckbox setState:mouseCoalescing];
 	[preciseCursorCheckbox setState:preciseCursor];
-	[useCoreImageCheckbox setState:useCoreImage];
     [useDiskCacheCheckbox setState:useDiskCache];
 	[selectionColorMenu selectItemAtIndex:[selectionColorMenu indexOfItemWithTag:selectionColor + 280]];
 	[guideColorMenu selectItemAtIndex:[guideColorMenu indexOfItemWithTag:guideColor + 290]];
@@ -524,12 +516,6 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 {
 	preciseCursor = [preciseCursorCheckbox state];
 	[self apply: self];
-}
-
-- (IBAction)setUseCoreImage:(id)sender
-{
-	useCoreImage = [useCoreImageCheckbox state];
-	[self apply: self];	
 }
 
 - (IBAction)setUseDiskCache:(id)sender
@@ -832,11 +818,6 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 - (BOOL)preciseCursor
 {
 	return preciseCursor;
-}
-
-- (BOOL)useCoreImage
-{
-	return useCoreImage;
 }
 
 - (BOOL)delayOverlay

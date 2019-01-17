@@ -1542,7 +1542,6 @@ This General Public License does not permit incorporating your program into prop
                 <outlet property="selectionColorMenu" destination="3690" id="3708"/>
                 <outlet property="smartInterpolationCheckbox" destination="2714" id="2772"/>
                 <outlet property="transparentBackgroundCheckbox" destination="2994" id="3019"/>
-                <outlet property="useCoreImageCheckbox" destination="4922" id="5221"/>
                 <outlet property="useDiskCacheCheckbox" destination="QhE-Rm-qR4" id="Shr-93-49I"/>
                 <outlet property="widthValue" destination="2983" id="3016"/>
                 <outlet property="windowBackWell" destination="3759" id="3761"/>
@@ -1744,17 +1743,6 @@ DQ
             <rect key="frame" x="0.0" y="0.0" width="431" height="359"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
-                <button imageHugsTitle="YES" id="4922">
-                    <rect key="frame" x="139" y="149" width="272" height="18"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Use Core Image for rotating/scaling" bezelStyle="regularSquare" imagePosition="leading" alignment="left" controlSize="small" inset="2" id="7325">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="smallSystem"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="setUseCoreImage:" target="507" id="5454"/>
-                    </connections>
-                </button>
                 <popUpButton verticalHuggingPriority="750" imageHugsTitle="YES" id="3788">
                     <rect key="frame" x="139" y="294" width="266" height="22"/>
                     <autoresizingMask key="autoresizingMask"/>
@@ -1843,7 +1831,7 @@ DQ
                     </connections>
                 </button>
                 <button imageHugsTitle="YES" id="2712">
-                    <rect key="frame" x="139" y="131" width="265" height="18"/>
+                    <rect key="frame" x="139" y="149" width="265" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Create a new document at start-up" bezelStyle="regularSquare" imagePosition="leading" alignment="left" controlSize="small" inset="2" id="7315">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1880,19 +1868,6 @@ DQ
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button imageHugsTitle="YES" id="QhE-Rm-qR4" userLabel="Use Disk Cache">
-                    <rect key="frame" x="139" y="101" width="265" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="I9i-oR-nqO" userLabel="Use Disk Cache">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <string key="title">Use "Legacy" Disk Cache for Undo
-(Change Requires Restart)</string>
-                        <font key="font" metaFont="smallSystem"/>
-                        <connections>
-                            <action selector="setUseDiskCache:" target="507" id="aML-IO-Efi"/>
-                        </connections>
-                    </buttonCell>
-                </button>
                 <button imageHugsTitle="YES" id="2720">
                     <rect key="frame" x="139" y="211" width="265" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
@@ -1903,6 +1878,19 @@ DQ
                     <connections>
                         <action selector="setIgnoreFirstTouch:" target="507" id="2809"/>
                     </connections>
+                </button>
+                <button imageHugsTitle="YES" id="QhE-Rm-qR4" userLabel="Use Disk Cache">
+                    <rect key="frame" x="139" y="119" width="265" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="I9i-oR-nqO" userLabel="Use Disk Cache">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <string key="title">Use "Legacy" Disk Cache for Undo
+(Change Requires Restart)</string>
+                        <font key="font" metaFont="smallSystem"/>
+                        <connections>
+                            <action selector="setUseDiskCache:" target="507" id="aML-IO-Efi"/>
+                        </connections>
+                    </buttonCell>
                 </button>
             </subviews>
             <point key="canvasLocation" x="34" y="726"/>
