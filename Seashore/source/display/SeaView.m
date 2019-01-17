@@ -146,6 +146,13 @@ static CGFloat white[4] = {0,3.5,2,.5};
     return self;
 }
 
+- (void)dealloc
+{
+    // the following is a work-around for issue #30 which appears to be OS version dependent
+    [verticalRuler setClientView:nil];
+    [horizontalRuler setClientView:nil];
+}
+
 
 - (IBAction)changeSpecialFont:(id)sender
 {
