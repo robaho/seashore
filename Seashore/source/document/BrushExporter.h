@@ -15,7 +15,7 @@
     __weak IBOutlet id document;
 
 	// The exporting panel
-	IBOutlet id sheet;
+	__weak IBOutlet id sheet;
 
 	IBOutlet id categoryTable;
 	

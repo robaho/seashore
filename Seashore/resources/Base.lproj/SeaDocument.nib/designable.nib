@@ -5322,24 +5322,8 @@ Gw
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField verticalHuggingPriority="750" id="SoJ-1F-rbl">
-                        <rect key="frame" x="21" y="107" width="120" height="14"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Spacing - 100%" id="ReR-pH-LEt">
-                            <font key="font" metaFont="label"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                        <connections>
-                            <binding destination="IbU-IZ-DpL" name="displayPatternValue1" keyPath="self.spacing" id="sIL-N8-lLQ">
-                                <dictionary key="options">
-                                    <string key="NSDisplayPattern">Spacing - %{value1}@%</string>
-                                </dictionary>
-                            </binding>
-                        </connections>
-                    </textField>
                     <slider verticalHuggingPriority="750" id="UHg-zH-hg9">
-                        <rect key="frame" x="19" y="75" width="219" height="25"/>
+                        <rect key="frame" x="19" y="75" width="278" height="25"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <sliderCell key="cell" continuous="YES" alignment="left" maxValue="1000" doubleValue="100" tickMarkPosition="below" numberOfTickMarks="11" sliderType="linear" id="Ak6-QP-LW3">
                             <font key="font" size="12" name="Helvetica"/>
@@ -5362,9 +5346,25 @@ DQ
                             <action selector="apply:" target="IbU-IZ-DpL" id="Xa6-oe-Hlv"/>
                         </connections>
                     </button>
+                    <textField verticalHuggingPriority="750" id="SoJ-1F-rbl">
+                        <rect key="frame" x="18" y="106" width="120" height="14"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Spacing - 100%" id="ReR-pH-LEt">
+                            <font key="font" metaFont="label"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <connections>
+                            <binding destination="IbU-IZ-DpL" name="displayPatternValue1" keyPath="self.spacing" id="XYB-8s-tjp">
+                                <dictionary key="options">
+                                    <string key="NSDisplayPattern">Spacing - %{value1}@%</string>
+                                </dictionary>
+                            </binding>
+                        </connections>
+                    </textField>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="-189" y="687"/>
+            <point key="canvasLocation" x="-189" y="686.5"/>
         </window>
     </objects>
     <resources>
