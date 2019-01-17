@@ -109,9 +109,6 @@
     float scaleh = bounds.size.height / (float)height;
     float scalew = bounds.size.width / (float)width;
     
-    NSLog(@"scaleByAmount %d, scaleToFit %d",_scaleByAmount,_scaleToFit);
-    NSLog(@"scaleh %f, scalew %f",scaleh,scalew);
-    
     if(_scaleToFit){
         if(_scaleEntireImage) {
             float scale = MIN(scaleh,scalew);
