@@ -322,7 +322,6 @@ enum {
 */
 - (void)readjust:(BOOL)scaling;
 
-#ifdef MACOS_10_4_COMPILE
 /*!
 	@method		tabletProximity:
 	@discussion	Handles tablet proximity events.
@@ -330,7 +329,6 @@ enum {
 				The event triggering this method.
 */
 - (void)tabletProximity:(NSEvent *)theEvent;
-#endif
 
 /*!
 	@method		tabletPoint:

@@ -4,9 +4,7 @@
 #import "SVGContent.h"
 #import "SeaDocument.h"
 #import "SeaView.h"
-#ifdef USE_CENTERING_CLIPVIEW
 #import "CenteringClipView.h"
-#endif
 #import "SeaController.h"
 #import "SeaWarning.h"
 #import "SeaWhiteboard.h"
@@ -186,9 +184,7 @@ enum {
 - (void)awakeFromNib
 {
 	id seaView;
-	#ifdef USE_CENTERING_CLIPVIEW
 	id newClipView;
-	#endif
     
 	// Believe it or not sometimes this function is called after it has already run
 	if (whiteboard == NULL) {
@@ -208,10 +204,8 @@ enum {
 		
 		// Setup the view to display the whiteboard
 		seaView = [[SeaView alloc] initWithDocument:self];
-		#ifdef USE_CENTERING_CLIPVIEW
 		newClipView = [[CenteringClipView alloc] initWithFrame:[[view contentView] frame]];
 		[(NSScrollView *)view setContentView:newClipView];
-		#endif
 		[view setDocumentView:seaView];
 		[view setDrawsBackground:NO];
 		

@@ -404,10 +404,6 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	[coalescingCheckbox setState:mouseCoalescing];
 	[preciseCursorCheckbox setState:preciseCursor];
 	[useCoreImageCheckbox setState:useCoreImage];
-	if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_3) {
-		[useCoreImageCheckbox setState:NO];
-		[useCoreImageCheckbox setEnabled:NO];
-	}
     [useDiskCacheCheckbox setState:useDiskCache];
 	[selectionColorMenu selectItemAtIndex:[selectionColorMenu indexOfItemWithTag:selectionColor + 280]];
 	[guideColorMenu selectItemAtIndex:[guideColorMenu indexOfItemWithTag:guideColor + 290]];

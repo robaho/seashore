@@ -41,19 +41,6 @@ BOOL checkRun(NSString *path, NSString *file)
         }
     }
     
-    // Check system version
-    value = [infoDict objectForKey:@"MinSystemVersion"];
-    if (value != NULL) {
-        switch ((int)floor(NSAppKitVersionNumber)) {
-            case NSAppKitVersionNumber10_3:
-                canRun = canRun && [value floatValue] <= 10.3;
-            break;
-            case NSAppKitVersionNumber10_4:
-                canRun = canRun && [value floatValue] <= 10.4;
-            break;
-        }
-    }
-    
     if(!canRun){
         NSLog(@"Unable to load/run plugin %@ %@",path,file);
     }

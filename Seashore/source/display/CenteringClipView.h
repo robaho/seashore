@@ -1,5 +1,3 @@
-#ifdef USE_CENTERING_CLIPVIEW
-
 #import "Globals.h"
 
 /*!
@@ -91,5 +89,3 @@
 - (void)scrollToPoint:(NSPoint)newOrigin;
 
 @end
-
-#endif

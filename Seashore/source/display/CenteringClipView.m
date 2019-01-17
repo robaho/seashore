@@ -1,5 +1,3 @@
-#ifdef USE_CENTERING_CLIPVIEW
-
 #import "CenteringClipView.h"
 
 @implementation CenteringClipView
@@ -267,5 +265,3 @@ static BOOL preventRecurse = NO;
 }
 
 @end
-
-#endif

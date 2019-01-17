@@ -15,12 +15,6 @@
 */
 
 #import <Cocoa/Cocoa.h>
-#ifdef MAIN_COMPILE
-#import <GIMPCore/GIMPCore.h>
-#import <zlib.h>
-#import <unistd.h>
-#import <sys/time.h>
-#endif
 
 #ifndef INTRECT_T
 #define INTRECT_T

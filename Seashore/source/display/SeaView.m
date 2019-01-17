@@ -2,9 +2,7 @@
 #import "SeaDocument.h"
 #import "SeaContent.h"
 #import "UtilitiesManager.h"
-#ifdef USE_CENTERING_CLIPVIEW
 #import "CenteringClipView.h"
-#endif
 #import "TransparentUtility.h"
 #import "SeaController.h"
 #import "SeaPrefs.h"
@@ -186,34 +184,21 @@ static CGFloat white[4] = {0,3.5,2,.5};
     if (gScreenResolution.y != 0 && [[document contents] yres] != gScreenResolution.y) frame.size.height /= ((float)[[document contents] yres] / gScreenResolution.y);
     [(NSClipView *)[self superview] scrollToPoint:NSMakePoint(0, 0)];
     [self setFrame:frame];
-    #ifdef USE_CENTERING_CLIPVIEW
     [(CenteringClipView *)[self superview] setCenterPoint:NSMakePoint(frame.size.width / 2.0, frame.size.height / 2.0)];
-    #else
-    [(NSClipView *)[self superview] scrollToPoint:point];
-    #endif
     [self setNeedsDisplay:YES];
     [[document helpers] zoomChanged];
 }
 
 - (IBAction)zoomIn:(id)sender
 {    
-    #ifdef USE_CENTERING_CLIPVIEW
     NSPoint point = [(CenteringClipView *)[self superview] centerPoint];
-    #else
-    NSPoint point = NSMakePoint(0, 0);
-    #endif
-    
     [self zoomInToPoint:point];
 }
 
 - (void)zoomTo:(int)power
 {
     NSPoint point = NSZeroPoint;
-    #ifdef USE_CENTERING_CLIPVIEW
     point = [(CenteringClipView *)[self superview] centerPoint];
-    #else
-    point = NSMakePoint(0, 0);
-    #endif
     
     if(zoom > pow(2, power)){
         while(zoom > pow(2, power)){
@@ -237,22 +222,14 @@ static CGFloat white[4] = {0,3.5,2,.5};
     if (gScreenResolution.y != 0 && [[document contents] yres] != gScreenResolution.y) frame.size.height /= ((float)[[document contents] yres] / gScreenResolution.y);
     frame.size.height *= zoom; frame.size.width *= zoom;
     [self setFrame:frame];
-    #ifdef USE_CENTERING_CLIPVIEW
     [(CenteringClipView *)[self superview] setCenterPoint:point];
-    #else
-    [(NSClipView *)[self superview] scrollToPoint:point];
-    #endif
     [self setNeedsDisplay:YES];
     [[document helpers] zoomChanged];
 }
 
 - (IBAction)zoomOut:(id)sender
 {
-    #ifdef USE_CENTERING_CLIPVIEW
     NSPoint point = [(CenteringClipView *)[self superview] centerPoint];
-    #else
-    NSPoint point = NSMakePoint(0, 0);
-    #endif
     
     [self zoomOutFromPoint:point];
 }
@@ -268,11 +245,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
     if (gScreenResolution.y != 0 && [[document contents] yres] != gScreenResolution.y) frame.size.height /= ((float)[[document contents] yres] / gScreenResolution.y);
     frame.size.height *= zoom; frame.size.width *= zoom;
     [self setFrame:frame];
-    #ifdef USE_CENTERING_CLIPVIEW
     [(CenteringClipView *)[self superview] setCenterPoint:point];
-    #else
-    [(NSClipView *)[self superview] scrollToPoint:point];
-    #endif
     [self setNeedsDisplay:YES];
     [[document helpers] zoomChanged];
 }
@@ -481,8 +454,6 @@ static CGFloat white[4] = {0,3.5,2,.5};
         maskImage = [[document selection] maskImage];
         srcRect.origin = IntPointMakeNSPoint([[document selection] maskOffset]);
         srcRect.size = IntSizeMakeNSSize(selectRect.size);
-        if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_2)
-            srcRect.origin.y = [[document selection] maskSize].height - (srcRect.origin.y + srcRect.size.height);
         [maskImage drawInRect:tempRect fromRect:srcRect operation:NSCompositeSourceOver fraction:0.4];
 
         // If the currently selected tool is a selection tool, draw the handles
@@ -961,11 +932,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
 
 - (void)readjust:(BOOL)scaling
 {
-    #ifdef USE_CENTERING_CLIPVIEW
     NSPoint point = [(CenteringClipView *)[self superview] centerPoint];
-    #else
-    NSPoint point = NSMakePoint(0, 0);
-    #endif
     NSRect frame;
     
     // Readjust the frame
@@ -978,23 +945,17 @@ static CGFloat white[4] = {0,3.5,2,.5};
         point.y *= frame.size.height / [self frame].size.height;
     }
     [self setFrame:frame];
-    #ifdef USE_CENTERING_CLIPVIEW
     [(CenteringClipView *)[self superview] setCenterPoint:point];
-    #endif
     [self setNeedsDisplay:YES];
 }
 
-#ifdef MACOS_10_4_COMPILE
 - (void)tabletProximity:(NSEvent *)theEvent
 {
-    if (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_3) {
-        tabletEraser = 0;
-        if ([theEvent isEnteringProximity] && [theEvent pointingDeviceType] == NSEraserPointingDevice) {
-            tabletEraser = 2;
-        }
+    tabletEraser = 0;
+    if ([theEvent isEnteringProximity] && [theEvent pointingDeviceType] == NSEraserPointingDevice) {
+        tabletEraser = 2;
     }
 }
-#endif
 
 - (void)tabletPoint:(NSEvent *)theEvent
 {
@@ -1074,19 +1035,14 @@ static CGFloat white[4] = {0,3.5,2,.5};
         SetMouseCoalescingEnabled(false, NULL);
     }
     
-    // Check for tablet events
-    #ifdef MACOS_10_4_COMPILE
-    if (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_3) {
-        if (tabletEraser < 2) {
-            tabletEraser = 0;
-            if ([theEvent subtype] == NSTabletProximityEventSubtype) {
-                if ([theEvent pointingDeviceType] == NSEraserPointingDevice) {
-                    tabletEraser = 1;
-                }
+    if (tabletEraser < 2) {
+        tabletEraser = 0;
+        if ([theEvent subtype] == NSTabletProximityEventSubtype) {
+            if ([theEvent pointingDeviceType] == NSEraserPointingDevice) {
+                tabletEraser = 1;
             }
         }
     }
-    #endif
     
     // Reset the deltas
     delta = IntMakePoint(0,0);

@@ -9,12 +9,6 @@
     NSColor *bottomColor;
     NSBezierPath *path;
 	BOOL usesOldStyle = NO;
-	switch ((int)floor(NSAppKitVersionNumber)) {
-			case NSAppKitVersionNumber10_3:
-			case NSAppKitVersionNumber10_4:
-				usesOldStyle = YES;
-			break;
-	}
 
     if([window isMainWindow] && usesOldStyle){
         topColor = [NSColor colorWithDeviceWhite:0.91 alpha:1.0];
