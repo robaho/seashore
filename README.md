@@ -18,7 +18,7 @@ Beyond the bug fixes, a lot of code refactoring was performed, including convert
 
 If you are looking for an free, easy to use, image editing application with "layers", this is the one.
 
-Here's a nice article on the Seashore project at [Libre Graphics World](http://libregraphicsworld.org/blog/entry/meet-seashore-free-image-editor-for-macos)
+Here's a nice article (with screenshots) on the Seashore project at [Libre Graphics World](http://libregraphicsworld.org/blog/entry/meet-seashore-free-image-editor-for-macos)
 
 # screenshots
 ![screenshot](doc/screenshot.jpg)
