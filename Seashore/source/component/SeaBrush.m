@@ -1,5 +1,6 @@
 #import "SeaBrush.h"
 #import "Bitmap.h"
+#import <GIMPCore/GIMPCore.h>
 
 typedef struct {
   unsigned int   header_size;  /*  header_size = sizeof (BrushHeader) + brush name  */

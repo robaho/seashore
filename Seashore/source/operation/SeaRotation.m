@@ -9,6 +9,7 @@
 #import "SeaSelection.h"
 #import "SeaLayerUndo.h"
 #import "SeaRotation.h"
+#import <GIMPCore/GIMPCore.h>
 
 @implementation SeaRotation
 

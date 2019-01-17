@@ -13,6 +13,7 @@
 #import "SeaController.h"
 #import "UtilitiesManager.h"
 #import "ToolboxUtility.h"
+#import <GIMPCore/GIMPCore.h>
 
 @implementation LassoTool
 

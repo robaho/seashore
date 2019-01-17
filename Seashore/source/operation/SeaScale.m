@@ -8,6 +8,7 @@
 #import "SeaHelpers.h"
 #import "SeaSelection.h"
 #import "Units.h"
+#import <GIMPCore/GIMPCore.h>
 
 @implementation SeaScale
 

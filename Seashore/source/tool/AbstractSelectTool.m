@@ -5,6 +5,7 @@
 #import "SeaSelection.h"
 #import "AbstractOptions.h"
 #import "SeaContent.h"
+#import <GIMPCore/GIMPCore.h>
 
 @implementation AbstractSelectTool
 

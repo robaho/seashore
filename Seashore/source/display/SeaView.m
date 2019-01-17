@@ -43,6 +43,7 @@
 #import "SeaScale.h"
 #import "NSEvent_Extensions.h"
 #import <Carbon/Carbon.h>
+#import <GIMPCore/GIMPCore.h>
 
 extern IntPoint gScreenResolution;
 

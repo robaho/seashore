@@ -27,9 +27,6 @@
 	// A checkbox indicating whether to scale
 	IBOutlet id scaleCheckbox;
 	
-	// A boolean indicating if the user has been warned about the Mac OS 10.4 bug
-	BOOL warnedUser;
-
 	// Are we erasing stuff?
 	BOOL isErasing;
 }

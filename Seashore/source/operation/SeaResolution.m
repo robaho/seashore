@@ -7,6 +7,7 @@
 #import "SeaSelection.h"
 #import "SeaWarning.h"
 #import "SeaController.h"
+#import <GIMPCore/GIMPCore.h>
 
 extern IntPoint gScreenResolution;
 

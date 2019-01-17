@@ -12,6 +12,8 @@
 #import "SeaOperations.h"
 #import "SeaRotation.h"
 #import "SeaScale.h"
+#import <GIMPCore/GIMPCore.h>
+
 
 
 @implementation PositionTool

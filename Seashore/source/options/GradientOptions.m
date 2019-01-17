@@ -2,6 +2,7 @@
 #import "SeaController.h"
 #import "SeaTools.h"
 #import "SeaHelp.h"
+#import <GIMPCore/GIMPCore.h>
 
 @implementation GradientOptions
 

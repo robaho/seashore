@@ -9,6 +9,7 @@
 #import "SeaHelpers.h"
 #import "SeaController.h"
 #import "SeaPrefs.h"
+#import <GIMPCore/GIMPCore.h>
 
 @implementation GradientTool
 
