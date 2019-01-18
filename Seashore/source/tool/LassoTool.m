@@ -157,10 +157,6 @@
     NSBezierPath *path = [[NSBezierPath alloc] init];
     
     for (tpos = 0; tpos <= pos; tpos++) {
-        // Scale the points depending on the zoom
-        points[tpos].x *= xScale;
-        points[tpos].y *= yScale;
-        
         if(tpos==0) {
             [path moveToPoint:NSMakePoint(points[tpos].x,points[tpos].y)];
         } else {
