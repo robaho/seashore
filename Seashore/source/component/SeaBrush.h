@@ -39,7 +39,7 @@ typedef struct {
 @interface SeaBrush : NSObject {
 	
 	// A grayscale mask of the brush
-	unsigned char *mask, *scaled, *positioned;
+	unsigned char *mask, *scaled;
 	BOOL maskLibraryValid;
 	
 	// A cache of all the brushes

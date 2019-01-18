@@ -14,4 +14,9 @@
 
 void determineBrushMask(unsigned char *input, unsigned char *output, int width, int height, int index1, int index2);
 
-void arrangePixels(unsigned char *dest, int destWidth, int destHeight, unsigned char *src, int srcWidth, int srcHeight);
+/*!
+   @method scaleAndCenterMask
+   @discussion the scaled and source must be width x height bytes
+ */
+void scaleAndCenterMask(unsigned char *scaled,int scalew,int scaleh,unsigned char *source,int width,int height);
+

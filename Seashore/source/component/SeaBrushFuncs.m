@@ -73,17 +73,24 @@ void determineBrushMask(unsigned char *input, unsigned char *output, int width, 
 	}
 }
 
-void arrangePixels(unsigned char *dest, int destWidth, int destHeight, unsigned char *src, int srcWidth, int srcHeight)
-{
-	int i, j, xoff, yoff;
-	
-	memset(dest, 0, destWidth * destHeight);
-	xoff = (destWidth / 2) - (srcWidth / 2);
-	yoff = (destHeight / 2) - (srcHeight / 2);
-	for (j = 0; j < srcHeight; j++) {
-		for (i = 0; i < srcWidth; i++) {
-			dest[(j + yoff) * destWidth + (i + xoff)] = src[j * srcWidth + i];
-		}
-	}
+void scaleAndCenterMask(unsigned char *scaled,int scalew,int scaleh,unsigned char *source,int width,int height){
+    memset(scaled,0,width*height);
+    
+    NSBitmapImageRep *src = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&source pixelsWide:width pixelsHigh:height
+                                                                 bitsPerSample:8 samplesPerPixel:1 hasAlpha:NO isPlanar:NO
+                                                                colorSpaceName:MyGraySpace bytesPerRow:width
+                                                                  bitsPerPixel:8];
+    
+    NSBitmapImageRep *dst = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&scaled pixelsWide:width pixelsHigh:height
+                                                                 bitsPerSample:8 samplesPerPixel:1 hasAlpha:NO isPlanar:NO
+                                                                colorSpaceName:MyGraySpace bytesPerRow:width
+                                                                  bitsPerPixel:8];
+    
+    NSRect rect = NSMakeRect((width-scalew)/2,(height-scaleh)/2,scalew,scaleh);
+    
+    [NSGraphicsContext saveGraphicsState];
+    NSGraphicsContext *ctx = [NSGraphicsContext graphicsContextWithBitmapImageRep:dst];
+    [NSGraphicsContext setCurrentContext:ctx];
+    [src drawInRect:rect fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:1.0 respectFlipped:false hints:NULL];
+    [NSGraphicsContext restoreGraphicsState];
 }
-

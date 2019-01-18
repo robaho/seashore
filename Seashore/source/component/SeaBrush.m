@@ -127,7 +127,6 @@ extern void determineBrushMask(unsigned char *input, unsigned char *output, int 
 		free(maskCache);
 	}
 	if (scaled) free(scaled);
-	if (positioned) free(positioned);
 	if (mask) free(mask);
 	if (pixmap) free(pixmap);
 	if (prePixmap) free(prePixmap);
@@ -149,7 +148,6 @@ extern void determineBrushMask(unsigned char *input, unsigned char *output, int 
 		maskCache[i].lastCheck = 0;
 	}
 	scaled = malloc(make_128(width * height));
-	positioned = malloc(make_128(width * height));
 }
 
 - (void)deactivate
@@ -166,7 +164,6 @@ extern void determineBrushMask(unsigned char *input, unsigned char *output, int 
 		maskCache = NULL;
 	}
 	if (scaled) { free(scaled); scaled = NULL; }
-	if (positioned) { free(positioned); positioned = NULL; }
 }
 
 - (NSString *)pixelTag
@@ -227,7 +224,6 @@ extern void determineBrushMask(unsigned char *input, unsigned char *output, int 
 	
 	// Wrap it up in an NSImage
 	thumbnail = [[NSImage alloc] initWithSize:NSMakeSize(thumbWidth, thumbHeight)];
-	[thumbnail setScalesWhenResized:YES];
 	[thumbnail addRepresentation:tempRep];
 	
 	return thumbnail;
@@ -322,9 +318,8 @@ extern void determineBrushMask(unsigned char *input, unsigned char *output, int 
 	
 	// Determine the mask
 	if ((width >= height && scale != width) || (height > width && scale != height)) {
-		GCScalePixels(scaled, scalew, scaleh,  mask, width, height, GIMP_INTERPOLATION_LINEAR, 1);
-		arrangePixels(positioned, width, height, scaled, scalew, scaleh);
-		determineBrushMask(positioned, maskCache[minCheckPos].cache, width, height, index1, index2);
+        scaleAndCenterMask(scaled, scalew, scaleh, mask, width, height);
+		determineBrushMask(scaled, maskCache[minCheckPos].cache, width, height, index1, index2);
 	}
 	else {
 		determineBrushMask(mask, maskCache[minCheckPos].cache, width, height, index1, index2);
