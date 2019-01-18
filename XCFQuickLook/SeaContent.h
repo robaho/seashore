@@ -291,13 +291,4 @@ typedef struct {
 */
 - (int)activeLayerIndex;
 
-
-/*!
-	@method		bitmapUnderneath:
-	@discussion	Returns the bitmap underneath the rectangle.
-	@param		rect
-				The rectangle concerned.
-*/
-- (unsigned char *)bitmapUnderneath:(IntRect)rect forWhiteboard:(SeaWhiteboard *)whiteboard;
-
 @end

@@ -397,7 +397,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     return exifData;
 }
 
-- (NSColorSpace *)cs
+- (NSColorSpace *)fileColorSpace
 {
     return fileColorSpace;
 }

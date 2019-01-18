@@ -220,37 +220,4 @@
 	return activeLayerIndex;
 }
 
-- (unsigned char *)bitmapUnderneath:(IntRect)rect forWhiteboard:(SeaWhiteboard *)whiteboard
-{
-	CompositorOptions options;
-	unsigned char *data;
-	SeaLayer *layer;
-	int i, spp = [self spp];
-	
-	// Create the replacement flat layer
-	data = malloc(make_128(rect.size.width * rect.size.height * spp));
-	memset(data, 0, rect.size.width * rect.size.height * spp);
-
-	// Set the composting options
-	options.forceNormal = 0;
-	options.rect = rect;
-	options.destRect = rect;
-	options.insertOverlay = NO;
-	options.useSelection = NO;
-	options.overlayOpacity = 255;
-	options.overlayBehaviour = kNormalBehaviour;
-	options.spp = spp;
-
-	// Composite the layers underneath
-	for (i = [layers count] - 1; i >= activeLayerIndex; i--) {
-		layer = [layers objectAtIndex:i];
-		if ([layer visible]) {
-			[[whiteboard compositor] compositeLayer:layer withOptions:options andData:data];
-		}
-	}
-	
-	return data;
-}
-
-
 @end
