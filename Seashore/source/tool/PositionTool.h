@@ -25,6 +25,7 @@
 	
 	// The scale and rotation values
 	float scale;
+    // rotation is in radians
 	float rotation;
 	BOOL rotationDefined;
     

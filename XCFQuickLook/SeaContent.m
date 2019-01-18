@@ -200,7 +200,7 @@
 	return exifData;
 }
 
-- (id)layer:(int)index
+- (SeaLayer*)layer:(int)index
 {
 	return [layers objectAtIndex:index];
 }
@@ -210,7 +210,7 @@
 	return [layers count];
 }
 
-- (id)activeLayer
+- (SeaLayer*)activeLayer
 {
 	return (activeLayerIndex < 0) ? NULL : [layers objectAtIndex:activeLayerIndex];
 }

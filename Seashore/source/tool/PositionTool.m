@@ -113,7 +113,7 @@
 - (void)mouseDraggedTo:(IntPoint)where withEvent:(NSEvent *)event
 {
 	id contents = [document contents];
-	id activeLayer = [contents activeLayer];
+	SeaLayer *activeLayer = [contents activeLayer];
 	int xoff, yoff, whichLayer;
 	int deltax = where.x - initialPoint.x, deltay = where.y - initialPoint.y;
 	IntPoint oldOffsets;
@@ -151,10 +151,7 @@
 		case kRotatingLayer:
 		
 			// Continue rotating layer
-			original = atan((initialPoint.y - activeCenter.y) / (initialPoint.x - activeCenter.x));
-			current = atan((where.y - activeCenter.y) / (where.x - activeCenter.x));
-			rotation = current - original;
-			
+            rotation = (initialPoint.x - where.x)/(float)[activeLayer width];
 		
 		break;
 		case kScalingLayer:

@@ -170,3 +170,21 @@ inline unsigned char averagedComponentValue(int spp, unsigned char *data, int wi
 		
 	return (total / count);
 }
+
+typedef enum {
+    GIMP_INTERPOLATION_NONE,         /* Specifies no interpolation. */
+    GIMP_INTERPOLATION_LINEAR,     /* Specifies lower-quality but faster linear interpolation. */
+    GIMP_INTERPOLATION_CUBIC        /* Specifies high-quality cubic interpolation */
+} GimpInterpolationType;
+
+NSImageInterpolation mapInterpolation(int interpolation) {
+    switch(interpolation){
+        case GIMP_INTERPOLATION_NONE:
+            return NSImageInterpolationNone;
+        case GIMP_INTERPOLATION_LINEAR:
+            return NSImageInterpolationMedium;
+        case GIMP_INTERPOLATION_CUBIC:
+            return NSImageInterpolationHigh;
+    }
+    return NSImageInterpolationDefault;
+}

@@ -746,6 +746,7 @@
 	BOOL hFlip = NO;
 	BOOL vFlip = NO;
 	unsigned char *newMask;
+    
 	if(active && newRect.size.width != 0 && newRect.size.height != 0){
 		// Create the new mask (if required)
 		if(newRect.size.width < 0){
@@ -763,17 +764,47 @@
 			oldMask = mask;
 		
 		if (oldMask) {
-			unsigned char* flippedMask = malloc(oldRect.size.width * oldRect.size.height);
-			memcpy(flippedMask, oldMask, oldRect.size.width * oldRect.size.height);
-			if(hFlip)
-				[(SeaFlip *)[[(SeaDocument *)gCurrentDocument operations] seaFlip] simpleFlipOf:flippedMask width:oldRect.size.width height:oldRect.size.height spp:1 type:kHorizontalFlip];
-			if(vFlip)
-				[(SeaFlip *)[[(SeaDocument *)gCurrentDocument operations] seaFlip] simpleFlipOf:flippedMask width:oldRect.size.width height:oldRect.size.height spp:1 type:kVerticalFlip];
-			
-			newMask = malloc(newRect.size.width * newRect.size.height);
-			GCScalePixels(newMask, newRect.size.width, newRect.size.height, flippedMask, oldRect.size.width, oldRect.size.height, interpolation, 1);
+            newMask = malloc(newRect.size.width * newRect.size.height);
+            memset(newMask,0,newRect.size.width * newRect.size.height);
+            
+            NSBitmapImageRep *old = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&oldMask
+                                                                            pixelsWide:oldRect.size.width pixelsHigh:oldRect.size.height
+                                                                                            bitsPerSample:8 samplesPerPixel:1 hasAlpha:NO isPlanar:NO
+                                                                                           colorSpaceName:MyGraySpace bytesPerRow:oldRect.size.width
+                                                                                             bitsPerPixel:8];
+            
+            NSBitmapImageRep *new = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&newMask
+                                                                            pixelsWide:newRect.size.width pixelsHigh:newRect.size.height
+                                                                         bitsPerSample:8 samplesPerPixel:1 hasAlpha:NO isPlanar:NO
+                                                                        colorSpaceName:MyGraySpace bytesPerRow:newRect.size.width
+                                                                          bitsPerPixel:8];
+            
+            NSRect newRect0 = NSMakeRect(0,0,newRect.size.width,newRect.size.height);
+            
+            [NSGraphicsContext saveGraphicsState];
+            NSGraphicsContext *ctx = [NSGraphicsContext graphicsContextWithBitmapImageRep:new];
+            [NSGraphicsContext setCurrentContext:ctx];
+            
+            [ctx setImageInterpolation:mapInterpolation(interpolation)];
+            
+            if (vFlip) {
+                NSAffineTransform *transform = [NSAffineTransform transform];
+                [transform scaleXBy:1 yBy:-1];
+                [transform translateXBy:0 yBy:newRect.size.height*-1];
+                [transform concat];
+            }
+
+            if (hFlip) {
+                NSAffineTransform *transform = [NSAffineTransform transform];
+                [transform scaleXBy:-1 yBy:1];
+                [transform translateXBy:newRect.size.width*-1 yBy:0];
+                [transform concat];
+            }
+            
+            [old drawInRect:newRect0 fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:1.0 respectFlipped:NO hints:NULL];
+            [NSGraphicsContext restoreGraphicsState];
+
 			free(mask);
-			free(flippedMask);
 			mask = newMask;
 		}
 					

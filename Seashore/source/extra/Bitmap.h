@@ -107,3 +107,9 @@ unsigned char averagedComponentValue(int spp, unsigned char *data, int width, in
  return data with alpha stripped if alpha not used, otherwise just return the source data
  */
 unsigned char *stripAlpha(unsigned char *srcData,int width,int height,int spp);
+
+/*!
+ @function mapInterpolation
+ @discussion map a GIMP interpolation value to the native OSX interpolation
+ */
+NSImageInterpolation mapInterpolation(int interpolation);

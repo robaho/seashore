@@ -406,39 +406,58 @@
 	yoff = ox;
 }
 
-- (void)setCoreImageRotation:(float)degrees interpolation:(int)interpolation withTrim:(BOOL)trim
+- (void)setRotation:(float)degrees interpolation:(int)interpolation withTrim:(BOOL)trim
 {
-    CIImage *inputImage = [[CIImage alloc] initWithBitmapImageRep:[self bitmap]];
-    CIFilter *controlsFilter = [CIFilter filterWithName:@"CIAffineTransform"];
-    [controlsFilter setValue:inputImage forKey:kCIInputImageKey];
     
+    NSRect bounds = NSMakeRect(0,0,width,height);
+    NSBezierPath *path = [NSBezierPath bezierPathWithRect:bounds];
     NSAffineTransform *at = [NSAffineTransform transform];
     [at rotateByDegrees:degrees];
-    [controlsFilter setValue:at forKey:@"inputTransform"];
-    CIImage *displayImage = [controlsFilter outputImage];
+    [path transformUsingAffineTransform:at];
+    NSRect rotatedBounds = [path bounds];
+
+    int newWidth = (int)NSWidth(rotatedBounds);
+    int newHeight = (int)NSHeight(rotatedBounds);
+
+    unsigned char *buffer = malloc(newWidth*newHeight*spp);
+    memset(buffer,0,newWidth*newHeight*spp);
+
+    NSBitmapImageRep *new = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&buffer
+                                                                    pixelsWide:newWidth pixelsHigh:newHeight
+                                                                 bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO
+                                                                colorSpaceName:spp>2 ? MyRGBSpace : MyGraySpace bytesPerRow:newWidth*spp
+                                                                  bitsPerPixel:8*spp];
     
-    NSCIImageRep *imageRep = [NSCIImageRep imageRepWithCIImage:displayImage];
     
-    data = convertImageRep(imageRep,spp);
+    [NSGraphicsContext saveGraphicsState];
+    NSGraphicsContext *ctx = [NSGraphicsContext graphicsContextWithBitmapImageRep:new];
+    [NSGraphicsContext setCurrentContext:ctx];
     
-    int newWidth = (int)[imageRep pixelsWide];
-    int newHeight = (int)[imageRep pixelsHigh];
+    [ctx setImageInterpolation:mapInterpolation(interpolation)];
+    
+    at = [NSAffineTransform transform];
+    [at translateXBy:NSWidth(rotatedBounds)/2 yBy:NSHeight(rotatedBounds)/2];
+    [at rotateByDegrees:degrees];
+    [at concat];
+    
+    [[self bitmap] drawAtPoint:NSMakePoint(-NSWidth(bounds)/2,-NSHeight(bounds)/2)];
+    [NSGraphicsContext restoreGraphicsState];
+    
+    unpremultiplyBitmap(spp,buffer,buffer,newWidth*newHeight);
+    
+    free(data);
+    data = buffer;
     
     xoff += width / 2 - newWidth / 2;
     yoff += height / 2 - newHeight / 2;
     width = newWidth; height = newHeight;
-
-	// Destroy the thumbnail data
-	if (thumbData) free(thumbData);
-	thumbnail = NULL; thumbData = NULL;
-	
-	// Make margin changes
+    
+    // Destroy the thumbnail data
+    if (thumbData) free(thumbData);
+    thumbnail = NULL; thumbData = NULL;
+    
+    // Make margin changes
     if (trim) [self trimLayer];
-}
-
-- (void)setRotation:(float)degrees interpolation:(int)interpolation withTrim:(BOOL)trim
-{
-    [self setCoreImageRotation:degrees interpolation:interpolation withTrim:trim];
 }
 
 - (BOOL)visible
@@ -740,23 +759,35 @@
 	thumbnail = NULL; thumbData = NULL;
 }
 
-- (void)setCoreImageWidth:(int)newWidth height:(int)newHeight interpolation:(int)interpolation
+- (void)setWidth:(int)newWidth height:(int)newHeight interpolation:(int)interpolation
 {
-    CIImage *inputImage = [[CIImage alloc] initWithBitmapImageRep:[self bitmap]];
-    CIFilter *controlsFilter = [CIFilter filterWithName:@"CIAffineTransform"];
-    [controlsFilter setValue:inputImage forKey:kCIInputImageKey];
+    unsigned char *buffer = malloc(newWidth*newHeight*spp);
+    memset(buffer,0,newWidth*newHeight*spp);
     
-    NSAffineTransform *at = [NSAffineTransform transform];
-    [at scaleXBy:(float)newWidth / (float)width yBy:(float)newHeight / (float)height];
-    [controlsFilter setValue:at forKey:@"inputTransform"];
-    CIImage *displayImage = [controlsFilter outputImage];
+    NSBitmapImageRep *bitmap = [self bitmap];
+    NSBitmapImageRep *new = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&buffer
+                                                                    pixelsWide:newWidth pixelsHigh:newHeight
+                                                                 bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO
+                                                                colorSpaceName:spp>2 ? MyRGBSpace : MyGraySpace bytesPerRow:newWidth*spp
+                                                                  bitsPerPixel:8*spp];
     
-    NSCIImageRep *imageRep = [NSCIImageRep imageRepWithCIImage:displayImage];
     
-    data = convertImageRep(imageRep,spp);
+    NSRect newRect = NSMakeRect(0,0,newWidth,newHeight);
     
-    newWidth = (int)[imageRep pixelsWide];
-    newHeight = (int)[imageRep pixelsHigh];
+    [NSGraphicsContext saveGraphicsState];
+    NSGraphicsContext *ctx = [NSGraphicsContext graphicsContextWithBitmapImageRep:new];
+    [NSGraphicsContext setCurrentContext:ctx];
+    
+    [ctx setImageInterpolation:mapInterpolation(interpolation)];
+    
+    [bitmap drawInRect:newRect fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:1.0 respectFlipped:NO hints:NULL];
+    [NSGraphicsContext restoreGraphicsState];
+    
+    free(data);
+    
+    unpremultiplyBitmap(spp,buffer,buffer,newWidth*newHeight);
+    
+    data = buffer;
     
     width = newWidth; height = newHeight;
     
@@ -764,15 +795,14 @@
     thumbnail = NULL; thumbData = NULL;
 }
 
-
-- (void)setWidth:(int)newWidth height:(int)newHeight interpolation:(int)interpolation
-{
-    [self setCoreImageWidth:newWidth height:newHeight interpolation:interpolation];
-}
-
 - (NSBitmapImageRep *)bitmap
 {
-    NSBitmapImageRep *imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:TRUE isPlanar:NO colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
+    NSBitmapImageRep *imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data
+                                                                         pixelsWide:width pixelsHigh:height bitsPerSample:8
+                                                                    samplesPerPixel:spp hasAlpha:TRUE isPlanar:NO
+                                                                     colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace
+                                                                       bitmapFormat:NSBitmapFormatAlphaNonpremultiplied
+                                                                        bytesPerRow:width * spp bitsPerPixel:8 * spp];
     return imageRep;
 }
 
