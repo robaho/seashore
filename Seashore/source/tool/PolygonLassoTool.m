@@ -11,7 +11,6 @@
 #import "SeaView.h"
 #import "SeaLayer.h"
 #import "SeaWhiteboard.h"
-#import <GIMPCore/GIMPCore.h>
 
 @implementation PolygonLassoTool
 

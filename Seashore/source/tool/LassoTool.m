@@ -13,7 +13,6 @@
 #import "SeaController.h"
 #import "UtilitiesManager.h"
 #import "ToolboxUtility.h"
-#import <GIMPCore/GIMPCore.h>
 
 @implementation LassoTool
 
@@ -112,7 +111,7 @@
     unsigned char *overlay = [[document whiteboard] overlay];
     int width = [(SeaLayer *)layer width], height = [(SeaLayer *)layer height];
     float xScale, yScale;
-    int interpolation;
+    NSImageInterpolation interpolation;
     int spp = [[document contents] spp];
     int tpos;
     IntRect rect;
@@ -129,9 +128,9 @@
     
     // Fill out the variables
     if([[document docView] zoom] <= 1){
-        interpolation = GIMP_INTERPOLATION_NONE;
+        interpolation = NSImageInterpolationNone;
     }else{
-        interpolation = GIMP_INTERPOLATION_CUBIC;
+        interpolation = NSImageInterpolationHigh;
     }
     
     // Create an overlay that's the size of what the user sees
@@ -177,6 +176,8 @@
     [NSGraphicsContext saveGraphicsState];
     NSGraphicsContext *ctx = [NSGraphicsContext graphicsContextWithBitmapImageRep:overlayImage];
     [NSGraphicsContext setCurrentContext:ctx];
+    [ctx setImageInterpolation:interpolation];
+
     NSAffineTransform *at = [NSAffineTransform transform];
     [at scaleXBy:1 yBy:-1];
     [at translateXBy:0 yBy:-height];

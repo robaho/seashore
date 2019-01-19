@@ -29,11 +29,7 @@ typedef struct {
 
 /*!
 	@class		SeaBrush
-	@abstract	Represents a single GIMP brush.
-	@discussion	N/A
-				<br><br>
-				<b>License:</b> GNU General Public License<br>
-				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
+	@abstract	Represents a single brush.
 */
 
 @interface SeaBrush : NSObject {

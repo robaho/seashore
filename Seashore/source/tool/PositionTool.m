@@ -12,9 +12,6 @@
 #import "SeaOperations.h"
 #import "SeaRotation.h"
 #import "SeaScale.h"
-#import <GIMPCore/GIMPCore.h>
-
-
 
 @implementation PositionTool
 
@@ -186,7 +183,7 @@
 			layer = [[document contents] activeLayer];
 			newWidth = scale *  [(SeaLayer *)layer width];
 			newHeight = scale * [(SeaLayer *)layer height];
-			[[seaOperations seaScale] scaleToWidth:newWidth height:newHeight interpolation:GIMP_INTERPOLATION_CUBIC index:kActiveLayer];
+			[[seaOperations seaScale] scaleToWidth:newWidth height:newHeight interpolation:NSImageInterpolationHigh index:kActiveLayer];
 		break;
 	}
 	

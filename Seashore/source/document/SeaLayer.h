@@ -519,7 +519,6 @@
 	@param		height
 				The revised height of the document or layer.
 	@param		interpolation
-				The interpolation style to be used (see GIMPCore).
 */
 - (void)setWidth:(int)newWidth height:(int)newHeight interpolation:(int)interpolation;
 

@@ -8,7 +8,7 @@
 #import "SeaHelpers.h"
 #import "SeaSelection.h"
 #import "Units.h"
-#import <GIMPCore/GIMPCore.h>
+#import "Bitmap.h"
 
 @implementation SeaScale
 
@@ -89,18 +89,17 @@
 	
 	// Set the options appropriately
 	[keepProportions setState:NSOnState];
-	[interpolationPopup selectItemAtIndex:[interpolationPopup indexOfItemWithTag:GIMP_INTERPOLATION_LINEAR]];
 	
 	// Set the interpolation style
 	if ([gUserDefaults objectForKey:@"interpolation"] == NULL) {
-		value = GIMP_INTERPOLATION_CUBIC;
+		value = 3;
 	}
 	else {
 		value = [gUserDefaults integerForKey:@"interpolation"];
 		if (value < 0 || value >= [interpolationPopup numberOfItems])
-			value = GIMP_INTERPOLATION_CUBIC;
+            value = 3;
 	}
-	[interpolationPopup selectItemAtIndex:value];
+    [interpolationPopup selectItemAtIndex:value];
 	
 	// Show the sheet
 	[NSApp beginSheet:sheet modalForWindow:[document window] modalDelegate:NULL didEndSelector:NULL contextInfo:NULL];
@@ -135,9 +134,11 @@
 	else {
 		if (newWidth == [(SeaContent *)[contents activeLayer] width] && newHeight == [(SeaContent *)[contents activeLayer] height]) { return; }
 	}
+    
+    NSImageInterpolation interpolation = [interpolationPopup selectedTag];
 	
 	// Make the changes
-	[self scaleToWidth:newWidth height:newHeight interpolation:[interpolationPopup indexOfSelectedItem] index:workingIndex]; 
+	[self scaleToWidth:newWidth height:newHeight interpolation:interpolation index:workingIndex];
 }
 
 - (IBAction)cancel:(id)sender

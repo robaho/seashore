@@ -14,7 +14,6 @@
 #import <CoreImage/CoreImage.h>
 #import <sys/stat.h>
 #import <sys/mount.h>
-#import <GIMPCore/GIMPCore.h>
 
 @implementation SeaLayer
 
@@ -433,7 +432,7 @@
     NSGraphicsContext *ctx = [NSGraphicsContext graphicsContextWithBitmapImageRep:new];
     [NSGraphicsContext setCurrentContext:ctx];
     
-    [ctx setImageInterpolation:mapInterpolation(interpolation)];
+    [ctx setImageInterpolation:interpolation];
     
     at = [NSAffineTransform transform];
     [at translateXBy:NSWidth(rotatedBounds)/2 yBy:NSHeight(rotatedBounds)/2];
@@ -778,7 +777,7 @@
     NSGraphicsContext *ctx = [NSGraphicsContext graphicsContextWithBitmapImageRep:new];
     [NSGraphicsContext setCurrentContext:ctx];
     
-    [ctx setImageInterpolation:mapInterpolation(interpolation)];
+    [ctx setImageInterpolation:interpolation];
     
     [bitmap drawInRect:newRect fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:1.0 respectFlipped:NO hints:NULL];
     [NSGraphicsContext restoreGraphicsState];

@@ -7,7 +7,6 @@
 #import "SeaSelection.h"
 #import "SeaWarning.h"
 #import "SeaController.h"
-#import <GIMPCore/GIMPCore.h>
 
 extern IntPoint gScreenResolution;
 
@@ -62,7 +61,7 @@ extern IntPoint gScreenResolution;
 	}
 	
 	// Make the changes
-	if ([preserveSize state]) [seaScale scaleToWidth:[(SeaContent *)contents width] * ((float)newRes.x / (float)[contents xres]) height:[(SeaContent *)contents height] * ((float)newRes.y / (float)[contents yres]) interpolation:GIMP_INTERPOLATION_CUBIC index:kAllLayers];
+	if ([preserveSize state]) [seaScale scaleToWidth:[(SeaContent *)contents width] * ((float)newRes.x / (float)[contents xres]) height:[(SeaContent *)contents height] * ((float)newRes.y / (float)[contents yres]) interpolation:NSImageInterpolationHigh index:kAllLayers];
 	[self setResolution:newRes];
 }
 

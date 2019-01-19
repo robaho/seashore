@@ -5,7 +5,6 @@
 #import "SeaSelection.h"
 #import "AbstractOptions.h"
 #import "SeaContent.h"
-#import <GIMPCore/GIMPCore.h>
 
 @implementation AbstractSelectTool
 
@@ -38,7 +37,7 @@
 		if(scalingDir > kNoDir && !translating){
 			[[document selection] scaleSelectionTo: newRect
 											  from: [self preScaledRect]
-									 interpolation: GIMP_INTERPOLATION_CUBIC
+									 interpolation: NSImageInterpolationHigh
 										 usingMask: [self preScaledMask]];
 		}else if (translating && scalingDir == kNoDir){
 			[[document selection] moveSelection:IntMakePoint(newRect.origin.x, newRect.origin.y)];

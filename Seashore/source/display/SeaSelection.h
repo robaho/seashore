@@ -306,7 +306,7 @@ enum {
 	@param		yScale
 				The scaling to be done vertically on the selection.
 	@param		interpolation
-				The interpolation to be used when scaling (see GIMPCore).
+				The interpolation to be used when scaling.
 */
 - (void)scaleSelectionHorizontally:(float)xScale vertically:(float)yScale interpolation:(int)interpolation;
 
@@ -318,7 +318,7 @@ enum {
 	@param		oldRect
 				The rectangle of the old selection.
 	@param		interpolation
-				The interpolation to be used when scaling (see GIMPCore).
+				The interpolation to be used when scaling.
 	@param		oldMask
 				The mask that should be scaled to the newRect.
 */

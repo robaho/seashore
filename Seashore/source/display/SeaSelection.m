@@ -11,7 +11,6 @@
 #import "Bitmap.h"
 #import "SeaWhiteboard.h"
 #import "SeaFlip.h"
-#import <GIMPCore/GIMPCore.h>
 
 @implementation SeaSelection
 
@@ -785,7 +784,7 @@
             NSGraphicsContext *ctx = [NSGraphicsContext graphicsContextWithBitmapImageRep:new];
             [NSGraphicsContext setCurrentContext:ctx];
             
-            [ctx setImageInterpolation:mapInterpolation(interpolation)];
+            [ctx setImageInterpolation:interpolation];
             
             if (vFlip) {
                 NSAffineTransform *transform = [NSAffineTransform transform];

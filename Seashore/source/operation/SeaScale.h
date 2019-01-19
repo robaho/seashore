@@ -88,7 +88,7 @@ typedef struct {
 	// The options
     IBOutlet id keepProportions;
 	
-	// The interpolation style to be used for scaling
+	// The interpolation style to be used for scaling. The "tag" for each item is the associated NSImageInterpolation value.
 	IBOutlet id interpolationPopup;
 	
 	// A list of various undo records required for undoing
@@ -156,7 +156,7 @@ typedef struct {
 	@param		height
 				The revised height of the document or layer.
 	@param		interpolation
-				The interpolation style to be used (see GIMPCore).
+				The interpolation style to be used.
 	@param		index
 				The index of the layer to be scaled (or kAllLayers to indicate
 				the entire document).
@@ -178,7 +178,7 @@ typedef struct {
 	@param		yorg
 				The y origin of the newly scaled layer.
 	@param		interpolation
-				The interpolation style to be used (see GIMPCore).
+				The interpolation style to be used.
 	@param		index
 				The index of the layer to be scaled (or kAllLayers to indicate
 				the entire document).

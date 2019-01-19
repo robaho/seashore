@@ -9,7 +9,6 @@
 #import "SeaSelection.h"
 #import "SeaLayerUndo.h"
 #import "SeaRotation.h"
-#import <GIMPCore/GIMPCore.h>
 
 @implementation SeaRotation
 
@@ -104,7 +103,7 @@ static inline float mod_float(float value, float divisor)
 	undoRecord.isRotated = YES;
 	undoRecord.withTrim = trim;
 	[[[document undoManager] prepareWithInvocationTarget:self] undoRotation:undoCount];
-	[activeLayer setRotation:degrees interpolation:GIMP_INTERPOLATION_CUBIC withTrim:trim];
+	[activeLayer setRotation:degrees interpolation:NSImageInterpolationHigh withTrim:trim];
 	if ([activeLayer floating] && trim) [[document selection] selectOpaque];
 	else [[document selection] clearSelection];
 	if (!trim && ![activeLayer hasAlpha]) {

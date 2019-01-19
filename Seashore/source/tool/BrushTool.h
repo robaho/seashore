@@ -26,8 +26,7 @@ typedef struct {
 
 /*!
 	@class		BrushTool
-	@abstract	The paintbrush's role in Seashore is much the same as that in
-				the GIMP. 
+	@abstract	The paintbrush's role in Seashore is much the same as that in the GIMP. 
 	@discussion	Shift key - Draws straight lines.<br>Option key - Changes
 				the brush to an eraser.<br>Control key - Draws lines at
 				45 degree intervals.
