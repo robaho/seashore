@@ -149,7 +149,7 @@ REQUEST:
 Application Support folder used for brushes, textures and plug-ins.
 
 RESOLUTION:
-Pending.
+Complete in 2.2.
 
 ---
 
@@ -349,7 +349,7 @@ REQUEST:
 Restore G3 compatibility.
 
 RESOLUTION:
-Implemented in 0.1.8.
+Implemented in 0.1.8. Removed in 1.1.5
 
 ---
 
