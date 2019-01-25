@@ -423,7 +423,6 @@ next:
 
 - (void)mouseUpAt:(IntPoint)where withEvent:(NSEvent *)event
 {
-    // Apply the changes
     [self endLineDrawing];
     [(SeaHelpers *)[document helpers] applyOverlay];
 }

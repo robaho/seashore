@@ -7,7 +7,6 @@
 #import "SeaView.h"
 #import "Units.h"
 #import "ImageToolbarItem.h"
-#import "WindowBackColorWell.h"
 #import "SeaHelpers.h"
 #import <IOKit/graphics/IOGraphicsLib.h>
 
@@ -188,7 +187,12 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	
 	// Determine the initial color (from preferences if possible)
 	if ([gUserDefaults objectForKey:@"windowBackColor"] == NULL) {
-        windowBackColor = [NSColor colorWithCalibratedRed:0.6667 green:0.6667 blue:0.6667 alpha:1.0];
+        NSString *osxMode = [[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"];
+        if(osxMode && [osxMode isEqualToString:@"@Dark"]){
+            windowBackColor = [NSColor windowBackgroundColor];
+        } else {
+            windowBackColor = [NSColor controlShadowColor];
+        }
 	}
 	else {
 		tempData = [gUserDefaults dataForKey:@"windowBackColor"];
@@ -387,7 +391,7 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	[modeMenu selectItemAtIndex: mode];
 	[checkerboardMatrix	selectCellAtRow: useCheckerboard column: 0];
 	[layerBoundsMatrix selectCellAtRow: whiteLayerBounds column: 0];
-	[windowBackWell setInitialColor:windowBackColor];
+	[windowBackWell setColor:windowBackColor];
 	[transparentBackgroundCheckbox setState:transparentBackground];
 	[fewerWarningsCheckbox setState:fewerWarnings];
 	[effectsPanelCheckbox setState:effectsPanel];
@@ -670,8 +674,14 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
 	int i;
 
-    windowBackColor = [NSColor colorWithCalibratedRed:0.6667 green:0.6667 blue:0.6667 alpha:1.0];
-	[windowBackWell setInitialColor:windowBackColor];
+    NSString *osxMode = [[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"];
+    if(osxMode && [osxMode isEqualToString:@"@Dark"]){
+        windowBackColor = [NSColor windowBackgroundColor];
+    } else {
+        windowBackColor = [NSColor controlShadowColor];
+    }
+
+	[windowBackWell setColor:windowBackColor];
 	for (i = 0; i < [documents count]; i++) {
 		[[documents objectAtIndex:i] updateWindowColor];
 		[[[[documents objectAtIndex:i] docView] superview] setNeedsDisplay:YES];

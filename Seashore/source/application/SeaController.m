@@ -138,13 +138,18 @@ id seaController;
 	NSDocument *document;
 	
 	// Ensure that the document is valid
-	if(![[NSPasteboard generalPasteboard] availableTypeFromArray:[NSArray arrayWithObjects:NSTIFFPboardType, NSPICTPboardType, NULL]]){
+	if(![[NSPasteboard generalPasteboard] availableTypeFromArray:[NSArray arrayWithObjects:NSTIFFPboardType, NSPICTPboardType, NSURLPboardType, NULL]]){
 		NSBeep();
 		return;
 	}
 	
 	// We can now create the new document
 	document = [[SeaDocument alloc] initWithPasteboard];
+    if(!document){
+        [NSAlert alertWithMessageText:@"Unsupported pasteboard format." defaultButton:@"OK" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"Unsupported pasteboard format."];
+        return;
+    }
+    
 	[[NSDocumentController sharedDocumentController] addDocument:document];
 	[document makeWindowControllers];
 	[document showWindows];
@@ -203,7 +208,7 @@ id seaController;
 			return gCurrentDocument && [gCurrentDocument fileName] && [gCurrentDocument current];
 		break;
 		case 400:
-			availableType = [[NSPasteboard generalPasteboard] availableTypeFromArray:[NSArray arrayWithObjects:NSTIFFPboardType, NSPICTPboardType, NULL]];
+			availableType = [[NSPasteboard generalPasteboard] availableTypeFromArray:[NSArray arrayWithObjects:NSTIFFPboardType, NSPICTPboardType, NSURLPboardType, NULL]];
 			if (availableType)
 				return YES;
 			else

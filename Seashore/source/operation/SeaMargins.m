@@ -565,6 +565,9 @@
 		focusObject = [contents layer:workingIndex];
 	xres = [contents xres];
 	yres = [contents yres];
+    
+    int width,height;
+    
 	switch ([[presetsMenu selectedItem] tag]) {
 		case 0:
 			pboard = [NSPasteboard generalPasteboard];
@@ -595,6 +598,16 @@
 			size = [[document selection] localRect].size;
 			customOrigin = YES;
 		break;
+        case 4:
+            if(workingIndex!=kAllLayers)
+                return;
+            width=height=0;
+            for(int i=0;i<[[document contents] layerCount];i++) {
+                width = MAX(width,[(SeaLayer*)[[document contents] layer:i] width]);
+                height = MAX(height,[(SeaLayer*)[[document contents] layer:i] height]);
+            }
+            size = IntMakeSize(width,height);
+            break;
 		default:
 			NSLog(@"Preset not supported.");
 		break;

@@ -198,6 +198,12 @@
 - (id)tools;
 
 /*!
+ @method        currentTool
+ @result        Returns the instance of the current tool
+ */
+- (id)currentTool;
+
+/*!
 	@method		helpers
 	@discussion	Returns an object containing various helper methods for the
 				document.

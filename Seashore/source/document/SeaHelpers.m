@@ -24,7 +24,7 @@
 
 - (void)endLineDrawing
 {
-	id curTool = [[document tools] currentTool];
+	id curTool = [document currentTool];
 
 	// We only need to act if the document is locked
 	if ([document locked] && [[document window] attachedSheet] == NULL) {
@@ -70,7 +70,7 @@
 - (void)zoomChanged
 {
 	[[[SeaController utilitiesManager] optionsUtilityFor:document] update];
-	[[[SeaController utilitiesManager] statusUtilityFor:document] updateZoom];
+	[[[SeaController utilitiesManager] statusUtilityFor:document] update];
 }
 
 - (void)boundariesAndContentChanged:(BOOL)scaling

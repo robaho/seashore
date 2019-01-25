@@ -107,7 +107,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
     cursorsManager = [[SeaCursors alloc] initWithDocument: doc andView: self];
     
     // Register for drag operations
-    [self registerForDraggedTypes:[NSArray arrayWithObjects:NSTIFFPboardType, NSPICTPboardType, NSFilenamesPboardType, nil]];
+    [self registerForDraggedTypes:[NSArray arrayWithObjects:NSTIFFPboardType, NSPICTPboardType, NSFilenamesPboardType, NSURLPboardType, NSFilesPromisePboardType, nil]];
     
     // Set up the rulers
     [[document scrollView] setHasHorizontalRuler:YES];
@@ -280,7 +280,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
     
     // Set the background color
     if ([[document whiteboard] whiteboardIsLayerSpecific]) {
-        [[NSColor colorWithCalibratedWhite:0.6667 alpha:1.0] set];
+        [[NSColor windowBackgroundColor] set];
         [[NSBezierPath bezierPathWithRect:destRect] fill];
     }
     else {
@@ -376,7 +376,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
     yScale = [[document contents] yscale];
     width = [(SeaContent *)[document contents] width];
     height = [(SeaContent *)[document contents] height];
-    cropRect = [[[document tools] currentTool] cropRect];
+    cropRect = [[document currentTool] cropRect];
     if (cropRect.size.width == 0 || cropRect.size.height == 0)
         return;
     tempRect.origin.x = floor(cropRect.origin.x * xScale);
@@ -400,8 +400,8 @@ static CGFloat white[4] = {0,3.5,2,.5};
     IntRect selectRect, tempSelectRect;
     int xoff, yoff, width, height, lwidth, lheight;
     BOOL useSelection, special, intermediate;
-    int curToolIndex = (int)[(ToolboxUtility *)[(UtilitiesManager *)[SeaController utilitiesManager] toolboxUtilityFor:document] tool];
-    AbstractTool* curTool = [[document tools] getTool: curToolIndex];
+    AbstractTool* curTool = [document currentTool];
+    int curToolIndex = [curTool toolId];
     NSBezierPath *tempPath;
     NSImage *maskImage;
     int radius = 0;
@@ -431,7 +431,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
     [tempPath setWindingRule:NSEvenOddWindingRule];
 
     if([[SeaController seaPrefs] layerBounds] && [[SeaController seaPrefs] whiteLayerBounds]){
-        [[NSColor colorWithDeviceWhite:1.0 alpha:0.4] set];
+        [[[NSColor windowBackgroundColor] colorWithAlphaComponent:0.4] set];
         [tempPath fill];        
     }else if(useSelection || [[SeaController seaPrefs] layerBounds]){
         // If we are not drawing the layer bounds we should still draw the full selection boundaries
@@ -718,7 +718,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
     
     
     if([(SeaPrefs *)[SeaController seaPrefs] guides] && xScale > 2 && yScale > 2){
-        [[NSColor colorWithCalibratedWhite:0.9 alpha:0.25] set];
+        [[[NSColor gridColor] colorWithAlphaComponent:0.25] set];
         int i, j;
         
         for(i = 0; i < [self frame].size.width / xScale; i++){
@@ -731,7 +731,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
             [tempPath lineToPoint:NSMakePoint([self frame].size.width, yScale *j - 0.5)];
         }        
         [tempPath stroke];
-        [[NSColor colorWithCalibratedWhite:0.5 alpha:0.25] set];
+        [[[[NSColor gridColor] highlightWithLevel:.25] colorWithAlphaComponent:0.25] set];
 
         for(i = 0; i < [self frame].size.width / xScale; i++){
             [tempPath moveToPoint:NSMakePoint(xScale * i + 0.5, 0)];
@@ -976,10 +976,8 @@ static CGFloat white[4] = {0,3.5,2,.5};
 - (void)mouseDown:(NSEvent *)theEvent
 {
     float xScale, yScale;
-    id curTool;
     IntPoint localActiveLayerPoint;
     NSPoint localPoint, globalPoint;
-    int curToolIndex = [[[SeaController utilitiesManager] toolboxUtilityFor:document] tool];
     id options = [[[SeaController utilitiesManager] optionsUtilityFor:document] currentOptions];
     
     // Get xScale, yScale    
@@ -994,30 +992,6 @@ static CGFloat white[4] = {0,3.5,2,.5};
         return;
     }
     
-
-    /* else if(curToolIndex == kCropTool || curToolIndex == kPositionTool) {
-        IntRect localRect;
-        if(curToolIndex == kCropTool){
-            CropTool *tool = [[document tools] getTool:kCropTool];
-            localRect = [tool cropRect];
-        }else {
-            localRect = [[[document contents] activeLayer] localRect];
-        }
-
-        scalingDir = [self point: [self convertPoint:[theEvent locationInWindow] fromView:NULL] isInHandleFor: localRect];
-        if(scalingDir >= 0){
-            if(curToolIndex == kCropTool){
-                scalingMode = kCropScalingMode;
-            }else {
-                scalingMode = kPositionScalingMode;
-            }
-
-            preScaledRect = localRect;
-            preScaledMask = NULL;
-            return;
-        }
-    }     */
-    
     // Check if it is a line draw
     if (lineDraw) {
         [self mouseDragged:theEvent];
@@ -1025,7 +999,9 @@ static CGFloat white[4] = {0,3.5,2,.5};
     }
     
     // Get the current tool
-    curTool = [[document tools] currentTool];
+    AbstractTool *curTool = [document currentTool];
+    
+    int curToolIndex = [curTool toolId];
     
     // Calculate the localPoint and localActiveLayerPoint
     mouseDownLoc = [theEvent locationInWindow];
@@ -1096,7 +1072,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
     id curTool;
     IntPoint localActiveLayerPoint;
     NSPoint localPoint;
-    int curToolIndex, deltaX, deltaY;
+    int deltaX, deltaY;
     double angle;
     NSPoint origin, newScrollPoint;
     NSClipView *view;
@@ -1178,8 +1154,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
     }
     
     // Set up tools
-    curTool = [[document tools] currentTool];
-    curToolIndex = [[[SeaController utilitiesManager] toolboxUtilityFor:document] tool];
+    curTool = [document currentTool];
     
     // Calculate the localPoint and localActiveLayerPoint
     xScale = [[document contents] xscale];
@@ -1232,7 +1207,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
 - (void)mouseUp:(NSEvent *)theEvent
 {
     float xScale, yScale;
-    id curTool = [[document tools] currentTool];
+    id curTool = [document currentTool];
     NSPoint localPoint;
     IntPoint localActiveLayerPoint;
     AbstractOptions *options = [[[SeaController utilitiesManager] optionsUtilityFor:document] currentOptions];
@@ -1367,16 +1342,16 @@ static CGFloat white[4] = {0,3.5,2,.5};
                 // Make the adjustment
                 switch (key) {
                     case NSUpArrowFunctionKey:
-                        [[[document tools] currentTool] adjustCrop:IntMakePoint(0, -1 * nudge)];
+                        [[document currentTool] adjustCrop:IntMakePoint(0, -1 * nudge)];
                     break;
                     case NSDownArrowFunctionKey:
-                        [[[document tools] currentTool] adjustCrop:IntMakePoint(0, nudge)];
+                        [[document currentTool] adjustCrop:IntMakePoint(0, nudge)];
                     break;
                     case NSLeftArrowFunctionKey:
-                        [[[document tools] currentTool] adjustCrop:IntMakePoint(-1 * nudge, 0)];
+                        [[document currentTool] adjustCrop:IntMakePoint(-1 * nudge, 0)];
                     break;
                     case NSRightArrowFunctionKey:
-                        [[[document tools] currentTool] adjustCrop:IntMakePoint(nudge, 0)];
+                        [[document currentTool] adjustCrop:IntMakePoint(nudge, 0)];
                     break;
                 }
                 
@@ -1703,10 +1678,10 @@ static CGFloat white[4] = {0,3.5,2,.5};
 
 - (IBAction)selectNone:(id)sender
 {
-    int curToolIndex = [[[SeaController utilitiesManager] toolboxUtilityFor:document] tool];
+    int curToolIndex = [[document currentTool] toolId];
     
-    if(curToolIndex >= kFirstSelectionTool && curToolIndex <= kLastSelectionTool && [[[document tools] currentTool] intermediate])
-        [[[document tools] currentTool] cancelSelection];
+    if(curToolIndex >= kFirstSelectionTool && curToolIndex <= kLastSelectionTool && [[document currentTool] intermediate])
+        [[document currentTool] cancelSelection];
     else
         [[document selection] clearSelection];
 }
@@ -1780,6 +1755,17 @@ static CGFloat white[4] = {0,3.5,2,.5};
                 return NSDragOperationCopy;
             }
         }
+        if([[pboard types] containsObject:NSFilesPromisePboardType]){
+            if (layer != [[document contents] activeLayer] && ![document locked] && ![[document selection] floating]) {
+                files = [pboard propertyListForType:NSFilesPromisePboardType];
+                success = YES;
+                for (i = 0; i < [files count]; i++)
+                    success = success && [[document contents] canImportLayerFromFile:[files objectAtIndex:i]];
+                if (success) {
+                    return NSDragOperationCopy;
+                }
+            }
+        }
         if ([[pboard types] containsObject:NSFilenamesPboardType]) {
             if (layer != [[document contents] activeLayer] && ![document locked] && ![[document selection] floating]) {
                 files = [pboard propertyListForType:NSFilenamesPboardType];
@@ -1788,6 +1774,17 @@ static CGFloat white[4] = {0,3.5,2,.5};
                     success = success && [[document contents] canImportLayerFromFile:[files objectAtIndex:i]];
                 if (success) {
                     return NSDragOperationCopy;
+                }
+            }
+        }
+        if ([[pboard types] containsObject:NSURLPboardType]) {
+            if (layer != [[document contents] activeLayer] && ![document locked] && ![[document selection] floating]) {
+                NSURL *url = [NSURL URLFromPasteboard:pboard];
+                if([url isFileURL]) {
+                    NSString *path = [url path];
+                    if([[document contents] canImportLayerFromFile:path]){
+                        return NSDragOperationCopy;
+                    }
                 }
             }
         }
@@ -1833,6 +1830,34 @@ static CGFloat white[4] = {0,3.5,2,.5};
             return YES;
         }
         
+        if ([[pboard types] containsObject:NSFilesPromisePboardType]) {
+            
+            NSError *error = nil;
+            NSString *tmpdir =[NSTemporaryDirectory() stringByAppendingPathComponent:@"dropfiles/"];
+            [[NSFileManager defaultManager] createDirectoryAtPath:tmpdir withIntermediateDirectories:NO attributes:NULL error:&error];
+            
+            NSURL* dropLocation = [NSURL fileURLWithPath:tmpdir];
+            
+            files = [sender namesOfPromisedFilesDroppedAtDestination:dropLocation];
+            success = YES;
+            for (i = 0; i < [files count]; i++) {
+                NSString *path = [[dropLocation path] stringByAppendingPathComponent:files[i]];
+                
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    while (![[NSFileManager defaultManager] isReadableFileAtPath:path]) {
+                        // We need to wait for the file to be avaliable.
+                        // This is ugly as hell. You better use File System Events
+                        // API of the CoreService framework.
+                    };
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [[self->document contents] importLayerFromFile:path];
+                        [[NSFileManager defaultManager] removeItemAtPath:path error:NULL];
+                    });
+                });
+            }
+            return success;
+        }
+        
         // Accept files as new layers
         if ([[pboard types] containsObject:NSFilenamesPboardType]) {
             files = [pboard propertyListForType:NSFilenamesPboardType];
@@ -1840,6 +1865,14 @@ static CGFloat white[4] = {0,3.5,2,.5};
             for (i = 0; i < [files count]; i++)
                 success = success && [[document contents] importLayerFromFile:[files objectAtIndex:i]];
             return success;
+        }
+        
+        if ([[pboard types] containsObject:NSURLPboardType]) {
+            NSURL *url = [NSURL URLFromPasteboard:pboard];
+            if([url isFileURL]) {
+                NSString *path = [url path];
+                return [[document contents] importLayerFromFile:path];
+            }
         }
 
     }
@@ -1910,7 +1943,6 @@ static CGFloat white[4] = {0,3.5,2,.5};
 {
     id availableType;
     
-    [[document helpers] endLineDrawing];
     switch ([menuItem tag]) {
         case 261: /* Copy */
             if (![[document selection] active])
@@ -1930,7 +1962,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
                 return NO;
         break;
         case 271: /* Select None */
-            if ([[[SeaController utilitiesManager] toolboxUtilityFor:document] tool] == kPolygonLassoTool && [[[document tools] currentTool] intermediate])
+            if ([[document currentTool] toolId] == kPolygonLassoTool && [[document currentTool] intermediate])
                 return YES;
             if (![[document selection] active] || [[document selection] floating])
                 return NO;
@@ -1948,24 +1980,6 @@ static CGFloat white[4] = {0,3.5,2,.5};
             else
                 return NO;
         break;
-    }
-    
-    return YES;
-}
-
-- (BOOL)validateToolbarItem:(NSToolbarItem *)theItem
-{
-    if([[theItem itemIdentifier] isEqual: SelectNoneToolbarItemIdentifier]){
-        if ([[[SeaController utilitiesManager] toolboxUtilityFor:document] tool] == kPolygonLassoTool && [[[document tools] currentTool] intermediate])
-            return YES;
-        if (![[document selection] active] || [[document selection] floating])
-            return NO;
-    } else     if([[theItem itemIdentifier] isEqual: SelectAllToolbarItemIdentifier] || [[theItem itemIdentifier] isEqual: SelectAlphaToolbarItemIdentifier] ){
-        if ([[document selection] floating])
-            return NO;
-    } else if([[theItem itemIdentifier] isEqual: SelectInverseToolbarItemIdentifier]){
-        if (![[document selection] active] || [[document selection] floating])
-            return NO;
     }
     
     return YES;

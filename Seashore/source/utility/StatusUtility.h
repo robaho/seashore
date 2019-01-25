@@ -26,7 +26,7 @@
 	// The actual view that is the status bar
 	__weak IBOutlet id view;
 
-	// The slider that controls the zoom
+    // The slider that controls the zoom
 	IBOutlet id zoomSlider;
 }
 

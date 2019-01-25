@@ -259,9 +259,6 @@ BOOL checkRun(NSString *path, NSString *file)
     if (document == NULL)
         return NO;
     
-    // End the line drawing
-    [[document helpers] endLineDrawing];
-    
     // Never when the document is locked
     if ([document locked])
         return NO;

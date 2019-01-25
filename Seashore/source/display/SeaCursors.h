@@ -19,10 +19,10 @@
 	__weak SeaView *view;
 	
 	// The various cursors used by the toolbox
-	NSCursor *crosspointCursor, *wandCursor, *zoomCursor, *pencilCursor, *brushCursor, *bucketCursor, *eyedropCursor, *moveCursor, *eraserCursor, *smudgeCursor, *effectCursor, *addCursor, *subtractCursor, *noopCursor;
+	NSCursor *crosspointCursor, *wandCursor, *zoomCursor, *pencilCursor, *brushCursor, *bucketCursor, *eyedropCursor, *moveCursor, *eraserCursor, *smudgeCursor, *effectCursor, *addCursor, *subtractCursor, *noopCursor, *cloneCursor;
 
 	// The view-specific cursors
-	NSCursor *handCursor, *grabCursor, *udCursor, *lrCursor, *urdlCursor, *uldrCursor, *closeCursor, *resizeCursor, *rotateCursor , *anchorCursor;
+    NSCursor *handCursor, *grabCursor, *udCursor, *lrCursor, *urdlCursor, *uldrCursor, *closeCursor, *resizeCursor;
 	
 	// The rects for the handles and selection
 	NSRect handleRects[8];
@@ -46,12 +46,6 @@
 				The SeaView that uses these cursors
 */
 - (id)initWithDocument:(id)newDocument andView:(id)newView;
-
-/*!
-	@method		dealloc
-	@discussion	Frees memory occupied by an instance of this class.
-*/
-- (void)dealloc;
 
 /*!
 	@method		resetCursorRects

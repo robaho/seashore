@@ -1,77 +1,24 @@
 #import "LayerControlView.h"
 #import "StatusUtility.h"
+#import "SeaProxy.h"
+#import "SeaController.h"
 
 @implementation LayerControlView
 
-- (id)initWithFrame:(NSRect)frame {
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code here.
-		statusUtility = nil;
-    }
-    return self;
-}
 
 - (void)resetCursorRects
 {
-	if(drawThumb){
-		[self addCursorRect:NSMakeRect([self frame].size.width -20, 0, 20 , [self frame].size.height) cursor:[NSCursor resizeLeftRightCursor]];
-	}
-}
-
-- (void)drawRect:(NSRect)rect {
-    // Drawing code here.
-	[[NSImage imageNamed:@"layer-gradient"] drawInRect:NSMakeRect(0, 0, [self frame].size.width, [self frame].size.height) fromRect: NSZeroRect operation: NSCompositeSourceOver fraction: 1.0]; 
-	
-	if(drawThumb){
-	
-		[[NSColor colorWithCalibratedWhite:0.0 alpha:0.6] set];
-		
-		NSBezierPath *tempPath = [NSBezierPath bezierPath];
-		[tempPath moveToPoint: NSMakePoint([self frame].size.width - 4.5 ,[self frame].size.height - 7.5)];
-		[tempPath lineToPoint:NSMakePoint([self frame].size.width - 4.5, 6.5)];
-		[tempPath stroke];
-
-		
-		tempPath = [NSBezierPath bezierPath];
-		[tempPath moveToPoint: NSMakePoint([self frame].size.width - 7.5 ,[self frame].size.height - 7.5)];
-		[tempPath lineToPoint:NSMakePoint([self frame].size.width - 7.5, 6.5)];
-		[tempPath stroke];
-
-		tempPath = [NSBezierPath bezierPath];
-		[tempPath moveToPoint: NSMakePoint([self frame].size.width - 10.5 ,[self frame].size.height - 7.5)];
-		[tempPath lineToPoint:NSMakePoint([self frame].size.width - 10.5, 6.5)];
-		[tempPath stroke];
-
-		[[NSColor colorWithCalibratedWhite:1.0 alpha:0.5] set];
-
-		tempPath = [NSBezierPath bezierPath];
-		[tempPath moveToPoint: NSMakePoint([self frame].size.width - 3.5 ,[self frame].size.height - 8.5)];
-		[tempPath lineToPoint:NSMakePoint([self frame].size.width - 3.5, 5.5)];
-		[tempPath stroke];
-		
-		tempPath = [NSBezierPath bezierPath];
-		[tempPath moveToPoint: NSMakePoint([self frame].size.width - 6.5 ,[self frame].size.height - 8.5)];
-		[tempPath lineToPoint:NSMakePoint([self frame].size.width - 6.5, 5.5)];
-		[tempPath stroke];
-		
-		tempPath = [NSBezierPath bezierPath];
-		[tempPath moveToPoint: NSMakePoint([self frame].size.width - 9.5 ,[self frame].size.height - 8.5)];
-		[tempPath lineToPoint:NSMakePoint([self frame].size.width - 9.5, 5.5)];
-		[tempPath stroke];
-	}else{
-		[statusUtility update];
-	}
+    [self addCursorRect:[grabberImage frame] cursor:[NSCursor resizeLeftRightCursor]];
 }
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
-	if(!drawThumb) return;
 	oldPoint = [self convertPoint:[theEvent locationInWindow] fromView:NULL];
-	if(oldPoint.x > [self frame].size.width - 20)
-		intermediate = YES;
-	else
-		intermediate = NO;
+    NSRect bounds = [grabberImage frame];
+    if([self mouse:oldPoint inRect:bounds]) {
+		dragging = YES;
+    } else
+		dragging = NO;
 	oldWidth = [self frame].size.width;
 }
 
@@ -79,23 +26,21 @@
 {
 	NSPoint localPoint;
 	localPoint = [self convertPoint:[theEvent locationInWindow] fromView:NULL];
-	if(intermediate && drawThumb){
+	if(dragging){
 		float diff = localPoint.x - oldPoint.x;
 		float newWidth = oldWidth + diff;
 		// Minimum width
 		if(newWidth < 64)
 			newWidth = 64;
 		
-		[delButton setHidden:(newWidth < 75)];
-		[dupButton setHidden:(newWidth < 107)];
-		[shButton setHidden:(newWidth < 138)];
-			
-		[leftPane setFrame:NSMakeRect(0, [leftPane frame].origin.y, newWidth, [leftPane frame].size.height)];
-		[rightPane setFrame:NSMakeRect(newWidth, [rightPane frame].origin.y, [[rightPane superview] frame].size.width - newWidth, [rightPane frame].size.height)];
-		
-		[divider setFrame:NSMakeRect(newWidth - 3, [divider frame].origin.y, [divider frame].size.width, [divider frame].size.height)];
-		[divider setNeedsDisplay: YES];
-		
+        [leftPane setFrame:NSMakeRect(0, [leftPane frame].origin.y, newWidth, [leftPane frame].size.height)];
+        [rightPane setFrame:NSMakeRect(newWidth, [rightPane frame].origin.y, [[rightPane superview] frame].size.width - newWidth, [rightPane frame].size.height)];
+        
+        NSRect grabberFrame = [grabberImage frame];
+        [delButton setHidden:NSIntersectsRect(grabberFrame,[delButton frame])];
+        [dupButton setHidden:NSIntersectsRect(grabberFrame,[dupButton frame])];
+        [infoButton setHidden:NSIntersectsRect(grabberFrame,[infoButton frame])];
+        
 		[self setNeedsDisplay:YES];
 		[leftPane setNeedsDisplay:YES];
 		[rightPane setNeedsDisplay:YES];
@@ -104,12 +49,18 @@
 
 - (void)mouseUp:(NSEvent *)theEvent
 {
-	intermediate = NO;
+	dragging = NO;
 }
 
-- (void)setHasResizeThumb:(BOOL)hasThumb
-{
-	drawThumb = hasThumb;
+- (IBAction)newLayer:(id)sender {
+    [(SeaProxy*)[SeaController seaProxy] addLayer:sender];
 }
 
+- (IBAction)duplicateLayer:(id)sender {
+    [(SeaProxy*)[SeaController seaProxy] duplicateLayer:sender];
+}
+
+- (IBAction)removeLayer:(id)sender {
+    [(SeaProxy*)[SeaController seaProxy] deleteLayer:sender];
+}
 @end

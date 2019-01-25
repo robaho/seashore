@@ -101,6 +101,7 @@
 	int brushCount =  [brushes count];
 	
 	[self setFrameSize:NSMakeSize(kBrushPreviewSize * kBrushesPerRow + 1, ((brushCount % kBrushesPerRow == 0) ? (brushCount / kBrushesPerRow) : (brushCount / kBrushesPerRow + 1)) * kBrushPreviewSize)];
+    [self setNeedsDisplay:YES];
 }
 
 - (BOOL)acceptsFirstMouse:(NSEvent *)event

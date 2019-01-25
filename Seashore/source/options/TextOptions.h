@@ -27,9 +27,6 @@
 	// A label specifying the font
 	IBOutlet id fontLabel;
 	
-	// The checkbox specifying whether a fringe is okay
-	IBOutlet id fringeCheckbox;
-	
 	// The font manager associated with the text tool
 	id fontManager;
 	
@@ -87,16 +84,6 @@
 				should use the foreground colour.
 */
 - (BOOL)useTextures;
-
-/*!
-	@method		allowFringe
-	@discussion	Returns whether a fringe is allowed, the fringe is determined using
-				the background layers and will look out of place if the background
-				changes. On the other hand, the fringe will look better if the
-				background does not change.
-	@result		Returns YES if the fringe should be allowed, NO otherwise.
-*/
-- (BOOL)allowFringe;
 
 /*!
 	@method		update

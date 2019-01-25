@@ -86,8 +86,6 @@ static bool profileIterate (CFDictionaryRef profileInfo, void *refCon)
     if (document == NULL)
         return NO;
     
-    [[document helpers] endLineDrawing];
-    
     if ([document locked])
         return NO;
     

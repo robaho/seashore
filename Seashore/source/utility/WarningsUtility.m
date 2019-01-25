@@ -27,7 +27,7 @@
 
 - (void)showFloatBanner
 {
-	[view setBannerText:@"Drag the floating layer to position it, then click Anchor to merge it into the layer below." defaultButtonText:@"Anchor" alternateButtonText:@"New Layer" andImportance:kUIImportance];
+    [view setBannerText:@"Drag the floating layer to position it, then click Anchor to merge it into the layer below." defaultButtonText:@"Anchor" alternateButtonText:@"New Layer" andImportance:kUIImportance];
 	mostRecentImportance = kUIImportance;
 	[windowContent setVisibility:YES forRegion:kWarningsBar];
 }

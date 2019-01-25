@@ -7,11 +7,6 @@
 
 @implementation SeaTools
 
-- (id)currentTool
-{
-	return [self getTool:[[[SeaController utilitiesManager] toolboxUtilityFor:gCurrentDocument] tool]];
-}
-
 - (id)getTool:(int)whichOne
 {
 	switch (whichOne) {
@@ -66,6 +61,8 @@
 		case kEffectTool:
 			return effectTool;
 		break;
+        case kZoomTool:
+            return zoomTool;
 	}
 	
 	return NULL;
@@ -73,6 +70,6 @@
 
 - (NSArray *)allTools
 {
-	return [NSArray arrayWithObjects: rectSelectTool, ellipseSelectTool, lassoTool, polygonLassoTool, wandTool, pencilTool, brushTool, bucketTool, textTool, eyedropTool, eraserTool, positionTool, gradientTool, smudgeTool, cloneTool, cropTool, effectTool, nil];
+	return [NSArray arrayWithObjects: rectSelectTool, ellipseSelectTool, lassoTool, polygonLassoTool, wandTool, pencilTool, brushTool, bucketTool, textTool, eyedropTool, eraserTool, positionTool, gradientTool, smudgeTool, cloneTool, cropTool, effectTool, zoomTool, nil];
 }
 @end

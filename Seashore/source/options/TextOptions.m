@@ -58,15 +58,6 @@ id gNewFont;
 	// Show the slider value
 	[outlineCheckbox setTitle:[NSString stringWithFormat:LOCALSTR(@"outline", @"Outline: %d pt"), [outlineSlider intValue]]];
 	
-	// Handle the text fringe checkbox
-	if ([gUserDefaults objectForKey:@"text fringe checkbox"] == NULL) {
-		bvalue = YES;
-	}
-	else {
-		bvalue = [gUserDefaults boolForKey:@"text fringe checkbox"];
-	}
-	[fringeCheckbox setState:bvalue];
-	
 	// Set up font manager
 	gNewFont = NULL;
 	fontManager = [NSFontManager sharedFontManager];
@@ -132,11 +123,6 @@ id gNewFont;
 	return [[SeaController seaPrefs] useTextures];
 }
 
-- (BOOL)allowFringe
-{
-	return [fringeCheckbox state];
-}
-
 - (IBAction)update:(id)sender
 {
 	// Enable or disable the slider appropriately
@@ -157,7 +143,6 @@ id gNewFont;
 	[gUserDefaults setInteger:[alignmentControl selectedSegment] forKey:@"text alignment"];
 	[gUserDefaults setObject:[outlineCheckbox state] ? @"YES" : @"NO" forKey:@"text outline checkbox"];
 	[gUserDefaults setInteger:[outlineSlider intValue] forKey:@"text outline slider"];
-	[gUserDefaults setObject:[fringeCheckbox state] ? @"YES" : @"NO" forKey:@"text fringe checkbox"];
 	[gUserDefaults setObject:[[fontManager selectedFont] fontName] forKey:@"text font"];
 	[gUserDefaults setInteger:(int)[[fontManager selectedFont] pointSize] forKey:@"text size"];
 }

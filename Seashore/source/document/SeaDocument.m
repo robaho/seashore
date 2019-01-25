@@ -24,6 +24,8 @@
 #import "OptionsUtility.h"
 #import "SeaWindowContent.h"
 #import "SeaPrintOptionsController.h"
+#import "ToolboxUtility.h"
+#import "SeaTools.h"
 
 extern int globalUniqueDocID;
 
@@ -86,6 +88,19 @@ enum {
 
 - (id)initWithPasteboard
 {
+    id pboard = [NSPasteboard generalPasteboard];
+    NSPasteboardType ptype = [pboard availableTypeFromArray:[NSArray arrayWithObjects:NSURLPboardType,NSTIFFPboardType,NSPICTPboardType,nil]];
+    if([ptype isEqualToString:NSURLPboardType]){
+        NSURL *url = [NSURL URLFromPasteboard:pboard];
+        if([url isFileURL]) {
+            NSString *path = [url path];
+            NSString *extension = [path pathExtension];
+            return [self initWithContentsOfFile:path ofType:extension];
+        } else {
+            // we'll try the image types below
+        }
+    }
+    
 	// Initialize superclass first
 	if (![super init])
 		return NULL;
@@ -216,6 +231,8 @@ enum {
 	}
     
 	[docWindow setAcceptsMouseMovedEvents:YES];
+    
+    [[[SeaController utilitiesManager] statusUtilityFor:self] update];
 }
 
 - (IBAction)saveDocument:(id)sender
@@ -253,6 +270,13 @@ enum {
 - (id)tools
 {
 	return tools;
+}
+
+- (id)currentTool
+{
+    ToolboxUtility *tu = (ToolboxUtility*)[[SeaController utilitiesManager] toolboxUtilityFor:self];
+    int toolId = [tu tool];
+    return [(SeaTools*)tools getTool:toolId];
 }
 
 - (SeaHelpers*)helpers
@@ -669,7 +693,6 @@ enum {
 {
 	id type = [self fileType];
 	
-	[helpers endLineDrawing];
 	if ([menuItem tag] == 171) {
 		if ([type isEqualToString:@"PDF Document"] || [type isEqualToString:@"PICT Document"] || [type isEqualToString:@"Graphics Interchange Format Image"] || [type isEqualToString:@"Windows Bitmap Image"])
 			return NO;

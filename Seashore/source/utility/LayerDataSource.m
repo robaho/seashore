@@ -159,13 +159,9 @@
 		}
 	}else if([[tableColumn identifier] isEqualToString:LAYER_VISIBLE_COL]){
 		NSButtonCell *buttonCell = (NSButtonCell *)cell;
-		if([(SeaLayer *)item visible]){
-			[buttonCell setImage:[NSImage imageNamed:@"checked"]];
-		}else{
-			[buttonCell setImage:[NSImage imageNamed:@"unchecked"]];
-		}
+        [buttonCell setState:([(SeaLayer *)item visible])];
 	}else if([[tableColumn identifier] isEqualToString:INFO_BUTTON_COL]){
-		[(NSButtonCell *)cell setImage:[NSImage imageNamed:@"layer-info"]];
+		[(NSButtonCell *)cell setImage:[NSImage imageNamed:@"layer-infoTemplate"]];
 	}else{
 		NSLog(@"Will display cell for unkown column %@", tableColumn);
 	}
@@ -173,7 +169,10 @@
 
 - (BOOL)outlineView:(NSOutlineView *)ov shouldSelectItem:(id)item
 {
-	// All items should be selectable
+	if([ov clickedColumn]==0)
+        return FALSE;
+    if([ov clickedColumn]==2)
+        return FALSE;
 	return YES;
 }
 
@@ -300,4 +299,7 @@ NSFileHandle *NewFileHandleForWritingFile(NSString *dirpath, NSString *basename,
 	[outlineView reloadData];
 }
 
+- (IBAction)visibilityChanged:(id)sender {
+    NSLog(@"got it");
+}
 @end

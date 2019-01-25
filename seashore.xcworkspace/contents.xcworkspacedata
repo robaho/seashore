@@ -203,6 +203,9 @@
       location = "container:"
       name = "Universal Plug-ins">
       <FileRef
+         location = "group:Plug-ins/Alpha2Gray/Alpha2Gray.xcodeproj">
+      </FileRef>
+      <FileRef
          location = "group:Plug-ins/Sharpen/Sharpen.xcodeproj">
       </FileRef>
       <FileRef

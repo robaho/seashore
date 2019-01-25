@@ -33,7 +33,7 @@
 	IntRect cropRect;
 	int width, height;
 	
-	cropRect = [[[gCurrentDocument tools] currentTool] cropRect];
+	cropRect = [[gCurrentDocument currentTool] cropRect];
 	if (cropRect.size.width < kMinImageSize) { NSBeep(); return; }
 	if (cropRect.size.height < kMinImageSize) { NSBeep(); return; }
 	if (cropRect.size.width > kMaxImageSize) { NSBeep(); return; }

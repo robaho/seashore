@@ -824,7 +824,7 @@
 	int newWidth, newHeight, i, j;
 	unsigned char *newMask;
 	BOOL fullyOpaque = YES;
-	
+    
 	// We only trim if the selction has a mask
 	if (mask) {
 		
@@ -863,6 +863,11 @@
 				}
 			}
 		}
+        
+        if(selectionLeft==-1 || selectionRight==-1 || selectionTop==-1 || selectionBottom==-1){
+            // entire mask is 0 alpha don't trim anything
+            return;
+        }
 		
 		// Check the mask for fully opacity
 		newWidth = rect.size.width - selectionLeft - selectionRight;
@@ -889,7 +894,7 @@
 		else {
 			
 			// Now make the change if required
-			if (selectionLeft != 0 || selectionRight != 0 || selectionTop != 0 || selectionBottom != 0) {
+			if (selectionLeft > 0 || selectionRight > 0 || selectionTop > 0 || selectionBottom > 0) {
 				
 				// Calculate the new mask
 				newMask = malloc(newWidth * newHeight);

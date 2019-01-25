@@ -54,7 +54,7 @@ extern id gNewFont;
 	NSFont *font;
 	IntSize fontSize;
 	NSDictionary *attributes;
-	unsigned char *bitmapData, *bitmapData2 = NULL, *initData, *initData2, *overlay, *data, *replace;
+	unsigned char *bitmapData, *bitmapData2 = NULL, *initData, *overlay, *data, *replace;
 	unsigned char basePixel[4];
 	NSColor *color;
 	NSString *text;
@@ -112,28 +112,19 @@ extern id gNewFont;
 	off.x = [layer xoff];
 	off.y = [layer yoff];
     
-    initData2 = NULL;
-	
-	// Create the initial data
-	if ([options allowFringe]) {
-		initData = [[document contents] bitmapUnderneath:IntMakeRect(off.x + pos.x, off.y + pos.y, fontSize.width, fontSize.height)];
-        initData2 = calloc(fontSize.width * fontSize.height * spp,sizeof(unsigned char));
-	}
-	else {
-		initData = malloc(fontSize.width * fontSize.height * spp);
-		for (j = 0; j < fontSize.height; j++) {
-			for (i = 0; i < fontSize.width; i++) {
-				if (pos.y + j < height && pos.x + i < width) {
-					for (k = 0; k < spp; k++)
-						initData[(j * fontSize.width + i) * spp + k] = data[((pos.y + j) * width + pos.x + i) * spp + k];
-				}
-				else {
-					for (k = 0; k < spp; k++)
-						initData[(j * fontSize.width + i) * spp + k] = 0;
-				}
-			}
-		}
-	}
+    initData = malloc(fontSize.width * fontSize.height * spp);
+    for (j = 0; j < fontSize.height; j++) {
+        for (i = 0; i < fontSize.width; i++) {
+            if (pos.y + j < height && pos.x + i < width) {
+                for (k = 0; k < spp; k++)
+                    initData[(j * fontSize.width + i) * spp + k] = data[((pos.y + j) * width + pos.x + i) * spp + k];
+            }
+            else {
+                for (k = 0; k < spp; k++)
+                    initData[(j * fontSize.width + i) * spp + k] = 0;
+            }
+        }
+    }
     
 	// Draw the text
 	initRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&initData pixelsWide:fontSize.width pixelsHigh:fontSize.height bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace bytesPerRow:fontSize.width * spp bitsPerPixel:8 * spp];
@@ -147,19 +138,9 @@ extern id gNewFont;
 
     [text drawInRect:NSMakeRect(slantWidth, 0.0, fontSize.width - slantWidth, fontSize.height) withAttributes:attributes];
     
-	// Calculate fringe mask
-	if ([options allowFringe]) {
-		initRep2 = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&initData2 pixelsWide:fontSize.width pixelsHigh:fontSize.height bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace bytesPerRow:fontSize.width * spp bitsPerPixel:8 * spp];
-        NSGraphicsContext *ctx = [NSGraphicsContext graphicsContextWithBitmapImageRep:initRep2];
-        ctx.shouldAntialias=TRUE;
-        [NSGraphicsContext setCurrentContext:ctx];
-		[text drawInRect:NSMakeRect(slantWidth, 0.0, fontSize.width - slantWidth, fontSize.height) withAttributes:attributes];
-	}
-    
     [NSGraphicsContext restoreGraphicsState];
     
     bitmapData = initData;
-    bitmapData2 = initData2;
 
 	// Go through all pixels and change them
 	basePixel[spp - 1] = 0xFF;
@@ -169,22 +150,11 @@ extern id gNewFont;
 				for (k = 0; k < spp; k++)
 					overlay[((pos.y + j) * width + pos.x + i) * spp + k] = bitmapData[(j * fontSize.width + i) * spp + k];
 				
-				if ([options allowFringe]) {
-					if (bitmapData2[(j * fontSize.width + i + 1) * spp - 1] == 0)
-						replace[(pos.y + j) * width + pos.x + i] = 0;
-					else
-						replace[(pos.y + j) * width + pos.x + i] = 255;
-				}
-				else {
-					replace[(pos.y + j) * width + pos.x + i] = 255;
-				}
+                replace[(pos.y + j) * width + pos.x + i] = 255;
 			}
 		}
 	}
 	free(initData);
-    if(initData2){
-        free(initData2);
-    }
 	
 	return IntMakeRect(pos.x, pos.y, fontSize.width, fontSize.height);
 }

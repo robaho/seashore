@@ -8,16 +8,12 @@
 #import "LayerControlView.h"
 #import "ToolboxUtility.h"
 #import "SeaView.h"
-// #import "WebSlider.h"
 #import "SeaWindowContent.h"
 
 @implementation StatusUtility
 - (void)awakeFromNib
 {
 	[[SeaController utilitiesManager] setStatusUtility: self for:document];
-	[(LayerControlView *)view setHasResizeThumb: NO];
-	
-	[self update];
 }
 
 - (void)shutdown
@@ -28,7 +24,6 @@
 {
 	[[[document window] contentView] setVisibility: YES forRegion: kStatusBar];
 	[self update];
-	[self updateZoom];
 }
 
 - (IBAction)hide:(id)sender
@@ -47,9 +42,11 @@
 
 - (void)update
 {
+    [self updateZoom];
+    
 	if(document){
 		SeaContent *contents = [document contents];
-
+        
 		// Set the channel selections correction
 		int i;
 		for(i = 0; i < 3; i++){
@@ -62,25 +59,17 @@
 		
 		[channelSelectionPopup selectItemAtIndex:([contents selectedChannel] + 1)];
 		[channelSelectionPopup setEnabled:YES];
-		[trueViewCheckbox setImage:[NSImage imageNamed:([contents trueView] ? @"trueview-sel" : @"trueview-not" )]];
 		[trueViewCheckbox setEnabled:YES];
+        [trueViewCheckbox setState:[contents trueView]];
 		
 		int newUnits = [document measureStyle];
 		NSString *statusString = @"";
 		unichar ch = 0x00B7; // replace this with your code pointNSString
 		NSString *divider = [NSString stringWithCharacters:&ch length:1];
-		if([view frame].size.width > 445){
-			statusString = [statusString stringByAppendingFormat: @"%@ %C %@ %@", StringFromPixels([contents width] , newUnits, [contents xres]), 0x00D7, StringFromPixels([contents height], newUnits, [contents yres]), UnitsString(newUnits)];
-		}
-		if([view frame].size.width > 480){
-			statusString = [[NSString stringWithFormat:@"%.0f%% %@ ", [contents xscale] * 100, divider] stringByAppendingString: statusString];
-		}
-		if([view frame].size.width > 525){
-			statusString = [statusString stringByAppendingFormat: @" %@ %d dpi", divider, [contents xres]];
-		}
-		if([view frame].size.width > 575){
-			statusString = [statusString stringByAppendingFormat: @" %@ %@", divider, [contents type] ? @"Grayscale" : @"Full Color"];
-		}
+        statusString = [statusString stringByAppendingFormat: @"%@ %C %@ %@", StringFromPixels([contents width] , newUnits, [contents xres]), 0x00D7, StringFromPixels([contents height], newUnits, [contents yres]), UnitsString(newUnits)];
+        statusString = [[NSString stringWithFormat:@"%.0f%% %@ ", [contents xscale] * 100, divider] stringByAppendingString: statusString];
+        statusString = [statusString stringByAppendingFormat: @" %@ %d dpi", divider, [contents xres]];
+        statusString = [statusString stringByAppendingFormat: @" %@ %@", divider, [contents type] ? @"Grayscale" : @"Full Color"];
         
         SeaColorProfile *cp = [[document whiteboard] proofProfile];
         if(cp!=NULL && cp.cs!=NULL) {
@@ -95,8 +84,8 @@
 		[channelSelectionPopup setEnabled:NO];
 		[channelSelectionPopup selectItemAtIndex:0];
 		[trueViewCheckbox setEnabled:NO];
-		[trueViewCheckbox setImage:[NSImage imageNamed:@"trueview-not"]];
-		
+        [trueViewCheckbox setState:NSControlStateValueOff];
+
 		[dimensionLabel setStringValue:@""];		
 	}
 }

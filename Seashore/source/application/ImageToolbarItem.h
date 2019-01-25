@@ -10,7 +10,7 @@
 */
 
 @interface ImageToolbarItem : NSToolbarItem {
-
+    id validator;
 }
 
 /*!

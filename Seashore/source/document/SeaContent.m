@@ -1669,27 +1669,4 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     [[document helpers] typeChanged]; 
 }
 
-- (BOOL)validateToolbarItem:(NSToolbarItem *)theItem
-{
-    if (![[document selection] active])
-        return NO;
-
-    if([[theItem itemIdentifier] isEqual: FloatAnchorToolbarItemIdentifier]){
-        if ([[document selection] floating]){
-            [theItem setLabel: @"Anchor"];
-            [theItem setPaletteLabel: LOCALSTR(@"anchor selection", @"Anchor Selection")];
-            [theItem setImage:[NSImage imageNamed:@"anchor-tb"]];
-        }else{
-            [theItem setLabel:@"Float"];
-            [theItem setPaletteLabel:LOCALSTR(@"float selection", @"Float Selection")];
-            [theItem setImage:[NSImage imageNamed:@"float-tb"]];
-        }
-    }else if([[theItem itemIdentifier] isEqual: DuplicateSelectionToolbarItemIdentifier]){
-        if([[document selection]floating])
-            return NO;
-    }
-    
-    return YES;
-}
-
 @end

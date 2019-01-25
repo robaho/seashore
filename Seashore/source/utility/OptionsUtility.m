@@ -22,7 +22,7 @@
 
 - (void)awakeFromNib
 {
-    [view addSubview:blankView];
+    [view addSubview:blankView positioned:NSWindowAbove relativeTo:horizontalLine ];
     lastView = blankView;
     
     NSArray *allTools = [[document tools] allTools];
@@ -146,6 +146,11 @@
         lastView = [currentOptions view];
         currentTool = [toolboxUtility tool];
     }
+    
+    NSRect vbounds = [lastView bounds];
+    NSRect bounds = [view bounds];
+    
+    [lastView setFrameOrigin:NSMakePoint(0,(bounds.size.height-vbounds.size.height)/2)];
     
     // Update the options
     [currentOptions activate:document];

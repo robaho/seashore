@@ -15,8 +15,8 @@
 		side = YES;
 	}
 	
-	// Here's the background
-	[[NSColor colorWithPatternImage: [NSImage imageNamed:@"info-win-backer"] ] set];
+    [[NSColor windowBackgroundColor] set];
+
 	NSRect rect = [self frame];
 	
 	// Make adjustments for the arrows

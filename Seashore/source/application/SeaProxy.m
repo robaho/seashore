@@ -389,19 +389,22 @@
 	if (document == NULL)
 		return NO;
 	
-	// End the line drawing
-	[[document helpers] endLineDrawing];
+    int tag = (int)[menuItem tag];
 	
 	// Sometimes we always enable
-	if ([menuItem tag] == 999)
+	if (tag == 999)
 		return YES;
 	
 	// Never when the document is locked
 	if ([document locked])
 		return NO;
+    
+    if(tag>=270 && tag<=273){
+        return [[gCurrentDocument docView] validateMenuItem:menuItem];
+    }
 	
 	// Sometimes in other cases
-	switch ([menuItem tag]) {
+	switch (tag) {
 		case 200:
 			if([[[document window] contentView] visibilityForRegion: kSidebar])
 				[menuItem setTitle:@"Hide Layers"];

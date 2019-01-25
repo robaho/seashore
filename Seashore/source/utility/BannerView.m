@@ -15,30 +15,32 @@
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
-    // We use images for the backgrounds
-	NSImage *background = NULL;
+    
+    NSColor *background;
+    NSColor *foreground;
+
 	switch(bannerImportance){
 		case kUIImportance:
-			background = [NSImage imageNamed:@"floatbar"];
+            background = [NSColor blueColor];
+            foreground = [NSColor whiteColor];
 			break;
 		case kHighImportance:
-			background = [NSImage imageNamed:@"errorbar"];
+            background = [NSColor redColor];
+            foreground = [NSColor whiteColor];
 			break;
 		default:
-			background = [NSImage imageNamed:@"warningbar"];
+            background = [NSColor yellowColor];
+            foreground = [NSColor blackColor];
 			break;
 	}
-	
-	[background drawInRect:NSMakeRect(0, 0, [self frame].size.width, [self frame].size.height) fromRect: NSZeroRect operation: NSCompositeSourceOver fraction: 1.0]; 
-	[NSGraphicsContext saveGraphicsState];
-    NSShadow *shadow = [[NSShadow alloc] init];
-	[shadow setShadowOffset: NSMakeSize(0, 1)];
-	[shadow setShadowBlurRadius:0];
-	[shadow setShadowColor:[NSColor colorWithCalibratedWhite:0.0 alpha:0.5]];
-	[shadow set];
-	
+    
+    NSGradient *gradient = [[NSGradient alloc] initWithStartingColor:background endingColor:[background shadowWithLevel:0.20]];
+    [gradient drawInRect:NSMakeRect(0,0,[self frame].size.width, [self frame].size.height) angle:270];
+    
+    [NSGraphicsContext saveGraphicsState];
+
 	NSDictionary *attrs;
-	attrs = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont systemFontOfSize:12] , NSFontAttributeName, [NSColor whiteColor], NSForegroundColorAttributeName, shadow ,NSShadowAttributeName ,nil];
+	attrs = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont systemFontOfSize:12] , NSFontAttributeName, foreground, NSForegroundColorAttributeName,nil];
 	
 	// We need to calculate the width of the text box
 	NSRect drawRect = NSMakeRect(10, 8, [self frame].size.width, 18);

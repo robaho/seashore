@@ -29,11 +29,8 @@
 {
 	// Shown By Default
 	[[SeaController utilitiesManager] setInfoUtility: self for:document];
-	[(LayerControlView *)controlView setHasResizeThumb:YES];
 	
-	if(![self visible]){
-		[toggleButton setImage:[NSImage imageNamed:@"show-info"]];
-	}
+    [toggleButton setState:[self visible]];
 }
 
 - (void)shutdown
@@ -55,13 +52,13 @@
 - (IBAction)show:(id)sender
 {
 	[[[document window] contentView] setVisibility: YES forRegion: kPointInformation];
-	[toggleButton setImage:[NSImage imageNamed:@"hide-info"]];
+    [toggleButton setState:1];
 }
 
 - (IBAction)hide:(id)sender
 {
 	[[[document window] contentView] setVisibility: NO forRegion: kPointInformation];	
-	[toggleButton setImage:[NSImage imageNamed:@"show-info"]];
+    [toggleButton setState:0];
 }
 
 - (IBAction)toggle:(id)sender
@@ -80,7 +77,6 @@
 	IntSize size;
 	NSColor *color;
 	int xres, yres, units;
-	int curToolIndex = [[[SeaController utilitiesManager] toolboxUtilityFor:document] tool];
 	
 	// Show no values
 	if (!document) {
@@ -105,10 +101,12 @@
 	// Update the document information
 	xres = [[document contents] xres];
 	yres = [[document contents] yres];
+    
+    int curToolIndex = [[document currentTool] toolId];
 
 	// Get the selection
 	if (curToolIndex == kCropTool) {
-		size = [[[document tools] currentTool] cropRect].size;
+		size = [[document currentTool] cropRect].size;
 	}
 	else if ([[document selection] active]) {
 		size = [[document selection] globalRect].size;

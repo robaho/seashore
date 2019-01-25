@@ -67,8 +67,6 @@ enum {
 	kLastTool = 17
 };
 
-@class AbstractTool;
-
 /*!
 	@class		SeaTools
 	@abstract	Acts as a gateway to all the tools of Seashore.
@@ -98,16 +96,9 @@ enum {
 	IBOutlet id cloneTool;
 	IBOutlet id cropTool;
 	IBOutlet id effectTool;
+    IBOutlet id zoomTool;
 	
 }
-
-/*!
-	@method		currentTool
-	@discussion	Returns the currently active tool according to the toolbox
-				utility.
-	@result		Returns an object that is a subclass of AbstractTool.
-*/
-- (id)currentTool;
 
 /*!
 	@method		getTool:

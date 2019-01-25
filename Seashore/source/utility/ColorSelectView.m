@@ -14,6 +14,10 @@
 
 @implementation ColorSelectView
 
+#define FG_RECT NSRect fg = NSMakeRect(2,2,20,10);
+#define BG_RECT NSRect bg = NSMakeRect(19,12,20,10);
+#define SWAP_RECT NSRect swap = NSMakeRect(6,14,10,10);
+
 - (id)initWithFrame:(NSRect)frame
 {
 	// Initialize the super
@@ -49,62 +53,27 @@
 
 - (void)drawRect:(NSRect)rect
 {
-	BOOL foregroundIsTexture = [[[document tools] currentTool] foregroundIsTexture];
-	
-	NSBezierPath *tempPath;
-	// Background color
-	// Border
-	[[NSColor colorWithCalibratedWhite:0.341 alpha:1.0] set];
-	[[NSBezierPath bezierPathWithRect:NSMakeRect(24, 6, 30, 20)] fill];
-	[[NSColor colorWithCalibratedWhite:0.759 alpha:1.0] set];
-	[[NSBezierPath bezierPathWithRect:NSMakeRect(25, 7, 28, 18)] fill];
-	// White
-	[[NSColor whiteColor] set];
-	tempPath = [NSBezierPath bezierPath];
-	[tempPath moveToPoint:NSMakePoint(52, 8)];
-	[tempPath lineToPoint:NSMakePoint(26, 24)];
-	[tempPath lineToPoint:NSMakePoint(52,24)];
-	[tempPath fill];
-	// Black
-	[[NSColor blackColor] set];
-	tempPath = [NSBezierPath bezierPath];
-	[tempPath moveToPoint:NSMakePoint(26, 8)];
-	[tempPath lineToPoint:NSMakePoint(52, 8)];
-	[tempPath lineToPoint:NSMakePoint(26,24)];
-	[tempPath fill];
+    FG_RECT
+    BG_RECT
+    SWAP_RECT
+    
+	BOOL foregroundIsTexture = [[document currentTool] foregroundIsTexture];
+    
+    [self drawColorWell:bg];
+    
 	// Actual Color
 	if (document == NULL)
 		[[NSColor whiteColor] set];
 	else {
         [[[document contents] background] set];
 	}
-	[[NSBezierPath bezierPathWithRect:NSMakeRect(26, 8, 26, 16)] fill];
+	[[NSBezierPath bezierPathWithRect:bg] fill];
+    
+    [self drawColorWell:fg];
 
-	// Forground Color
-	// Border
-	[[NSColor colorWithCalibratedWhite:0.341 alpha:1.0] set];
-	[[NSBezierPath bezierPathWithRect:NSMakeRect(0, 0, 30, 20)] fill];
-	[[NSColor colorWithCalibratedWhite:0.759 alpha:1.0] set];
-	[[NSBezierPath bezierPathWithRect:NSMakeRect(1, 1, 28, 18)] fill];
-	// White
-	[[NSColor whiteColor] set];
-	tempPath = [NSBezierPath bezierPath];
-	[tempPath moveToPoint:NSMakePoint(28, 2)];
-	[tempPath lineToPoint:NSMakePoint(2, 18)];
-	[tempPath lineToPoint:NSMakePoint(28,18)];
-	[tempPath fill];
-	// Black
-	[[NSColor blackColor] set];
-	tempPath = [NSBezierPath bezierPath];
-	[tempPath moveToPoint:NSMakePoint(2, 2)];
-	[tempPath lineToPoint:NSMakePoint(28, 2)];
-	[tempPath lineToPoint:NSMakePoint(2,18)];
-	[tempPath fill];
-	// Actual Color
-	// Draw the foreground button
 	if (foregroundIsTexture) {
 		[[NSColor colorWithPatternImage:[[[[SeaController utilitiesManager] textureUtilityFor:document] activeTexture] thumbnail]] set];
-		[[NSBezierPath bezierPathWithRect:NSMakeRect(2, 2, 26, 16)] fill];
+		[[NSBezierPath bezierPathWithRect:fg] fill];
 	}
 	else {
 		if (document == NULL)
@@ -112,13 +81,38 @@
 		else {
             [[[document contents] foreground] set];
 		}
-		[[NSBezierPath bezierPathWithRect:NSMakeRect(2, 2, 26, 16)] fill];
+		[[NSBezierPath bezierPathWithRect:fg] fill];
 	}
 	
-    NSImage *image = [NSImage imageNamed:@"swap"];
+    NSImage *image = [NSImage imageNamed:@"swapTemplate"];
     [image setFlipped:YES];
 	// Draw the images
-    [image drawAtPoint:NSMakePoint(18,21) fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:1.0];
+    [image drawInRect:swap fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:1.0];
+}
+
+- (void)drawColorWell:(NSRect)rect
+{
+    [[NSColor darkGrayColor] set];
+    [[NSBezierPath bezierPathWithRect:NSInsetRect(rect,-2,-2)] fill];
+    [[NSColor lightGrayColor] set];
+    [[NSBezierPath bezierPathWithRect:NSInsetRect(rect,-1,-1)] fill];
+    
+    // draw the triangles
+    [[NSColor blackColor] set];
+    NSBezierPath *tempPath = [NSBezierPath bezierPath];
+    [tempPath moveToPoint:rect.origin];
+    [tempPath lineToPoint:NSMakePoint(NSMaxX(rect),rect.origin.y)];
+    [tempPath lineToPoint:NSMakePoint(rect.origin.x,NSMaxY(rect))];
+    [tempPath lineToPoint:rect.origin];
+    [tempPath fill];
+    // Black
+    [[NSColor whiteColor] set];
+    tempPath = [NSBezierPath bezierPath];
+    [tempPath moveToPoint:NSMakePoint(rect.origin.x,NSMaxY(rect))];
+    [tempPath lineToPoint:NSMakePoint(NSMaxX(rect),NSMaxY(rect))];
+    [tempPath lineToPoint:NSMakePoint(NSMaxX(rect),rect.origin.y)];
+    [tempPath lineToPoint:NSMakePoint(rect.origin.x,NSMaxY(rect))];
+    [tempPath fill];
 }
 
 - (IBAction)activateForegroundColor:(id)sender
@@ -167,20 +161,24 @@
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
+    FG_RECT
+    BG_RECT
+    SWAP_RECT
+
 	NSPoint clickPoint = [self convertPoint:[theEvent locationInWindow] fromView:NULL];
 	
 	// Don't do anything if there isn't a document to do it on
 	if (!document)
 		return;
 	
-	if (NSMouseInRect(clickPoint, NSMakeRect(2, 2, 26, 16), [self isFlipped])) {
+	if (NSMouseInRect(clickPoint, fg, [self isFlipped])) {
 		[self activateForegroundColor: self];
 	
 	}
-	else if (NSMouseInRect(clickPoint, NSMakeRect(26, 8, 26, 16), [self isFlipped])) {
+	else if (NSMouseInRect(clickPoint, bg, [self isFlipped])) {
 		[self activateBackgroundColor: self];
 	}
-	else if (NSMouseInRect(clickPoint, NSMakeRect(9, 27 - 8, 18, 10), [self isFlipped])) {
+	else if (NSMouseInRect(clickPoint, swap, [self isFlipped])) {
 		
 		// Highlight the swap button
 		mouseDownOnSwap = YES;
@@ -191,6 +189,7 @@
 
 - (void)mouseUp:(NSEvent *)theEvent
 {
+    SWAP_RECT
 	NSPoint clickPoint = [self convertPoint:[theEvent locationInWindow] fromView:NULL];
 	
 	if (mouseDownOnSwap) {
@@ -200,7 +199,7 @@
 		[self setNeedsDisplay:YES];
 		
 		// If the button was released in the same rectangle swap the colours
-		if (NSMouseInRect(clickPoint, NSMakeRect(9, 27 - 8, 18, 10), [self isFlipped]))
+		if (NSMouseInRect(clickPoint, swap, [self isFlipped]))
 			[self swapColors: self];
 	}
 }

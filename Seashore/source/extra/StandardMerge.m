@@ -17,8 +17,9 @@ void specialMerge(int spp, unsigned char *destPtr, int destLoc, unsigned char *s
 	else
 		alpha = srcPtr[srcLoc + alphaPos];
 	
-	if (alpha + destPtr[destLoc + alphaPos] < 255)
-		multi = (unsigned char)(((float)alpha / ((float)alpha + (float)destPtr[destLoc + alphaPos])) * 255.0);
+    int dstAlpha = destPtr[destLoc + alphaPos];
+	if (alpha + dstAlpha < 255 && alpha +dstAlpha > 0)
+		multi = (unsigned char)(((float)alpha / ((float)alpha + (float)dstAlpha)) * 255.0);
 	else
 		multi = alpha;
 	for (k = 0; k < spp - 1; k++) {

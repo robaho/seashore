@@ -183,7 +183,6 @@
 
 - (void)mouseUpAt:(IntPoint)where withEvent:(NSEvent *)event
 {
-	// Apply the changes
 	[(SeaHelpers *)[document helpers] applyOverlay];
 }
 

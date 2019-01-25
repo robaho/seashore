@@ -36,7 +36,7 @@ typedef struct {
 	BOOL insertOverlay;
 	BOOL useSelection;
 	int overlayOpacity;
-	BOOL overlayBehaviour;
+	int overlayBehaviour;
 	int spp;
 } CompositorOptions;
 

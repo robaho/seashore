@@ -41,6 +41,8 @@
 	IBOutlet id cloneOptions;
 	IBOutlet id cropOptions;
 	IBOutlet id effectOptions;
+    
+    IBOutlet id horizontalLine;
 	
 	// The toolbox utility object
 	__weak IBOutlet id toolboxUtility;

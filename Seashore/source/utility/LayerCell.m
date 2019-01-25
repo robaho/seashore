@@ -81,7 +81,7 @@
         NSShadow *shadow = [[NSShadow alloc] init];
 		[shadow setShadowOffset: NSMakeSize(1, 1)];
 		[shadow setShadowBlurRadius:2];
-		[shadow setShadowColor:[NSColor blackColor]];
+		[shadow setShadowColor:[NSColor shadowColor]];
 		[shadow set];
 		
 		NSRect	imageFrame;
@@ -100,21 +100,22 @@
             imageFrame.origin.y += ceil((cellFrame.size.height - imageFrame.size.height) / 2);
 
         [[NSImage imageNamed:@"checkerboard"] drawInRect:NSMakeRect(imageFrame.origin.x, imageFrame.origin.y - imageSize.height, imageSize.width, imageSize.height) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction: 1.0];
-
+        
+        [NSGraphicsContext restoreGraphicsState];
+        
+        [image drawInRect:NSMakeRect(imageFrame.origin.x, imageFrame.origin.y - imageSize.height, imageSize.width, imageSize.height) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction: 1.0];
+        
 		cellFrame.size.height = 18;
 		cellFrame.origin.y += 10;
 		NSDictionary *attrs;
 		if(selected){
-			attrs = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont boldSystemFontOfSize:12] , NSFontAttributeName, [NSColor whiteColor], NSForegroundColorAttributeName, nil];
+			attrs = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont boldSystemFontOfSize:12] , NSFontAttributeName, [NSColor selectedControlTextColor], NSForegroundColorAttributeName, nil];
 			[[self stringValue] drawInRect:cellFrame withAttributes:attrs];
-			[NSGraphicsContext restoreGraphicsState];
 		}else{
-			[NSGraphicsContext restoreGraphicsState];
-			attrs = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont systemFontOfSize:12] , NSFontAttributeName, [NSColor blackColor], NSForegroundColorAttributeName, nil];
+			attrs = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont systemFontOfSize:12] , NSFontAttributeName, [NSColor controlTextColor], NSForegroundColorAttributeName, nil];
 			[[self stringValue] drawInRect:cellFrame withAttributes:attrs];
 		}
 		
-        [image compositeToPoint:imageFrame.origin operation:NSCompositeSourceOver];
 	}else{
 		[super drawWithFrame:cellFrame inView:controlView];
 	}

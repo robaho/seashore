@@ -36,7 +36,7 @@ unsigned char *convertImageRep(NSImageRep *imageRep,int spp) {
 
 unsigned char *stripAlpha(unsigned char *srcData,int width,int height,int spp) {
     int i,j;
-    bool hasAlpha;
+    bool hasAlpha = false;
     unsigned char *destData;
     
     // Determine whether or not an alpha channel would be redundant

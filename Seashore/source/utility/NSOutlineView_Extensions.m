@@ -91,33 +91,41 @@
 
 -(void)highlightSelectionInClipRect:(NSRect)theClipRect
 {
-	[[NSBezierPath bezierPathWithRect:theClipRect] fill];
-	NSIndexSet *indecies = [self selectedRowIndexes];
-	int i;
-	for(i = 0; i < [self numberOfRows]; i++){
-		if([indecies containsIndex: i]){
-			[[NSImage imageNamed:((isFirst && [[self window] isMainWindow]) ?@"sel-gradient" :@"bg-gradient")] drawInRect:[self rectOfRow: i] fromRect:NSZeroRect operation: NSCompositeSourceOver fraction: 1.0];	
-		}else{
-			[[NSColor colorWithCalibratedRed:228.0/255 green:234.0/255 blue:241.0/255 alpha:1.0] set];
-			[[NSBezierPath bezierPathWithRect: [self rectOfRow: i]] fill];
-		}
-	}
-}
+    NSArray<NSColor*> *bgColors = [NSColor controlAlternatingRowBackgroundColors];
+    NSColor *select = [NSColor selectedControlColor];
 
--(id)_highlightColorForCell:(NSCell *)cell
-{
-    return nil;
+    [[NSBezierPath bezierPathWithRect:theClipRect] fill];
+    NSIndexSet *indecies = [self selectedRowIndexes];
+    int i;
+    
+    double pattern[] = { 3, 3};
+    for(i = 0; i < [self numberOfRows]; i++){
+        NSRect rect = [self rectOfRow:i];
+        NSColor *bg = bgColors[i%2];
+        if([indecies containsIndex: i]){
+            bool isMainWindow = [[self window] isMainWindow];
+            if(isMainWindow)
+                [select set];
+            else
+                [[select shadowWithLevel:.25] set];
+            [[NSBezierPath bezierPathWithRect: rect] fill];
+        }else{
+            [bg set];
+            [[NSBezierPath bezierPathWithRect: rect] fill];
+        }
+        [[NSColor gridColor] set];
+        NSBezierPath *path = [[NSBezierPath alloc] init];
+        [path moveToPoint:NSMakePoint(rect.origin.x,rect.origin.y+rect.size.height)];
+        [path lineToPoint:NSMakePoint(rect.origin.x+rect.size.width,rect.origin.y+rect.size.height)];
+        [path setLineWidth:2.0];
+        [path setLineDash:pattern count:2 phase:0];
+        [path stroke];
+    }
 }
 
 -(BOOL)acceptsFirstResponder
 {
-	return NO;
-}
-
--(BOOL)resignFirstResponder
-{
-	isFirst = NO;
-	return [super resignFirstResponder];
+    return NO;
 }
 
 @end

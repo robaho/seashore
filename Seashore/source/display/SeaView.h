@@ -503,6 +503,14 @@ enum {
 - (IBAction)selectInverse:(id)sender;
 
 /*!
+ @method        selectInverse:
+ @discussion    Selects the alpha mask
+ @param        sender
+ Ignored.
+ */
+- (IBAction)selectOpaque:(id)sender;
+
+/*!
 	@method		endLineDrawing
 	@discussion	Ends line drawing (called by some methods in SeaHelpers).
 */
