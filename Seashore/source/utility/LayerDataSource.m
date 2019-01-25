@@ -26,7 +26,7 @@
 
 	[outlineView setIndentationPerLevel: 0.0];
 	[outlineView setOutlineTableColumn:[outlineView tableColumnWithIdentifier:LAYER_THUMB_NAME_COL]];
-
+    
 	draggedNodes = nil;
 }
 
@@ -37,28 +37,19 @@
 // Target / action methods. (most wired up in IB)
 // ================================================================
 
-- (void)outlineViewAction:(id)olv
+- (void)outlineViewSelectionDidChange:(NSNotification *)notification
 {
-    // This message is sent from the outlineView as it's action (see the connection in IB).
     NSArray *selectedNodes = [self selectedNodes];
-	if([selectedNodes count] != 1){
-		NSLog(@"%@ says the Selection has Changed for %@ the selectedNodes are %@",self, olv, selectedNodes);
-	}else{
-		SeaLayer *selectedLayer = [selectedNodes objectAtIndex:0];
-		[[document helpers] activeLayerWillChange];
-		[[document contents] setActiveLayerIndex:[selectedLayer index]];
-		[[document helpers] activeLayerChanged:kLayerSwitched rect:NULL];
-	}
-}
-
-- (void)deleteSelections:(id)sender
-{
-    NSArray *selection = [self selectedNodes];
+    SeaLayer *selectedLayer = [selectedNodes count] > 0 ? [selectedNodes objectAtIndex:0] : NULL;
+    int index = (selectedLayer ? [selectedLayer index] : 0);
     
-    // Tell all of the selected nodes to remove themselves from the model.
-    [selection makeObjectsPerformSelector: @selector(removeFromParent)];
-    [outlineView deselectAll:nil];
-    [outlineView reloadData];
+    if(index==[[document contents] activeLayerIndex]){
+        return;
+    }
+    
+    [[document helpers] activeLayerWillChange];
+    [[document contents] setActiveLayerIndex:index];
+    [[document helpers] activeLayerChanged:kLayerSwitched rect:NULL];
 }
 
 // ================================================================
@@ -278,10 +269,12 @@ NSFileHandle *NewFileHandleForWritingFile(NSString *dirpath, NSString *basename,
 - (BOOL)outlineView:(NSOutlineView *)ov acceptDrop:(id <NSDraggingInfo>)info item:(id)item childIndex:(int)childIndex
 {
 	if(draggedNodes){
+        SeaLayer *current = [[document contents] activeLayer];
 		SeaLayer *layer = [draggedNodes objectAtIndex:0];
 		[[document contents] moveLayer: layer toIndex:childIndex];
 		[self update];
 		draggedNodes = nil;
+        [ov selectItems:[NSArray arrayWithObject:current] byExtendingSelection:NO];
 		return YES;
 	}else{
 		return NO;
@@ -295,11 +288,11 @@ NSFileHandle *NewFileHandleForWritingFile(NSString *dirpath, NSString *basename,
 
 - (void)update
 {
-	[outlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:[[document contents] activeLayerIndex]] byExtendingSelection:NO];
+    if(reloading)
+        return;
+    reloading=true;
 	[outlineView reloadData];
+    reloading=false;
 }
 
-- (IBAction)visibilityChanged:(id)sender {
-    NSLog(@"got it");
-}
 @end

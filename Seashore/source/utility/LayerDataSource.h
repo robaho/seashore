@@ -19,16 +19,10 @@
 	
 	// A reference back to the outline view
     IBOutlet id outlineView;
+    
+    BOOL reloading;
 	
 }
-
-/*!
-	@method		outlineViewAction:
-	@discussion	Called when outline view is chicked on.
-	@param		sender
-				Ignored.
-*/
-- (IBAction)outlineViewAction:(id)sender;
 
 /*!
 	@method		draggedNodes

@@ -64,30 +64,20 @@
 }
 
 - (void)selectItems:(NSArray *)items byExtendingSelection:(BOOL)extend {
-    int i, totalCount = [items count];
-    if (extend==NO) [self deselectAll:nil];
-    for (i = 0; i < totalCount; i++) {
-        int row = [self rowForItem:[items objectAtIndex:i]];
-        if(row>=0) [self selectRow: row byExtendingSelection:YES];
+    NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
+    
+    for (int i = 0; i < [items count]; i++) {
+        int row = (int)[self rowForItem:[items objectAtIndex:i]];
+        if(row>=0) {
+            [indexSet addIndex:row];
+        }
     }
+    [self selectRowIndexes:indexSet byExtendingSelection:extend];
 }
 
 @end
 
 @implementation SeaOutlineView
-
-/* This NSOutlineView subclass is necessary only if you want to delete items by dragging them to the trash.  In order to support drags to the trash, you need to implement draggedImage:endedAt:operation: and handle the NSDragOperationDelete operation.  For any other operation, pass the message to the superclass */
-- (void)draggedImage:(NSImage *)image endedAt:(NSPoint)screenPoint operation:(NSDragOperation)operation {
-    if (operation == NSDragOperationDelete) {
-        // Tell all of the dragged nodes to remove themselves from the model.
-        NSArray *selection = [(LayerDataSource *)[self dataSource] draggedNodes];
-        [selection makeObjectsPerformSelector: @selector(removeFromParent)];
-        [self deselectAll:nil];
-        [self reloadData];
-    } else {
-        [super draggedImage:image endedAt:screenPoint operation:operation];
-    }
-}
 
 -(void)highlightSelectionInClipRect:(NSRect)theClipRect
 {
@@ -126,6 +116,11 @@
 -(BOOL)acceptsFirstResponder
 {
     return NO;
+}
+
+-(void)willOpenMenu:(NSMenu *)menu withEvent:(NSEvent *)event
+{
+    [self selectRowIndexes:[NSIndexSet indexSetWithIndex:[self clickedRow]] byExtendingSelection:NO];
 }
 
 @end
