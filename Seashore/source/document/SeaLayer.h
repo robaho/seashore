@@ -1,9 +1,6 @@
 #import "Globals.h"
 #import "SeaDocument.h"
 
-
-@class SeaLayerUndo;
-
 /*!
 	@class		SeaLayer
 	@abstract	Represents a layer of the document.
@@ -13,13 +10,14 @@
 				<b>License:</b> GNU General Public License<br>
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
+
 @interface SeaLayer : NSObject {
 	
 	// The document that contains this layer
 	__weak SeaDocument *document;
 	
 	// The object responsible for changes to our bitmap
-	SeaLayerUndo *seaLayerUndo;
+	id seaLayerUndo;
 	
 	// The layer's height, width and mode
 	int height, width, mode;
@@ -61,18 +59,11 @@
 	unsigned char *thumbData;
 	int thumbWidth, thumbHeight;
 	
-	// Stores whether or not the data is compressed
-	BOOL compressed;
-	unsigned int compressedLen;
-	
 	// Remembers whether or not the layer has an alpha channel
 	BOOL hasAlpha;
 	
 	// The unique ID for this layer - sometimes used
 	int uniqueLayerID;
-
-	// A path to the file we use for undoing
-	NSString *undoFilePath;
 }
 
 // CREATION METHODS
@@ -160,26 +151,6 @@
 	@discussion	Frees memory occupied by an instance of this class.
 */
 - (void)dealloc;
-
-// COMPRESSION METHODS
-
-/*!
-	@method		compress
-	@discussion	Reduces the memory occupied by the layer by writing its data to
-				disk. This data can then be recovered by sending a decompress
-				message to the object. While the layer is compressed it is
-				largely dysfunctional. For this reason layers are typically only
-				compressed upon deletion and decompressed upon recovery (by an
-				undo operation).
-*/
-- (void)compress;
-
-/*!
-	@method		decompress
-	@discussion	Decompresses the layer if it has previously been compressed. See
-				the compress method for more information.
-*/
-- (void)decompress;
 
 // PROPERTY METHODS
 
@@ -533,7 +504,5 @@
 				The type to which the layer's bitmap is being converted.
 */
 - (void)convertFromType:(int)srcType to:(int)destType;
-
--(NSString*)undoFilePath;
 
 @end

@@ -24,7 +24,7 @@
 	opacity = 255; xoff = yoff = 0;
 	spp = 4; visible = YES; data = NULL; hasAlpha = YES;
 	lostprops = NULL; lostprops_len = 0;
-	compressed = NO; document = doc;
+	document = doc;
 	thumbnail = NULL; thumbData = NULL;
 	floating = NO;
 	seaLayerUndo = [[SeaLayerUndo alloc] initWithDocument:doc forLayer:self];
@@ -34,7 +34,6 @@
 	else
 		name = [[NSString alloc] initWithFormat:LOCALSTR(@"layer title", @"Layer %d"), uniqueLayerID];
 	oldNames = [[NSArray alloc] init];
-    undoFilePath = [NSHomeDirectory() stringByAppendingFormat:@"Library/Caches/Seashore/seaundo-d%d-l%d",[document uniqueDocID], [self uniqueLayerID]];
 	
 	return self;
 }
@@ -133,7 +132,6 @@
 	spp = [[document contents] spp];
 	visible = YES;
 	hasAlpha = YES;
-	compressed = NO;
 	thumbnail = NULL; thumbData = NULL;
 	floating = YES;
 	
@@ -141,91 +139,14 @@
 	seaLayerUndo = [[SeaLayerUndo alloc] initWithDocument:doc forLayer:self];
 	uniqueLayerID = [(SeaDocument *)doc uniqueFloatingLayerID];
 	name = NULL; oldNames = NULL;
-    undoFilePath = [NSHomeDirectory() stringByAppendingFormat:@"Library/Caches/Seashore/seaundo-d%d-l%d",[document uniqueDocID], [self uniqueLayerID]];
 	
 	return self;
 }
 
 - (void)dealloc
 {	
-	struct stat sb;
-	
     if (data) free(data);
 	if (thumbData) free(thumbData);
-	if (data == NULL) {
-		if (stat([undoFilePath fileSystemRepresentation], &sb) == 0) {
-			unlink([undoFilePath fileSystemRepresentation]);
-		}
-	}
-}
-
-- (void)compress
-{
-	FILE *file;
-	
-	// If the image data is not already compressed
-	if (data && ![seaLayerUndo useDiskCache]) {
-		
-		// Do a check of the disk space
-		if ([seaLayerUndo checkDiskSpace]) {
-			
-			// Open a file for writing the memory cache
-			file = fopen([undoFilePath fileSystemRepresentation], "w");
-			
-			// Check we have a valid file handle
-			if (file != NULL) {
-				
-				// Write the image data to disk
-				fwrite(data, sizeof(char), width * height * spp, file);
-				
-				// Close the memory cache
-				fclose(file);
-				
-				// Free the memory currently occupied the document's data
-				free(data);
-				data = NULL;
-				
-            } else {
-                NSLog(@"unable to open disk layer cache %s",sys_errlist[errno]);
-            }
-
-			// Get rid of the thumbnail
-			if (thumbData) free(thumbData);
-			thumbnail = NULL; thumbData = NULL;
-
-		}
-		
-	}
-}
-
-- (void)decompress
-{
-	FILE *file;
-
-	// If the image data is not already decompressed
-	if (data == NULL) {
-		
-		// Create space for the decompressed image data
-		data = malloc(make_128(width * height * spp));
-		
-		// Open a file for writing the image data
-		file = fopen([undoFilePath fileSystemRepresentation], "r");
-		
-		// Check we have a valid file handle
-		if (file != NULL) {
-			
-			// Write the image data to disk
-			fread(data, sizeof(char), width * height * spp, file);
-			
-			// Close the file
-			fclose(file);
-			
-			// Delete the file (we have its contents in memory now)
-			unlink([undoFilePath fileSystemRepresentation]);
-			
-		}
-	
-	}
 }
 
 - (id)document
@@ -592,7 +513,7 @@
 	return floating;
 }
 
-- (SeaLayerUndo*)seaLayerUndo
+- (id)seaLayerUndo
 {
 	return seaLayerUndo;
 }
@@ -829,11 +750,6 @@
     free(data);
     
     data = newdata;
-}
-
-- (NSString*)undoFilePath
-{
-    return undoFilePath;
 }
 
 @end

@@ -1542,7 +1542,6 @@ This General Public License does not permit incorporating your program into prop
                 <outlet property="selectionColorMenu" destination="3690" id="3708"/>
                 <outlet property="smartInterpolationCheckbox" destination="2714" id="2772"/>
                 <outlet property="transparentBackgroundCheckbox" destination="2994" id="3019"/>
-                <outlet property="useDiskCacheCheckbox" destination="QhE-Rm-qR4" id="Shr-93-49I"/>
                 <outlet property="widthValue" destination="2983" id="3016"/>
                 <outlet property="windowBackWell" destination="3759" id="3761"/>
             </connections>
@@ -1879,19 +1878,6 @@ DQ
                     <connections>
                         <action selector="setIgnoreFirstTouch:" target="507" id="2809"/>
                     </connections>
-                </button>
-                <button imageHugsTitle="YES" id="QhE-Rm-qR4" userLabel="Use Disk Cache">
-                    <rect key="frame" x="139" y="119" width="265" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="I9i-oR-nqO" userLabel="Use Disk Cache">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <string key="title">Use "Legacy" Disk Cache for Undo
-(Change Requires Restart)</string>
-                        <font key="font" metaFont="smallSystem"/>
-                        <connections>
-                            <action selector="setUseDiskCache:" target="507" id="aML-IO-Efi"/>
-                        </connections>
-                    </buttonCell>
                 </button>
             </subviews>
             <point key="canvasLocation" x="34" y="726"/>

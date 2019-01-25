@@ -125,17 +125,6 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 			runCount = 1;
 	}
 
-	memoryCacheSize = 4096;
-	if ([gUserDefaults objectForKey:@"memoryCacheSize"])
-		memoryCacheSize = [gUserDefaults integerForKey:@"memoryCacheSize"];
-	if (memoryCacheSize < 128 || memoryCacheSize > 32768)
-		memoryCacheSize = 4096;
-    
-    useDiskCache=true;
-    if ([gUserDefaults objectForKey:@"useDiskCache"])
-        useDiskCache = [gUserDefaults boolForKey:@"useDiskCache"];
-    useDiskCacheAtStart = useDiskCache;
-
 	// Get the use of the checkerboard pattern
 	if ([gUserDefaults objectForKey:@"useCheckerboard"])
 		useCheckerboard = [gUserDefaults boolForKey:@"useCheckerboard"];
@@ -315,8 +304,6 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	[gUserDefaults setObject:(guides ? @"YES" : @"NO") forKey:@"guides"];
 	[gUserDefaults setObject:(layerBounds ? @"YES" : @"NO") forKey:@"boundaries"];
 	[gUserDefaults setObject:(rulers ? @"YES" : @"NO") forKey:@"rulers"];
-	[gUserDefaults setInteger:memoryCacheSize forKey:@"memoryCacheSize"];
-    [gUserDefaults setBool:useDiskCache forKey:@"useDiskCache"];
 	[gUserDefaults setObject:(fewerWarnings ? @"YES" : @"NO") forKey:@"fewerWarnings"];
 	[gUserDefaults setObject:(effectsPanel ? @"YES" : @"NO") forKey:@"effectsPanel"];
 	[gUserDefaults setObject:(smartInterpolation ? @"YES" : @"NO") forKey:@"smartInterpolation"];
@@ -400,7 +387,6 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	[ignoreFirstTouchCheckbox setState:ignoreFirstTouch];
 	[coalescingCheckbox setState:mouseCoalescing];
 	[preciseCursorCheckbox setState:preciseCursor];
-    [useDiskCacheCheckbox setState:useDiskCache];
 	[selectionColorMenu selectItemAtIndex:[selectionColorMenu indexOfItemWithTag:selectionColor + 280]];
 	[guideColorMenu selectItemAtIndex:[guideColorMenu indexOfItemWithTag:guideColor + 290]];
 	[resolutionHandlingMenu selectItemAtIndex:[resolutionHandlingMenu indexOfItemWithTag:resolutionHandling]];
@@ -522,12 +508,6 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	[self apply: self];
 }
 
-- (IBAction)setUseDiskCache:(id)sender
-{
-    useDiskCache = [useDiskCacheCheckbox state];
-    [self apply: self];
-}
-
 -(IBAction)setResolutionHandling:(id)sender
 {
 	NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
@@ -577,21 +557,6 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 - (BOOL)firstRun
 {
 	return firstRun;
-}
-
-- (int)memoryCacheSize
-{
-	return memoryCacheSize;
-}
-
-- (bool)useDiskCache
-{
-    return useDiskCache;
-}
-
-- (bool)useDiskCacheAtStart
-{
-    return useDiskCacheAtStart;
 }
 
 - (int)warningLevel

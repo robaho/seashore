@@ -20,7 +20,7 @@
 				information specifying where those pixels are.
 */
 typedef struct {
-	int fileNumber;
+    IntRect rect;
 	unsigned char *data;
 } UndoRecord;
 
@@ -46,15 +46,6 @@ typedef struct {
 	int records_len;
 	int records_max_len;
 	
-	// The maximum size of the memory cache
-	unsigned long memoryCacheSize;
-    bool useDiskCache;
-	
-	// The big block of memory which we use to record new data
-	char *memory_cache;
-	int memory_cache_pos;
-	int memory_cache_len;
-	
 }
 
 // CREATION METHODS
@@ -76,22 +67,6 @@ typedef struct {
 	@discussion	Frees memory occupied by an instance of this class.
 */
 - (void)dealloc;
-
-/*!
-	@method		checkDiskSpace
-	@discussion	Checks there is sufficient disk space to save the undo data.
-	@result		YES if there is enough space to save the undo data, NO
-				otherwise.
-*/
-- (BOOL)checkDiskSpace;
-
-/*!
- @method        useDiskCache
- @discussion    Returns whether the disk cache should be disabled for increased performane
- @result        YES if the diska cache is disabled
- */
-- (BOOL)useDiskCache;
-
 
 /*!
 	@method		takeSanpshot:automatic:

@@ -800,7 +800,6 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     layers = tempArray;
     
     // Add the layer to the lost layers (compressed)
-    [layer compress];
     deletedLayers = [deletedLayers arrayByAddingObject:layer];
     
     // Change the layer
@@ -830,9 +829,6 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     
     // Inform the helpers we will change the layer
     [[document helpers] activeLayerWillChange];
-    
-    // Decompress the layer we are restoring
-    [layer decompress];
     
     // Create a new array with all the existing layers including the one being restored
     tempArray = [NSArray array];
