@@ -48,6 +48,11 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
     double horizontalSizeInInches = size.width / mmPerInch;
     double verticalSizeInInches = size.height / mmPerInch;
 
+    if (verticalSizeInInches==0 || horizontalSizeInInches==0){
+        *horizontalDPI = 72;
+        *horizontalDPI = 72;
+        return CGDisplayNoErr;
+    }
     // Now we can calculate the actual DPI
     // with information from the displayModeDict
     *horizontalDPI = (float)width / horizontalSizeInInches;
