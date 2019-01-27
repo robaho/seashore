@@ -11,7 +11,6 @@
 
 -(void)awakeFromNib
 {
-    [statusLabel setAllowsDefaultTighteningForTruncation:YES];
     [statusLabel setMaximumNumberOfLines:1];
 }
 
