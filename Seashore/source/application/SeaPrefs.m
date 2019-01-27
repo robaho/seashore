@@ -38,40 +38,22 @@ static int GetIntFromDictionaryForKey(CFDictionaryRef desc, CFStringRef key)
 
 CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 {
-    CGDisplayErr err = kCGErrorFailure;
-    io_connect_t displayPort;
-    CFDictionaryRef displayDict;
-	CFDictionaryRef displayModeDict;
-	CGDirectDisplayID displayID;
-	
-	// Get the main display
-	displayModeDict = CGDisplayCurrentMode(kCGDirectMainDisplay);
-	displayID = kCGDirectMainDisplay;
-	
-    // Grab a connection to IOKit for the requested display
-    displayPort = CGDisplayIOServicePort( displayID );
-    if ( displayPort != MACH_PORT_NULL ) {
-	
-        // Find out what IOKit knows about this display
-        displayDict = IOCreateDisplayInfoDictionary(displayPort, 0);
-        if ( displayDict != NULL ) {
-            const double mmPerInch = 25.4;
-            double horizontalSizeInInches = (double)GetIntFromDictionaryForKey(displayDict, CFSTR(kDisplayHorizontalImageSize)) / mmPerInch;
-            double verticalSizeInInches = (double)GetIntFromDictionaryForKey(displayDict, CFSTR(kDisplayVerticalImageSize)) / mmPerInch;
+    
+    long width = CGDisplayPixelsWide(kCGDirectMainDisplay);
+    long height = CGDisplayPixelsHigh(kCGDirectMainDisplay);
+    
+    CGSize size = CGDisplayScreenSize(kCGDirectMainDisplay);
 
-            // Make sure to release the dictionary we got from IOKit
-            CFRelease(displayDict);
+    const double mmPerInch = 25.4;
+    double horizontalSizeInInches = size.width / mmPerInch;
+    double verticalSizeInInches = size.height / mmPerInch;
 
-            // Now we can calculate the actual DPI
-            // with information from the displayModeDict
-            *horizontalDPI = (float)GetIntFromDictionaryForKey( displayModeDict, kCGDisplayWidth ) / horizontalSizeInInches;
-            *verticalDPI = (float)GetIntFromDictionaryForKey( displayModeDict, kCGDisplayHeight ) / verticalSizeInInches;
-            err = CGDisplayNoErr;
-        }
-		
-    }
+    // Now we can calculate the actual DPI
+    // with information from the displayModeDict
+    *horizontalDPI = (float)width / horizontalSizeInInches;
+    *verticalDPI = (float)height / verticalSizeInInches;
 	
-    return err;
+    return CGDisplayNoErr;
 }
 
 @implementation SeaPrefs 
