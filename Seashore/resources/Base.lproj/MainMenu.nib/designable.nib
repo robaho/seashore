@@ -2325,7 +2325,6 @@ DQ
                     <color key="color" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <action selector="windowBackChanged:" target="507" id="F1q-xI-PRk"/>
-                        <outlet property="seaPrefs" destination="507" id="3783"/>
                     </connections>
                 </colorWell>
                 <box verticalHuggingPriority="750" boxType="separator" id="5934">
@@ -2496,7 +2495,7 @@ DQ
                     </textFieldCell>
                 </textField>
             </subviews>
-            <point key="canvasLocation" x="250" y="-255"/>
+            <point key="canvasLocation" x="83" y="-385"/>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="X1R-xm-eP3"/>
     </objects>
