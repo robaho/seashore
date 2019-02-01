@@ -74,8 +74,6 @@
 - (IBAction)condenseLayer:(id)sender;
 - (IBAction)condenseToSelection:(id)sender;
 - (IBAction)expandLayer:(id)sender;
-- (IBAction)cropImage:(id)sender;
-- (IBAction)maskImage:(id)sender;
 
 // To methods in SeaScale...
 - (IBAction)setScale:(id)sender;

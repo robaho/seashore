@@ -293,16 +293,6 @@
 	[(SeaMargins *)[(SeaOperations *)[gCurrentDocument operations] seaMargins] expandLayer:sender];
 }
 
-- (IBAction)cropImage:(id)sender
-{
-	[(SeaMargins *)[(SeaOperations *)[gCurrentDocument operations] seaMargins] cropImage:sender];
-}
-
-- (IBAction)maskImage:(id)sender
-{
-	[(SeaMargins *)[(SeaOperations *)[gCurrentDocument operations] seaMargins] maskImage:sender];
-}
-
 - (IBAction)setScale:(id)sender
 {
 	[(SeaScale *)[(SeaOperations *)[gCurrentDocument operations] seaScale] run:YES];
