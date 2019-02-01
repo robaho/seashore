@@ -426,8 +426,8 @@ static CGFloat white[4] = {0,3.5,2,.5};
     [tempPath setWindingRule:NSEvenOddWindingRule];
 
     if([[SeaController seaPrefs] layerBounds] && [[SeaController seaPrefs] whiteLayerBounds]){
-        [[[NSColor windowBackgroundColor] colorWithAlphaComponent:0.4] set];
-        [tempPath fill];        
+        [[NSColor colorWithDeviceWhite:1.0 alpha:0.4] set];
+        [tempPath fill];
     }else if(useSelection || [[SeaController seaPrefs] layerBounds]){
         // If we are not drawing the layer bounds we should still draw the full selection boundaries
         [[[SeaController seaPrefs] selectionColor:0.4] set];
