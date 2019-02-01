@@ -11,7 +11,6 @@
 
 -(void)awakeFromNib
 {
-    [statusLabel setMaximumNumberOfLines:1];
 }
 
 -(void)resizeWithOldSuperviewSize:(NSSize)oldSize
