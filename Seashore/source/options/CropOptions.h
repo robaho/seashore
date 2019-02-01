@@ -24,12 +24,21 @@
 - (void)awakeFromNib;
 
 /*!
-	@method		crop:
+	@method		cropImage:
 	@discussion	Crops the image to given rectangle.
 	@param		sender
 				Ignored.
 */
-- (IBAction)crop:(id)sender;
+- (IBAction)cropImage:(id)sender;
+
+
+/*!
+ @method        cropLayer:
+ @discussion    Crops the current layer to given rectangle.
+ @param        sender
+ Ignored.
+ */
+- (IBAction)cropLayer:(id)sender;
 
 /*!
 	@method		shutdown

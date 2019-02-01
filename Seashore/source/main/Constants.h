@@ -241,7 +241,7 @@ enum {
 	@defined	kMaxResolution
 	@discussion	Specifies the maximum resolution of an image.
 */
-#define kMaxResolution 8192
+#define kMaxResolution 8192*2
 
 /*!
 	@defined	kMinResolution

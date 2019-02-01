@@ -295,16 +295,6 @@
 	[self setMarginLeft:[layer xoff] top:[layer yoff] right:width - ([layer xoff] + [(SeaLayer *)layer width]) bottom:height - ([layer yoff] + [(SeaLayer *)layer height]) index:kActiveLayer];
 }
 
-- (IBAction)cropImage:(id)sender
-{
-	NSLog(@"Cropping Not Implemented Yet. \n");
-}
-
-- (IBAction)maskImage:(id)sender
-{
-	NSLog(@"Masking Not Implemented Yet. \n");
-}
-
 - (void)setMarginLeft:(int)left top:(int)top right:(int)right bottom:(int)bottom index:(int)index undoRecord:(MarginUndoRecord *)undoRecord
 {
 	id contents = [document contents], layer = NULL;

@@ -3064,19 +3064,19 @@ Gw
             <point key="canvasLocation" x="-338" y="-697"/>
         </customView>
         <customView id="1891" userLabel="Crop Options">
-            <rect key="frame" x="0.0" y="0.0" width="498" height="21"/>
+            <rect key="frame" x="0.0" y="0.0" width="694" height="21"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <box horizontalHuggingPriority="750" boxType="separator" id="6610">
-                    <rect key="frame" x="272" y="0.0" width="5" height="21"/>
+                    <rect key="frame" x="264" y="-1" width="5" height="21"/>
                     <autoresizingMask key="autoresizingMask"/>
                 </box>
                 <box horizontalHuggingPriority="750" boxType="separator" id="6609">
-                    <rect key="frame" x="163" y="0.0" width="5" height="21"/>
+                    <rect key="frame" x="163" y="-1" width="5" height="21"/>
                     <autoresizingMask key="autoresizingMask"/>
                 </box>
                 <popUpButton verticalHuggingPriority="750" imageHugsTitle="YES" id="2096">
-                    <rect key="frame" x="289" y="3" width="140" height="15"/>
+                    <rect key="frame" x="375" y="2" width="140" height="15"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" title="No modifiers active" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2113" id="16881">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -3090,26 +3090,30 @@ Gw
                         </menu>
                     </popUpButtonCell>
                     <connections>
-                        <action selector="modifierPopupChanged:" target="1878" id="6612"/>
+                        <action selector="cropImage:" target="1878" id="6612"/>
                     </connections>
                 </popUpButton>
                 <button verticalHuggingPriority="750" imageHugsTitle="YES" id="2097">
-                    <rect key="frame" x="177" y="2" width="86" height="16"/>
+                    <rect key="frame" x="173" y="1" width="86" height="16"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="push" title="Crop Image" bezelStyle="rounded" alignment="center" controlSize="mini" borderStyle="border" inset="2" id="16882">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="miniSystem"/>
                     </buttonCell>
                     <connections>
-                        <action selector="crop:" target="1878" id="2582"/>
+                        <action selector="cropImage:" target="1878" id="2582"/>
                     </connections>
                 </button>
                 <box horizontalHuggingPriority="750" boxType="separator" id="12048">
-                    <rect key="frame" x="434" y="0.0" width="5" height="21"/>
+                    <rect key="frame" x="365" y="-1" width="5" height="21"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                </box>
+                <box horizontalHuggingPriority="750" boxType="separator" id="gfB-XH-h5S">
+                    <rect key="frame" x="523" y="-1" width="5" height="21"/>
                     <autoresizingMask key="autoresizingMask"/>
                 </box>
                 <popUpButton verticalHuggingPriority="750" imageHugsTitle="YES" id="2099">
-                    <rect key="frame" x="77" y="3" width="77" height="15"/>
+                    <rect key="frame" x="77" y="2" width="77" height="15"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" title="1 to 1" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2104" id="16883">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -3143,15 +3147,26 @@ Gw
                     </connections>
                 </button>
                 <button horizontalHuggingPriority="750" verticalHuggingPriority="750" id="LGW-e5-6oc">
-                    <rect key="frame" x="444" y="-2" width="25" height="25"/>
+                    <rect key="frame" x="533" y="-3" width="25" height="25"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="help" bezelStyle="helpButton" alignment="center" controlSize="mini" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="D5C-ma-k9K">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="miniSystem"/>
                     </buttonCell>
                 </button>
+                <button verticalHuggingPriority="750" imageHugsTitle="YES" id="Tre-Pl-vY3">
+                    <rect key="frame" x="274" y="1" width="86" height="16"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <buttonCell key="cell" type="push" title="Crop Layer" bezelStyle="rounded" alignment="center" controlSize="mini" borderStyle="border" inset="2" id="Ae9-KW-yby">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="miniSystem"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="cropLayer:" target="1878" id="oE1-dq-ECv"/>
+                    </connections>
+                </button>
             </subviews>
-            <point key="canvasLocation" x="-399" y="152.5"/>
+            <point key="canvasLocation" x="-462" y="69.5"/>
         </customView>
         <customView id="1892" userLabel="Clone Options">
             <rect key="frame" x="0.0" y="0.0" width="663" height="26"/>
