@@ -117,9 +117,8 @@ static CGFloat white[4] = {0,3.5,2,.5};
     [self updateRulers];
     
     // Change the ruler client views
-    [verticalRuler setClientView:[document scrollView]];
-    [horizontalRuler setClientView:[document scrollView]];
-    [document scrollView];
+    [verticalRuler setClientView:self];
+    [horizontalRuler setClientView:self];
     
     // Add the markers
     vMarker = [[NSRulerMarker alloc]initWithRulerView:verticalRuler markerLocation:0 image:[NSImage imageNamed:@"vMarker"] imageOrigin:NSMakePoint(4.0,4.0)];
@@ -147,11 +146,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
 
 - (void)dealloc
 {
-    // the following is a work-around for issue #30 which appears to be OS version dependent
-    [verticalRuler setClientView:nil];
-    [horizontalRuler setClientView:nil];
 }
-
 
 - (IBAction)changeSpecialFont:(id)sender
 {
