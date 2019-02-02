@@ -26,7 +26,7 @@ IntSize getDocumentSize(char *path)
 			if (tagID == 1 || tagID == 2) {
 				
 				ivalue = -1;
-				size = pos - value;
+				size = (int)(pos - value);
 				if (size > 127) size = 127;
 				if (strncmp(pos, "pt", 2) == 0 || pos[0] == '"') {
 					strncpy(dstr, value, size);
@@ -180,8 +180,8 @@ IntSize getDocumentSize(char *path)
 	}
 	
 	// Determine the height and width of the image
-	height = [imageRep pixelsHigh];
-	width = [imageRep pixelsWide];
+	height = (int)[imageRep pixelsHigh];
+	width = (int)[imageRep pixelsWide];
 	
 	// Determine the resolution of the image
 	xres = yres = 72; 
