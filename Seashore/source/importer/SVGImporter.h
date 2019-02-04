@@ -1,4 +1,5 @@
 #import "Globals.h"
+#import "SeaLayer.h"
 
 /*!
 	@class		SVGImporter
@@ -41,6 +42,14 @@
 	@result		YES if the operation was successful, NO otherwise.
 */
 - (BOOL)addToDocument:(id)doc contentsOfFile:(NSString *)path;
+
+
+/*!
+ @method     loadSVGLayer
+ @discussion shared method to load a SeaLayer from a SVG file. shows dialog to control scaling.
+ @result NULL if the SVG file could not be loaded
+ */
+- (SeaLayer*)loadSVGLayer:(id)doc path:(NSString*)path;
 
 /*!
 	@method		endPanel:

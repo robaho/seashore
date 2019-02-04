@@ -11,7 +11,15 @@
 
 #include <PocketSVG/PocketSVG.h>
 
-extern id layerFromSVG(id doc,SVGLayer *svg,IntSize size);
+@interface FlippedView : NSView
+@end
+@implementation FlippedView
+
+- (BOOL)isFlipped
+{
+    return YES;
+}
+@end
 
 @implementation SVGImporter
 
@@ -20,24 +28,12 @@ extern id layerFromSVG(id doc,SVGLayer *svg,IntSize size);
 	// Load nib file
 	[NSBundle loadNibNamed:@"SVGContent" owner:self];
 
-    SVGLayer *svg = [[SVGLayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path]];
-
-	// Run the scaling panel
-	[scalePanel center];
-    trueSize = IntMakeSize(svg.preferredFrameSize.width,svg.preferredFrameSize.height);
-	size.width = trueSize.width; size.height = trueSize.height;
-	[sizeLabel setStringValue:[NSString stringWithFormat:@"%d x %d", size.width, size.height]];
-	[scaleSlider setIntValue:2];
-	[NSApp runModalForWindow:scalePanel];
-	[scalePanel orderOut:self];
+    SeaLayer *layer = [self loadSVGLayer:doc path:path];
+    if(layer==NULL)
+        return NO;
     
-    id layer = layerFromSVG(doc,svg,size);
-	if (layer == NULL) {
-		return NO;
-	}
-	
 	// Rename the layer
-	[(SeaLayer *)layer setName:[[NSString alloc] initWithString:[[path lastPathComponent] stringByDeletingPathExtension]]];
+	[layer setName:[[NSString alloc] initWithString:[[path lastPathComponent] stringByDeletingPathExtension]]];
 	
 	// Add the layer
 	[[doc contents] addLayerObject:layer];
@@ -49,6 +45,46 @@ extern id layerFromSVG(id doc,SVGLayer *svg,IntSize size);
 	return YES;
 }
 
+- (SeaLayer*)loadSVGLayer:(id)doc path:(NSString*)path
+{
+    [NSBundle loadNibNamed:@"SVGContent" owner:self];
+    
+    SVGLayer *svg = [[SVGLayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path]];
+    
+    // Run the scaling panel
+    [scalePanel center];
+    
+    trueSize = IntMakeSize(svg.preferredFrameSize.width,svg.preferredFrameSize.height);
+    size.width = trueSize.width; size.height = trueSize.height;
+    [sizeLabel setStringValue:[NSString stringWithFormat:@"%d x %d", size.width, size.height]];
+    [scaleSlider setIntValue:2];
+    [NSApp runModalForWindow:scalePanel];
+    [scalePanel orderOut:self];
+    
+    int width = size.width;
+    int height = size.height;
+    
+    NSBitmapImageRep *imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:NULL pixelsWide:width pixelsHigh:height
+                                                                      bitsPerSample:8 samplesPerPixel:4 hasAlpha:YES isPlanar:NO
+                                                                     colorSpaceName:MyRGBSpace bytesPerRow:width*4
+                                                                       bitsPerPixel:8*4];
+    
+    
+    NSView *view = [[FlippedView alloc]init];
+    view.layer = svg;
+    [svg setFrame:NSMakeRect(0,0,size.width,size.height)];
+    [view setFrame:[svg frame]];
+    [svg setNeedsDisplay];
+    [svg setGeometryFlipped:TRUE];
+    
+    [NSGraphicsContext saveGraphicsState];
+    NSGraphicsContext *ctx = [NSGraphicsContext graphicsContextWithBitmapImageRep:imageRep];
+    [NSGraphicsContext setCurrentContext:ctx];
+    [view displayRectIgnoringOpacity:[svg frame] inContext:ctx];
+    [NSGraphicsContext restoreGraphicsState];
+    
+    return [[CocoaLayer alloc] initWithImageRep:imageRep document:doc spp:4];
+}
 
 - (IBAction)endPanel:(id)sender
 {

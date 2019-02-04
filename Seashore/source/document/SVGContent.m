@@ -3,19 +3,8 @@
 #import "SeaDocumentController.h"
 #import "SeaWarning.h"
 #import "CocoaLayer.h"
-#import <PocketSVG/PocketSVG.h>
-
-@interface FlippedView : NSView
-@end
-@implementation FlippedView
-
-extern id layerFromSVG(id doc, SVGLayer *svg,IntSize size);
-
-- (BOOL)isFlipped
-{
-    return YES;
-}
-@end
+#import "SVGImporter.h"
+#import "SeaLayer.h"
 
 @implementation SVGContent
 
@@ -29,29 +18,16 @@ extern id layerFromSVG(id doc, SVGLayer *svg,IntSize size);
 	// Initialize superclass first
 	if (![super initWithDocument:doc])
 		return NULL;
-		
-	// Load nib file
-	[NSBundle loadNibNamed:@"SVGContent" owner:self];
-
-    SVGLayer *svg = [[SVGLayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path]];
     
-	// Run the scaling panel
-	[scalePanel center];
-    
-    trueSize = IntMakeSize(svg.preferredFrameSize.width,svg.preferredFrameSize.height);
-	size.width = trueSize.width; size.height = trueSize.height;
-	[sizeLabel setStringValue:[NSString stringWithFormat:@"%d x %d", size.width, size.height]];
-	[scaleSlider setIntValue:2];
-	[NSApp runModalForWindow:scalePanel];
-	[scalePanel orderOut:self];
-    
-    id layer = layerFromSVG(doc, svg, size);
+    SeaLayer *layer = [[[SVGImporter alloc] init] loadSVGLayer:doc path:path];
     if(layer==NULL)
         return NULL;
+		
+	// Load nib file
 	
 	// Determine the height and width of the image
-    height = size.height;
-    width = size.width;
+    height = layer.height;
+    width = layer.width;
     type = XCF_RGB_IMAGE;
 	
 	// Determine the resolution of the image
@@ -121,28 +97,3 @@ extern id layerFromSVG(id doc, SVGLayer *svg,IntSize size);
 
 @end
 
-id layerFromSVG(id doc, SVGLayer *svg,IntSize size) {
-    int width = size.width;
-    int height = size.height;
-    
-    NSBitmapImageRep *imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:NULL pixelsWide:width pixelsHigh:height
-                                                                      bitsPerSample:8 samplesPerPixel:4 hasAlpha:YES isPlanar:NO
-                                                                     colorSpaceName:MyRGBSpace bytesPerRow:width*4
-                                                                       bitsPerPixel:8*4];
-    
-    
-    NSView *view = [[FlippedView alloc]init];
-    view.layer = svg;
-    [svg setFrame:NSMakeRect(0,0,size.width,size.height)];
-    [view setFrame:[svg frame]];
-    [svg setNeedsDisplay];
-    [svg setGeometryFlipped:TRUE];
-    
-    [NSGraphicsContext saveGraphicsState];
-    NSGraphicsContext *ctx = [NSGraphicsContext graphicsContextWithBitmapImageRep:imageRep];
-    [NSGraphicsContext setCurrentContext:ctx];
-    [view displayRectIgnoringOpacity:[svg frame] inContext:ctx];
-    [NSGraphicsContext restoreGraphicsState];
-    
-    return [[CocoaLayer alloc] initWithImageRep:imageRep document:doc spp:4];
-}
