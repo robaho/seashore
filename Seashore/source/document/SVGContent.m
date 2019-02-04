@@ -1,100 +1,21 @@
 #import "SVGContent.h"
-#import "SVGLayer.h"
 #import "SeaController.h"
 #import "SeaDocumentController.h"
 #import "SeaWarning.h"
+#import "CocoaLayer.h"
+#import <PocketSVG/PocketSVG.h>
 
-IntSize getDocumentSize(char *path)
+@interface FlippedView : NSView
+@end
+@implementation FlippedView
+
+extern id layerFromSVG(id doc, SVGLayer *svg,IntSize size);
+
+- (BOOL)isFlipped
 {
-	FILE *file;
-	char header[2056], dstr[128];
-	IntSize result = IntMakeSize(0, 0);
-	int ivalue;
-	char *pos, *value = NULL;
-	BOOL quote;
-	int tagID, size;
-		
-	file = fopen(path, "rb");
-	fread(header, sizeof(char), 2048, file);
-	pos = header;
-	quote = NO;
-	tagID = 0;
-	
-	while (pos - header < 2048 && (result.width == 0 || result.height == 0)) {
-
-		if (quote) {
-			if (tagID == 1 || tagID == 2) {
-				
-				ivalue = -1;
-				size = (int)(pos - value);
-				if (size > 127) size = 127;
-				if (strncmp(pos, "pt", 2) == 0 || pos[0] == '"') {
-					strncpy(dstr, value, size);
-					dstr[size] = 0x00;
-					ivalue = (int)strtod(dstr, NULL) * 1.25;
-				}
-				else if (strncmp(pos, "pc", 2) == 0) {
-					strncpy(dstr, value, size);
-					dstr[size] = 0x00;
-					ivalue = (int)strtod(dstr, NULL) * 15.0;
-				}
-				else if (strncmp(pos, "mm", 2) == 0) {
-					strncpy(dstr, value, size);
-					dstr[size] = 0x00;
-					ivalue = (int)strtod(dstr, NULL) * 3.543307;
-				}
-				else if (strncmp(pos, "cm", 2) == 0) {
-					strncpy(dstr, value, size);
-					dstr[size] = 0x00;
-					ivalue = (int)strtod(dstr, NULL) * 35.43307;
-				}
-				else if (strncmp(pos, "in", 2) == 0) {
-					strncpy(dstr, value, size);
-					dstr[size] = 0x00;
-					ivalue = (int)strtod(dstr, NULL) * 90.0;
-				}
-				if (ivalue != -1) {
-					if (tagID == 1)
-						result.width = ivalue;
-					else
-						result.height = ivalue;
-					tagID = 0;
-				}
-			
-			}				
-		}
-			
-	
-		if (pos[0] == '"') {
-			
-			if (quote) {
-				quote = NO;
-				tagID = 0;
-			}
-			else {
-				quote = YES;
-				value = pos + 1;
-			}
-		
-		}
-		
-		if (!quote) {
-			if (strncmp(pos, "width", 5) == 0) {
-				tagID = 1;
-			}
-			if (strncmp(pos, "height", 6) == 0) {
-				tagID = 2;
-			}
-		}
-		
-		pos++;
-	
-	}
-	
-	fclose(file);
-	
-	return result;
+    return YES;
 }
+@end
 
 @implementation SVGContent
 
@@ -105,105 +26,42 @@ IntSize getDocumentSize(char *path)
 
 - (id)initWithDocument:(id)doc contentsOfFile:(NSString *)path
 {
-	NSString *importerPath;
-    NSBitmapImageRep *imageRep;
-    id layer;
-	NSImage *image;
-	BOOL test;
-	NSString *path_in, *path_out, *width_arg, *height_arg;
-	NSArray *args;
-	NSTask *task;
-	
 	// Initialize superclass first
 	if (![super initWithDocument:doc])
 		return NULL;
 		
 	// Load nib file
 	[NSBundle loadNibNamed:@"SVGContent" owner:self];
-	
+
+    SVGLayer *svg = [[SVGLayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path]];
+    
 	// Run the scaling panel
 	[scalePanel center];
-	trueSize = getDocumentSize((char *)[path fileSystemRepresentation]);
+    
+    trueSize = IntMakeSize(svg.preferredFrameSize.width,svg.preferredFrameSize.height);
 	size.width = trueSize.width; size.height = trueSize.height;
 	[sizeLabel setStringValue:[NSString stringWithFormat:@"%d x %d", size.width, size.height]];
 	[scaleSlider setIntValue:2];
 	[NSApp runModalForWindow:scalePanel];
 	[scalePanel orderOut:self];
-	
-	// Add all plug-ins to the array
-	importerPath = [[gMainBundle builtInPlugInsPath] stringByAppendingString:@"/SVGImporter.app/Contents/MacOS/SVGImporter"];
-	if ([gFileManager fileExistsAtPath:importerPath]) {
-		if (![gFileManager fileExistsAtPath:@"/tmp/seaimport"]) [gFileManager createDirectoryAtPath:@"/tmp/seaimport" attributes:NULL];
-		path_in = path;
-		path_out = [NSString stringWithFormat:@"/tmp/seaimport/%@.png", [[path lastPathComponent] stringByDeletingPathExtension]];
-		if (size.width > 0 && size.height > 0 && size.width < kMaxImageSize && size.height < kMaxImageSize) {
-			width_arg = [NSString stringWithFormat:@"%d", size.width];
-			height_arg = [NSString stringWithFormat:@"%d", size.height];
-			args = [NSArray arrayWithObjects:path_in, path_out, width_arg, height_arg, NULL];
-		}
-		else {
-			args = [NSArray arrayWithObjects:path_in, path_out, NULL];
-		}
-		[waitPanel center];
-		[waitPanel makeKeyAndOrderFront:self];
-		task = [NSTask launchedTaskWithLaunchPath:importerPath arguments:args];
-		[spinner startAnimation:self];
-		while ([task isRunning]) {
-			[NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]];
-		}
-		[spinner stopAnimation:self];
-		[waitPanel orderOut:self];
-	}
-	else {
-		[[SeaController seaWarning] addMessage:LOCALSTR(@"SVG message", @"Seashore is unable to open the given SVG file because the SVG Importer is not installed. The installer for this importer can be found on Seashore's website.") level:kHighImportance];
-		return NULL;
-	}
-
-	// Open the image
-	image = [[NSImage alloc] initByReferencingFile:path_out];
-	if (image == NULL) {
-		return NULL;
-	}
-	
     
-	// Form a bitmap representation of the file at the specified path
-	imageRep = NULL;
-	if ([[image representations] count] > 0) {
-		NSImageRep *r = [[image representations] objectAtIndex:0];
-		if (![r isKindOfClass:[NSBitmapImageRep class]]) {
-			r = [NSBitmapImageRep imageRepWithData:[image TIFFRepresentation]];
-        }
-        imageRep = (NSBitmapImageRep*)r;
-	}
-	if (imageRep == NULL) {
-		return NULL;
-	}
+    id layer = layerFromSVG(doc, svg, size);
+    if(layer==NULL)
+        return NULL;
 	
 	// Determine the height and width of the image
-	height = (int)[imageRep pixelsHigh];
-	width = (int)[imageRep pixelsWide];
+    height = size.height;
+    width = size.width;
+    type = XCF_RGB_IMAGE;
 	
 	// Determine the resolution of the image
 	xres = yres = 72; 
 	
-	// Determine the image type
-	test = [[imageRep colorSpaceName] isEqualToString:NSCalibratedBlackColorSpace] || [[imageRep colorSpaceName] isEqualToString:NSDeviceBlackColorSpace];
-	test = test || [[imageRep colorSpaceName] isEqualToString:NSCalibratedWhiteColorSpace] || [[imageRep colorSpaceName] isEqualToString:NSDeviceWhiteColorSpace];
-	if (test) 
-		type = XCF_GRAY_IMAGE;
-	else
-		type = XCF_RGB_IMAGE;
-		
-	// Create the layer
-	layer = [[SVGLayer alloc] initWithImageRep:imageRep document:doc spp:(type == XCF_RGB_IMAGE) ? 4 : 2];
-	if (layer == NULL) {
-		return NULL;
-	}
-	layers = [NSArray arrayWithObject:layer];
-	
-	// Now forget the NSImage
-	[gFileManager removeFileAtPath:path_out handler:NULL];
-	
+    // Rename the layer
+    [(SeaLayer *)layer setName:[[NSString alloc] initWithString:[[path lastPathComponent] stringByDeletingPathExtension]]];
+    
+    layers = [NSArray arrayWithObject:layer];
+
 	return self;
 }
 
@@ -262,3 +120,29 @@ IntSize getDocumentSize(char *path)
 }
 
 @end
+
+id layerFromSVG(id doc, SVGLayer *svg,IntSize size) {
+    int width = size.width;
+    int height = size.height;
+    
+    NSBitmapImageRep *imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:NULL pixelsWide:width pixelsHigh:height
+                                                                      bitsPerSample:8 samplesPerPixel:4 hasAlpha:YES isPlanar:NO
+                                                                     colorSpaceName:MyRGBSpace bytesPerRow:width*4
+                                                                       bitsPerPixel:8*4];
+    
+    
+    NSView *view = [[FlippedView alloc]init];
+    view.layer = svg;
+    [svg setFrame:NSMakeRect(0,0,size.width,size.height)];
+    [view setFrame:[svg frame]];
+    [svg setNeedsDisplay];
+    [svg setGeometryFlipped:TRUE];
+    
+    [NSGraphicsContext saveGraphicsState];
+    NSGraphicsContext *ctx = [NSGraphicsContext graphicsContextWithBitmapImageRep:imageRep];
+    [NSGraphicsContext setCurrentContext:ctx];
+    [view displayRectIgnoringOpacity:[svg frame] inContext:ctx];
+    [NSGraphicsContext restoreGraphicsState];
+    
+    return [[CocoaLayer alloc] initWithImageRep:imageRep document:doc spp:4];
+}

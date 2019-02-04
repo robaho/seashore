@@ -9,80 +9,29 @@
 #import "SeaController.h"
 #import "SeaWarning.h"
 
-extern IntSize getDocumentSize(char *path);
+#include <PocketSVG/PocketSVG.h>
+
+extern id layerFromSVG(id doc,SVGLayer *svg,IntSize size);
 
 @implementation SVGImporter
 
 - (BOOL)addToDocument:(id)doc contentsOfFile:(NSString *)path
 {
-	id imageRep, layer;
-	NSImage *image;
-	NSString *importerPath;
-	NSString *path_in, *path_out, *width_arg, *height_arg;
-	NSArray *args;
-	NSTask *task;
-		
 	// Load nib file
 	[NSBundle loadNibNamed:@"SVGContent" owner:self];
-	
+
+    SVGLayer *svg = [[SVGLayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path]];
+
 	// Run the scaling panel
 	[scalePanel center];
-	trueSize = getDocumentSize((char *)[path fileSystemRepresentation]);
+    trueSize = IntMakeSize(svg.preferredFrameSize.width,svg.preferredFrameSize.height);
 	size.width = trueSize.width; size.height = trueSize.height;
 	[sizeLabel setStringValue:[NSString stringWithFormat:@"%d x %d", size.width, size.height]];
 	[scaleSlider setIntValue:2];
 	[NSApp runModalForWindow:scalePanel];
 	[scalePanel orderOut:self];
-	
-	// Add all plug-ins to the array
-	importerPath = [[gMainBundle builtInPlugInsPath] stringByAppendingString:@"/SVGImporter.app/Contents/MacOS/SVGImporter"];
-	if ([gFileManager fileExistsAtPath:importerPath]) {
-		if (![gFileManager fileExistsAtPath:@"/tmp/seaimport"]) [gFileManager createDirectoryAtPath:@"/tmp/seaimport" attributes:NULL];
-		path_in = path;
-		path_out = [NSString stringWithFormat:@"/tmp/seaimport/%@.png", [[path lastPathComponent] stringByDeletingPathExtension]];
-		if (size.width > 0 && size.height > 0 && size.width < kMaxImageSize && size.height < kMaxImageSize) {
-			width_arg = [NSString stringWithFormat:@"%d", size.width];
-			height_arg = [NSString stringWithFormat:@"%d", size.height];
-			args = [NSArray arrayWithObjects:path_in, path_out, width_arg, height_arg, NULL];
-		}
-		else {
-			args = [NSArray arrayWithObjects:path_in, path_out, NULL];
-		}
-		[waitPanel center];
-		[waitPanel makeKeyAndOrderFront:self];
-		task = [NSTask launchedTaskWithLaunchPath:importerPath arguments:args];
-		[spinner startAnimation:self];
-		while ([task isRunning]) {
-			[NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]];
-		}
-		[spinner stopAnimation:self];
-		[waitPanel orderOut:self];
-	}
-	else {
-		[[SeaController seaWarning] addMessage:LOCALSTR(@"SVG message", @"Seashore is unable to open the given SVG file because the SVG Importer is not installed. The installer for this importer can be found on Seashore's website.") level:kHighImportance];
-		return NO;
-	}
-	
-	// Open the image
-	image = [[NSImage alloc] initByReferencingFile:path_out];
-	if (image == NULL) {
-		return NO;
-	}
-	
-	// Form a bitmap representation of the file at the specified path
-	imageRep = NULL;
-	if ([[image representations] count] > 0) {
-		imageRep = [[image representations] objectAtIndex:0];
-		if (![imageRep isKindOfClass:[NSBitmapImageRep class]]) {
-			imageRep = [NSBitmapImageRep imageRepWithData:[image TIFFRepresentation]];
-		}
-	}
-	if (imageRep == NULL) {
-		return NO;
-	}
-		
-	// Create the layer
-	layer = [[CocoaLayer alloc] initWithImageRep:imageRep document:doc spp:[[doc contents] spp]];
+    
+    id layer = layerFromSVG(doc,svg,size);
 	if (layer == NULL) {
 		return NO;
 	}
