@@ -11,25 +11,6 @@
 */
 
 @interface SVGContent : SeaContent {
-
-	// The length warning panel
-	IBOutlet id waitPanel;
-	
-	// The spinner to update
-	IBOutlet id spinner;
-	
-	// The scaling panel
-	IBOutlet id scalePanel;
-	
-	// The slider indicating the extent of scaling
-	IBOutlet id scaleSlider;
-	
-	// A label indicating the document's expected size
-	IBOutlet id sizeLabel;
-	
-	// The document's actual and scaled size
-	IntSize trueSize, size;
-	
 }
 
 /*!
@@ -51,21 +32,5 @@
 	@result		Returns instance upon success (or NULL otherwise).
 */
 - (id)initWithDocument:(id)doc contentsOfFile:(NSString *)path;
-
-/*!
-	@method		endPanel:
-	@discussion	Closes the current modal dialog.
-	@param		sender
-				Ignored.
-*/
-- (IBAction)endPanel:(id)sender;
-
-/*!
-	@method		update:
-	@discussion	Updates the document's expected size.
-	@param		sender
-				Ignored.
-*/
-- (IBAction)update:(id)sender;
 
 @end
