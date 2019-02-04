@@ -1,5 +1,17 @@
 #import "RLE.h"
 
+
+unsigned short readShort(unsigned short *ptr){
+    unsigned char *cp = (unsigned char *)ptr;
+    return (cp[1]<<8) | cp[0];
+}
+
+void writeShort(unsigned short *ptr,unsigned short val){
+    unsigned char *cp = (unsigned char *)ptr;
+    cp[1] = (val >> 8) & 0xFF;
+    cp[0] = val & 0xFF;
+}
+
 BOOL RLEDecompress(unsigned char *output, unsigned char *input, int inputLength, int width, int height, int spp)
 {
 	unsigned char *destData;
@@ -41,7 +53,7 @@ BOOL RLEDecompress(unsigned char *output, unsigned char *input, int inputLength,
 				if (length == 128) {
 					if (srcData >= srcDataLimit)
 						return NO;
-					tmp_short = ((unsigned short *)srcData)[0];
+                    tmp_short = readShort((unsigned short *)srcData);
 					tmp_short = ntohs(tmp_short);
 					length = tmp_short;
 					srcData += 2;
@@ -74,7 +86,7 @@ BOOL RLEDecompress(unsigned char *output, unsigned char *input, int inputLength,
 				if (length == 128) {
 					if (srcData >= srcDataLimit)
 						return NO;
-					tmp_short = ((unsigned short *)srcData)[0];
+                    tmp_short = readShort((unsigned short *)srcData);
 					tmp_short = ntohs(tmp_short);
 					length = tmp_short;
 					srcData += 2;
@@ -104,7 +116,6 @@ BOOL RLEDecompress(unsigned char *output, unsigned char *input, int inputLength,
 
 	return YES;
 }
-
 
 int RLECompress(unsigned char *output, unsigned char *input, int width, int height, int spp)
 {
@@ -151,7 +162,7 @@ int RLECompress(unsigned char *output, unsigned char *input, int width, int heig
 							write_length = length;
 							write_length = htons(write_length);
 							destShortData = (unsigned short *)(destData + destLength + 1);
-							destShortData[0] = write_length;
+							writeShort(destShortData,write_length);
 							
 							// Write the repeating item in the fourth byte
 							destData[destLength + 3] = last;
@@ -217,7 +228,7 @@ int RLECompress(unsigned char *output, unsigned char *input, int width, int heig
 							write_length = length;
 							write_length = htons(write_length);
 							destShortData = (unsigned short *)(destData + destLength + 1);
-							destShortData[0] = write_length;
+							writeShort(destShortData,write_length);
 							
 							// Move forward 3 bytes
 							destLength += 3;
@@ -263,3 +274,4 @@ int RLECompress(unsigned char *output, unsigned char *input, int width, int heig
 	
 	return destLength;
 }
+
