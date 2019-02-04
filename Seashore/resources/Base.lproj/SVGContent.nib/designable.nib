@@ -6,7 +6,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="SVGContent">
+        <customObject id="-2" userLabel="File's Owner" customClass="SVGImporter">
             <connections>
                 <outlet property="scalePanel" destination="27" id="50"/>
                 <outlet property="scaleSlider" destination="30" id="48"/>
