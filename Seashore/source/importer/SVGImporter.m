@@ -25,9 +25,6 @@
 
 - (BOOL)addToDocument:(id)doc contentsOfFile:(NSString *)path
 {
-	// Load nib file
-	[NSBundle loadNibNamed:@"SVGContent" owner:self];
-
     SeaLayer *layer = [self loadSVGLayer:doc path:path];
     if(layer==NULL)
         return NO;
