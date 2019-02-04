@@ -20,6 +20,7 @@
 	textureUtilities = [[NSMutableDictionary alloc] init];
 	infoUtilities = [[NSMutableDictionary alloc] init];
 	statusUtilities = [[NSMutableDictionary alloc] init];
+    recentsUtilities = [[NSMutableDictionary alloc] init];
 	return self;
 }
 
@@ -56,6 +57,10 @@
     
     [[self statusUtilityFor:doc] shutdown];
     [statusUtilities  removeObjectForKey:key];
+
+    [[self recentsUtilityFor:doc] shutdown];
+    [recentsUtilities  removeObjectForKey:key];
+    
 
 }
 
@@ -107,6 +112,12 @@
 	return [statusUtilities objectForKey:[NSNumber numberWithLong:(long)doc]];
 }
 
+- (id)recentsUtilityFor:(id)doc
+{
+    return [recentsUtilities objectForKey:[NSNumber numberWithLong:(long)doc]];
+}
+
+
 - (void)setPegasusUtility:(id)util for:(id)doc
 {
 	[pegasusUtilities setObject:util forKey:[NSNumber numberWithLong:(long)doc]];
@@ -140,6 +151,11 @@
 - (void)setStatusUtility:(id)util for:(id)doc
 {
 	[statusUtilities setObject:util forKey:[NSNumber numberWithLong:(long)doc]];
+}
+
+- (void)setRecentsUtility:(id)util for:(id)doc
+{
+    [recentsUtilities setObject:util forKey:[NSNumber numberWithLong:(long)doc]];
 }
 
 @end

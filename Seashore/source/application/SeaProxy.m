@@ -349,6 +349,10 @@
 	[[[SeaController utilitiesManager] statusUtilityFor:gCurrentDocument] toggle: sender];
 }
 
+- (IBAction)toggleRecentsBar:(id)sender {
+    [[[SeaController utilitiesManager] recentsUtilityFor:gCurrentDocument] toggle: sender];
+}
+
 // To the ColorView
 - (IBAction)activateForegroundColor:(id)sender
 {
@@ -423,6 +427,13 @@
 				[menuItem setTitle:@"Show Status Bar"];
 			return YES;			
 		break;
+        case 195:
+            if([[[document window] contentView] visibilityForRegion:kRecentsBar])
+                [menuItem setTitle:@"Hide Recents Bar"];
+            else
+                [menuItem setTitle:@"Show Recents Bar"];
+            return YES;
+            break;
 		case 210:
 			if (![[document docView] canZoomIn])
 				return NO;

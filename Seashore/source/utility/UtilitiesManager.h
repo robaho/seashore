@@ -25,7 +25,8 @@
 	NSMutableDictionary *textureUtilities;
 	NSMutableDictionary *infoUtilities;
 	NSMutableDictionary *statusUtilities;
-	
+    NSMutableDictionary *recentsUtilities;
+
 	// Various choices
 	int optionsChoice;
 	BOOL infoChoice;
@@ -139,6 +140,16 @@
 */
 - (id)statusUtilityFor:(id)doc;
 - (void)setStatusUtility:(id)util for:(id)doc;
+
+/*!
+ @method        recentsUtilityFor:
+ @discussion    Returns the recents utility.
+ @param        doc
+ The document that the utility is requested for.
+ @result        Returns an instance of RecentsUtility.
+ */
+- (id)recentsUtilityFor:(id)doc;
+- (void)setRecentsUtility:(id)util for:(id)doc;
 
 
 @end

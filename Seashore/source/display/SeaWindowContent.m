@@ -11,10 +11,11 @@
              [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:YES], @"visibility", pointInformation, @"view", layers, @"nonView", @"below", @"side", [NSNumber numberWithFloat: 0], @"oldValue", nil], [NSNumber numberWithInt:kPointInformation],
              [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:YES], @"visibility", warningsBar, @"view", mainDocumentView, @"nonView", @"above", @"side", [NSNumber numberWithFloat: 0], @"oldValue", nil], [NSNumber numberWithInt:kWarningsBar],
              [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:YES], @"visibility", statusBar, @"view", mainDocumentView, @"nonView", @"below", @"side", [NSNumber numberWithFloat: 0], @"oldValue", nil], [NSNumber numberWithInt:kStatusBar],
+            [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:YES], @"visibility", recentsBar, @"view", mainDocumentView, @"nonView", @"right", @"side", [NSNumber numberWithFloat: 0], @"oldValue", nil], [NSNumber numberWithInt:kRecentsBar],
              nil];
     
     int i;
-    for(i = kOptionsBar; i <= kStatusBar; i++){
+    for(i = kOptionsBar; i <= kRecentsBar; i++){
         NSString *key = [NSString stringWithFormat:@"region%dvisibility", i];
         if([gUserDefaults objectForKey: key] && ![gUserDefaults boolForKey:key]){
             // We need to hide it

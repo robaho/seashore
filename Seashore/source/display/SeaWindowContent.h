@@ -17,7 +17,8 @@ enum
 	kSidebar,
 	kPointInformation,
 	kStatusBar,
-	kWarningsBar
+	kWarningsBar,
+    kRecentsBar
 };
 
 
@@ -41,6 +42,7 @@ enum
 	IBOutlet BannerView *warningsBar;
 	IBOutlet NSView *mainDocumentView;
 	IBOutlet LayerControlView *statusBar;
+    IBOutlet NSScrollView *recentsBar;
 	
 	// Dictionary for all properties
 	NSDictionary *dict;

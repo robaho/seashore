@@ -101,6 +101,7 @@
 - (IBAction)toggleInformation:(id)sender;
 - (IBAction)toggleOptions:(id)sender;
 - (IBAction)toggleStatusBar:(id)sender;
+- (IBAction)toggleRecentsBar:(id)sender;
 
 // To the ColorView
 - (IBAction)activateForegroundColor:(id)sender;

@@ -773,6 +773,11 @@ CA
                                     <action selector="toggleStatusBar:" target="501" id="7265"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Show Recents Bar" tag="195" keyEquivalent="/" id="rvb-IM-45o">
+                                <connections>
+                                    <action selector="toggleRecentsBar:" target="501" id="ed1-xI-0BC"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="3630">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>

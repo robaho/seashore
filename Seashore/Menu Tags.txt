@@ -148,6 +148,7 @@
 //195 - Show Brushes
 //196 - Show Textures
 194 - Show Status Bar
+195 - Show Recents Bar
 
 197 - All
 198 - Toolbar

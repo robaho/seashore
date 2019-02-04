@@ -167,7 +167,7 @@ DQ
                                                 </textFieldCell>
                                             </textField>
                                             <customView id="N0y-Pj-zOW">
-                                                <rect key="frame" x="506" y="-19" width="170" height="59"/>
+                                                <rect key="frame" x="506" y="-18" width="170" height="59"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                                 <subviews>
                                                     <button toolTip="Zoom out" verticalHuggingPriority="750" imageHugsTitle="YES" id="16597">
@@ -232,15 +232,41 @@ DQ
                                         </connections>
                                     </customView>
                                     <customView id="14765">
-                                        <rect key="frame" x="0.0" y="23" width="676" height="407"/>
+                                        <rect key="frame" x="0.0" y="23" width="620" height="407"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
                                             <customView id="63" customClass="NSScrollView">
-                                                <rect key="frame" x="0.0" y="0.0" width="676" height="407"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="620" height="407"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             </customView>
                                         </subviews>
                                     </customView>
+                                    <scrollView wantsLayer="YES" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="t4V-Nb-J8A" userLabel="Recents Bar">
+                                        <rect key="frame" x="621" y="23" width="55" height="407"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" heightSizable="YES"/>
+                                        <clipView key="contentView" drawsBackground="NO" id="Qow-IY-oRt">
+                                            <rect key="frame" x="1" y="1" width="53" height="405"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <collectionView id="Q1v-nq-RGj">
+                                                    <rect key="frame" x="0.0" y="0.0" width="53" height="158"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                                                    <color key="primaryBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    <connections>
+                                                        <outlet property="itemPrototype" destination="gJo-Az-k5y" id="7a5-J7-eqy"/>
+                                                    </connections>
+                                                </collectionView>
+                                            </subviews>
+                                        </clipView>
+                                        <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="K7o-Vv-7Sm">
+                                            <rect key="frame" x="-100" y="-100" width="233" height="15"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
+                                        <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="1bb-yo-gdl">
+                                            <rect key="frame" x="234" y="1" width="15" height="143"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
+                                    </scrollView>
                                 </subviews>
                             </customView>
                             <customView id="2729">
@@ -640,6 +666,7 @@ DQ
                     <outlet property="nonSidebar" destination="2730" id="16681"/>
                     <outlet property="optionsBar" destination="2200" id="16656"/>
                     <outlet property="pointInformation" destination="2666" id="16672"/>
+                    <outlet property="recentsBar" destination="t4V-Nb-J8A" id="zRq-QD-fnv"/>
                     <outlet property="sidebar" destination="2729" id="16664"/>
                     <outlet property="sidebarStatusbar" destination="2940" id="16671"/>
                     <outlet property="statusBar" destination="14768" id="16665"/>
@@ -5458,6 +5485,21 @@ CA
             </items>
             <point key="canvasLocation" x="-555" y="245"/>
         </menu>
+        <collectionViewItem id="gJo-Az-k5y">
+            <connections>
+                <outlet property="view" destination="CPk-M4-sON" id="bE5-31-odt"/>
+            </connections>
+        </collectionViewItem>
+        <view id="CPk-M4-sON">
+            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+            <autoresizingMask key="autoresizingMask"/>
+        </view>
+        <customObject id="s3c-Oa-QRW" userLabel="RecentsUtility" customClass="RecentsUtility">
+            <connections>
+                <outlet property="document" destination="-2" id="7ZE-jK-47z"/>
+                <outlet property="view" destination="t4V-Nb-J8A" id="A0E-fY-ICj"/>
+            </connections>
+        </customObject>
     </objects>
     <resources>
         <image name="bucketTemplate" width="24" height="24"/>
