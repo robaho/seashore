@@ -1,6 +1,8 @@
 #import "RLE.h"
 
 
+// readShort and writeShort are used to avoid alignment problems
+
 unsigned short readShort(unsigned short *ptr){
     unsigned char *cp = (unsigned char *)ptr;
     return (cp[1]<<8) | cp[0];
