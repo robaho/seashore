@@ -240,9 +240,18 @@
 {
 	return opacity;
 }
+- (void)setOpacity:(int)value
+{
+    if(value<0 || value>255)
+        return;
+    [opacitySlider setIntValue:(int)((value/255.0)*100)];
+    opacity=value;
+}
 
 - (id)activeTexture
 {
+    if(![[SeaController seaPrefs] useTextures])
+        return NULL;
 	return [[groups objectAtIndex:activeGroupIndex] objectAtIndex:activeTextureIndex];
 }
 
@@ -252,6 +261,24 @@
 		return activeTextureIndex;
 	else
 		return -1;
+}
+
+- (void)setActiveTexture:(SeaTexture*)texture
+{
+    if(texture==NULL){
+        [self setActiveTextureIndex:-1];
+    } else {
+        for(int group=0;group<[groups count];group++){
+            NSArray *textures = [groups objectAtIndex:group];
+            for(int index=0;index<[textures count];index++){
+                if([textures objectAtIndex:index]==texture){
+                    activeGroupIndex=group;
+                    [self setActiveTextureIndex:index];
+                    return;
+                }
+            }
+        }
+    }
 }
 
 - (void)setActiveTextureIndex:(int)index

@@ -219,10 +219,11 @@ extern void determineBrushMask(unsigned char *input, unsigned char *output, int 
 	if (usePixmap)
 		tempRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&prePixmap pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:4 hasAlpha:YES isPlanar:NO colorSpaceName:MyRGBSpace bytesPerRow:width * 4 bitsPerPixel:8 * 4];
 	else
-		tempRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&mask pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:1 hasAlpha:NO isPlanar:NO colorSpaceName:NSDeviceBlackColorSpace bytesPerRow:width * 1 bitsPerPixel:8 * 1];
+		tempRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&mask pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:1 hasAlpha:NO isPlanar:NO colorSpaceName:NSDeviceWhiteColorSpace bytesPerRow:width * 1 bitsPerPixel:8 * 1];
 	
 	// Wrap it up in an NSImage
 	thumbnail = [[NSImage alloc] initWithSize:NSMakeSize(thumbWidth, thumbHeight)];
+//    [thumbnail setTemplate:YES];
 	[thumbnail addRepresentation:tempRep];
 	
 	return thumbnail;
@@ -344,6 +345,29 @@ extern void determineBrushMask(unsigned char *input, unsigned char *output, int 
 - (NSComparisonResult)compare:(id)other
 {
 	return [[self name] caseInsensitiveCompare:[other name]];
+}
+
+- (void)drawBrushAt:(NSRect)rect
+{
+    NSImage *thumbnail = [self thumbnail];
+    
+    int xOffset = rect.size.width/2-[thumbnail size].width/2;
+    int yOffset = rect.size.height/2+[thumbnail size].height/2;
+
+    // Draw the thumbnail
+    [thumbnail compositeToPoint:NSMakePoint(rect.origin.x+xOffset,rect.origin.y+yOffset) operation:NSCompositeDifference];
+    
+    // Draw the pixel tag if needed
+    NSString *pixelTag = [self pixelTag];
+    if (pixelTag) {
+        NSFont *font = [NSFont systemFontOfSize:9.0];
+        NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, [NSColor whiteColor], NSForegroundColorAttributeName, NULL];
+        IntSize fontSize = NSSizeMakeIntSize([pixelTag sizeWithAttributes:attributes]);
+        [NSGraphicsContext saveGraphicsState];
+        [[NSGraphicsContext currentContext] setCompositingOperation:NSCompositingOperationDifference];
+        [pixelTag drawAtPoint:NSMakePoint(rect.origin.x + rect.size.width / 2 - fontSize.width / 2, rect.origin.y + rect.size.height / 2 - fontSize.height / 2) withAttributes:attributes];
+        [NSGraphicsContext restoreGraphicsState];
+    }
 }
 
 @end

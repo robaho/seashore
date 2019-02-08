@@ -18,6 +18,7 @@
 #import "Bucket.h"
 #import "SeaController.h"
 #import "SeaPrefs.h"
+#import "RecentsUtility.h"
 
 #define EPSILON 0.0001
 
@@ -417,7 +418,9 @@ next:
         points[pos].special = 2;
         pos++;
     }
-
+    
+    [[[SeaController utilitiesManager] recentsUtilityFor:document] rememberBrush:options];
+    
     [self drawThread:NULL];
 }
 

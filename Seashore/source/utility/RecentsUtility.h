@@ -6,6 +6,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SeaBrush.h"
+#import "BrushOptions.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -14,8 +16,10 @@ NS_ASSUME_NONNULL_BEGIN
     // The document that owns the utility
     __weak IBOutlet id document;
     
-    // The actual view that is the status bar
+    // The actual view that is the recents bar
     __weak IBOutlet id view;
+    
+    NSMutableArray *memories;
 }
 
 
@@ -42,6 +46,10 @@ NS_ASSUME_NONNULL_BEGIN
  Ignored.
  */
 - (IBAction)toggle:(id)sender;
+
+- (void)rememberBrush:(BrushOptions*)options;
+- (int)memoryCount;
+- (id)memoryAt:(int)index;
 
 
 @end

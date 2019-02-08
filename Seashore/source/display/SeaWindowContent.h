@@ -42,7 +42,7 @@ enum
 	IBOutlet BannerView *warningsBar;
 	IBOutlet NSView *mainDocumentView;
 	IBOutlet LayerControlView *statusBar;
-    IBOutlet NSScrollView *recentsBar;
+    IBOutlet NSView *recentsBar;
 	
 	// Dictionary for all properties
 	NSDictionary *dict;

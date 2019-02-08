@@ -133,6 +133,13 @@
 */
 - (int)opacity;
 
+
+/*!
+ @method        setOpacity
+ @discussion    sets the opacity, must be between 0 and 255 inclusive. 25 is fully opaque.
+ */
+- (void)setOpacity:(int)value;
+
 /*!
 	@method		activeTexture
 	@discussion	Returns the currently active texture.
@@ -140,6 +147,12 @@
 				active texture.
 */
 - (id)activeTexture;
+
+/*!
+ @method        setActiveTexture
+ @discussion    set the active texture, or NULL to disable textures
+ */
+- (void)setActiveTexture:(SeaTexture*)texture;
 
 /*!
 	@method		activeTextureIndex

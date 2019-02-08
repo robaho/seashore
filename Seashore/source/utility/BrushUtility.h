@@ -109,12 +109,27 @@
 - (int)spacing;
 
 /*!
+ @method        setSpacing
+ @discussion    sets the spacing
+ */
+- (void)setSpacing:(int)spacing;
+
+
+/*!
 	@method		activeBrush
 	@discussion	Returns the currently active brush.
 	@result		Returns an instance of SeaBrush representing the currently
 				active brush.
 */
 - (id)activeBrush;
+
+/*!
+ @method        activeGroupIndex
+ @discussion    Returns the index of the currently active brush group.
+ @result        Returns an integer representing the index of the currently
+ active brush group.
+ */
+- (int)activeGroupIndex;
 
 /*!
 	@method		activeBrushIndex
@@ -125,12 +140,29 @@
 - (int)activeBrushIndex;
 
 /*!
+ @method        setActiveGroupIndex:
+ @discussion    Sets the active brush group to that specified by the given index.
+ @param        index
+ The index of the brush group to activate.
+ */
+- (void)setActiveGroupIndex:(int)index;
+
+/*!
 	@method		setActiveBrushIndex:
 	@discussion	Sets the active brush to that specified by the given index.
 	@param		index
 				The index of the brush to activate.
 */
 - (void)setActiveBrushIndex:(int)index;
+
+
+/*!
+ @method        setActiveBrushIndex:
+ @discussion    Sets the active brush to that specified by the given index.
+ @param        index
+ The index of the brush to activate.
+ */
+- (void)setActiveBrush:(SeaBrush*)brush;
 
 /*!
 	@method		brushes

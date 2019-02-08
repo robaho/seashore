@@ -6,6 +6,7 @@
 #import "InfoUtility.h"
 #import "SeaController.h"
 #import "TextureUtility.h"
+#import "RecentsUtility.h"
 
 @implementation UtilitiesManager
 
@@ -112,7 +113,7 @@
 	return [statusUtilities objectForKey:[NSNumber numberWithLong:(long)doc]];
 }
 
-- (id)recentsUtilityFor:(id)doc
+- (RecentsUtility*)recentsUtilityFor:(id)doc
 {
     return [recentsUtilities objectForKey:[NSNumber numberWithLong:(long)doc]];
 }

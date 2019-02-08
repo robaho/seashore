@@ -210,4 +210,6 @@ typedef struct {
 */
 - (NSComparisonResult)compare:(id)other;
 
+-(void)drawBrushAt:(NSRect)rect;
+
 @end

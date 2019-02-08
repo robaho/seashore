@@ -235,6 +235,11 @@
 	return ([spacingSlider intValue] / 5 * 5 == 0) ? 1 : [spacingSlider intValue] / 5 * 5;
 }
 
+- (void)setSpacing:(int)spacing
+{
+    [spacingSlider setIntValue:spacing];
+}
+
 - (id)activeBrush
 {
 	return [[groups objectAtIndex:activeGroupIndex] objectAtIndex:activeBrushIndex];
@@ -243,6 +248,16 @@
 - (int)activeBrushIndex
 {
 	return activeBrushIndex;
+}
+
+- (int)activeGroupIndex
+{
+    return activeGroupIndex;
+}
+
+- (void)setActiveGroupIndex:(int)index
+{
+    activeGroupIndex = index;
 }
 
 - (void)setActiveBrushIndex:(int)index
@@ -260,6 +275,21 @@
         [spacingSlider setIntValue:[newBrush spacing]];
         [spacingLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"spacing", @"Spacing: %d%%"), [self spacing]]];
         [newBrush activate];
+    }
+}
+
+- (void)setActiveBrush:(SeaBrush *)brush
+{
+    for(int group=0;group<[groups count];group++) {
+        NSArray *brushes = [groups objectAtIndex:group];
+        for(int index=0;index<[brushes count];index++){
+            SeaBrush *sb = [brushes objectAtIndex:index];
+            if(sb==brush){
+                [self setActiveGroupIndex:group];
+                [self setActiveBrushIndex:index];
+                return;
+            }
+        }
     }
 }
 
