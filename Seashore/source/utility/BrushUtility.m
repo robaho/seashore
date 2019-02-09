@@ -238,6 +238,7 @@
 - (void)setSpacing:(int)spacing
 {
     [spacingSlider setIntValue:spacing];
+    [self changeSpacing:spacingSlider];
 }
 
 - (id)activeBrush
@@ -257,7 +258,13 @@
 
 - (void)setActiveGroupIndex:(int)index
 {
+    if(activeBrushIndex!=-1){
+        SeaBrush *oldBrush = [[groups objectAtIndex:activeGroupIndex] objectAtIndex:activeBrushIndex];
+        [oldBrush deactivate];
+        activeBrushIndex=-1;
+    }
     activeGroupIndex = index;
+    [brushGroupPopUp selectItemAtIndex:[brushGroupPopUp indexOfItemWithTag:activeGroupIndex]];
 }
 
 - (void)setActiveBrushIndex:(int)index
@@ -272,21 +279,22 @@
     if(index!=-1) {
         SeaBrush *newBrush = [[groups objectAtIndex:activeGroupIndex] objectAtIndex:index];
         [brushNameLabel setStringValue:[newBrush name]];
-        [spacingSlider setIntValue:[newBrush spacing]];
-        [spacingLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"spacing", @"Spacing: %d%%"), [self spacing]]];
+        [self setSpacing:[newBrush spacing]];
         [newBrush activate];
     }
 }
 
 - (void)setActiveBrush:(SeaBrush *)brush
 {
-    for(int group=0;group<[groups count];group++) {
+    for(int group=1;group<[groups count];group++) { // don't search in all {
         NSArray *brushes = [groups objectAtIndex:group];
         for(int index=0;index<[brushes count];index++){
             SeaBrush *sb = [brushes objectAtIndex:index];
             if(sb==brush){
                 [self setActiveGroupIndex:group];
                 [self setActiveBrushIndex:index];
+                [[view documentView] update];
+                [view setNeedsDisplay:YES];
                 return;
             }
         }

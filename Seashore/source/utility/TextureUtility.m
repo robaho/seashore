@@ -233,7 +233,7 @@
 - (IBAction)changeOpacity:(id)sender
 {
 	[opacityLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"opacity", @"Opacity: %d%%"), [opacitySlider intValue]]];
-	opacity = [opacitySlider intValue] * 2.55;
+	opacity = (int)([opacitySlider intValue] * 2.55 +.5);
 }
 
 - (int)opacity
@@ -244,8 +244,8 @@
 {
     if(value<0 || value>255)
         return;
-    [opacitySlider setIntValue:(int)((value/255.0)*100)];
-    opacity=value;
+    [opacitySlider setIntValue:(int)((value/255.0)*100 +0.5)];
+    [self changeOpacity:opacitySlider];
 }
 
 - (id)activeTexture
@@ -268,12 +268,13 @@
     if(texture==NULL){
         [self setActiveTextureIndex:-1];
     } else {
-        for(int group=0;group<[groups count];group++){
+        for(int group=1;group<[groups count];group++){ // don't check all group
             NSArray *textures = [groups objectAtIndex:group];
             for(int index=0;index<[textures count];index++){
                 if([textures objectAtIndex:index]==texture){
-                    activeGroupIndex=group;
-                    [self setActiveTextureIndex:index];
+                    [textureGroupPopUp selectItemAtIndex:[textureGroupPopUp indexOfItemWithTag:group]];
+                    activeTextureIndex=index;
+                    [self update];
                     return;
                 }
             }
@@ -283,9 +284,6 @@
 
 - (void)setActiveTextureIndex:(int)index
 {
-	id oldTexture;
-	id newTexture;
-	
 	if (index == -1) {
 		[[SeaController seaPrefs] setUseTextures:NO];
 		[textureNameLabel setStringValue:@""];
@@ -293,9 +291,7 @@
 		[view setNeedsDisplay:YES];
 	}
 	else {
-		oldTexture = [[groups objectAtIndex:activeGroupIndex] objectAtIndex:activeTextureIndex];
-		newTexture = [[groups objectAtIndex:activeGroupIndex] objectAtIndex:index];
-		[oldTexture deactivate];
+		id newTexture = [[groups objectAtIndex:activeGroupIndex] objectAtIndex:index];
 		activeTextureIndex = index;
 		[[SeaController seaPrefs] setUseTextures:YES];
 		[textureNameLabel setStringValue:[newTexture name]];
