@@ -17,7 +17,7 @@ typedef struct {
 #warning Anti-aliasing for pixmap brushes?
 #endif
 
-#define BrushThumbnail 48
+#define BrushThumbnail 42
 
 extern void determineBrushMask(unsigned char *input, unsigned char *output, int width, int height, int index1, int index2);
 
@@ -351,13 +351,14 @@ extern void determineBrushMask(unsigned char *input, unsigned char *output, int 
 
 - (void)drawBrushAt:(NSRect)rect
 {
+    
     NSImage *thumbnail = [self thumbnail];
     
     int xOffset = rect.size.width/2-[thumbnail size].width/2;
-    int yOffset = rect.size.height/2+[thumbnail size].height/2;
+    int yOffset = rect.size.height/2-[thumbnail size].height/2;
 
     // Draw the thumbnail
-    [thumbnail compositeToPoint:NSMakePoint(rect.origin.x+xOffset,rect.origin.y+yOffset) operation:NSCompositeDifference];
+    [thumbnail drawAtPoint:NSMakePoint(rect.origin.x+xOffset,rect.origin.y+yOffset) fromRect:NSZeroRect operation:NSCompositingOperationDifference fraction:1.0];
     
     // Draw the pixel tag if needed
     NSString *pixelTag = [self pixelTag];

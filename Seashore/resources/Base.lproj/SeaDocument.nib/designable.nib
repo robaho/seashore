@@ -449,7 +449,7 @@
                                 <rect key="frame" x="199" y="0.0" width="743" height="533"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <customView id="zTv-xo-Ehe" userLabel="Recents Bar" customClass="RecentsBarView">
+                                    <customView focusRingType="none" id="zTv-xo-Ehe" userLabel="Recents Bar" customClass="RecentsBarView">
                                         <rect key="frame" x="667" y="0.0" width="76" height="533"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" heightSizable="YES"/>
                                         <subviews>
@@ -462,7 +462,7 @@
                                                     <color key="backgroundColor" name="selectedControlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <collectionView selectable="YES" maxNumberOfColumns="1" id="cjF-QV-i89">
+                                            <collectionView focusRingType="none" selectable="YES" maxNumberOfColumns="1" id="cjF-QV-i89">
                                                 <rect key="frame" x="1" y="27" width="71" height="484"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <color key="primaryBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>

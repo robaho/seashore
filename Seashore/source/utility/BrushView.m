@@ -38,12 +38,8 @@
 	int brushCount =  [brushes count];
 	int activeBrushIndex = [master activeBrushIndex];
 	int i, j, elemNo;
-	NSRect elemRect, tempRect;
+	NSRect elemRect;
 	
-	// Draw background
-	[[NSColor controlBackgroundColor] set];
-	[[NSBezierPath bezierPathWithRect:rect] fill];
-		
 	// Draw each elements
 	for (i = rect.origin.x / kBrushPreviewSize; i <= (rect.origin.x + rect.size.width) / kBrushPreviewSize; i++) {
 		for (j = rect.origin.y / kBrushPreviewSize; j <= (rect.origin.y + rect.size.height) / kBrushPreviewSize; j++) {
@@ -52,26 +48,23 @@
 			elemNo = j * kBrushesPerRow + i;
 			elemRect = NSMakeRect(i * kBrushPreviewSize, j * kBrushPreviewSize, kBrushPreviewSize, kBrushPreviewSize);
 			
+            [[NSColor controlBackgroundColor] set];
+            [[NSBezierPath bezierPathWithRect:elemRect] fill];
+            
 			// Continue if we are in range
 			if (elemNo < brushCount) {
-				
-				// Draw the brush background and frame
-				[[NSColor whiteColor] set];
-				[[NSBezierPath bezierPathWithRect:elemRect] fill];
-				if (elemNo != activeBrushIndex) {
-					[[NSColor grayColor] set];
-					[NSBezierPath setDefaultLineWidth:1];
-					[[NSBezierPath bezierPathWithRect:elemRect] stroke];
-				}
-				else {
-					[[NSColor blackColor] set];
-					[NSBezierPath setDefaultLineWidth:2];
-					tempRect = elemRect;
-					tempRect.origin.x++; tempRect.origin.y++; tempRect.size.width -= 2; tempRect.size.height -= 2;
-					[[NSBezierPath bezierPathWithRect:tempRect] stroke];
-				}
                 
                 [[brushes objectAtIndex:elemNo] drawBrushAt:elemRect];
+                
+				if (elemNo == activeBrushIndex) {
+                    [NSBezierPath setDefaultLineWidth:4];
+					[[NSColor selectedControlColor] set];
+                } else {
+                    [NSBezierPath setDefaultLineWidth:1];
+                    [[NSColor gridColor] set];
+                }
+                [[NSBezierPath bezierPathWithRect:NSInsetRect(elemRect,1,1)] stroke];
+
             }
 			
 		}

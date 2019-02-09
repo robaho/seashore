@@ -16,7 +16,6 @@
 #define kImageSize 48
 
 #define FG_RECT NSRect fg = NSMakeRect(0,0,10,8);
-#define BG_RECT NSRect bg = NSMakeRect(8,6,10,8);
 
 @protocol Memory
 -(NSString*)memoryAsString;
@@ -37,7 +36,15 @@
 
 -(void)drawRect:(NSRect)dirtyRect
 {
-    [memory drawAt:NSMakeRect(0,4,kImageSize,kImageSize)];
+    NSCollectionView *parent = (NSCollectionView*)[self superview];
+    int index = (int)[[parent content] indexOfObject:memory];
+    
+    NSColor *bgc = (index %2==0) ? [parent backgroundColors][0] : [parent backgroundColors][1];
+    
+    NSRect rect =NSMakeRect(0,4,kImageSize,kImageSize);
+    [bgc set];
+    [NSBezierPath fillRect:rect];
+    [memory drawAt:rect];
 
     [[NSColor gridColor] set];
     [NSBezierPath fillRect:NSMakeRect(0,kPreviewHeight-1,kPreviewWidth,1)];
@@ -62,7 +69,8 @@
 - (void)drawColorRect
 {
     FG_RECT
-    BG_RECT
+    
+    NSRect bg = NSMakeRect(fg.origin.x+(int)(fg.size.width*.75),fg.origin.x+(int)(fg.size.height*.75),fg.size.width,fg.size.height);
     
     BOOL foregroundIsTexture = [memory texture]!=NULL;
     
@@ -163,7 +171,6 @@
     }
     [cview setContent:items];
     [cview setSelectionIndexes:[NSIndexSet new]];
-    [cview setFocusRingType:NSFocusRingTypeNone];
 }
 
 @end

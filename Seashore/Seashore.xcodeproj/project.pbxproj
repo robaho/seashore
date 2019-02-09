@@ -1470,8 +1470,6 @@
 		F5003C2303CA959301FED195 /* Utility Classes */ = {
 			isa = PBXGroup;
 			children = (
-				2BDD5E5D2208AE3200F9BC74 /* RecentsBarView.h */,
-				2BDD5E5E2208AE3200F9BC74 /* RecentsBarView.m */,
 				F5003C2803CAA0B301FED195 /* UtilitiesManager.h */,
 				F5003C2903CAA0B301FED195 /* UtilitiesManager.m */,
 				F577AC29040760E401092A6C /* SeaUtilityPanel.h */,
@@ -1511,6 +1509,8 @@
 				2B2D8CA821F8C3E0004527F2 /* StatusBarView.m */,
 				2BDD5E5A2208A05D00F9BC74 /* RecentsUtility.h */,
 				2BDD5E5B2208A05D00F9BC74 /* RecentsUtility.m */,
+				2BDD5E5D2208AE3200F9BC74 /* RecentsBarView.h */,
+				2BDD5E5E2208AE3200F9BC74 /* RecentsBarView.m */,
 			);
 			name = "Utility Classes";
 			path = source/utility;

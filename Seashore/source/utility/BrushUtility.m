@@ -43,9 +43,7 @@
 	
 	// Configure the view
 	[view setHasVerticalScroller:YES];
-	[view setBorderType:NSGrooveBorder];
 	[view setDocumentView:[[BrushView alloc] initWithMaster:self]];
-	[view setBackgroundColor:[NSColor lightGrayColor]];
 	if ([[view documentView] bounds].size.height > 3 * kBrushPreviewSize) {
 		yoff = MIN((activeBrushIndex / kBrushesPerRow) * kBrushPreviewSize, ([[self brushes] count] / kBrushesPerRow - 2) * kBrushPreviewSize);
 		[[view contentView] scrollToPoint:NSMakePoint(0, yoff)];

@@ -54,9 +54,7 @@
 
 	// Configure the view
 	[view setHasVerticalScroller:YES];
-	[view setBorderType:NSGrooveBorder];
 	[view setDocumentView:[[TextureView alloc] initWithMaster:self]];
-	[view setBackgroundColor:[NSColor lightGrayColor]];
 	if ([[view documentView] bounds].size.height > 3 * kTexturePreviewSize) {
 		yoff = MIN((activeTextureIndex / kTexturesPerRow) * kTexturePreviewSize, ([[self textures] count] / kTexturesPerRow - 2) * kTexturePreviewSize);
 		[[view contentView] scrollToPoint:NSMakePoint(0, yoff)];
