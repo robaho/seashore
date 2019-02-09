@@ -457,7 +457,7 @@
                                                 <rect key="frame" x="1" y="513" width="71" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" allowsUndo="NO" alignment="center" title="RECENTS" drawsBackground="YES" id="Q7E-ta-VLa">
-                                                    <font key="font" metaFont="systemBold" size="11"/>
+                                                    <font key="font" metaFont="smallSystemBold"/>
                                                     <color key="textColor" name="selectedTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="selectedControlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -1542,7 +1542,7 @@ Gw
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" usesFontPanel="YES" usesRuler="YES" spellingCorrection="YES" smartInsertDelete="YES" id="1007" customClass="NSTextViewRedirect">
-                                    <rect key="frame" x="0.0" y="0.0" width="451" height="54"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="459" height="54"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1776,6 +1776,7 @@ DQ
                     </textField>
                 </subviews>
             </view>
+            <point key="canvasLocation" x="891" y="462"/>
         </window>
         <customObject id="361" userLabel="EraserTool" customClass="EraserTool">
             <connections>
@@ -2484,10 +2485,10 @@ Gw
         <customObject id="1869" userLabel="BucketOptions" customClass="BucketOptions">
             <connections>
                 <outlet property="document" destination="-2" id="2590"/>
-                <outlet property="intervalsSlider" destination="16684" id="16686"/>
+                <outlet property="intervalsSlider" destination="16684" id="7xf-Yh-njk"/>
                 <outlet property="modifierPopup" destination="2155" id="2552"/>
-                <outlet property="toleranceLabel" destination="2158" id="2550"/>
-                <outlet property="toleranceSlider" destination="2157" id="2551"/>
+                <outlet property="toleranceLabel" destination="16860" id="c5Z-9g-koo"/>
+                <outlet property="toleranceSlider" destination="2157" id="W22-nN-Pih"/>
                 <outlet property="view" destination="1887" id="2219"/>
             </connections>
         </customObject>
@@ -2830,18 +2831,9 @@ Gw
                         <font key="font" metaFont="miniSystem"/>
                     </sliderCell>
                     <connections>
-                        <action selector="toleranceSliderChanged:" target="1869" id="6467"/>
+                        <action selector="toleranceSliderChanged:" target="1869" id="9TN-jJ-Avc"/>
                     </connections>
                 </slider>
-                <textField verticalHuggingPriority="750" id="2158">
-                    <rect key="frame" x="4" y="4" width="79" height="11"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="left" title="Tolerance: 15" id="16860">
-                        <font key="font" metaFont="miniSystem"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <button horizontalHuggingPriority="750" verticalHuggingPriority="750" id="v6z-jt-jI8">
                     <rect key="frame" x="652" y="-3" width="25" height="25"/>
                     <autoresizingMask key="autoresizingMask"/>
@@ -2850,6 +2842,15 @@ Gw
                         <font key="font" metaFont="miniSystem"/>
                     </buttonCell>
                 </button>
+                <textField verticalHuggingPriority="750" textCompletion="NO" id="2158">
+                    <rect key="frame" x="4" y="4" width="79" height="11"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <textFieldCell key="cell" controlSize="mini" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="left" title="Tolerance: 15" id="16860">
+                        <font key="font" metaFont="miniSystem"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
             <point key="canvasLocation" x="-159" y="-499"/>
         </customView>
@@ -4897,7 +4898,7 @@ DQ
                     </button>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="722" y="-191"/>
+            <point key="canvasLocation" x="967" y="-748"/>
         </window>
         <window title="Brushes" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" visibleAtLaunch="NO" animationBehavior="default" id="7411" userLabel="Panel (Brushes)" customClass="InfoPanel">
             <windowStyleMask key="styleMask" titled="YES" utility="YES"/>
@@ -4975,7 +4976,7 @@ DQ
                     </button>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="493" y="-532"/>
+            <point key="canvasLocation" x="596" y="-748"/>
         </window>
         <menuItem title="Selection" id="d5w-Iy-VJy" userLabel="Menu Item (Selection)">
             <modifierMask key="keyEquivalentModifierMask"/>
@@ -5484,20 +5485,13 @@ CA
             </items>
             <point key="canvasLocation" x="-555" y="245"/>
         </menu>
-        <view id="CPk-M4-sON">
-            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
-            <autoresizingMask key="autoresizingMask"/>
-        </view>
         <customObject id="s3c-Oa-QRW" userLabel="RecentsUtility" customClass="RecentsUtility">
             <connections>
                 <outlet property="document" destination="-2" id="7ZE-jK-47z"/>
                 <outlet property="view" destination="zTv-xo-Ehe" id="cKq-Z8-CAA"/>
             </connections>
         </customObject>
-        <view id="Xhf-cy-DPK">
-            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
-            <autoresizingMask key="autoresizingMask"/>
-        </view>
+        <userDefaultsController representsSharedInstance="YES" id="r3A-zL-KVo"/>
     </objects>
     <resources>
         <image name="bucketTemplate" width="24" height="24"/>

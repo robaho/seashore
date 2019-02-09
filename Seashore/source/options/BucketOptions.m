@@ -12,15 +12,11 @@
 	int value;
 	
 	if ([gUserDefaults objectForKey:@"bucket tolerance"] == NULL) {
-		[toleranceSlider setIntValue:15];
-		[toleranceLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"tolerance", @"Tolerance: %d"), 15]];
+        [self setTolerance:15];
 	}
 	else {
 		value = [gUserDefaults integerForKey:@"bucket tolerance"];
-		if (value < 0 || value > 255)
-			value = 0;
-		[toleranceSlider setIntValue:value];
-		[toleranceLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"tolerance", @"Tolerance: %d"), value]];
+        [self setTolerance:value];
 	}
 	
 	if([gUserDefaults objectForKey:@"bucket intervals"] == NULL){
@@ -34,7 +30,7 @@
 
 - (IBAction)toleranceSliderChanged:(id)sender
 {
-	[toleranceLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"tolerance", @"Tolerance: %d"), [toleranceSlider intValue]]];
+    [toleranceLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"tolerance", @"Tolerance: %d"), [toleranceSlider intValue]]];
 }
 
 - (int)tolerance
@@ -42,9 +38,22 @@
 	return [toleranceSlider intValue];
 }
 
+- (void)setTolerance:(int)value
+{
+    if (value < 0 || value > 255)
+        value = 0;
+    [toleranceSlider setIntValue:value];
+    [self toleranceSliderChanged:toleranceSlider];
+}
+
 - (int)numIntervals
 {
 	return [intervalsSlider intValue];
+}
+
+- (void)setNumIntervals:(int)value
+{
+    [intervalsSlider setIntValue:value];
 }
 
 - (BOOL)useTextures

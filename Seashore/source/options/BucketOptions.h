@@ -44,6 +44,12 @@
 */
 - (int)tolerance;
 
+/*!
+ @method        setTolerance
+ @discussion    sets the tolerance to be used with the paint bucket tool.
+ */
+- (void)setTolerance:(int)value;
+
 
 /*!
 	@method		numIntervals
@@ -51,6 +57,12 @@
 	@result		Returns an integer.
 */
 - (int)numIntervals;
+
+/*!
+ @method        setNumIntervals
+ @discussion    stes the number of intervals for the wand sampling
+ */
+- (void)setNumIntervals:(int)value;
 
 /*!
 	@method		useTextures

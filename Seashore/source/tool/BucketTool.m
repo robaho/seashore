@@ -14,6 +14,7 @@
 #import "SeaController.h"
 #import "UtilitiesManager.h"
 #import "TextureUtility.h"
+#import "RecentsUtility.h"
 
 @implementation BucketTool
 
@@ -82,6 +83,8 @@
 	}
 	isPreviewing = NO;
 	intermediate = NO;
+    
+    [[[SeaController utilitiesManager] recentsUtilityFor:document] rememberBucket:(BucketOptions*)options];
 }
 
 - (void)fillAtPoint:(IntPoint)point useTolerance:(BOOL)useTolerance delay:(BOOL)delay

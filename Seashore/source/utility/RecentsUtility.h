@@ -9,6 +9,7 @@
 #import "SeaBrush.h"
 #import "BrushOptions.h"
 #import "PencilOptions.h"
+#import "BucketOptions.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -26,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*!
  @method        show:
- @discussion    Shows the utility's window.
+ @discussion    Shows the recents bar
  @param        sender
  Ignored.
  */
@@ -34,7 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*!
  @method        hide:
- @discussion    Hides the utility's window.
+ @discussion    Hides the recents bar
  @param        sender
  Ignored.
  */
@@ -42,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*!
  @method        toggle:
- @discussion    Toggles the visibility of the options bar.
+ @discussion    Toggles the visibility of the recents bar.
  @param        sender
  Ignored.
  */
@@ -51,6 +52,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)rememberBrush:(BrushOptions*)options;
 
 - (void)rememberPencil:(PencilOptions*)options;
+
+- (void)rememberBucket:(BucketOptions*)options;
 
 - (int)memoryCount;
 - (id)memoryAt:(int)index;

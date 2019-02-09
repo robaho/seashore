@@ -133,6 +133,57 @@
 }
 @end
 
+@interface RememberedBucket : RememberedBase
+@end
+
+@implementation RememberedBucket
+{
+    @public int tolerance;
+    @public int numIntervals;
+}
+
+-(NSString*)memoryAsString
+{
+    return @"bucket";
+}
+-(void)drawAt:(NSRect)rect
+{
+    NSImage *img = [NSImage imageNamed:@"bucketTemplate.png"];
+    
+    NSRect imageRect = NSMakeRect(4,8,32,32);
+    [img drawInRect:imageRect];
+    
+//    NSString *size = [NSString stringWithFormat:@"%d",pencilSize];
+//
+//    NSFont *font = [NSFont systemFontOfSize:9.0];
+//    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, [NSColor whiteColor], NSForegroundColorAttributeName, NULL];
+//    [NSGraphicsContext saveGraphicsState];
+//    [[NSGraphicsContext currentContext] setCompositingOperation:NSCompositingOperationDifference];
+//    [size drawAtPoint:NSMakePoint(imageRect.origin.x+imageRect.size.width-8,imageRect.origin.y+imageRect.size.height-8) withAttributes:attributes];
+//    [NSGraphicsContext restoreGraphicsState];
+    
+}
+
+-(void)restore
+{
+    ToolboxUtility *toolbox = [[SeaController utilitiesManager] toolboxUtilityFor:document];
+    TextureUtility *textures =[[SeaController utilitiesManager] textureUtilityFor:document];
+    OptionsUtility *options = [[SeaController utilitiesManager] optionsUtilityFor:document];
+    
+    [toolbox setForeground:foreground];
+    [toolbox setBackground:background];
+    
+    [textures setActiveTexture:texture];
+    [textures setOpacity:opacity];
+    
+    [toolbox changeToolTo:kBucketTool];
+    BucketOptions *opts = [options getOptions:kBucketTool];
+    [opts setTolerance:tolerance];
+    [opts setNumIntervals:numIntervals];
+    [options update];
+}
+@end
+
 
 @implementation RecentsUtility
 
@@ -269,6 +320,54 @@
     
     [view update];
 }
+
+- (void)rememberBucket:(BucketOptions*)options
+{
+    
+    ToolboxUtility *toolbox = [[SeaController utilitiesManager] toolboxUtilityFor:document];
+    TextureUtility *textures =[[SeaController utilitiesManager] textureUtilityFor:document];
+    int tolerance = [options tolerance];
+    int numIntervals = [options numIntervals];
+    
+    SeaTexture *texture = [textures activeTexture];
+    int opacity = [textures opacity];
+    NSColor *foreground = [toolbox foreground];
+    NSColor *background = [toolbox background];
+    
+    for (int i=0;i<[memories count];i++) {
+        id entry = [memories objectAtIndex:i];
+        if([entry class]!=[RememberedBucket class]) {
+            continue;
+        }
+        RememberedBucket *memory = entry;
+        if(memory->tolerance==tolerance && memory->numIntervals==numIntervals && memory->texture==texture && memory->foreground==foreground && memory->background==background && memory->opacity==opacity) {
+            if(i==0) {
+                // order not changing, nothing to update
+                return;
+            }
+            [memories removeObject:memory];
+            break;
+        }
+    }
+    
+    RememberedBucket *memory = [RememberedBucket new];
+    memory->tolerance = tolerance;
+    memory->numIntervals = numIntervals;
+    memory->document = document;
+    memory->texture = texture;
+    memory->foreground = foreground;
+    memory->background = background;
+    memory->opacity = opacity;
+    
+    if ([memories count]==0) {
+        [memories addObject:memory];
+    } else {
+        [memories insertObject:memory atIndex:0];
+    }
+    
+    [view update];
+}
+
 
 
 - (int) memoryCount
