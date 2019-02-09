@@ -285,10 +285,12 @@
 - (void)setActiveTextureIndex:(int)index
 {
 	if (index == -1) {
+        activeTextureIndex=-1;
 		[[SeaController seaPrefs] setUseTextures:NO];
 		[textureNameLabel setStringValue:@""];
 		[opacitySlider setEnabled:NO];
-		[view setNeedsDisplay:YES];
+        [[view documentView] update];
+        [view setNeedsDisplay:YES];
 	}
 	else {
 		id newTexture = [[groups objectAtIndex:activeGroupIndex] objectAtIndex:index];
