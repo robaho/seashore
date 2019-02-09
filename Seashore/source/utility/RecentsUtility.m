@@ -21,7 +21,8 @@
 #import "BrushOptions.h"
 #import "SeaTexture.h"
 #import "TextureUtility.h"
-
+#import "SeaTools.h"
+#import "OptionsUtility.h"
 
 @interface RememberedBase : NSObject
 {
@@ -78,8 +79,60 @@
     
     [textures setActiveTexture:texture];
     [textures setOpacity:opacity];
+    
+    [toolbox changeToolTo:kBrushTool];
 }
 @end
+
+@interface RememberedPencil : RememberedBase
+@end
+
+@implementation RememberedPencil
+{
+@public int pencilSize;
+}
+
+-(NSString*)memoryAsString
+{
+    return @"pencil";
+}
+-(void)drawAt:(NSRect)rect
+{
+    NSImage *img = [NSImage imageNamed:@"pencilLargeTemplate.png"];
+    
+    NSRect imageRect = NSMakeRect(4,8,32,32);
+    [img drawInRect:imageRect];
+    
+    NSString *size = [NSString stringWithFormat:@"%d",pencilSize];
+    
+    NSFont *font = [NSFont systemFontOfSize:9.0];
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, [NSColor whiteColor], NSForegroundColorAttributeName, NULL];
+    [NSGraphicsContext saveGraphicsState];
+    [[NSGraphicsContext currentContext] setCompositingOperation:NSCompositingOperationDifference];
+    [size drawAtPoint:NSMakePoint(imageRect.origin.x+imageRect.size.width-8,imageRect.origin.y+imageRect.size.height-8) withAttributes:attributes];
+    [NSGraphicsContext restoreGraphicsState];
+
+}
+
+-(void)restore
+{
+    ToolboxUtility *toolbox = [[SeaController utilitiesManager] toolboxUtilityFor:document];
+    TextureUtility *textures =[[SeaController utilitiesManager] textureUtilityFor:document];
+    OptionsUtility *options = [[SeaController utilitiesManager] optionsUtilityFor:document];
+    
+    [toolbox setForeground:foreground];
+    [toolbox setBackground:background];
+    
+    [textures setActiveTexture:texture];
+    [textures setOpacity:opacity];
+    
+    [toolbox changeToolTo:kPencilTool];
+    PencilOptions *opts = [options getOptions:kPencilTool];
+    [opts setPencilSize:pencilSize];
+    [options update];
+}
+@end
+
 
 @implementation RecentsUtility
 
@@ -140,7 +193,11 @@
     NSColor *background = [toolbox background];
 
     for (int i=0;i<[memories count];i++) {
-        RememberedBrush *memory = [memories objectAtIndex:i];
+        id entry = [memories objectAtIndex:i];
+        if([entry class]!=[RememberedBrush class]) {
+            continue;
+        }
+        RememberedBrush *memory = entry;
         if(memory->brush==brush && memory->spacing==spacing && memory->texture==texture && memory->foreground==foreground && memory->background==background && memory->opacity==opacity) {
             if(i==0) {
                 // order not changing, nothing to update
@@ -151,7 +208,7 @@
         }
     }
     
-    RememberedBrush *memory = [[RememberedBrush alloc] init];
+    RememberedBrush *memory = [RememberedBrush new];
     memory->document = document;
     memory->brush = brush;
     memory->spacing = spacing;
@@ -168,6 +225,51 @@
     
     [view update];
 }
+
+- (void)rememberPencil:(PencilOptions*)options
+{
+    
+    ToolboxUtility *toolbox = [[SeaController utilitiesManager] toolboxUtilityFor:document];
+    TextureUtility *textures =[[SeaController utilitiesManager] textureUtilityFor:document];
+    int pencilSize = [options pencilSize];
+    SeaTexture *texture = [textures activeTexture];
+    int opacity = [textures opacity];
+    NSColor *foreground = [toolbox foreground];
+    NSColor *background = [toolbox background];
+    
+    for (int i=0;i<[memories count];i++) {
+        id entry = [memories objectAtIndex:i];
+        if([entry class]!=[RememberedPencil class]) {
+            continue;
+        }
+        RememberedPencil *memory = entry;
+        if(memory->pencilSize==pencilSize && memory->texture==texture && memory->foreground==foreground && memory->background==background && memory->opacity==opacity) {
+            if(i==0) {
+                // order not changing, nothing to update
+                return;
+            }
+            [memories removeObject:memory];
+            break;
+        }
+    }
+    
+    RememberedPencil *memory = [RememberedPencil new];
+    memory->pencilSize = pencilSize;
+    memory->document = document;
+    memory->texture = texture;
+    memory->foreground = foreground;
+    memory->background = background;
+    memory->opacity = opacity;
+    
+    if ([memories count]==0) {
+        [memories addObject:memory];
+    } else {
+        [memories insertObject:memory atIndex:0];
+    }
+    
+    [view update];
+}
+
 
 - (int) memoryCount
 {

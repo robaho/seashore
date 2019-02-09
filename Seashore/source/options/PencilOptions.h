@@ -33,6 +33,12 @@
 - (int)pencilSize;
 
 /*!
+ @method        setPencilSize
+ @discussion    set the pencial size
+ */
+- (void)setPencilSize:(int)pencilSize;
+
+/*!
 	@method		useTextures
 	@discussion	Returns whether or not the tool should use textures.
 	@result		Returns YES if the tool should use textures, NO if the tool

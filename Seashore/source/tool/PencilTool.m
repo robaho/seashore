@@ -16,6 +16,7 @@
 #import "UtilitiesManager.h"
 #import "TextureUtility.h"
 #import "Bucket.h"
+#import "RecentsUtility.h"
 
 @implementation PencilTool
 
@@ -184,6 +185,8 @@
 - (void)mouseUpAt:(IntPoint)where withEvent:(NSEvent *)event
 {
 	[(SeaHelpers *)[document helpers] applyOverlay];
+    
+    [[[SeaController utilitiesManager] recentsUtilityFor:document] rememberPencil:(PencilOptions*)options];
 }
 
 - (void)startStroke:(IntPoint)where;

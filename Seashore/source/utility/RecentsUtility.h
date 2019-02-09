@@ -8,6 +8,7 @@
 #import <Foundation/Foundation.h>
 #import "SeaBrush.h"
 #import "BrushOptions.h"
+#import "PencilOptions.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -48,6 +49,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (IBAction)toggle:(id)sender;
 
 - (void)rememberBrush:(BrushOptions*)options;
+
+- (void)rememberPencil:(PencilOptions*)options;
+
 - (int)memoryCount;
 - (id)memoryAt:(int)index;
 

@@ -28,6 +28,11 @@
 	return [sizeSlider intValue];
 }
 
+- (void)setPencilSize:(int)pencilSize
+{
+    [sizeSlider setIntValue:pencilSize];
+}
+
 - (BOOL)useTextures
 {
 	return [[SeaController seaPrefs] useTextures];

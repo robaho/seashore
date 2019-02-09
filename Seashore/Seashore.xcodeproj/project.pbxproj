@@ -117,6 +117,7 @@
 		2BD5926921E53B74002D150B /* GIMPCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2BD5906F21E3BCF5002D150B /* GIMPCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BDD5E5C2208A05D00F9BC74 /* RecentsUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BDD5E5B2208A05D00F9BC74 /* RecentsUtility.m */; };
 		2BDD5E5F2208AE3200F9BC74 /* RecentsBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BDD5E5E2208AE3200F9BC74 /* RecentsBarView.m */; };
+		2BDD5E63220F33A300F9BC74 /* pencilLargeTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BDD5E62220F33A300F9BC74 /* pencilLargeTemplate.png */; };
 		2BE76CD221EE937400B6C65F /* Seashore.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 2BE76CD121EE937400B6C65F /* Seashore.xcconfig */; };
 		2BED225621F3F899005B496C /* textTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BED225521F3F899005B496C /* textTemplate.png */; };
 		2BED226921F3FB40005B496C /* rectangleTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BED225821F3FB3D005B496C /* rectangleTemplate.png */; };
@@ -626,6 +627,7 @@
 		2BDD5E5B2208A05D00F9BC74 /* RecentsUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecentsUtility.m; sourceTree = "<group>"; };
 		2BDD5E5D2208AE3200F9BC74 /* RecentsBarView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecentsBarView.h; sourceTree = "<group>"; };
 		2BDD5E5E2208AE3200F9BC74 /* RecentsBarView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecentsBarView.m; sourceTree = "<group>"; };
+		2BDD5E62220F33A300F9BC74 /* pencilLargeTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pencilLargeTemplate.png; path = ../../../../../Downloads/pencilLargeTemplate.png; sourceTree = "<group>"; };
 		2BE76CD121EE937400B6C65F /* Seashore.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Seashore.xcconfig; path = ../Seashore.xcconfig; sourceTree = "<group>"; };
 		2BED225521F3F899005B496C /* textTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = textTemplate.png; sourceTree = "<group>"; };
 		2BED225821F3FB3D005B496C /* rectangleTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rectangleTemplate.png; sourceTree = "<group>"; };
@@ -1685,6 +1687,7 @@
 		F5A77790040101DB01DD7B36 /* tools */ = {
 			isa = PBXGroup;
 			children = (
+				2BDD5E62220F33A300F9BC74 /* pencilLargeTemplate.png */,
 				2B2D8CAA21F8DB40004527F2 /* swapTemplate.png */,
 				2BED227B21F3FBF3005B496C /* eraserTemplate.png */,
 				2BED227921F3FBB7005B496C /* pencilTemplate.png */,
@@ -1954,6 +1957,7 @@
 				DC9C47120FFC685500C44AA4 /* selectnoneTemplate.png in Resources */,
 				2BED227521F3FB40005B496C /* smudgeTemplate.png in Resources */,
 				DC414D09102FE08400B66F04 /* trueviewTemplate.png in Resources */,
+				2BDD5E63220F33A300F9BC74 /* pencilLargeTemplate.png in Resources */,
 				DC414D27102FE71E00B66F04 /* channels-menuTemplate.png in Resources */,
 				2BED226D21F3FB40005B496C /* gradientTemplate.png in Resources */,
 				2BED227221F3FB40005B496C /* cloneTemplate.png in Resources */,

@@ -17,6 +17,8 @@ typedef struct {
 #warning Anti-aliasing for pixmap brushes?
 #endif
 
+#define BrushThumbnail 48
+
 extern void determineBrushMask(unsigned char *input, unsigned char *output, int width, int height, int index1, int index2);
 
 @implementation SeaBrush
@@ -204,14 +206,14 @@ extern void determineBrushMask(unsigned char *input, unsigned char *output, int 
 	// Determine the thumbnail size
 	thumbWidth = width;
 	thumbHeight = height;
-	if (width > 40 || height > 40) {
+	if (width > BrushThumbnail || height > BrushThumbnail) {
 		if (width > height) {
-			thumbHeight = (int)((float)height * (40.0 / (float)width));
-			thumbWidth = 40;
+			thumbHeight = (int)((float)height * (BrushThumbnail / (float)width));
+			thumbWidth = BrushThumbnail;
 		}
 		else {
-			thumbWidth = (int)((float)width * (40.0 / (float)height));
-			thumbHeight = 40;
+			thumbWidth = (int)((float)width * (BrushThumbnail / (float)height));
+			thumbHeight = BrushThumbnail;
 		}
 	}
 	
@@ -360,7 +362,7 @@ extern void determineBrushMask(unsigned char *input, unsigned char *output, int 
     // Draw the pixel tag if needed
     NSString *pixelTag = [self pixelTag];
     if (pixelTag) {
-        NSFont *font = [NSFont systemFontOfSize:9.0];
+        NSFont *font = [NSFont systemFontOfSize:10.0];
         NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, [NSColor whiteColor], NSForegroundColorAttributeName, NULL];
         IntSize fontSize = NSSizeMakeIntSize([pixelTag sizeWithAttributes:attributes]);
         [NSGraphicsContext saveGraphicsState];
