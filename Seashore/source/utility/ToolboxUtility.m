@@ -255,7 +255,7 @@ static NSString*    SelectionEditIdentifier = @"Selection Edit Identifier";
     int segment = (int)[sender selectedSegment];
     if(segment<0)
         return;
-    int tag = (int)[sender tagForSegment:segment];
+    int tag = (int)[[sender cell] tagForSegment:segment];
     [self changeToolTo:(tag % 100)];
 }
 
@@ -263,7 +263,7 @@ static NSString*    SelectionEditIdentifier = @"Selection Edit Identifier";
     int segment = (int)[sender selectedSegment];
     if(segment<0)
         return;
-    int tag = (int)[sender tagForSegment:segment];
+    int tag = (int)[[sender cell] tagForSegment:segment];
     switch(tag) {
         case 271:
             [[document docView] selectNone:sender];
@@ -326,7 +326,7 @@ static NSString*    SelectionEditIdentifier = @"Selection Edit Identifier";
 - (void)setEffectEnabled:(BOOL)enable
 {
     for(int i=0;i<[effectTBView segmentCount];i++){
-        int tag = (int)[effectTBView tagForSegment:i];
+        int tag = (int)[[effectTBView cell] tagForSegment:i];
         if(tag==kEffectTool){
             [effectTBView setEnabled:enable forSegment:(NSInteger)i];
         }
