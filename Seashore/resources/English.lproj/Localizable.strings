@@ -137,7 +137,7 @@
 	<key>rate</key>
 	<string>Rate: %d%%</string>
 	<key>read only message</key>
-	<string>This file is in a read-only format, as such you cannot save this file. This warning will not be displayed for subsequent files in a read-only format.</string>
+	<string>This file is in a read-only format, so you must Save As/Export any changes. This warning will not be displayed for subsequent files in a read-only format.</string>
 	<key>resolution no effect message</key>
 	<string>The resolution of this image has been changed and this will affect printing and saving. However this will not affect the viewing window because your Preferences are set to ignore image resolution.</string>
 	<key>revert</key>

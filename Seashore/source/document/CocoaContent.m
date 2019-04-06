@@ -135,7 +135,7 @@
 				NSBitmapImageRep* newRep = [[NSBitmapImageRep alloc]
 											initWithFocusedViewRect: destinationRect];
 				[dest unlockFocus];
-				pdfRep = newRep;
+				imageRep = newRep;
 			}else {
 				imageRep = [NSBitmapImageRep imageRepWithData:[image TIFFRepresentation]];
 			}
