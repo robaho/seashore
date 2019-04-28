@@ -16,10 +16,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2B65AC1522763B94005CE6C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/CIEdges.nib; sourceTree = "<group>"; };
 		2B8BD58021ECF38200FD9AC5 /* Plugins.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Plugins.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B8BD58221ECF39000FD9AC5 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		2B8BD58421ECF39000FD9AC5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		2BDB908621836092000D7803 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/CIEdges.nib; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* Edges+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Edges+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A831E1400789471D0009080F /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -124,7 +124,6 @@
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				en,
-				Base,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* CICrystallize */;
 			projectDirPath = "";
@@ -170,7 +169,7 @@
 		A86E1AA90BF2138F00CCFBB8 /* CIEdges.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				2BDB908621836092000D7803 /* Base */,
+				2B65AC1522763B94005CE6C9 /* en */,
 			);
 			name = CIEdges.nib;
 			sourceTree = "<group>";

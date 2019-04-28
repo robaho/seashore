@@ -17,10 +17,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2B65AC2C22763C77005CE6C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/CISunbeams.nib; sourceTree = "<group>"; };
 		2B8BD46621ECEA7500FD9AC5 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		2B8BD46721ECEA7500FD9AC5 /* Plugins.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Plugins.framework; path = ../../Build/Products/Debug/Plugins.framework; sourceTree = "<group>"; };
 		2B8BD46821ECEA7500FD9AC5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		2BDB909D218360A2000D7803 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/CISunbeams.nib; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* Sunbeams+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Sunbeams+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A831E1400789471D0009080F /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -129,7 +129,6 @@
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				en,
-				Base,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* CICrystallize */;
 			projectDirPath = "";
@@ -168,7 +167,7 @@
 		A80C4C5A0C39F97700CCE612 /* CISunbeams.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				2BDB909D218360A2000D7803 /* Base */,
+				2B65AC2C22763C77005CE6C9 /* en */,
 			);
 			name = CISunbeams.nib;
 			sourceTree = "<group>";

@@ -367,7 +367,7 @@ extern void determineBrushMask(unsigned char *input, unsigned char *output, int 
         NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, [NSColor whiteColor], NSForegroundColorAttributeName, NULL];
         IntSize fontSize = NSSizeMakeIntSize([pixelTag sizeWithAttributes:attributes]);
         [NSGraphicsContext saveGraphicsState];
-        [[NSGraphicsContext currentContext] setCompositingOperation:NSCompositingOperationDifference];
+        [[NSGraphicsContext currentContext] setCompositingOperation:NSCompositeDifference];
         [pixelTag drawAtPoint:NSMakePoint(rect.origin.x + rect.size.width / 2 - fontSize.width / 2, rect.origin.y + rect.size.height / 2 - fontSize.height / 2) withAttributes:attributes];
         [NSGraphicsContext restoreGraphicsState];
     }

@@ -20,7 +20,7 @@
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		2B1F6AF421D763C000D6F371 /* Plugins.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Plugins.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BDB907D2183608B000D7803 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/CIBloom.nib; sourceTree = "<group>"; };
+		2B65AC0D22763B5A005CE6C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/CIBloom.nib; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* Bloom+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Bloom+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A831E1400789471D0009080F /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -146,7 +146,6 @@
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				en,
-				Base,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* CICrystallize */;
 			projectDirPath = "";
@@ -192,7 +191,7 @@
 		A86E1AA90BF2138F00CCFBB8 /* CIBloom.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				2BDB907D2183608B000D7803 /* Base */,
+				2B65AC0D22763B5A005CE6C9 /* en */,
 			);
 			name = CIBloom.nib;
 			sourceTree = "<group>";

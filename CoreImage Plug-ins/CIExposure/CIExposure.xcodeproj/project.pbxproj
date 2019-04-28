@@ -16,10 +16,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2B65AC1722763BB2005CE6C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/CIExposure.nib; sourceTree = "<group>"; };
 		2B8BD3A721ECE86000FD9AC5 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		2B8BD3A821ECE86000FD9AC5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		2B8BD3A921ECE86000FD9AC5 /* Plugins.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Plugins.framework; path = ../../Build/Products/Debug/Plugins.framework; sourceTree = "<group>"; };
-		2BDB908821836093000D7803 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/CIExposure.nib; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* Exposure+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Exposure+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A831E1400789471D0009080F /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -124,7 +124,6 @@
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				en,
-				Base,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* CIExposure */;
 			projectDirPath = "";
@@ -170,7 +169,7 @@
 		A8CA58330793689B004BE921 /* CIExposure.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				2BDB908821836093000D7803 /* Base */,
+				2B65AC1722763BB2005CE6C9 /* en */,
 			);
 			name = CIExposure.nib;
 			sourceTree = "<group>";

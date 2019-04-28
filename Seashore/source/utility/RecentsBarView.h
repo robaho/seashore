@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface RecentsBarView : NSView <NSCollectionViewDelegate>
 {
     __weak IBOutlet id document;
-    __weak IBOutlet NSCollectionView *cview;
+    IBOutlet NSCollectionView *cview;
 }
 @end
 

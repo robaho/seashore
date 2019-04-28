@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
     __weak IBOutlet id document;
     
     // The actual view that is the recents bar
-    __weak IBOutlet id view;
+    IBOutlet id view;
     
     NSMutableArray *memories;
 }

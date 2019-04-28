@@ -25,13 +25,12 @@
 
 /* Begin PBXBuildFile section */
 		2B1F70DF21DC929A00D6F371 /* ColorSync.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B4046692185672100BCC2A2 /* ColorSync.framework */; };
-		2B1F70E221DC969500D6F371 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1F70E121DC969400D6F371 /* CoreGraphics.framework */; };
+		2B1F70E221DC969500D6F371 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1F70E121DC969400D6F371 /* CoreGraphics.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		2B1F70E821DC983500D6F371 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1F70E721DC983500D6F371 /* CoreServices.framework */; };
 		2B1F70EB21DD472B00D6F371 /* SeaColorProfiles.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1F70EA21DD472B00D6F371 /* SeaColorProfiles.m */; };
 		2B2D8CA221F7A026004527F2 /* OptionHelpButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B2D8CA121F7A026004527F2 /* OptionHelpButton.m */; };
 		2B2D8CA421F7C822004527F2 /* grabberTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2D8CA321F7C822004527F2 /* grabberTemplate.png */; };
 		2B2D8CA921F8C3E0004527F2 /* StatusBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B2D8CA821F8C3E0004527F2 /* StatusBarView.m */; };
-		2B2D8CAB21F8DB41004527F2 /* swapTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2D8CAA21F8DB40004527F2 /* swapTemplate.png */; };
 		2B2D8CC721F996A5004527F2 /* Alpha2Gray.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B2D8CC521F995BB004527F2 /* Alpha2Gray.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2B2D8CCA21F9A870004527F2 /* ZoomTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B2D8CC921F9A870004527F2 /* ZoomTool.m */; };
 		2B70A88B22061F4300E51F69 /* Plugins.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2BD5906D21E3BCF0002D150B /* Plugins.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -532,12 +531,15 @@
 		2B2D8CA321F7C822004527F2 /* grabberTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grabberTemplate.png; sourceTree = "<group>"; };
 		2B2D8CA721F8C3E0004527F2 /* StatusBarView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StatusBarView.h; sourceTree = "<group>"; };
 		2B2D8CA821F8C3E0004527F2 /* StatusBarView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StatusBarView.m; sourceTree = "<group>"; };
-		2B2D8CAA21F8DB40004527F2 /* swapTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = swapTemplate.png; sourceTree = "<group>"; };
 		2B2D8CC521F995BB004527F2 /* Alpha2Gray.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = Alpha2Gray.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B2D8CC821F9A870004527F2 /* ZoomTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZoomTool.h; sourceTree = "<group>"; };
 		2B2D8CC921F9A870004527F2 /* ZoomTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZoomTool.m; sourceTree = "<group>"; };
 		2B4046692185672100BCC2A2 /* ColorSync.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ColorSync.framework; path = System/Library/Frameworks/ColorSync.framework; sourceTree = SDKROOT; };
 		2B40466A2185672300BCC2A2 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
+		2B65AC05227612E1005CE6C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/SVGContent.nib; sourceTree = "<group>"; };
+		2B65AC06227612E1005CE6C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/CocoaContent.nib; sourceTree = "<group>"; };
+		2B65AC07227612E1005CE6C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/SeaDocument.nib; sourceTree = "<group>"; };
+		2B65AC08227612E1005CE6C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		2B8BD34421EA565C00FD9AC5 /* SeaPrintOptionsController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaPrintOptionsController.h; sourceTree = "<group>"; };
 		2B8BD34521EA565C00FD9AC5 /* SeaPrintOptionsController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeaPrintOptionsController.m; sourceTree = "<group>"; };
 		2B8BD35121EA6E1800FD9AC5 /* PrintPanelAccessory.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = PrintPanelAccessory.nib; path = /Users/robertengels/seashore/Seashore/resources/PrintPanelAccessory.nib; sourceTree = "<absolute>"; };
@@ -619,10 +621,6 @@
 		2BD5923421E3DBCE002D150B /* VertStripes.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = VertStripes.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BD5924D21E3E7CF002D150B /* XCFQuickLook.qlgenerator */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = XCFQuickLook.qlgenerator; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BD5924F21E3E7CF002D150B /* XCFSpotlight.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = XCFSpotlight.mdimporter; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BDB907921836088000D7803 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/SeaDocument.nib; sourceTree = "<group>"; };
-		2BDB907A21836089000D7803 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/MainMenu.nib; sourceTree = "<group>"; };
-		2BDB907B21836089000D7803 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/CocoaContent.nib; sourceTree = "<group>"; };
-		2BDB907C2183608A000D7803 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/SVGContent.nib; sourceTree = "<group>"; };
 		2BDD5E5A2208A05D00F9BC74 /* RecentsUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecentsUtility.h; sourceTree = "<group>"; };
 		2BDD5E5B2208A05D00F9BC74 /* RecentsUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecentsUtility.m; sourceTree = "<group>"; };
 		2BDD5E5D2208AE3200F9BC74 /* RecentsBarView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecentsBarView.h; sourceTree = "<group>"; };
@@ -1688,7 +1686,6 @@
 			isa = PBXGroup;
 			children = (
 				2BDD5E62220F33A300F9BC74 /* pencilLargeTemplate.png */,
-				2B2D8CAA21F8DB40004527F2 /* swapTemplate.png */,
 				2BED227B21F3FBF3005B496C /* eraserTemplate.png */,
 				2BED227921F3FBB7005B496C /* pencilTemplate.png */,
 				2BED225A21F3FB3D005B496C /* bucketTemplate.png */,
@@ -1854,7 +1851,7 @@
 				Japanese,
 				French,
 				German,
-				Base,
+				en,
 			);
 			mainGroup = 2A37F4AAFDCFA73011CA2CEA /* Seashore */;
 			projectDirPath = "";
@@ -1930,7 +1927,6 @@
 				DC70A07F0A6205DC000B8333 /* GeneralPrefsIcon.png in Resources */,
 				DC70A0800A6205DC000B8333 /* NewPrefsIcon.png in Resources */,
 				DC70A0D20A629E7F000B8333 /* MinusIcon.png in Resources */,
-				2B2D8CAB21F8DB41004527F2 /* swapTemplate.png in Resources */,
 				DC70A0D30A629E7F000B8333 /* PlusIcon.png in Resources */,
 				A830C7C80B8AE56B002AB85C /* effect-cursor.png in Resources */,
 				DC079DFC0C32082C00A08E2E /* ColorPrefsIcon.png in Resources */,
@@ -2155,7 +2151,7 @@
 		A81240C507E81A7A00F275BF /* SVGContent.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				2BDB907C2183608A000D7803 /* Base */,
+				2B65AC05227612E1005CE6C9 /* en */,
 			);
 			name = SVGContent.nib;
 			sourceTree = "<group>";
@@ -2187,7 +2183,7 @@
 		A87E672706D1F4A000A5C89A /* SeaDocument.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				2BDB907921836088000D7803 /* Base */,
+				2B65AC07227612E1005CE6C9 /* en */,
 			);
 			name = SeaDocument.nib;
 			sourceTree = "<group>";
@@ -2195,7 +2191,7 @@
 		A87E672B06D1F4A000A5C89A /* MainMenu.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				2BDB907A21836089000D7803 /* Base */,
+				2B65AC08227612E1005CE6C9 /* en */,
 			);
 			name = MainMenu.nib;
 			sourceTree = "<group>";
@@ -2203,7 +2199,7 @@
 		A87E672D06D1F4A000A5C89A /* CocoaContent.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				2BDB907B21836089000D7803 /* Base */,
+				2B65AC06227612E1005CE6C9 /* en */,
 			);
 			name = CocoaContent.nib;
 			sourceTree = "<group>";
@@ -2224,6 +2220,7 @@
 			baseConfigurationReference = 2BE76CD121EE937400B6C65F /* Seashore.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
@@ -2303,6 +2300,7 @@
 			baseConfigurationReference = 2BE76CD121EE937400B6C65F /* Seashore.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;

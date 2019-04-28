@@ -99,12 +99,13 @@
 -(void)drawAt:(NSRect)rect
 {
     NSImage *img = [NSImage imageNamed:@"pencilLargeTemplate.png"];
-    
+//    [img setFlipped:true];
+
     NSRect imageRect = NSMakeRect(4,8,32,32);
-    [img drawInRect:imageRect];
-    
+    [img drawInRect:imageRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:true hints:NULL];
+
     NSString *size = [NSString stringWithFormat:@"%d",pencilSize];
-    
+
     NSFont *font = [NSFont systemFontOfSize:9.0];
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, [NSColor whiteColor], NSForegroundColorAttributeName, NULL];
     [NSGraphicsContext saveGraphicsState];
@@ -147,10 +148,11 @@
 -(void)drawAt:(NSRect)rect
 {
     NSImage *img = [NSImage imageNamed:@"bucketTemplate.png"];
-    
+//    [img setFlipped:true];
+
     NSRect imageRect = NSMakeRect(4,8,32,32);
-    [img drawInRect:imageRect];
-   
+    [img drawInRect:imageRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:true hints:NULL];
+
 }
 
 -(void)restore
