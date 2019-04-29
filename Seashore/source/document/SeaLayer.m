@@ -556,6 +556,7 @@
 	
 	thumbnail = [[NSImage alloc] initWithSize:NSMakeSize(thumbWidth, thumbHeight)];
 	[thumbnail addRepresentation:tempRep];
+    [thumbnail setFlipped:true];
 		
 	return thumbnail;
 }
