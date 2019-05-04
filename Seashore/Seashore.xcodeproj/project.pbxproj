@@ -626,7 +626,7 @@
 		2BDD5E5B2208A05D00F9BC74 /* RecentsUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecentsUtility.m; sourceTree = "<group>"; };
 		2BDD5E5D2208AE3200F9BC74 /* RecentsBarView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecentsBarView.h; sourceTree = "<group>"; };
 		2BDD5E5E2208AE3200F9BC74 /* RecentsBarView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecentsBarView.m; sourceTree = "<group>"; };
-		2BDD5E62220F33A300F9BC74 /* pencilLargeTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pencilLargeTemplate.png; path = ../../../../../Downloads/pencilLargeTemplate.png; sourceTree = "<group>"; };
+		2BDD5E62220F33A300F9BC74 /* pencilLargeTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pencilLargeTemplate.png; sourceTree = "<group>"; };
 		2BE76CD121EE937400B6C65F /* Seashore.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Seashore.xcconfig; path = ../Seashore.xcconfig; sourceTree = "<group>"; };
 		2BED225521F3F899005B496C /* textTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = textTemplate.png; sourceTree = "<group>"; };
 		2BED225821F3FB3D005B496C /* rectangleTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rectangleTemplate.png; sourceTree = "<group>"; };
