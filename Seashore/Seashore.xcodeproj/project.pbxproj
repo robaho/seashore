@@ -137,6 +137,7 @@
 		2BED227A21F3FBB7005B496C /* pencilTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BED227921F3FBB7005B496C /* pencilTemplate.png */; };
 		2BED227C21F3FBF3005B496C /* eraserTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BED227B21F3FBF3005B496C /* eraserTemplate.png */; };
 		2BED227E21F4D958005B496C /* clone-cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BED227D21F4D958005B496C /* clone-cursor.png */; };
+		2BF40507227DC8DB0091E1EA /* swapTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF40506227DC8DB0091E1EA /* swapTemplate.png */; };
 		2BFF47FE22067E6400640509 /* PocketSVG.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BFF47FD22067E6400640509 /* PocketSVG.framework */; };
 		2BFF47FF22067E6400640509 /* PocketSVG.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2BFF47FD22067E6400640509 /* PocketSVG.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		56C8A64D1055A1DA0056E36F /* normalTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 56C8A64C1055A1DA0056E36F /* normalTemplate.png */; };
@@ -647,6 +648,7 @@
 		2BED227B21F3FBF3005B496C /* eraserTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eraserTemplate.png; sourceTree = "<group>"; };
 		2BED227D21F4D958005B496C /* clone-cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clone-cursor.png"; sourceTree = "<group>"; };
 		2BF173CD21D58AB400579D9D /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		2BF40506227DC8DB0091E1EA /* swapTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = swapTemplate.png; sourceTree = "<group>"; };
 		2BFF47FD22067E6400640509 /* PocketSVG.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PocketSVG.framework; path = ../PocketSVG/PocketSVG.framework; sourceTree = "<group>"; };
 		56C8A64C1055A1DA0056E36F /* normalTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = normalTemplate.png; sourceTree = "<group>"; };
 		A801053106945E1E00A80207 /* GradientTool.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = GradientTool.h; sourceTree = "<group>"; };
@@ -1685,6 +1687,7 @@
 		F5A77790040101DB01DD7B36 /* tools */ = {
 			isa = PBXGroup;
 			children = (
+				2BF40506227DC8DB0091E1EA /* swapTemplate.png */,
 				2BDD5E62220F33A300F9BC74 /* pencilLargeTemplate.png */,
 				2BED227B21F3FBF3005B496C /* eraserTemplate.png */,
 				2BED227921F3FBB7005B496C /* pencilTemplate.png */,
@@ -1958,6 +1961,7 @@
 				2BED226D21F3FB40005B496C /* gradientTemplate.png in Resources */,
 				2BED227221F3FB40005B496C /* cloneTemplate.png in Resources */,
 				DCB08D9110463653009DE7C3 /* selectalphaTemplate.png in Resources */,
+				2BF40507227DC8DB0091E1EA /* swapTemplate.png in Resources */,
 				DCB08D9210463653009DE7C3 /* selectinverseTemplate.png in Resources */,
 				2BED226F21F3FB40005B496C /* paintbrushTemplate.png in Resources */,
 				DCB08D9310463653009DE7C3 /* selectallTemplate.png in Resources */,
