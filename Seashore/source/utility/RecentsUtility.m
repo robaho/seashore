@@ -109,7 +109,7 @@
     NSFont *font = [NSFont systemFontOfSize:9.0];
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, [NSColor whiteColor], NSForegroundColorAttributeName, NULL];
     [NSGraphicsContext saveGraphicsState];
-    [[NSGraphicsContext currentContext] setCompositingOperation:NSCompositingOperationDifference];
+    [[NSGraphicsContext currentContext] setCompositingOperation:NSCompositeXOR];
     [size drawAtPoint:NSMakePoint(imageRect.origin.x+imageRect.size.width-8,imageRect.origin.y+imageRect.size.height-8) withAttributes:attributes];
     [NSGraphicsContext restoreGraphicsState];
 
