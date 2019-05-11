@@ -14,6 +14,7 @@
                 <outlet property="docWindow" destination="5" id="56"/>
                 <outlet property="exportersPopUp" destination="71" id="76"/>
                 <outlet property="gifExporter" destination="870" id="871"/>
+                <outlet property="heicExporter" destination="1tO-4B-6H8" id="feo-jb-glL"/>
                 <outlet property="helpers" destination="291" id="292"/>
                 <outlet property="jp2Exporter" destination="792" id="799"/>
                 <outlet property="jpegExporter" destination="328" id="332"/>
@@ -375,7 +376,7 @@
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <clipView key="contentView" drawsBackground="NO" id="sE3-sQ-GEf">
                                             <rect key="frame" x="0.0" y="0.0" width="198" height="379"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="44" indentationPerLevel="16" outlineTableColumn="9834" id="7811" customClass="SeaOutlineView">
                                                     <rect key="frame" x="0.0" y="0.0" width="198" height="379"/>
@@ -871,11 +872,126 @@ Gw
                 <outlet property="yValue" destination="540" id="552"/>
             </connections>
         </customObject>
+        <window title="JPEG Options" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="336" userLabel="JPEG Options" customClass="NSPanel">
+            <windowStyleMask key="styleMask" titled="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="520" y="370" width="360" height="354"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
+            <view key="contentView" id="337">
+                <rect key="frame" x="0.0" y="0.0" width="360" height="354"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField verticalHuggingPriority="750" id="339">
+                        <rect key="frame" x="17" y="275" width="326" height="14"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Please select the compression level:" id="16817">
+                            <font key="font" metaFont="smallSystem"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <slider toolTip="Compression level" verticalHuggingPriority="750" id="340">
+                        <rect key="frame" x="18" y="243" width="324" height="25"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <sliderCell key="cell" alignment="left" maxValue="30" tickMarkPosition="below" numberOfTickMarks="31" allowsTickMarkValuesOnly="YES" sliderType="linear" id="16818">
+                            <font key="font" size="12" name="Helvetica"/>
+                        </sliderCell>
+                        <connections>
+                            <action selector="compressionChanged:" target="328" id="353"/>
+                        </connections>
+                    </slider>
+                    <textField verticalHuggingPriority="750" id="341">
+                        <rect key="frame" x="186" y="60" width="154" height="13"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Compressed - 10%" id="16819">
+                            <font key="font" metaFont="label"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <imageView toolTip="Original version of the image" id="344" customClass="NSPreciseImageView">
+                        <rect key="frame" x="17" y="78" width="160" height="160"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="16820"/>
+                    </imageView>
+                    <imageView toolTip="Compressed version of the image" id="346" customClass="NSPreciseImageView">
+                        <rect key="frame" x="183" y="78" width="160" height="160"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="16821"/>
+                    </imageView>
+                    <box verticalHuggingPriority="750" boxType="separator" id="347">
+                        <rect key="frame" x="20" y="49" width="320" height="5"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </box>
+                    <button verticalHuggingPriority="750" imageHugsTitle="YES" id="349">
+                        <rect key="frame" x="250" y="12" width="96" height="32"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="16822">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="endPanel:" target="328" id="351"/>
+                        </connections>
+                    </button>
+                    <textField verticalHuggingPriority="750" id="372">
+                        <rect key="frame" x="20" y="60" width="154" height="13"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Original" id="16823">
+                            <font key="font" metaFont="label"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" autosizesCells="NO" id="677">
+                        <rect key="frame" x="18" y="295" width="324" height="18"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        <size key="cellSize" width="160" height="18"/>
+                        <size key="intercellSpacing" width="4" height="2"/>
+                        <buttonCell key="prototype" type="radio" title="Radio" imagePosition="leading" alignment="left" inset="2" id="17039">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <cells>
+                            <column>
+                                <buttonCell type="radio" title="Web (without CM)" imagePosition="leading" alignment="left" controlSize="small" state="on" toolTip="Create an image without an ICC Profile" inset="2" id="682">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="smallSystem"/>
+                                </buttonCell>
+                            </column>
+                            <column>
+                                <buttonCell type="radio" title="Print (with CM)" imagePosition="leading" alignment="left" controlSize="small" toolTip="Create an image with an ICC Profile" inset="2" id="683">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="smallSystem"/>
+                                </buttonCell>
+                            </column>
+                        </cells>
+                        <connections>
+                            <action selector="targetChanged:" target="328" id="685"/>
+                        </connections>
+                    </matrix>
+                    <textField verticalHuggingPriority="750" id="684">
+                        <rect key="frame" x="17" y="320" width="326" height="14"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Please select the target:" id="16824">
+                            <font key="font" metaFont="smallSystem"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                </subviews>
+            </view>
+            <point key="canvasLocation" x="891" y="462"/>
+        </window>
         <window title="Boundaries" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="109" userLabel="Margins" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="893" y="423" width="328" height="376"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
             <view key="contentView" id="117">
                 <rect key="frame" x="0.0" y="0.0" width="328" height="376"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -1188,6 +1304,121 @@ Gw
                 </subviews>
             </view>
         </window>
+        <window title="JP2 Options" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="800" userLabel="JP2 Options" customClass="NSPanel">
+            <windowStyleMask key="styleMask" titled="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="146" y="311" width="360" height="354"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
+            <view key="contentView" id="801">
+                <rect key="frame" x="0.0" y="0.0" width="360" height="354"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField verticalHuggingPriority="750" id="808">
+                        <rect key="frame" x="17" y="275" width="326" height="14"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Please select the compression level:" id="16845">
+                            <font key="font" metaFont="smallSystem"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <slider toolTip="Compression level" verticalHuggingPriority="750" id="814">
+                        <rect key="frame" x="18" y="243" width="324" height="25"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <sliderCell key="cell" alignment="left" maxValue="30" tickMarkPosition="below" numberOfTickMarks="31" allowsTickMarkValuesOnly="YES" sliderType="linear" id="16846">
+                            <font key="font" size="12" name="Helvetica"/>
+                        </sliderCell>
+                        <connections>
+                            <action selector="compressionChanged:" target="792" id="822"/>
+                        </connections>
+                    </slider>
+                    <textField verticalHuggingPriority="750" id="803">
+                        <rect key="frame" x="186" y="60" width="154" height="13"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Compressed - 10%" id="16840">
+                            <font key="font" metaFont="label"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <imageView toolTip="Original version of the image" id="805" customClass="NSPreciseImageView">
+                        <rect key="frame" x="17" y="78" width="160" height="160"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="16842"/>
+                    </imageView>
+                    <imageView toolTip="Compressed version of the image" id="807" customClass="NSPreciseImageView">
+                        <rect key="frame" x="183" y="78" width="160" height="160"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="16844"/>
+                    </imageView>
+                    <box verticalHuggingPriority="750" boxType="separator" id="812">
+                        <rect key="frame" x="20" y="49" width="320" height="5"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </box>
+                    <button verticalHuggingPriority="750" imageHugsTitle="YES" id="802">
+                        <rect key="frame" x="250" y="12" width="96" height="32"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="16839">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="endPanel:" target="792" id="823"/>
+                        </connections>
+                    </button>
+                    <textField verticalHuggingPriority="750" id="806">
+                        <rect key="frame" x="20" y="60" width="154" height="13"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Original" id="16843">
+                            <font key="font" metaFont="label"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" autosizesCells="NO" id="809">
+                        <rect key="frame" x="18" y="295" width="324" height="18"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        <size key="cellSize" width="160" height="18"/>
+                        <size key="intercellSpacing" width="4" height="2"/>
+                        <buttonCell key="prototype" type="radio" title="Radio" imagePosition="leading" alignment="left" inset="2" id="17041">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <cells>
+                            <column>
+                                <buttonCell type="radio" title="Web (without CM)" imagePosition="leading" alignment="left" controlSize="small" state="on" toolTip="Create an image without an ICC Profile" inset="2" id="811">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="smallSystem"/>
+                                </buttonCell>
+                            </column>
+                            <column>
+                                <buttonCell type="radio" title="Print (with CM)" imagePosition="leading" alignment="left" controlSize="small" toolTip="Create an image with an ICC Profile" inset="2" id="810">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="smallSystem"/>
+                                </buttonCell>
+                            </column>
+                        </cells>
+                        <connections>
+                            <action selector="targetChanged:" target="792" id="824"/>
+                        </connections>
+                    </matrix>
+                    <textField verticalHuggingPriority="750" id="804">
+                        <rect key="frame" x="17" y="320" width="326" height="14"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Please select the target:" id="16841">
+                            <font key="font" metaFont="smallSystem"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                </subviews>
+            </view>
+            <point key="canvasLocation" x="566" y="147"/>
+        </window>
         <customObject id="119" userLabel="SeaMargins" customClass="SeaMargins">
             <connections>
                 <outlet property="bottomLabel" destination="1057" id="1078"/>
@@ -1497,6 +1728,120 @@ Gw
                 <outlet property="zoomTool" destination="D6l-fn-e2E" id="8jP-dh-6FM"/>
             </connections>
         </customObject>
+        <window title="HEIC Options" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="Ymb-N1-0M8" userLabel="HEIC Options" customClass="NSPanel">
+            <windowStyleMask key="styleMask" titled="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="146" y="311" width="360" height="354"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
+            <view key="contentView" id="hDB-Ua-oTL">
+                <rect key="frame" x="0.0" y="0.0" width="360" height="354"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField verticalHuggingPriority="750" id="hn9-id-r99">
+                        <rect key="frame" x="17" y="275" width="326" height="14"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Please select the compression level:" id="YMw-gg-3mC">
+                            <font key="font" metaFont="smallSystem"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <slider toolTip="Compression level" verticalHuggingPriority="750" id="snc-sg-tMo">
+                        <rect key="frame" x="18" y="243" width="324" height="25"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <sliderCell key="cell" alignment="left" maxValue="30" tickMarkPosition="below" numberOfTickMarks="31" allowsTickMarkValuesOnly="YES" sliderType="linear" id="EsA-sl-ROc">
+                            <font key="font" size="12" name="Helvetica"/>
+                        </sliderCell>
+                        <connections>
+                            <action selector="compressionChanged:" target="1tO-4B-6H8" id="e6W-Gd-ivZ"/>
+                        </connections>
+                    </slider>
+                    <textField verticalHuggingPriority="750" id="3dn-UA-ELi">
+                        <rect key="frame" x="186" y="60" width="154" height="13"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Compressed - 10%" id="HBg-eR-VBQ">
+                            <font key="font" metaFont="label"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <imageView toolTip="Original version of the image" id="1NF-9N-fRh" customClass="NSPreciseImageView">
+                        <rect key="frame" x="17" y="78" width="160" height="160"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="jWa-5k-PBK"/>
+                    </imageView>
+                    <imageView toolTip="Compressed version of the image" id="Vj4-RZ-scX" customClass="NSPreciseImageView">
+                        <rect key="frame" x="183" y="78" width="160" height="160"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="IW1-i5-e43"/>
+                    </imageView>
+                    <box verticalHuggingPriority="750" boxType="separator" id="x3U-3r-CEq">
+                        <rect key="frame" x="20" y="49" width="320" height="5"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </box>
+                    <button verticalHuggingPriority="750" imageHugsTitle="YES" id="wpj-Vy-MPe">
+                        <rect key="frame" x="250" y="12" width="96" height="32"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="Nje-Ag-9uR">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="endPanel:" target="1tO-4B-6H8" id="hNC-Ww-gB9"/>
+                        </connections>
+                    </button>
+                    <textField verticalHuggingPriority="750" id="NK8-m4-hsR">
+                        <rect key="frame" x="20" y="60" width="154" height="13"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Original" id="Olu-Uw-7So">
+                            <font key="font" metaFont="label"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" autosizesCells="NO" id="ss3-fb-gJH">
+                        <rect key="frame" x="18" y="295" width="324" height="18"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        <size key="cellSize" width="160" height="18"/>
+                        <size key="intercellSpacing" width="4" height="2"/>
+                        <buttonCell key="prototype" type="radio" title="Radio" imagePosition="left" alignment="left" inset="2" id="LxO-zh-JyN">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <cells>
+                            <column>
+                                <buttonCell type="radio" title="Web (without CM)" imagePosition="left" alignment="left" controlSize="small" state="on" toolTip="Create an image without an ICC Profile" inset="2" id="n6T-m5-wFu">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="smallSystem"/>
+                                </buttonCell>
+                            </column>
+                            <column>
+                                <buttonCell type="radio" title="Print (with CM)" imagePosition="left" alignment="left" controlSize="small" toolTip="Create an image with an ICC Profile" inset="2" id="UHJ-ot-oVL">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="smallSystem"/>
+                                </buttonCell>
+                            </column>
+                        </cells>
+                        <connections>
+                            <action selector="targetChanged:" target="1tO-4B-6H8" id="drY-em-SUg"/>
+                        </connections>
+                    </matrix>
+                    <textField verticalHuggingPriority="750" id="fS4-Uj-eXZ">
+                        <rect key="frame" x="17" y="320" width="326" height="14"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Please select the target:" id="TS2-kt-rFT">
+                            <font key="font" metaFont="smallSystem"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                </subviews>
+            </view>
+        </window>
         <window title="Insert Text..." allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="276" userLabel="Insert Text" customClass="MovePanel">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -1538,15 +1883,15 @@ Gw
                         <rect key="frame" x="20" y="34" width="440" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <clipView key="contentView" drawsBackground="NO" id="zX2-tZ-Cdx">
-                            <rect key="frame" x="1" y="1" width="427" height="54"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <rect key="frame" x="1" y="1" width="423" height="54"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" usesFontPanel="YES" usesRuler="YES" spellingCorrection="YES" smartInsertDelete="YES" id="1007" customClass="NSTextViewRedirect">
                                     <rect key="frame" x="0.0" y="0.0" width="459" height="54"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                    <size key="minSize" width="427" height="54"/>
+                                    <size key="minSize" width="423" height="54"/>
                                     <size key="maxSize" width="466" height="10000000"/>
                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <connections>
@@ -1594,6 +1939,111 @@ Gw
             </view>
             <point key="canvasLocation" x="28" y="572"/>
         </window>
+        <customView id="T2q-qG-4Xt" userLabel="toolbar items">
+            <rect key="frame" x="0.0" y="0.0" width="492" height="253"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <segmentedControl verticalHuggingPriority="750" id="ENK-7F-2Dq" userLabel="SelectionTB View">
+                    <rect key="frame" x="157" y="108" width="220" height="24"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                    <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="automatic" trackingMode="selectOne" id="p0q-wg-FBo">
+                        <font key="font" metaFont="system"/>
+                        <segments>
+                            <segment toolTip="Rectangle Select Tool" image="rectangleTemplate"/>
+                            <segment toolTip="Ellipse Select Tool" image="circleTemplate" tag="1"/>
+                            <segment toolTip="Lasso Select Tool" image="lassoTemplate" tag="2"/>
+                            <segment toolTip="Polygon Lasso Tool" image="polygonTemplate" tag="3"/>
+                            <segment toolTip="Wand Select Tool" image="wandTemplate" tag="4"/>
+                        </segments>
+                    </segmentedCell>
+                    <connections>
+                        <action selector="selectToolUsingSegmentTag:" target="1598" id="Uu3-l9-4Yt"/>
+                    </connections>
+                </segmentedControl>
+                <segmentedControl verticalHuggingPriority="750" id="DFd-u5-6hQ">
+                    <rect key="frame" x="157" y="138" width="176" height="24"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                    <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="automatic" trackingMode="selectOne" id="PmV-W0-wiI">
+                        <font key="font" metaFont="system"/>
+                        <segments>
+                            <segment toolTip="Eyedrop Tool" image="eyedropTemplate" tag="7"/>
+                            <segment toolTip="Crop Tool" image="cropTemplate" tag="12"/>
+                            <segment toolTip="Zoom Tool" image="zoomTemplate" tag="16">
+                                <nil key="label"/>
+                            </segment>
+                            <segment toolTip="Position Tool" image="moveTemplate" tag="17">
+                                <nil key="label"/>
+                            </segment>
+                        </segments>
+                    </segmentedCell>
+                    <connections>
+                        <action selector="selectToolUsingSegmentTag:" target="1598" id="lKj-4e-MqE"/>
+                    </connections>
+                </segmentedControl>
+                <segmentedControl verticalHuggingPriority="750" id="UOA-RA-pJO">
+                    <rect key="frame" x="157" y="170" width="264" height="24"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                    <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="automatic" trackingMode="selectOne" id="3Kh-ov-q6t">
+                        <font key="font" metaFont="system"/>
+                        <segments>
+                            <segment toolTip="Pencil Tool" image="pencilTemplate" tag="5"/>
+                            <segment toolTip="Brush Tool" image="paintbrushTemplate" tag="6"/>
+                            <segment toolTip="Text Tool" image="textTemplate" tag="8">
+                                <nil key="label"/>
+                            </segment>
+                            <segment toolTip="Eraser Tool" image="eraserTemplate" tag="9">
+                                <nil key="label"/>
+                            </segment>
+                            <segment toolTip="Bucket Tool" image="bucketTemplate" tag="10">
+                                <nil key="label"/>
+                            </segment>
+                            <segment toolTip="Gradient Tool" image="gradientTemplate" tag="11">
+                                <nil key="label"/>
+                            </segment>
+                        </segments>
+                    </segmentedCell>
+                    <connections>
+                        <action selector="selectToolUsingSegmentTag:" target="1598" id="Ccl-W6-jMF"/>
+                    </connections>
+                </segmentedControl>
+                <segmentedControl verticalHuggingPriority="750" id="ncZ-rJ-zPF">
+                    <rect key="frame" x="158" y="199" width="132" height="24"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                    <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="automatic" trackingMode="selectOne" id="lFY-rl-9KJ">
+                        <font key="font" metaFont="system"/>
+                        <segments>
+                            <segment toolTip="Effects Tool" image="effectTemplate" tag="15"/>
+                            <segment toolTip="Smudge Tool" image="smudgeTemplate" tag="14"/>
+                            <segment toolTip="Clone Tool" image="cloneTemplate" tag="13"/>
+                        </segments>
+                    </segmentedCell>
+                    <connections>
+                        <action selector="selectToolUsingSegmentTag:" target="1598" id="HTy-6j-sn5"/>
+                    </connections>
+                </segmentedControl>
+                <segmentedControl verticalHuggingPriority="750" id="60Y-Tw-PJZ" userLabel="SelectionEditTB View">
+                    <rect key="frame" x="157" y="79" width="176" height="24"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                    <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="automatic" trackingMode="momentary" id="QQp-hH-gq3">
+                        <font key="font" metaFont="system"/>
+                        <segments>
+                            <segment toolTip="Select None" image="selectnoneTemplate" tag="271"/>
+                            <segment toolTip="Select Alpha" image="selectalphaTemplate" tag="273"/>
+                            <segment toolTip="Select Inverse" image="selectinverseTemplate" tag="272">
+                                <nil key="label"/>
+                            </segment>
+                            <segment toolTip="Select All" image="selectallTemplate" tag="270">
+                                <nil key="label"/>
+                            </segment>
+                        </segments>
+                    </segmentedCell>
+                    <connections>
+                        <action selector="switchSelectionMode:" target="1598" id="6Ml-88-kbM"/>
+                    </connections>
+                </segmentedControl>
+            </subviews>
+            <point key="canvasLocation" x="-1857" y="-990.5"/>
+        </customView>
         <customObject id="288" userLabel="SeaOperations" customClass="SeaOperations">
             <connections>
                 <outlet property="seaAlignment" destination="662" id="861"/>
@@ -1663,121 +2113,6 @@ Gw
             </connections>
         </customObject>
         <customObject id="331" userLabel="XCFExporter" customClass="XCFExporter"/>
-        <window title="JPEG Options" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="336" userLabel="JPEG Options" customClass="NSPanel">
-            <windowStyleMask key="styleMask" titled="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="520" y="370" width="360" height="354"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
-            <view key="contentView" id="337">
-                <rect key="frame" x="0.0" y="0.0" width="360" height="354"/>
-                <autoresizingMask key="autoresizingMask"/>
-                <subviews>
-                    <textField verticalHuggingPriority="750" id="339">
-                        <rect key="frame" x="17" y="275" width="326" height="14"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Please select the compression level:" id="16817">
-                            <font key="font" metaFont="smallSystem"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <slider toolTip="Compression level" verticalHuggingPriority="750" id="340">
-                        <rect key="frame" x="18" y="243" width="324" height="25"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <sliderCell key="cell" alignment="left" maxValue="30" tickMarkPosition="below" numberOfTickMarks="31" allowsTickMarkValuesOnly="YES" sliderType="linear" id="16818">
-                            <font key="font" size="12" name="Helvetica"/>
-                        </sliderCell>
-                        <connections>
-                            <action selector="compressionChanged:" target="328" id="353"/>
-                        </connections>
-                    </slider>
-                    <textField verticalHuggingPriority="750" id="341">
-                        <rect key="frame" x="186" y="60" width="154" height="13"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Compressed - 10%" id="16819">
-                            <font key="font" metaFont="label"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <imageView toolTip="Original version of the image" id="344" customClass="NSPreciseImageView">
-                        <rect key="frame" x="17" y="78" width="160" height="160"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="16820"/>
-                    </imageView>
-                    <imageView toolTip="Compressed version of the image" id="346" customClass="NSPreciseImageView">
-                        <rect key="frame" x="183" y="78" width="160" height="160"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="16821"/>
-                    </imageView>
-                    <box verticalHuggingPriority="750" boxType="separator" id="347">
-                        <rect key="frame" x="20" y="49" width="320" height="5"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </box>
-                    <button verticalHuggingPriority="750" imageHugsTitle="YES" id="349">
-                        <rect key="frame" x="250" y="12" width="96" height="32"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="16822">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                            <string key="keyEquivalent" base64-UTF8="YES">
-DQ
-</string>
-                        </buttonCell>
-                        <connections>
-                            <action selector="endPanel:" target="328" id="351"/>
-                        </connections>
-                    </button>
-                    <textField verticalHuggingPriority="750" id="372">
-                        <rect key="frame" x="20" y="60" width="154" height="13"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Original" id="16823">
-                            <font key="font" metaFont="label"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" autosizesCells="NO" id="677">
-                        <rect key="frame" x="18" y="295" width="324" height="18"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        <size key="cellSize" width="160" height="18"/>
-                        <size key="intercellSpacing" width="4" height="2"/>
-                        <buttonCell key="prototype" type="radio" title="Radio" imagePosition="leading" alignment="left" inset="2" id="17039">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <cells>
-                            <column>
-                                <buttonCell type="radio" title="Web (without CM)" imagePosition="leading" alignment="left" controlSize="small" state="on" toolTip="Create an image without an ICC Profile" inset="2" id="682">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="smallSystem"/>
-                                </buttonCell>
-                            </column>
-                            <column>
-                                <buttonCell type="radio" title="Print (with CM)" imagePosition="leading" alignment="left" controlSize="small" toolTip="Create an image with an ICC Profile" inset="2" id="683">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="smallSystem"/>
-                                </buttonCell>
-                            </column>
-                        </cells>
-                        <connections>
-                            <action selector="targetChanged:" target="328" id="685"/>
-                        </connections>
-                    </matrix>
-                    <textField verticalHuggingPriority="750" id="684">
-                        <rect key="frame" x="17" y="320" width="326" height="14"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Please select the target:" id="16824">
-                            <font key="font" metaFont="smallSystem"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                </subviews>
-            </view>
-            <point key="canvasLocation" x="891" y="462"/>
-        </window>
         <customObject id="361" userLabel="EraserTool" customClass="EraserTool">
             <connections>
                 <outlet property="document" destination="-2" id="363"/>
@@ -1898,7 +2233,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <clipView key="contentView" id="Soe-9G-BN0">
                             <rect key="frame" x="1" y="1" width="231" height="94"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" id="415" customClass="NSExtendedTableView">
                                     <rect key="frame" x="0.0" y="0.0" width="231" height="94"/>
@@ -2200,120 +2535,15 @@ Gw
                 <outlet property="targetRadios" destination="809" id="817"/>
             </connections>
         </customObject>
-        <window title="JP2 Options" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="800" userLabel="JP2 Options" customClass="NSPanel">
-            <windowStyleMask key="styleMask" titled="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="146" y="311" width="360" height="354"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
-            <view key="contentView" id="801">
-                <rect key="frame" x="0.0" y="0.0" width="360" height="354"/>
-                <autoresizingMask key="autoresizingMask"/>
-                <subviews>
-                    <textField verticalHuggingPriority="750" id="808">
-                        <rect key="frame" x="17" y="275" width="326" height="14"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Please select the compression level:" id="16845">
-                            <font key="font" metaFont="smallSystem"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <slider toolTip="Compression level" verticalHuggingPriority="750" id="814">
-                        <rect key="frame" x="18" y="243" width="324" height="25"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <sliderCell key="cell" alignment="left" maxValue="30" tickMarkPosition="below" numberOfTickMarks="31" allowsTickMarkValuesOnly="YES" sliderType="linear" id="16846">
-                            <font key="font" size="12" name="Helvetica"/>
-                        </sliderCell>
-                        <connections>
-                            <action selector="compressionChanged:" target="792" id="822"/>
-                        </connections>
-                    </slider>
-                    <textField verticalHuggingPriority="750" id="803">
-                        <rect key="frame" x="186" y="60" width="154" height="13"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Compressed - 10%" id="16840">
-                            <font key="font" metaFont="label"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <imageView toolTip="Original version of the image" id="805" customClass="NSPreciseImageView">
-                        <rect key="frame" x="17" y="78" width="160" height="160"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="16842"/>
-                    </imageView>
-                    <imageView toolTip="Compressed version of the image" id="807" customClass="NSPreciseImageView">
-                        <rect key="frame" x="183" y="78" width="160" height="160"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="16844"/>
-                    </imageView>
-                    <box verticalHuggingPriority="750" boxType="separator" id="812">
-                        <rect key="frame" x="20" y="49" width="320" height="5"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </box>
-                    <button verticalHuggingPriority="750" imageHugsTitle="YES" id="802">
-                        <rect key="frame" x="250" y="12" width="96" height="32"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="16839">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                            <string key="keyEquivalent" base64-UTF8="YES">
-DQ
-</string>
-                        </buttonCell>
-                        <connections>
-                            <action selector="endPanel:" target="792" id="823"/>
-                        </connections>
-                    </button>
-                    <textField verticalHuggingPriority="750" id="806">
-                        <rect key="frame" x="20" y="60" width="154" height="13"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Original" id="16843">
-                            <font key="font" metaFont="label"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" autosizesCells="NO" id="809">
-                        <rect key="frame" x="18" y="295" width="324" height="18"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        <size key="cellSize" width="160" height="18"/>
-                        <size key="intercellSpacing" width="4" height="2"/>
-                        <buttonCell key="prototype" type="radio" title="Radio" imagePosition="leading" alignment="left" inset="2" id="17041">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <cells>
-                            <column>
-                                <buttonCell type="radio" title="Web (without CM)" imagePosition="leading" alignment="left" controlSize="small" state="on" toolTip="Create an image without an ICC Profile" inset="2" id="811">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="smallSystem"/>
-                                </buttonCell>
-                            </column>
-                            <column>
-                                <buttonCell type="radio" title="Print (with CM)" imagePosition="leading" alignment="left" controlSize="small" toolTip="Create an image with an ICC Profile" inset="2" id="810">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="smallSystem"/>
-                                </buttonCell>
-                            </column>
-                        </cells>
-                        <connections>
-                            <action selector="targetChanged:" target="792" id="824"/>
-                        </connections>
-                    </matrix>
-                    <textField verticalHuggingPriority="750" id="804">
-                        <rect key="frame" x="17" y="320" width="326" height="14"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Please select the target:" id="16841">
-                            <font key="font" metaFont="smallSystem"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                </subviews>
-            </view>
-        </window>
+        <customObject id="1tO-4B-6H8" userLabel="HEICExporter" customClass="HEICExporter">
+            <connections>
+                <outlet property="compressImageView" destination="Vj4-RZ-scX" id="5RQ-Lb-ThN"/>
+                <outlet property="compressLabel" destination="3dn-UA-ELi" id="cnv-gg-y3a"/>
+                <outlet property="compressSlider" destination="snc-sg-tMo" id="B6l-nn-iEz"/>
+                <outlet property="panel" destination="Ymb-N1-0M8" id="B29-iu-LhF"/>
+                <outlet property="realImageView" destination="1NF-9N-fRh" id="bwZ-QK-Tjg"/>
+            </connections>
+        </customObject>
         <customObject id="856" userLabel="LassoTool" customClass="LassoTool">
             <connections>
                 <outlet property="document" destination="-2" id="857"/>
@@ -5049,7 +5279,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <clipView key="contentView" id="lgO-ZC-m12">
                             <rect key="frame" x="1" y="1" width="199" height="160"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="14" id="11980">
                                     <rect key="frame" x="0.0" y="0.0" width="199" height="160"/>
@@ -5211,7 +5441,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <clipView key="contentView" id="5IG-Ux-tar">
                             <rect key="frame" x="1" y="1" width="231" height="94"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" id="8wZ-Nr-BCs" customClass="NSExtendedTableView">
                                     <rect key="frame" x="0.0" y="0.0" width="231" height="94"/>
@@ -5328,111 +5558,6 @@ DQ
                 <outlet property="transformTBView" destination="DFd-u5-6hQ" id="TXD-M9-um3"/>
             </connections>
         </customObject>
-        <customView id="T2q-qG-4Xt" userLabel="toolbar items">
-            <rect key="frame" x="0.0" y="0.0" width="492" height="253"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <subviews>
-                <segmentedControl verticalHuggingPriority="750" id="ENK-7F-2Dq" userLabel="SelectionTB View">
-                    <rect key="frame" x="157" y="108" width="220" height="24"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                    <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="automatic" trackingMode="selectOne" id="p0q-wg-FBo">
-                        <font key="font" metaFont="system"/>
-                        <segments>
-                            <segment toolTip="Rectangle Select Tool" image="rectangleTemplate"/>
-                            <segment toolTip="Ellipse Select Tool" image="circleTemplate" tag="1"/>
-                            <segment toolTip="Lasso Select Tool" image="lassoTemplate" tag="2"/>
-                            <segment toolTip="Polygon Lasso Tool" image="polygonTemplate" tag="3"/>
-                            <segment toolTip="Wand Select Tool" image="wandTemplate" tag="4"/>
-                        </segments>
-                    </segmentedCell>
-                    <connections>
-                        <action selector="selectToolUsingSegmentTag:" target="1598" id="Uu3-l9-4Yt"/>
-                    </connections>
-                </segmentedControl>
-                <segmentedControl verticalHuggingPriority="750" id="DFd-u5-6hQ">
-                    <rect key="frame" x="157" y="138" width="176" height="24"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                    <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="automatic" trackingMode="selectOne" id="PmV-W0-wiI">
-                        <font key="font" metaFont="system"/>
-                        <segments>
-                            <segment toolTip="Eyedrop Tool" image="eyedropTemplate" tag="7"/>
-                            <segment toolTip="Crop Tool" image="cropTemplate" tag="12"/>
-                            <segment toolTip="Zoom Tool" image="zoomTemplate" tag="16">
-                                <nil key="label"/>
-                            </segment>
-                            <segment toolTip="Position Tool" image="moveTemplate" tag="17">
-                                <nil key="label"/>
-                            </segment>
-                        </segments>
-                    </segmentedCell>
-                    <connections>
-                        <action selector="selectToolUsingSegmentTag:" target="1598" id="lKj-4e-MqE"/>
-                    </connections>
-                </segmentedControl>
-                <segmentedControl verticalHuggingPriority="750" id="UOA-RA-pJO">
-                    <rect key="frame" x="157" y="170" width="264" height="24"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                    <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="automatic" trackingMode="selectOne" id="3Kh-ov-q6t">
-                        <font key="font" metaFont="system"/>
-                        <segments>
-                            <segment toolTip="Pencil Tool" image="pencilTemplate" tag="5"/>
-                            <segment toolTip="Brush Tool" image="paintbrushTemplate" tag="6"/>
-                            <segment toolTip="Text Tool" image="textTemplate" tag="8">
-                                <nil key="label"/>
-                            </segment>
-                            <segment toolTip="Eraser Tool" image="eraserTemplate" tag="9">
-                                <nil key="label"/>
-                            </segment>
-                            <segment toolTip="Bucket Tool" image="bucketTemplate" tag="10">
-                                <nil key="label"/>
-                            </segment>
-                            <segment toolTip="Gradient Tool" image="gradientTemplate" tag="11">
-                                <nil key="label"/>
-                            </segment>
-                        </segments>
-                    </segmentedCell>
-                    <connections>
-                        <action selector="selectToolUsingSegmentTag:" target="1598" id="Ccl-W6-jMF"/>
-                    </connections>
-                </segmentedControl>
-                <segmentedControl verticalHuggingPriority="750" id="ncZ-rJ-zPF">
-                    <rect key="frame" x="158" y="199" width="132" height="24"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                    <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="automatic" trackingMode="selectOne" id="lFY-rl-9KJ">
-                        <font key="font" metaFont="system"/>
-                        <segments>
-                            <segment toolTip="Effects Tool" image="effectTemplate" tag="15"/>
-                            <segment toolTip="Smudge Tool" image="smudgeTemplate" tag="14"/>
-                            <segment toolTip="Clone Tool" image="cloneTemplate" tag="13"/>
-                        </segments>
-                    </segmentedCell>
-                    <connections>
-                        <action selector="selectToolUsingSegmentTag:" target="1598" id="HTy-6j-sn5"/>
-                    </connections>
-                </segmentedControl>
-                <segmentedControl verticalHuggingPriority="750" id="60Y-Tw-PJZ" userLabel="SelectionEditTB View">
-                    <rect key="frame" x="157" y="79" width="176" height="24"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                    <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="automatic" trackingMode="momentary" id="QQp-hH-gq3">
-                        <font key="font" metaFont="system"/>
-                        <segments>
-                            <segment toolTip="Select None" image="selectnoneTemplate" tag="271"/>
-                            <segment toolTip="Select Alpha" image="selectalphaTemplate" tag="273"/>
-                            <segment toolTip="Select Inverse" image="selectinverseTemplate" tag="272">
-                                <nil key="label"/>
-                            </segment>
-                            <segment toolTip="Select All" image="selectallTemplate" tag="270">
-                                <nil key="label"/>
-                            </segment>
-                        </segments>
-                    </segmentedCell>
-                    <connections>
-                        <action selector="switchSelectionMode:" target="1598" id="6Ml-88-kbM"/>
-                    </connections>
-                </segmentedControl>
-            </subviews>
-            <point key="canvasLocation" x="-1857" y="-990.5"/>
-        </customView>
         <customObject id="1599" userLabel="OptionsUtility" customClass="OptionsUtility">
             <connections>
                 <outlet property="blankView" destination="2801" id="2804"/>

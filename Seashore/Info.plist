@@ -325,6 +325,27 @@
 			<key>NSPersistentStoreTypeKey</key>
 			<string>Binary</string>
 		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>heic</string>
+				<string>HEIC</string>
+			</array>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>image/heic</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>HEIC image</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>public.heic</string>
+			</array>
+			<key>NSDocumentClass</key>
+			<string>SeaDocument</string>
+		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
 	<string>Seashore</string>

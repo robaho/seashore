@@ -13,6 +13,7 @@
 	if([controller type: aType isContainedInDocType: @"TIFF image"] ||
 	   [controller type: aType isContainedInDocType: @"Portable Network Graphics image"] ||
 	   [controller type: aType isContainedInDocType: @"JPEG image"] ||
+       [controller type: aType isContainedInDocType: @"HEIC image"] ||
 	   [controller type: aType isContainedInDocType: @"JPEG 2000 image"]){
 		return YES;
 	}else if ([controller type: aType isContainedInDocType: @"Graphics Interchange Format (GIF)"]){

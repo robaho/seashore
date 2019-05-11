@@ -203,14 +203,27 @@ enum {
     
 	// Believe it or not sometimes this function is called after it has already run
 	if (whiteboard == NULL) {
-		exporters = [NSArray arrayWithObjects:
-					 gifExporter,
-					 jpegExporter,
-					 jp2Exporter,
-					 pngExporter,
-					 tiffExporter,
-					 xcfExporter,
-					 NULL];
+        if (@available(macOS 10.13.4, *)) {
+            exporters = [NSArray arrayWithObjects:
+                         gifExporter,
+                         jpegExporter,
+                         jp2Exporter,
+                         pngExporter,
+                         tiffExporter,
+                         xcfExporter,
+                         heicExporter,
+                         NULL];
+        } else {
+            exporters = [NSArray arrayWithObjects:
+                         gifExporter,
+                         jpegExporter,
+                         jp2Exporter,
+                         pngExporter,
+                         tiffExporter,
+                         xcfExporter,
+                         NULL];
+        }
+
 		
 		// Create a fresh whiteboard and selection manager
 		whiteboard = [[SeaWhiteboard alloc] initWithDocument:self];
@@ -694,7 +707,10 @@ enum {
 	id type = [self fileType];
 	
 	if ([menuItem tag] == 171) {
-		if ([type isEqualToString:@"PDF Document"] || [type isEqualToString:@"PICT Document"] || [type isEqualToString:@"Graphics Interchange Format Image"] || [type isEqualToString:@"Windows Bitmap Image"])
+		if ([type isEqualToString:@"PDF Document"] ||
+            [type isEqualToString:@"PICT Document"] ||
+            [type isEqualToString:@"Graphics Interchange Format Image"] ||
+            [type isEqualToString:@"Windows Bitmap Image"])
 			return NO;
 		if ([self isDocumentEdited] == NO)
 			return NO;

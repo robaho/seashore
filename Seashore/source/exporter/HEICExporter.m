@@ -1,4 +1,4 @@
-#import "JP2Exporter.h"
+#import "HEICExporter.h"
 #import "SeaContent.h"
 #import "SeaLayer.h"
 #import "SeaDocument.h"
@@ -6,33 +6,34 @@
 #import "Bitmap.h"
 #import "SeaDocument.h"
 #import "Bitmap.h"
+#import <CoreImage/CoreImage.h>
 
-@implementation JP2Exporter
+@implementation HEICExporter
 
 - (id)init
 {
     int value;
     
-    if ([gUserDefaults objectForKey:@"jp2 target"] == NULL)
+    if ([gUserDefaults objectForKey:@"heic target"] == NULL)
         targetWeb = YES;
     else
-        targetWeb = [gUserDefaults boolForKey:@"jp2 target"];
+        targetWeb = [gUserDefaults boolForKey:@"heic target"];
     
-    if ([gUserDefaults objectForKey:@"jp2 web compression"] == NULL) {
+    if ([gUserDefaults objectForKey:@"heic web compression"] == NULL) {
         value = 26;
     }
     else {
-        value = [gUserDefaults integerForKey:@"jp2 web compression"];
+        value = [gUserDefaults integerForKey:@"heic web compression"];
         if (value < 0 || value > kMaxCompression)
             value = 26;
     }
     webCompression = value;
     
-    if ([gUserDefaults objectForKey:@"jp2 print compression"] == NULL) {
+    if ([gUserDefaults objectForKey:@"heic print compression"] == NULL) {
         value = 30;
     }
     else {
-        value = [gUserDefaults integerForKey:@"jp2 print compression"];
+        value = [gUserDefaults integerForKey:@"heic print compression"];
         if (value < 0 || value > kMaxCompression)
             value = 30;
     }
@@ -156,11 +157,11 @@
     [panel orderOut:self];
     
     // Clean-up
-    [gUserDefaults setObject:(targetWeb ? @"YES" : @"NO") forKey:@"jp2 target"];
+    [gUserDefaults setObject:(targetWeb ? @"YES" : @"NO") forKey:@"heic target"];
     if (targetWeb)
-        [gUserDefaults setInteger:webCompression forKey:@"jp2 web compression"];
+        [gUserDefaults setInteger:webCompression forKey:@"heic web compression"];
     else
-        [gUserDefaults setInteger:printCompression forKey:@"jp2 print compression"];
+        [gUserDefaults setInteger:printCompression forKey:@"heic print compression"];
     free(sampleData);
 }
 
@@ -210,12 +211,12 @@
 
 - (NSString *)title
 {
-    return @"JPEG 2000 image";
+    return @"HEIC image";
 }
 
 - (NSString *)extension
 {
-    return @"jp2";
+    return @"heic";
 }
 
 - (NSString *)optionsString
@@ -231,7 +232,6 @@
     int width, height, spp, xres, yres;
     unsigned char *srcData, *destData;
     NSBitmapImageRep *imageRep;
-    NSData *imageData;
     BOOL hasAlpha = true;
     
     // Get the data to write
@@ -242,12 +242,14 @@
     xres = [[document contents] xres];
     yres = [[document contents] yres];
 
-    // Strip the alpha channel if necessary
-    destData = stripAlpha(srcData,width,height,spp);
-    if (destData!=srcData) {
-        spp--;
-        hasAlpha=false;
-    }
+//    // Strip the alpha channel if necessary
+//    destData = stripAlpha(srcData,width,height,spp);
+//    if (destData!=srcData) {
+//        spp--;
+//        hasAlpha=false;
+//    }
+    
+    destData = srcData;
     
     NSBitmapFormat bmf = 0;
     
@@ -264,18 +266,35 @@
         imageRep = [imageRep bitmapImageRepByConvertingToColorSpace:cs renderingIntent:NSColorRenderingIntentDefault];
     }
     
+    CIFormat ciFormat = (spp == 4 ? kCIFormatRGBA8 : kCIFormatLA8);
+    
+    CGColorSpaceRef ciCS = [[imageRep colorSpace] CGColorSpace];
+    
     NSSize newSize;
     newSize.width = [imageRep pixelsWide] * 72.0 / xres;  // x-resolution
     newSize.height = [imageRep pixelsHigh] * 72.0 / yres;  // y-resolution
     
     [imageRep setSize:newSize];
-
-    // Finally build the JPEG 2000 data
-    imageData = [imageRep representationUsingType:NSJPEG2000FileType properties:[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:[self reviseCompression]] forKey:NSImageCompressionFactor]];
     
-    // Save our file and let's go
-    [imageData writeToFile:path atomically:YES];
+    CIImage *ciImage = [[CIImage alloc] initWithBitmapImageRep:imageRep];
     
+//    CGColorSpaceRef csp = (spp == 4 ? CGColorSpaceCreateDeviceRGB() : CGColorSpaceCreateDeviceGray());
+    
+    CIContext *ctx = [CIContext context];
+    
+    NSURL *url = [NSURL fileURLWithPath:path];
+    
+    NSDictionary *options = @{(__bridge id)kCGImageDestinationLossyCompressionQuality:[NSNumber numberWithFloat:[self reviseCompression]]};
+    
+    if (@available(macOS 10.13.4, *)) {
+        [ctx writeHEIFRepresentationOfImage:ciImage toURL:url format:ciFormat colorSpace:ciCS options:options error:nil];
+    }
+//    // Finally build the JPEG 2000 data
+//    imageData = [imageRep representationUsingType:NSJPEG2000FileType properties:[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:[self reviseCompression]] forKey:NSImageCompressionFactor]];
+//
+//    // Save our file and let's go
+//    [imageData writeToFile:path atomically:YES];
+//
     // If the destination data is not equivalent to the source data free the former
     if (destData != srcData)
         free(destData);

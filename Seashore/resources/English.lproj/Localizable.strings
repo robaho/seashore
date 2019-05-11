@@ -108,6 +108,8 @@
 	<string>Indexed color not supported</string>
 	<key>jp2 not supported</key>
 	<string>The JPEG 2000 image format is only supported on systems running Mac OS 10.4 or later.</string>
+    <key>heic not supported</key>
+    <string>The HEIC image format is only supported on systems running Mac OS 10.13.4 or later.</string>
 	<key>layer title</key>
 	<string>Layer %d</string>
 	<key>locked body</key>
