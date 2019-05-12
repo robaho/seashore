@@ -410,14 +410,14 @@
                                                             </textFieldCell>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                         </tableColumn>
-                                                        <tableColumn identifier="Info Button Column" width="16" minWidth="16" maxWidth="16" id="9836">
+                                                        <tableColumn identifier="Info Button Column" editable="NO" width="16" minWidth="16" maxWidth="16" id="9836">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="I">
                                                                 <font key="font" metaFont="smallSystem"/>
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                             </tableHeaderCell>
-                                                            <buttonCell key="dataCell" type="roundTextured" bezelStyle="texturedRounded" image="layer-infoTemplate" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" imageScaling="proportionallyDown" inset="2" id="15197">
-                                                                <behavior key="behavior" lightByContents="YES"/>
+                                                            <buttonCell key="dataCell" type="bevel" bezelStyle="regularSquare" image="layer-infoTemplate" imagePosition="left" lineBreakMode="truncatingTail" inset="2" id="15197">
+                                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
                                                         </tableColumn>
@@ -1883,15 +1883,15 @@ Gw
                         <rect key="frame" x="20" y="34" width="440" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <clipView key="contentView" drawsBackground="NO" id="zX2-tZ-Cdx">
-                            <rect key="frame" x="1" y="1" width="423" height="54"/>
+                            <rect key="frame" x="1" y="1" width="427" height="54"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" usesFontPanel="YES" usesRuler="YES" spellingCorrection="YES" smartInsertDelete="YES" id="1007" customClass="NSTextViewRedirect">
-                                    <rect key="frame" x="0.0" y="0.0" width="459" height="54"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="463" height="54"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                    <size key="minSize" width="423" height="54"/>
+                                    <size key="minSize" width="427" height="54"/>
                                     <size key="maxSize" width="466" height="10000000"/>
                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <connections>

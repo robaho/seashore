@@ -93,7 +93,7 @@
 	}else if([[tableColumn identifier] isEqualToString:LAYER_VISIBLE_COL]){
 		return [NSNumber numberWithBool:[(SeaLayer *)item visible]];
 	}else if([[tableColumn identifier] isEqualToString:INFO_BUTTON_COL]){
-		return [NSNumber numberWithBool:YES];
+		return [NSNumber numberWithBool:NO];
 	}else{
 		NSLog(@"Object value for unkown column: %@", tableColumn);
 	}
