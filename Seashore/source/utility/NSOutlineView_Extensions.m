@@ -79,40 +79,6 @@
 
 @implementation SeaOutlineView
 
--(void)highlightSelectionInClipRect:(NSRect)theClipRect
-{
-    NSArray<NSColor*> *bgColors = [NSColor controlAlternatingRowBackgroundColors];
-    NSColor *select = [NSColor selectedControlColor];
-
-    [[NSBezierPath bezierPathWithRect:theClipRect] fill];
-    NSIndexSet *indecies = [self selectedRowIndexes];
-    int i;
-    
-    double pattern[] = { 3, 3};
-    for(i = 0; i < [self numberOfRows]; i++){
-        NSRect rect = [self rectOfRow:i];
-        NSColor *bg = bgColors[i%2];
-        if([indecies containsIndex: i]){
-            bool isMainWindow = [[self window] isMainWindow];
-            if(isMainWindow)
-                [select set];
-            else
-                [[select shadowWithLevel:.25] set];
-            [[NSBezierPath bezierPathWithRect: rect] fill];
-        }else{
-            [bg set];
-            [[NSBezierPath bezierPathWithRect: rect] fill];
-        }
-        [[NSColor gridColor] set];
-        NSBezierPath *path = [[NSBezierPath alloc] init];
-        [path moveToPoint:NSMakePoint(rect.origin.x,rect.origin.y+rect.size.height)];
-        [path lineToPoint:NSMakePoint(rect.origin.x+rect.size.width,rect.origin.y+rect.size.height)];
-        [path setLineWidth:2.0];
-        [path setLineDash:pattern count:2 phase:0];
-        [path stroke];
-    }
-}
-
 -(BOOL)acceptsFirstResponder
 {
     return NO;

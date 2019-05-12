@@ -56,7 +56,7 @@
                             <outlet property="window" destination="5" id="2881"/>
                         </connections>
                     </customView>
-                    <customView id="16667">
+                    <customView id="16667" userLabel="Content Pane">
                         <rect key="frame" x="0.0" y="0.0" width="942" height="533"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -376,13 +376,14 @@
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <clipView key="contentView" drawsBackground="NO" id="sE3-sQ-GEf">
                                             <rect key="frame" x="0.0" y="0.0" width="198" height="379"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="44" indentationPerLevel="16" outlineTableColumn="9834" id="7811" customClass="SeaOutlineView">
+                                                <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="44" indentationPerLevel="16" outlineTableColumn="9834" id="7811" customClass="SeaOutlineView">
                                                     <rect key="frame" x="0.0" y="0.0" width="198" height="379"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <size key="intercellSpacing" width="2" height="3"/>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    <tableViewGridLines key="gridStyleMask" dashed="YES"/>
                                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                     <tableColumns>
                                                         <tableColumn identifier="Layer Visible Checkbox Column" width="16" minWidth="16" maxWidth="16" id="9834">
@@ -429,7 +430,6 @@
                                                     </connections>
                                                 </outlineView>
                                             </subviews>
-                                            <nil key="backgroundColor"/>
                                         </clipView>
                                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="17050">
                                             <rect key="frame" x="-100" y="-100" width="183" height="15"/>
@@ -446,7 +446,7 @@
                                     </box>
                                 </subviews>
                             </customView>
-                            <customView id="2730">
+                            <customView id="2730" userLabel="Right Pane">
                                 <rect key="frame" x="199" y="0.0" width="743" height="533"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
