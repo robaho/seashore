@@ -93,6 +93,7 @@ extern void determineBrushMask(unsigned char *input, unsigned char *output, int 
 				NSLog(@"Brush \"%@\" failed to load\n", [path lastPathComponent]);
 				return NULL;
 			}
+            templateMask = malloc(width*height*2);
 		break;
 		case 4:
 			usePixmap = YES;
@@ -131,6 +132,7 @@ extern void determineBrushMask(unsigned char *input, unsigned char *output, int 
 	if (mask) free(mask);
 	if (pixmap) free(pixmap);
 	if (prePixmap) free(prePixmap);
+    if (templateMask) free(templateMask);
 }
 
 - (void)activate
@@ -220,12 +222,22 @@ extern void determineBrushMask(unsigned char *input, unsigned char *output, int 
 	// Create the representation
 	if (usePixmap)
 		tempRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&prePixmap pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:4 hasAlpha:YES isPlanar:NO colorSpaceName:MyRGBSpace bytesPerRow:width * 4 bitsPerPixel:8 * 4];
-	else
-		tempRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&mask pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:1 hasAlpha:NO isPlanar:NO colorSpaceName:NSDeviceBlackColorSpace bytesPerRow:width * 1 bitsPerPixel:8 * 1];
+    else {
+        // create a temlate image using alpha
+        
+        for(int row=0;row<height;row++){
+            for(int col=0;col<width;col++){
+                templateMask[(width*row+col)*2]=0x00;
+                templateMask[(width*row+col)*2+1]=mask[row*width+col];
+            }
+        }
+        premultiplyBitmap(2,templateMask,templateMask,width*height);
+        
+		tempRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&templateMask pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:2 hasAlpha:YES isPlanar:NO colorSpaceName:NSDeviceWhiteColorSpace bytesPerRow:width * 2 bitsPerPixel:8 * 2];
+    }
 	
 	// Wrap it up in an NSImage
 	thumbnail = [[NSImage alloc] initWithSize:NSMakeSize(thumbWidth, thumbHeight)];
-//    [thumbnail setTemplate:YES];
 	[thumbnail addRepresentation:tempRep];
     if (!usePixmap)
         [thumbnail setTemplate:TRUE];
