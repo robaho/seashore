@@ -450,7 +450,7 @@
                                 <rect key="frame" x="199" y="0.0" width="743" height="533"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <customView focusRingType="none" id="zTv-xo-Ehe" userLabel="Recents Bar" customClass="RecentsBarView">
+                                    <customView wantsLayer="YES" focusRingType="none" id="zTv-xo-Ehe" userLabel="Recents Bar" customClass="RecentsBarView">
                                         <rect key="frame" x="667" y="0.0" width="76" height="533"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" heightSizable="YES"/>
                                         <subviews>
@@ -5617,6 +5617,15 @@ CA
             </connections>
         </customObject>
         <userDefaultsController representsSharedInstance="YES" id="r3A-zL-KVo"/>
+        <collectionViewItem id="Npy-lm-5Jp">
+            <connections>
+                <outlet property="view" destination="Ffn-3L-1WL" id="Uxp-Mb-nfO"/>
+            </connections>
+        </collectionViewItem>
+        <view id="Ffn-3L-1WL">
+            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+            <autoresizingMask key="autoresizingMask"/>
+        </view>
     </objects>
     <resources>
         <image name="bucketTemplate" width="24" height="24"/>

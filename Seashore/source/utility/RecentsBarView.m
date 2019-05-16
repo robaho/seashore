@@ -36,14 +36,8 @@
 
 -(void)drawRect:(NSRect)dirtyRect
 {
-    NSCollectionView *parent = (NSCollectionView*)[self superview];
-    int index = (int)[[parent content] indexOfObject:memory];
-    
-    NSColor *bgc = (index %2==0) ? [parent backgroundColors][0] : [parent backgroundColors][1];
-    
     NSRect rect =NSMakeRect(0,4,kImageSize,kImageSize);
-    [bgc set];
-    [NSBezierPath fillRect:rect];
+    
     [memory drawAt:rect];
 
     [[NSColor gridColor] set];
