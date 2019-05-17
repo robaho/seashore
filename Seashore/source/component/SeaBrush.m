@@ -239,8 +239,6 @@ extern void determineBrushMask(unsigned char *input, unsigned char *output, int 
 	// Wrap it up in an NSImage
 	thumbnail = [[NSImage alloc] initWithSize:NSMakeSize(thumbWidth, thumbHeight)];
 	[thumbnail addRepresentation:tempRep];
-    if (!usePixmap)
-        [thumbnail setTemplate:TRUE];
 	
 	return thumbnail;
 }
@@ -366,11 +364,11 @@ extern void determineBrushMask(unsigned char *input, unsigned char *output, int 
 - (void)drawBrushAt:(NSRect)rect
 {
     
-    NSImage *thumbnail = [self thumbnail];
+    NSImage *thumbnail = getTinted([self thumbnail],[NSColor controlTextColor]);
     
     int xOffset = rect.size.width/2-[thumbnail size].width/2;
     int yOffset = rect.size.height/2-[thumbnail size].height/2;
-
+    
     // Draw the thumbnail
     [thumbnail drawAtPoint:NSMakePoint(rect.origin.x+xOffset,rect.origin.y+yOffset) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
     

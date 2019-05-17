@@ -23,6 +23,7 @@
 #import "TextureUtility.h"
 #import "SeaTools.h"
 #import "OptionsUtility.h"
+#import "Bitmap.h"
 
 @interface RememberedBase : NSObject
 {
@@ -98,9 +99,9 @@
 }
 -(void)drawAt:(NSRect)rect
 {
-    NSImage *img = [NSImage imageNamed:@"pencilLargeTemplate.png"];
+    NSImage *img = getTinted([NSImage imageNamed:@"pencilLargeTemplate.png"],[NSColor controlTextColor]);
 //    [img setFlipped:true];
-
+    
     NSRect imageRect = NSMakeRect(4,8,32,32);
     [img drawInRect:imageRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:true hints:NULL];
 
@@ -143,12 +144,10 @@
 }
 -(void)drawAt:(NSRect)rect
 {
-    NSImage *img = [NSImage imageNamed:@"bucketTemplate.png"];
-//    [img setFlipped:true];
+    NSImage *img = getTinted([NSImage imageNamed:@"bucketTemplate.png"],[NSColor controlTextColor]);
 
     NSRect imageRect = NSMakeRect(4,8,32,32);
     [img drawInRect:imageRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:true hints:NULL];
-
 }
 
 -(void)restore

@@ -184,4 +184,15 @@ inline unsigned char averagedComponentValue(int spp, unsigned char *data, int wi
 	return (total / count);
 }
 
+NSImage *getTinted(NSImage *src,NSColor *tint){
+    NSImage *copy = [src copy];
+    NSRect imageRect = NSMakeRect(0,0,[copy size].width,[copy size].height);
+    [copy lockFocus];
+    [[NSGraphicsContext currentContext] setCompositingOperation:NSCompositeSourceAtop];
+    [tint set];
+    [NSBezierPath fillRect:imageRect];
+    [copy unlockFocus];
+    return copy;
+}
+
 
