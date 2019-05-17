@@ -1883,16 +1883,16 @@ Gw
                         <rect key="frame" x="20" y="34" width="440" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <clipView key="contentView" drawsBackground="NO" id="zX2-tZ-Cdx">
-                            <rect key="frame" x="1" y="1" width="423" height="54"/>
-                            <autoresizingMask key="autoresizingMask"/>
+                            <rect key="frame" x="1" y="1" width="427" height="54"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" usesFontPanel="YES" usesRuler="YES" spellingCorrection="YES" smartInsertDelete="YES" id="1007" customClass="NSTextViewRedirect">
-                                    <rect key="frame" x="0.0" y="0.0" width="463" height="54"/>
+                                <textView importsGraphics="NO" verticallyResizable="YES" usesFontPanel="YES" usesRuler="YES" spellingCorrection="YES" smartInsertDelete="YES" id="1007" customClass="NSTextViewRedirect">
+                                    <rect key="frame" x="0.0" y="0.0" width="467" height="54"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                    <size key="minSize" width="423" height="54"/>
-                                    <size key="maxSize" width="466" height="10000000"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <size key="minSize" width="427" height="54"/>
+                                    <size key="maxSize" width="467" height="10000000"/>
                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <connections>
                                         <outlet property="delegate" destination="310" id="1017"/>
@@ -1944,9 +1944,9 @@ Gw
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <segmentedControl verticalHuggingPriority="750" id="ENK-7F-2Dq" userLabel="SelectionTB View">
-                    <rect key="frame" x="157" y="108" width="220" height="24"/>
+                    <rect key="frame" x="157" y="108" width="220" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                    <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="automatic" trackingMode="selectOne" id="p0q-wg-FBo">
+                    <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="texturedSquare" trackingMode="selectOne" id="p0q-wg-FBo">
                         <font key="font" metaFont="system"/>
                         <segments>
                             <segment toolTip="Rectangle Select Tool" image="rectangleTemplate"/>
@@ -1961,9 +1961,9 @@ Gw
                     </connections>
                 </segmentedControl>
                 <segmentedControl verticalHuggingPriority="750" id="DFd-u5-6hQ">
-                    <rect key="frame" x="157" y="138" width="176" height="24"/>
+                    <rect key="frame" x="157" y="138" width="176" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                    <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="automatic" trackingMode="selectOne" id="PmV-W0-wiI">
+                    <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="texturedSquare" trackingMode="selectOne" id="PmV-W0-wiI">
                         <font key="font" metaFont="system"/>
                         <segments>
                             <segment toolTip="Eyedrop Tool" image="eyedropTemplate" tag="7"/>
@@ -1981,9 +1981,9 @@ Gw
                     </connections>
                 </segmentedControl>
                 <segmentedControl verticalHuggingPriority="750" id="UOA-RA-pJO">
-                    <rect key="frame" x="157" y="170" width="264" height="24"/>
+                    <rect key="frame" x="157" y="170" width="264" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                    <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="automatic" trackingMode="selectOne" id="3Kh-ov-q6t">
+                    <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="texturedSquare" trackingMode="selectOne" id="3Kh-ov-q6t">
                         <font key="font" metaFont="system"/>
                         <segments>
                             <segment toolTip="Pencil Tool" image="pencilTemplate" tag="5"/>
@@ -2007,9 +2007,9 @@ Gw
                     </connections>
                 </segmentedControl>
                 <segmentedControl verticalHuggingPriority="750" id="ncZ-rJ-zPF">
-                    <rect key="frame" x="158" y="199" width="132" height="24"/>
+                    <rect key="frame" x="158" y="199" width="132" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                    <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="automatic" trackingMode="selectOne" id="lFY-rl-9KJ">
+                    <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="texturedSquare" trackingMode="selectOne" id="lFY-rl-9KJ">
                         <font key="font" metaFont="system"/>
                         <segments>
                             <segment toolTip="Effects Tool" image="effectTemplate" tag="15"/>
@@ -2022,9 +2022,9 @@ Gw
                     </connections>
                 </segmentedControl>
                 <segmentedControl verticalHuggingPriority="750" id="60Y-Tw-PJZ" userLabel="SelectionEditTB View">
-                    <rect key="frame" x="157" y="79" width="176" height="24"/>
+                    <rect key="frame" x="157" y="79" width="176" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                    <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="automatic" trackingMode="momentary" id="QQp-hH-gq3">
+                    <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="texturedSquare" trackingMode="selectOne" id="QQp-hH-gq3">
                         <font key="font" metaFont="system"/>
                         <segments>
                             <segment toolTip="Select None" image="selectnoneTemplate" tag="271"/>

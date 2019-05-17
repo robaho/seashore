@@ -11,6 +11,7 @@
 #import "TextureUtility.h"
 #import "SeaWhiteboard.h"
 #import "ToolboxUtility.h"
+#import "Bitmap.h"
 
 @implementation ColorSelectView
 
@@ -86,6 +87,8 @@
 	
     NSImage *image = [NSImage imageNamed:@"swapTemplate"];
     [image setFlipped:YES];
+    
+    image = getTinted(image,[NSColor controlTextColor]);
 	// Draw the images
     [image drawInRect:swap fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:1.0];
 }

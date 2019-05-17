@@ -42,8 +42,9 @@ extern id gNewFont;
 	running = YES;
 	previewRect = IntMakeRect(0, 0, 0, 0);
 	[textbox setUsesFontPanel:NO];
-	[panel setAlphaValue:0.6];
-	[movePanel setAlphaValue:0.6];
+    [textbox setTextColor:[NSColor controlTextColor]];
+	[panel setAlphaValue:0.75];
+	[movePanel setAlphaValue:0.75];
 	[self preview:NULL];
 	[NSApp beginSheet:panel modalForWindow:[document window] modalDelegate:NULL didEndSelector:NULL contextInfo:NULL];
 }
