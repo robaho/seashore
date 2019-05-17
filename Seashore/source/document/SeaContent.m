@@ -1004,13 +1004,26 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     if (spp == 4 && selectedChannel == kAlphaChannel) {
         dspp = 2;
     }
-    
+
     data = convertImageRep(imageRep,dspp);
     if (!data) {
         NSLog(@"Required conversion not supported.");
         return;
     }
     
+    // Handle the special case where a GGGA graphic is wanted
+    if (spp == 4 && dspp == 2) {
+        unsigned char *tdata = malloc(make_128(rect.size.width * rect.size.height * 4));
+        for (i = 0; i < rect.size.width * rect.size.height; i++) {
+            tdata[i * 4] = data[i * 2];
+            tdata[i * 4 + 1] = data[i * 2];
+            tdata[i * 4 + 2] = data[i * 2];
+            tdata[i * 4 + 3] = data[i * 2 + 1];
+        }
+        free(data);
+        data = tdata;
+    }
+
     // Inform the helpers we will change the layer
     [[document helpers] activeLayerWillChange];
     
