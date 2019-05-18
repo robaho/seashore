@@ -23,5 +23,7 @@ If you are looking for an free, easy to use, image editing application with "lay
 Here's a nice article (with screenshots) on the Seashore project at [Libre Graphics World](http://libregraphicsworld.org/blog/entry/meet-seashore-free-image-editor-for-macos)
 
 # screenshots
+![screenshot](doc/ss1.png)
+![screenshot](doc/ss2.png)
 ![screenshot](doc/screenshot.png)
 ![screenshot](doc/screenshot2.png)
