@@ -4,7 +4,7 @@
 
 Seashore is now on the App Store !!! Please add your positive review there. Also, if you use it for your website, business, whatever, giving credit to Seashore and a link to the App Store will go a long way towards making the project survive and prosper.
 
-[![Download](https://linkmaker.itunes.apple.com/en-us/badge-lrg.svg?releaseDate=2019-01-15T00:00:00Z&kind=desktopapp&bubble=macos_apps)](https://geo.itunes.apple.com/us/app/seashore/id1448648921?mt=12&app=apps)
+[![Download](doc/download.png)](https://geo.itunes.apple.com/us/app/seashore/id1448648921?mt=12&app=apps)
 
 You can also download the latest DMG releases [here](https://github.com/robaho/seashore/releases), **but these will no longer perform "update checks"** - since this requires the App Store - so you will need to periodically check for new releases !
 
