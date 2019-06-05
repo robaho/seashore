@@ -37,7 +37,7 @@
     IntRect selection;
     
     unsigned char *data, *overlay, *replace;
-    int width, height, spp, channel;
+    int width, height, spp;
     
     pluginData = [(SeaPlugins *)seaPlugins data];
     [pluginData setOverlayOpacity:255];
@@ -63,7 +63,7 @@
     
     NSBitmapImageRep *imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height
                                                                       bitsPerSample:8 samplesPerPixel:spp hasAlpha:TRUE isPlanar:NO
-                                                                     colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace
+                                                                     colorSpaceName:MyRGBSpace
                                                                         bytesPerRow:width * spp bitsPerPixel:8 * spp];
     
 
@@ -84,28 +84,31 @@
     [NSGraphicsContext saveGraphicsState];
     [NSGraphicsContext setCurrentContext:ctx];
     
-    [imageRep drawInRect:to fromRect:from operation:NSCompositingOperationCopy fraction:1 respectFlipped:NO hints:NULL];
-    
-    // now draw image back into overlay buffer
-    
-    NSBitmapImageRep *overlayRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&overlay pixelsWide:width pixelsHigh:height
-                                                                        bitsPerSample:8 samplesPerPixel:spp hasAlpha:TRUE isPlanar:NO
-                                                                       colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace
-                                                                          bytesPerRow:width * spp bitsPerPixel:8 * spp];
-    
-    ctx = [NSGraphicsContext graphicsContextWithBitmapImageRep:overlayRep];
-    
-    [NSGraphicsContext setCurrentContext:ctx];
-    
-    [tmp drawAtPoint:from.origin];
+    [imageRep drawInRect:to fromRect:from operation:NSCompositeCopy fraction:1 respectFlipped:NO hints:NULL];
     
     [NSGraphicsContext restoreGraphicsState];
     
-    int j,pos;
+    // now copy into overlay
     
-    for (j = selection.origin.y; j < selection.origin.y + selection.size.height; j++) {
-        pos = j * width + selection.origin.x;
-        memset(replace+pos,255,selection.size.width);
+    for(int row=0;row<selheight;row++){
+        for(int col=0;col<selwidth;col++){
+            int index = (row+selection.origin.y)*width+(col+selection.origin.x);
+            int sindex = (row*selwidth)*dspp+col*dspp;
+            int c = 255.0/buffer[sindex];
+            int m = 255.0/buffer[sindex+1];
+            int y = 255.0/buffer[sindex+2];
+            int k = 255.0/buffer[sindex+3];
+
+            int r = 255 * (1-c)*(1-k);
+            int g = 255 * (1-m)*(1-k);
+            int b = 255 * (1-y)*(1-k);
+            
+            overlay[index*spp]=r;
+            overlay[index*spp+1]=g;
+            overlay[index*spp+2]=b;
+            overlay[index*spp+3]=data[index*spp+3];
+            replace[index]=25;
+        }
     }
 
     [pluginData apply];

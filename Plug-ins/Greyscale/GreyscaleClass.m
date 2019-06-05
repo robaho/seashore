@@ -37,7 +37,7 @@
 	IntRect selection;
     
 	unsigned char *data, *overlay, *replace;
-	int width, height, spp, channel;
+	int width, height, spp;
 	
 	pluginData = [(SeaPlugins *)seaPlugins data];
 	[pluginData setOverlayOpacity:255];
@@ -56,57 +56,17 @@
     int selwidth = selection.size.width;
     int selheight = selection.size.height;
     
-    int sely = height-(selection.origin.y+selheight); // need to reverse coordinates
-    
-    NSRect to = NSMakeRect(0,0,selwidth,selheight);
-    NSRect from = NSMakeRect(selection.origin.x,sely,selwidth,selheight);
-
-    NSBitmapImageRep *imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height
-                                                                      bitsPerSample:8 samplesPerPixel:spp hasAlpha:TRUE isPlanar:NO
-                                                                     colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace
-                                                                        bytesPerRow:width * spp bitsPerPixel:8 * spp];
-    
-    NSColorSpaceName csname = NSDeviceWhiteColorSpace;
-    
-    int dspp = 1;
-    unsigned char *buffer = malloc(selwidth*selheight*dspp);
-    
-    memset(buffer,0,selwidth*selheight*dspp);
-
-    NSBitmapImageRep *tmp = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&buffer pixelsWide:selwidth pixelsHigh:selheight
-                                                                 bitsPerSample:8 samplesPerPixel:dspp hasAlpha:FALSE isPlanar:NO
-                                                                colorSpaceName:csname
-                                                                   bytesPerRow:selwidth*dspp bitsPerPixel:8*dspp];
-    
-    NSGraphicsContext *ctx = [NSGraphicsContext graphicsContextWithBitmapImageRep:tmp];
-
-    [NSGraphicsContext saveGraphicsState];
-    [NSGraphicsContext setCurrentContext:ctx];
-    
-    [imageRep drawInRect:to fromRect:from operation:NSCompositingOperationCopy fraction:1 respectFlipped:NO hints:NULL];
-    
-    // now draw image back into overlay buffer
-    
-    NSBitmapImageRep *overlayRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&overlay pixelsWide:width pixelsHigh:height
-                                                                        bitsPerSample:8 samplesPerPixel:spp hasAlpha:TRUE isPlanar:NO
-                                                                       colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace
-                                                                          bytesPerRow:width * spp bitsPerPixel:8 * spp];
-    
-    ctx = [NSGraphicsContext graphicsContextWithBitmapImageRep:overlayRep];
-
-    [NSGraphicsContext setCurrentContext:ctx];
-    
-    [tmp drawAtPoint:from.origin];
-
-    [NSGraphicsContext restoreGraphicsState];
-    
-    int j,pos;
-    
-    for (j = selection.origin.y; j < selection.origin.y + selection.size.height; j++) {
-        pos = j * width + selection.origin.x;
-        memset(replace+pos,255,selection.size.width);
+    for(int row=0;row<selheight;row++){
+        for(int col=0;col<selwidth;col++){
+            int rindex = (row+selection.origin.y)*width+(col+selection.origin.x);
+            int index = rindex*spp;
+            int gray = ((int)data[index+0] + (int)data[index+1] + (int)data[index+2]) / 3;
+            overlay[index]=overlay[index+1]=overlay[index+2]=gray;
+            overlay[index+3]=data[index+3];
+            replace[rindex]=255;
+        }
     }
-	
+    
 	[pluginData apply];
 }
 
