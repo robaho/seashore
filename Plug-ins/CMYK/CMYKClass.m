@@ -94,10 +94,10 @@
         for(int col=0;col<selwidth;col++){
             int index = (row+selection.origin.y)*width+(col+selection.origin.x);
             int sindex = (row*selwidth)*dspp+col*dspp;
-            int c = 255.0/buffer[sindex];
-            int m = 255.0/buffer[sindex+1];
-            int y = 255.0/buffer[sindex+2];
-            int k = 255.0/buffer[sindex+3];
+            int c = buffer[sindex]/255.0;
+            int m = buffer[sindex+1]/255.0;
+            int y = buffer[sindex+2]/255.0;
+            int k = buffer[sindex+3]/255.0;
 
             int r = 255 * (1-c)*(1-k);
             int g = 255 * (1-m)*(1-k);

@@ -216,8 +216,9 @@ BOOL checkRun(NSString *path, NSString *file)
 
 - (IBAction)run:(id)sender
 {
-    [(PluginClass *)[plugins objectAtIndex:[sender tag] - 10000] run];
-    lastEffect = [sender tag] - 10000;
+    int index = (int)([sender tag] - 10000);
+    [(PluginClass *)[plugins objectAtIndex:index] run];
+    lastEffect = index;
 }
 
 - (IBAction)reapplyEffect:(id)sender
