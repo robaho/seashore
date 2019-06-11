@@ -39,7 +39,7 @@ typedef struct {
 	BOOL maskLibraryValid;
 	
 	// A cache of all the brushes
-	CachedMask *maskCache;
+    CachedMask *maskCache;
 	int checkCount;
 	
 	// A coloured pixmap of the brush (RGBA)

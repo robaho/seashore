@@ -325,7 +325,7 @@ extern void determineBrushMask(unsigned char *input, unsigned char *output, int 
 				}
 			}
 		}
-		if (maskCache[minCheckPos].lastCheck < maskCache[i].lastCheck) {
+		if (maskCache[minCheckPos].lastCheck > maskCache[i].lastCheck) {
 			minCheckPos = i;
 		}
 	}
