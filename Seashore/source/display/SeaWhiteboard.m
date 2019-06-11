@@ -48,6 +48,8 @@ extern IntPoint gScreenResolution;
 	memset(replace, 0, layerWidth * layerHeight);
 	altData = NULL;
     
+    group = dispatch_group_create();
+    
 	return self;
 }
 
@@ -368,13 +370,13 @@ extern IntPoint gScreenResolution;
     [(StatusUtility *)[[SeaController utilitiesManager] statusUtilityFor:document] update];
 }
 
-- (void)forcedChannelUpdate
+- (void)forcedChannelUpdate:(IntRect)minorUpdateRect
 {
 	id layer, flayer;
 	int layerWidth, layerHeight, lxoff, lyoff;
 	unsigned char *layerData, tempSpace[4], tempSpace2[4], *mask, *floatingData;
 	int i, j, k, temp, tx, ty, t, selectOpacity, nextOpacity;
-	IntRect selectRect, minorUpdateRect;
+	IntRect selectRect;
 	IntSize maskSize = IntMakeSize(0, 0);
 	IntPoint point, maskOffset = IntMakePoint(0, 0);
 	BOOL useSelection, floating;
@@ -409,17 +411,7 @@ extern IntPoint gScreenResolution;
 	lxoff = [(SeaLayer *)layer xoff];
 	lyoff = [(SeaLayer *)layer yoff];
 	layerData = [(SeaLayer *)layer data];
-	
-	// Determine the minor update rect
-	if (useUpdateRect) {
-		minorUpdateRect = updateRect;
-		IntOffsetRect(&minorUpdateRect, -[layer xoff],  -[layer yoff]);
-		minorUpdateRect = IntConstrainRect(minorUpdateRect, IntMakeRect(0, 0, layerWidth, layerHeight));
-	}
-	else {
-		minorUpdateRect = IntMakeRect(0, 0, layerWidth, layerHeight);
-	}
-	
+		
 	// Go through pixel-by-pixel working out the channel update
 	for (j = minorUpdateRect.origin.y; j < minorUpdateRect.origin.y + minorUpdateRect.size.height; j++) {
 		for (i = minorUpdateRect.origin.x; i < minorUpdateRect.origin.x + minorUpdateRect.size.width; i++) {
@@ -542,21 +534,44 @@ extern IntPoint gScreenResolution;
 	}
 }
 
-- (void)forcedUpdate
+-(void)forcedUpdate
+{
+    int HEIGHT=64;
+    IntRect majorUpdateRect;
+    
+    // Determine the major update rect
+    if (useUpdateRect) {
+        majorUpdateRect = IntConstrainRect(updateRect, IntMakeRect(0, 0, width, height));
+    }
+    else {
+        majorUpdateRect = IntMakeRect(0, 0, width, height);
+    }
+    dispatch_group_t group = self->group;
+    
+    if(group==nil || majorUpdateRect.size.height < HEIGHT){
+        [self forcedUpdateWithRect:majorUpdateRect];
+    } else {
+        dispatch_queue_t aQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
+        int height = majorUpdateRect.size.height;
+        IntRect rect = IntMakeRect(majorUpdateRect.origin.x,majorUpdateRect.origin.y,majorUpdateRect.size.width,HEIGHT);
+        while(height>0){
+            dispatch_group_async(group,aQueue,^{[self forcedUpdateWithRect:rect];});
+            height-=HEIGHT;
+            rect.origin.y += HEIGHT;
+            if(height<HEIGHT && height>0){
+                rect.size.height=height;
+            }
+        }
+        dispatch_group_wait(group,DISPATCH_TIME_FOREVER);
+    }
+}
+
+- (void)forcedUpdateWithRect:(IntRect)majorUpdateRect
 {
 	int i, count = 0, layerCount = [[document contents] layerCount];
-	IntRect majorUpdateRect;
 	CompositorOptions options;
 	BOOL floating;
 
-	// Determine the major update rect
-	if (useUpdateRect) {
-		majorUpdateRect = IntConstrainRect(updateRect, IntMakeRect(0, 0, width, height));
-	}
-	else {
-		majorUpdateRect = IntMakeRect(0, 0, width, height);
-	}
-	
 	// Handle non-channel updates here
 	if (majorUpdateRect.size.width > 0 && majorUpdateRect.size.height > 0) {
 		
@@ -613,7 +628,7 @@ extern IntPoint gScreenResolution;
 	
 	// Handle channel updates here
 	if (viewType == kPrimaryChannelsView || viewType == kAlphaChannelView) {
-		[self forcedChannelUpdate];
+        [self forcedChannelUpdate:majorUpdateRect];
 	}
 }
 
