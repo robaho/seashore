@@ -35,6 +35,7 @@
 		return NULL;
 	sourceSet = NO;
 	mergedData = NULL;
+    points = NULL;
 	return self;
 }
 
@@ -472,7 +473,7 @@ next:
 - (void)endLineDrawing
 {
 	// Tell the other thread to terminate
-	if (pos < kMaxBTPoints) {
+	if (sourceSet && points != NULL && pos < kMaxBTPoints) {
 		points[pos].special = 2;
 		pos++;
 	}
