@@ -83,11 +83,13 @@
 	width = [(SeaLayer *)[[document contents] activeLayer] width];
 	height = [(SeaLayer *)[[document contents] activeLayer] height];
 	spp = [[document contents] spp];
-	if ([[document selection] active])
-		rect = [[document selection] localRect];
+    
+    SeaSelection *selection = [document selection];
+	if ([selection active])
+		rect = [selection localRect];
 	else
 		rect = IntMakeRect(0, 0, width, height);
-	complex = [[document selection] active] && [[document selection] mask];
+	complex = [selection active] && [selection mask];
 	
 	// Erase selection if it is complex
 	if (complex) {
@@ -97,7 +99,7 @@
 				memcpy(&(edata[(j * rect.size.width + i) * spp]), &(data[((j + rect.origin.y) * width +  (i + rect.origin.x)) * spp]), spp);
 			}
 		}
-		[[document selection] deleteSelection];
+		[selection deleteSelection];
 	}
 	
 	// Do the correct flip
@@ -142,7 +144,7 @@
 	if (complex) free(edata);
 	
 	// Flip the selection
-	[[document selection] flipSelection:type];
+	[selection flipSelection:type];
 	
 	// Apply the changes
 	[[document whiteboard] setOverlayOpacity:255];
