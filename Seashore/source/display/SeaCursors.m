@@ -97,6 +97,10 @@
 	
 	int tool = [[[SeaController utilitiesManager] toolboxUtilityFor:document] tool];
 	SeaLayer *activeLayer = [[document contents] activeLayer];
+    
+    if(activeLayer==NULL)
+        return;
+    
 	float xScale = [[document contents] xscale];
 	float yScale = [[document contents] yscale];
 	NSRect operableRect;

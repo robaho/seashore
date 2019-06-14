@@ -212,7 +212,7 @@
 
 - (SeaLayer*)activeLayer
 {
-	return (activeLayerIndex < 0) ? NULL : [layers objectAtIndex:activeLayerIndex];
+	return (activeLayerIndex < 0 || layers == NULL) ? NULL : [layers objectAtIndex:activeLayerIndex];
 }
 
 - (int)activeLayerIndex
