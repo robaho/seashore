@@ -116,9 +116,11 @@ extern id gNewFont;
     initData = malloc(fontSize.width * fontSize.height * spp);
     for (j = 0; j < fontSize.height; j++) {
         for (i = 0; i < fontSize.width; i++) {
-            if (pos.y + j < height && pos.x + i < width) {
+            int dy = pos.y + j;
+            int dx = pos.x + i;
+            if (dy>=0 && dy < height && dx>=0 && dx < width) {
                 for (k = 0; k < spp; k++)
-                    initData[(j * fontSize.width + i) * spp + k] = data[((pos.y + j) * width + pos.x + i) * spp + k];
+                    initData[(j * fontSize.width + i) * spp + k] = data[((dy) * width + dx) * spp + k];
             }
             else {
                 for (k = 0; k < spp; k++)
