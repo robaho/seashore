@@ -370,13 +370,13 @@ extern IntPoint gScreenResolution;
     [(StatusUtility *)[[SeaController utilitiesManager] statusUtilityFor:document] update];
 }
 
-- (void)forcedChannelUpdate:(IntRect)minorUpdateRect
+- (void)forcedChannelUpdate:(IntRect)updateRect
 {
 	id layer, flayer;
 	int layerWidth, layerHeight, lxoff, lyoff;
 	unsigned char *layerData, tempSpace[4], tempSpace2[4], *mask, *floatingData;
 	int i, j, k, temp, tx, ty, t, selectOpacity, nextOpacity;
-	IntRect selectRect;
+	IntRect selectRect, minorUpdateRect;
 	IntSize maskSize = IntMakeSize(0, 0);
 	IntPoint point, maskOffset = IntMakePoint(0, 0);
 	BOOL useSelection, floating;
@@ -412,6 +412,10 @@ extern IntPoint gScreenResolution;
 	lyoff = [(SeaLayer *)layer yoff];
 	layerData = [(SeaLayer *)layer data];
 		
+    minorUpdateRect = updateRect;
+    IntOffsetRect(&minorUpdateRect, -[layer xoff],  -[layer yoff]);
+    minorUpdateRect = IntConstrainRect(minorUpdateRect, IntMakeRect(0, 0, layerWidth, layerHeight));
+
 	// Go through pixel-by-pixel working out the channel update
 	for (j = minorUpdateRect.origin.y; j < minorUpdateRect.origin.y + minorUpdateRect.size.height; j++) {
 		for (i = minorUpdateRect.origin.x; i < minorUpdateRect.origin.x + minorUpdateRect.size.width; i++) {
