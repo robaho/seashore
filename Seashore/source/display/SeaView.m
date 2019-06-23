@@ -699,6 +699,9 @@ static CGFloat white[4] = {0,3.5,2,.5};
     IntPoint sourcePoint;
     NSImage *crossImage;
     
+    if([[document contents] activeLayer]==NULL){
+        return;
+    }
     
     // Fill out various variables
     xoff = [[[document contents] activeLayer] xoff];
