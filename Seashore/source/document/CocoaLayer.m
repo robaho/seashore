@@ -16,6 +16,10 @@
 	// Determine the width and height of this layer
 	width = (int)[(NSImageRep*)imageRep pixelsWide];
 	height = (int)[(NSImageRep*)imageRep pixelsHigh];
+    
+    if(width ==0 || height ==0){
+        return NULL;
+    }
 	
 	// Determine samples per pixel
 	spp = lspp;
