@@ -360,11 +360,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.4.6</string>
+	<string>2.4.7</string>
 	<key>CFBundleSignature</key>
 	<string>SeSh</string>
 	<key>CFBundleVersion</key>
-	<string>2019062101</string>
+	<string>2019070401</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.graphics-design</string>
 	<key>LSMinimumSystemVersion</key>
