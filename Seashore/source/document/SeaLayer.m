@@ -43,6 +43,9 @@
 	// Call the core initializer
 	if (![self initWithDocument:doc])
 		return NULL;
+    
+    if(lwidth<=0 || lheight<=0)
+        return NULL;
 	
 	// Extract appropriate values of master
 	width = lwidth; height = lheight;
@@ -72,6 +75,9 @@
 	// Derive the width and height from the imageRep
 	xoff = lrect.origin.x; yoff = lrect.origin.y;
 	width = lrect.size.width; height = lrect.size.height;
+    
+    if(width<=0 || height<=0)
+        return NULL;
 	
 	// Get the appropriate samples per pixel
 	spp = lspp;
@@ -95,6 +101,11 @@
 	// Synchronize properties
 	width = [layer width];
 	height = [layer height];
+    
+    if(width<=0 || height<=0)
+        return NULL;
+    
+    
 	mode = [layer mode];
 	spp = [[[layer document] contents] spp];
 	data = malloc(make_128(width * height * spp));
@@ -119,6 +130,7 @@
 	// Set the offsets, height and width
 	xoff = lrect.origin.x;
 	yoff = lrect.origin.y;
+    
 	width = lrect.size.width;
 	height = lrect.size.height;
 	
@@ -648,6 +660,11 @@
 	// Allocate an appropriate amount of memory for the new bitmap
 	newWidth = width + left + right;
 	newHeight = height + top + bottom;
+    
+    if(newWidth<0 || newHeight<0){
+        return;
+    }
+    
 	newImageData = malloc(make_128(newWidth * newHeight * spp));
 	// do_128_clean(newImageData, make_128(newWidth * newHeight * spp));
 	
