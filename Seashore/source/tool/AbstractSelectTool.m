@@ -40,7 +40,8 @@
 									 interpolation: NSImageInterpolationHigh
 										 usingMask: [self preScaledMask]];
 		}else if (translating && scalingDir == kNoDir){
-			[[document selection] moveSelection:IntMakePoint(newRect.origin.x, newRect.origin.y)];
+            [[document selection] moveSelection:localPoint fromOrigin:moveOrigin];
+            moveOrigin = localPoint;
 		}
 	}
 }

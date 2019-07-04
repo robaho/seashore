@@ -111,7 +111,7 @@
 				}
 			}
 			else {
-				if (selectionRect.origin.y < where.y) {
+                if (startPoint.y < where.y) {
 					selectionRect.size.height = where.y - startPoint.y;
 					selectionRect.origin.y = startPoint.y;
 				}

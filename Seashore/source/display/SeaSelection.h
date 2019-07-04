@@ -122,15 +122,6 @@ enum {
 - (IntSize)maskSize;
 
 /*!
-	@method		trueLocalRect
-	@discussion	Returns the selection's true rectangle (this rectangle may
-				be larger than the active layer and should rarely be required).
-	@result		Returns an IntRect reprensenting the rectangle selection's true
-				rectangle in the overlay's co-ordinates.
-*/
-- (IntRect)trueLocalRect;
-
-/*!
 	@method		globalRect
 	@discussion	Returns a rectangle enclosing the current selection.
 	@result		Returns an IntRect reprensenting the rectangle that encloses the
@@ -208,7 +199,7 @@ enum {
 	@param		newOrigin
 				The new origin.
 */
-- (void)moveSelection:(IntPoint)newOrigin;
+- (void)moveSelection:(IntPoint)newOrigin fromOrigin:(IntPoint)oldOrigin;
 
 /*!
 	@method		readjustSelection

@@ -67,11 +67,15 @@
 	
 	
 	if(scalingDir > kNoDir){
-		// 1. Resizing selection
-		preScaledRect = globalRect;
-		if(mask){
-			preScaledMask = malloc(globalRect.size.width * globalRect.size.height);
-			memcpy(preScaledMask, mask, globalRect.size.width * globalRect.size.height);
+        
+        IntPoint maskOffset = [[document selection] maskOffset];
+        IntSize maskSize = [[document selection] maskSize];
+        
+        preScaledRect = IntMakeRect(maskOffset.x+globalRect.origin.x,maskOffset.y+globalRect.origin.y,maskSize.width,maskSize.height);
+        if(mask){
+            int len = preScaledRect.size.width * preScaledRect.size.height;
+			preScaledMask = malloc(len);
+            memcpy(preScaledMask, mask, len);
 		} else {
 			preScaledMask = NULL;
 		}
@@ -79,7 +83,6 @@
 		// 2. Moving Selection
 		translating = YES;
 		moveOrigin = localPoint;
-		oldOrigin =  localRect.origin;
 	}
 
 }
@@ -165,11 +168,7 @@
 
 		return IntMakeRect((int)newX, (int)newY, (int)newWidth, (int)newHeight);
 	} else if (translating) {
-		IntPoint newOrigin;
-		// Move the thing
-		newOrigin.x = oldOrigin.x + (localPoint.x - moveOrigin.x);
-		newOrigin.y = oldOrigin.y + (localPoint.y - moveOrigin.y);
-		return IntMakeRect(newOrigin.x, newOrigin.y, globalRect.size.width, globalRect.size.height);
+        return IntMakeRect(0,0,0,0);
 	}
 	return IntMakeRect(0,0,0,0);
 }

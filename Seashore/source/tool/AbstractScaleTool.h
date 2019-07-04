@@ -43,9 +43,6 @@ enum {
 	// The origin of moving
 	IntPoint moveOrigin;
 	
-	// The old origin
-	IntPoint oldOrigin;
-	
 	// The direction of currently scaling (if any)
 	int scalingDir;
 	

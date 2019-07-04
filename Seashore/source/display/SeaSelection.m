@@ -81,17 +81,6 @@
 	return IntMakeSize(rect.size.width, rect.size.height);
 }
 
-- (IntRect)trueLocalRect
-{
-	id layer = [[document contents] activeLayer];
-	IntRect localRect = rect;
-	
-	localRect.origin.x -= [layer xoff];
-	localRect.origin.y -= [layer yoff];
-	
-	return localRect;
-}
-
 - (IntRect)globalRect
 {
 	return globalRect;
@@ -168,6 +157,13 @@
         [NSGraphicsContext saveGraphicsState];
         NSGraphicsContext *ctx = [NSGraphicsContext graphicsContextWithBitmapImageRep:maskRep];
         [NSGraphicsContext setCurrentContext:ctx];
+        NSAffineTransform *transform = [NSAffineTransform transform];
+        
+        [transform translateXBy:0 yBy:mheight];
+        [transform scaleXBy:1 yBy:-1];
+        
+        [transform translateXBy:(selectionRect.origin.x-rect.origin.x) yBy:(selectionRect.origin.y-rect.origin.y)];
+        [transform concat];
         [[NSColor whiteColor] setFill];
         [path fill];
         [NSGraphicsContext restoreGraphicsState];
@@ -405,7 +401,7 @@
 	if (maskBitmap) { free(maskBitmap); maskBitmap = NULL; maskImage = NULL; }
 	
 	// Adjust the rectangle
-	rect = IntMakeRect([layer xoff], [layer yoff], [(SeaLayer *)layer width], [(SeaLayer *)layer height]);
+    rect = [layer localRect];
 	globalRect = rect;
 	
 	// Activate the selection
@@ -423,20 +419,16 @@
 	[[document helpers] selectionChanged];
 }
 
-- (void)moveSelection:(IntPoint)newOrigin
+- (void)moveSelection:(IntPoint)newOrigin fromOrigin:(IntPoint)origin
 {
 	id layer = [[document contents] activeLayer];
-	int width = [(SeaLayer *)layer width], height = [(SeaLayer *)layer height];
 	
 	// Adjust the selection
-	rect.origin.x = newOrigin.x;
-	rect.origin.y = newOrigin.y;
-	globalRect = IntConstrainRect(rect, IntMakeRect(0, 0, width, height));
-	rect.origin.x += [layer xoff];
-	rect.origin.y += [layer yoff];
-	globalRect.origin.x += [layer xoff];
-	globalRect.origin.y += [layer yoff];
-	
+    rect.origin.x += newOrigin.x-origin.x;
+    rect.origin.y += newOrigin.y-origin.y;
+    
+    globalRect = IntConstrainRect(rect, [layer localRect]);
+
 	// Make the change
 	[[document helpers] selectionChanged];
 }
@@ -444,10 +436,7 @@
 - (void)readjustSelection
 {
 	id layer = [[document contents] activeLayer];
-	IntRect layerRect;
-	
-	layerRect = IntMakeRect([layer xoff], [layer yoff], [(SeaLayer *)layer width], [(SeaLayer *)layer height]);
-	globalRect = IntConstrainRect(rect, layerRect);
+    globalRect = IntConstrainRect(rect, [layer localRect]);
 	if (globalRect.size.width == 0 || globalRect.size.height == 0) {
 		active = NO;
 		if (mask) { free(mask); mask = NULL; }
