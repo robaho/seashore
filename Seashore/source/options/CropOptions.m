@@ -8,6 +8,7 @@
 #import "SeaOperations.h"
 #import "SeaContent.h"
 #import "AspectRatio.h"
+#import "SeaLayer.h"
 
 #define customItemIndex 2
 
@@ -49,15 +50,24 @@
     int width, height;
     
     int index = [[document contents] activeLayerIndex];
+    SeaLayer *activeLayer = [[document contents] layer:index];
     
     cropRect = [[gCurrentDocument currentTool] cropRect];
+    cropRect = IntConstrainRect([activeLayer localRect], cropRect);
+    
+    cropRect.origin.x -= [activeLayer xoff];
+    cropRect.origin.y -= [activeLayer yoff];
+
     if (cropRect.size.width < kMinImageSize) { NSBeep(); return; }
     if (cropRect.size.height < kMinImageSize) { NSBeep(); return; }
     if (cropRect.size.width > kMaxImageSize) { NSBeep(); return; }
     if (cropRect.size.height > kMaxImageSize) { NSBeep(); return; }
-    width = [(SeaContent *)[gCurrentDocument contents] width];
-    height = [(SeaContent *)[gCurrentDocument contents] height];
+    
+    width = [activeLayer width];
+    height = [activeLayer height];
+    
     [(SeaMargins *)[(SeaOperations *)[gCurrentDocument operations] seaMargins] setMarginLeft:-cropRect.origin.x top:-cropRect.origin.y right:(cropRect.origin.x + cropRect.size.width) - width bottom:(cropRect.origin.y + cropRect.size.height) - height index:index];
+    
     [[gCurrentDocument currentTool] clearCrop];
 }
 
