@@ -1308,7 +1308,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     // Check selection
     if ([[document selection] active]) {
         mask = [(SeaSelection*)[(SeaDocument*)document selection] mask];
-        globalRect = [[document selection] globalRect];
+        globalRect = IntConstrainRect(IntMakeRect(0,0,width,height),[[document selection] globalRect]);
         ndata = malloc(make_128(globalRect.size.width * globalRect.size.height * spp));
         if (mask) {
             for (j = globalRect.origin.y; j < globalRect.origin.y + globalRect.size.height; j++) {
