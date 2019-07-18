@@ -306,10 +306,16 @@ extern void determineBrushMask(unsigned char *input, unsigned char *output, int 
 	// Determine the horizontal shift
 	remainder = (point.x + xextra) - floor (point.x + xextra);
 	index1 = (int)(remainder * (float)(kSubsampleLevel + 1));
+    if(index1>kSubsampleLevel){
+        index1=kSubsampleLevel;
+    }
 	
 	// Determine the vertical shift
 	remainder = (point.y + yextra) - floor (point.y + yextra);
 	index2 = (int)(remainder * (float)(kSubsampleLevel + 1));
+    if(index2>kSubsampleLevel){
+        index2=kSubsampleLevel;
+    }
 
 	 // Increment the checkCount
 	 checkCount++;
