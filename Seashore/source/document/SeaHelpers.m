@@ -261,7 +261,7 @@
 {
 	id contents = [document contents], layer;
 	IntRect rectA, rectB, rectC;
-	int xoff, yoff;
+	int xoff, yoff, width, height;
 
 	if (index == kActiveLayer)
 		index = [contents activeLayerIndex];
@@ -278,12 +278,14 @@
 			layer = [contents layer:index];
 			xoff = [layer xoff];
 			yoff = [layer yoff];
+            width =[(SeaLayer *)layer width];
+            height = [(SeaLayer *)layer height];
 			rectA.origin.x = MIN(xoff, oldOffsets.x);
 			rectA.origin.y = MIN(yoff, oldOffsets.y);
-			rectA.size.width = MAX(xoff, oldOffsets.x) - MIN(xoff, oldOffsets.x) + [(SeaLayer *)layer width];
-			rectA.size.height = MAX(yoff, oldOffsets.y) - MIN(yoff, oldOffsets.y) + [(SeaLayer *)layer height];
-			rectB = IntMakeRect(oldOffsets.x, oldOffsets.y, [(SeaLayer *)layer width], [(SeaLayer *)layer height]);
-			rectC = IntMakeRect(xoff, yoff, [(SeaLayer *)layer width], [(SeaLayer *)layer height]);
+			rectA.size.width = MAX(xoff, oldOffsets.x) - MIN(xoff, oldOffsets.x) + width;
+			rectA.size.height = MAX(yoff, oldOffsets.y) - MIN(yoff, oldOffsets.y) + height;
+			rectB = IntMakeRect(oldOffsets.x, oldOffsets.y, width, height);
+			rectC = IntMakeRect(xoff, yoff, width, height);
 			if (rectA.size.width * rectA.size.height < rectB.size.width * rectB.size.height + rectC.size.width * rectC.size.height) {
 				[(SeaWhiteboard *)[document whiteboard] update:rectA];
 			}
