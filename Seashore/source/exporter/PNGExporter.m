@@ -48,14 +48,8 @@
         hasAlpha=false;
     }
     
-    NSBitmapFormat bmf = 0;
-    
-    if(hasAlpha){
-        bmf = NSBitmapFormatAlphaNonpremultiplied;
-    }
-	
 	// Make an image representation from the data
-    imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&destData pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:hasAlpha isPlanar:NO colorSpaceName:(spp > 2) ? MyRGBSpace : MyGraySpace bitmapFormat:bmf bytesPerRow:width * spp bitsPerPixel:8 * spp];
+    imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&destData pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:hasAlpha isPlanar:NO colorSpaceName:(spp > 2) ? MyRGBSpace : MyGraySpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
     
     NSSize newSize;
     newSize.width = [imageRep pixelsWide] * 72.0 / xres;  // x-resolution
