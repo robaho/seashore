@@ -378,6 +378,8 @@
 	</array>
 	<key>CFBundleExecutable</key>
 	<string>Seashore</string>
+	<key>CFBundleIconFile</key>
+	<string>Main Icon.icns</string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
