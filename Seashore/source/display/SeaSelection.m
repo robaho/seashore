@@ -88,11 +88,13 @@
 
 - (IntRect)localRect
 {	
-	id layer = [[document contents] activeLayer];
+	SeaLayer *layer = [[document contents] activeLayer];
 	IntRect localRect = globalRect;
 	
 	localRect.origin.x -= [layer xoff];
 	localRect.origin.y -= [layer yoff];
+    
+    localRect = IntConstrainRect(localRect,IntMakeRect(0,0,[layer width],[layer height]));
 	
 	return localRect;
 }

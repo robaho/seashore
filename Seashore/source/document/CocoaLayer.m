@@ -12,19 +12,27 @@
 	// Initialize superclass first
 	if (![super initWithDocument:doc])
 		return NULL;
-	
-	// Determine the width and height of this layer
-	width = (int)[(NSImageRep*)imageRep pixelsWide];
-	height = (int)[(NSImageRep*)imageRep pixelsHigh];
     
-    if(width ==0 || height ==0){
+    // Determine the width and height of this layer
+    
+    long lwidth = [(NSImageRep*)imageRep pixelsWide];
+    long lheight = [(NSImageRep*)imageRep pixelsHigh];
+    
+    if(lwidth<kMinImageSize || lwidth > kMaxImageSize ||
+       lheight < kMinImageSize || lheight > kMaxImageSize) {
         return NULL;
     }
 	
+    width = (int)lwidth;
+    height = (int)lheight;
+    
 	// Determine samples per pixel
 	spp = lspp;
 
     data = convertImageRep(imageRep,spp);
+    if(!data){
+        return NULL;
+    }
     
     hasAlpha = NO;
     for (i = 0; i < width * height; i++) {

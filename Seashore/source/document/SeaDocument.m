@@ -131,6 +131,8 @@ enum {
 	return self;
 }
 
+static int count=0;
+
 - (id)initWithContentsOfFile:(NSString *)path ofType:(NSString *)type
 {
 	// Initialize superclass first
@@ -154,16 +156,16 @@ enum {
 	// Set the measure style
 	measureStyle = [(SeaPrefs *)[SeaController seaPrefs] newUnits];
 	
-	// Do required work
-	if ([self readFromFile:path ofType:type]) {
-		[self setFileName:path];
-		[self setFileType:type];
-	}
-	else {
-		return NULL;
-	}
-	
-	return self;
+    // Do required work
+    if ([self readFromFile:path ofType:type]) {
+        [self setFileName:path];
+        [self setFileType:type];
+    }
+    else {
+        return NULL;
+    }
+    
+    return self;
 }
 
 - (id)initWithData:(unsigned char *)data type:(int)type width:(int)width height:(int)height

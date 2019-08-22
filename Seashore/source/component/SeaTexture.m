@@ -24,6 +24,9 @@
 
     // convert to RGBA
     unsigned char *dataWithAlpha = convertImageRep(tempBitmapRep,4);
+    if(!dataWithAlpha){
+        return NULL;
+    }
     
 	// Allocate space for the greyscale and color textures
 	colorTexture = malloc(width * height * 3);
