@@ -695,7 +695,6 @@ static CGFloat white[4] = {0,3.5,2,.5};
     NSPoint outPoint, hilightPoint;
     float xScale, yScale;
     int xoff, yoff, lwidth, lheight, i;
-    NSBezierPath *tempPath;
     IntPoint sourcePoint;
     NSImage *crossImage;
     
@@ -711,11 +710,11 @@ static CGFloat white[4] = {0,3.5,2,.5};
     xScale = [[document contents] xscale];
     yScale = [[document contents] yscale];
 
-    tempPath = [NSBezierPath bezierPath];
-    [tempPath setLineWidth:1.0];
-    
     
     if([(SeaPrefs *)[SeaController seaPrefs] guides] && xScale > 2 && yScale > 2){
+        NSBezierPath *tempPath = [NSBezierPath bezierPath];
+        [tempPath setLineWidth:1.0];
+        
         [[[NSColor gridColor] colorWithAlphaComponent:0.25] set];
         int i, j;
         
@@ -781,7 +780,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
         }else if([(PositionTool *)positionTool rotationDefined]){
             radians = [(PositionTool *)positionTool rotation];
         }
-        tempPath = [NSBezierPath bezierPath];
+        NSBezierPath *tempPath = [NSBezierPath bezierPath];
         [tempPath setLineWidth:1.0];
 
         // All of the silliness with the 0.5's is because when drawing with Bezier paths
@@ -824,7 +823,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
         for (i = 0; i < [(EffectTool*)effectTool clickCount]; i++) {
             [[[SeaController seaPrefs] selectionColor:0.6] set];
             hilightPoint = IntPointMakeNSPoint([effectTool point:i]);
-            tempPath = [NSBezierPath bezierPath];
+            NSBezierPath *tempPath = [NSBezierPath bezierPath];
             [tempPath moveToPoint:NSMakePoint((hilightPoint.x + xoff) * xScale - 4, (hilightPoint.y + yoff) * yScale + 4)];
             [tempPath lineToPoint:NSMakePoint((hilightPoint.x + xoff) * xScale + 4, (hilightPoint.y + yoff) * yScale - 4)];
             [tempPath moveToPoint:NSMakePoint((hilightPoint.x + xoff) * xScale + 4, (hilightPoint.y + yoff) * yScale + 4)];
@@ -839,7 +838,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
             // Draw the connecting line
             [[(SeaPrefs *)[SeaController seaPrefs] guideColor: 1.0] set];
 
-            tempPath = [NSBezierPath bezierPath];
+            NSBezierPath *tempPath = [NSBezierPath bezierPath];
             [tempPath setLineWidth:1.0];
             [tempPath moveToPoint:[tool start]];
             [tempPath lineToPoint:[tool current]];
@@ -855,7 +854,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
             // Draw the connecting line
             [[(SeaPrefs *)[SeaController seaPrefs] guideColor: 1.0] set];
 
-            tempPath = [NSBezierPath bezierPath];
+            NSBezierPath *tempPath = [NSBezierPath bezierPath];
             [tempPath setLineWidth:1.0];
             [tempPath moveToPoint:[tool start]];
             [tempPath lineToPoint:[tool current]];
