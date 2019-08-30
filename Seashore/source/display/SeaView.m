@@ -767,7 +767,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
             lheight = postScaledRect.size.height;
         }
             
-        [self drawDragHandles:NSMakeRect(xoff, yoff, lwidth, lheight) type:kPositionType];
+        // [self drawDragHandles:NSMakeRect(xoff, yoff, lwidth, lheight) type:kPositionType];
         
         NSPoint centerPoint = NSMakePoint(xoff + lwidth / 2, yoff + lheight / 2);
         // Additionally, the new guides are directly proportional to the amount of rotation or 
@@ -781,7 +781,9 @@ static CGFloat white[4] = {0,3.5,2,.5};
         }else if([(PositionTool *)positionTool rotationDefined]){
             radians = [(PositionTool *)positionTool rotation];
         }
-        
+        tempPath = [NSBezierPath bezierPath];
+        [tempPath setLineWidth:1.0];
+
         // All of the silliness with the 0.5's is because when drawing with Bezier paths
         // the coordinates are at vertices between the pixels, not centered on them.
         [tempPath moveToPoint:NSPointRotateNSPoint(NSMakePoint(xoff + 0.5, yoff +0.5), centerPoint, radians)];
