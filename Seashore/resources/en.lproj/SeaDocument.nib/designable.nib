@@ -680,22 +680,11 @@ DQ
             <point key="canvasLocation" x="-1857" y="-513"/>
         </window>
         <customView id="70" userLabel="Accessory View">
-            <rect key="frame" x="0.0" y="0.0" width="505" height="21"/>
-            <autoresizingMask key="autoresizingMask"/>
+            <rect key="frame" x="0.0" y="0.0" width="884" height="41"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
             <subviews>
-                <button verticalHuggingPriority="750" imageHugsTitle="YES" id="74">
-                    <rect key="frame" x="139" y="-7" width="90" height="32"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
-                    <buttonCell key="cell" type="push" title="Options" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" inset="2" id="16798">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="showExporterOptions:" target="-2" id="327"/>
-                    </connections>
-                </button>
                 <popUpButton verticalHuggingPriority="750" imageHugsTitle="YES" id="71">
-                    <rect key="frame" x="-2" y="-3" width="142" height="26"/>
+                    <rect key="frame" x="6" y="7" width="182" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                     <popUpButtonCell key="cell" type="push" title="Unknown" bezelStyle="rounded" alignment="left" lineBreakMode="clipping" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="73" id="16797">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -710,17 +699,28 @@ DQ
                         <action selector="exporterChanged:" target="-2" id="77"/>
                     </connections>
                 </popUpButton>
+                <button verticalHuggingPriority="750" imageHugsTitle="YES" id="74">
+                    <rect key="frame" x="187" y="3" width="103" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
+                    <buttonCell key="cell" type="push" title="Options" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" inset="2" id="16798">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="showExporterOptions:" target="-2" id="327"/>
+                    </connections>
+                </button>
                 <textField verticalHuggingPriority="750" id="692">
-                    <rect key="frame" x="229" y="-3" width="271" height="19"/>
-                    <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" id="16799">
+                    <rect key="frame" x="290" y="12" width="596" height="19"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES"/>
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" id="16799">
                         <font key="font" metaFont="label"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
             </subviews>
-            <point key="canvasLocation" x="15.5" y="791.5"/>
+            <point key="canvasLocation" x="-114" y="804.5"/>
         </customView>
         <window title="Resolution..." allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="87" userLabel="Resolution" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES"/>
@@ -1883,15 +1883,15 @@ Gw
                         <rect key="frame" x="20" y="34" width="440" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <clipView key="contentView" drawsBackground="NO" id="zX2-tZ-Cdx">
-                            <rect key="frame" x="1" y="1" width="427" height="54"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <rect key="frame" x="1" y="1" width="423" height="54"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <textView importsGraphics="NO" verticallyResizable="YES" usesFontPanel="YES" usesRuler="YES" spellingCorrection="YES" smartInsertDelete="YES" id="1007" customClass="NSTextViewRedirect">
                                     <rect key="frame" x="0.0" y="0.0" width="467" height="54"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                    <size key="minSize" width="427" height="54"/>
+                                    <size key="minSize" width="423" height="54"/>
                                     <size key="maxSize" width="467" height="10000000"/>
                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <connections>
@@ -2542,6 +2542,7 @@ Gw
                 <outlet property="compressSlider" destination="snc-sg-tMo" id="B6l-nn-iEz"/>
                 <outlet property="panel" destination="Ymb-N1-0M8" id="B29-iu-LhF"/>
                 <outlet property="realImageView" destination="1NF-9N-fRh" id="bwZ-QK-Tjg"/>
+                <outlet property="targetRadios" destination="ss3-fb-gJH" id="dfh-hQ-hhX"/>
             </connections>
         </customObject>
         <customObject id="856" userLabel="LassoTool" customClass="LassoTool">
