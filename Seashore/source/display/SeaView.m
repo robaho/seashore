@@ -1948,11 +1948,11 @@ static CGFloat white[4] = {0,3.5,2,.5};
                 return NO;
         break;
         case 260: /* Cut */
-            if (![[document selection] active] || [[document selection] floating] || [[document contents] selectedChannel] != kAllChannels)
+            if (![[document selection] active] || [[document selection] floating])
                 return NO;
         break;
         case 263: /* Delete */
-            if (![[document selection] active] || [[document contents] selectedChannel] != kAllChannels)
+            if (![[document selection] active])
                 return NO;
         break;
         case 270: /* Select All */
