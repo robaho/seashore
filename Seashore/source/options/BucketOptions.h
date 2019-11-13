@@ -18,8 +18,6 @@
 	// A label displaying the tolerance of the bucket
 	IBOutlet id toleranceLabel;
 
-	// A slider for the density of the wand sampling
-	IBOutlet id intervalsSlider;
 }
 
 /*!
@@ -49,20 +47,6 @@
  @discussion    sets the tolerance to be used with the paint bucket tool.
  */
 - (void)setTolerance:(int)value;
-
-
-/*!
-	@method		numIntervals
-	@discussion	Returns the number of intervals for the wand sampling
-	@result		Returns an integer.
-*/
-- (int)numIntervals;
-
-/*!
- @method        setNumIntervals
- @discussion    stes the number of intervals for the wand sampling
- */
-- (void)setNumIntervals:(int)value;
 
 /*!
 	@method		useTextures

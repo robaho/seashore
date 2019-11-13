@@ -119,21 +119,21 @@
 			basePixel[1] = (unsigned char)([color alphaComponent] * 255.0);
 		}
 	}
-		
 	
-	int intervals = [(BucketOptions*)options numIntervals];
-	
-	IntPoint* seeds = malloc(sizeof(IntPoint) * (intervals + 1));
-	
-	int seedIndex;
-	int xDelta = point.x - startPoint.x;
-	int yDelta = point.y - startPoint.y;
-	for(seedIndex = 0; seedIndex <= intervals; seedIndex++){
-		int x = startPoint.x + (int)ceil(xDelta * ((float)seedIndex / intervals));
-		int y = startPoint.y + (int)ceil(yDelta * ((float)seedIndex / intervals));
-		seeds[seedIndex] = IntMakePoint(x, y);				
-	}
+    int seedIndex;
+    int xDelta = point.x - startPoint.x;
+    int yDelta = point.y - startPoint.y;
+    
+    int distance = (int)ceil(sqrt(xDelta*xDelta+yDelta*yDelta));
+    int intervals = MAX(MIN(distance,64),1);
 
+    IntPoint* seeds = malloc(sizeof(IntPoint) * (intervals));
+    
+    for(seedIndex = 0; seedIndex < intervals; seedIndex++){
+        int x = startPoint.x + (int)ceil(xDelta * ((float)seedIndex / intervals));
+        int y = startPoint.y + (int)ceil(yDelta * ((float)seedIndex / intervals));
+        seeds[seedIndex] = IntMakePoint(x, y);
+    }
 	
 	// Fill everything
 	if (useTolerance)

@@ -38,7 +38,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" topStrut="YES"/>
             <rect key="contentRect" x="267" y="-225" width="942" height="560"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
             <view key="contentView" id="6" customClass="SeaWindowContent">
                 <rect key="frame" x="0.0" y="0.0" width="942" height="560"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -726,7 +726,7 @@ DQ
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="267" y="453" width="254" height="233"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
             <view key="contentView" id="78">
                 <rect key="frame" x="0.0" y="0.0" width="254" height="233"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -1446,7 +1446,7 @@ DQ
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="119" y="378" width="328" height="307"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
             <view key="contentView" id="180">
                 <rect key="frame" x="0.0" y="0.0" width="328" height="307"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -1846,7 +1846,7 @@ DQ
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="379" y="346" width="480" height="99"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
             <view key="contentView" id="277">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="99"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -1887,12 +1887,12 @@ Gw
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <textView importsGraphics="NO" verticallyResizable="YES" usesFontPanel="YES" usesRuler="YES" spellingCorrection="YES" smartInsertDelete="YES" id="1007" customClass="NSTextViewRedirect">
-                                    <rect key="frame" x="0.0" y="0.0" width="467" height="54"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="475" height="54"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <size key="minSize" width="423" height="54"/>
-                                    <size key="maxSize" width="467" height="10000000"/>
+                                    <size key="maxSize" width="475" height="10000000"/>
                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <connections>
                                         <outlet property="delegate" destination="310" id="1017"/>
@@ -2365,7 +2365,7 @@ Gw
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="702" y="566" width="270" height="167"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
             <view key="contentView" id="695">
                 <rect key="frame" x="0.0" y="0.0" width="270" height="167"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -2439,7 +2439,7 @@ DQ
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="473" y="362" width="309" height="175"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
             <view key="contentView" id="745">
                 <rect key="frame" x="0.0" y="0.0" width="309" height="175"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -2590,7 +2590,7 @@ Gw
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="221" y="362" width="442" height="85"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
             <view key="contentView" id="1020">
                 <rect key="frame" x="0.0" y="0.0" width="442" height="85"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -2716,7 +2716,6 @@ Gw
         <customObject id="1869" userLabel="BucketOptions" customClass="BucketOptions">
             <connections>
                 <outlet property="document" destination="-2" id="2590"/>
-                <outlet property="intervalsSlider" destination="16684" id="7xf-Yh-njk"/>
                 <outlet property="modifierPopup" destination="2155" id="2552"/>
                 <outlet property="toleranceLabel" destination="16860" id="c5Z-9g-koo"/>
                 <outlet property="toleranceSlider" destination="2157" id="W22-nN-Pih"/>
@@ -2823,8 +2822,8 @@ Gw
         <customObject id="1881" userLabel="WandOptions" customClass="WandOptions">
             <connections>
                 <outlet property="document" destination="-2" id="2605"/>
-                <outlet property="intervalsSlider" destination="16675" id="16678"/>
                 <outlet property="modifierPopup" destination="1917" id="2532"/>
+                <outlet property="selectAllRegions" destination="7YZ-pA-dwc" id="EMA-pV-25b"/>
                 <outlet property="toleranceLabel" destination="1920" id="2530"/>
                 <outlet property="toleranceSlider" destination="1919" id="2531"/>
                 <outlet property="view" destination="1901" id="2213"/>
@@ -2997,36 +2996,39 @@ Gw
             <rect key="frame" x="0.0" y="0.0" width="708" height="20"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
-                <slider toolTip="Tolerance range for colour" verticalHuggingPriority="750" id="16684">
-                    <rect key="frame" x="274" y="3" width="128" height="12"/>
+                <box horizontalHuggingPriority="750" boxType="separator" id="16682">
+                    <rect key="frame" x="217" y="-1" width="5" height="21"/>
                     <autoresizingMask key="autoresizingMask"/>
-                    <sliderCell key="cell" controlSize="mini" continuous="YES" state="on" alignment="left" minValue="1" maxValue="128" doubleValue="15" tickMarkPosition="above" sliderType="linear" id="16864">
+                </box>
+                <slider toolTip="Tolerance range for colour" verticalHuggingPriority="750" id="2157">
+                    <rect key="frame" x="77" y="3" width="128" height="12"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <sliderCell key="cell" controlSize="mini" continuous="YES" alignment="left" maxValue="255" doubleValue="15" tickMarkPosition="above" sliderType="linear" id="16859">
                         <font key="font" metaFont="miniSystem"/>
                     </sliderCell>
+                    <connections>
+                        <action selector="toleranceSliderChanged:" target="1869" id="9TN-jJ-Avc"/>
+                    </connections>
                 </slider>
-                <textField verticalHuggingPriority="750" id="16683">
-                    <rect key="frame" x="226" y="4" width="47" height="11"/>
+                <textField verticalHuggingPriority="750" textCompletion="NO" id="2158">
+                    <rect key="frame" x="4" y="4" width="79" height="11"/>
                     <autoresizingMask key="autoresizingMask"/>
-                    <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="left" title="Intervals:" id="16863">
+                    <textFieldCell key="cell" controlSize="mini" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="left" title="Tolerance: 15" id="16860">
                         <font key="font" metaFont="miniSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <box horizontalHuggingPriority="750" boxType="separator" id="16682">
-                    <rect key="frame" x="217" y="-1" width="5" height="21"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                </box>
                 <box horizontalHuggingPriority="750" boxType="separator" id="12033">
-                    <rect key="frame" x="642" y="-1" width="5" height="21"/>
+                    <rect key="frame" x="450" y="-1" width="5" height="21"/>
                     <autoresizingMask key="autoresizingMask"/>
                 </box>
                 <box horizontalHuggingPriority="750" boxType="separator" id="12011">
-                    <rect key="frame" x="486" y="-1" width="5" height="21"/>
+                    <rect key="frame" x="294" y="-1" width="5" height="21"/>
                     <autoresizingMask key="autoresizingMask"/>
                 </box>
                 <button verticalHuggingPriority="750" imageHugsTitle="YES" id="12010">
-                    <rect key="frame" x="418" y="1" width="63" height="16"/>
+                    <rect key="frame" x="226" y="1" width="63" height="16"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="push" title="Textures" bezelStyle="rounded" alignment="center" controlSize="mini" borderStyle="border" inset="2" id="16861">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -3036,12 +3038,8 @@ Gw
                         <action selector="toggleTextures:" target="1869" id="12013"/>
                     </connections>
                 </button>
-                <box horizontalHuggingPriority="750" boxType="separator" id="6468">
-                    <rect key="frame" x="408" y="-1" width="5" height="21"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                </box>
                 <popUpButton verticalHuggingPriority="750" imageHugsTitle="YES" id="2155">
-                    <rect key="frame" x="497" y="2" width="140" height="15"/>
+                    <rect key="frame" x="305" y="2" width="140" height="15"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" title="No modifiers active" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2165" id="16858">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -3055,33 +3053,14 @@ Gw
                         </menu>
                     </popUpButtonCell>
                 </popUpButton>
-                <slider toolTip="Tolerance range for colour" verticalHuggingPriority="750" id="2157">
-                    <rect key="frame" x="77" y="3" width="128" height="12"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <sliderCell key="cell" controlSize="mini" continuous="YES" alignment="left" maxValue="255" doubleValue="15" tickMarkPosition="above" sliderType="linear" id="16859">
-                        <font key="font" metaFont="miniSystem"/>
-                    </sliderCell>
-                    <connections>
-                        <action selector="toleranceSliderChanged:" target="1869" id="9TN-jJ-Avc"/>
-                    </connections>
-                </slider>
                 <button horizontalHuggingPriority="750" verticalHuggingPriority="750" id="v6z-jt-jI8">
-                    <rect key="frame" x="652" y="-3" width="25" height="25"/>
+                    <rect key="frame" x="460" y="-3" width="25" height="25"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="help" bezelStyle="helpButton" alignment="center" controlSize="mini" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3Ph-TO-4EY">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="miniSystem"/>
                     </buttonCell>
                 </button>
-                <textField verticalHuggingPriority="750" textCompletion="NO" id="2158">
-                    <rect key="frame" x="4" y="4" width="79" height="11"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <textFieldCell key="cell" controlSize="mini" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="left" title="Tolerance: 15" id="16860">
-                        <font key="font" metaFont="miniSystem"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
             </subviews>
             <point key="canvasLocation" x="-159" y="-499"/>
         </customView>
@@ -3959,7 +3938,7 @@ Gw
                     </buttonCell>
                 </button>
             </subviews>
-            <point key="canvasLocation" x="-1049.5" y="83"/>
+            <point key="canvasLocation" x="-939" y="147"/>
         </customView>
         <customView id="1898" userLabel="Lasso Options">
             <rect key="frame" x="0.0" y="0.0" width="206" height="22"/>
@@ -4157,39 +4136,50 @@ Gw
             <point key="canvasLocation" x="-640" y="476.5"/>
         </customView>
         <customView id="1901" userLabel="Wand Options">
-            <rect key="frame" x="0.0" y="0.0" width="637" height="26"/>
+            <rect key="frame" x="0.0" y="0.0" width="899" height="26"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
-                <box horizontalHuggingPriority="750" boxType="separator" id="16676">
-                    <rect key="frame" x="409" y="2" width="5" height="21"/>
+                <box horizontalHuggingPriority="750" boxType="separator" id="6452">
+                    <rect key="frame" x="188" y="2" width="5" height="21"/>
                     <autoresizingMask key="autoresizingMask"/>
                 </box>
-                <slider toolTip="Tolerance range for colour" verticalHuggingPriority="750" id="16675">
-                    <rect key="frame" x="262" y="6" width="142" height="12"/>
+                <slider toolTip="Tolerance range for colour" verticalHuggingPriority="750" id="1919">
+                    <rect key="frame" x="80" y="6" width="103" height="12"/>
                     <autoresizingMask key="autoresizingMask"/>
-                    <sliderCell key="cell" controlSize="mini" continuous="YES" state="on" alignment="left" minValue="1" maxValue="128" doubleValue="15" tickMarkPosition="above" sliderType="linear" id="16942">
+                    <sliderCell key="cell" controlSize="mini" continuous="YES" state="on" alignment="left" maxValue="255" doubleValue="129.69827324151993" tickMarkPosition="above" sliderType="linear" id="16938">
                         <font key="font" metaFont="miniSystem"/>
                     </sliderCell>
+                    <connections>
+                        <action selector="toleranceSliderChanged:" target="1881" id="UF7-yW-bKR"/>
+                    </connections>
                 </slider>
-                <textField verticalHuggingPriority="750" id="16674">
-                    <rect key="frame" x="204" y="7" width="47" height="11"/>
+                <textField verticalHuggingPriority="750" id="1920">
+                    <rect key="frame" x="7" y="6" width="73" height="12"/>
                     <autoresizingMask key="autoresizingMask"/>
-                    <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="left" title="Intervals:" id="16941">
+                    <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="left" title="Tolerance: 15" id="16939">
                         <font key="font" metaFont="miniSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <box horizontalHuggingPriority="750" boxType="separator" id="12081">
-                    <rect key="frame" x="565" y="2" width="5" height="21"/>
+                <button toolTip="Select non-contiguous regions" verticalHuggingPriority="750" id="7YZ-pA-dwc">
+                    <rect key="frame" x="195" y="2" width="111" height="22"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Select All Regions" bezelStyle="regularSquare" imagePosition="left" controlSize="mini" inset="2" id="LjL-wy-ibI">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="miniSystem"/>
+                    </buttonCell>
+                </button>
+                <box horizontalHuggingPriority="750" boxType="separator" id="MOl-VA-wwH">
+                    <rect key="frame" x="302" y="2" width="5" height="21"/>
                     <autoresizingMask key="autoresizingMask"/>
                 </box>
-                <box horizontalHuggingPriority="750" boxType="separator" id="6452">
-                    <rect key="frame" x="188" y="2" width="5" height="21"/>
+                <box horizontalHuggingPriority="750" boxType="separator" id="12081">
+                    <rect key="frame" x="456" y="2" width="5" height="21"/>
                     <autoresizingMask key="autoresizingMask"/>
                 </box>
                 <popUpButton verticalHuggingPriority="750" imageHugsTitle="YES" id="1917">
-                    <rect key="frame" x="420" y="5" width="140" height="15"/>
+                    <rect key="frame" x="312" y="5" width="140" height="15"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" title="No modifiers active" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="1932" id="16937">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -4206,31 +4196,9 @@ Gw
                             </items>
                         </menu>
                     </popUpButtonCell>
-                    <connections>
-                        <action selector="modifierPopupChanged:" target="1881" id="6433"/>
-                    </connections>
                 </popUpButton>
-                <slider toolTip="Tolerance range for colour" verticalHuggingPriority="750" id="1919">
-                    <rect key="frame" x="80" y="6" width="103" height="12"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <sliderCell key="cell" controlSize="mini" continuous="YES" state="on" alignment="left" maxValue="255" doubleValue="129.69827324151993" tickMarkPosition="above" sliderType="linear" id="16938">
-                        <font key="font" metaFont="miniSystem"/>
-                    </sliderCell>
-                    <connections>
-                        <action selector="toleranceSliderChanged:" target="1881" id="6434"/>
-                    </connections>
-                </slider>
-                <textField verticalHuggingPriority="750" id="1920">
-                    <rect key="frame" x="7" y="6" width="73" height="12"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="left" title="Tolerance: 15" id="16939">
-                        <font key="font" metaFont="miniSystem"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <button horizontalHuggingPriority="750" verticalHuggingPriority="750" id="akn-dM-unv">
-                    <rect key="frame" x="575" y="0.0" width="25" height="25"/>
+                    <rect key="frame" x="466" y="0.0" width="25" height="25"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="help" bezelStyle="helpButton" alignment="center" controlSize="mini" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="7rP-I4-53x">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -4238,7 +4206,7 @@ Gw
                     </buttonCell>
                 </button>
             </subviews>
-            <point key="canvasLocation" x="935.5" y="83"/>
+            <point key="canvasLocation" x="215.5" y="394"/>
         </customView>
         <customView id="1902" userLabel="Polygon Lasso Options">
             <rect key="frame" x="0.0" y="0.0" width="207" height="22"/>

@@ -18,9 +18,8 @@
 	// A label displaying the tolerance of the wand
 	IBOutlet id toleranceLabel;
 	
-	// A slider for the density of the wand sampling
-	IBOutlet id intervalsSlider;
-	
+    // if checked then non-continguous regions are checked
+    IBOutlet id selectAllRegions;
 }
 
 /*!
@@ -46,11 +45,11 @@
 - (int)tolerance;
 
 /*!
-	@method		numIntervals
-	@discussion	Returns the number of intervals for the wand sampling
-	@result		Returns an integer.
-*/
-- (int)numIntervals;
+ @method        selectAllRegions
+ @discussion    Returns the value of the 'select all regions' checkbox
+ @result        Returns a Bool.
+ */
+- (bool)selectAllRegions;
 
 /*!
 	@method		shutdown

@@ -23,13 +23,17 @@
 		[toleranceSlider setIntValue:value];
 		[toleranceLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"tolerance", @"Tolerance: %d"), value]];
 	}
-	
-	if([gUserDefaults objectForKey:@"wand intervals"] == NULL){
-		[intervalsSlider setIntValue:15];
-	}else{
-		value = [gUserDefaults integerForKey:@"wand intervals"];
-		[intervalsSlider setIntValue: value];
-	}
+    if ([gUserDefaults objectForKey:@"wand selectAllRegions"] == NULL) {
+        [selectAllRegions setState:NSOffState];
+    }
+    else {
+        bool b = [gUserDefaults boolForKey:@"wand selectAllRegions"];
+        if(b) {
+            [selectAllRegions setState:NSOnState];
+        } else {
+            [selectAllRegions setState:NSOffState];
+        }
+    }
 }
 
 - (IBAction)toleranceSliderChanged:(id)sender
@@ -42,15 +46,15 @@
 	return [toleranceSlider intValue];
 }
 
-- (int)numIntervals
+- (bool)selectAllRegions
 {
-	return [intervalsSlider intValue];
+    return [selectAllRegions state] == NSOnState;
 }
 
 - (void)shutdown
 {
 	[gUserDefaults setInteger:[toleranceSlider intValue] forKey:@"wand tolerance"];
-	[gUserDefaults setInteger:[intervalsSlider intValue] forKey:@"wand intervals"];
+    [gUserDefaults setBool:[selectAllRegions state]==NSOnState forKey:@"wand selectAllRegions"];
 }
 
 @end

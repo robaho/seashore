@@ -18,14 +18,6 @@
 		value = [gUserDefaults integerForKey:@"bucket tolerance"];
         [self setTolerance:value];
 	}
-	
-	if([gUserDefaults objectForKey:@"bucket intervals"] == NULL){
-		[intervalsSlider setIntValue:15];
-	}else{
-		value = [gUserDefaults integerForKey:@"bucket intervals"];
-		[intervalsSlider setIntValue: value];
-	}
-	
 }
 
 - (IBAction)toleranceSliderChanged:(id)sender
@@ -46,16 +38,6 @@
     [self toleranceSliderChanged:toleranceSlider];
 }
 
-- (int)numIntervals
-{
-	return [intervalsSlider intValue];
-}
-
-- (void)setNumIntervals:(int)value
-{
-    [intervalsSlider setIntValue:value];
-}
-
 - (BOOL)useTextures
 {
 	return [[SeaController seaPrefs] useTextures];
@@ -64,7 +46,6 @@
 - (void)shutdown
 {
 	[gUserDefaults setInteger:[toleranceSlider intValue] forKey:@"bucket tolerance"];
-	[gUserDefaults setInteger:[intervalsSlider intValue] forKey:@"bucket intervals"];
 }
 
 @end
