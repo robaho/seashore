@@ -2,7 +2,7 @@
 
 ![icon](doc/icon.png)
 
-Seashore is now on the App Store !!! Please add your positive review there. Also, if you use it for your website, business, whatever, giving credit to Seashore and a link to the App Store will go a long way towards making the project survive and prosper.
+Seashore is now on the App Store !!! Please add your positive review/rating ther (I believe people are trying to tank the project by posting clearly incorrect reviews). Also, if you use it for your website, business, whatever, giving credit to Seashore and a link to the App Store will go a long way towards making the project survive and prosper.
 
 [![Download](doc/download.png)](https://geo.itunes.apple.com/us/app/seashore/id1448648921?mt=12&app=apps)
 
