@@ -129,11 +129,16 @@
 
     IntPoint* seeds = malloc(sizeof(IntPoint) * (intervals));
     
+    int inrect=0;
     for(seedIndex = 0; seedIndex < intervals; seedIndex++){
         int x = startPoint.x + (int)ceil(xDelta * ((float)seedIndex / intervals));
         int y = startPoint.y + (int)ceil(yDelta * ((float)seedIndex / intervals));
-        seeds[seedIndex] = IntMakePoint(x, y);
+        if(x<0 || x>=width || y <0 || y>=height)
+            continue;
+        seeds[inrect] = IntMakePoint(x, y);
+        inrect++;
     }
+    intervals=inrect;
 	
 	// Fill everything
 	if (useTolerance)
