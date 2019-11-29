@@ -370,7 +370,7 @@ extern void determineBrushMask(unsigned char *input, unsigned char *output, int 
 - (void)drawBrushAt:(NSRect)rect
 {
     
-    NSImage *thumbnail = getTinted([self thumbnail],[NSColor controlTextColor]);
+    NSImage *thumbnail = usePixmap ? [self thumbnail] : getTinted([self thumbnail],[NSColor controlTextColor]);
     
     int xOffset = rect.size.width/2-[thumbnail size].width/2;
     int yOffset = rect.size.height/2-[thumbnail size].height/2;
