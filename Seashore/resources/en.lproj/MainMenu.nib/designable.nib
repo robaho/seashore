@@ -908,10 +908,20 @@ CA
                                     <action selector="reportAProblem:" target="235" id="MQU-lE-2v3"/>
                                 </connections>
                             </menuItem>
+                            <menuItem isSeparatorItem="YES" id="YCc-XZ-zrf">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Donate to Seashore" id="aWJ-pV-HWH">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="donateToSeashore:" target="235" id="exM-eH-C0a"/>
+                                </connections>
+                            </menuItem>
                         </items>
                     </menu>
                 </menuItem>
             </items>
+            <point key="canvasLocation" x="-208" y="73"/>
         </menu>
         <window title="Seashore License" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="license window" animationBehavior="default" id="204" userLabel="License Win">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>

@@ -40,6 +40,8 @@
 
 - (IBAction)reportAProblem:(id)sender;
 
+- (IBAction)donateToSeashore:(id)sender;
+
 /*!
 	@method		updateInstantHelp:
 	@discussion Updates the instant help window with the given string if and
