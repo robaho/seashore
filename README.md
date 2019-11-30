@@ -6,7 +6,7 @@ Seashore is now on the App Store !!! Please add your positive review/rating ther
 
 [![Download](doc/download.png)](https://geo.itunes.apple.com/us/app/seashore/id1448648921?mt=12&app=apps)
 
-If you'd like to offer monetary assistance to the project, please donate here [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](TCF29QJ6J653C)
+If you'd like to offer monetary assistance to the project, please donate here [![paypal](doc/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=TCF29QJ6J653C&source=url)
 
 You can also download the latest DMG releases [here](https://github.com/robaho/seashore/releases), **but these will no longer perform "update checks"** - since this requires the App Store - so you will need to periodically check for new releases !
 
