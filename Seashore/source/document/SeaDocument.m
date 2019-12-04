@@ -131,8 +131,6 @@ enum {
 	return self;
 }
 
-static int count=0;
-
 - (id)initWithContentsOfFile:(NSString *)path ofType:(NSString *)type
 {
 	// Initialize superclass first
