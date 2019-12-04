@@ -68,13 +68,17 @@
 		if (![imageRep isKindOfClass:[NSBitmapImageRep class]]) {
 			if ([imageRep isKindOfClass:[NSPDFImageRep class]]) {
                 
+                int dpi_index =0;
+                if ([gUserDefaults objectForKey:@"pdfDPI"])
+                    dpi_index = [gUserDefaults integerForKey:@"pdfDPI"];
+                
                 NSPDFImageRep *pdfRep = (NSPDFImageRep*)imageRep;
 				
 				[NSBundle loadNibNamed:@"CocoaContent" owner:self];
 				[resMenu setEnabled:YES];
+                [resMenu selectItemAtIndex:dpi_index];
 				[pdfPanel center];
 				[pageLabel setStringValue:[NSString stringWithFormat:@"of %d", [pdfRep pageCount]]];
-				[resMenu selectItemAtIndex:0];
 				[NSApp runModalForWindow:pdfPanel];
 				[pdfPanel orderOut:self];
 
@@ -122,7 +126,15 @@
 						size.height *= 900.0 / 72.0;
 						xres = yres = 900.0;
 					break;
+                    case 6:
+                        res_set = YES;
+                        size.width *= 1200.0 / 72.0;
+                        size.height *= 1200.0 / 72.0;
+                        xres = yres = 1200.0;
+                        break;
 				}
+                
+                [gUserDefaults setInteger:value forKey:@"pdfDPI"];
 				[[NSGraphicsContext currentContext] setImageInterpolation: NSImageInterpolationHigh];
 				[image setSize:size];
 				NSRect destinationRect = NSMakeRect( 0, 0, size.width, size.height );
