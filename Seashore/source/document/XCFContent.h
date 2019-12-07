@@ -51,10 +51,6 @@ typedef struct
 
 	// The version of this document
 	int version;
-	
-	// These hold 64 bytes of temporary information for us 
-	int tempIntString[16];
-	char tempString[64];
 
 }
 

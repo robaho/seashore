@@ -26,6 +26,9 @@ static inline void fix_endian_read(int *input, int size)
 
 - (BOOL)readHeader:(FILE *)file
 {
+    int tempIntString[16];
+    char tempString[64];
+
 	// Check signature
 	if (fread(tempString, sizeof(char), 9, file) == 9) {
 		if (memcmp(tempString, "gimp xcf", 8))
@@ -62,6 +65,10 @@ static inline void fix_endian_read(int *input, int size)
 	int parasites_start;
 	char *nameString;
 	int pos, i;
+    
+    // These hold 64 bytes of temporary information for us
+    int tempIntString[16];
+    char tempString[64];
 	
 	// Keep reading until we're finished or hit an error
 	while (!finished && !ferror(file)) {
@@ -198,6 +205,8 @@ static inline void fix_endian_read(int *input, int size)
 	ParasiteData *exifParasite;
 	NSString *errorString;
 	NSData *exifContainer;
+    
+    int tempIntString[16];
 	
 	// Initialize superclass first
 	if (![super initWithDocument:doc])
