@@ -1,6 +1,6 @@
 #include "Bucket.h"
 
-#define kStackSizeIncrement 2500
+#define kStackSizeIncrement 8192
 
 inline BOOL shouldFill(unsigned char *overlay, unsigned char *data, IntPoint seeds[], int numSeeds, IntPoint point, int width, int spp, int tolerance, int channel)
 {
