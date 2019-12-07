@@ -399,6 +399,16 @@ enum {
 {
 	BOOL result = NO;
 	int i;
+    
+    bool isGIMP = [[SeaDocumentController sharedDocumentController] type: [self fileType] isContainedInDocType:@"GIMP image"];
+    if(contents.layerCount > 1 && !isGIMP) {
+        if (NSRunAlertPanel(LOCALSTR(@"savelayers title", @"Warning"),
+            [NSString stringWithFormat:LOCALSTR(@"savelayers body",
+                                                @"\"%@\" contains layers which are not supported by the current file type and will not be saved. Maybe use 'Save As'?\n\nAre you sure you want to continue?"),
+             [gCurrentDocument displayName]], LOCALSTR(@"cancel", @"Cancel"), LOCALSTR(@"continue", @"Continue"), NULL) == NSAlertDefaultReturn){
+                return NO;
+            }
+    }
 	
 	for (i = 0; i < [exporters count]; i++) {
 		if ([[SeaDocumentController sharedDocumentController]
