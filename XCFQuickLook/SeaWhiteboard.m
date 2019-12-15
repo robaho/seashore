@@ -94,8 +94,6 @@
 
 - (IntRect)imageRect
 {
-	id layer;
-	
     return IntMakeRect(0, 0, width, height);
 }
 
