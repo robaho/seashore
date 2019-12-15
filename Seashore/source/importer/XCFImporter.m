@@ -20,6 +20,16 @@ static inline void fix_endian_read(int *input, int size)
 #endif
 }
 
+static inline void fix_endian_readl(long *input, int size)
+{
+#ifdef __LITTLE_ENDIAN__
+    int i;
+    
+    for (i = 0; i < size; i++) {
+        input[i] = ntohll(input[i]);
+    }
+#endif
+}
 
 - (BOOL)readHeader:(FILE *)file
 {
@@ -47,6 +57,14 @@ static inline void fix_endian_read(int *input, int size)
 	// width = tempIntString[0];
 	// height = tempIntString[1];
 	type = tempIntString[2];
+    if (version >= 4)
+    {
+        int precision;
+        
+        fread(tempIntString, sizeof(int), 1, file);
+        fix_endian_read(tempIntString,1);
+        precision = tempIntString[0];
+    }
 	
 	return YES;
 }
@@ -110,10 +128,26 @@ static inline void fix_endian_read(int *input, int size)
 	return YES;
 }
 
+- (long)readOffset:(FILE*)file;
+{
+    if(version>=11){
+        long offset;
+        fread(&offset, sizeof(long), 1, file);
+        fix_endian_readl(&offset,1);
+        return offset;
+    } else {
+        int offset;
+        fread(&offset, sizeof(int), 1, file);
+        fix_endian_read(&offset,1);
+        return offset;
+    }
+}
+
+
 - (BOOL)addToDocument:(id)doc contentsOfFile:(NSString *)path
 {
 	SharedXCFInfo info;
-	int layerOffsets, offset;
+	long layerOffsets, offset;
 	FILE *file;
 	id layer;
 	int i, newType = [(SeaContent *)[doc contents] type];
@@ -146,16 +180,19 @@ static inline void fix_endian_read(int *input, int size)
 	
 	// Provide the type for the layer
 	info.type = type;
+    
+    int offsetSize = 4;
+    if(version>=11){
+        offsetSize=8;
+    }
 	
 	// Determine the offset for the next layer
 	i = 0;
 	layerOffsets = ftell(file);
 	layers = [NSArray array];
 	do {
-		fseek(file, layerOffsets + i * sizeof(int), SEEK_SET);
-		fread(tempIntString, sizeof(int), 1, file);
-		fix_endian_read(tempIntString, 1);
-		offset = tempIntString[0];
+		fseek(file, layerOffsets + i * offsetSize, SEEK_SET);
+        offset = [self readOffset:file];
 		// NSLog(@"Layer begins: %d", offset);
 		
 		// If it exists, move to it

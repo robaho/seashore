@@ -14,10 +14,38 @@ static inline void fix_endian_read(int *input, int size)
 #endif
 }
 
+static inline void fix_endian_readl(long *input, int size)
+{
+#ifdef __LITTLE_ENDIAN__
+    int i;
+    
+    for (i = 0; i < size; i++) {
+        input[i] = ntohll(input[i]);
+    }
+#endif
+}
+
+- (long)readOffset:(FILE*)file;
+{
+    if(version>=11){
+        long offset;
+        fread(&offset, sizeof(long), 1, file);
+        fix_endian_readl(&offset,1);
+        return offset;
+    } else {
+        int offset;
+        fread(&offset, sizeof(int), 1, file);
+        fix_endian_read(&offset,1);
+        return offset;
+    }
+}
+
 - (BOOL)readHeader:(FILE *)file
 {
 	char nameString[256];
 	int i;
+    
+    int tempIntString[16];
 	
 	// Read the width and height
 	fread(tempIntString, sizeof(int), 3, file);
@@ -58,6 +86,8 @@ static inline void fix_endian_read(int *input, int size)
 	int propType, propSize;
 	BOOL finished = NO;
 	int lostprops_pos;
+    
+    int tempIntString[16];
 	
 	// Keep reading until we're finished or hit an error
 	
@@ -169,6 +199,8 @@ static inline void fix_endian_read(int *input, int size)
 {
 	int propType, propSize;
 	BOOL finished;
+    
+    int tempIntString[16];
 	
 	// Skip width, height and name
 	fseek(file, sizeof(int) * 2, SEEK_CUR);
@@ -218,24 +250,22 @@ static inline void fix_endian_read(int *input, int size)
 	int tilesPerColumn = (height % XCF_TILE_HEIGHT) ? (height / XCF_TILE_HEIGHT + 1) : (height / XCF_TILE_HEIGHT);
 	int whichTile = 0, i, j, k, curColor, srcSPP, destSPP;
 	int tileHeight, tileWidth;
-	int tileOffset, oldOffset, srcLoc, destLoc, expectedSize, srcSize;
+    long tileOffset, oldOffset;
+    int srcLoc, destLoc, expectedSize, srcSize;
 	unsigned char *cmap = info->cmap;
 	unsigned char *srcData, *tileData, *totalData;
 	BOOL finished;
+    
+    int tempIntString[16];
 
 	// Determine the source's samples per pixel
-	fread(tempIntString, sizeof(int), 4, file);
-	fix_endian_read(tempIntString, 4);
+	fread(tempIntString, sizeof(int), 3, file);
+	fix_endian_read(tempIntString, 3);
 	destSPP = tempIntString[2];
 	srcSPP = destSPP;
-	fseek(file, tempIntString[3], SEEK_SET);
-	
-	// NSLog(@"%d - %d - %d - %d", tempIntString[0], tempIntString[1], tempIntString[2], tempIntString[3]);
-	
-	// Determine the target samples per pixel
-	oldOffset = ftell(file) + 2 * sizeof(int);
-	fread(tempIntString, sizeof(int), 2, file);
-	fix_endian_read(tempIntString, 2);
+    
+    oldOffset = [self readOffset:file] + 8; // skip the width & height
+    
 	// NSLog(@"%d - %d", tempIntString[0], tempIntString[1]);
 	if (info->type == XCF_INDEXED_IMAGE || info->type == XCF_RGB_IMAGE)
 		destSPP = 4;
@@ -251,10 +281,8 @@ static inline void fix_endian_read(int *input, int size)
 	
 		// Read the offset of the next tile
 		fseek(file, oldOffset, SEEK_SET);
-		fread(tempIntString, sizeof(int), 1, file);
-		fix_endian_read(tempIntString, 1);
-		oldOffset = ftell(file);
-		tileOffset = tempIntString[0];
+        tileOffset = [self readOffset:file];
+        oldOffset = ftell(file);
 		finished = (tileOffset == 0);
 		
 		// Determine the tile's width, height and expected size
@@ -360,7 +388,8 @@ static inline void fix_endian_read(int *input, int size)
 	int tilesPerRow = (width % XCF_TILE_WIDTH) ? (width / XCF_TILE_WIDTH + 1) : (width / XCF_TILE_WIDTH);
 	int tilesPerColumn = (width % XCF_TILE_HEIGHT) ? (height / XCF_TILE_HEIGHT + 1) : (height / XCF_TILE_HEIGHT);
 	int tileHeight, tileWidth;
-	int tileOffset, oldOffset, srcLoc, destLoc, expectedSize, srcSize;
+    long tileOffset, oldOffset;
+    int srcLoc, destLoc, expectedSize, srcSize;
 	unsigned char *srcData, *tileData;
 	int whichTile = 0, i, j;
 	BOOL finished;
@@ -377,10 +406,8 @@ static inline void fix_endian_read(int *input, int size)
 		
 		// Read the offset of the next tile
 		fseek(file, oldOffset, SEEK_SET);
-		fread(tempIntString, sizeof(int), 1, file);
-		fix_endian_read(tempIntString, 1);
+        tileOffset = [self readOffset:file];
 		oldOffset = ftell(file);
-		tileOffset = tempIntString[0];
 		finished = (tileOffset == 0);
 		
 		// Determine the tile's width, height and expected size
@@ -455,13 +482,13 @@ static inline void fix_endian_read(int *input, int size)
 
 - (BOOL)readBody:(FILE *)file sharedInfo:(SharedXCFInfo *)info
 {
-	int maskOffset, pixelsOffset;
+	long maskOffset, pixelsOffset;
 	
 	// Determine relevant file positions
-	fread(tempIntString, sizeof(int), 2, file);
-	fix_endian_read(tempIntString, 2);
-	pixelsOffset = tempIntString[0];
-	maskOffset = tempIntString[1];
+    
+    pixelsOffset = [self readOffset:file];
+    maskOffset = [self readOffset:file];
+    
 	fseek(file, pixelsOffset, SEEK_SET);
 	
 	// NSLog(@"Layer Pixels Present At: %d", pixelsOffset);
@@ -489,14 +516,16 @@ static inline void fix_endian_read(int *input, int size)
 	return YES;
 }
 
-- (id)initWithFile:(FILE *)file offset:(int)offset document:(id)doc sharedInfo:(SharedXCFInfo *)info
+- (id)initWithFile:(FILE *)file offset:(long)offset document:(id)doc sharedInfo:(SharedXCFInfo *)info
 {
 	// int i;
 	
 	// Initialize superclass first
 	if (![super  initWithDocument:doc])
 		return NULL;
-
+    
+    version = info->version;
+    
 	// Go to the given offset
 	fseek(file, offset, SEEK_SET);
 	

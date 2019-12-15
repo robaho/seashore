@@ -1,10 +1,13 @@
 #import "XCFContent.h"
 #import "XCFLayer.h"
+
+#ifndef OTHER_PLUGIN
 #import "SeaController.h"
 #import "SeaWarning.h"
 #import "SeaDocument.h"
 #import "SeaDocumentController.h"
 #import "SeaSelection.h"
+#endif
 
 @implementation XCFContent
 
@@ -19,9 +22,39 @@ static inline void fix_endian_read(int *input, int size)
 #endif
 }
 
+static inline void fix_endian_readl(long *input, int size)
+{
+#ifdef __LITTLE_ENDIAN__
+    int i;
+    
+    for (i = 0; i < size; i++) {
+        input[i] = ntohll(input[i]);
+    }
+#endif
+}
+
+- (long)readOffset:(FILE*)file;
+{
+    if(version>=11){
+        long offset;
+        fread(&offset, sizeof(long), 1, file);
+        fix_endian_readl(&offset,1);
+        return offset;
+    } else {
+        int offset;
+        fread(&offset, sizeof(int), 1, file);
+        fix_endian_read(&offset,1);
+        return offset;
+    }
+}
+
 + (BOOL)typeIsEditable:(NSString *)aType
 {
+#ifdef OTHER_PLUGIN
+    return TRUE;
+#else
 	return [[SeaDocumentController sharedDocumentController] type: aType isContainedInDocType: @"GIMP image"];
+#endif
 }
 
 - (BOOL)readHeader:(FILE *)file
@@ -53,20 +86,66 @@ static inline void fix_endian_read(int *input, int size)
 	width = tempIntString[0];
 	height = tempIntString[1];
 	type = tempIntString[2];
-	
+    
+    if (version >= 4)
+    {
+        int precision;
+        
+        fread(tempIntString, sizeof(int), 1, file);
+        fix_endian_read(tempIntString,1);
+        precision = tempIntString[0];
+        
+//        if (version == 4)
+//        {
+//            switch (precision)
+//            {
+//                case 0: precision = GIMP_PRECISION_U8_NON_LINEAR;  break;
+//                case 1: precision = GIMP_PRECISION_U16_NON_LINEAR; break;
+//                case 2: precision = GIMP_PRECISION_U32_LINEAR;     break;
+//                case 3: precision = GIMP_PRECISION_HALF_LINEAR;    break;
+//                case 4: precision = GIMP_PRECISION_FLOAT_LINEAR;   break;
+//                default:
+//                    goto hard_error;
+//            }
+//        }
+//        else if (version == 5 || version == 6)
+//        {
+//            switch (precision)
+//            {
+//                case 100: precision = GIMP_PRECISION_U8_LINEAR;        break;
+//                case 150: precision = GIMP_PRECISION_U8_NON_LINEAR;    break;
+//                case 200: precision = GIMP_PRECISION_U16_LINEAR;       break;
+//                case 250: precision = GIMP_PRECISION_U16_NON_LINEAR;   break;
+//                case 300: precision = GIMP_PRECISION_U32_LINEAR;       break;
+//                case 350: precision = GIMP_PRECISION_U32_NON_LINEAR;   break;
+//                case 400: precision = GIMP_PRECISION_HALF_LINEAR;      break;
+//                case 450: precision = GIMP_PRECISION_HALF_NON_LINEAR;  break;
+//                case 500: precision = GIMP_PRECISION_FLOAT_LINEAR;     break;
+//                case 550: precision = GIMP_PRECISION_FLOAT_NON_LINEAR; break;
+//                default:
+//                    goto hard_error;
+//            }
+//        }
+//        else
+//        {
+//            precision = p;
+//        }
+    }
+    
 	return YES;
+hard_error:
+    return NO;
 }
 
 - (BOOL)readProperties:(FILE *)file sharedInfo:(SharedXCFInfo *)info
 {
 	int propType, propSize;
 	BOOL finished = NO;
-	int lostprops_pos;
-	int parasites_start;
+	long lostprops_pos;
+	long parasites_start;
 	char *nameString;
 	int pos, i;
     
-    // These hold 64 bytes of temporary information for us
     int tempIntString[16];
     char tempString[64];
 	
@@ -88,8 +167,12 @@ static inline void fix_endian_read(int *input, int size)
 			
 				// Store the color map and complain if we are using the problematic version 0 XCF file
 				if (version == 0) {
+#ifdef OTHER_PLUGIN
+                    NSLog( @"indexed color files not supported");
+#else
 					NSRunAlertPanel(LOCALSTR(@"indexed color title", @"Indexed colour not supported"), LOCALSTR(@"indexed color body", @"XCF files using indexed colours are only supported if they are of version 1 or greater. This is because version 0 is known to have certain problems with indexed colours."), LOCALSTR(@"ok", @"OK"), NULL, NULL);
 					return NO;
+#endif
 				}
 				else {
 					fread(tempIntString, sizeof(int), 1, file);
@@ -197,7 +280,7 @@ static inline void fix_endian_read(int *input, int size)
 - (id)initWithDocument:(id)doc contentsOfFile:(NSString *)path;
 {
 	SharedXCFInfo info;
-	int layerOffsets, offset;
+	long layerOffsets, offset;
 	FILE *file;
 	id layer;
 	int i;
@@ -225,8 +308,13 @@ static inline void fix_endian_read(int *input, int size)
 	}
 	
 	// Express warning if necessary
-	if (version > 2)
+    if (version > 2) {
+#ifdef OTHER_PLUGIN
+        NSLog(LOCALSTR(@"xcf version body", @"The version of the XCF file you are trying to load is not supported by this program, loading may fail."));
+#else
 		NSRunAlertPanel(LOCALSTR(@"xcf version title", @"XCF version not supported"), LOCALSTR(@"xcf version body", @"The version of the XCF file you are trying to load is not supported by this program, loading may fail."), LOCALSTR(@"ok", @"OK"), NULL, NULL);
+#endif
+    }
 	
 	// NSLog(@"Properties begin: %d", ftell(file));
 	
@@ -245,11 +333,17 @@ static inline void fix_endian_read(int *input, int size)
 	i = 0;
 	layerOffsets = ftell(file);
 	layers = [NSArray array];
+    
+    int offsetSize = 4;
+    if(version>=11){
+        offsetSize=8;
+    }
+    
+    info.version = version;
+    
 	do {
-		fseek(file, layerOffsets + i * sizeof(int), SEEK_SET);
-		fread(tempIntString, sizeof(int), 1, file);
-		fix_endian_read(tempIntString, 1);
-		offset = tempIntString[0];
+		fseek(file, layerOffsets + i * offsetSize, SEEK_SET);
+        offset = [self readOffset:file];
 		// NSLog(@"Layer begins: %d", offset);
 		
 		// If it exists, move to it
@@ -273,7 +367,9 @@ static inline void fix_endian_read(int *input, int size)
 	fread(tempIntString, sizeof(int), 1, file);
 	fix_endian_read(tempIntString, 1);
 	if (tempIntString[0] != 0) {
+#ifndef OTHER_PLUGIN
 		[[SeaController seaWarning] addMessage:LOCALSTR(@"channels message", @"This XCF file contains channels which are not currently supported by Seashore. These channels will be lost upon saving.") forDocument: doc level:kHighImportance];
+#endif
 	}
 	
 	// Close the file
@@ -294,7 +390,9 @@ static inline void fix_endian_read(int *input, int size)
 	
 	// Inform user if we've composited the mask to the alpha channel
 	if (maskToAlpha) {
+#ifndef OTHER_PLUGIN
 		[[SeaController seaWarning] addMessage:LOCALSTR(@"mask-to-alpha message", @"Some of the masks in this image have been composited to their layer's alpha channel. These masks will be lost upon saving.") forDocument: doc level:kHighImportance];
+#endif
 	}
 	
 	// Store EXIF data

@@ -12,11 +12,7 @@
 */
 
 @interface XCFLayer : SeaLayer {
-
-	// These hold 64 bytes of temporary information for us 
-	int tempIntString[16];
-	char tempString[64];
-
+    int version;
 }
 
 /*!

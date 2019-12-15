@@ -8,6 +8,8 @@
 				between the content and layer loaders. This record allows us to
 				do this. "-->" indicates the field is filled by the document and
 				passed to the layer, "<--" indicates the opposite.
+    @field      version
+                --> the version of the file
 	@field		cmap
 				--> The block of memory containing the document's colour map,
 				this block of memory will be deallocated after document
@@ -28,6 +30,7 @@
 */
 typedef struct
 {
+    int version;
 	unsigned char *cmap;
 	int cmap_len;
 	int compression;
@@ -48,10 +51,8 @@ typedef struct
 */
 
 @interface XCFContent : SeaContent {
-
 	// The version of this document
 	int version;
-
 }
 
 /*!
