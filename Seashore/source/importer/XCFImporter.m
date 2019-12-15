@@ -1,9 +1,6 @@
 #import "XCFImporter.h"
 #import "XCFLayer.h"
-#import "SeaController.h"
-#import "SeaWarning.h"
 #import "SeaDocument.h"
-#import "SeaSelection.h"
 #import "SeaAlignment.h"
 #import "SeaOperations.h"
 
@@ -33,6 +30,11 @@ static inline void fix_endian_readl(long *input, int size)
 
 - (BOOL)readHeader:(FILE *)file
 {
+    
+    // These hold 64 bytes of temporary information for us
+    int tempIntString[16];
+    char tempString[64];
+    
 	// Check signature
 	if (fread(tempString, sizeof(char), 9, file) == 9) {
 		if (memcmp(tempString, "gimp xcf", 8))
@@ -73,6 +75,10 @@ static inline void fix_endian_readl(long *input, int size)
 {
 	int propType, propSize;
 	BOOL finished = NO;
+    
+    // These hold 64 bytes of temporary information for us
+    int tempIntString[16];
+    char tempString[64];
 	
 	// Keep reading until we're finished or hit an error
 	while (!finished && !ferror(file)) {
