@@ -28,6 +28,21 @@ static inline void fix_endian_readl(long *input, int size)
 #endif
 }
 
+- (long)readOffset:(FILE*)file;
+{
+    if(version>=11){
+        long offset;
+        fread(&offset, sizeof(long), 1, file);
+        fix_endian_readl(&offset,1);
+        return offset;
+    } else {
+        int offset;
+        fread(&offset, sizeof(int), 1, file);
+        fix_endian_read(&offset,1);
+        return offset;
+    }
+}
+
 - (BOOL)readHeader:(FILE *)file
 {
     
@@ -132,21 +147,6 @@ static inline void fix_endian_readl(long *input, int size)
 		return NO;
 	
 	return YES;
-}
-
-- (long)readOffset:(FILE*)file;
-{
-    if(version>=11){
-        long offset;
-        fread(&offset, sizeof(long), 1, file);
-        fix_endian_readl(&offset,1);
-        return offset;
-    } else {
-        int offset;
-        fread(&offset, sizeof(int), 1, file);
-        fix_endian_read(&offset,1);
-        return offset;
-    }
 }
 
 

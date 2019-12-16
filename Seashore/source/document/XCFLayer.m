@@ -40,6 +40,38 @@ static inline void fix_endian_readl(long *input, int size)
     }
 }
 
+-(int)mapV10Mode:(int)mode
+{
+    if(version<10)
+        return mode;
+    switch(mode){
+        case 28: return XCF_NORMAL_MODE;
+        case 29: return XCF_BEHIND_MODE;
+        case 30: return XCF_MULTIPLY_MODE;
+        case 31: return XCF_SCREEN_MODE;
+        case 32: return XCF_DIFFERENCE_MODE;
+        case 33: return XCF_ADDITION_MODE;
+        case 34: return XCF_SUBTRACT_MODE;
+        case 35: return XCF_DARKEN_ONLY_MODE;
+        case 36: return XCF_LIGHTEN_ONLY_MODE;
+        case 37: return XCF_HUE_MODE;
+        case 38: return XCF_SATURATION_MODE;
+        case 39: return XCF_COLOR_MODE;
+        case 40: return XCF_VALUE_MODE;
+        case 41: return XCF_DIVIDE_MODE;
+        case 42: return XCF_DODGE_MODE;
+        case 43: return XCF_BURN_MODE;
+        case 44: return XCF_HARDLIGHT_MODE;
+        case 45: return XCF_SOFTLIGHT_MODE;
+        case 46: return XCF_GRAIN_EXTRACT_MODE;
+        case 47: return XCF_GRAIN_MERGE_MODE;
+        case 57: return XCF_COLOR_ERASE_MODE;
+        case 58: return XCF_ERASE_MODE;
+    }
+    NSLog(@"unknown layer mode");
+    return XCF_NORMAL_MODE;
+}
+
 - (BOOL)readHeader:(FILE *)file
 {
 	char nameString[256];
@@ -135,7 +167,7 @@ static inline void fix_endian_readl(long *input, int size)
 				// Store the layer's mode
 				fread(tempIntString, sizeof(int), 1, file);
 				fix_endian_read(tempIntString, 1);
-				mode = tempIntString[0];
+                mode = [self mapV10Mode:tempIntString[0]];;
 				
 			break;
 			case PROP_ACTIVE_LAYER:
@@ -232,14 +264,8 @@ static inline void fix_endian_readl(long *input, int size)
 	// If we've had a problem fail
 	if (ferror(file))
 		return NO;
-	
-	// Move into position
-	fread(tempIntString, sizeof(int), 1, file);
-	fix_endian_read(tempIntString, 1);
-	fseek(file, tempIntString[0], SEEK_SET);
-	fread(tempIntString, sizeof(int), 4, file);
-	fix_endian_read(tempIntString, 4);
-	fseek(file, tempIntString[3], SEEK_SET);
+    
+    fseek(file,[self readOffset:file],SEEK_SET); // move to start of hierarchy
 	
 	return YES;
 }
@@ -259,13 +285,15 @@ static inline void fix_endian_readl(long *input, int size)
     int tempIntString[16];
 
 	// Determine the source's samples per pixel
-	fread(tempIntString, sizeof(int), 3, file);
-	fix_endian_read(tempIntString, 3);
+    fread(tempIntString, sizeof(int), 3, file); // read width, height, bpp
+    fix_endian_read(tempIntString, 3);
+    
 	destSPP = tempIntString[2];
 	srcSPP = destSPP;
     
-    oldOffset = [self readOffset:file] + 8; // skip the width & height
-    
+    oldOffset = [self readOffset:file]; // we only ever process the 1st level
+    oldOffset+=8; // skip width & height
+
 	// NSLog(@"%d - %d", tempIntString[0], tempIntString[1]);
 	if (info->type == XCF_INDEXED_IMAGE || info->type == XCF_RGB_IMAGE)
 		destSPP = 4;
@@ -303,7 +331,7 @@ static inline void fix_endian_readl(long *input, int size)
 					if (fread(srcData, sizeof(char), expectedSize, file) != expectedSize) {
 						// NSRunAlertPanel(@"Unexpected end-of-file", @"The data being loaded has unexpectedly ended, this could be due to an incomplete or corrupted XCF file. As such this file cannot be properly loaded.", @"OK", NULL, NULL);
 						NSLog(@"Unexpected end-of-file (no compression pixles)");
-						free(srcData); free(tileData); free(totalData);
+						free(srcData); free(tileData);
 						return NULL;
 					}
 					for (i = 0; i < srcSPP; i++) {
@@ -322,7 +350,7 @@ static inline void fix_endian_readl(long *input, int size)
 					if (!RLEDecompress(tileData, srcData, srcSize, tileWidth, tileHeight, srcSPP)) {
 						// NSRunAlertPanel(@"RLE decompression failed", @"The RLE decompression of a certain part of this file failed, this could be due to an incomplete or corrupted XCF file. As such this file cannot be properly loaded.", @"OK", NULL, NULL);
 						NSLog(@"RLE decompression failed (pixels)");
-						free(srcData); free(tileData); free(totalData);
+						free(srcData); free(tileData);
 						return NULL;
 					}
 					free(srcData);
@@ -383,33 +411,49 @@ static inline void fix_endian_readl(long *input, int size)
 	return totalData;
 }
 
+static inline int alphaReplaceMerge(int dstOpacity,int srcOpacity)
+{
+    if (srcOpacity == 255)
+        return dstOpacity;
+    if (srcOpacity == 0)
+        return 0;
+    
+    return (dstOpacity * srcOpacity)/255;
+}
+
 - (BOOL)readMaskPixels:(FILE *)file toData:(unsigned char *)totalData sharedInfo:(SharedXCFInfo *)info
 {
 	int tilesPerRow = (width % XCF_TILE_WIDTH) ? (width / XCF_TILE_WIDTH + 1) : (width / XCF_TILE_WIDTH);
-	int tilesPerColumn = (width % XCF_TILE_HEIGHT) ? (height / XCF_TILE_HEIGHT + 1) : (height / XCF_TILE_HEIGHT);
+	int tilesPerColumn = (height % XCF_TILE_HEIGHT) ? (height / XCF_TILE_HEIGHT + 1) : (height / XCF_TILE_HEIGHT);
+    
 	int tileHeight, tileWidth;
     long tileOffset, oldOffset;
     int srcLoc, destLoc, expectedSize, srcSize;
 	unsigned char *srcData, *tileData;
 	int whichTile = 0, i, j;
 	BOOL finished;
+    int tempIntString[16];
 
 	// We have no use for the mask's header information (we assume its reasonable)
 	if (![self skipMaskHeader:file])
 		return NO;
+    
+    fread(tempIntString, sizeof(int), 3, file); // read width, height, bpp
+    fix_endian_read(tempIntString, 3);
+    
+    oldOffset = [self readOffset:file]; // we only ever process the 1st level
+    oldOffset+=8; // skip width & height
 
-	// Prepare to load tile-by-tile
-	oldOffset = ftell(file) + 2 * sizeof(int);
 	tileData = malloc(XCF_TILE_HEIGHT * XCF_TILE_WIDTH);
 			
 	do {
 		
-		// Read the offset of the next tile
-		fseek(file, oldOffset, SEEK_SET);
+        // Read the offset of the next tile
+        fseek(file, oldOffset, SEEK_SET);
         tileOffset = [self readOffset:file];
-		oldOffset = ftell(file);
-		finished = (tileOffset == 0);
-		
+        oldOffset = ftell(file);
+        finished = (tileOffset == 0);
+
 		// Determine the tile's width, height and expected size
 		tileWidth =  (whichTile % tilesPerRow == tilesPerRow - 1 && width % XCF_TILE_WIDTH != 0) ? (width % XCF_TILE_WIDTH) : XCF_TILE_WIDTH;
 		tileHeight = (whichTile / tilesPerRow == tilesPerColumn - 1 && height % XCF_TILE_HEIGHT != 0) ? (height % XCF_TILE_HEIGHT) : XCF_TILE_HEIGHT;
@@ -428,7 +472,7 @@ static inline void fix_endian_readl(long *input, int size)
 					if (fread(srcData, sizeof(char), expectedSize, file) != expectedSize) {
 						// NSRunAlertPanel(@"Unexpected end-of-file", @"The data being loaded has unexpectedly ended, this could be due to an incomplete or corrupted XCF file. As such this file cannot be properly loaded.", @"OK", NULL, NULL);
 						NSLog(@"Unexpected end-of-file (no compression mask)");
-						free(srcData); free(tileData); free(totalData);
+						free(srcData); free(tileData);
 						return NO;
 					}
 					for (i = 0; i < expectedSize; i++)
@@ -444,7 +488,7 @@ static inline void fix_endian_readl(long *input, int size)
 					if (!RLEDecompress(tileData, srcData, srcSize, tileWidth, tileHeight, 1)) {
 						// NSRunAlertPanel(@"RLE decompression failed", @"The RLE decompression of a certain part of this file failed, this could be due to an incomplete or corrupted XCF file. As such this file cannot be properly loaded.", @"OK", NULL, NULL);
 						NSLog(@"RLE decompression failed (mask)");
-						free(srcData); free(tileData); free(totalData);
+						free(srcData); free(tileData);
 						return NO;
 					}
 					free(srcData);
@@ -457,7 +501,7 @@ static inline void fix_endian_readl(long *input, int size)
 				for (i = 0; i < tileWidth; i++) {
 					srcLoc = (i + j * tileWidth);
 					destLoc = (((whichTile % tilesPerRow) * XCF_TILE_WIDTH) + i) * spp + ((whichTile /  tilesPerRow) * XCF_TILE_HEIGHT + j) * width * spp;
-					totalData[destLoc + (spp - 1)] = tileData[srcLoc];				
+                    totalData[destLoc + (spp - 1)] = alphaReplaceMerge(totalData[destLoc + (spp-1)],tileData[srcLoc]);
 				}
 			}
 			
@@ -521,7 +565,7 @@ static inline void fix_endian_readl(long *input, int size)
 	// int i;
 	
 	// Initialize superclass first
-	if (![super  initWithDocument:doc])
+	if (![super initWithDocument:doc])
 		return NULL;
     
     version = info->version;

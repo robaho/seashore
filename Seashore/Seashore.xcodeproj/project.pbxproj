@@ -1616,14 +1616,14 @@
 		F57AD82C03FF7FFB0185BAF6 /* SeaContent Subclasses */ = {
 			isa = PBXGroup;
 			children = (
-				2B96A50E23A5525C00A04B72 /* XCFContent.h */,
-				2B96A50F23A5525D00A04B72 /* XCFContent.m */,
 				F52A09BD03D81A200192180E /* CocoaContent.h */,
 				F52A09BE03D81A200192180E /* CocoaContent.m */,
 				A8721E2507DAF1F000995290 /* SVGContent.h */,
 				A8721E2407DAF1EF00995290 /* SVGContent.m */,
 				A829BDFE053976F900A80207 /* XBMContent.h */,
 				A829BDFF053976F900A80207 /* XBMContent.m */,
+				2B96A50E23A5525C00A04B72 /* XCFContent.h */,
+				2B96A50F23A5525D00A04B72 /* XCFContent.m */,
 			);
 			name = "SeaContent Subclasses";
 			sourceTree = "<group>";

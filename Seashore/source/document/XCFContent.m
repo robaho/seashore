@@ -4,9 +4,7 @@
 #ifndef OTHER_PLUGIN
 #import "SeaController.h"
 #import "SeaWarning.h"
-#import "SeaDocument.h"
 #import "SeaDocumentController.h"
-#import "SeaSelection.h"
 #endif
 
 @implementation XCFContent
@@ -363,10 +361,8 @@ hard_error:
 	} while (offset != 0);
 	
 	// Check for channels
-	fseek(file, layerOffsets + i * sizeof(int), SEEK_SET);
-	fread(tempIntString, sizeof(int), 1, file);
-	fix_endian_read(tempIntString, 1);
-	if (tempIntString[0] != 0) {
+	fseek(file, layerOffsets + i * offsetSize, SEEK_SET);
+    if ([self readOffset:file] != 0) {
 #ifndef OTHER_PLUGIN
 		[[SeaController seaWarning] addMessage:LOCALSTR(@"channels message", @"This XCF file contains channels which are not currently supported by Seashore. These channels will be lost upon saving.") forDocument: doc level:kHighImportance];
 #endif
