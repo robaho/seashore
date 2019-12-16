@@ -306,9 +306,9 @@ hard_error:
 	// Express warning if necessary
     if (version > 2) {
 #ifdef OTHER_PLUGIN
-        NSLog(LOCALSTR(@"xcf version body", @"The version of the XCF file you are trying to load is not supported by this program, loading may fail."));
+        NSLog(LOCALSTR(@"xcf version body", @"The version of the XCF file you are trying to load is not fully supported by this program, loading may fail."));
 #else
-		NSRunAlertPanel(LOCALSTR(@"xcf version title", @"XCF version not supported"), LOCALSTR(@"xcf version body", @"The version of the XCF file you are trying to load is not supported by this program, loading may fail."), LOCALSTR(@"ok", @"OK"), NULL, NULL);
+		NSRunAlertPanel(LOCALSTR(@"xcf version title", @"XCF version not supported"), LOCALSTR(@"xcf version body", @"The version of the XCF file you are trying to load is not fully supported by this program, loading may fail."), LOCALSTR(@"ok", @"OK"), NULL, NULL);
 #endif
     }
 	
