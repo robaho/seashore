@@ -12,11 +12,7 @@
 */
 
 @interface XCFLayer : SeaLayer {
-
-	// These hold 64 bytes of temporary information for us 
-	int tempIntString[16];
-	char tempString[64];
-
+    int version;
 }
 
 /*!
@@ -35,6 +31,6 @@
 				information).
 	@result		Returns instance upon success (or NULL otherwise).
 */
-- (id)initWithFile:(FILE *)file offset:(int)offset sharedInfo:(SharedXCFInfo *)info;
+- (id)initWithFile:(FILE *)file offset:(long)offset document:(id)doc sharedInfo:(SharedXCFInfo *)info;
 
 @end

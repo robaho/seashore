@@ -11,7 +11,7 @@
 			<string>MDImporter</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>app.seashore.xcf</string>
+				<string>org.gimp.xcf</string>
 			</array>
 		</dict>
 	</array>

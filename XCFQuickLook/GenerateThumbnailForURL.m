@@ -14,7 +14,7 @@
 
 OSStatus GenerateThumbnailForURL(void *thisInterface, QLThumbnailRequestRef thumbnail, CFURLRef url, CFStringRef contentTypeUTI, CFDictionaryRef options, CGSize maxSize)
 {
-	XCFContent *contents = [[XCFContent alloc] initWithContentsOfFile: [(__bridge NSURL *)url path]];
+	XCFContent *contents = [[XCFContent alloc] initWithDocument:NULL contentsOfFile: [(__bridge NSURL *)url path]];
 	SeaWhiteboard *whiteboard = [[SeaWhiteboard alloc] initWithContent:contents];
 	[whiteboard update];
     

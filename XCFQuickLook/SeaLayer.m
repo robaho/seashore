@@ -7,7 +7,7 @@
 
 @implementation SeaLayer
 
-- (id)init
+- (id)initWithDocument:(id)doc
 {	
 	// Set the data members to reasonable values
 	height = width = mode = 0;

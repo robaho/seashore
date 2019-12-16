@@ -184,6 +184,8 @@ inline unsigned char averagedComponentValue(int spp, unsigned char *data, int wi
 			}
 		}
 	}
+    if(count==0)
+        return 0;
 		
 	return (total / count);
 }

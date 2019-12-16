@@ -1,3 +1,4 @@
+#import "Globals.h"
 #import "SeaContent.h"
 
 /*!
@@ -7,6 +8,8 @@
 				between the content and layer loaders. This record allows us to
 				do this. "-->" indicates the field is filled by the document and
 				passed to the layer, "<--" indicates the opposite.
+    @field      version
+                --> the version of the file
 	@field		cmap
 				--> The block of memory containing the document's colour map,
 				this block of memory will be deallocated after document
@@ -27,6 +30,7 @@
 */
 typedef struct
 {
+    int version;
 	unsigned char *cmap;
 	int cmap_len;
 	int compression;
@@ -47,15 +51,19 @@ typedef struct
 */
 
 @interface XCFContent : SeaContent {
-
 	// The version of this document
 	int version;
-	
-	// These hold 64 bytes of temporary information for us 
-	int tempIntString[16];
-	char tempString[64];
-
 }
+
+/*!
+	@method		typeIsEditable:
+	@discussion	Whether or not the type is XCFContent
+	@param		type
+				A string type, could be an HFS File Type or UTI
+	@result		A boolean indicating acceptance.
+
+*/
++ (BOOL)typeIsEditable:(NSString *)type;
 
 /*!
 	@method		initWithDocument:contentsOfFile:
@@ -66,6 +74,6 @@ typedef struct
 				The path of the XCF file with which to initalize this class.
 	@result		Returns instance upon success (or NULL otherwise).
 */
-- (id)initWithContentsOfFile:(NSString *)path;
+- (id)initWithDocument:(id)doc contentsOfFile:(NSString *)path;
 
 @end

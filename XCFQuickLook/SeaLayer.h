@@ -76,7 +76,7 @@
 				The document with which to initialize the instance.
 	@result		Returns instance upon success (or NULL otherwise).
 */
-- (id)init;
+- (id)initWithDocument:(id)doc;
 /*!
 	@method		dealloc
 	@discussion	Frees memory occupied by an instance of this class.

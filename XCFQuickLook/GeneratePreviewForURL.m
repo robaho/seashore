@@ -15,7 +15,7 @@
 OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview, CFURLRef url, CFStringRef contentTypeUTI, CFDictionaryRef options)
 {
     // Create and read the document file
-	XCFContent *contents = [[XCFContent alloc] initWithContentsOfFile: [(__bridge NSURL *)url path]];
+	XCFContent *contents = [[XCFContent alloc] initWithDocument:NULL contentsOfFile: [(__bridge NSURL *)url path]];
 	SeaWhiteboard *whiteboard = [[SeaWhiteboard alloc] initWithContent:contents];
 	[whiteboard update];
     

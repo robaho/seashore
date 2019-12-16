@@ -60,7 +60,7 @@ Boolean GetMetadataForFile(void* thisInterface,
     Boolean success=NO;
 	
     // load the document at the specified location
-	XCFContent *contents = [[XCFContent alloc] initWithContentsOfFile: (__bridge NSString *)pathToFile];
+	XCFContent *contents = [[XCFContent alloc] initWithDocument:NULL contentsOfFile: (__bridge NSString *)pathToFile];
 	if(contents)
 	{
 		int width = [contents width];

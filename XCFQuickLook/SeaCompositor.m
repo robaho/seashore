@@ -95,7 +95,8 @@
 			if (insertOverlay) {
 				
 				// Check if we should apply the overlay for this pixel
-				overlayOkay = NO;
+                
+                overlayOkay = YES;
 				switch (options.overlayBehaviour) {
 					case kReplacingBehaviour:
 					case kMaskingBehaviour:
@@ -105,7 +106,6 @@
 						selectOpacity = options.overlayOpacity;
 					break;
 				}
-				overlayOkay = YES;
 				
 				// Don't do anything if there's no point
 				if (selectOpacity == 0)
