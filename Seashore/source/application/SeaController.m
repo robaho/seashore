@@ -30,15 +30,6 @@ id seaController;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	NSString *crashReport = [NSString stringWithFormat:@"%@/Library/Logs/CrashReporter/Seashore.crash.log", NSHomeDirectory()];
-	NSString *trashedReport = [NSString stringWithFormat:@"%@/.Trash/Seashore.crash.log", NSHomeDirectory()];
-
-	// Run initial tests
-	if ([seaPrefs firstRun] && [gFileManager fileExistsAtPath:crashReport]) {
-		if ([gFileManager movePath:crashReport toPath:trashedReport handler:NULL]) {
-			[seaWarning addMessage:LOCALSTR(@"old crash report message", @"Seashore has moved its old crash report to the Trash so that it will be deleted next time you empty the trash.") level:kModerateImportance];
-		}
-	}
 }
 
 - (UtilitiesManager*)utilitiesManager
