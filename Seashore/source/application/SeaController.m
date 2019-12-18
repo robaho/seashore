@@ -193,10 +193,10 @@ id seaController;
 	
 	switch ([menuItem tag]) {
 		case 175:
-			return gCurrentDocument && [gCurrentDocument fileName] && [gCurrentDocument isDocumentEdited] && [gCurrentDocument current];
+			return gCurrentDocument && [gCurrentDocument fileName] && [gCurrentDocument isDocumentEdited];
 		break;
 		case 176:
-			return gCurrentDocument && [gCurrentDocument fileName] && [gCurrentDocument current];
+			return gCurrentDocument && [gCurrentDocument fileName];
 		break;
 		case 400:
 			availableType = [[NSPasteboard generalPasteboard] availableTypeFromArray:[NSArray arrayWithObjects:NSTIFFPboardType, NSPICTPboardType, NSURLPboardType, NULL]];

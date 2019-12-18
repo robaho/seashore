@@ -63,7 +63,6 @@ enum {
 	// Set data members appropriately
 	whiteboard = NULL;
 	restoreOldType = NO;
-	current = YES;
 	specialStart = kNormalStart;
 	
 	// Set the measure style
@@ -116,7 +115,6 @@ enum {
 	// Set data members appropriately
 	whiteboard = NULL;
 	restoreOldType = NO;
-	current = YES;
 	specialStart = kPasteboardStart;
 	
 	// Set the measure style
@@ -148,7 +146,6 @@ enum {
 	// Set data members appropriately
 	whiteboard = NULL;
 	restoreOldType = NO;
-	current = YES;
 	specialStart = kOpenStart;
 	
 	// Set the measure style
@@ -183,7 +180,6 @@ enum {
 	// Set data members appropriately
 	whiteboard = NULL;
 	restoreOldType = NO;
-	current = YES;
 	contents = [[SeaContent alloc] initWithDocument:self data:data type:type width:width height:height res:72];
 	specialStart = kPlugInStart;
 
@@ -250,13 +246,11 @@ enum {
 
 - (IBAction)saveDocument:(id)sender
 {
-	current = YES;
 	[super saveDocument:sender];
 }
 
 - (IBAction)saveDocumentAs:(id)sender
 {
-	current = YES;
 	[super saveDocumentAs:sender];
 }
 
@@ -542,17 +536,6 @@ enum {
 	[(OptionsUtility *)[(UtilitiesManager *)[SeaController utilitiesManager] optionsUtilityFor:self] viewNeedsDisplay];
 }
 
-- (BOOL)windowShouldClose:(NSWindow *)sender
-{
-    bool isGIMP = [[SeaDocumentController sharedDocumentController] type: [self fileType] isContainedInDocType:@"GIMP image"];
-    if(contents.layerCount > 1 && !isGIMP) {
-        if (NSRunAlertPanel(LOCALSTR(@"savelayers title", @"Warning"), [NSString stringWithFormat:LOCALSTR(@"savelayers body", @"\"%@\" contains layers which are not supported by the current file type and will be lost. Are you sure you want to continue?"), [gCurrentDocument displayName]], LOCALSTR(@"cancel", @"Cancel"), LOCALSTR(@"continue", @"Continue"), NULL) == NSAlertDefaultReturn){
-            return false;
-        }
-    }
-    return true;
-}
-
 - (void)windowDidResignMain:(NSNotification *)notification
 {
 	NSPoint point;
@@ -643,16 +626,6 @@ enum {
 
 	// Then call our supervisor
 	[super close];
-}
-
-- (BOOL)current
-{
-	return current;
-}
-
-- (void)setCurrent:(BOOL)value
-{
-	current = value;
 }
 
 - (int)uniqueLayerID

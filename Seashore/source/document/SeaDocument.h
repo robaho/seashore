@@ -89,10 +89,6 @@
 	// File types with Cocoa can be difficult
 	BOOL restoreOldType;
 	NSString *oldType;
-	
-	// Is the file the current version?
-	BOOL current;
-	
 }
 
 // CREATION METHODS
@@ -386,22 +382,6 @@
 - (NSRect) standardFrame;
 
 // EXTRA METHODS
-
-/*!
-	@method		current
-	@discussion	Returns a boolean indicating whether the document is current.
-				Documents are not current, if they were created using the "Compare
-				to Last Saved" menu item and have not been resaved since.
-	@result		Returns YES if the document is original, NO otherwise.
-*/
-- (BOOL)current;
-
-/*!
-	@method		setCurrent
-	@discussion	Sets the current boolean to the specified value. Remember non-current
-				documents will be deleted upon closing!
-*/
-- (void)setCurrent:(BOOL)value;
 
 /*!
 	@method		uniqueLayerID

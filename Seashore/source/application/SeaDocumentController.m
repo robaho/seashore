@@ -135,7 +135,7 @@
 
 - (void)noteNewRecentDocument:(NSDocument *)aDocument
 {
-	if (stopNotingRecentDocuments == NO && [(SeaDocument *)aDocument current]) {
+	if (stopNotingRecentDocuments == NO) {
 		[super noteNewRecentDocument:aDocument];
 	}
 }
