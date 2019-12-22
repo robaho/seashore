@@ -9,9 +9,6 @@
 #import <sys/stat.h>
 #import <sys/mount.h>
 
-extern int tempFileCount;
-extern BOOL userWarnedOnDiskSpace;
-
 @implementation SeaLayerUndo
 
 - (id)initWithDocument:(id)doc forLayer:(id)ilayer

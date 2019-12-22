@@ -74,21 +74,13 @@
 	// The unique ID for floating layer
 	int uniqueFloatingLayerID;
 	
-	// The unique ID for this document (sometimes used)
-	int uniqueDocID;
-	
 	// The document's measure style
 	int measureStyle;
 	
 	// Is the document locked?
 	BOOL locked;
 	
-	// Is the document initing from the pasteboard or plug-in?
-	int specialStart;
-	
-	// File types with Cocoa can be difficult
-	BOOL restoreOldType;
-	NSString *oldType;
+    NSString *selectedType;
 }
 
 // CREATION METHODS
@@ -107,32 +99,6 @@
 	@result		Returns instance upon success (or NULL otherwise).
 */
 - (id)initWithPasteboard;
-
-/*!
-	@method		initWithContentsOfFile:ofType:
-	@discussion	Initializes an instance of this class with the given image file.
-	@param		path
-				The path of the file with which to initalize this class.
-	@param		type
-				The type of file with which this class is being initialized.
-	@result		Returns instance upon success (or NULL otherwise).
-*/
-- (id)initWithContentsOfFile:(NSString *)path ofType:(NSString *)type;
-
-/*!
-	@method		initWithData:type:width:height:
-	@discussion	Initializes an instance of this class with the given data.
-	@param		data
-				The data with which this class is being initialized.
-	@param		type
-				The type with which this class is being initialized.
-	@param		width
-				The width of the data with which this class is being initialized.
-	@param		height
-				The height of the data with which this class is being initialized.
-	@result		Returns instance upon success (or NULL otherwise).
-*/
-- (id)initWithData:(unsigned char *)data type:(int)type width:(int)width height:(int)height;
 
 /*!
 	@method		awakeFromNib
@@ -408,13 +374,6 @@
 - (int)uniqueFloatingLayerID;
 
 /*!
-	@method		uniqueDocID
-	@discussion	Returns the unique ID of the document.
-	@result		Returns an integer representing a unique ID for the document.
-*/
-- (int)uniqueDocID;
-
-/*!
 	@method		windowNibName
 	@discussion	Returns the name of the NIB file associated with this document's
 				window for use by NSDocumentController.
@@ -499,14 +458,6 @@
 	@result		YES if the menu item should be enabled, NO otherwise.
 */
 - (BOOL)validateMenuItem:(id)menuItem;
-
-/*!
-	@method		fileTypeFromLastRunSavePanel
-	@discussion	Must be overridden to make sure the saving of files works
-				correctly.
-	@result		Returns exactly the same as the "fileType" method would.
-*/
-- (NSString *)fileTypeFromLastRunSavePanel;
 
 /*!
     @method     scrollView

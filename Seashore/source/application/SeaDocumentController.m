@@ -46,6 +46,17 @@
 	}
 }
 
++ (void)restoreWindowWithIdentifier:(NSString *)identifier state:(NSCoder *)state completionHandler:(void (^)(NSWindow *, NSError *))completionHandler
+{
+    NSInteger restorable = [state decodeIntegerForKey:@"restorable"];
+    if (!restorable) {
+        completionHandler(nil, [NSError errorWithDomain:NSCocoaErrorDomain code:NSUserCancelledError userInfo:nil]);
+    }
+    else {
+        [super restoreWindowWithIdentifier:identifier state:state completionHandler:completionHandler];
+    }
+}
+
 - (IBAction)newDocument:(id)sender
 {		
 	NSString *string;
@@ -72,17 +83,17 @@
 	[backgroundCheckbox setState:[(SeaPrefs *)[SeaController seaPrefs] transparentBackground]];
 	
 	// Set up the recents menu
-	int i;
 	NSArray *recentDocs = [super recentDocumentURLs];
 	if([recentDocs count]){
 		[recentMenu setEnabled:YES];
-		for(i = 0; i < [recentDocs count]; i++){
-			NSString *path = [[recentDocs objectAtIndex:i] path];
-			NSString *filename = [[path pathComponents] objectAtIndex:[[path pathComponents] count] -1];
-			NSImage *image = [[NSWorkspace sharedWorkspace] iconForFile: path];
+		for(NSURL *url in [super recentDocumentURLs]){
+            NSString *filename = [url lastPathComponent];
 			[recentMenu addItemWithTitle: filename];
-			[[recentMenu itemAtIndex:[recentMenu numberOfItems] - 1] setRepresentedObject:path];
-			[[recentMenu itemAtIndex:[recentMenu numberOfItems] - 1] setImage: image];
+			[[recentMenu itemAtIndex:[recentMenu numberOfItems] - 1] setRepresentedObject:url];
+            if ([url isFileURL]) {
+                NSImage *image = [[NSWorkspace sharedWorkspace] iconForFile:[url path]];
+                [[recentMenu itemAtIndex:[recentMenu numberOfItems] - 1] setImage: image];
+            }
 		}
 	}else {
 		[recentMenu setEnabled:NO];
@@ -130,7 +141,8 @@
 
 - (IBAction)openRecent:(id)sender
 {
-	[[NSDocumentController sharedDocumentController] openDocumentWithContentsOfFile:[[sender selectedItem] representedObject] display:YES];
+    NSURL *url = [[sender selectedItem] representedObject];
+    [[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:url display:YES];
 }
 
 - (void)noteNewRecentDocument:(NSDocument *)aDocument

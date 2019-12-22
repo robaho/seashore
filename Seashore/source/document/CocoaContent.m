@@ -56,7 +56,7 @@
 		return NULL;
 	
 	// Open the image
-	image = [[NSImage alloc] initByReferencingFile:path];
+	image = [[NSImage alloc] initWithContentsOfFile:path];
 	if (image == NULL) {
 		return NULL;
 	}

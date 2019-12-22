@@ -27,27 +27,14 @@
 #import "ToolboxUtility.h"
 #import "SeaTools.h"
 
-extern int globalUniqueDocID;
-
 extern IntPoint gScreenResolution;
 
 extern BOOL globalReadOnlyWarning;
-
-enum {
-	kNoStart = 0,
-	kNormalStart = 1,
-	kOpenStart = 2,
-	kPasteboardStart = 3,
-	kPlugInStart = 4
-};
 
 @implementation SeaDocument
 
 - (id)init
 {
-	int dtype, dwidth, dheight, dres;
-	BOOL dopaque;
-	
 	// Initialize superclass first
 	if (![super init])
 		return NULL;
@@ -56,33 +43,50 @@ enum {
 	uniqueLayerID = -1;
 	uniqueFloatingLayerID = 4999;
 	
-	// Get a unique ID for this document
-	uniqueDocID = globalUniqueDocID;
-	globalUniqueDocID++;
-	
 	// Set data members appropriately
 	whiteboard = NULL;
-	restoreOldType = NO;
-	specialStart = kNormalStart;
 	
 	// Set the measure style
 	measureStyle = [(SeaDocumentController *)[NSDocumentController sharedDocumentController] units];
 	
-	// Create contents
-	dtype = [(SeaDocumentController *)[NSDocumentController sharedDocumentController] type];
-	dwidth = [(SeaDocumentController *)[NSDocumentController sharedDocumentController] width];
-	dheight = [(SeaDocumentController *)[NSDocumentController sharedDocumentController] height];
-	dres = [(SeaDocumentController *)[NSDocumentController sharedDocumentController] resolution];
-	dopaque = [(SeaDocumentController *)[NSDocumentController sharedDocumentController] opaque];
-    
-    if (dres==0) {
-        return NULL;
-    }
-    
-    
-	contents = [[SeaContent alloc] initWithDocument:self type:dtype width:dwidth height:dheight res:dres opaque:dopaque];
+	contents = [[SeaContent alloc] initWithDocument:self type:0 width:64 height:64 res:72 opaque:NO];
 	
 	return self;
+}
+
+- (id)initWithType:(NSString *)typeName error:(NSError * _Nullable __autoreleasing *)outError
+{
+    int dtype, dwidth, dheight, dres;
+    BOOL dopaque;
+    
+    // Initialize superclass first
+    if (![super init])
+        return NULL;
+    
+    [self setFileType:typeName];
+    
+    // Reset uniqueLayerID
+    uniqueLayerID = -1;
+    uniqueFloatingLayerID = 4999;
+    
+    // Set data members appropriately
+    whiteboard = NULL;
+    
+    // Set the measure style
+    measureStyle = [(SeaDocumentController *)[NSDocumentController sharedDocumentController] units];
+    
+    // Create contents
+    dtype = [(SeaDocumentController *)[NSDocumentController sharedDocumentController] type];
+    dwidth = [(SeaDocumentController *)[NSDocumentController sharedDocumentController] width];
+    dheight = [(SeaDocumentController *)[NSDocumentController sharedDocumentController] height];
+    dopaque = [(SeaDocumentController *)[NSDocumentController sharedDocumentController] opaque];
+    dres = [(SeaDocumentController *)[NSDocumentController sharedDocumentController] resolution];
+
+    contents = [[SeaContent alloc] initWithDocument:self type:dtype width:dwidth height:dheight res:dres opaque:dopaque];
+    
+    outError = NULL;
+    
+    return self;
 }
 
 - (id)initWithPasteboard
@@ -108,14 +112,8 @@ enum {
 	uniqueLayerID = -1;
 	uniqueFloatingLayerID = 4999;
 	
-	// Get a unique ID for this document
-	uniqueDocID = globalUniqueDocID;
-	globalUniqueDocID++;
-	
 	// Set data members appropriately
 	whiteboard = NULL;
-	restoreOldType = NO;
-	specialStart = kPasteboardStart;
 	
 	// Set the measure style
 	measureStyle = [(SeaPrefs *)[SeaController seaPrefs] newUnits];
@@ -124,69 +122,6 @@ enum {
 	contents = [[SeaContent alloc] initFromPasteboardWithDocument:self];
 	
 	// Mark document as dirty
-	[self updateChangeCount:NSChangeDone];
-	
-	return self;
-}
-
-- (id)initWithContentsOfFile:(NSString *)path ofType:(NSString *)type
-{
-	// Initialize superclass first
-	if (![super init])
-		return NULL;
-	
-	// Reset uniqueLayerID
-	uniqueLayerID = -1;
-	uniqueFloatingLayerID = 4999;
-	
-	// Get a unique ID for this document
-	uniqueDocID = globalUniqueDocID;
-	globalUniqueDocID++;
-	
-	// Set data members appropriately
-	whiteboard = NULL;
-	restoreOldType = NO;
-	specialStart = kOpenStart;
-	
-	// Set the measure style
-	measureStyle = [(SeaPrefs *)[SeaController seaPrefs] newUnits];
-	
-    // Do required work
-    if ([self readFromFile:path ofType:type]) {
-        [self setFileName:path];
-        [self setFileType:type];
-    }
-    else {
-        return NULL;
-    }
-    
-    return self;
-}
-
-- (id)initWithData:(unsigned char *)data type:(int)type width:(int)width height:(int)height
-{
-	// Initialize superclass first
-	if (![super init])
-		return NULL;
-	
-	// Reset uniqueLayerID
-	uniqueLayerID = -1;
-	uniqueFloatingLayerID = 4999;
-	
-	// Get a unique ID for this document
-	uniqueDocID = globalUniqueDocID;
-	globalUniqueDocID++;
-	
-	// Set data members appropriately
-	whiteboard = NULL;
-	restoreOldType = NO;
-	contents = [[SeaContent alloc] initWithDocument:self data:data type:type width:width height:height res:72];
-	specialStart = kPlugInStart;
-
-	// Set the measure style
-	measureStyle = [(SeaPrefs *)[SeaController seaPrefs] newUnits];
-
-	// Increment change count
 	[self updateChangeCount:NSChangeDone];
 	
 	return self;
@@ -242,6 +177,16 @@ enum {
 	[docWindow setAcceptsMouseMovedEvents:YES];
     
     [[[SeaController utilitiesManager] statusUtilityFor:self] update];
+}
+
+- (void) encodeRestorableStateWithCoder:(NSCoder *) coder {
+    
+    if (self.fileURL){
+        [coder encodeInteger:1 forKey:@"restorable"];
+    } else {
+        [coder encodeInteger:0 forKey:@"restorable"];
+    }
+    [super encodeRestorableStateWithCoder:coder];
 }
 
 - (IBAction)saveDocument:(id)sender
@@ -389,35 +334,31 @@ enum {
 	return YES;
 }
 
+- (NSString*)fileTypeFromLastRunSavePanel
+{
+    return selectedType;
+}
+
 - (BOOL)writeToFile:(NSString *)path ofType:(NSString *)type
 {
-	BOOL result = NO;
-	int i;
-    
-    bool isGIMP = [[SeaDocumentController sharedDocumentController] type: [self fileType] isContainedInDocType:@"GIMP image"];
-    if(contents.layerCount > 1 && !isGIMP) {
-        if (NSRunAlertPanel(LOCALSTR(@"savelayers title", @"Warning"),
-            [NSString stringWithFormat:LOCALSTR(@"savelayers body",
-                                                @"\"%@\" contains layers which are not supported by the current file type and will not be saved. Maybe use 'Save As'?\n\nAre you sure you want to continue?"),
-             [gCurrentDocument displayName]], LOCALSTR(@"cancel", @"Cancel"), LOCALSTR(@"continue", @"Continue"), NULL) == NSAlertDefaultReturn){
-                return NO;
-            }
-    }
-	
-	for (i = 0; i < [exporters count]; i++) {
-		if ([[SeaDocumentController sharedDocumentController]
-			 type: type
-			 isContainedInDocType:[[exporters objectAtIndex:i] title]
-			 ]) {
-			[[exporters objectAtIndex:i] writeDocument:self toFile:path];
-			result = YES;
+//    bool isGIMP = [[SeaDocumentController sharedDocumentController] type: [self fileType] isContainedInDocType:@"GIMP image"];
+//    if(contents.layerCount > 1 && !isGIMP) {
+//        if (NSRunAlertPanel(LOCALSTR(@"savelayers title", @"Warning"),
+//            [NSString stringWithFormat:LOCALSTR(@"savelayers body",
+//                                                @"\"%@\" contains layers which are not supported by the current file type and will not be saved. Maybe use 'Save As'?\n\nAre you sure you want to continue?"),
+//             [gCurrentDocument displayName]], LOCALSTR(@"cancel", @"Cancel"), LOCALSTR(@"continue", @"Continue"), NULL) == NSAlertDefaultReturn){
+//                return NO;
+//            }
+//    }
+//    
+	for (AbstractExporter *exporter in exporters) {
+		if ([[SeaDocumentController sharedDocumentController] type:type isContainedInDocType:[exporter title]]) {
+			return [exporter writeDocument:self toFile:path];
 		}
 	}
 	
-	if (!result){
-		NSLog(@"Unknown type passed to writeToFile:<%@>ofType:<%@>", path, type);
-	}
-	return result;
+    NSLog(@"Unknown type passed to writeToFile:<%@>ofType:<%@>", path, type);
+	return NO;
 }
 
 - (void)printShowingPrintPanel:(BOOL)showPanels
@@ -462,40 +403,41 @@ enum {
 
 - (BOOL)prepareSavePanel:(NSSavePanel *)savePanel
 {
-	int i, exporterIndex = -1;
-	
-	// Implement the view that allows us to select layers
-	[savePanel setAccessoryView:accessoryView];
-	
-	// Find the default exporter's index
-	for (i = 0; i < [exporters count]; i++) {
-		if ([[SeaDocumentController sharedDocumentController]
-			 type: [self fileType]
-			 isContainedInDocType:[[exporters objectAtIndex:i] title]
-			 ]) {
-			exporterIndex = i;
-			break;
-		}
-	}
-	
-	// Deal with the rare case where we don't find one
-	if (exporterIndex == -1) {
-		exporterIndex = [exporters count] - 1;
-		[self setFileType:[[exporters objectAtIndex:[exporters count] - 1] title]];
-	}
-	
-	// Add in our exporters
-	[exportersPopUp removeAllItems];
-	for (i = 0; i < [exporters count]; i++)
-		[exportersPopUp addItemWithTitle:[[exporters objectAtIndex:i] title]];
-	[exportersPopUp selectItemAtIndex:exporterIndex];
-	[savePanel setRequiredFileType:[[exporters objectAtIndex:exporterIndex] extension]];
-	
-	// Finally set the options button state appropriately
-	[optionsButton setEnabled:[[exporters objectAtIndex:[exportersPopUp indexOfSelectedItem]] hasOptions]];
-	[optionsSummary setStringValue:[[exporters objectAtIndex:[exportersPopUp indexOfSelectedItem]] optionsString]];
-	
-	return YES;
+    int i, exporterIndex = -1;
+    
+    // Implement the view that allows us to select layers
+    [savePanel setAccessoryView:accessoryView];
+    [savePanel setAllowsOtherFileTypes:NO];
+    
+    // Find the default exporter's index
+    for (i = 0; i < [exporters count]; i++) {
+        if ([[SeaDocumentController sharedDocumentController]
+             type: [self fileType]
+             isContainedInDocType:[[exporters objectAtIndex:i] title]
+             ]) {
+            exporterIndex = i;
+            break;
+        }
+    }
+    
+    // Deal with the rare case where we don't find one
+    if (exporterIndex == -1) {
+        exporterIndex = (int)[exporters count] - 1;
+    }
+    
+    // Add in our exporters
+    [exportersPopUp removeAllItems];
+    for (i = 0; i < [exporters count]; i++)
+        [exportersPopUp addItemWithTitle:[[exporters objectAtIndex:i] title]];
+    
+    [exportersPopUp selectItemAtIndex:exporterIndex];
+    selectedType = [[exporters objectAtIndex:exporterIndex] title];
+    
+    // Finally set the options button state appropriately
+    [optionsButton setEnabled:[[exporters objectAtIndex:[exportersPopUp indexOfSelectedItem]] hasOptions]];
+    [optionsSummary setStringValue:[[exporters objectAtIndex:[exportersPopUp indexOfSelectedItem]] optionsString]];
+    
+    return YES;
 }
 
 - (IBAction)showExporterOptions:(id)sender
@@ -506,8 +448,9 @@ enum {
 
 - (IBAction)exporterChanged:(id)sender
 {
-	[(NSSavePanel *)[exportersPopUp window] setRequiredFileType:[[exporters objectAtIndex:[exportersPopUp indexOfSelectedItem]] extension]];
-	[self setFileType:[[exporters objectAtIndex:[exportersPopUp indexOfSelectedItem]] title]];
+    NSSavePanel *savePanel = (NSSavePanel *)[exportersPopUp window];
+    [savePanel setAllowedFileTypes:@[ [[exporters objectAtIndex:[exportersPopUp indexOfSelectedItem]] extension] ] ];
+    selectedType = [[exporters objectAtIndex:[exportersPopUp indexOfSelectedItem]] title];
 	[optionsButton setEnabled:[[exporters objectAtIndex:[exportersPopUp indexOfSelectedItem]] hasOptions]];
 	[optionsSummary setStringValue:[[exporters objectAtIndex:[exportersPopUp indexOfSelectedItem]] optionsString]];
 }
@@ -640,11 +583,6 @@ enum {
 	return uniqueFloatingLayerID;
 }
 
-- (int)uniqueDocID
-{
-	return uniqueDocID;
-}
-
 - (NSString *)windowNibName
 {
     return @"SeaDocument";
@@ -706,42 +644,6 @@ enum {
 
 	return YES;
 }
-
-- (void)runModalSavePanelForSaveOperation:(NSSaveOperationType)saveOperation delegate:(id)delegate didSaveSelector:(SEL)didSaveSelector contextInfo:(void *)contextInfo
-{
-	// Remember the old type
-	oldType = [self fileType];
-	if (saveOperation == NSSaveToOperation) {
-		restoreOldType = YES;
-	}
-	
-	// Check we're not meant to call someone
-	if (delegate)
-		NSLog(@"Delegate specified for save panel");
-	
-	// Run the super's method calling our custom
-	[super runModalSavePanelForSaveOperation:saveOperation delegate:self didSaveSelector:@selector(document:didSave:contextInfo:) contextInfo:NULL];
-	
-}
-
-- (void)document:(NSDocument *)doc didSave:(BOOL)didSave contextInfo:(void *)contextInfo
-{
-	// Restore the old type
-	if (restoreOldType && didSave) {
-		[self setFileType:oldType];
-		restoreOldType = NO;
-	}
-	else if (!didSave) {
-		[self setFileType:oldType];
-		restoreOldType = NO;
-	}
-}
-
-- (NSString *)fileTypeFromLastRunSavePanel
-{
-	return [self fileType];
-}
-
 
 - (NSScrollView *)scrollView
 {

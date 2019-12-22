@@ -172,21 +172,6 @@ enum {
 - (void)setOverlayOpacity:(int)value;
 
 /*!
-	@method		applyWithNewDocumentData:spp:width:height:
-	@discussion	Creates a new document with the given data.
-	@param		data
-				The data of the new document (must be a multiple of 128-bits in
-				length).
-	@param		spp
-				The samples per pixel of the new document.
-	@param		width
-				The width of the new document.
-	@param		height
-				The height of the new document.
-*/
-- (void)applyWithNewDocumentData:(unsigned char *)data spp:(int)spp width:(int)width height:(int)height;
-
-/*!
 	@method		apply
 	@discussion	Apply the plug-in changes.
 */

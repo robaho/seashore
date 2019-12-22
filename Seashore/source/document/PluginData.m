@@ -101,21 +101,6 @@
 	[[document whiteboard] setOverlayOpacity:value];
 }
 
-- (void)applyWithNewDocumentData:(unsigned char *)data spp:(int)spp width:(int)width height:(int)height
-{
-	NSDocument *newDocument;
-	
-	if (data == NULL || data == [(SeaWhiteboard *)[document whiteboard] data] || data == [(SeaLayer *)[[document contents] activeLayer] data]) {
-		NSRunAlertPanel(@"Critical Plug-in Malfunction", @"The plug-in has returned the same pointer passed to it (or returned NULL). This is a critical malfunction, please refrain from further use of this plug-in and contact the plug-in's developer.", @"Ok", NULL, NULL);
-	}
-	else {
-		newDocument = [[SeaDocument alloc] initWithData:data type:(spp == 4) ? 0 : 1 width:width height:height];
-		[[NSDocumentController sharedDocumentController] addDocument:newDocument];
-		[newDocument makeWindowControllers];
-		[newDocument showWindows];
-	}
-}
-
 - (void)apply
 {
 	[(SeaHelpers *)[document helpers] applyOverlay];
