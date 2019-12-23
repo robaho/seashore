@@ -650,7 +650,7 @@ extern BOOL globalReadOnlyWarning;
     if(!layerWarningShown && contents.layerCount > 1 && !isGIMP) {
         [[SeaController seaWarning]
          addMessage:LOCALSTR(@"layers warning",
-                             @"Layers are not supported by the current file format and will not be saved. Use 'Save As'/'Export' and select Seashore/GIMP as the file format.")
+                             @"Layers are not supported by the current file format and cannot be saved. To save layers, use 'Save As'/'Export' and select Seashore/GIMP as the file format.")
          forDocument:self
          level:kLowImportance];
         layerWarningShown=YES;
