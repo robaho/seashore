@@ -341,16 +341,6 @@ extern BOOL globalReadOnlyWarning;
 
 - (BOOL)writeToFile:(NSString *)path ofType:(NSString *)type
 {
-//    bool isGIMP = [[SeaDocumentController sharedDocumentController] type: [self fileType] isContainedInDocType:@"GIMP image"];
-//    if(contents.layerCount > 1 && !isGIMP) {
-//        if (NSRunAlertPanel(LOCALSTR(@"savelayers title", @"Warning"),
-//            [NSString stringWithFormat:LOCALSTR(@"savelayers body",
-//                                                @"\"%@\" contains layers which are not supported by the current file type and will not be saved. Maybe use 'Save As'?\n\nAre you sure you want to continue?"),
-//             [gCurrentDocument displayName]], LOCALSTR(@"cancel", @"Cancel"), LOCALSTR(@"continue", @"Continue"), NULL) == NSAlertDefaultReturn){
-//                return NO;
-//            }
-//    }
-//    
 	for (AbstractExporter *exporter in exporters) {
 		if ([[SeaDocumentController sharedDocumentController] type:type isContainedInDocType:[exporter title]]) {
 			return [exporter writeDocument:self toFile:path];
@@ -405,7 +395,6 @@ extern BOOL globalReadOnlyWarning;
 {
     int i, exporterIndex = -1;
     
-    // Implement the view that allows us to select layers
     [savePanel setAccessoryView:accessoryView];
     [savePanel setAllowsOtherFileTypes:NO];
     

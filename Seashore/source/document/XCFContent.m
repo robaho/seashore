@@ -51,7 +51,7 @@ static inline void fix_endian_readl(long *input, int size)
 #ifdef OTHER_PLUGIN
     return TRUE;
 #else
-	return [[SeaDocumentController sharedDocumentController] type: aType isContainedInDocType: @"GIMP image"];
+	return [[SeaDocumentController sharedDocumentController] type: aType isContainedInDocType: @"Seashore/GIMP image"];
 #endif
 }
 

@@ -31,7 +31,7 @@ static inline void fix_endian_write(int *input, int size)
 
 - (NSString *)title
 {
-	return @"GIMP image";
+	return @"Seashore/GIMP image";
 }
 
 - (NSString *)extension

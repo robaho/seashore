@@ -17,7 +17,7 @@
 			<key>CFBundleTypeIconFile</key>
 			<string>XCF Icon.icns</string>
 			<key>CFBundleTypeName</key>
-			<string>GIMP image</string>
+			<string>Seashore/GIMP image</string>
 			<key>CFBundleTypeOSTypes</key>
 			<array>
 				<string>XCF</string>
@@ -429,7 +429,7 @@ GNU General Public License v2.0</string>
 				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>GIMP image</string>
+			<string>Seahore/GIMP image</string>
 			<key>UTTypeIconFile</key>
 			<string>XCF Icon.icns</string>
 			<key>UTTypeIdentifier</key>
