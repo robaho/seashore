@@ -121,6 +121,9 @@
 			[whiteboard readjustAltData:YES];
 		break;
 	}
+    
+    [document maybeShowLayerWarning];
+
 	[(LayerDataSource *)[document dataSource] update];
 	[(PegasusUtility *)[[SeaController utilitiesManager] pegasusUtilityFor:document] update:kPegasusUpdateAll];
 }

@@ -81,6 +81,8 @@
 	BOOL locked;
 	
     NSString *selectedType;
+    
+    BOOL layerWarningShown;
 }
 
 // CREATION METHODS
@@ -471,5 +473,12 @@
 	@result		Returns the data source used by the layers view
 */
 - (id) dataSource;
+
+/*!
+ @method maybeShowLayerWarning
+ @discussion maybe show the warning that the current document does not
+   support saving layers
+*/
+- (void)maybeShowLayerWarning;
 
 @end
