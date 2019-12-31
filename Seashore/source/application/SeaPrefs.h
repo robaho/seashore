@@ -130,9 +130,6 @@ enum {
 	// Is this the first run?
 	BOOL firstRun;
 	
-	// Whether textures should be used
-	BOOL useTextures;
-		
 	// Whether fewer warnings should be shown
 	BOOL fewerWarnings;
 	
@@ -427,21 +424,6 @@ enum {
 	@result		Returns YES if smart interpolation should be used, NO otherwise.
 */
 - (BOOL)smartInterpolation;
-
-/*!
-	@method		useTextures
-	@discussion	Returns whether textures should be used where possible.
-	@result		Returns YES if textures should be used, NO otherwise.
-*/
-- (BOOL)useTextures;
-
-/*!
-	@method		setUseTextures:
-	@discussion	Sets whether textures should be used where possible.
-	@param		value
-				YES if textures should be used, NO otherwise.
-*/
-- (void)setUseTextures:(BOOL)value;
 
 /*!
 	@method		toggleBoundaries:

@@ -118,11 +118,6 @@ id gNewFont;
 	return YES;
 }
 
-- (BOOL)useTextures
-{
-	return [[SeaController seaPrefs] useTextures];
-}
-
 - (IBAction)update:(id)sender
 {
 	// Enable or disable the slider appropriately

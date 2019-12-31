@@ -116,11 +116,6 @@ enum {
 	return [scaleCheckbox state];
 }
 
-- (BOOL)useTextures
-{
-	return [[SeaController seaPrefs] useTextures];
-}
-
 - (BOOL)brushIsErasing
 {
 	return isErasing;

@@ -38,11 +38,6 @@
     [self toleranceSliderChanged:toleranceSlider];
 }
 
-- (BOOL)useTextures
-{
-	return [[SeaController seaPrefs] useTextures];
-}
-
 - (void)shutdown
 {
 	[gUserDefaults setInteger:[toleranceSlider intValue] forKey:@"bucket tolerance"];

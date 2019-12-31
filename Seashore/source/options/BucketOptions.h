@@ -49,14 +49,6 @@
 - (void)setTolerance:(int)value;
 
 /*!
-	@method		useTextures
-	@discussion	Returns whether or not the tool should use textures.
-	@result		Returns YES if the tool should use textures, NO if the tool
-				should use the foreground colour.
-*/
-- (BOOL)useTextures;
-
-/*!
 	@method		shutdown
 	@discussion	Saves current options upon shutdown.
 */

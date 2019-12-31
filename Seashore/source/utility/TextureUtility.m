@@ -248,17 +248,14 @@
 
 - (id)activeTexture
 {
-    if(![[SeaController seaPrefs] useTextures])
+    if(activeTextureIndex==-1)
         return NULL;
 	return [[groups objectAtIndex:activeGroupIndex] objectAtIndex:activeTextureIndex];
 }
 
 - (int)activeTextureIndex
 {
-	if ([[SeaController seaPrefs] useTextures])
-		return activeTextureIndex;
-	else
-		return -1;
+    return activeTextureIndex;
 }
 
 - (void)setActiveTexture:(SeaTexture*)texture
@@ -284,7 +281,6 @@
 {
 	if (index == -1) {
         activeTextureIndex=-1;
-		[[SeaController seaPrefs] setUseTextures:NO];
 		[textureNameLabel setStringValue:@""];
 		[opacitySlider setEnabled:NO];
         [[view documentView] update];
@@ -293,7 +289,6 @@
 	else {
 		id newTexture = [[groups objectAtIndex:activeGroupIndex] objectAtIndex:index];
 		activeTextureIndex = index;
-		[[SeaController seaPrefs] setUseTextures:YES];
 		[textureNameLabel setStringValue:[newTexture name]];
 		[opacitySlider setEnabled:YES];
 		[newTexture activate];

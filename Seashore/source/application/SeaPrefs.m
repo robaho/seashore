@@ -561,16 +561,6 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	return smartInterpolation;
 }
 
-- (BOOL)useTextures
-{
-	return useTextures;
-}
-
-- (void)setUseTextures:(BOOL)value
-{
-	useTextures = value;
-}
-
 - (IBAction)toggleBoundaries:(id)sender
 {
 	NSArray *documents = [[NSDocumentController sharedDocumentController] documents];

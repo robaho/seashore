@@ -5,6 +5,7 @@
 #import "SeaPrefs.h"
 #import "SeaDocument.h"
 #import "AspectRatio.h"
+#import "TextureUtility.h"
 
 static int lastTool = -1;
 static BOOL forceAlt = NO;
@@ -95,7 +96,8 @@ static BOOL forceAlt = NO;
 
 - (BOOL)useTextures
 {
-	return NO;
+    TextureUtility *textures =[[SeaController utilitiesManager] textureUtilityFor:document];
+    return [textures activeTexture]!=NULL;
 }
 
 - (void)shutdown
