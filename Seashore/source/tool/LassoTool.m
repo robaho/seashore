@@ -11,7 +11,6 @@
 #import "SeaLayer.h"
 #import "SeaWhiteboard.h"
 #import "SeaController.h"
-#import "UtilitiesManager.h"
 #import "ToolboxUtility.h"
 
 @implementation LassoTool

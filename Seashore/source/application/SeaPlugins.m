@@ -6,7 +6,6 @@
 #import "SeaTools.h"
 #import "EffectTool.h"
 #import "ToolboxUtility.h"
-#import "UtilitiesManager.h"
 #import "OptionsUtility.h"
 
 @implementation SeaPlugins
@@ -197,7 +196,7 @@ BOOL checkRun(NSString *path, NSString *file)
     // Finish off
     
     // Correct effect tool
-    [(ToolboxUtility *)[[SeaController utilitiesManager] toolboxUtilityFor:gCurrentDocument] setEffectEnabled:([pointPluginsNames count] != 0)];
+    [[gCurrentDocument toolboxUtility] setEffectEnabled:([pointPluginsNames count] != 0)];
 
     // Register to recieve the terminate message when Seashore quits
     [controller registerForTermination:self];
@@ -205,7 +204,7 @@ BOOL checkRun(NSString *path, NSString *file)
 
 - (void)terminate
 {
-    EffectOptions *options = (EffectOptions*)[[[SeaController utilitiesManager] optionsUtilityFor:gCurrentDocument] getOptions:kEffectTool];
+    EffectOptions *options = (EffectOptions*)[[gCurrentDocument optionsUtility] getOptions:kEffectTool];
     [gUserDefaults setInteger:[options selectedRow] forKey:@"effectIndex"];
 }
 
@@ -248,7 +247,7 @@ BOOL checkRun(NSString *path, NSString *file)
 
 - (id)activePointEffect
 {
-    EffectOptions *options = (EffectOptions*)[[[SeaController utilitiesManager] optionsUtilityFor:gCurrentDocument] getOptions: kEffectTool];
+    EffectOptions *options = (EffectOptions*)[[gCurrentDocument optionsUtility] getOptions:kEffectTool];
     return [pointPlugins objectAtIndex:[options selectedRow] ];
 }
 

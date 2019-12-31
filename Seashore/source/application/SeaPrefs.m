@@ -1,7 +1,6 @@
 #import "SeaPrefs.h"
 #import "SeaDocument.h"
 #import "SeaController.h"
-#import "UtilitiesManager.h"
 #import "InfoUtility.h"
 #import "SeaWarning.h"
 #import "SeaView.h"
@@ -429,8 +428,8 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	SeaDocument *document = gCurrentDocument;
 	[document changeMeasuringStyle:[sender tag] % 10];
 	[[document docView] updateRulers];
-	[[[SeaController utilitiesManager] infoUtilityFor:document] update];
-	[[[SeaController utilitiesManager] statusUtilityFor:document] update];
+	[[document infoUtility] update];
+	[[document statusUtility] update];
 }
 
 -(IBAction)setResolution:(id)sender

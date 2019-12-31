@@ -25,12 +25,6 @@
 - (id)init;
 
 /*!
-	@method		dealloc
-	@discussion	Frees memory occupied by an instance of this class.
-*/
-- (void)dealloc;
-
-/*!
 	@method		toggle:
 	@discussion	Toggles the visibility of the utility's window.
 	@param		sender

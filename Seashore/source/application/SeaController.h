@@ -19,9 +19,6 @@
 */
 
 @interface SeaController : NSObject {
-	// An outlet to the utilities manager of the application
-	IBOutlet id utilitiesManager;
-	
 	// An outlet to the plug-ins manager of the application
 	IBOutlet id seaPlugins;
 	
@@ -61,13 +58,6 @@
 				Ignored.
 */
 - (void)applicationDidFinishLaunching:(NSNotification *)notification;
-
-/*!
-	@method		utilitiesManager
-	@discussion	A class method that returns the object of the same name.
-	@result		Returns the instance of UtilitiesManager.
-*/
-+ (id)utilitiesManager;
 
 /*!
 	@method		seaPlugins

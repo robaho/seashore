@@ -2,7 +2,6 @@
 #import "ToolboxUtility.h"
 #import "SeaController.h"
 #import "SeaDocument.h"
-#import "UtilitiesManager.h"
 #import "AbstractTool.h"
 
 @implementation SeaTools

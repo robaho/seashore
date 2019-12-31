@@ -5,7 +5,6 @@
 #import "ColorSelectView.h"
 #import "SeaController.h"
 #import "SeaHelp.h"
-#import "UtilitiesManager.h"
 #import "SeaTools.h"
 #import "SeaHelpers.h"
 #import "SeaPrefs.h"
@@ -85,8 +84,6 @@ static NSString*    SelectionEditIdentifier = @"Selection Edit Identifier";
 	
     // Attach the toolbar to the document window 
     [[document window] setToolbar: toolbar];
-	
-	[[SeaController utilitiesManager] setToolboxUtility: self for:document];
 }
 
 - (NSToolbarItem *) toolbar: (NSToolbar *)toolbar itemForItemIdentifier: (NSString *) itemIdent willBeInsertedIntoToolbar:(BOOL) willBeInserted
@@ -290,7 +287,7 @@ static NSString*    SelectionEditIdentifier = @"Selection Edit Identifier";
 		[[document docView] setNeedsDisplay:YES];
 	}
 	if (tool == newTool && [[NSApp currentEvent] type] == NSLeftMouseUp && [[NSApp currentEvent] clickCount] > 1) {
-		[[[SeaController utilitiesManager] optionsUtilityFor:document] show:NULL];
+		[[document optionsUtility] show:NULL];
 	} else {
         [selectionTBView setSelectedSegment:-1];
         [drawTBView setSelectedSegment:-1];
@@ -304,7 +301,7 @@ static NSString*    SelectionEditIdentifier = @"Selection Edit Identifier";
         [transformTBView selectSegmentWithTag:tool];
 		[self update:YES];
 	}
-	if (updateCrop) [[[SeaController utilitiesManager] infoUtilityFor:document] update];
+	if (updateCrop) [[document infoUtility] update];
 }
 
 -(void)floatTool

@@ -6,7 +6,6 @@
 #import "SeaController.h"
 #import "SeaDocument.h"
 #import "SeaView.h"
-#import "UtilitiesManager.h"
 #import "ToolboxUtility.h"
 #import "SeaLayer.h"
 #import "SeaContent.h"
@@ -95,7 +94,7 @@
 		return;
 	}
 	
-	int tool = [[[SeaController utilitiesManager] toolboxUtilityFor:document] tool];
+	int tool = [[document toolboxUtility] tool];
 	SeaLayer *activeLayer = [[document contents] activeLayer];
     
     if(activeLayer==NULL)
@@ -113,7 +112,7 @@
 
 	if(tool >= kFirstSelectionTool && tool <= kLastSelectionTool){
 		// Find out what the selection mode is
-		int selectionMode = [(AbstractSelectOptions *)[[[SeaController utilitiesManager] optionsUtilityFor:document] getOptions:tool] selectionMode];
+		int selectionMode = [(AbstractSelectOptions *)[[document optionsUtility] getOptions:tool] selectionMode];
 		
 		if(selectionMode == kAddMode){
 			[self addCursorRect:operableRect cursor:addCursor];
@@ -225,11 +224,11 @@
 		
 	}
 
-	if(tool == kBrushTool && [(BrushOptions *)[[[SeaController utilitiesManager] optionsUtilityFor:document] getOptions:tool] brushIsErasing]){
+	if(tool == kBrushTool && [(BrushOptions *)[[document optionsUtility] getOptions:tool] brushIsErasing]){
 		// Do we need this?
 		//[view removeCursorRect:operableRect cursor:brushCursor];
         [self addCursorRect:operableRect cursor:(preciseCursor ? crosspointCursor : eraserCursor)];
-	}else if (tool == kPencilTool && [(PencilOptions *)[[[SeaController utilitiesManager] optionsUtilityFor:document] getOptions:tool] pencilIsErasing]){
+	}else if (tool == kPencilTool && [(PencilOptions *)[[document optionsUtility] getOptions:tool] pencilIsErasing]){
 		// Do we need this?
 		//[view removeCursorRect:operableRect cursor:pencilCursor];
 		[self addCursorRect:operableRect cursor:(preciseCursor ? crosspointCursor : eraserCursor)];

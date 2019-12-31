@@ -12,10 +12,11 @@
 
 @class BannerView;
 @class SeaWindowContent;
+@class SeaDocument;
 
 @interface WarningsUtility : NSObject {
 	// The host for the utility
-	__weak IBOutlet id document;
+	__weak SeaDocument *document;
 	
 	// We need the content to show or hide the banner
 	IBOutlet SeaWindowContent *windowContent;

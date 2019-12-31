@@ -6,7 +6,6 @@
 #import "SeaPrefs.h"
 #import "ZoomOptions.h"
 #import "AbstractSelectOptions.h"
-#import "UtilitiesManager.h"
 #import "SeaDocument.h"
 #import "AbstractTool.h"
 #import "SeaWindowContent.h"
@@ -31,8 +30,6 @@
     while(tool = [e nextObject]){
         [tool setOptions: [self getOptions:[tool toolId]]];
     }
-    
-    [[SeaController utilitiesManager] setOptionsUtility: self for:document];
 }
 
 

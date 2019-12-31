@@ -1,7 +1,6 @@
 #import "BrushUtility.h"
 #import "BrushView.h"
 #import "SeaBrush.h"
-#import "UtilitiesManager.h"
 #import "SeaController.h"
 #import "InfoPanel.h"
 
@@ -74,8 +73,6 @@
 	
 	// Set the window's properties
 	[(InfoPanel *)window setPanelStyle:kVerticalPanelStyle];
-	
-	[[SeaController utilitiesManager] setBrushUtility: self for:document];
 }
 
 - (void)shutdown

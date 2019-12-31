@@ -1,7 +1,6 @@
 #import "EraserOptions.h"
 #import "ToolboxUtility.h"
 #import "SeaController.h"
-#import "UtilitiesManager.h"
 #import "SeaHelp.h"
 #import "SeaTools.h"
 

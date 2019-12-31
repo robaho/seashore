@@ -1,5 +1,4 @@
 #import "Globals.h"
-#import "SeaDocument.h"
 
 /*!
 	@class		ToolboxUtility
@@ -10,6 +9,8 @@
 				<b>License:</b> GNU General Public License<br>
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
+
+@class SeaDocument;
 
 @interface ToolboxUtility : NSObject <NSToolbarDelegate> {
 

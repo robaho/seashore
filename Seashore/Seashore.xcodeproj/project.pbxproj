@@ -228,7 +228,6 @@
 		A8EDF0F7078959C80022BB31 /* SeaLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C69B1003C5835601F792F6 /* SeaLayer.m */; };
 		A8EDF0F9078959C80022BB31 /* XCFLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F5DEAE1403C5C847010475F1 /* XCFLayer.m */; };
 		A8EDF0FA078959C80022BB31 /* PegasusUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = F5003C2503CA976F01FED195 /* PegasusUtility.m */; };
-		A8EDF0FB078959C80022BB31 /* UtilitiesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F5003C2903CAA0B301FED195 /* UtilitiesManager.m */; };
 		A8EDF0FD078959C80022BB31 /* CenteringClipView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B6B31D03D14F9301FCB9EC /* CenteringClipView.m */; };
 		A8EDF0FE078959C80022BB31 /* SeaWhiteboard.m in Sources */ = {isa = PBXBuildFile; fileRef = F56DD20C03D18DA9017AAAE1 /* SeaWhiteboard.m */; };
 		A8EDF0FF078959C80022BB31 /* SeaView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5A2694903D5606501DE7A72 /* SeaView.m */; };
@@ -954,8 +953,6 @@
 		DCFBB72F0FBC9A9C00851216 /* AbstractScaleTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractScaleTool.m; sourceTree = "<group>"; };
 		F5003C2403CA976F01FED195 /* PegasusUtility.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = PegasusUtility.h; sourceTree = "<group>"; };
 		F5003C2503CA976F01FED195 /* PegasusUtility.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = PegasusUtility.m; sourceTree = "<group>"; };
-		F5003C2803CAA0B301FED195 /* UtilitiesManager.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = UtilitiesManager.h; sourceTree = "<group>"; };
-		F5003C2903CAA0B301FED195 /* UtilitiesManager.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = UtilitiesManager.m; sourceTree = "<group>"; };
 		F50687EA039B7ADC016F7F19 /* SeaHelp.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SeaHelp.h; sourceTree = "<group>"; };
 		F50687EB039B7ADC016F7F19 /* SeaHelp.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = SeaHelp.m; sourceTree = "<group>"; };
 		F50687FB039B950A016F7F19 /* Globals.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Globals.h; sourceTree = "<group>"; };
@@ -1477,8 +1474,6 @@
 		F5003C2303CA959301FED195 /* Utility Classes */ = {
 			isa = PBXGroup;
 			children = (
-				F5003C2803CAA0B301FED195 /* UtilitiesManager.h */,
-				F5003C2903CAA0B301FED195 /* UtilitiesManager.m */,
 				F577AC29040760E401092A6C /* SeaUtilityPanel.h */,
 				F577AC2A040760E401092A6C /* SeaUtilityPanel.m */,
 				DC9C46780FFC2CCF00C44AA4 /* AbstractPanelUtility.h */,
@@ -2007,7 +2002,6 @@
 				A8EDF0F7078959C80022BB31 /* SeaLayer.m in Sources */,
 				A8EDF0F9078959C80022BB31 /* XCFLayer.m in Sources */,
 				A8EDF0FA078959C80022BB31 /* PegasusUtility.m in Sources */,
-				A8EDF0FB078959C80022BB31 /* UtilitiesManager.m in Sources */,
 				2B96A51023A5525D00A04B72 /* XCFContent.m in Sources */,
 				A8EDF0FD078959C80022BB31 /* CenteringClipView.m in Sources */,
 				A8EDF0FE078959C80022BB31 /* SeaWhiteboard.m in Sources */,

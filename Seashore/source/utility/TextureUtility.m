@@ -2,7 +2,6 @@
 #import "TextureView.h"
 #import "SeaTexture.h"
 #import "SeaController.h"
-#import "UtilitiesManager.h"
 #import "ToolboxUtility.h"
 #import "SeaPrefs.h"
 #import "SeaProxy.h"
@@ -75,8 +74,6 @@
 	
 	// Inform the texture that it is active
 	[self setActiveTextureIndex:-1];
-
-	[[SeaController utilitiesManager] setTextureUtility: self for:document];
 }
 
 - (void)activate:(id)sender
@@ -292,7 +289,7 @@
 		[textureNameLabel setStringValue:[newTexture name]];
 		[opacitySlider setEnabled:YES];
 		[newTexture activate];
-		[(ToolboxUtility*)[[SeaController utilitiesManager] toolboxUtilityFor:document] update:NO];
+		[[document toolboxUtility] update:NO];
 		[(TextTool *)[[document tools] getTool:kTextTool] preview:NULL];
 	}
 }

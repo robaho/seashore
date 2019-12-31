@@ -3,7 +3,6 @@
 #import "SeaDocument.h"
 #import "SeaLayerUndo.h"
 #import "SeaController.h"
-#import "UtilitiesManager.h"
 #import "PegasusUtility.h"
 #import "Bitmap.h"
 #import "SeaWarning.h"
@@ -465,7 +464,7 @@
 	hasAlpha = !hasAlpha;
 	
 	// Update the Pegasus utility
-	[(PegasusUtility *)[[SeaController utilitiesManager] pegasusUtilityFor:document] update:kPegasusUpdateAll]; 
+	[[document pegasusUtility] update:kPegasusUpdateAll]; 
 
 	// Make action undoable
 	[[[document undoManager] prepareWithInvocationTarget:self] toggleAlpha];

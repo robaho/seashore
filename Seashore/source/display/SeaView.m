@@ -1,7 +1,6 @@
 #import "SeaView.h"
 #import "SeaDocument.h"
 #import "SeaContent.h"
-#import "UtilitiesManager.h"
 #import "CenteringClipView.h"
 #import "TransparentUtility.h"
 #import "SeaController.h"
@@ -150,7 +149,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
 
 - (IBAction)changeSpecialFont:(id)sender
 {
-    [[[[SeaController utilitiesManager] optionsUtilityFor:document] getOptions:kTextTool] changeFont:sender];
+    [[[document optionsUtility] getOptions:kTextTool] changeFont:sender];
 }
 
 - (void)needsCursorsReset
@@ -261,7 +260,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
 {
     NSRect srcRect, destRect;
     NSImage *image = NULL;
-    id tUtil = [[SeaController utilitiesManager] toolboxUtilityFor:document];
+    ToolboxUtility *tUtil = [document toolboxUtility];
     int curToolIndex = [tUtil tool];
     IntRect imageRect = [[document whiteboard] imageRect];
     int xres = [[document contents] xres], yres = [[document contents] yres];
@@ -282,7 +281,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
         if([(SeaPrefs *)[SeaController seaPrefs] useCheckerboard]){
             [[NSColor colorWithPatternImage: [NSImage imageNamed:@"checkerboard"] ] set];
         }else{
-            [(NSColor*)[[[SeaController utilitiesManager] transparentUtility] color] set];
+            [(NSColor*)[[document transparentUtility] color] set];
         }
         [[NSBezierPath bezierPathWithRect:destRect] fill];
     }
@@ -349,7 +348,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
 
 - (void)drawBoundaries
 {
-    int curToolIndex = [[[SeaController utilitiesManager] toolboxUtilityFor:document] tool];
+    int curToolIndex = [[document toolboxUtility] tool];
     
     if (curToolIndex == kCropTool) {
         [self drawCropBoundaries];
@@ -467,7 +466,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
     // Get the data for drawing rounded rectangular selections
     special = NO;
     if (curToolIndex == kRectSelectTool) {
-        radius = [(RectSelectOptions *)[[[SeaController utilitiesManager] optionsUtilityFor:document] currentOptions] radius];
+        radius = [(RectSelectOptions *)[[document optionsUtility] currentOptions] radius];
         tempSelectRect = [(RectSelectTool *)curTool selectionRect];
         special = tempSelectRect.size.width < 2 * radius && tempSelectRect.size.height < 2 * radius;
     }
@@ -689,7 +688,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
 
 - (void)drawExtras
 {    
-    int curToolIndex = [[[SeaController utilitiesManager] toolboxUtilityFor:document] tool];
+    int curToolIndex = [[document toolboxUtility] tool];
     id cloneTool = [[document tools] getTool:kCloneTool];
     id effectTool = [[document tools] getTool:kEffectTool];
     NSPoint outPoint, hilightPoint;
@@ -870,7 +869,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
 - (void)checkMouseTracking
 {
     if ([[self window] isMainWindow]) {
-        if ([[document scrollView] rulersVisible] || [[[SeaController utilitiesManager] infoUtilityFor:document] visible])
+        if ([[document scrollView] rulersVisible] || [[document infoUtility] visible])
             [[self window] setAcceptsMouseMovedEvents:YES];
         else
             [[self window] setAcceptsMouseMovedEvents:NO];
@@ -908,7 +907,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
 
 - (void)mouseMoved:(NSEvent *)theEvent
 {
-    if ([[[SeaController utilitiesManager] infoUtilityFor:document] visible]) [[[SeaController utilitiesManager] infoUtilityFor:document] update];
+    if ([[document infoUtility] visible]) [[document infoUtility] update];
     if ([[document scrollView] rulersVisible]) [self updateRulerMarkings:[theEvent locationInWindow] andStationary:NSMakePoint(-256e6, -256e6)];
 }
 
@@ -977,7 +976,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
     float xScale, yScale;
     IntPoint localActiveLayerPoint;
     NSPoint localPoint, globalPoint;
-    id options = [[[SeaController utilitiesManager] optionsUtilityFor:document] currentOptions];
+    id options = [[document optionsUtility] currentOptions];
     
     // Get xScale, yScale    
     xScale = [[document contents] xscale];
@@ -1075,7 +1074,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
     double angle;
     NSPoint origin, newScrollPoint;
     NSClipView *view;
-    id options = [[[SeaController utilitiesManager] optionsUtilityFor:document] currentOptions];
+    id options = [[document optionsUtility] currentOptions];
     
     NSRect visRect = [(NSClipView *)[self superview] documentVisibleRect];
     localPoint = [self convertPoint:[theEvent locationInWindow] fromView:NULL];
@@ -1193,7 +1192,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
     lineDraw = NO;
     
     // Update the info utility
-    if ([[[SeaController utilitiesManager] infoUtilityFor:document] visible]) [[[SeaController utilitiesManager] infoUtilityFor:document] update];
+    if ([[document infoUtility] visible]) [[document infoUtility] update];
     if ([[document scrollView] rulersVisible]) [self updateRulerMarkings:[theEvent locationInWindow] andStationary:mouseDownLoc];
 }
 
@@ -1209,7 +1208,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
     id curTool = [document currentTool];
     NSPoint localPoint;
     IntPoint localActiveLayerPoint;
-    AbstractOptions *options = [[[SeaController utilitiesManager] optionsUtilityFor:document] currentOptions];
+    AbstractOptions *options = [[document optionsUtility] currentOptions];
     
     // Get xScale, yScale
     xScale = [[document contents] xscale];
@@ -1265,7 +1264,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
 
 - (void)flagsChanged:(NSEvent *)theEvent
 {
-    [(AbstractOptions *)[[[SeaController utilitiesManager] optionsUtilityFor:document] currentOptions] updateModifiers:[theEvent modifierFlags]];
+    [(AbstractOptions *)[[document optionsUtility] currentOptions] updateModifiers:[theEvent modifierFlags]];
     [[document helpers] endLineDrawing];
 }
 
@@ -1276,7 +1275,10 @@ static CGFloat white[4] = {0,3.5,2,.5};
     IntPoint oldOffsets;
     unichar key;
     unsigned int mods;
-    int curToolIndex = [[[SeaController utilitiesManager] toolboxUtilityFor:document] tool];
+    
+    ToolboxUtility *toolbox = [document toolboxUtility];
+    
+    int curToolIndex = [toolbox tool];
     BOOL floating = [[document selection] floating];
     
     // End the line drawing
@@ -1465,73 +1467,73 @@ static CGFloat white[4] = {0,3.5,2,.5};
                 break;
                 case 'm':
                     if (!floating) {
-                        if ([[[SeaController utilitiesManager] toolboxUtilityFor:document] tool] == kRectSelectTool)
-                            [[[SeaController utilitiesManager] toolboxUtilityFor:document] changeToolTo:kEllipseSelectTool];
+                        if ([toolbox tool] == kRectSelectTool)
+                            [toolbox changeToolTo:kEllipseSelectTool];
                         else
-                            [[[SeaController utilitiesManager] toolboxUtilityFor:document] changeToolTo:kRectSelectTool];
+                            [toolbox changeToolTo:kRectSelectTool];
                     }
                 break;
                 case 'l':
                     if (!floating) {
-                        if ([[[SeaController utilitiesManager] toolboxUtilityFor:document] tool] == kLassoTool)
-                            [[[SeaController utilitiesManager] toolboxUtilityFor:document] changeToolTo:kPolygonLassoTool];
+                        if ([toolbox tool] == kLassoTool)
+                            [toolbox changeToolTo:kPolygonLassoTool];
                         else
-                            [[[SeaController utilitiesManager] toolboxUtilityFor:document] changeToolTo:kLassoTool];
+                            [toolbox changeToolTo:kLassoTool];
                     }
                 break;
                 case 'w':
                     if (!floating) {
-                        [[[SeaController utilitiesManager] toolboxUtilityFor:document] changeToolTo:kWandTool];
+                        [toolbox changeToolTo:kWandTool];
                     }
                 break;
                 case 'b':
-                    if ([[[SeaController utilitiesManager] toolboxUtilityFor:document] tool] == kBrushTool)
-                        [[[SeaController utilitiesManager] toolboxUtilityFor:document] changeToolTo:kPencilTool];
+                    if ([toolbox tool] == kBrushTool)
+                        [toolbox changeToolTo:kPencilTool];
                     else
-                        [[[SeaController utilitiesManager] toolboxUtilityFor:document] changeToolTo:kBrushTool];
+                        [toolbox changeToolTo:kBrushTool];
                 break;
                 case 'g':
-                    if ([[[SeaController utilitiesManager] toolboxUtilityFor:document] tool] == kBucketTool)
-                        [[[SeaController utilitiesManager] toolboxUtilityFor:document] changeToolTo:kGradientTool];
+                    if ([toolbox tool] == kBucketTool)
+                        [toolbox changeToolTo:kGradientTool];
                     else
-                        [[[SeaController utilitiesManager] toolboxUtilityFor:document] changeToolTo:kBucketTool];
+                        [toolbox changeToolTo:kBucketTool];
                 break;
                 case 't':
-                    [[[SeaController utilitiesManager] toolboxUtilityFor:document] changeToolTo:kTextTool];
+                    [toolbox changeToolTo:kTextTool];
                 break;
                 case 'e':
-                    [[[SeaController utilitiesManager] toolboxUtilityFor:document] changeToolTo:kEraserTool];
+                    [toolbox changeToolTo:kEraserTool];
                 break;
                 case 'i':
-                    [[[SeaController utilitiesManager] toolboxUtilityFor:document] changeToolTo:kEyedropTool];
+                    [toolbox changeToolTo:kEyedropTool];
                 break;
                 case 'o':
-                    if ([[[SeaController utilitiesManager] toolboxUtilityFor:document] tool] == kSmudgeTool)
-                        [[[SeaController utilitiesManager] toolboxUtilityFor:document] changeToolTo:kEffectTool];
+                    if ([toolbox tool] == kSmudgeTool)
+                        [toolbox changeToolTo:kEffectTool];
                     else
-                        [[[SeaController utilitiesManager] toolboxUtilityFor:document] changeToolTo:kSmudgeTool];
+                        [toolbox changeToolTo:kSmudgeTool];
                 break;
                 case 's':
-                    [[[SeaController utilitiesManager] toolboxUtilityFor:document] changeToolTo:kCloneTool];
+                    [toolbox changeToolTo:kCloneTool];
                 break;
                 case 'c':
-                    [[[SeaController utilitiesManager] toolboxUtilityFor:document] changeToolTo:kCropTool];
+                    [toolbox changeToolTo:kCropTool];
                 break;
                 case 'z':
-                    [[[SeaController utilitiesManager] toolboxUtilityFor:document] changeToolTo:kZoomTool];
+                    [toolbox changeToolTo:kZoomTool];
                 break;
                 case 'v':
-                    [[[SeaController utilitiesManager] toolboxUtilityFor:document] changeToolTo:kPositionTool];
+                    [toolbox changeToolTo:kPositionTool];
                 break;
                 case 'x':
-                    [[[[SeaController utilitiesManager] toolboxUtilityFor:document] colorView] swapColors: self];
+                    [[toolbox colorView] swapColors: self];
                 break;
                 case 'd':
-                    [[[[SeaController utilitiesManager] toolboxUtilityFor:document] colorView] defaultColors: self];
+                    [[toolbox colorView] defaultColors: self];
                 break;
                 case '\t':
-                    eyedropToolMemory = [[[SeaController utilitiesManager] toolboxUtilityFor:document] tool];
-                    [[[SeaController utilitiesManager] toolboxUtilityFor:document] changeToolTo:kEyedropTool];
+                    eyedropToolMemory = [toolbox tool];
+                    [toolbox changeToolTo:kEyedropTool];
                 break;
                 case '\r':
                 case kEnterCharCode:
@@ -1570,7 +1572,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
                 [self needsCursorsReset];
             break;
             case '\t':
-                [[[SeaController utilitiesManager] toolboxUtilityFor:document] changeToolTo:eyedropToolMemory];
+                [[document toolboxUtility] changeToolTo:eyedropToolMemory];
             break;
         }
     
@@ -1655,7 +1657,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
 {
     if ([[document selection] active])
         [[document selection] clearSelection];
-    [[[SeaController utilitiesManager] toolboxUtilityFor:document] changeToolTo:kRectSelectTool];
+    [[document toolboxUtility] changeToolTo:kRectSelectTool];
     [[document contents] makePasteboardFloat];
 }
 

@@ -8,7 +8,6 @@
 #import "SeaController.h"
 #import "SeaWarning.h"
 #import "SeaWhiteboard.h"
-#import "UtilitiesManager.h"
 #import "TIFFExporter.h"
 #import "XCFExporter.h"
 #import "PNGExporter.h"
@@ -175,8 +174,6 @@ extern BOOL globalReadOnlyWarning;
 	}
     
 	[docWindow setAcceptsMouseMovedEvents:YES];
-    
-    [[[SeaController utilitiesManager] statusUtilityFor:self] update];
 }
 
 - (void) encodeRestorableStateWithCoder:(NSCoder *) coder {
@@ -226,8 +223,7 @@ extern BOOL globalReadOnlyWarning;
 
 - (id)currentTool
 {
-    ToolboxUtility *tu = (ToolboxUtility*)[[SeaController utilitiesManager] toolboxUtilityFor:self];
-    int toolId = [tu tool];
+    int toolId = [[self toolboxUtility] tool];
     return [(SeaTools*)tools getTool:toolId];
 }
 
@@ -446,26 +442,25 @@ extern BOOL globalReadOnlyWarning;
 
 - (void)windowWillBeginSheet:(NSNotification *)notification
 {
-	[(PegasusUtility *)[[SeaController utilitiesManager] pegasusUtilityFor:self] setEnabled:NO];
+	[[self pegasusUtility] setEnabled:NO];
 }
 
 - (void)windowDidEndSheet:(NSNotification *)notification
 {
-	[(PegasusUtility *)[[SeaController utilitiesManager] pegasusUtilityFor:self] setEnabled:YES];
+	[[self pegasusUtility] setEnabled:YES];
 }
 
 - (void)windowDidBecomeMain:(NSNotification *)notification
 {
 	NSPoint point;
 	
-	[(UtilitiesManager *)[SeaController utilitiesManager] activate:self];
 	if ([docWindow attachedSheet])
-		[(PegasusUtility *)[[SeaController utilitiesManager] pegasusUtilityFor:self] setEnabled:NO];
+		[[self pegasusUtility] setEnabled:NO];
 	else
-		[(PegasusUtility *)[[SeaController utilitiesManager] pegasusUtilityFor:self] setEnabled:YES];
+		[[self pegasusUtility] setEnabled:YES];
 	point = [docWindow mouseLocationOutsideOfEventStream];
 	[[self docView] updateRulerMarkings:point andStationary:NSMakePoint(-256e6, -256e6)];
-	[(OptionsUtility *)[(UtilitiesManager *)[SeaController utilitiesManager] optionsUtilityFor:self] viewNeedsDisplay];
+	[[self optionsUtility] viewNeedsDisplay];
 }
 
 - (void)windowDidResignMain:(NSNotification *)notification
@@ -474,12 +469,12 @@ extern BOOL globalReadOnlyWarning;
 	
 	[helpers endLineDrawing];
 	if ([docWindow attachedSheet])
-		[(PegasusUtility *)[[SeaController utilitiesManager] pegasusUtilityFor:self] setEnabled:NO];
+		[[self pegasusUtility] setEnabled:NO];
 	else
-		[(PegasusUtility *)[[SeaController utilitiesManager] pegasusUtilityFor:self] setEnabled:YES];
+		[[self pegasusUtility] setEnabled:YES];
 	point = NSMakePoint(-256e6, -256e6);
 	[[self docView] updateRulerMarkings:point andStationary:point];
-	[(OptionsUtility *)[(UtilitiesManager *)[SeaController utilitiesManager] optionsUtilityFor:self] viewNeedsDisplay];
+	[[self optionsUtility] viewNeedsDisplay];
 	[gColorPanel orderOut:self];
 }
 
@@ -554,7 +549,11 @@ extern BOOL globalReadOnlyWarning;
 
 - (void)close
 {
-	[[SeaController utilitiesManager] shutdownFor:self];
+    [[self textureUtility] shutdown];
+    [[self brushUtility] shutdown];
+    [[self transparentUtility] shutdown];
+    [[self optionsUtility] shutdown];
+    [[self infoUtility] shutdown];
 
 	// Then call our supervisor
 	[super close];

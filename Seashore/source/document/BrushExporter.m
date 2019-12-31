@@ -1,6 +1,5 @@
 #import "BrushExporter.h"
 #import "SeaController.h"
-#import "UtilitiesManager.h"
 #import "BrushUtility.h"
 #import "SeaDocument.h"
 #import "Bitmap.h"
@@ -25,7 +24,7 @@ enum {
 
 - (IBAction)apply:(id)sender
 {
-	NSArray *groupNames = [[[SeaController utilitiesManager] brushUtilityFor:document] groupNames];
+	NSArray *groupNames = [[document brushUtility] groupNames];
     
     if ([existingCategoryRadio state] == NSOnState && [categoryTable selectedRow]==-1) {
         return;
@@ -54,7 +53,7 @@ enum {
     [self writeToFile:path spacing:_spacing data:[[doc whiteboard] data] spp:[[doc contents] spp] width:[[doc contents] width] height:[[doc contents] height]];
     
 	// Refresh textures
-	[[[SeaController utilitiesManager] brushUtilityFor:document] addBrushFromPath:path];
+	[[document brushUtility] addBrushFromPath:path];
 }
 
 - (IBAction)cancel:(id)sender
@@ -94,14 +93,14 @@ enum {
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)column row:(int)row
 {
-	NSArray *groupNames = [[[SeaController utilitiesManager] brushUtilityFor:document] groupNames];
+	NSArray *groupNames = [[document brushUtility] groupNames];
 
 	return [groupNames objectAtIndex:row];
 }
 
 - (int)numberOfRowsInTableView:(NSTableView *)tableView
 {
-	NSArray *groupNames = [[[SeaController utilitiesManager] brushUtilityFor:document] groupNames];
+	NSArray *groupNames = [[document brushUtility] groupNames];
 
 	return [groupNames count];
 }

@@ -1,7 +1,6 @@
 #import "SeaContent.h"
 #import "SeaLayer.h"
 #import "SeaDocument.h"
-#import "UtilitiesManager.h"
 #import "SeaController.h"
 #import "SeaPrefs.h"
 #import "SeaView.h"
@@ -370,7 +369,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
 {
     id foreground;
     
-    foreground = [[[SeaController utilitiesManager] toolboxUtilityFor:document] foreground];
+    foreground = [[document toolboxUtility] foreground];
     if (type == XCF_RGB_IMAGE && selectedChannel != kAlphaChannel)
         return [foreground colorUsingColorSpace:MyRGBCS];
     else if (type == XCF_GRAY_IMAGE)
@@ -383,7 +382,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
 {
     id background;
     
-    background = [[[SeaController utilitiesManager] toolboxUtilityFor:document] background];
+    background = [[document toolboxUtility] background];
     if (type == XCF_RGB_IMAGE && selectedChannel != kAlphaChannel)
         return [background colorUsingColorSpace:MyRGBCS];
     else if (type == XCF_GRAY_IMAGE)
@@ -786,8 +785,8 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     // Clear the selection if the layer is a floating one
     if ([layer floating]){
         [[document selection] clearSelection];
-        [(ToolboxUtility *)[[SeaController utilitiesManager] toolboxUtilityFor:document] anchorTool];
-        [(ToolboxUtility *)[[SeaController utilitiesManager] toolboxUtilityFor:document] update:YES];
+        [[document toolboxUtility] anchorTool];
+        [[document toolboxUtility] update:YES];
     }
         
     // Create a new array with all the existing layers except the one being deleted
@@ -817,7 +816,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     
     // Update toolbox
     if ([layer floating])
-        [(ToolboxUtility *)[[SeaController utilitiesManager] toolboxUtilityFor:document] update:YES];
+        [[document toolboxUtility] update:YES];
 }
 
 - (void)restoreLayer:(int)index fromLostIndex:(int)lostIndex
@@ -870,8 +869,8 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     
     // Update toolbox
     if ([layer floating]){
-        [(ToolboxUtility *)[[SeaController utilitiesManager] toolboxUtilityFor:document] floatTool];
-        [(ToolboxUtility *)[[SeaController utilitiesManager] toolboxUtilityFor:document] update:YES];
+        [[document toolboxUtility] floatTool];
+        [[document toolboxUtility] update:YES];
     }
 }
 
@@ -930,7 +929,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     [[document helpers] activeLayerChanged:kLayerAdded rect:&rect];
     
     // Inform the tools of the floating
-    [[[SeaController utilitiesManager] toolboxUtilityFor:document] floatTool];
+    [[document toolboxUtility] floatTool];
     
     // Make action undoable
     [(SeaContent *)[[document undoManager] prepareWithInvocationTarget:self] deleteLayer:activeLayerIndex];
@@ -1046,7 +1045,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     [[document helpers] activeLayerChanged:kLayerAdded rect:&rect];
     
     // Inform the tools of the floating
-    [[[SeaController utilitiesManager] toolboxUtilityFor:document] floatTool];
+    [[document toolboxUtility] floatTool];
     
     // Make action undoable
     [(SeaContent *)[[document undoManager] prepareWithInvocationTarget:self] deleteLayer:activeLayerIndex];
@@ -1272,7 +1271,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     
     // Apply the changes
     [layer setLinked:isLinked];
-    [(PegasusUtility *)[[SeaController utilitiesManager] pegasusUtilityFor:document] update:kPegasusUpdateLayerView];
+    [[document pegasusUtility] update:kPegasusUpdateLayerView];
     
     // Make action undoable
     [[[document undoManager] prepareWithInvocationTarget:self] setLinked:!isLinked forLayer:index];
@@ -1289,7 +1288,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     // Apply the changes
     [layer setVisible:isVisible];
     [[document helpers] layerAttributesChanged:index hold:YES];
-    [(PegasusUtility *)[[SeaController utilitiesManager] pegasusUtilityFor:document] update:kPegasusUpdateLayerView];
+    [[document pegasusUtility] update:kPegasusUpdateLayerView];
     
     // Make action undoable
     [[[document undoManager] prepareWithInvocationTarget:self] setVisible:!isVisible forLayer:index];

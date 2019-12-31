@@ -2,7 +2,6 @@
 #import "SeaView.h"
 #import "SeaDocument.h"
 #import "SeaContent.h"
-#import "UtilitiesManager.h"
 #import "TransparentUtility.h"
 #import "SeaController.h"
 #import "SeaPrefs.h"

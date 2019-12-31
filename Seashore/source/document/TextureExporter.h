@@ -1,4 +1,5 @@
 #import "Globals.h"
+#import "SeaDocument.h"
 
 /*!
 	@class		TextureExporter
@@ -12,7 +13,7 @@
 @interface TextureExporter : NSObject {
 
 	// The document associated with this object
-    __weak IBOutlet id document;
+    __weak SeaDocument *document;
 
 	// The exporting panel
 	IBOutlet id sheet;

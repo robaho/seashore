@@ -12,7 +12,6 @@
 #import "SeaHelpers.h"
 #import "SeaSelection.h"
 #import "SeaController.h"
-#import "UtilitiesManager.h"
 #import "TextureUtility.h"
 #import "RecentsUtility.h"
 
@@ -84,12 +83,12 @@
 	isPreviewing = NO;
 	intermediate = NO;
     
-    [[[SeaController utilitiesManager] recentsUtilityFor:document] rememberBucket:(BucketOptions*)options];
+    [[document recentsUtility] rememberBucket:(BucketOptions*)options];
 }
 
 - (void)fillAtPoint:(IntPoint)point useTolerance:(BOOL)useTolerance delay:(BOOL)delay
 {
-	id layer = [[document contents] activeLayer], activeTexture = [[[SeaController utilitiesManager] textureUtilityFor:document] activeTexture];
+	id layer = [[document contents] activeLayer], activeTexture = [[document textureUtility] activeTexture];
 	int tolerance, width = [(SeaLayer *)layer width], height = [(SeaLayer *)layer height], spp = [[document contents] spp];
 	int textureWidth = [(SeaTexture *)activeTexture width], textureHeight = [(SeaTexture *)activeTexture height];
 	unsigned char *overlay = [[document whiteboard] overlay], *data = [(SeaLayer *)layer data];
@@ -105,7 +104,7 @@
 	if ([options useTextures]) {
 		for (k = 0; k < spp - 1; k++)
 			basePixel[k] = 0;
-		basePixel[spp - 1] = [(TextureUtility*)[[SeaController utilitiesManager] textureUtilityFor:document] opacity];
+		basePixel[spp - 1] = [[document textureUtility] opacity];
 	}
 	else {
 		if (spp == 4) {

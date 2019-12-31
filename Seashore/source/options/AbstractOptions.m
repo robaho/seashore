@@ -1,6 +1,5 @@
 #import "AbstractOptions.h"
 #import "SeaController.h"
-#import "UtilitiesManager.h"
 #import "ToolboxUtility.h"
 #import "SeaPrefs.h"
 #import "SeaDocument.h"
@@ -17,7 +16,7 @@ static BOOL forceAlt = NO;
 	int curTool;
 	
 	document = sender;
-	curTool = [[[SeaController utilitiesManager] toolboxUtilityFor:document] tool];
+	curTool = [[document toolboxUtility] tool];
 	if (lastTool != curTool) {
 		[self updateModifiers:0];
 		lastTool = curTool;
@@ -96,8 +95,7 @@ static BOOL forceAlt = NO;
 
 - (BOOL)useTextures
 {
-    TextureUtility *textures =[[SeaController utilitiesManager] textureUtilityFor:document];
-    return [textures activeTexture]!=NULL;
+    return [[document textureUtility] activeTexture]!=NULL;
 }
 
 - (void)shutdown

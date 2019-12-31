@@ -13,7 +13,6 @@
 #import "SeaTools.h"
 #import "SeaTexture.h"
 #import "BrushOptions.h"
-#import "UtilitiesManager.h"
 #import "TextureUtility.h"
 #import "Bucket.h"
 #import "SeaController.h"
@@ -103,8 +102,8 @@
 {
     id layer = [[document contents] activeLayer];
     BOOL hasAlpha = [layer hasAlpha];
-    id curBrush = [[[SeaController utilitiesManager] brushUtilityFor:document] activeBrush];
-    id activeTexture = [[[SeaController utilitiesManager] textureUtilityFor:document] activeTexture];
+    id curBrush = [[document brushUtility] activeBrush];
+    id activeTexture = [[document textureUtility] activeTexture];
     NSPoint curPoint = IntPointMakeNSPoint(where), temp;
     IntRect rect;
     NSColor *color = NULL;
@@ -142,7 +141,7 @@
     else if ([options useTextures]) {
         for (k = 0; k < spp - 1; k++)
             basePixel[k] = 0;
-        basePixel[spp - 1] = [(TextureUtility*)[[SeaController utilitiesManager] textureUtilityFor:document] opacity];
+        basePixel[spp - 1] = [[document textureUtility] opacity];
     }
     else if (spp == 4) {
         color = [[document contents] foreground];
@@ -165,7 +164,7 @@
     }
     else {
         if ([options useTextures])
-            [[document whiteboard] setOverlayOpacity:[(TextureUtility*)[[SeaController utilitiesManager] textureUtilityFor:document] opacity]];
+            [[document whiteboard] setOverlayOpacity:[[document textureUtility] opacity]];
         else
             [[document whiteboard] setOverlayOpacity:[color alphaComponent] * 255.0];
     }
@@ -218,13 +217,13 @@
    
    // Set-up variables
    layer = [[document contents] activeLayer];
-   curBrush = [[[SeaController utilitiesManager] brushUtilityFor:document] activeBrush];
+   curBrush = [[document brushUtility] activeBrush];
    layerWidth = [(SeaLayer *)layer width];
    layerHeight = [(SeaLayer *)layer height];
    brushWidth = [(SeaBrush *)curBrush fakeWidth];
    brushHeight = [(SeaBrush *)curBrush fakeHeight];
-   activeTexture = [[[SeaController utilitiesManager] textureUtilityFor:document] activeTexture];
-   brushSpacing = (double)[(BrushUtility*)[[SeaController utilitiesManager] brushUtilityFor:document] spacing] / 100.0;
+   activeTexture = [[document textureUtility] activeTexture];
+   brushSpacing = (double)[[document brushUtility] spacing] / 100.0;
    fade = [options fade];
    fadeValue = [options fadeValue];
    spp = [[document contents] spp];
@@ -419,7 +418,7 @@ next:
         pos++;
     }
     
-    [[[SeaController utilitiesManager] recentsUtilityFor:document] rememberBrush:options];
+    [[document recentsUtility] rememberBrush:options];
     
     [self drawThread:NULL];
 }

@@ -13,7 +13,6 @@
 #import "SeaTools.h"
 #import "SeaTexture.h"
 #import "BrushOptions.h"
-#import "UtilitiesManager.h"
 #import "TextureUtility.h"
 #import "Bucket.h"
 #import "SeaController.h"
@@ -142,7 +141,7 @@
 - (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event
 {
 	id layer = [[document contents] activeLayer];
-	id curBrush = [[[SeaController utilitiesManager] brushUtilityFor:document] activeBrush];
+	id curBrush = [[document brushUtility] activeBrush];
 	NSPoint curPoint = IntPointMakeNSPoint(where), temp;
 	IntRect rect;
 	int spp = [[document contents] spp];
@@ -271,13 +270,13 @@
 
 	// Set-up variables
 	layer = [[document contents] activeLayer];
-	curBrush = [[[SeaController utilitiesManager] brushUtilityFor:document] activeBrush];
+	curBrush = [[document brushUtility] activeBrush];
 	layerWidth = [(SeaLayer *)layer width];
 	layerHeight = [(SeaLayer *)layer height];
 	brushWidth = [(SeaBrush *)curBrush fakeWidth];
 	brushHeight = [(SeaBrush *)curBrush fakeHeight];
-	activeTexture = [[[SeaController utilitiesManager] textureUtilityFor:document] activeTexture];
-	brushSpacing = (double)[(BrushUtility*)[[SeaController utilitiesManager] brushUtilityFor:document] spacing] / 100.0;
+	activeTexture = [[document textureUtility] activeTexture];
+	brushSpacing = (double)[[document brushUtility] spacing] / 100.0;
 	spp = [[document contents] spp];
 	bigRect = IntMakeRect(0, 0, 0, 0);
 	lastDate = [NSDate date];

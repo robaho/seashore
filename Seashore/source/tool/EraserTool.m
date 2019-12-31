@@ -13,7 +13,6 @@
 #import "SeaTools.h"
 #import "SeaTexture.h"
 #import "BrushOptions.h"
-#import "UtilitiesManager.h"
 #import "TextureUtility.h"
 #import "EraserOptions.h"
 #import "SeaController.h"
@@ -47,7 +46,7 @@
 	int width = [(SeaLayer *)layer width], height = [(SeaLayer *)layer height];
 	int i, j, spp = [[document contents] spp], overlayPos;
 	IntPoint ipoint = NSPointMakeIntPoint(point);
-	id boptions = [[[SeaController utilitiesManager] optionsUtilityFor:document] getOptions:kBrushTool];
+	id boptions = [[document optionsUtility] getOptions:kBrushTool];
 	
 	if ([brush usePixmap]) {
 	
@@ -103,7 +102,7 @@
 {
 	id layer = [[document contents] activeLayer];
 	BOOL hasAlpha = [layer hasAlpha];
-	id curBrush = [[[SeaController utilitiesManager] brushUtilityFor:document] activeBrush];
+	id curBrush = [[document brushUtility] activeBrush];
 	NSPoint curPoint = IntPointMakeNSPoint(where), temp;
 	IntRect rect;
 	NSColor *color = NULL;
@@ -115,7 +114,7 @@
 	// Determine whether operation should continue
 	lastWhere.x = where.x;
 	lastWhere.y = where.y;
-	boptions = (BrushOptions*)[[[SeaController utilitiesManager] optionsUtilityFor:document] getOptions:kBrushTool];
+	boptions = (BrushOptions*)[[document optionsUtility] getOptions:kBrushTool];
 	ignoreFirstTouch = [[SeaController seaPrefs] ignoreFirstTouch];
 	if (ignoreFirstTouch && ([event type] == NSLeftMouseDown || [event type] == NSRightMouseDown) && !([options modifier] == kShiftModifier)) {
 		firstTouchDone = NO;
@@ -192,14 +191,14 @@
 	
    // Set-up variables
    layer = [[document contents] activeLayer];
-   curBrush = [[[SeaController utilitiesManager] brushUtilityFor:document] activeBrush];
+   curBrush = [[document brushUtility] activeBrush];
    layerWidth = [(SeaLayer *)layer width];
    layerHeight = [(SeaLayer *)layer height];
    brushWidth = [(SeaBrush *)curBrush fakeWidth];
    brushHeight = [(SeaBrush *)curBrush fakeHeight];
-   activeTexture = [[[SeaController utilitiesManager] textureUtilityFor:document] activeTexture];
-   boptions = [[[SeaController utilitiesManager] optionsUtilityFor:document] getOptions:kBrushTool];
-   brushSpacing = (double)[(BrushUtility*)[[SeaController utilitiesManager] brushUtilityFor:document] spacing] / 100.0;
+   activeTexture = [[document textureUtility] activeTexture];
+   boptions = [[document optionsUtility] getOptions:kBrushTool];
+   brushSpacing = (double)[[document brushUtility] spacing] / 100.0;
    fade = [options mimicBrush] && [boptions fade];
    fadeValue = [boptions fadeValue];
    spp = [[document contents] spp];
@@ -352,7 +351,7 @@ next:
 
 - (void)mouseDraggedTo:(IntPoint)where withEvent:(NSEvent *)event
 {
-	id boptions = [[[SeaController utilitiesManager] optionsUtilityFor:document] getOptions:kBrushTool];
+	id boptions = [[document optionsUtility] getOptions:kBrushTool];
 	
 	// Have we registerd the first touch
 	if (!firstTouchDone) {

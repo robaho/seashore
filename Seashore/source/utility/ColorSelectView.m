@@ -4,7 +4,6 @@
 #import "SeaController.h"
 #import "SeaTools.h"
 #import "AbstractTool.h"
-#import "UtilitiesManager.h"
 #import "TextureUtility.h"
 #import "SeaTexture.h"
 #import "TransparentUtility.h"
@@ -73,7 +72,7 @@
     [self drawColorWell:fg];
 
 	if (foregroundIsTexture) {
-		[[NSColor colorWithPatternImage:[[[[SeaController utilitiesManager] textureUtilityFor:document] activeTexture] thumbnail]] set];
+		[[NSColor colorWithPatternImage:[[[document textureUtility] activeTexture] thumbnail]] set];
 		[[NSBezierPath bezierPathWithRect:fg] fill];
 	}
 	else {
@@ -149,16 +148,16 @@
 	NSColor *tempColor;
 	[self setNeedsDisplay:YES];
 	tempColor = [[document contents] foreground];
-	[(ToolboxUtility *)[[SeaController utilitiesManager] toolboxUtilityFor:document] setForeground:[[document contents] background]];
-	[(ToolboxUtility *)[[SeaController utilitiesManager] toolboxUtilityFor:document] setBackground:tempColor];
+	[[document toolboxUtility] setForeground:[[document contents] background]];
+	[[document toolboxUtility] setBackground:tempColor];
 	[self update];
 }
 
 - (IBAction)defaultColors:(id)sender
 {
 	[self setNeedsDisplay:YES];
-	[(ToolboxUtility *)[[SeaController utilitiesManager] toolboxUtilityFor:document] setForeground:[NSColor blackColor]];
-	[(ToolboxUtility *)[[SeaController utilitiesManager] toolboxUtilityFor:document] setBackground:[NSColor whiteColor]];
+	[[document toolboxUtility] setForeground:[NSColor blackColor]];
+	[[document toolboxUtility] setBackground:[NSColor whiteColor]];
 	[self update];
 }
 
@@ -209,18 +208,14 @@
 
 - (void)changeForegroundColor:(id)sender
 {
-	id toolboxUtility = (ToolboxUtility *)[[SeaController utilitiesManager] toolboxUtilityFor:document];
-	
-	[toolboxUtility setForeground:[sender color]];
+	[[document toolboxUtility] setForeground:[sender color]];
 	[textureUtility setActiveTextureIndex:-1];
 	[self setNeedsDisplay:YES];
 }
 
 - (void)changeBackgroundColor:(id)sender
 {
-	id toolboxUtility = (ToolboxUtility *)[[SeaController utilitiesManager] toolboxUtilityFor:document];
-	
-	[toolboxUtility setBackground:[sender color]];
+	[[document toolboxUtility] setBackground:[sender color]];
 	[self setNeedsDisplay:YES];
 }
 
@@ -231,9 +226,9 @@
 				
 		// Set colour correctly
 		if ([[gColorPanel title] isEqualToString:LOCALSTR(@"foreground", @"Foreground")])
-			[gColorPanel setColor:[(ToolboxUtility *)[[SeaController utilitiesManager] toolboxUtilityFor:document] foreground]];
+			[gColorPanel setColor:[[document toolboxUtility] foreground]];
 		else
-			[gColorPanel setColor:[(ToolboxUtility *)[[SeaController utilitiesManager] toolboxUtilityFor:document] background]];
+			[gColorPanel setColor:[[document toolboxUtility] background]];
 		
 	}
 	

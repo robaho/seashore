@@ -10,10 +10,12 @@
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
 
+@class SeaDocument;
+
 @interface AbstractTool : NSObject {
 
 	// The document associated with this tool
-	__weak IBOutlet id document;
+	__weak SeaDocument *document;
 	
 	// Is the selection being made
 	BOOL intermediate;

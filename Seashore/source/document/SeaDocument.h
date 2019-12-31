@@ -1,6 +1,14 @@
 #import "Globals.h"
 #import "SeaContent.h"
 #import "SeaWhiteboard.h"
+#import "TextureUtility.h"
+#import "BrushUtility.h"
+#import "ToolboxUtility.h"
+#import "OptionsUtility.h"
+#import "InfoUtility.h"
+#import "RecentsUtility.h"
+#import "PegasusUtility.h"
+#import "StatusUtility.h"
 
 /*!
 	@class		SeaDocument
@@ -83,7 +91,19 @@
     NSString *selectedType;
     
     BOOL layerWarningShown;
+    
+    // utilities
 }
+
+@property (strong) IBOutlet RecentsUtility *recentsUtility;
+@property (strong) IBOutlet TextureUtility *textureUtility;
+@property (strong) IBOutlet BrushUtility *brushUtility;
+@property (strong) IBOutlet PegasusUtility *pegasusUtility;
+@property (strong) IBOutlet id transparentUtility;
+@property (strong) IBOutlet ToolboxUtility *toolboxUtility;
+@property (strong) IBOutlet OptionsUtility *optionsUtility;
+@property (strong) IBOutlet InfoUtility *infoUtility;
+@property (strong) IBOutlet StatusUtility *statusUtility;
 
 // CREATION METHODS
 

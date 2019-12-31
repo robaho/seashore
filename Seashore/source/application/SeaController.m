@@ -1,5 +1,4 @@
 #import "SeaController.h"
-#import "UtilitiesManager.h"
 #import "SeaBrush.h"
 #import "SeaDocument.h"
 #import "SeaWhiteboard.h"
@@ -32,11 +31,6 @@ id seaController;
 {
 }
 
-- (UtilitiesManager*)utilitiesManager
-{
-	return utilitiesManager;
-}
-
 - (id)seaPlugins
 {
 	return seaPlugins;
@@ -60,11 +54,6 @@ id seaController;
 - (id)seaWarning
 {
 	return seaWarning;
-}
-
-+ (UtilitiesManager*)utilitiesManager
-{
-	return [seaController utilitiesManager];
 }
 
 + (id)seaPlugins

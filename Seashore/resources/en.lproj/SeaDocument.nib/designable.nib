@@ -10,22 +10,31 @@
             <connections>
                 <outlet property="accessoryView" destination="70" id="75"/>
                 <outlet property="brushExporter" destination="IbU-IZ-DpL" id="gdr-0h-j8r"/>
+                <outlet property="brushUtility" destination="1597" id="Fgt-ZF-Lll"/>
                 <outlet property="dataSource" destination="7818" id="9833"/>
                 <outlet property="docWindow" destination="5" id="56"/>
                 <outlet property="exportersPopUp" destination="71" id="76"/>
                 <outlet property="gifExporter" destination="870" id="871"/>
                 <outlet property="heicExporter" destination="1tO-4B-6H8" id="feo-jb-glL"/>
                 <outlet property="helpers" destination="291" id="292"/>
+                <outlet property="infoUtility" destination="1601" id="DDH-q9-sZz"/>
                 <outlet property="jp2Exporter" destination="792" id="799"/>
                 <outlet property="jpegExporter" destination="328" id="332"/>
                 <outlet property="operations" destination="288" id="289"/>
                 <outlet property="optionsButton" destination="74" id="326"/>
                 <outlet property="optionsSummary" destination="692" id="693"/>
+                <outlet property="optionsUtility" destination="1599" id="ZAY-Wm-jVg"/>
+                <outlet property="pegasusUtility" destination="1595" id="2LX-Ql-0b6"/>
                 <outlet property="pluginData" destination="383" id="385"/>
                 <outlet property="pngExporter" destination="329" id="333"/>
+                <outlet property="recentsUtility" destination="s3c-Oa-QRW" id="hdm-qJ-bDc"/>
+                <outlet property="statusUtility" destination="14766" id="ezD-tk-efh"/>
                 <outlet property="textureExporter" destination="421" id="422"/>
+                <outlet property="textureUtility" destination="1600" id="nAz-Ci-DwR"/>
                 <outlet property="tiffExporter" destination="330" id="334"/>
+                <outlet property="toolboxUtility" destination="1598" id="sEf-ps-7lU"/>
                 <outlet property="tools" destination="259" id="290"/>
+                <outlet property="transparentUtility" destination="1596" id="lv6-SJ-2IB"/>
                 <outlet property="view" destination="63" id="69"/>
                 <outlet property="warnings" destination="16701" id="16704"/>
                 <outlet property="window" destination="5" id="18"/>

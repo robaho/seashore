@@ -1,6 +1,5 @@
 #import "NSTextViewRedirect.h"
 #import "SeaController.h"
-#import "UtilitiesManager.h"
 #import "OptionsUtility.h"
 #import "SeaTools.h"
 #import "TextTool.h"
@@ -10,7 +9,7 @@
 
 - (IBAction)changeSpecialFont:(id)sender
 {
-	[[[[SeaController utilitiesManager] optionsUtilityFor:gCurrentDocument] getOptions:kTextTool] changeFont:sender];
+	[[[gCurrentDocument optionsUtility] getOptions:kTextTool] changeFont:sender];
 }
 
 @end

@@ -5,7 +5,6 @@
 //  Created by robert engels on 2/4/19.
 //
 #import "SeaController.h"
-#import "UtilitiesManager.h"
 #import "SeaDocument.h"
 #import "SeaContent.h"
 #import "SeaHelpers.h"
@@ -69,9 +68,9 @@
 }
 -(void)restore
 {
-    BrushUtility *brushes = [[SeaController utilitiesManager] brushUtilityFor:document];
-    ToolboxUtility *toolbox = [[SeaController utilitiesManager] toolboxUtilityFor:document];
-    TextureUtility *textures =[[SeaController utilitiesManager] textureUtilityFor:document];
+    BrushUtility *brushes = [document brushUtility];
+    ToolboxUtility *toolbox = [document toolboxUtility];
+    TextureUtility *textures =[document textureUtility];
     
     [brushes setActiveBrush:brush];
     [brushes setSpacing:spacing];
@@ -114,9 +113,9 @@
 
 -(void)restore
 {
-    ToolboxUtility *toolbox = [[SeaController utilitiesManager] toolboxUtilityFor:document];
-    TextureUtility *textures =[[SeaController utilitiesManager] textureUtilityFor:document];
-    OptionsUtility *options = [[SeaController utilitiesManager] optionsUtilityFor:document];
+    ToolboxUtility *toolbox = [document toolboxUtility];
+    TextureUtility *textures =[document textureUtility];
+    OptionsUtility *options = [document optionsUtility];
     
     [toolbox setForeground:foreground];
     [toolbox setBackground:background];
@@ -152,9 +151,9 @@
 
 -(void)restore
 {
-    ToolboxUtility *toolbox = [[SeaController utilitiesManager] toolboxUtilityFor:document];
-    TextureUtility *textures =[[SeaController utilitiesManager] textureUtilityFor:document];
-    OptionsUtility *options = [[SeaController utilitiesManager] optionsUtilityFor:document];
+    ToolboxUtility *toolbox = [document toolboxUtility];
+    TextureUtility *textures =[document textureUtility];
+    OptionsUtility *options = [document optionsUtility];
     
     [toolbox setForeground:foreground];
     [toolbox setBackground:background];
@@ -178,7 +177,6 @@
 
 - (void)awakeFromNib
 {
-    [[SeaController utilitiesManager] setRecentsUtility: self for:document];
 }
 
 - (IBAction)show:(id)sender
@@ -216,9 +214,9 @@
 - (void)rememberBrush:(BrushOptions*)options
 {
   
-    BrushUtility *brushes = [[SeaController utilitiesManager] brushUtilityFor:document];
-    ToolboxUtility *toolbox = [[SeaController utilitiesManager] toolboxUtilityFor:document];
-    TextureUtility *textures =[[SeaController utilitiesManager] textureUtilityFor:document];
+    BrushUtility *brushes = [document brushUtility];
+    ToolboxUtility *toolbox = [document toolboxUtility];
+    TextureUtility *textures =[document textureUtility];
     SeaBrush *brush = [brushes activeBrush];
     int spacing = [brushes spacing];
     SeaTexture *texture = [textures activeTexture];
@@ -263,8 +261,8 @@
 - (void)rememberPencil:(PencilOptions*)options
 {
     
-    ToolboxUtility *toolbox = [[SeaController utilitiesManager] toolboxUtilityFor:document];
-    TextureUtility *textures =[[SeaController utilitiesManager] textureUtilityFor:document];
+    ToolboxUtility *toolbox = [document toolboxUtility];
+    TextureUtility *textures =[document textureUtility];
     int pencilSize = [options pencilSize];
     SeaTexture *texture = [textures activeTexture];
     int opacity = [textures opacity];
@@ -307,8 +305,8 @@
 - (void)rememberBucket:(BucketOptions*)options
 {
     
-    ToolboxUtility *toolbox = [[SeaController utilitiesManager] toolboxUtilityFor:document];
-    TextureUtility *textures =[[SeaController utilitiesManager] textureUtilityFor:document];
+    ToolboxUtility *toolbox = [document toolboxUtility];
+    TextureUtility *textures =[document textureUtility];
     
     SeaTexture *texture = [textures activeTexture];
     int opacity = [textures opacity];

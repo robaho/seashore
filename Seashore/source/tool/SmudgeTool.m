@@ -4,7 +4,6 @@
 #import "SeaDocument.h"
 #import "SeaContent.h"
 #import "SeaController.h"
-#import "UtilitiesManager.h"
 #import "BrushUtility.h"
 #import "SeaLayer.h"
 #import "StandardMerge.h"
@@ -101,7 +100,7 @@
 	id layer = [[document contents] activeLayer];
 	int layerWidth = [(SeaLayer *)layer width], layerHeight = [(SeaLayer *)layer height];
 	unsigned char *data = [(SeaLayer *)layer data];
-	id curBrush = [[[SeaController utilitiesManager] brushUtilityFor:document] activeBrush];
+	id curBrush = [[document brushUtility] activeBrush];
 	int brushWidth = [(SeaBrush *)curBrush fakeWidth], brushHeight = [(SeaBrush *)curBrush fakeHeight];
 	int i, j, k, tx, ty, spp = [[document contents] spp];
 	NSPoint curPoint = IntPointMakeNSPoint(where), temp;
@@ -175,7 +174,7 @@
 {
 	id layer = [[document contents] activeLayer];
 	int layerWidth = [(SeaLayer *)layer width], layerHeight = [(SeaLayer *)layer height];
-	id curBrush = [[[SeaController utilitiesManager] brushUtilityFor:document] activeBrush];
+	id curBrush = [[document brushUtility] activeBrush];
 	int brushWidth = [(SeaBrush *)curBrush fakeWidth], brushHeight = [(SeaBrush *)curBrush fakeHeight];
 	NSPoint curPoint = IntPointMakeNSPoint(where);
 	double brushSpacing = 1.0 / 100.0;

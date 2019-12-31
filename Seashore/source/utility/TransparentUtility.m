@@ -2,7 +2,6 @@
 #import "SeaDocument.h"
 #import "SeaController.h"
 #import "SeaPrefs.h"
-#import "UtilitiesManager.h"
 
 @implementation TransparentUtility
 

@@ -13,7 +13,6 @@
 #import "SeaTools.h"
 #import "SeaLayer.h"
 #import "SeaTexture.h"
-#import "UtilitiesManager.h"
 #import "TextureUtility.h"
 #import "Bucket.h"
 #import "RecentsUtility.h"
@@ -37,7 +36,7 @@
 
 - (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event
 {
-	id activeTexture = [[[SeaController utilitiesManager] textureUtilityFor:document] activeTexture];
+	id activeTexture = [[document textureUtility] activeTexture];
 	id layer = [[document contents] activeLayer];
 	BOOL hasAlpha = [layer hasAlpha];
 	unsigned char *overlay = [[document whiteboard] overlay];
@@ -89,7 +88,7 @@
 	}
 	else {
 		if ([options useTextures])
-			[[document whiteboard] setOverlayOpacity:[(TextureUtility*)[[SeaController utilitiesManager] textureUtilityFor:document] opacity]];
+			[[document whiteboard] setOverlayOpacity:[[document textureUtility] opacity]];
 		else
 			[[document whiteboard] setOverlayOpacity:[color alphaComponent] * 255.0];
 	}
@@ -128,7 +127,7 @@
 
 - (void)mouseDraggedTo:(IntPoint)where withEvent:(NSEvent *)event
 {
-	id activeTexture = [[[SeaController utilitiesManager] textureUtilityFor:document] activeTexture];
+	id activeTexture = [[document textureUtility] activeTexture];
 	id layer = [[document contents] activeLayer];
 	unsigned char *overlay = [[document whiteboard] overlay];
 	int width = [(SeaLayer *)layer width], height = [(SeaLayer *)layer height];
@@ -186,7 +185,7 @@
 {
 	[(SeaHelpers *)[document helpers] applyOverlay];
     
-    [[[SeaController utilitiesManager] recentsUtilityFor:document] rememberPencil:(PencilOptions*)options];
+    [[document recentsUtility] rememberPencil:(PencilOptions*)options];
 }
 
 - (void)startStroke:(IntPoint)where;

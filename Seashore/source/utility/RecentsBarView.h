@@ -6,12 +6,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "SeaDocument.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface RecentsBarView : NSView <NSCollectionViewDelegate>
 {
-    __weak IBOutlet id document;
+    __weak SeaDocument *document;
     IBOutlet NSCollectionView *cview;
 }
 @end

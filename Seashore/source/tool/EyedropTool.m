@@ -3,7 +3,6 @@
 #import "SeaContent.h"
 #import "SeaDocument.h"
 #import "SeaController.h"
-#import "UtilitiesManager.h"
 #import "ToolboxUtility.h"
 #import "OptionsUtility.h"
 #import "EyedropOptions.h"
@@ -23,7 +22,7 @@
 
 - (void)mouseUpAt:(IntPoint)where withEvent:(NSEvent *)event
 {
-    ToolboxUtility *toolboxUtility = (ToolboxUtility *)[[SeaController utilitiesManager] toolboxUtilityFor:document];
+    ToolboxUtility *toolboxUtility = [document toolboxUtility];
     NSColor *color = [self getColor];
     
     if (color != NULL) {

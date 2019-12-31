@@ -3,7 +3,6 @@
 #import "SeaHelp.h"
 #import "SeaTools.h"
 #import "SeaController.h"
-#import "UtilitiesManager.h"
 #import "SeaWarning.h"
 #import "SeaDocument.h"
 

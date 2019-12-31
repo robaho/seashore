@@ -7,7 +7,6 @@
 #import "SeaHelpers.h"
 #import "SeaController.h"
 #import "SeaPrefs.h"
-#import "UtilitiesManager.h"
 #import "SeaProxy.h"
 #import "SeaWindowContent.h"
 
@@ -22,8 +21,6 @@
 {
 	// Enable the utility
 	enabled = YES;
-	
-	[[SeaController utilitiesManager] setPegasusUtility: self for:document];
 }
 
 - (void)activate

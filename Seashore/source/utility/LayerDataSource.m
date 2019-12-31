@@ -6,7 +6,6 @@
 #import "SeaLayer.h"
 #import "SeaHelpers.h"
 #import "SeaController.h"
-#import "UtilitiesManager.h"
 #import "PegasusUtility.h"
 #import "LayerSettings.h"
 
@@ -109,7 +108,7 @@
 		[[document contents] setVisible:[object boolValue] forLayer:[(SeaLayer *)item index]];
 	}else if([[tableColumn identifier] isEqualToString:INFO_BUTTON_COL]){
 		NSPoint p = [[outlineView window] convertBaseToScreen:[[outlineView window] mouseLocationOutsideOfEventStream]];
-		[[[[SeaController utilitiesManager] pegasusUtilityFor:document] layerSettings] showSettings:item from:p];
+		[[[document pegasusUtility] layerSettings] showSettings:item from:p];
 	}else{
 		NSLog(@"Setting the value for unknown column %@", tableColumn);
 	}	

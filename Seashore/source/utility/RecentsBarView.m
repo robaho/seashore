@@ -7,7 +7,6 @@
 
 #import "RecentsBarView.h"
 #import "SeaController.h"
-#import "UtilitiesManager.h"
 #import "RecentsUtility.h"
 #import "SeaTexture.h"
 
@@ -156,7 +155,7 @@
 
 - (void)update
 {
-    RecentsUtility *util = [[SeaController utilitiesManager] recentsUtilityFor:document];
+    RecentsUtility *util = [document recentsUtility];
     int i;
                             
     NSMutableArray *items = [[NSMutableArray alloc] init];

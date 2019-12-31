@@ -9,7 +9,6 @@
 #import "TextOptions.h"
 #import "SeaController.h"
 #import "SeaPrefs.h"
-#import "UtilitiesManager.h"
 #import "TextureUtility.h"
 #import "SeaTexture.h"
 #import "Bucket.h"
@@ -61,7 +60,7 @@ extern id gNewFont;
 	NSString *text;
 	IntPoint pos, off;
     SeaLayer *layer;
-    id activeTexture = [[[SeaController utilitiesManager] textureUtilityFor:document] activeTexture];
+    id activeTexture = [[document textureUtility] activeTexture];
     NSBitmapImageRep *initRep;
 	NSMutableParagraphStyle *paraStyle;
 	int slantWidth;

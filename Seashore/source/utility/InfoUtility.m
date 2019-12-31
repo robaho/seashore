@@ -8,7 +8,6 @@
 #import "SeaContent.h"
 #import "SeaPrefs.h"
 #import "SeaController.h"
-#import "UtilitiesManager.h"
 #import "SeaPrefs.h"
 #import "PositionTool.h"
 #import "RectSelectTool.h"
@@ -28,8 +27,6 @@
 - (void)awakeFromNib
 {
 	// Shown By Default
-	[[SeaController utilitiesManager] setInfoUtility: self for:document];
-	
     [toggleButton setState:[self visible]];
 }
 

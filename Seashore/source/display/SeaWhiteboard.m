@@ -11,7 +11,6 @@
 #import "ToolboxUtility.h"
 #import "StatusUtility.h"
 #import "SeaController.h"
-#import "UtilitiesManager.h"
 
 extern IntPoint gScreenResolution;
 
@@ -366,8 +365,8 @@ extern IntPoint gScreenResolution;
 {
     proofProfile = profile;
 	[self readjustAltData:YES];
-	[(ToolboxUtility *)[[SeaController utilitiesManager] toolboxUtilityFor:document] update:NO];
-    [(StatusUtility *)[[SeaController utilitiesManager] statusUtilityFor:document] update];
+	[[document toolboxUtility] update:NO];
+    [[document statusUtility] update];
 }
 
 - (void)forcedChannelUpdate:(IntRect)updateRect

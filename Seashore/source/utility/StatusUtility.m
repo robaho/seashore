@@ -1,6 +1,5 @@
 #import "StatusUtility.h"
 #import "SeaController.h"
-#import "UtilitiesManager.h"
 #import "SeaDocument.h"
 #import "SeaContent.h"
 #import "SeaHelpers.h"
@@ -13,7 +12,6 @@
 @implementation StatusUtility
 - (void)awakeFromNib
 {
-	[[SeaController utilitiesManager] setStatusUtility: self for:document];
 }
 
 - (void)shutdown
