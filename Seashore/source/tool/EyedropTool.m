@@ -28,8 +28,10 @@
     if (color != NULL) {
         if ([(EyedropOptions*)options modifier] == kAltModifier)
             [toolboxUtility setBackground:[self getColor]];
-        else
+        else {
             [toolboxUtility setForeground:[self getColor]];
+            [[document textureUtility] setActiveTexture:NULL];
+        }
         [toolboxUtility update:NO];
     }
 }
