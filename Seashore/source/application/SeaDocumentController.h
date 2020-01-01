@@ -15,7 +15,7 @@
 	IBOutlet id seaPrefs;
 	
 	// A panel through which a new image can be configured
-	IBOutlet id newPanel; 
+	IBOutlet NSPanel *newPanel; 
 	
 	// The various text boxes from the New Image Settings panel
 	IBOutlet id widthInput, heightInput;

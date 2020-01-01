@@ -47,7 +47,7 @@ enum {
 	IBOutlet id ratioPopup;
 	
 	// A panel for selecting the custom aspect ratio
-	IBOutlet id panel;
+	IBOutlet NSPanel *panel;
 	
 	// Text boxes for custom ratio values
     IBOutlet id xRatioValue;

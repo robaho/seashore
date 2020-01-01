@@ -16,7 +16,7 @@
 	__weak IBOutlet id idocument;
 	
 	// The panel allowing colour space choice
-	IBOutlet id panel;
+	IBOutlet NSPanel *panel;
 	
 	// The radio buttons specifying the target
 	IBOutlet id targetRadios;

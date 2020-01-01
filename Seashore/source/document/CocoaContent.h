@@ -14,7 +14,7 @@
 
 @interface CocoaContent : SeaContent {
 
-	IBOutlet id pdfPanel;
+	IBOutlet NSPanel *pdfPanel;
 	IBOutlet id pageLabel;
 	IBOutlet id pageInput;
 	IBOutlet id resMenu;
