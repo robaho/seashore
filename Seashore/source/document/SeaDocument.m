@@ -551,7 +551,6 @@ extern BOOL globalReadOnlyWarning;
 {
     [[self textureUtility] shutdown];
     [[self brushUtility] shutdown];
-    [[self transparentUtility] shutdown];
     [[self optionsUtility] shutdown];
     [[self infoUtility] shutdown];
 
