@@ -266,8 +266,7 @@
 			destLoc = ((j + yoff - options.destRect.origin.y) * options.destRect.size.width + (i + xoff - options.destRect.origin.x)) * options.spp;
 			
 			// Prepare for overlay application
-			for (k = 0; k < options.spp; k++)
-				tempSpace2[k] = srcPtr[srcLoc + k];
+            memcpy(tempSpace2,srcPtr+srcLoc,options.spp);
 				
 			// Insert floating layer
 			ty = yoff - yfoff + j;
@@ -307,8 +306,7 @@
 			if (normal == NO && mode != XCF_NORMAL_MODE && options.forceNormal == NO) {
 
 				// Copy pixel from destination in to temporary memory
-				for (k = 0; k < options.spp; k++)
-					tempSpace[k] = destPtr[destLoc + k];
+                memcpy(tempSpace,destPtr+destLoc,options.spp);
 				
 				// Apply the appropriate effect using the source pixel
 				selectMerge(mode, options.spp, tempSpace, 0, tempSpace2, 0);

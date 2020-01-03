@@ -549,19 +549,23 @@ extern IntPoint gScreenResolution;
     else {
         majorUpdateRect = IntMakeRect(0, 0, width, height);
     }
+    
     dispatch_group_t group = self->group;
     
-    if(group==nil || majorUpdateRect.size.height < HEIGHT){
+    int numCPU = (int)sysconf(_SC_NPROCESSORS_ONLN);
+    int height = majorUpdateRect.size.height;
+    int perCPU = height / numCPU;
+
+    if(group==nil || height < HEIGHT | perCPU < 16){
         [self forcedUpdateWithRect:majorUpdateRect];
     } else {
         dispatch_queue_t aQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
-        int height = majorUpdateRect.size.height;
-        IntRect rect = IntMakeRect(majorUpdateRect.origin.x,majorUpdateRect.origin.y,majorUpdateRect.size.width,HEIGHT);
+        IntRect rect = IntMakeRect(majorUpdateRect.origin.x,majorUpdateRect.origin.y,majorUpdateRect.size.width,perCPU);
         while(height>0){
             dispatch_group_async(group,aQueue,^{[self forcedUpdateWithRect:rect];});
-            height-=HEIGHT;
-            rect.origin.y += HEIGHT;
-            if(height<HEIGHT && height>0){
+            height-=perCPU;
+            rect.origin.y += perCPU;
+            if(height<perCPU && height>0){
                 rect.size.height=height;
             }
         }
