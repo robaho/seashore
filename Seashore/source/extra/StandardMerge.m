@@ -50,7 +50,6 @@ void replaceMerge(int spp, unsigned char *destPtr, int destLoc, unsigned char *s
 			destPtr[destLoc + k] = int_mult(destPtr[destLoc + k], 255 - srcOpacity, t1) + int_mult(srcPtr[srcLoc + k], srcOpacity, t2);
 	}
 }
-
 void replacePrimaryMerge(int spp, unsigned char *destPtr, int destLoc, unsigned char *srcPtr, int srcLoc, int srcOpacity)
 {
 	int t1, t2, k;
@@ -65,7 +64,6 @@ void replacePrimaryMerge(int spp, unsigned char *destPtr, int destLoc, unsigned 
 			destPtr[destLoc + k] = int_mult(destPtr[destLoc + k], 255 - srcOpacity, t1) + int_mult(srcPtr[srcLoc + k], srcOpacity, t2);
 	}
 }
-
 void replaceAlphaMerge(int spp, unsigned char *destPtr, int destLoc, unsigned char *srcPtr, int srcLoc, int srcOpacity)
 {
 	int t1, t2;
@@ -84,25 +82,23 @@ void normalMerge(int spp, unsigned char *destPtr, int destLoc, unsigned char *sr
 {
 	unsigned char alpha;
 	int t1, t2;
-	int k;
     
     unsigned char *sPtr = srcPtr+srcLoc;
+    unsigned char *sPtrEnd = srcPtr+srcLoc+alphaPos;
     unsigned char *dPtr = destPtr+destLoc;
 
-	alpha = int_mult(*(sPtr+alphaPos), srcOpacity, t1);
+	alpha = int_mult(*(sPtrEnd), srcOpacity, t1);
 	if (alpha == 0)
 		return;
 		
 	if (alpha == 255) {
-        for (k = 0; k < alphaPos; k++) {
-            *dPtr = *sPtr;
-            dPtr++;
-            sPtr++;
+        while(sPtr<sPtrEnd) {
+            *dPtr++ = *sPtr++;
         }
         *dPtr = 255;
 	}
 	else {
-        for (k = 0; k < alphaPos; k++) {
+        while(sPtr<sPtrEnd) {
 			*dPtr = int_mult (*sPtr, alpha, t1) + int_mult (*dPtr, (255 - alpha), t2);
             sPtr++;
             dPtr++;
