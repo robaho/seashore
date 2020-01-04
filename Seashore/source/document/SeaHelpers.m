@@ -21,6 +21,13 @@
 	[[document infoUtility] update];
 }
 
+- (void)selectionChanged:(IntRect)rect
+{
+    SeaLayer *layer = [[document contents] activeLayer];
+    [[document docView] setNeedsDisplayInDocumentRect:IntOffsetRect(IntGrowRect(rect,8),[layer xoff],[layer yoff])];
+    [[document infoUtility] update];
+}
+
 - (void)endLineDrawing
 {
 	id curTool = [document currentTool];
@@ -29,7 +36,7 @@
 	if ([document locked] && [[document window] attachedSheet] == NULL) {
 		
 		// Apply the changes
-		[(SeaWhiteboard *)[document whiteboard] applyOverlay];
+		[[document whiteboard] applyOverlay];
 		
 		// Notify ourselves of the change
 		[self layerContentsChanged:kActiveLayer];
@@ -150,10 +157,10 @@
 	id contents = [document contents], layer;
 	IntRect rect;
 	
-	rect = [(SeaWhiteboard *)[document whiteboard] applyOverlay];
+	rect = [[document whiteboard] applyOverlay];
 	layer = [contents activeLayer];
 	[layer updateThumbnail];
-	[(SeaWhiteboard *)[document whiteboard] update:rect];
+	[[document whiteboard] update:rect];
 	[[document pegasusUtility] update:kPegasusUpdateLayerView];
 }
 
@@ -163,7 +170,7 @@
 	
 	rect.origin.x += [[contents activeLayer] xoff];
 	rect.origin.y += [[contents activeLayer] yoff];
-	[(SeaWhiteboard *)[document whiteboard] update:rect];
+	[[document whiteboard] update:rect];
 }
 
 - (void)layerAttributesChanged:(int)index hold:(BOOL)hold
@@ -261,15 +268,20 @@
 
 - (void)layerOffsetsChanged:(int)index from:(IntPoint)oldOffsets
 {
-	id contents = [document contents], layer;
-	IntRect rectA, rectB, rectC;
-	int xoff, yoff, width, height;
+    id contents = [document contents];
+    SeaLayer *layer;
+    int xoff, yoff;
 
 	if (index == kActiveLayer)
 		index = [contents activeLayerIndex];
 	
 	switch (index) {
 		case kAllLayers:
+            [[document whiteboard] update];
+            layer = [contents activeLayer];
+            xoff = [layer xoff];
+            yoff = [layer yoff];
+        break;
 		case kLinkedLayers:
 			[[document whiteboard] update];
 			layer = [contents activeLayer];
@@ -278,23 +290,10 @@
 		break;
 		default:
 			layer = [contents layer:index];
-			xoff = [layer xoff];
-			yoff = [layer yoff];
-            width =[(SeaLayer *)layer width];
-            height = [(SeaLayer *)layer height];
-			rectA.origin.x = MIN(xoff, oldOffsets.x);
-			rectA.origin.y = MIN(yoff, oldOffsets.y);
-			rectA.size.width = MAX(xoff, oldOffsets.x) - MIN(xoff, oldOffsets.x) + width;
-			rectA.size.height = MAX(yoff, oldOffsets.y) - MIN(yoff, oldOffsets.y) + height;
-			rectB = IntMakeRect(oldOffsets.x, oldOffsets.y, width, height);
-			rectC = IntMakeRect(xoff, yoff, width, height);
-			if (rectA.size.width * rectA.size.height < rectB.size.width * rectB.size.height + rectC.size.width * rectC.size.height) {
-				[(SeaWhiteboard *)[document whiteboard] update:rectA];
-			}
-			else {
-				[(SeaWhiteboard *)[document whiteboard] update:rectB];
-				[(SeaWhiteboard *)[document whiteboard] update:rectC];
-			}
+            xoff = [layer xoff];
+            yoff = [layer yoff];
+            IntRect oldRect = IntMakeRect(oldOffsets.x,oldOffsets.y,[layer width],[layer height]);
+            [[document whiteboard] update:IntSumRects(oldRect,[layer localRect])];
 		break;
 	}
 	
@@ -303,10 +302,22 @@
 	}
 }
 
+- (void)layerOffsetsChanged:(IntPoint)oldOffsets rect:(IntRect)dirty
+{
+    SeaLayer *layer = [[document contents] activeLayer];
+    IntPoint newOffsets = [layer localRect].origin;
+    [[document whiteboard] update:dirty];
+    
+    if ([[document selection] active]) {
+        [[document selection] adjustOffset:IntMakePoint(newOffsets.x - oldOffsets.x, newOffsets.y - oldOffsets.y)];
+    }
+}
+
+
 - (void)layerLevelChanged:(int)index
 {
-	id contents = [document contents], layer;
-	IntRect rect;
+    id contents = [document contents];
+    SeaLayer *layer;
 	
 	if (index == kActiveLayer)
 		index = [contents activeLayerIndex];
@@ -318,8 +329,7 @@
 		break;
 		default:
 			layer = [contents layer:index];
-			rect = IntMakeRect([layer xoff], [layer yoff], [(SeaLayer *)layer width], [(SeaLayer *)layer height]);
-			[(SeaWhiteboard *)[document whiteboard] update:rect];
+			[[document whiteboard] update:[layer localRect]];
 		break;
 	}
 	[(LayerDataSource *)[document dataSource] update];

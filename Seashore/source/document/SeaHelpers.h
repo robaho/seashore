@@ -42,6 +42,13 @@ enum {
 - (void)selectionChanged;
 
 /*!
+    @method        selectionChanged
+    @discussion    Called after a selection is made or cancelled
+    @param         the rect encompasing the old and new selection
+*/
+- (void)selectionChanged:(IntRect)rect;
+
+/*!
 	@method		endLineDrawing
 	@discussion	Ends the drawing of a line if required. Should be called before
 				a tool or layer change.
@@ -183,6 +190,16 @@ enum {
 				is kAllLayers or kLinkedLayers.
 */
 - (void)layerOffsetsChanged:(int)index from:(IntPoint)oldOffsets;
+
+/*!
+    @method        layerOffsetsChanged:rect:
+    @discussion    Called after multiple layer offsets  are changed.
+    @param        oldOffsets
+                Theold offsets of the active layer
+    @param        rect
+                The dirty rect containing the union of all old/new rects
+*/
+- (void)layerOffsetsChanged:(IntPoint)oldOffsets rect:(IntRect)dirtyRect;
 
 /*!
 	@method		layerSnapshotRestored:rect:

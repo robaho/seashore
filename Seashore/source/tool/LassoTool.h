@@ -37,6 +37,7 @@ typedef struct {
 	
 	// The current position in the list
 	int pos;
+    IntRect dirty;
     
     LassoOptions *options;
 }

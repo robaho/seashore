@@ -31,6 +31,8 @@ typedef struct {
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
 
+@class SeaLayer;
+
 @interface SeaContent : NSObject {
 	
 	// The document associated with this object
@@ -411,7 +413,7 @@ typedef struct {
 	@discussion	Returns the currently active layer.
 	@result		An instance of SeaLayer representing the active layer.
 */
-- (id)activeLayer;
+- (SeaLayer*)activeLayer;
 
 /*!
 	@method		activeLayerIndex

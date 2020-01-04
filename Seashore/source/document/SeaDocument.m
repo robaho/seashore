@@ -242,9 +242,9 @@ extern BOOL globalReadOnlyWarning;
 	return pluginData;
 }
 
-- (id)docView
+- (SeaView*)docView
 {
-	return [view documentView];
+	return (SeaView*)[view documentView];
 }
 
 - (id)window

@@ -1,6 +1,8 @@
 #import "Rects.h"
 #import "Globals.h"
 
+IntRect IntZeroRect = {{0,0},{0,0}};
+
 inline IntPoint NSPointMakeIntPoint(NSPoint point)
 {
 	IntPoint newPoint;
@@ -73,10 +75,14 @@ inline IntRect IntMakeRect(int x, int y, int width, int height)
 	return newRect;
 }
 
-inline void IntOffsetRect(IntRect *rect, int x, int y)
+inline IntRect IntOffsetRect(IntRect rect, int x, int y)
 {
-	rect->origin.x += x;
-	rect->origin.y += y;
+    return IntMakeRect(rect.origin.x+x,rect.origin.y+y,rect.size.width,rect.size.height);
+}
+
+inline IntRect IntGrowRect(IntRect rect, int distance)
+{
+    return IntMakeRect(rect.origin.x-distance,rect.origin.y-distance,rect.size.width+distance*2,rect.size.height+distance*2);
 }
 
 inline BOOL IntPointInRect(IntPoint point, IntRect rect)

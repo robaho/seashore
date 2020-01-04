@@ -1,5 +1,4 @@
 #import "Globals.h"
-#import "SeaDocument.h"
 #import "SeaCursors.h"
 
 /*!
@@ -37,6 +36,7 @@ enum {
 				<b>License:</b> GNU General Public License<br>
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli		
 */
+@class SeaDocument;
 
 @interface SeaView : NSView {
 	
@@ -527,6 +527,14 @@ enum {
 				over or (-1, -1) if no such pixel exists.
 */
 - (IntPoint)getMousePosition:(BOOL)compensation;
+
+/*!
+    @method     setNeedsDisplayInDocumentRect
+    @discussion invalid the view in document coordinates
+    @param      invalidRect
+                the rect to be refreshed in documen coordinates
+ */
+-(void)setNeedsDisplayInDocumentRect:(IntRect)invalidRect;
 
 /*!
 	@method		draggingEntered

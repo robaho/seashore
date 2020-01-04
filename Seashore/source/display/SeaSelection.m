@@ -126,8 +126,8 @@
 }
 
 - (void)updateMaskFromPath:(NSBezierPath*)path selectionRect:(IntRect)selectionRect mode:(int)mode {
-    id layer = [[document contents] activeLayer];
-    int width = [(SeaLayer *)layer width], height = [(SeaLayer *)layer height];
+    SeaLayer *layer = [[document contents] activeLayer];
+    int width = [layer width], height = [layer height];
     unsigned char *newMask, *tempMask, oldMaskPoint, newMaskPoint;
     IntRect newRect, oldRect, tempRect;
     int tempMaskPoint, tempMaskProduct;
@@ -423,16 +423,17 @@
 
 - (void)moveSelection:(IntPoint)newOrigin fromOrigin:(IntPoint)origin
 {
-	id layer = [[document contents] activeLayer];
+	SeaLayer *layer = [[document contents] activeLayer];
+    
+    IntRect old = [self localRect];
 	
 	// Adjust the selection
     rect.origin.x += newOrigin.x-origin.x;
     rect.origin.y += newOrigin.y-origin.y;
     
     globalRect = IntConstrainRect(rect, [layer localRect]);
-
-	// Make the change
-	[[document helpers] selectionChanged];
+    
+    [[document helpers] selectionChanged:IntSumRects(old,[self localRect])];
 }
 
 - (void)readjustSelection
@@ -525,7 +526,7 @@
 	else {
 		active = NO;
 	}
-	[[document helpers] selectionChanged];
+    [[document helpers] selectionChanged:IntSumRects(localRect,[self localRect])];
 }
 
 - (void)flipSelection:(int)type
@@ -562,7 +563,7 @@
 		if (maskBitmap) { free(maskBitmap); maskBitmap = NULL; maskImage = NULL; }
 		[self trimSelection];
 		[self updateMaskImage];
-		[[document helpers] selectionChanged];
+        [[document helpers] selectionChanged:[self localRect]];
 
 	}
 }
@@ -737,6 +738,8 @@
 	BOOL vFlip = NO;
 	unsigned char *newMask;
     
+    IntRect dirty = [self localRect];
+    
 	if(active && newRect.size.width != 0 && newRect.size.height != 0){
 		// Create the new mask (if required)
 		if(newRect.size.width < 0){
@@ -805,7 +808,7 @@
 			if (maskBitmap) { free(maskBitmap); maskBitmap = NULL;  maskImage = NULL; }
 			[self updateMaskImage];
 		}
-		[[document docView] setNeedsDisplay: YES];
+        [[document helpers] selectionChanged:IntSumRects(dirty,[self localRect])];
 	}
 }
 

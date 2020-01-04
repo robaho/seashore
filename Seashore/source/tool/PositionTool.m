@@ -113,43 +113,44 @@
 	SeaLayer *activeLayer = [contents activeLayer];
 	int xoff, yoff, whichLayer;
 	int deltax = where.x - initialPoint.x, deltay = where.y - initialPoint.y;
-	IntPoint oldOffsets;
-	NSPoint activeCenter = NSMakePoint([activeLayer xoff] + [(SeaLayer *)activeLayer width] / 2, [activeLayer yoff] + [(SeaLayer *)activeLayer height] / 2);
+	NSPoint activeCenter = NSMakePoint([activeLayer xoff] + [activeLayer width] / 2, [activeLayer yoff] + [activeLayer height] / 2);
 	float original, current;
 	
+    IntPoint oldOffsets = [activeLayer localRect].origin;
+                  
 	// Vary behaviour based on function
 	switch ([options toolFunction]) {
 		case kMovingLayer:
-			
+            
 			// If the active layer is linked we have to move all associated layers
 			if ([activeLayer linked]) {
+                IntRect dirty = [activeLayer localRect];
 			
 				// Move all of the linked layers
 				for (whichLayer = 0; whichLayer < [contents layerCount]; whichLayer++) {
-					if ([[contents layer:whichLayer] linked]) {
-						xoff = [[contents layer:whichLayer] xoff]; yoff = [[contents layer:whichLayer] yoff];
-						[[contents layer:whichLayer] setOffsets:IntMakePoint(xoff + deltax, yoff + deltay)];
-					}
+                    SeaLayer *layer = [contents layer:whichLayer];
+					if ([layer linked]) {
+                        dirty = IntSumRects(dirty,[layer localRect]);
+						xoff = [layer xoff]; yoff = [layer yoff];
+						[layer setOffsets:IntMakePoint(xoff + deltax, yoff + deltay)];
+                        dirty = IntSumRects(dirty,[layer localRect]);
+                    }
 				}
-				[[document helpers] layerOffsetsChanged:kLinkedLayers from:oldOffsets];
-				
+                [[document helpers] layerOffsetsChanged:oldOffsets rect:dirty];
 			}
 			else {
-			
 				// Move the active layer
 				xoff = [activeLayer xoff]; yoff = [activeLayer yoff];
-				oldOffsets = IntMakePoint(xoff, yoff);
 				[activeLayer setOffsets:IntMakePoint(xoff + deltax, yoff + deltay)];
-				[[document helpers] layerOffsetsChanged:kActiveLayer from:oldOffsets];
-				
+                [[document helpers] layerOffsetsChanged:kActiveLayer from:oldOffsets];
 			}
-			
 		break;
 		case kRotatingLayer:
 		
 			// Continue rotating layer
             rotation = (initialPoint.x - where.x)/(float)[activeLayer width];
-		
+            [[document docView] setNeedsDisplay:YES];
+
 		break;
 		case kScalingLayer:
 	
@@ -157,10 +158,10 @@
 			original = sqrt(sqr(initialPoint.x - activeCenter.x) + sqr(initialPoint.y - activeCenter.y));
 			current = sqrt(sqr(where.x - activeCenter.x) + sqr(where.y - activeCenter.y));
 			scale = current / original;
-		
+            [[document docView] setNeedsDisplay:YES];
+
 		break;
 	}
-	[[document docView] setNeedsDisplay:YES];
 }
 
 - (void)mouseUpAt:(IntPoint)where withEvent:(NSEvent *)event

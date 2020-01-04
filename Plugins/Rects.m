@@ -72,10 +72,9 @@ inline IntRect IntMakeRect(int x, int y, int width, int height)
 	return newRect;
 }
 
-inline void IntOffsetRect(IntRect *rect, int x, int y)
+inline IntRect IntOffsetRect(IntRect rect, int x, int y)
 {
-	rect->origin.x += x;
-	rect->origin.y += y;
+    return IntMakeRect(rect.origin.x+x,rect.origin.y+y,rect.size.width,rect.size.height);
 }
 
 inline BOOL IntPointInRect(IntPoint point, IntRect rect)

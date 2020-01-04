@@ -426,7 +426,7 @@ next:
 - (void)mouseUpAt:(IntPoint)where withEvent:(NSEvent *)event
 {
     [self endLineDrawing];
-    [(SeaHelpers *)[document helpers] applyOverlay];
+    [[document helpers] applyOverlay];
 }
 
 - (void)startStroke:(IntPoint)where;

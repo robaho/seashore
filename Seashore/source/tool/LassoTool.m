@@ -29,7 +29,9 @@
     points = malloc(kMaxLTPoints * sizeof(IntPoint));
     pos = 0;
     points[0] =  NSPointMakeIntPoint(where);
-    [[document docView] setNeedsDisplay:YES];
+    dirty = IntMakeRect(where.x-1,where.y-1,2,2);
+    SeaLayer *layer = [[document contents] activeLayer];
+    [[document docView] setNeedsDisplayInDocumentRect:IntOffsetRect(dirty,[layer xoff],[layer yoff])];
     intermediate = YES;
 }
 
@@ -41,16 +43,20 @@
         // Add the point to the list
         pos++;
         points[pos] = NSPointMakeIntPoint(where);
+        dirty = IntSumRects(dirty,IntMakeRect(where.x-1,where.y-1,2,2));
+        
+        SeaLayer *layer = [[document contents] activeLayer];
         
         // Make sure we fall inside the layer
-        width = [(SeaLayer *)[[document contents] activeLayer] width];
-        height = [(SeaLayer *)[[document contents] activeLayer] height];
+        width = [layer width];
+        height = [layer height];
         
         if (points[pos].x < 0) points[pos].x = 0;
         if (points[pos].y < 0) points[pos].y = 0;
         if (points[pos].x > width) points[pos].x = width;
         if (points[pos].y > height) points[pos].y = height;
-        [[document docView] setNeedsDisplay:YES];
+        
+        [[document docView] setNeedsDisplayInDocumentRect:IntOffsetRect(dirty,[layer xoff],[layer yoff])];
     }
 }
 

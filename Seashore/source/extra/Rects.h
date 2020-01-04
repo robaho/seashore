@@ -131,13 +131,25 @@ IntRect IntMakeRect(int x, int y, int width, int height);
 	@discussion	Given a reference to a rectangle offsets it by the specified
 				co-ordinates.
 	@param		rect
-				A reference to the rectangle to be offset.
+				the rectangle to be offset.
 	@param		x
 				The amount by which to offset the x co-ordinates.
 	@param		y
 				The amount by which to offset the y co-ordinates.
+    @result the offset rect
 */
-void IntOffsetRect(IntRect *rect, int x, int y);
+IntRect IntOffsetRect(IntRect rect, int x, int y);
+
+/*!
+    @function    IntGrowRect
+    @discussion  Given a reference to a rectangle expand it in width and height,
+                 adjusting the offset to maintain the center
+    @param        rect
+                The IntRect to grow
+    @param        distance
+                The amount by which to expand the width and height in each direction
+*/
+IntRect IntGrowRect(IntRect rect, int distance);
 
 /*!
 	@function	IntPointInRect
@@ -232,3 +244,5 @@ NSRect IntRectMakeNSRect(IntRect rect);
 	@result		Returns an NSPoint with the defined rotation.
 */
 NSPoint NSPointRotateNSPoint (NSPoint initialPoint, NSPoint centerPoint, float radians);
+
+extern IntRect IntZeroRect;

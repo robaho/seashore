@@ -30,6 +30,7 @@ typedef struct {
 */
 
 @class SeaWhiteboard;
+@class SeaLayer;
 
 @interface SeaContent : NSObject {
 	IntPoint gScreenResolution;
@@ -282,7 +283,7 @@ typedef struct {
 	@discussion	Returns the currently active layer.
 	@result		An instance of SeaLayer representing the active layer.
 */
-- (id)activeLayer;
+- (SeaLayer*)activeLayer;
 
 /*!
 	@method		activeLayerIndex

@@ -193,6 +193,9 @@ static CGFloat white[4] = {0,3.5,2,.5};
 - (IBAction)zoomIn:(id)sender
 {    
     NSPoint point = [(CenteringClipView *)[self superview] centerPoint];
+    
+//    CGSize size = [self bounds].size;
+//    [self setBoundsSize:NSMakeSize(size.width/2,size.height/2)];
     [self zoomInToPoint:point];
 }
 
@@ -232,6 +235,9 @@ static CGFloat white[4] = {0,3.5,2,.5};
 {
     NSPoint point = [(CenteringClipView *)[self superview] centerPoint];
     
+//    CGSize size = [self bounds].size;
+//    [self setBoundsSize:NSMakeSize(size.width*2,size.height*2)];
+
     [self zoomOutFromPoint:point];
 }
 
@@ -256,6 +262,39 @@ static CGFloat white[4] = {0,3.5,2,.5};
     return zoom;
 }
 
+-(void)setNeedsDisplay:(BOOL)b
+{
+    [super setNeedsDisplay:b];
+}
+
+- (void)setNeedsDisplayInDocumentRect:(IntRect)invalidRect
+{
+    NSRect displayUpdateRect = IntRectMakeNSRect(invalidRect);
+    float zoom = [[document docView] zoom];
+    int xres = [[document contents] xres], yres = [[document contents] yres];
+    
+    if (gScreenResolution.x != 0 && xres != gScreenResolution.x) {
+        displayUpdateRect.origin.x /= ((float)xres / gScreenResolution.x);
+        displayUpdateRect.size.width /= ((float)xres / gScreenResolution.x);
+    }
+    if (gScreenResolution.y != 0 && yres != gScreenResolution.y) {
+        displayUpdateRect.origin.y /= ((float)yres / gScreenResolution.y);
+        displayUpdateRect.size.height /= ((float)yres / gScreenResolution.y);
+    }
+    displayUpdateRect.origin.x *= zoom;
+    displayUpdateRect.size.width *= zoom;
+    displayUpdateRect.origin.y *= zoom;
+    displayUpdateRect.size.height *= zoom;
+    
+    // Free us from hairlines
+    displayUpdateRect.origin.x = floor(displayUpdateRect.origin.x)-1;
+    displayUpdateRect.origin.y = floor(displayUpdateRect.origin.y)-1;
+    displayUpdateRect.size.width = ceil(displayUpdateRect.size.width) + 2;
+    displayUpdateRect.size.height = ceil(displayUpdateRect.size.height) + 2;
+    
+    [self setNeedsDisplayInRect:displayUpdateRect];
+}
+
 - (void)drawRect:(NSRect)rect
 {
     NSRect srcRect, destRect;
@@ -270,7 +309,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
     image = [[document whiteboard] image];
     srcRect = destRect = rect;
     
-//    NSLog(@"%@",NSStringFromRect(rect));
+    NSLog(@"%@",NSStringFromRect(rect));
     
     // Set the background color
     if ([[document whiteboard] whiteboardIsLayerSpecific]) {
@@ -361,29 +400,55 @@ static CGFloat white[4] = {0,3.5,2,.5};
 - (void)drawCropBoundaries
 {
     NSRect tempRect;
-    IntRect cropRect;
+    IntRect cropRect,tempCropRect;
     NSBezierPath *tempPath;
     float xScale, yScale;
     int width, height;
+    AbstractTool* curTool = [document currentTool];
     
+    BOOL intermediate =  [(AbstractScaleTool *)curTool intermediate];
+
     xScale = [[document contents] xscale];
     yScale = [[document contents] yscale];
-    width = [(SeaContent *)[document contents] width];
-    height = [(SeaContent *)[document contents] height];
+    width = [[document contents] width];
+    height = [[document contents] height];
     cropRect = [[document currentTool] cropRect];
+    
     if (cropRect.size.width == 0 || cropRect.size.height == 0)
         return;
-    tempRect.origin.x = floor(cropRect.origin.x * xScale);
-    tempRect.origin.y =  floor(cropRect.origin.y * yScale);
-    tempRect.size.width = ceil(cropRect.size.width * xScale);
-    tempRect.size.height = ceil(cropRect.size.height * yScale);
-    [[[SeaController seaPrefs] selectionColor:0.4] set];
-    tempPath = [NSBezierPath bezierPathWithRect:NSMakeRect(0, 0, width * xScale + 1.0, height * yScale + 1.0)];
-    [tempPath appendBezierPathWithRect:tempRect];
-    [tempPath setWindingRule:NSEvenOddWindingRule];
-    [tempPath fill];
+
+    tempCropRect = cropRect;
+    tempRect = IntRectMakeNSRect(tempCropRect);
+    tempRect.origin.x *= xScale; tempRect.origin.y *= yScale; tempRect.size.width *= xScale; tempRect.size.height *= yScale;
     
-    [self drawDragHandles: tempRect type: kCropHandleType];
+    // There are no rounded corners
+    tempRect.origin.x += .5;
+    tempRect.origin.y += .5;
+    tempRect.size.width -= 1;
+    tempRect.size.height -= 1;
+    
+    tempPath = [NSBezierPath bezierPathWithRect:tempRect];
+    
+    [[NSColor blackColor] set];
+    [tempPath setLineDash: black count: 4 phase: 0.0];
+    [tempPath stroke];
+    [[NSColor whiteColor] set];
+    [tempPath setLineDash: white count: 4 phase: 0.0];
+    [tempPath stroke];
+
+    if(!intermediate) {
+        tempRect.origin.x = floor(cropRect.origin.x * xScale);
+        tempRect.origin.y =  floor(cropRect.origin.y * yScale);
+        tempRect.size.width = ceil(cropRect.size.width * xScale);
+        tempRect.size.height = ceil(cropRect.size.height * yScale);
+        [[[SeaController seaPrefs] selectionColor:0.4] set];
+        tempPath = [NSBezierPath bezierPathWithRect:NSMakeRect(0, 0, width * xScale + 1.0, height * yScale + 1.0)];
+        [tempPath appendBezierPathWithRect:tempRect];
+        [tempPath setWindingRule:NSEvenOddWindingRule];
+        [tempPath fill];
+        [self drawDragHandles: tempRect type: kCropHandleType];
+    }
+    
 }
 
 

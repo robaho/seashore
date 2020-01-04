@@ -9,6 +9,7 @@
 #import "RecentsUtility.h"
 #import "PegasusUtility.h"
 #import "StatusUtility.h"
+#import "SeaView.h"
 
 /*!
 	@class		SeaDocument
@@ -18,6 +19,7 @@
 				<b>License:</b> GNU General Public License<br>
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
+@class SeaHelpers;
 
 @interface SeaDocument : NSDocument {
 
@@ -193,7 +195,7 @@
 				document.
 	@result		Returns an instance of SeaHelpers.
 */
-- (id)helpers;
+- (SeaHelpers*)helpers;
 
 /*!
 	@method		warnings
@@ -214,7 +216,7 @@
 	@discussion	Returns the document view of the document.
 	@result		Returns an instance of SeaView.
 */
-- (id)docView;
+- (SeaView *)docView;
 
 /*!
 	@method		window

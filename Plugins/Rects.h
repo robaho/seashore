@@ -121,17 +121,18 @@ inline IntSize IntMakeSize(int width, int height);
 inline IntRect IntMakeRect(int x, int y, int width, int height);
 
 /*!
-	@function	IntOffsetRect
-	@discussion	Given a reference to a rectangle offsets it by the specified
-				co-ordinates.
-	@param		rect
-				A reference to the rectangle to be offset.
-	@param		x
-				The amount by which to offset the x co-ordinates.
-	@param		y
-				The amount by which to offset the y co-ordinates.
+    @function    IntOffsetRect
+    @discussion    Given a reference to a rectangle offsets it by the specified
+                co-ordinates.
+    @param        rect
+                the rectangle to be offset.
+    @param        x
+                The amount by which to offset the x co-ordinates.
+    @param        y
+                The amount by which to offset the y co-ordinates.
+    @result the offset rect
 */
-inline void IntOffsetRect(IntRect *rect, int x, int y);
+inline IntRect IntOffsetRect(IntRect rect, int x, int y);
 
 /*!
 	@function	IntPointInRect

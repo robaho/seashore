@@ -88,10 +88,6 @@ enum {
 	// One of the above constants to specify what is seen by the user
 	int viewType;
 	
-	// The rectangle the update is needed in (useUpdateRect may be NO in which case the entire whiteboard is updated)
-	BOOL useUpdateRect;
-	IntRect updateRect;
-    
     dispatch_group_t group;
 }
 

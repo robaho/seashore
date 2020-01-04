@@ -412,7 +412,7 @@ extern IntPoint gScreenResolution;
 	layerData = [(SeaLayer *)layer data];
 		
     minorUpdateRect = updateRect;
-    IntOffsetRect(&minorUpdateRect, -[layer xoff],  -[layer yoff]);
+    minorUpdateRect = IntOffsetRect(minorUpdateRect, -[layer xoff],  -[layer yoff]);
     minorUpdateRect = IntConstrainRect(minorUpdateRect, IntMakeRect(0, 0, layerWidth, layerHeight));
 
 	// Go through pixel-by-pixel working out the channel update
@@ -537,7 +537,7 @@ extern IntPoint gScreenResolution;
 	}
 }
 
--(void)forcedUpdate
+-(void)forcedUpdate:(BOOL)useUpdateRect updateRect:(IntRect)updateRect
 {
     int HEIGHT=64;
     IntRect majorUpdateRect;
@@ -641,41 +641,16 @@ extern IntPoint gScreenResolution;
 
 - (void)update
 {
-	useUpdateRect = NO;
-	[self forcedUpdate];
+    NSLog(@"updating all");
+    [self forcedUpdate:NO updateRect:IntZeroRect];
 	[[document docView] setNeedsDisplay:YES];
 }
 
 - (void)update:(IntRect)rect
 {
-	NSRect displayUpdateRect = IntRectMakeNSRect(rect);
-	float zoom = [[document docView] zoom];
-	int xres = [[document contents] xres], yres = [[document contents] yres];
-	
-	if (gScreenResolution.x != 0 && xres != gScreenResolution.x) {
-		displayUpdateRect.origin.x /= ((float)xres / gScreenResolution.x);
-		displayUpdateRect.size.width /= ((float)xres / gScreenResolution.x);
-	}
-	if (gScreenResolution.y != 0 && yres != gScreenResolution.y) {
-		displayUpdateRect.origin.y /= ((float)yres / gScreenResolution.y);
-		displayUpdateRect.size.height /= ((float)yres / gScreenResolution.y);
-	}
-	displayUpdateRect.origin.x *= zoom;
-	displayUpdateRect.size.width *= zoom;
-	displayUpdateRect.origin.y *= zoom;
-	displayUpdateRect.size.height *= zoom;
-	
-	// Free us from hairlines
-	displayUpdateRect.origin.x = floor(displayUpdateRect.origin.x);
-	displayUpdateRect.origin.y = floor(displayUpdateRect.origin.y);
-	displayUpdateRect.size.width = ceil(displayUpdateRect.size.width) + 1.0;
-	displayUpdateRect.size.height = ceil(displayUpdateRect.size.height) + 1.0;
-	
-	// Now do the rest of the update
-	useUpdateRect = YES;
-	updateRect = rect;
-	[self forcedUpdate];
-    [[document docView] setNeedsDisplayInRect:displayUpdateRect];
+    NSLog(@"updating rect %@",NSStringFromRect(IntRectMakeNSRect(rect)));
+    [self forcedUpdate:YES updateRect:rect];
+    [[document docView] setNeedsDisplayInDocumentRect:rect];
 }
 
 - (IntRect)imageRect
