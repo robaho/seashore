@@ -145,7 +145,7 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
     if ([gUserDefaults objectForKey:@"zoomToFit"])
         zoomToFitAtOpen = [gUserDefaults boolForKey:@"zoomToFit"];
     else
-        zoomToFitAtOpen = NO;
+        zoomToFitAtOpen = YES;
 
 	// Get the selection colour
 	selectionColor = kBlackColor;

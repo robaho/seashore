@@ -168,6 +168,10 @@ extern BOOL globalReadOnlyWarning;
 		[view setDrawsBackground:NO];
 		
 		[docWindow setFrame:[self standardFrame] display:YES];
+        if([[SeaController seaPrefs] zoomToFitAtOpen]) {
+            [[self docView] zoomToFit:self];
+        }
+        [(NSWindow*)[view window] center];
 		
 		// Finally, if the doc has any warnings we are ready for them
 		[(SeaWarning *)[SeaController seaWarning] triggerQueue: self];
