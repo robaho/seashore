@@ -508,8 +508,8 @@ extern BOOL globalReadOnlyWarning;
 	rect.origin.y = frame.origin.y;
 	xScale = [contents xscale];
 	yScale = [contents yscale];
-	rect.size.width = [(SeaContent *)contents width]  * xScale;
-	rect.size.height = [(SeaContent *)contents height] * yScale;
+	rect.size.width = [contents width]  * xScale;
+	rect.size.height = [contents height] * yScale;
 		
 	 // Remember the rulers have dimension
 	 if([[SeaController seaPrefs] rulers]){
@@ -526,14 +526,11 @@ extern BOOL globalReadOnlyWarning;
 		rect.size.height += 35;
 		minHeight += 35;
 	}
-	// Options Bar
 	rect.size.height += [[docWindow contentView] sizeForRegion: kOptionsBar];
-	 // Status Bar
 	rect.size.height += [[docWindow contentView] sizeForRegion: kStatusBar];
-	
-	 // Layers
 	rect.size.width += [[docWindow contentView] sizeForRegion: kSidebar];
-	
+    rect.size.width += [[docWindow contentView] sizeForRegion: kRecentsBar];
+
 	// Disallow ridiculously small or large windows
 	NSRect defaultFrame = [[docWindow screen] frame];
 	if (rect.size.width > defaultFrame.size.width) rect.size.width = defaultFrame.size.width;

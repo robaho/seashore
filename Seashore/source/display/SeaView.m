@@ -67,7 +67,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
     document = doc;
     
     // Determine the frame at 100% 72-dpi
-    frame = NSMakeRect(0, 0, [(SeaContent *)[document contents] width], [(SeaContent *)[document contents] height]);
+    frame = NSMakeRect(0, 0, [[document contents] width], [[document contents] height]);
 
     // Adjust frame for non 72 dpi resolutions
     xres = [[document contents] xres];
