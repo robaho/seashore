@@ -35,6 +35,7 @@
 	if(cropRect.size.width > 0 && cropRect.size.height > 0){
 		[self mouseDownAt: where
 				  forRect: cropRect
+             withMaskRect: IntZeroRect
 				  andMask: NULL];
 	}
 	
@@ -154,16 +155,22 @@
 			
 		}
 		else {
-		
 			cropRect.origin.x = where.x;
 			cropRect.origin.y = where.y;
-			
 		}
 
 		// Update the changes
         [self cropRectChanged:IntSumRects(old,cropRect)];
 	} else {
-		[self setCropRect:draggedRect];
+        if(translating){
+            int xoff = where.x-moveOrigin.x;
+            int yoff = where.y-moveOrigin.y;
+
+            [self setCropRect:IntMakeRect(cropRect.origin.x +xoff,cropRect.origin.y + yoff,cropRect.size.width,cropRect.size.height)];
+            moveOrigin = where;
+        } else {
+            [self setCropRect:draggedRect];
+        }
 	}
 
 }

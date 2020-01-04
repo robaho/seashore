@@ -16,9 +16,12 @@
 		 here it is:
 		 [(AbstractSelectOptions *)options selectionMode] == kDefaultMode
 		 */
+        IntPoint maskOffset = [[document selection] maskOffset];
+        IntSize maskSize = [[document selection] maskSize];
 		
 		[self mouseDownAt: localPoint
 				  forRect: [[document selection] globalRect]
+             withMaskRect: IntMakeRect(maskOffset.x,maskOffset.y,maskSize.width,maskSize.height)
 				  andMask: [(SeaSelection*)[document selection] mask]];
 		
 		// Also, we universally float the selection if alt is down

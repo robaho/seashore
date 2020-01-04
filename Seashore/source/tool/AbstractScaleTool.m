@@ -36,7 +36,7 @@
     return (AbstractScaleOptions*)[self getOptions];
 }
 
-- (void)mouseDownAt:(IntPoint)localPoint forRect:(IntRect)globalRect andMask:(unsigned char *)mask
+- (void)mouseDownAt:(IntPoint)localPoint forRect:(IntRect)globalRect withMaskRect:(IntRect)maskRect andMask:(unsigned char *)mask
 {
 	translating = NO;
 	scalingDir = kNoDir;
@@ -53,9 +53,7 @@
 	globalPoint.y *= [[document contents] yscale];
 	
 	// Check if location is in existing rect
-	scalingDir = [self point:globalPoint
-			   isInHandleFor:globalRect
-				  ];
+	scalingDir = [self point:globalPoint isInHandleFor:globalRect ];
 
 	// But the local rect for the moving
 	IntRect localRect = globalRect;
@@ -63,13 +61,12 @@
 	localRect.origin.x -= [[[document contents] activeLayer]  xoff];
 	localRect.origin.y -= [[[document contents] activeLayer]  yoff];
 	
-	
 	if(scalingDir > kNoDir){
-        
-        IntPoint maskOffset = [[document selection] maskOffset];
-        IntSize maskSize = [[document selection] maskSize];
-        
-        preScaledRect = IntMakeRect(maskOffset.x+globalRect.origin.x,maskOffset.y+globalRect.origin.y,maskSize.width,maskSize.height);
+        if(!mask) {
+            preScaledRect = globalRect;
+        } else {
+            preScaledRect = IntMakeRect(maskRect.origin.x+globalRect.origin.x,maskRect.origin.y+globalRect.origin.y,maskRect.size.width,maskRect.size.height);
+        }
         if(mask){
             int len = preScaledRect.size.width * preScaledRect.size.height;
 			preScaledMask = malloc(len);

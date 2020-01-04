@@ -75,7 +75,7 @@ enum {
 	@param		mask
 				If the rectangle is just a bounding box this is the internal mask
 */
-- (void)mouseDownAt:(IntPoint)localPoint forRect:(IntRect)globalRect andMask:(unsigned char *)mask;
+- (void)mouseDownAt:(IntPoint)localPoint forRect:(IntRect)globalRect withMaskRect:(IntRect)maskRect andMask:(unsigned char *)mask;
 
 /*!
 	@method		mouseDraggedTo:withEvent:
