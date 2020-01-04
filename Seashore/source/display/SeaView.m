@@ -289,6 +289,21 @@ static CGFloat white[4] = {0,3.5,2,.5};
     [super setNeedsDisplay:b];
 }
 
+- (BOOL)shouldDrawBoundaries
+{
+    ToolboxUtility *tUtil = [document toolboxUtility];
+    int curToolIndex = [tUtil tool];
+
+    return ([[SeaController seaPrefs] layerBounds] && ![[document whiteboard] whiteboardIsLayerSpecific]) ||
+     [[document selection] active] ||
+     (curToolIndex == kCropTool) ||
+     (curToolIndex == kRectSelectTool && [(RectSelectTool *)[[document tools] getTool: kRectSelectTool] intermediate]) ||
+     (curToolIndex == kEllipseSelectTool && [(EllipseSelectTool *)[[document tools] getTool: kEllipseSelectTool] intermediate]) ||
+     (curToolIndex == kLassoTool && [(LassoTool *)[[document tools] getTool:kLassoTool] intermediate]) ||
+     (curToolIndex == kPolygonLassoTool && [(PolygonLassoTool *)[[document tools] getTool:kPolygonLassoTool] intermediate]);
+     
+}
+
 - (void)setNeedsDisplayInDocumentRect:(IntRect)invalidRect
 {
     NSRect displayUpdateRect = IntRectMakeNSRect(invalidRect);
@@ -308,11 +323,12 @@ static CGFloat white[4] = {0,3.5,2,.5};
     displayUpdateRect.origin.y *= zoom;
     displayUpdateRect.size.height *= zoom;
     
-    // Free us from hairlines
-    displayUpdateRect.origin.x = floor(displayUpdateRect.origin.x)-1;
-    displayUpdateRect.origin.y = floor(displayUpdateRect.origin.y)-1;
-    displayUpdateRect.size.width = ceil(displayUpdateRect.size.width) + 2;
-    displayUpdateRect.size.height = ceil(displayUpdateRect.size.height) + 2;
+    if([self shouldDrawBoundaries]){
+        // need to account for selection handles
+        displayUpdateRect = NSMakeRect(displayUpdateRect.origin.x-5,displayUpdateRect.origin.y-5,displayUpdateRect.size.width+10,displayUpdateRect.size.height+10);
+    }
+    
+    displayUpdateRect = NSIntegralRectWithOptions(displayUpdateRect,NSAlignAllEdgesOutward);
     
     [self setNeedsDisplayInRect:displayUpdateRect];
 }
@@ -321,8 +337,6 @@ static CGFloat white[4] = {0,3.5,2,.5};
 {
     NSRect srcRect, destRect;
     NSImage *image = NULL;
-    ToolboxUtility *tUtil = [document toolboxUtility];
-    int curToolIndex = [tUtil tool];
     IntRect imageRect = [[document whiteboard] imageRect];
     int xres = [[document contents] xres], yres = [[document contents] yres];
     float xResScale, yResScale;
@@ -393,15 +407,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
     [self needsCursorsReset];
     
     // If we aren't using the view for printing draw the boundaries and the marching ants
-    if (
-        ([[SeaController seaPrefs] layerBounds] && ![[document whiteboard] whiteboardIsLayerSpecific]) ||
-        [[document selection] active] ||
-        (curToolIndex == kCropTool) ||
-        (curToolIndex == kRectSelectTool && [(RectSelectTool *)[[document tools] getTool: kRectSelectTool] intermediate]) ||
-        (curToolIndex == kEllipseSelectTool && [(EllipseSelectTool *)[[document tools] getTool: kEllipseSelectTool] intermediate]) ||
-        (curToolIndex == kLassoTool && [(LassoTool *)[[document tools] getTool:kLassoTool] intermediate]) ||
-        (curToolIndex == kPolygonLassoTool && [(PolygonLassoTool *)[[document tools] getTool:kPolygonLassoTool] intermediate])
-        ) {
+    if ([self shouldDrawBoundaries]) {
         [self drawBoundaries];
     }
     [self drawExtras];
@@ -565,12 +571,13 @@ static CGFloat white[4] = {0,3.5,2,.5};
     }
     
     [cursorsManager setCloseRect:NSMakeRect(0, 0, 0, 0)];
-    if ((intermediate && (curToolIndex == kEllipseSelectTool)) || special) {
+    if (intermediate && (curToolIndex == kEllipseSelectTool || special)) {
         // The ellipse tool is currently being dragged, so draw its marching ants
         tempSelectRect = [(EllipseSelectTool *)curTool selectionRect];
         tempRect = IntRectMakeNSRect(tempSelectRect);
         tempRect.origin.x += xoff; tempRect.origin.y += yoff;
-        tempRect.origin.x *= xScale; tempRect.origin.y *= yScale; tempRect.size.width *= xScale; tempRect.size.height *= yScale; 
+        tempRect.origin.x *= xScale; tempRect.origin.y *= yScale; tempRect.size.width *= xScale; tempRect.size.height *= yScale;
+        tempRect = NSIntegralRectWithOptions(tempRect,NSAlignAllEdgesInward);
         tempPath = [NSBezierPath bezierPathWithOvalInRect:tempRect];
         [[NSColor blackColor] set];
         [tempPath setLineDash: black count: 4 phase: 0.0];
@@ -586,6 +593,8 @@ static CGFloat white[4] = {0,3.5,2,.5};
         tempRect = IntRectMakeNSRect(tempSelectRect);
         tempRect.origin.x += xoff; tempRect.origin.y += yoff;        
         tempRect.origin.x *= xScale; tempRect.origin.y *= yScale; tempRect.size.width *= xScale; tempRect.size.height *= yScale; 
+        tempRect = NSIntegralRectWithOptions(tempRect,NSAlignAllEdgesInward);
+        
         // The corners have a rounding
         if (radius) {
             f = (4.0 / 3.0) * (sqrt(2) - 1);
@@ -606,12 +615,6 @@ static CGFloat white[4] = {0,3.5,2,.5};
             [tempPath lineToPoint:NSMakePoint(tempRect.origin.x, tempRect.origin.y + revCurveRadius * yScale)];
         }
         else {
-            // There are no rounded corners
-            tempRect.origin.x += .5;
-            tempRect.origin.y += .5;
-            tempRect.size.width -= 1;
-            tempRect.size.height -= 1;
-            
             tempPath = [NSBezierPath bezierPathWithRect:tempRect];        
         }
         

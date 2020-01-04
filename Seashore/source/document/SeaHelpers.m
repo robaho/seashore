@@ -23,8 +23,7 @@
 
 - (void)selectionChanged:(IntRect)rect
 {
-    SeaLayer *layer = [[document contents] activeLayer];
-    [[document docView] setNeedsDisplayInDocumentRect:IntOffsetRect(IntGrowRect(rect,8),[layer xoff],[layer yoff])];
+    [[document docView] setNeedsDisplayInDocumentRect:rect];
     [[document infoUtility] update];
 }
 
