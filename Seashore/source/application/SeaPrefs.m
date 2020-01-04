@@ -140,7 +140,13 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 		openUntitled = [gUserDefaults boolForKey:@"openUntitled"];
 	else
 		openUntitled = YES;
-		
+
+    //  Get the openUntitled
+    if ([gUserDefaults objectForKey:@"zoomToFit"])
+        zoomToFitAtOpen = [gUserDefaults boolForKey:@"zoomToFit"];
+    else
+        zoomToFitAtOpen = NO;
+
 	// Get the selection colour
 	selectionColor = kBlackColor;
 	if ([gUserDefaults objectForKey:@"selectionColor"])
@@ -294,6 +300,7 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	[gUserDefaults setObject:(effectsPanel ? @"YES" : @"NO") forKey:@"effectsPanel"];
 	[gUserDefaults setObject:(smartInterpolation ? @"YES" : @"NO") forKey:@"smartInterpolation"];
 	[gUserDefaults setObject:(openUntitled ? @"YES" : @"NO") forKey:@"openUntitled"];
+    [gUserDefaults setObject:(zoomToFitAtOpen ? @"YES" : @"NO") forKey:@"zoomToFit"];
 	[gUserDefaults setObject:(ignoreFirstTouch ? @"YES" : @"NO") forKey:@"ignoreFirstTouch"];
 	[gUserDefaults setObject:(mouseCoalescing ? @"YES" : @"NO") forKey:@"newMouseCoalescing"];
 	[gUserDefaults setObject:(preciseCursor ? @"YES" : @"NO") forKey:@"preciseCursor"];
@@ -370,6 +377,7 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	[effectsPanelCheckbox setState:effectsPanel];
 	[smartInterpolationCheckbox setState:smartInterpolation];
 	[openUntitledCheckbox setState:openUntitled];
+    [zoomToFitAtOpenCheckbox setState:zoomToFitAtOpen];
 	[ignoreFirstTouchCheckbox setState:ignoreFirstTouch];
 	[coalescingCheckbox setState:mouseCoalescing];
 	[preciseCursorCheckbox setState:preciseCursor];
@@ -474,6 +482,12 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 {
 	openUntitled = [openUntitledCheckbox state];
 	[self apply: self];
+}
+
+-(IBAction)setZoomToFitAtOpen:(id)sender
+{
+    zoomToFitAtOpen = [zoomToFitAtOpenCheckbox state];
+    [self apply: self];
 }
 
 -(IBAction)setIgnoreFirstTouch:(id)sender
@@ -844,6 +858,11 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 - (BOOL)openUntitled
 {
 	return openUntitled;
+}
+
+- (BOOL)zoomToFitAtOpen
+{
+    return zoomToFitAtOpen;
 }
 
 - (BOOL)validateMenuItem:(id)menuItem

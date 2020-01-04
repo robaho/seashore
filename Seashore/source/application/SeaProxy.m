@@ -47,6 +47,11 @@
 	[[gCurrentDocument docView] zoomNormal:sender];
 }
 
+- (IBAction)zoomToFit:(id)sender
+{
+    [[gCurrentDocument docView] zoomToFit:sender];
+}
+
 - (IBAction)zoomOut:(id)sender
 {
 	[[gCurrentDocument docView] zoomOut:sender];

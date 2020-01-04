@@ -41,6 +41,7 @@
 		2B96A50C23A5522D00A04B72 /* SeaContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B96A50923A5522C00A04B72 /* SeaContent.m */; };
 		2B96A50D23A5522D00A04B72 /* SeaDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B96A50A23A5522C00A04B72 /* SeaDocument.m */; };
 		2B96A51023A5525D00A04B72 /* XCFContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B96A50F23A5525D00A04B72 /* XCFContent.m */; };
+		2BB338C423C1119600647008 /* toFitTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BB338C323C1119600647008 /* toFitTemplate.png */; };
 		2BD591A921E3DBCA002D150B /* AutoEnhance+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591A821E3DBCA002D150B /* AutoEnhance+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BD591AB21E3DBCA002D150B /* AffineTile+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591AA21E3DBCA002D150B /* AffineTile+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BD591AD21E3DBCA002D150B /* Bloom+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591AC21E3DBCA002D150B /* Bloom+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -552,6 +553,7 @@
 		2B96A50A23A5522C00A04B72 /* SeaDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeaDocument.m; sourceTree = "<group>"; };
 		2B96A50E23A5525C00A04B72 /* XCFContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCFContent.h; sourceTree = "<group>"; };
 		2B96A50F23A5525D00A04B72 /* XCFContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCFContent.m; sourceTree = "<group>"; };
+		2BB338C323C1119600647008 /* toFitTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toFitTemplate.png; sourceTree = "<group>"; };
 		2BCE42D623A57FE500E6EC04 /* SeaLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeaLayer.h; sourceTree = "<group>"; };
 		2BD5906D21E3BCF0002D150B /* Plugins.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Plugins.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BD5906F21E3BCF5002D150B /* GIMPCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GIMPCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1788,6 +1790,7 @@
 		F5FE2C7003C43530013856BA /* layers */ = {
 			isa = PBXGroup;
 			children = (
+				2BB338C323C1119600647008 /* toFitTemplate.png */,
 				2B2D8CA321F7C822004527F2 /* grabberTemplate.png */,
 				DC20066510561301006B673A /* slider-track.png */,
 				56C8A64C1055A1DA0056E36F /* normalTemplate.png */,
@@ -1926,6 +1929,7 @@
 				A89C5138086E7F8E0032AEBE /* vStatMarker.png in Resources */,
 				A89C5139086E7F8E0032AEBE /* hStatMarker.png in Resources */,
 				A80EB8A6086F05E300369324 /* JP2 Icon.icns in Resources */,
+				2BB338C423C1119600647008 /* toFitTemplate.png in Resources */,
 				A81EC6B0094A6C5C00F7D365 /* GIF Icon.icns in Resources */,
 				2BED226A21F3FB40005B496C /* moveTemplate.png in Resources */,
 				2BED227021F3FB40005B496C /* circleTemplate.png in Resources */,

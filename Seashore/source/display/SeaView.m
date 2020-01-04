@@ -180,7 +180,29 @@ static CGFloat white[4] = {0,3.5,2,.5};
     
     zoom = 1.0;
     [self updateRulers];
-    frame = NSMakeRect(0, 0, [(SeaContent *)[document contents] width], [(SeaContent *)[document contents] height]);
+    frame = NSMakeRect(0, 0, [[document contents] width], [[document contents] height]);
+    if (gScreenResolution.x != 0 && [[document contents] xres] != gScreenResolution.x) frame.size.width /= ((float)[[document contents] xres] / gScreenResolution.x);
+    if (gScreenResolution.y != 0 && [[document contents] yres] != gScreenResolution.y) frame.size.height /= ((float)[[document contents] yres] / gScreenResolution.y);
+    [(NSClipView *)[self superview] scrollToPoint:NSMakePoint(0, 0)];
+    [self setFrame:frame];
+    [(CenteringClipView *)[self superview] setCenterPoint:NSMakePoint(frame.size.width / 2.0, frame.size.height / 2.0)];
+    [self setNeedsDisplay:YES];
+    [[document helpers] zoomChanged];
+}
+
+- (IBAction)zoomToFit:(id)sender
+{
+    NSRect frame = [(CenteringClipView *)[self superview] frame];
+    
+    double xscale = frame.size.width / [[document contents] width];
+    double yscale = frame.size.height / [[document contents] height];
+    
+    zoom = MIN(xscale,yscale);
+    
+    [self updateRulers];
+    
+    frame = NSMakeRect(0, 0, [[document contents] width] * zoom, [[document contents] height] * zoom);
+
     if (gScreenResolution.x != 0 && [[document contents] xres] != gScreenResolution.x) frame.size.width /= ((float)[[document contents] xres] / gScreenResolution.x);
     if (gScreenResolution.y != 0 && [[document contents] yres] != gScreenResolution.y) frame.size.height /= ((float)[[document contents] yres] / gScreenResolution.y);
     [(NSClipView *)[self superview] scrollToPoint:NSMakePoint(0, 0)];

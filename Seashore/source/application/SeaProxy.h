@@ -21,6 +21,7 @@
 // To methods in SeaView...
 - (IBAction)zoomIn:(id)sender;
 - (IBAction)zoomNormal:(id)sender;
+- (IBAction)zoomToFit:(id)sender;
 - (IBAction)zoomOut:(id)sender;
 
 // To methods in SeaWhiteboard...

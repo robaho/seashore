@@ -493,6 +493,15 @@ extern BOOL globalReadOnlyWarning;
 	return [self standardFrame];
 }
 
+- (void)restoreStateWithCoder:(NSCoder *)coder
+{
+    [super restoreStateWithCoder:coder];
+    
+    if([[SeaController seaPrefs] zoomToFitAtOpen]) {
+        [[self docView] zoomToFit:self];
+    }
+}
+
 - (NSRect)standardFrame
 {
 	NSRect frame;

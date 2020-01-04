@@ -175,6 +175,14 @@ enum {
 - (IBAction)zoomNormal:(id)sender;
 
 /*!
+    @method        zoomToFit:
+    @discussion    Sets the zoom of the view to fit in content area.
+    @param        sender
+                Ignored.
+*/
+- (IBAction)zoomToFit:(id)sender;
+
+/*!
 	@method		zoomIn:
 	@discussion	Zooms in on the centre of the view.
 	@param		sender

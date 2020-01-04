@@ -119,22 +119,27 @@
 
 - (IBAction)changeZoom:(id)sender
 {
-	[(SeaView *)[document docView] zoomTo: [sender intValue]];
+	[[document docView] zoomTo: [sender intValue]];
 }
 
 - (IBAction)zoomIn:(id)sender
 {
-	[(SeaView *)[document docView] zoomIn: self];
+	[[document docView] zoomIn: self];
 }
 
 - (IBAction)zoomOut:(id)sender
 {
-	[(SeaView *)[document docView] zoomOut: self];
+	[[document docView] zoomOut: self];
 }
 
 - (IBAction)zoomNormal:(id)sender
 {
-	[(SeaView *)[document docView] zoomNormal: self];
+	[[document docView] zoomNormal: self];
+}
+
+- (IBAction)zoomToFit:(id)sender
+{
+    [[document docView] zoomToFit: self];
 }
 
 - (id)view

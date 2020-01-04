@@ -103,7 +103,9 @@ enum {
 	// A checkbox which when checked indicates a new document should be created at start-up
 	IBOutlet id openUntitledCheckbox;
 
-	// A checkbox which when checked indicates the first pressure sensitive touch should be ignored
+    // if checked, zoom document to fit at open
+    IBOutlet id zoomToFitAtOpenCheckbox;
+    // A checkbox which when checked indicates the first pressure sensitive touch should be ignored
 	IBOutlet id ignoreFirstTouchCheckbox;
 	
 	// A checkbox which when checked indicates mouse coalescing should always be on
@@ -141,7 +143,10 @@ enum {
 	
 	// Whether to create a new document at start-up
 	BOOL openUntitled;
-	
+    
+    // Whether to zoom to fit documents at open
+    BOOL zoomToFitAtOpen;
+
 	// Whether the precise cursor should be used
 	BOOL preciseCursor;
 	
@@ -330,6 +335,14 @@ enum {
 				Ignored.
 */
 -(IBAction)setOpenUntitled:(id)sender;
+
+/*!
+    @method        setZoomToFitAtOpen:
+    @discussion    Sets if a  document should be zoom to fit at open.
+    @param        sender
+                Ignored.
+*/
+-(IBAction)setZoomToFitAtOpen:(id)sender;
 
 /*!
 	@method		setIgnoreFirstTouch:
@@ -640,6 +653,13 @@ enum {
 	@result		Returns YES if the a new document should be created, NO otherwise.
 */
 - (BOOL)openUntitled;
+
+/*!
+    @method        zoomToFitAtOpen
+    @discussion    Returns whether a document should zoom to fit at open
+    @result        Returns YES if the a new document should be zoomed, NO otherwise.
+*/
+- (BOOL)zoomToFitAtOpen;
 
 /*!
 	@method		validateMenuItem:

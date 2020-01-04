@@ -125,4 +125,12 @@
 */
 - (IBAction)zoomNormal:(id)sender;
 
+/*!
+    @method        zoomToFit:
+    @discussion    For when the zoom to fit button is pressed.
+    @param        sender
+                Ignored.
+*/
+- (IBAction)zoomToFit:(id)sender;
+
 @end

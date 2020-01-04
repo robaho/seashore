@@ -123,7 +123,7 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="layer-infoTemplate" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyUpOrDown" inset="2" id="16783">
                                                     <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
-                                                    <font key="font" metaFont="controlContent" size="11"/>
+                                                    <font key="font" metaFont="label" size="11"/>
                                                 </buttonCell>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="showsBorderOnlyWhileMouseInside" value="YES"/>
@@ -165,7 +165,7 @@
                                                 <rect key="frame" x="158" y="24" width="35" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="0" id="16777">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -174,7 +174,7 @@
                                                 <rect key="frame" x="112" y="24" width="48" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Radius:" id="16776">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -183,7 +183,7 @@
                                                 <rect key="frame" x="112" y="8" width="48" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Sample:" id="16775">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -192,7 +192,7 @@
                                                 <rect key="frame" x="6" y="56" width="43" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Delta X:" id="16774">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -201,7 +201,7 @@
                                                 <rect key="frame" x="6" y="42" width="43" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Delta Y:" id="16773">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -210,7 +210,7 @@
                                                 <rect key="frame" x="6" y="89" width="43" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Width:" id="16772">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -219,7 +219,7 @@
                                                 <rect key="frame" x="6" y="73" width="43" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Height:" id="16771">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -233,7 +233,7 @@
                                                 <rect key="frame" x="6" y="8" width="43" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Y-Pos:" id="16770">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -242,7 +242,7 @@
                                                 <rect key="frame" x="6" y="24" width="43" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="X-Pos:" id="16769">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -251,7 +251,7 @@
                                                 <rect key="frame" x="46" y="8" width="64" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="0" id="16768">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -260,7 +260,7 @@
                                                 <rect key="frame" x="46" y="24" width="64" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="0" id="16767">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -269,7 +269,7 @@
                                                 <rect key="frame" x="46" y="42" width="64" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="0" id="16766">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -278,7 +278,7 @@
                                                 <rect key="frame" x="46" y="56" width="64" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="0" id="16765">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -287,7 +287,7 @@
                                                 <rect key="frame" x="46" y="73" width="64" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="0" id="16764">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -296,7 +296,7 @@
                                                 <rect key="frame" x="46" y="89" width="64" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="0" id="16763">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -305,7 +305,7 @@
                                                 <rect key="frame" x="158" y="42" width="35" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="0" id="16762">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -314,7 +314,7 @@
                                                 <rect key="frame" x="112" y="42" width="48" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Alpha:" id="16761">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -323,7 +323,7 @@
                                                 <rect key="frame" x="158" y="56" width="35" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="0" id="16760">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -332,7 +332,7 @@
                                                 <rect key="frame" x="112" y="56" width="48" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Blue:" id="16759">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -341,7 +341,7 @@
                                                 <rect key="frame" x="158" y="73" width="35" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="0" id="16758">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -350,7 +350,7 @@
                                                 <rect key="frame" x="112" y="73" width="48" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Green:" id="16757">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -359,7 +359,7 @@
                                                 <rect key="frame" x="158" y="89" width="35" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="0" id="16756">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -368,7 +368,7 @@
                                                 <rect key="frame" x="112" y="89" width="48" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Red:" id="16755">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -396,7 +396,7 @@
                                                     <tableColumns>
                                                         <tableColumn identifier="Layer Visible Checkbox Column" width="16" minWidth="16" maxWidth="16" id="9834">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="V">
-                                                                <font key="font" metaFont="controlContent" size="11"/>
+                                                                <font key="font" metaFont="label" size="11"/>
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                             </tableHeaderCell>
@@ -407,7 +407,7 @@
                                                         </tableColumn>
                                                         <tableColumn identifier="Layer Thumbnail and Name Column" editable="NO" width="160" minWidth="47" maxWidth="1000" id="7813">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Layer">
-                                                                <font key="font" metaFont="controlContent" size="11"/>
+                                                                <font key="font" metaFont="label" size="11"/>
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite"/>
                                                             </tableHeaderCell>
@@ -420,7 +420,7 @@
                                                         </tableColumn>
                                                         <tableColumn identifier="Info Button Column" editable="NO" width="16" minWidth="16" maxWidth="16" id="9836">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="I">
-                                                                <font key="font" metaFont="controlContent" size="11"/>
+                                                                <font key="font" metaFont="label" size="11"/>
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                             </tableHeaderCell>
@@ -592,19 +592,19 @@ DQ
                                                 <rect key="frame" x="71" y="6" width="503" height="13"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="center" title="100% · 512 × 384 px · 72 dpi · Full Color" id="16785">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
                                             <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N0y-Pj-zOW">
-                                                <rect key="frame" x="571" y="-19" width="170" height="59"/>
+                                                <rect key="frame" x="520" y="-19" width="221" height="59"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                                 <subviews>
-                                                    <button toolTip="Zoom out" verticalHuggingPriority="750" fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="16597">
-                                                        <rect key="frame" x="0.0" y="20" width="32" height="19"/>
+                                                    <button toolTip="Zoom to fit the content" verticalHuggingPriority="750" fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mfk-QV-Omk">
+                                                        <rect key="frame" x="43" y="20" width="32" height="19"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                                        <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="deleteTemplate" imagePosition="only" alignment="center" borderStyle="border" inset="2" id="16792">
+                                                        <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="toFitTemplate" imagePosition="only" alignment="center" borderStyle="border" inset="2" id="35e-qh-NIs">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                             <font key="font" metaFont="label" size="12"/>
                                                         </buttonCell>
@@ -612,11 +612,11 @@ DQ
                                                             <userDefinedRuntimeAttribute type="boolean" keyPath="showsBorderOnlyWhileMouseInside" value="YES"/>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
-                                                            <action selector="zoomOut:" target="14766" id="16601"/>
+                                                            <action selector="zoomToFit:" target="14766" id="BjD-g8-OR1"/>
                                                         </connections>
                                                     </button>
                                                     <button toolTip="Zoom to the default zoom level" verticalHuggingPriority="750" fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="16608">
-                                                        <rect key="frame" x="32" y="20" width="32" height="19"/>
+                                                        <rect key="frame" x="75" y="20" width="32" height="19"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                         <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="normalTemplate" imagePosition="only" alignment="center" borderStyle="border" inset="2" id="16794">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -630,7 +630,7 @@ DQ
                                                         </connections>
                                                     </button>
                                                     <button toolTip="Zoom in" verticalHuggingPriority="750" fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="16599">
-                                                        <rect key="frame" x="64" y="20" width="32" height="19"/>
+                                                        <rect key="frame" x="11" y="20" width="32" height="19"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                         <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="newTemplate" imagePosition="only" alignment="center" borderStyle="border" inset="2" id="16793">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -644,7 +644,7 @@ DQ
                                                         </connections>
                                                     </button>
                                                     <slider toolTip="Change the zoom of the document" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="15205">
-                                                        <rect key="frame" x="104" y="21" width="53" height="16"/>
+                                                        <rect key="frame" x="155" y="21" width="53" height="16"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                         <sliderCell key="cell" controlSize="mini" continuous="YES" state="on" alignment="left" minValue="-6" maxValue="8" tickMarkPosition="below" numberOfTickMarks="15" allowsTickMarkValuesOnly="YES" sliderType="linear" id="16790">
                                                             <font key="font" metaFont="miniSystem"/>
@@ -653,6 +653,20 @@ DQ
                                                             <action selector="changeZoom:" target="14766" id="15219"/>
                                                         </connections>
                                                     </slider>
+                                                    <button toolTip="Zoom out" verticalHuggingPriority="750" fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="16597">
+                                                        <rect key="frame" x="107" y="20" width="32" height="19"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                        <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="deleteTemplate" imagePosition="only" alignment="center" borderStyle="border" inset="2" id="16792">
+                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                            <font key="font" metaFont="label" size="12"/>
+                                                        </buttonCell>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="showsBorderOnlyWhileMouseInside" value="YES"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="zoomOut:" target="14766" id="16601"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                             </customView>
                                         </subviews>
@@ -723,7 +737,7 @@ DQ
                     <rect key="frame" x="290" y="12" width="596" height="19"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" id="16799">
-                        <font key="font" metaFont="system" size="10"/>
+                        <font key="font" metaFont="menu" size="10"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -800,7 +814,7 @@ Gw
                                     <rect key="frame" x="174" y="90" width="30" height="14"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="dpi" id="16997">
-                                        <font key="font" metaFont="controlContent" size="11"/>
+                                        <font key="font" metaFont="label" size="11"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
@@ -819,7 +833,7 @@ Gw
                                     <autoresizingMask key="autoresizingMask"/>
                                     <buttonCell key="cell" type="check" title="Scale to preserve size" bezelStyle="regularSquare" imagePosition="leading" alignment="left" controlSize="small" inset="2" id="16999">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                        <font key="font" metaFont="controlContent" size="11"/>
+                                        <font key="font" metaFont="label" size="11"/>
                                     </buttonCell>
                                     <connections>
                                         <action selector="togglePreserveSize:" target="93" id="554"/>
@@ -829,7 +843,7 @@ Gw
                                     <rect key="frame" x="174" y="62" width="30" height="14"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="dpi" id="17000">
-                                        <font key="font" metaFont="controlContent" size="11"/>
+                                        <font key="font" metaFont="label" size="11"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
@@ -839,7 +853,7 @@ Gw
                                     <autoresizingMask key="autoresizingMask"/>
                                     <buttonCell key="cell" type="check" title="Force square resolution" bezelStyle="regularSquare" imagePosition="leading" alignment="left" controlSize="small" inset="2" id="17001">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                        <font key="font" metaFont="controlContent" size="11"/>
+                                        <font key="font" metaFont="label" size="11"/>
                                     </buttonCell>
                                     <connections>
                                         <action selector="toggleForceSquare:" target="93" id="553"/>
@@ -849,7 +863,7 @@ Gw
                                     <rect key="frame" x="13" y="91" width="76" height="14"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Horizontal" id="17002">
-                                        <font key="font" metaFont="controlContent" size="11"/>
+                                        <font key="font" metaFont="label" size="11"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
@@ -858,7 +872,7 @@ Gw
                                     <rect key="frame" x="13" y="62" width="76" height="14"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Vertical" id="17003">
-                                        <font key="font" metaFont="controlContent" size="11"/>
+                                        <font key="font" metaFont="label" size="11"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
@@ -913,7 +927,7 @@ Gw
                         <rect key="frame" x="186" y="60" width="154" height="13"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Compressed - 10%" id="16819">
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -950,7 +964,7 @@ DQ
                         <rect key="frame" x="20" y="60" width="154" height="13"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Original" id="16823">
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -1032,7 +1046,7 @@ DQ
                         <rect key="frame" x="128" y="339" width="180" height="13"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Whole Document" id="16805">
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -1312,6 +1326,7 @@ Gw
                     </popUpButton>
                 </subviews>
             </view>
+            <point key="canvasLocation" x="-1838" y="53"/>
         </window>
         <window title="JP2 Options" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="800" userLabel="JP2 Options" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES"/>
@@ -1345,7 +1360,7 @@ Gw
                         <rect key="frame" x="186" y="60" width="154" height="13"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Compressed - 10%" id="16840">
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -1382,7 +1397,7 @@ DQ
                         <rect key="frame" x="20" y="60" width="154" height="13"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Original" id="16843">
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -1487,7 +1502,7 @@ DQ
                         <rect key="frame" x="128" y="270" width="180" height="13"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Whole Document" id="16810">
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -1698,6 +1713,7 @@ Gw
                     </popUpButton>
                 </subviews>
             </view>
+            <point key="canvasLocation" x="-1838" y="-1055"/>
         </window>
         <customObject id="207" userLabel="SeaScale" customClass="SeaScale">
             <connections>
@@ -1769,7 +1785,7 @@ Gw
                         <rect key="frame" x="186" y="60" width="154" height="13"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Compressed - 10%" id="HBg-eR-VBQ">
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -1806,7 +1822,7 @@ DQ
                         <rect key="frame" x="20" y="60" width="154" height="13"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Original" id="Olu-Uw-7So">
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -1850,6 +1866,7 @@ DQ
                     </textField>
                 </subviews>
             </view>
+            <point key="canvasLocation" x="-1125" y="-436"/>
         </window>
         <window title="Insert Text..." allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="276" userLabel="Insert Text" customClass="MovePanel">
             <windowStyleMask key="styleMask" titled="YES"/>
@@ -1893,7 +1910,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <clipView key="contentView" ambiguous="YES" drawsBackground="NO" id="zX2-tZ-Cdx">
                             <rect key="frame" x="1" y="1" width="427" height="54"/>
-                            <autoresizingMask key="autoresizingMask"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView ambiguous="YES" importsGraphics="NO" verticallyResizable="YES" usesFontPanel="YES" usesRuler="YES" spellingCorrection="YES" smartInsertDelete="YES" id="1007" customClass="NSTextViewRedirect">
                                     <rect key="frame" x="0.0" y="0.0" width="479" height="54"/>
@@ -2242,7 +2259,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <clipView key="contentView" ambiguous="YES" id="Soe-9G-BN0">
                             <rect key="frame" x="1" y="1" width="231" height="94"/>
-                            <autoresizingMask key="autoresizingMask"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" ambiguous="YES" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" id="415" customClass="NSExtendedTableView">
                                     <rect key="frame" x="0.0" y="0.0" width="231" height="94"/>
@@ -2480,7 +2497,7 @@ DQ
                         <rect key="frame" x="112" y="138" width="180" height="13"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Whole Document" id="16838">
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -3830,7 +3847,7 @@ Gw
                     <rect key="frame" x="178" y="6" width="21" height="13"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="21" id="16915">
-                        <font key="font" metaFont="system" size="10"/>
+                        <font key="font" metaFont="menu" size="10"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -4350,7 +4367,7 @@ Gw
                         <rect key="frame" x="100" y="67" width="35" height="13"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="to" id="16948">
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -4390,6 +4407,7 @@ DQ
                     </popUpButton>
                 </subviews>
             </view>
+            <point key="canvasLocation" x="-1442" y="-82"/>
         </window>
         <window title="Aspect Ratio" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="2806" userLabel="Ellipse Aspect Ratio" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES"/>
@@ -4422,7 +4440,7 @@ DQ
                         <rect key="frame" x="100" y="67" width="35" height="13"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="to" id="16953">
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -4462,6 +4480,7 @@ DQ
                     </popUpButton>
                 </subviews>
             </view>
+            <point key="canvasLocation" x="-2235" y="-82"/>
         </window>
         <window title="Aspect Ratio" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="2807" userLabel="Crop Aspect Ratio1" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES"/>
@@ -4494,7 +4513,7 @@ DQ
                         <rect key="frame" x="100" y="67" width="35" height="13"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="to" id="16957">
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -4534,6 +4553,7 @@ DQ
                     </popUpButton>
                 </subviews>
             </view>
+            <point key="canvasLocation" x="-2561" y="-436"/>
         </window>
         <customObject id="2891" userLabel="LayerSettings" customClass="LayerSettings">
             <connections>
@@ -4862,6 +4882,7 @@ DQ
                     <outlet property="nextKeyView" destination="2896" id="10612"/>
                 </connections>
             </view>
+            <point key="canvasLocation" x="-1838" y="510"/>
         </window>
         <menuItem title="Selection Tools" id="3857" userLabel="Menu Item (Selection Tools)">
             <modifierMask key="keyEquivalentModifierMask"/>
@@ -5066,7 +5087,7 @@ DQ
                         <rect key="frame" x="167" y="74" width="120" height="13"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Untitled" id="16986">
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -5085,7 +5106,7 @@ DQ
                         <rect key="frame" x="27" y="74" width="120" height="14"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Opacity: 100%" id="16988">
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -5144,7 +5165,7 @@ DQ
                         <rect key="frame" x="164" y="83" width="120" height="13"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Untitled" id="16991">
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -5163,7 +5184,7 @@ DQ
                         <rect key="frame" x="24" y="83" width="120" height="14"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Spacing: 100%" id="16993">
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -5236,6 +5257,7 @@ Gw
                     </connections>
                 </menuItem>
             </items>
+            <point key="canvasLocation" x="-1448" y="-915"/>
         </menu>
         <customObject id="7818" userLabel="Layer Data Source" customClass="LayerDataSource">
             <connections>
@@ -5257,7 +5279,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <clipView key="contentView" ambiguous="YES" id="lgO-ZC-m12">
                             <rect key="frame" x="1" y="1" width="199" height="160"/>
-                            <autoresizingMask key="autoresizingMask"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" ambiguous="YES" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="14" id="11980">
                                     <rect key="frame" x="0.0" y="0.0" width="199" height="160"/>
@@ -5419,7 +5441,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <clipView key="contentView" ambiguous="YES" id="5IG-Ux-tar">
                             <rect key="frame" x="1" y="1" width="231" height="94"/>
-                            <autoresizingMask key="autoresizingMask"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" ambiguous="YES" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" id="8wZ-Nr-BCs" customClass="NSExtendedTableView">
                                     <rect key="frame" x="0.0" y="0.0" width="231" height="94"/>
@@ -5502,7 +5524,7 @@ DQ
                         <rect key="frame" x="18" y="106" width="120" height="14"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Spacing - 100%" id="ReR-pH-LEt">
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -5603,6 +5625,7 @@ CA
         <view id="Ffn-3L-1WL">
             <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
             <autoresizingMask key="autoresizingMask"/>
+            <point key="canvasLocation" x="-2220" y="-933"/>
         </view>
     </objects>
     <resources>
@@ -5636,6 +5659,7 @@ CA
         <image name="selectnoneTemplate" width="24" height="24"/>
         <image name="smudgeTemplate" width="24" height="24"/>
         <image name="textTemplate" width="24" height="24"/>
+        <image name="toFitTemplate" width="32" height="23"/>
         <image name="trueviewTemplate" width="18" height="18"/>
         <image name="wandTemplate" width="24" height="24"/>
         <image name="zoomTemplate" width="24" height="24"/>
