@@ -107,7 +107,24 @@ id seaController;
 - (IBAction)editLastSaved:(id)sender
 {
     id currentDocument = gCurrentDocument;
-    [[NSDocumentController sharedDocumentController] openNonCurrentFile:[currentDocument fileName]];
+    SeaDocument *lastDocument = [[NSDocumentController sharedDocumentController] openNonCurrentFile:[currentDocument fileName]];
+    if(!lastDocument)
+        return;
+    // show documents side by side
+    NSRect screen = [[[[currentDocument docView] window] screen] frame];
+    NSRect currentFrame = [[[currentDocument docView] window] frame];
+    
+    currentFrame.size.width = screen.size.width/2;
+    currentFrame.origin.x = screen.origin.x;
+    
+    NSRect lastFrame = NSMakeRect(currentFrame.origin.x+currentFrame.size.width+1,currentFrame.origin.y,currentFrame.size.width-1,currentFrame.size.height);
+    [[[currentDocument docView] window] setFrame:currentFrame display:YES];
+    [[[lastDocument docView] window] setFrame:lastFrame display:YES];
+    
+    if([[SeaController seaPrefs] zoomToFitAtOpen]) {
+        [[currentDocument docView] zoomToFit:self];
+        [[lastDocument docView] zoomToFit:self];
+    }
 }
 
 - (IBAction)showLicense:(id)sender
