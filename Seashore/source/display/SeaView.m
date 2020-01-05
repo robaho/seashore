@@ -390,13 +390,14 @@ static CGFloat white[4] = {0,3.5,2,.5};
     srcRect.origin.y -= imageRect.origin.y;
     
     // Set interpolation (image smoothing) appropriately
-    if ([[SeaController seaPrefs] smartInterpolation]) {
-        if (srcRect.size.width > destRect.size.width || (gScreenResolution.x > 72 && (xres / 72.0) * zoom <= 4))
-            [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
-        else
-            [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
-    }
-    else {
+    
+    bool floating = [[[document contents] activeLayer] floating];
+    int size = [[document contents] width] * [[document contents] height];
+    
+    // do not use high interpolation when dealing with large images
+    if ((!floating || size < 64000) && [[SeaController seaPrefs] smartInterpolation]) {
+        [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
+    } else {
         [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
     }
     
