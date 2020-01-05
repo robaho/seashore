@@ -32,6 +32,12 @@
 
 - (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event
 {
+    int modifier = [(CropOptions*)options modifier];
+    
+    if (modifier == kControlModifier) {
+        [self clearCrop];
+    }
+    
 	if(cropRect.size.width > 0 && cropRect.size.height > 0){
 		[self mouseDownAt: where
 				  forRect: cropRect
@@ -43,7 +49,6 @@
 		int aspectType = [options aspectType];
 		NSSize ratio;
 		double xres, yres;
-		int modifier = [(CropOptions*)options modifier];
         
 		SeaLayer *activeLayer;
 		
