@@ -283,6 +283,7 @@ extern IntPoint gScreenResolution;
 	// Revise the data
 	if (data) free(data);
 	data = malloc(make_128(width * height * spp));
+    cachedImage = NULL;
     
 	// Adjust the alternate data as necessary
 	[self readjustAltData:NO];
@@ -328,6 +329,7 @@ extern IntPoint gScreenResolution;
 	viewType = kAllChannelsView;
 	if (altData) free(altData);
 	altData = NULL;
+    cachedImage = NULL;
     
 	// Change layer if appropriate
 	if ([[document selection] floating]) {
@@ -641,15 +643,17 @@ extern IntPoint gScreenResolution;
 
 - (void)update
 {
-    NSLog(@"updating all");
+//    NSLog(@"updating all");
     [self forcedUpdate:NO updateRect:IntZeroRect];
+    cachedImage=NULL;
 	[[document docView] setNeedsDisplay:YES];
 }
 
 - (void)update:(IntRect)rect
 {
-    NSLog(@"updating rect %@",NSStringFromRect(IntRectMakeNSRect(rect)));
+//    NSLog(@"updating rect %@",NSStringFromRect(IntRectMakeNSRect(rect)));
     [self forcedUpdate:YES updateRect:rect];
+    cachedImage=NULL;
     [[document docView] setNeedsDisplayInDocumentRect:rect];
 }
 
@@ -671,12 +675,17 @@ extern IntPoint gScreenResolution;
 
 - (NSImage *)image
 {
+    if(cachedImage){
+        return cachedImage;
+    }
+    
 	NSBitmapImageRep *imageRep;
 	SeaContent *contents = [document contents];
     SeaLayer *layer;
 	int xwidth, xheight;
     
 	NSImage *image = [[NSImage alloc] init];
+    [image setCacheMode:NSImageCacheAlways];
     
 	if (altData) {
 		if ([[document selection] floating]) {
@@ -705,6 +714,8 @@ extern IntPoint gScreenResolution;
     }
     
     [image addRepresentation:imageRep];
+    
+    cachedImage = image;
     
     return image;
 }

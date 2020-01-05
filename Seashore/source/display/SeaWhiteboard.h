@@ -66,6 +66,9 @@ enum {
 	// The whiteboard's data
 	unsigned char *data;
 	unsigned char *altData;
+    
+    // the cached NSImage
+    NSImage * cachedImage;
 	
 	// The overlay for the current layer
 	unsigned char *overlay;

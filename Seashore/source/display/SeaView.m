@@ -345,7 +345,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
     image = [[document whiteboard] image];
     srcRect = destRect = rect;
     
-    NSLog(@"%@",NSStringFromRect(rect));
+//    NSLog(@"%@",NSStringFromRect(rect));
     
     // Set the background color
     if ([[document whiteboard] whiteboardIsLayerSpecific]) {
