@@ -83,7 +83,7 @@ id seaController;
 
 - (IBAction)revert:(id)sender
 {
-	id newDocument;
+	SeaDocument *newDocument;
 	NSString *filename = [gCurrentDocument fileName];
 	NSRect frame = [[[[gCurrentDocument windowControllers] objectAtIndex:0] window] frame];
 	id window;
@@ -96,8 +96,11 @@ id seaController;
 		newDocument = [[NSDocumentController sharedDocumentController] openDocumentWithContentsOfFile:filename display:NO];
 		window = [[[newDocument windowControllers] objectAtIndex:0] window];
 		[window setFrame:frame display:YES];
-		[window makeKeyAndOrderFront:self];		
-
+		[window makeKeyAndOrderFront:self];
+        
+        if([[SeaController seaPrefs] zoomToFitAtOpen]) {
+            [[newDocument docView] zoomToFit:self];
+        }
 	}
 }
 
