@@ -90,8 +90,6 @@ enum {
 	
 	// One of the above constants to specify what is seen by the user
 	int viewType;
-	
-    dispatch_group_t group;
 }
 
 // CREATION METHODS

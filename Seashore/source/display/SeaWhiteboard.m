@@ -14,6 +14,9 @@
 
 extern IntPoint gScreenResolution;
 
+dispatch_queue_t queue;
+dispatch_group_t group;
+
 @implementation SeaWhiteboard
 
 - (id)initWithDocument:(id)doc
@@ -46,8 +49,6 @@ extern IntPoint gScreenResolution;
 	replace = malloc(make_128(layerWidth * layerHeight));
 	memset(replace, 0, layerWidth * layerHeight);
 	altData = NULL;
-    
-    group = dispatch_group_create();
     
 	return self;
 }
@@ -552,7 +553,10 @@ extern IntPoint gScreenResolution;
         majorUpdateRect = IntMakeRect(0, 0, width, height);
     }
     
-    dispatch_group_t group = self->group;
+    if(queue==NULL){
+        queue = dispatch_queue_create("SeaWhiteboard", DISPATCH_QUEUE_CONCURRENT);
+        group = dispatch_group_create();
+    }
     
     int numCPU = (int)sysconf(_SC_NPROCESSORS_ONLN);
     int height = majorUpdateRect.size.height;
@@ -561,10 +565,9 @@ extern IntPoint gScreenResolution;
     if(group==nil || height < HEIGHT | perCPU < 16){
         [self forcedUpdateWithRect:majorUpdateRect];
     } else {
-        dispatch_queue_t aQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
         IntRect rect = IntMakeRect(majorUpdateRect.origin.x,majorUpdateRect.origin.y,majorUpdateRect.size.width,perCPU);
         while(height>0){
-            dispatch_group_async(group,aQueue,^{[self forcedUpdateWithRect:rect];});
+            dispatch_group_async(group,queue,^{[self forcedUpdateWithRect:rect];});
             height-=perCPU;
             rect.origin.y += perCPU;
             if(height<perCPU && height>0){
