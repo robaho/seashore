@@ -662,21 +662,21 @@ dispatch_group_t group;
 
 - (IntRect)imageRect
 {
-	id layer;
+	SeaLayer *layer;
 	
 	if (viewType == kPrimaryChannelsView || viewType == kAlphaChannelView) {
 		if ([[document selection] floating])
 			layer = [[document contents] layer:[[document contents] activeLayerIndex] + 1];
 		else
 			layer = [[document contents] activeLayer];
-		return IntMakeRect([layer xoff], [layer yoff], [(SeaLayer *)layer width], [(SeaLayer *)layer height]);
+		return IntMakeRect([layer xoff], [layer yoff], [layer width], [layer height]);
 	}
 	else {
 		return IntMakeRect(0, 0, width, height);
 	}
 }
 
-- (NSImage *)image
+- (CIImage *)image
 {
     if(cachedImage){
         return cachedImage;
@@ -686,9 +686,6 @@ dispatch_group_t group;
 	SeaContent *contents = [document contents];
     SeaLayer *layer;
 	int xwidth, xheight;
-    
-	NSImage *image = [[NSImage alloc] init];
-    [image setCacheMode:NSImageCacheAlways];
     
 	if (altData) {
 		if ([[document selection] floating]) {
@@ -702,13 +699,15 @@ dispatch_group_t group;
 			xheight = [layer height];
             imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&altData pixelsWide:xwidth pixelsHigh:xheight bitsPerSample:8 samplesPerPixel:spp - 1 hasAlpha:NO isPlanar:NO colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace bytesPerRow:xwidth * (spp - 1) bitsPerPixel:8 * (spp - 1)];
 		}
-		else if (viewType == kAlphaChannelView) {
+        else { // if (viewType == kAlphaChannelView) {
 			xwidth = [layer width];
 			xheight = [layer height];
 			imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&altData pixelsWide:xwidth pixelsHigh:xheight bitsPerSample:8 samplesPerPixel:1 hasAlpha:NO isPlanar:NO colorSpaceName:MyGraySpace bytesPerRow:xwidth * 1 bitsPerPixel:8];
 		}
 	}
 	else {
+        xwidth = width;
+        xheight = height;
         imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace bitmapFormat:0 bytesPerRow:width * spp bitsPerPixel:8 * spp];
 	}
     
@@ -716,7 +715,10 @@ dispatch_group_t group;
         imageRep = [imageRep bitmapImageRepByConvertingToColorSpace:proofProfile.cs renderingIntent:NSColorRenderingIntentDefault];
     }
     
-    [image addRepresentation:imageRep];
+    CIImage *image = [[CIImage alloc] initWithBitmapImageRep:imageRep];
+    CGAffineTransform transform = CGAffineTransformMakeScale(1, -1);
+    transform = CGAffineTransformTranslate(transform,0, -xheight);
+    image = [image imageByApplyingTransform:transform];
     
     cachedImage = image;
     

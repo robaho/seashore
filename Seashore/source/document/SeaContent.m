@@ -1429,8 +1429,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
         rect.size.width = width;
         rect.size.height = height;
         data = malloc(make_128(rect.size.width * rect.size.height * spp));
-        NSBitmapImageRep *imageRep = (NSBitmapImageRep*)[[[[document whiteboard] image] representations] objectAtIndex:0];
-        memcpy(data, [imageRep bitmapData], rect.size.width * rect.size.height * spp);
+        memcpy(data, [[document whiteboard] data], rect.size.width * rect.size.height * spp);
         NSEnumerator *e = [layers objectEnumerator];
         while(layer = [e nextObject]){
             [ordering setValue: [NSNumber numberWithInt:[layers indexOfObject: layer]] forKey: [NSString stringWithFormat: @"%d" ,[layer uniqueLayerID]]];

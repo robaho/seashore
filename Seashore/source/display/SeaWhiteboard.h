@@ -68,7 +68,7 @@ enum {
 	unsigned char *altData;
     
     // the cached NSImage
-    NSImage * cachedImage;
+    CIImage * cachedImage;
 	
 	// The overlay for the current layer
 	unsigned char *overlay;
@@ -250,7 +250,7 @@ enum {
 				or channel-specific depending on user settings).
 	@result		Returns an NSImage representing the whiteboard.
 */
-- (NSImage *)image;
+- (CIImage *)image;
 
 /*!
 	@method		printableImage

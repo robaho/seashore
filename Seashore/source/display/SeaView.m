@@ -42,6 +42,7 @@
 #import "SeaScale.h"
 #import "NSEvent_Extensions.h"
 #import <Carbon/Carbon.h>
+#import <CoreImage/CoreImage.h>
 
 extern IntPoint gScreenResolution;
 
@@ -336,7 +337,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
 - (void)drawRect:(NSRect)rect
 {
     NSRect srcRect, destRect;
-    NSImage *image = NULL;
+    CIImage *image = NULL;
     IntRect imageRect = [[document whiteboard] imageRect];
     int xres = [[document contents] xres], yres = [[document contents] yres];
     float xResScale, yResScale;
@@ -360,9 +361,6 @@ static CGFloat white[4] = {0,3.5,2,.5};
         }
         [[NSBezierPath bezierPathWithRect:destRect] fill];
     }
-    
-    // We want our image flipped
-    [image setFlipped:YES];
     
     // For non 72 dpi resolutions we must scale here
     xResScale = yResScale = 1.0;
@@ -389,21 +387,17 @@ static CGFloat white[4] = {0,3.5,2,.5};
     srcRect.origin.x -= imageRect.origin.x;
     srcRect.origin.y -= imageRect.origin.y;
     
-    // Set interpolation (image smoothing) appropriately
+    srcRect = NSIntegralRectWithOptions(srcRect,NSAlignAllEdgesOutward);
     
-    bool floating = [[[document contents] activeLayer] floating];
-    int size = [[document contents] width] * [[document contents] height];
-    
-    // do not use high interpolation when dealing with large images
-    if ((!floating || size < 64000) && [[SeaController seaPrefs] smartInterpolation]) {
+    if ([[SeaController seaPrefs] smartInterpolation]) {
         [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
     } else {
         [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
     }
     
-    // Draw the image to screen
-    [image drawInRect:destRect fromRect:srcRect operation:NSCompositeSourceOver fraction:1.0];
-
+    CIContext *ctx = [[NSGraphicsContext currentContext] CIContext];
+    [ctx drawImage:image inRect:destRect fromRect:srcRect];
+    
     // Clear out the old cursor rects
     [self needsCursorsReset];
     
