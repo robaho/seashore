@@ -585,7 +585,13 @@
 		vertStep = (float)height / (float)thumbHeight;
 		for (j = 0; j < thumbHeight; j++) {
 			for (i = 0; i < thumbWidth; i++) {
-				srcPos = ((int)(j * vertStep) * width + (int)(i * horizStep)) * spp;
+                int srcRow = (int)(j*vertStep);
+                int srcCol = (int)(i*horizStep);
+                
+                if(srcRow>=height || srcCol>=width)
+                    continue;
+                
+				srcPos = (srcRow * width + srcCol) * spp;
 				destPos = (j * thumbWidth + i) * spp;
 				
 				if (data[srcPos + (spp - 1)] == 255) {
