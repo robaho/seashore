@@ -30,10 +30,10 @@ dispatch_group_t group;
 	compositor = [[SeaCompositor alloc] init];
 	
 	// Record the width, height and use of greys
-	width = [(SeaContent *)[document contents] width];
-	height = [(SeaContent *)[document contents] height];
-	layerWidth = [(SeaLayer *)[[document contents] activeLayer] width];
-	layerHeight = [(SeaLayer *)[[document contents] activeLayer] height];
+	width = [[document contents] width];
+	height = [[document contents] height];
+	layerWidth = [[[document contents] activeLayer] width];
+	layerHeight = [[[document contents] activeLayer] height];
 	
 	// Record the samples per pixel used by the whiteboard
 	spp = [[document contents] spp];
@@ -272,8 +272,8 @@ dispatch_group_t group;
 - (void)readjust
 {	
 	// Resize the memory allocated to the data 
-	width = [(SeaContent *)[document contents] width];
-	height = [(SeaContent *)[document contents] height];
+	width = [[document contents] width];
+	height = [[document contents] height];
 	
 	// Change the samples per pixel if required
 	if (spp != [[document contents] spp]) {
@@ -291,11 +291,11 @@ dispatch_group_t group;
 	
 	// Update the overlay
 	if (overlay) free(overlay);
-	overlay = malloc(make_128([(SeaLayer *)[[document contents] activeLayer] width] * [(SeaLayer *)[[document contents] activeLayer] height] * spp));
-	memset(overlay, 0, [(SeaLayer *)[[document contents] activeLayer] width] * [(SeaLayer *)[[document contents] activeLayer] height] * spp);
+	overlay = malloc(make_128([[[document contents] activeLayer] width] * [[[document contents] activeLayer] height] * spp));
+	memset(overlay, 0, [[[document contents] activeLayer] width] * [[[document contents] activeLayer] height] * spp);
 	if (replace) free(replace);
-	replace = malloc(make_128([(SeaLayer *)[[document contents] activeLayer] width] * [(SeaLayer *)[[document contents] activeLayer] height]));
-	memset(replace, 0, [(SeaLayer *)[[document contents] activeLayer] width] * [(SeaLayer *)[[document contents] activeLayer] height]);
+	replace = malloc(make_128([[[document contents] activeLayer] width] * [[[document contents] activeLayer] height]));
+	memset(replace, 0, [[[document contents] activeLayer] width] * [[[document contents] activeLayer] height]);
 
 	// Update ourselves
 	[self update];
@@ -308,11 +308,11 @@ dispatch_group_t group;
 	
 	// Update the overlay
 	if (overlay) free(overlay);
-	overlay = malloc(make_128([(SeaLayer *)[[document contents] activeLayer] width] * [(SeaLayer *)[[document contents] activeLayer] height] * spp));
-	memset(overlay, 0, [(SeaLayer *)[[document contents] activeLayer] width] * [(SeaLayer *)[[document contents] activeLayer] height] * spp);
+	overlay = malloc(make_128([[[document contents] activeLayer] width] * [[[document contents] activeLayer] height] * spp));
+	memset(overlay, 0, [[[document contents] activeLayer] width] * [[[document contents] activeLayer] height] * spp);
 	if (replace) free(replace);
-	replace = malloc(make_128([(SeaLayer *)[[document contents] activeLayer] width] * [(SeaLayer *)[[document contents] activeLayer] height]));
-	memset(replace, 0, [(SeaLayer *)[[document contents] activeLayer] width] * [(SeaLayer *)[[document contents] activeLayer] height]);
+	replace = malloc(make_128([[[document contents] activeLayer] width] * [[[document contents] activeLayer] height]));
+	memset(replace, 0, [[[document contents] activeLayer] width] * [[[document contents] activeLayer] height]);
 	
 	// Update ourselves
 	[self update];
@@ -374,7 +374,7 @@ dispatch_group_t group;
 
 - (void)forcedChannelUpdate:(IntRect)updateRect
 {
-	id layer, flayer;
+	SeaLayer *layer, *flayer;
 	int layerWidth, layerHeight, lxoff, lyoff;
 	unsigned char *layerData, tempSpace[4], tempSpace2[4], *mask, *floatingData;
 	int i, j, k, temp, tx, ty, t, selectOpacity, nextOpacity;
@@ -388,7 +388,7 @@ dispatch_group_t group;
 	selectRect = IntMakeRect(0, 0, 0, 0);
 	useSelection = [[document selection] active];
 	floating = [[document selection] floating];
-	floatingData = [(SeaLayer *)[[document contents] activeLayer] data];
+	floatingData = [[[document contents] activeLayer] data];
 	if (useSelection && floating) {
 		layer = [[document contents] layer:[[document contents] activeLayerIndex] + 1];
 	}
@@ -398,7 +398,7 @@ dispatch_group_t group;
 	if (useSelection) {
 		if (floating) {
 			flayer = [[document contents] activeLayer];
-			selectRect = IntMakeRect([(SeaLayer *)flayer xoff] - [(SeaLayer *)layer xoff], [(SeaLayer *)flayer yoff] - [(SeaLayer *)layer yoff], [(SeaLayer *)flayer width], [(SeaLayer *)flayer height]);
+			selectRect = IntMakeRect([flayer xoff] - [layer xoff], [flayer yoff] - [layer yoff], [flayer width], [flayer height]);
 		}
 		else {
 			selectRect = [[document selection] globalRect];
@@ -408,11 +408,11 @@ dispatch_group_t group;
 		maskSize = [[document selection] maskSize];
 	}
 	selectOpacity = 255;
-	layerWidth = [(SeaLayer *)layer width];
-	layerHeight = [(SeaLayer *)layer height];
-	lxoff = [(SeaLayer *)layer xoff];
-	lyoff = [(SeaLayer *)layer yoff];
-	layerData = [(SeaLayer *)layer data];
+	layerWidth = [layer width];
+	layerHeight = [layer height];
+	lxoff = [layer xoff];
+	lyoff = [layer yoff];
+	layerData = [layer data];
 		
     minorUpdateRect = updateRect;
     minorUpdateRect = IntOffsetRect(minorUpdateRect, -[layer xoff],  -[layer yoff]);

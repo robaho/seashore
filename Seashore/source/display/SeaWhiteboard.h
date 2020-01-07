@@ -52,10 +52,12 @@ enum {
 				Copyright (c) 2005 Daniel Jalkut
 */
 
+@class SeaDocument;
+
 @interface SeaWhiteboard : NSObject {
 
 	// The document associated with this whiteboard
-	__weak id document;
+	__weak SeaDocument *document;
 	
 	// The compositor for this whiteboard
 	id compositor;

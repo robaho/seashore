@@ -209,7 +209,6 @@
 	
 	[[[document undoManager] prepareWithInvocationTarget:self] undoMode:index to:[layer mode]];
 	[layer setMode:value];
-	[[document contents] setActiveLayerIndex:index];
 	[[document helpers] layerAttributesChanged:index hold:NO];
 }
 
@@ -232,7 +231,6 @@
 	
 	[[[document undoManager] prepareWithInvocationTarget:self] undoOpacity:index to:[layer opacity]];
 	[layer setOpacity:value];
-	[[document contents] setActiveLayerIndex:index];
 	[[document helpers] layerAttributesChanged:index hold:NO];
 }
 

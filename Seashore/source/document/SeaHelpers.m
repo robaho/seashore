@@ -188,7 +188,7 @@
 		default:
 			layer = [contents layer:index];
 			rect = IntMakeRect([layer xoff], [layer yoff], [(SeaLayer *)layer width], [(SeaLayer *)layer height]);
-			[(SeaWhiteboard *)[document whiteboard] update:rect];
+			[[document whiteboard] update:rect];
 		break;
 	}
 	
