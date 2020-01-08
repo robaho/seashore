@@ -493,10 +493,10 @@ static CGFloat white[4] = {0,3.5,2,.5};
     useSelection = [[document selection] active];
     xoff = [[[document contents] activeLayer] xoff];
     yoff = [[[document contents] activeLayer] yoff];
-    width = [(SeaContent *)[document contents] width];
-    height = [(SeaContent *)[document contents] height];
-    lwidth = [(SeaLayer *)[[document contents] activeLayer] width];
-    lheight = [(SeaLayer *)[[document contents] activeLayer] height];
+    width = [[document contents] width];
+    height = [[document contents] height];
+    lwidth = [[[document contents] activeLayer] width];
+    lheight = [[[document contents] activeLayer] height];
     xScale = [[document contents] xscale];
     yScale = [[document contents] yscale];
 
