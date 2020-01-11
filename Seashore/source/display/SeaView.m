@@ -338,20 +338,49 @@ static CGFloat white[4] = {0,3.5,2,.5};
 {
     NSRect srcRect, destRect;
     CIImage *image = NULL;
+    
     IntRect imageRect = [[document whiteboard] imageRect];
+    
     int xres = [[document contents] xres], yres = [[document contents] yres];
     float xResScale, yResScale;
 
     // Get the correct image for displaying
     image = [[document whiteboard] image];
-    srcRect = destRect = rect;
     
-//    NSLog(@"%@",NSStringFromRect(rect));
+    srcRect = [image extent];
+    
+    destRect = IntRectMakeNSRect(imageRect);
+    
+    [NSBezierPath clipRect:rect];
+    
+    // For non 72 dpi resolutions we must scale here
+     xResScale = yResScale = 1.0;
+     if (gScreenResolution.x != 0 && gScreenResolution.y != 0) {
+         if (xres != gScreenResolution.x) {
+             xResScale = ((float)xres / gScreenResolution.x);
+         }
+         if (yres != gScreenResolution.y) {
+             yResScale = ((float)yres / gScreenResolution.y);
+         }
+     }
+    
+     destRect.origin.x /= xResScale;
+     destRect.size.width /= xResScale;
+     destRect.origin.y /= yResScale;
+     destRect.size.height /= yResScale;
+     
+     // Then scale here for zoom
+     destRect.origin.x *= zoom;
+     destRect.size.width *= zoom;
+     destRect.origin.y *= zoom;
+     destRect.size.height *= zoom;
+     
+     destRect = NSIntegralRectWithOptions(destRect,NSAlignAllEdgesOutward);
     
     // Set the background color
     if ([[document whiteboard] whiteboardIsLayerSpecific]) {
         [[NSColor windowBackgroundColor] set];
-        [[NSBezierPath bezierPathWithRect:destRect] fill];
+        [[NSBezierPath bezierPathWithRect:rect] fill];
     }
     else {
         if([(SeaPrefs *)[SeaController seaPrefs] useCheckerboard]){
@@ -359,35 +388,8 @@ static CGFloat white[4] = {0,3.5,2,.5};
         }else{
             [(NSColor*)[[document transparentUtility] color] set];
         }
-        [[NSBezierPath bezierPathWithRect:destRect] fill];
+        [[NSBezierPath bezierPathWithRect:rect] fill];
     }
-    
-    // For non 72 dpi resolutions we must scale here
-    xResScale = yResScale = 1.0;
-    if (gScreenResolution.x != 0 && gScreenResolution.y != 0) {
-        if (xres != gScreenResolution.x) {
-            xResScale = ((float)xres / gScreenResolution.x);
-        }
-        if (yres != gScreenResolution.y) {
-            yResScale = ((float)yres / gScreenResolution.y);
-        }
-    }
-    srcRect.origin.x *= xResScale;
-    srcRect.size.width *= xResScale;
-    srcRect.origin.y *= yResScale;
-    srcRect.size.height *= yResScale;
-    
-    // Then scale here for zoom
-    srcRect.origin.x /= zoom;
-    srcRect.size.width /= zoom;
-    srcRect.origin.y /= zoom;
-    srcRect.size.height /= zoom;
-    
-    // Position the image correctly
-    srcRect.origin.x -= imageRect.origin.x;
-    srcRect.origin.y -= imageRect.origin.y;
-    
-    srcRect = NSIntegralRectWithOptions(srcRect,NSAlignAllEdgesOutward);
     
     if ([[SeaController seaPrefs] smartInterpolation]) {
         [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
