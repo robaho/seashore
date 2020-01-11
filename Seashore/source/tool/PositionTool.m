@@ -165,15 +165,8 @@
 	// Determine the delta
 	deltax = where.x - initialPoint.x;
     
-    int function = [options toolFunction];
-    
-    // Determine the function
-    if ([activeLayer floating] && [options canAnchor] && (where.x < 0 || where.y < 0 || where.x >= [activeLayer width] || where.y >= [activeLayer height])){
-        function = kAnchoringLayer;
-    }
-	
 	// Vary behaviour based on function
-	switch (function) {
+	switch ([options toolFunction]) {
 		case kRotatingLayer:
 			// Finish rotating layer
 			[[seaOperations seaRotation] rotate:rotation * 180.0 / 3.1415 withTrim:YES];
@@ -185,12 +178,13 @@
 			newHeight = scale * [(SeaLayer *)layer height];
 			[[seaOperations seaScale] scaleToWidth:newWidth height:newHeight interpolation:NSImageInterpolationHigh index:kActiveLayer];
 		break;
-        case kAnchoringLayer:
-            [contents anchorSelection];
+        default:
+            if ([activeLayer floating] && [options canAnchor] && (where.x < 0 || where.y < 0 || where.x >= [activeLayer width] || where.y >= [activeLayer height])){
+                [contents anchorSelection];
+            }
         break;
-
 	}
-	
+    
 	// Cancel the previewing
 	scale = -1;
 	rotationDefined = NO;
