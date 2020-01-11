@@ -46,6 +46,9 @@
 
 - (void)mouseDraggedTo:(IntPoint)where withEvent:(NSEvent *)event
 {
+    if(!intermediate)
+        return;
+    
 	currentNSPoint = [[document docView] convertPoint:[event locationInWindow] fromView:NULL];
 	
 	BOOL optionDown = [(BucketOptions*)options modifier] == kAltModifier;

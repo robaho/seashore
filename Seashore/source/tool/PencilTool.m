@@ -123,6 +123,7 @@
 	
 	// Record the position as the last point
 	lastPoint = where;
+    intermediate = YES;
 }
 
 - (void)mouseDraggedTo:(IntPoint)where withEvent:(NSEvent *)event
@@ -137,6 +138,9 @@
 	IntPoint curPoint, revisedCurPoint, newLastPoint;
 	int halfSize = (size % 2 == 0) ? size / 2 - 1 : size / 2;
 	IntRect rect;
+    
+    if (!intermediate)
+        return;
 	
 	// Only continue if the current point is different from the last point
 	if (lastPoint.x == where.x && lastPoint.y == where.y)
@@ -186,6 +190,8 @@
 	[(SeaHelpers *)[document helpers] applyOverlay];
     
     [[document recentsUtility] rememberPencil:(PencilOptions*)options];
+    
+    intermediate = NO;
 }
 
 - (void)startStroke:(IntPoint)where;

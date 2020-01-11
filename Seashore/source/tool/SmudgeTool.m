@@ -82,10 +82,11 @@
 						basePixel[k] = basePixel[spp - 1];
 					basePixel[spp - 1] = 255;
 				}
-                unsigned char brush_alpha = brushData[(j * brushWidth +i)*brush_spp];
-				blendPixel(spp, accumData, (j * brushWidth + i) * spp, basePixel, 0, rate);
+                int bOffset = (j*brushWidth+i);
+                unsigned char brush_alpha = brushData[bOffset*brush_spp];
+				blendPixel(spp, accumData, bOffset * spp, basePixel, 0, rate);
 				replace[pos] = brush_alpha + int_mult((255 - brush_alpha), replace[pos], t1);
-				memcpy(&(overlay[pos * spp]), &(accumData[(j * brushWidth + i) * spp]), spp);
+				memcpy(&(overlay[pos * spp]), &(accumData[bOffset * spp]), spp);
 				
 			}
 		}
@@ -168,6 +169,7 @@
 	// Record the position as the last point
 	lastPoint = lastPlotPoint = IntPointMakeNSPoint(where);
 	distance = 0;
+    intermediate = YES;
 }
 
 - (void)mouseDraggedTo:(IntPoint)where withEvent:(NSEvent *)event
@@ -185,6 +187,9 @@
 	int n, num_points;
 	IntRect rect;
 	NSPoint temp;
+    
+    if (!intermediate)
+        return;
 	
 	// Check this is a new point
 	if (where.x == lastWhere.x && where.y == lastWhere.y) {
@@ -297,6 +302,7 @@
 
 	// Free the accumulating data
 	if (accumData) { free(accumData); accumData = NULL; }
+    intermediate = NO;
 }
 
 - (void)startStroke:(IntPoint)where;

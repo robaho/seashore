@@ -165,6 +165,7 @@
 	// Create the points list
 	points = malloc(kMaxETPoints * sizeof(ETPointRecord));
 	pos = drawingPos = 0;
+    intermediate = YES;
 }
 
 - (void)drawThread:(id)object
@@ -351,6 +352,9 @@ next:
 
 - (void)mouseDraggedTo:(IntPoint)where withEvent:(NSEvent *)event
 {
+    if (!intermediate)
+        return;
+    
 	id boptions = [[document optionsUtility] getOptions:kBrushTool];
 	
 	// Have we registerd the first touch
@@ -400,6 +404,7 @@ next:
 	// Apply the changes
 	[self endLineDrawing];
 	[(SeaHelpers *)[document helpers] applyOverlay];
+    intermediate = NO;
 }
 
 - (void)startStroke:(IntPoint)where;

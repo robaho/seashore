@@ -18,15 +18,15 @@
 #import "WarningsUtility.h"
 #import "AbstractTool.h"
 
-static NSString*	DocToolbarIdentifier 	= @"Document Toolbar Instance Identifier";
+static NSString*	DocToolbarIdentifier = @"Document Toolbar Instance Identifier";
 
-static NSString*	SelectionIdentifier 	= @"Selection  Item Identifier";
-static NSString*	DrawIdentifier 	= @"Draw Item Identifier";
-static NSString*    EffectIdentifier = @"Effect Item Identifier";
-static NSString*    TransformIdentifier = @"Transform Item Identifier";
+static NSString*	SelectionIdentifier = @"Selection  Item Identifier";
+static NSString*	DrawIdentifier = @"Draw Item Identifier";
+static NSString*  EffectIdentifier = @"Effect Item Identifier";
+static NSString*  TransformIdentifier = @"Transform Item Identifier";
 static NSString*	ColorsIdentifier = @"Colors Item Identifier";
 
-static NSString*    SelectionEditIdentifier = @"Selection Edit Identifier";
+static NSString*  SelectionEditIdentifier = @"Selection Edit Identifier";
 
 @implementation ToolboxUtility
 
@@ -280,6 +280,10 @@ static NSString*    SelectionEditIdentifier = @"Selection Edit Identifier";
 - (void)changeToolTo:(int)newTool
 {
 	BOOL updateCrop = NO;
+    
+    id currentTool = [document currentTool];
+    if([currentTool intermediate])
+        return;
 	
 	[[document helpers] endLineDrawing];
 	if (tool == kCropTool || newTool == kCropTool) {

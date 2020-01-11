@@ -191,6 +191,7 @@
     points = malloc(kMaxBTPoints * sizeof(BTPointRecord));
     pos = drawingPos = 0;
     lastPressure = -1;
+    intermediate = YES;
     
 }
 
@@ -382,6 +383,9 @@ next:
 
 - (void)mouseDraggedTo:(IntPoint)where withEvent:(NSEvent *)event
 {
+    if(!intermediate)
+        return;
+    
     // Have we registerd the first touch
     if (!firstTouchDone) {
         [self mouseDownAt:where withEvent:event];
@@ -427,6 +431,7 @@ next:
 {
     [self endLineDrawing];
     [[document helpers] applyOverlay];
+    intermediate=NO;
 }
 
 - (void)startStroke:(IntPoint)where;

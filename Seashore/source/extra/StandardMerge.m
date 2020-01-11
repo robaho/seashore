@@ -159,20 +159,24 @@ void blendPixel(int spp, unsigned char *destPtr, int destLoc, unsigned char *src
 {
 	const int blend1 = 256 - blend;
 	const int blend2 = blend + 1;
-	int a1, a2, a, k;
-	
-	a1 = blend1 * srcPtr[srcLoc + alphaPos];
-	a2 = blend2 * destPtr[destLoc + alphaPos];
+    int a1, a2, a;
+    
+    unsigned char *sPtr = srcPtr+srcLoc;
+    unsigned char *sPtrEnd = srcPtr+srcLoc+alphaPos;
+    unsigned char *dPtr = destPtr+destLoc;
+    unsigned char *dPtrEnd = destPtr+destLoc+alphaPos;
+
+	a1 = blend1 * *sPtrEnd;
+	a2 = blend2 * *dPtrEnd;
 	a = a1 + a2;
 	
 	if (a == 0) {
-		for (k = 0; k < spp; k++)
-			destPtr[destLoc + k] = 0;
+        memset(dPtr,0,spp);
 	}
 	else {
-		for (k = 0; k < alphaPos; k++)
-			destPtr[destLoc + k] = (srcPtr[srcLoc + k] * a1 + destPtr[destLoc + k] * a2) / a;
-		destPtr[destLoc + alphaPos] = a >> 8;
+        for (;sPtr<sPtrEnd;dPtr++,sPtr++)
+			*dPtr = (*sPtr * a1 + *dPtr * a2) / a;
+		*dPtrEnd = a >> 8;
 	}
 }
 
