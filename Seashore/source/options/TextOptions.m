@@ -28,7 +28,7 @@ id gNewFont;
 			ivalue = NSLeftTextAlignment;
 	}
 	[alignmentControl setSelectedSegment:ivalue];
-	
+
 	// Handle the text outline slider
 	if ([gUserDefaults objectForKey:@"text outline slider"] == NULL) {
 		ivalue = 5;
@@ -57,6 +57,16 @@ id gNewFont;
 	
 	// Show the slider value
 	[outlineCheckbox setTitle:[NSString stringWithFormat:LOCALSTR(@"outline", @"Outline: %d pt"), [outlineSlider intValue]]];
+    
+    // Handle the text outline checkbox
+    if ([gUserDefaults objectForKey:@"text new layer"] == NULL) {
+        bvalue = NO;
+    }
+    else {
+        bvalue = [gUserDefaults boolForKey:@"text new layer"];
+    }
+    [newLayerCheckbox setState:bvalue];
+
 	
 	// Set up font manager
 	gNewFont = NULL;
@@ -118,6 +128,11 @@ id gNewFont;
 	return YES;
 }
 
+- (BOOL)shouldAddTextAsNewLayer
+{
+    return [newLayerCheckbox state];
+}
+
 - (IBAction)update:(id)sender
 {
 	// Enable or disable the slider appropriately
@@ -140,6 +155,7 @@ id gNewFont;
 	[gUserDefaults setInteger:[outlineSlider intValue] forKey:@"text outline slider"];
 	[gUserDefaults setObject:[[fontManager selectedFont] fontName] forKey:@"text font"];
 	[gUserDefaults setInteger:(int)[[fontManager selectedFont] pointSize] forKey:@"text size"];
+    [gUserDefaults setObject:[newLayerCheckbox state] ? @"YES" : @"NO" forKey:@"text new layer"];
 }
 
 @end

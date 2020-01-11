@@ -77,7 +77,7 @@ dispatch_group_t group;
 
 - (IntRect)applyOverlay
 {
-	id layer;
+	SeaLayer *layer;
 	int leftOffset, rightOffset, topOffset, bottomOffset;
 	int i, j, k, srcLoc, selectedChannel;
 	int xoff, yoff;
@@ -94,9 +94,9 @@ dispatch_group_t group;
 	selectedChannel = [[document contents] selectedChannel];
 	layer = [[document contents] activeLayer];
 	floating = [layer floating];
-	srcPtr = [(SeaLayer *)layer data];
-	lwidth = [(SeaLayer *)layer width];
-	lheight = [(SeaLayer *)layer height];
+	srcPtr = [layer data];
+	lwidth = [layer width];
+	lheight = [layer height];
 	xoff = [layer xoff];
 	yoff = [layer yoff];
 	mask = [(SeaSelection*)[document selection] mask];

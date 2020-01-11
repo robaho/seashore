@@ -48,7 +48,12 @@ extern id gNewFont;
 	[NSApp beginSheet:panel modalForWindow:[document window] modalDelegate:NULL didEndSelector:NULL contextInfo:NULL];
 }
 
-- (IntRect)drawOverlay
+typedef struct {
+    IntRect rect;
+    unsigned char *data;
+} result;
+
+- (result)drawOverlay:(BOOL)preview
 {
 	int i, j, k, width, height, spp = [[document contents] spp];
 	NSFont *font;
@@ -65,6 +70,8 @@ extern id gNewFont;
 	NSMutableParagraphStyle *paraStyle;
 	int slantWidth;
 	int outline = [options outline];
+    
+    result r;
 	
 	// Set up the colour
 	if ([options useTextures])
@@ -76,7 +83,12 @@ extern id gNewFont;
 	
 	// Get the font
 	font = (gNewFont) ? gNewFont : [fontManager selectedFont];
-	if (font == NULL) return IntMakeRect(0, 0, 0, 0);
+    if (font == NULL) {
+        r.rect = IntMakeRect(0, 0, 0, 0);
+        r.data = NULL;
+        return r;
+    }
+    
 	paraStyle = [[NSMutableParagraphStyle alloc] init];
 	[paraStyle setAlignment:[options alignment]];
 	if (outline)
@@ -113,17 +125,22 @@ extern id gNewFont;
 	off.y = [layer yoff];
     
     initData = malloc(fontSize.width * fontSize.height * spp);
-    for (j = 0; j < fontSize.height; j++) {
-        for (i = 0; i < fontSize.width; i++) {
-            int dy = pos.y + j;
-            int dx = pos.x + i;
-            if (dy>=0 && dy < height && dx>=0 && dx < width) {
-                for (k = 0; k < spp; k++)
-                    initData[(j * fontSize.width + i) * spp + k] = data[((dy) * width + dx) * spp + k];
-            }
-            else {
-                for (k = 0; k < spp; k++)
-                    initData[(j * fontSize.width + i) * spp + k] = 0;
+    if(!preview && [options shouldAddTextAsNewLayer]) {
+        memset(initData,0,fontSize.width * fontSize.height * spp);
+    } else {
+        // copy background for proper anti-aliasing
+        for (j = 0; j < fontSize.height; j++) {
+            for (i = 0; i < fontSize.width; i++) {
+                int dy = pos.y + j;
+                int dx = pos.x + i;
+                if (dy>=0 && dy < height && dx>=0 && dx < width) {
+                    for (k = 0; k < spp; k++)
+                        initData[(j * fontSize.width + i) * spp + k] = data[((dy) * width + dx) * spp + k];
+                }
+                else {
+                    for (k = 0; k < spp; k++)
+                        initData[(j * fontSize.width + i) * spp + k] = 0;
+                }
             }
         }
     }
@@ -142,6 +159,12 @@ extern id gNewFont;
     
     [NSGraphicsContext restoreGraphicsState];
     
+    if(!preview && [options shouldAddTextAsNewLayer]){
+        r.rect = IntMakeRect(pos.x,pos.y,fontSize.width,fontSize.height);
+        r.data = initData;
+        return r;
+    }
+    
     bitmapData = initData;
 
 	// Go through all pixels and change them
@@ -157,8 +180,10 @@ extern id gNewFont;
 		}
 	}
 	free(initData);
-	
-	return IntMakeRect(pos.x, pos.y, fontSize.width, fontSize.height);
+    
+    r.rect = IntConstrainRect(IntMakeRect(pos.x, pos.y, fontSize.width, fontSize.height),IntMakeRect(0,0,width,height));
+    r.data = NULL;
+    return r;
 }
 
 - (IBAction)apply:(id)sender
@@ -170,13 +195,36 @@ extern id gNewFont;
 		[panel orderOut:self];
 	}
 	running = NO;
-	
-	// Apply the changes
-	[[document whiteboard] clearOverlay];
-	if ([[[textbox textStorage] string] length] > 0) {
-		[self drawOverlay];
-		[(SeaHelpers *)[document helpers] applyOverlay];
-	}
+    
+    [[document whiteboard] clearOverlay];
+    if ([[[textbox textStorage] string] length] <= 0) {
+        return;
+    }
+    
+    result r = [self drawOverlay:NO];
+    
+    if(r.data!=NULL){
+        NSString *text = [[textbox textStorage] string];
+        SeaLayer *activeLayer = [[document contents] activeLayer];
+        r.rect = IntOffsetRect(r.rect,[activeLayer xoff],[activeLayer yoff]);
+         
+        SeaLayer *layer = [[SeaLayer alloc] initWithDocument:document rect:r.rect data:r.data spp:[[document contents] spp]];
+        free(r.data);
+        
+        NSMutableString *name = [[NSMutableString alloc] initWithString:text];
+        for(int i=0;i<[name length];i++) {
+            if([name characterAtIndex:i]<=32){
+                [name replaceCharactersInRange:NSMakeRange(i,1) withString:@"."];
+            }
+        }
+        [layer setName:name];
+        [[document contents] addLayerObject:layer];
+    } else {
+        if(r.rect.size.height<=0 || r.rect.size.width<=0)
+            return;
+        // Apply the changes into the current layer
+        [[document helpers] applyOverlay];
+    }
 }
 
 - (IBAction)cancel:(id)sender
@@ -201,8 +249,8 @@ extern id gNewFont;
 			[[document helpers] overlayChanged:previewRect];
 		}
 		if ([[[textbox textStorage] string] length] > 0) {
-			previewRect = [self drawOverlay];
-			[[document helpers] overlayChanged:previewRect];
+            result r = [self drawOverlay:YES];
+			[[document helpers] overlayChanged:r.rect];
 		}
 	}
 }

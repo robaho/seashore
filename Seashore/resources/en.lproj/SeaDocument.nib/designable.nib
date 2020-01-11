@@ -123,7 +123,7 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="layer-infoTemplate" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyUpOrDown" inset="2" id="16783">
                                                     <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
-                                                    <font key="font" metaFont="message" size="11"/>
+                                                    <font key="font" metaFont="controlContent" size="11"/>
                                                 </buttonCell>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="showsBorderOnlyWhileMouseInside" value="YES"/>
@@ -165,7 +165,7 @@
                                                 <rect key="frame" x="158" y="24" width="35" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="0" id="16777">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -174,7 +174,7 @@
                                                 <rect key="frame" x="112" y="24" width="48" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Radius:" id="16776">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -183,7 +183,7 @@
                                                 <rect key="frame" x="112" y="8" width="48" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Sample:" id="16775">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -192,7 +192,7 @@
                                                 <rect key="frame" x="6" y="56" width="43" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Delta X:" id="16774">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -201,7 +201,7 @@
                                                 <rect key="frame" x="6" y="42" width="43" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Delta Y:" id="16773">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -210,7 +210,7 @@
                                                 <rect key="frame" x="6" y="89" width="43" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Width:" id="16772">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -219,7 +219,7 @@
                                                 <rect key="frame" x="6" y="73" width="43" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Height:" id="16771">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -233,7 +233,7 @@
                                                 <rect key="frame" x="6" y="8" width="43" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Y-Pos:" id="16770">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -242,7 +242,7 @@
                                                 <rect key="frame" x="6" y="24" width="43" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="X-Pos:" id="16769">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -251,7 +251,7 @@
                                                 <rect key="frame" x="46" y="8" width="64" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="0" id="16768">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -260,7 +260,7 @@
                                                 <rect key="frame" x="46" y="24" width="64" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="0" id="16767">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -269,7 +269,7 @@
                                                 <rect key="frame" x="46" y="42" width="64" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="0" id="16766">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -278,7 +278,7 @@
                                                 <rect key="frame" x="46" y="56" width="64" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="0" id="16765">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -287,7 +287,7 @@
                                                 <rect key="frame" x="46" y="73" width="64" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="0" id="16764">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -296,7 +296,7 @@
                                                 <rect key="frame" x="46" y="89" width="64" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="0" id="16763">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -305,7 +305,7 @@
                                                 <rect key="frame" x="158" y="42" width="35" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="0" id="16762">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -314,7 +314,7 @@
                                                 <rect key="frame" x="112" y="42" width="48" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Alpha:" id="16761">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -323,7 +323,7 @@
                                                 <rect key="frame" x="158" y="56" width="35" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="0" id="16760">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -332,7 +332,7 @@
                                                 <rect key="frame" x="112" y="56" width="48" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Blue:" id="16759">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -341,7 +341,7 @@
                                                 <rect key="frame" x="158" y="73" width="35" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="0" id="16758">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -350,7 +350,7 @@
                                                 <rect key="frame" x="112" y="73" width="48" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Green:" id="16757">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -359,7 +359,7 @@
                                                 <rect key="frame" x="158" y="89" width="35" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="0" id="16756">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -368,7 +368,7 @@
                                                 <rect key="frame" x="112" y="89" width="48" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Red:" id="16755">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -396,7 +396,7 @@
                                                     <tableColumns>
                                                         <tableColumn identifier="Layer Visible Checkbox Column" width="16" minWidth="16" maxWidth="16" id="9834">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="V">
-                                                                <font key="font" metaFont="message" size="11"/>
+                                                                <font key="font" metaFont="controlContent" size="11"/>
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                             </tableHeaderCell>
@@ -407,7 +407,7 @@
                                                         </tableColumn>
                                                         <tableColumn identifier="Layer Thumbnail and Name Column" editable="NO" width="160" minWidth="47" maxWidth="1000" id="7813">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Layer">
-                                                                <font key="font" metaFont="message" size="11"/>
+                                                                <font key="font" metaFont="controlContent" size="11"/>
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite"/>
                                                             </tableHeaderCell>
@@ -420,7 +420,7 @@
                                                         </tableColumn>
                                                         <tableColumn identifier="Info Button Column" editable="NO" width="16" minWidth="16" maxWidth="16" id="9836">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="I">
-                                                                <font key="font" metaFont="message" size="11"/>
+                                                                <font key="font" metaFont="controlContent" size="11"/>
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                             </tableHeaderCell>
@@ -592,7 +592,7 @@ DQ
                                                 <rect key="frame" x="71" y="6" width="503" height="13"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="center" title="100% · 512 × 384 px · 72 dpi · Full Color" id="16785">
-                                                    <font key="font" metaFont="system" size="10"/>
+                                                    <font key="font" metaFont="menu" size="10"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -647,7 +647,7 @@ DQ
                                                         <rect key="frame" x="155" y="21" width="53" height="16"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                         <sliderCell key="cell" controlSize="mini" continuous="YES" state="on" alignment="left" minValue="-6" maxValue="8" tickMarkPosition="below" numberOfTickMarks="15" allowsTickMarkValuesOnly="YES" sliderType="linear" id="16790">
-                                                            <font key="font" metaFont="miniSystem"/>
+                                                            <font key="font" metaFont="label" size="9"/>
                                                         </sliderCell>
                                                         <connections>
                                                             <action selector="changeZoom:" target="14766" id="15219"/>
@@ -825,7 +825,7 @@ Gw
                                     <rect key="frame" x="174" y="90" width="30" height="14"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="dpi" id="16997">
-                                        <font key="font" metaFont="message" size="11"/>
+                                        <font key="font" metaFont="controlContent" size="11"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
@@ -844,7 +844,7 @@ Gw
                                     <autoresizingMask key="autoresizingMask"/>
                                     <buttonCell key="cell" type="check" title="Scale to preserve size" bezelStyle="regularSquare" imagePosition="leading" alignment="left" controlSize="small" inset="2" id="16999">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                        <font key="font" metaFont="message" size="11"/>
+                                        <font key="font" metaFont="controlContent" size="11"/>
                                     </buttonCell>
                                     <connections>
                                         <action selector="togglePreserveSize:" target="93" id="554"/>
@@ -854,7 +854,7 @@ Gw
                                     <rect key="frame" x="174" y="62" width="30" height="14"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="dpi" id="17000">
-                                        <font key="font" metaFont="message" size="11"/>
+                                        <font key="font" metaFont="controlContent" size="11"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
@@ -864,7 +864,7 @@ Gw
                                     <autoresizingMask key="autoresizingMask"/>
                                     <buttonCell key="cell" type="check" title="Force square resolution" bezelStyle="regularSquare" imagePosition="leading" alignment="left" controlSize="small" inset="2" id="17001">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                        <font key="font" metaFont="message" size="11"/>
+                                        <font key="font" metaFont="controlContent" size="11"/>
                                     </buttonCell>
                                     <connections>
                                         <action selector="toggleForceSquare:" target="93" id="553"/>
@@ -874,7 +874,7 @@ Gw
                                     <rect key="frame" x="13" y="91" width="76" height="14"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Horizontal" id="17002">
-                                        <font key="font" metaFont="message" size="11"/>
+                                        <font key="font" metaFont="controlContent" size="11"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
@@ -883,7 +883,7 @@ Gw
                                     <rect key="frame" x="13" y="62" width="76" height="14"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Vertical" id="17003">
-                                        <font key="font" metaFont="message" size="11"/>
+                                        <font key="font" metaFont="controlContent" size="11"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
@@ -938,7 +938,7 @@ Gw
                         <rect key="frame" x="186" y="60" width="154" height="13"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Compressed - 10%" id="16819">
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -975,7 +975,7 @@ DQ
                         <rect key="frame" x="20" y="60" width="154" height="13"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Original" id="16823">
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -1057,7 +1057,7 @@ DQ
                         <rect key="frame" x="128" y="339" width="180" height="13"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Whole Document" id="16805">
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -1371,7 +1371,7 @@ Gw
                         <rect key="frame" x="186" y="60" width="154" height="13"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Compressed - 10%" id="16840">
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -1408,7 +1408,7 @@ DQ
                         <rect key="frame" x="20" y="60" width="154" height="13"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Original" id="16843">
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -1513,7 +1513,7 @@ DQ
                         <rect key="frame" x="128" y="270" width="180" height="13"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Whole Document" id="16810">
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -1796,7 +1796,7 @@ Gw
                         <rect key="frame" x="186" y="60" width="154" height="13"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Compressed - 10%" id="HBg-eR-VBQ">
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -1833,7 +1833,7 @@ DQ
                         <rect key="frame" x="20" y="60" width="154" height="13"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Original" id="Olu-Uw-7So">
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -1921,7 +1921,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <clipView key="contentView" ambiguous="YES" drawsBackground="NO" id="zX2-tZ-Cdx">
                             <rect key="frame" x="1" y="1" width="427" height="54"/>
-                            <autoresizingMask key="autoresizingMask"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView ambiguous="YES" importsGraphics="NO" verticallyResizable="YES" usesFontPanel="YES" usesRuler="YES" spellingCorrection="YES" smartInsertDelete="YES" id="1007" customClass="NSTextViewRedirect">
                                     <rect key="frame" x="0.0" y="0.0" width="479" height="54"/>
@@ -2508,7 +2508,7 @@ DQ
                         <rect key="frame" x="112" y="138" width="180" height="13"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Whole Document" id="16838">
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -2871,6 +2871,7 @@ Gw
                 <outlet property="alignmentControl" destination="6458" id="6469"/>
                 <outlet property="document" destination="-2" id="2604"/>
                 <outlet property="fontLabel" destination="2036" id="2544"/>
+                <outlet property="newLayerCheckbox" destination="OrG-xV-9dT" id="Pzu-cq-vvZ"/>
                 <outlet property="outlineCheckbox" destination="2039" id="2542"/>
                 <outlet property="outlineSlider" destination="2038" id="2543"/>
                 <outlet property="view" destination="1894" id="2217"/>
@@ -2914,7 +2915,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="push" title="Choose Effect..." bezelStyle="rounded" alignment="center" controlSize="mini" borderStyle="border" inset="2" id="16852">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                     <connections>
                         <action selector="showEffects:" target="1879" id="12026"/>
@@ -2924,7 +2925,7 @@ Gw
                     <rect key="frame" x="112" y="5" width="112" height="11"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="left" title="Clicks remaining: 0" id="16850">
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -2933,7 +2934,7 @@ Gw
                     <rect key="frame" x="237" y="5" width="543" height="11"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                     <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="left" title="No instructions available." id="16851">
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -2943,7 +2944,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="help" bezelStyle="helpButton" alignment="center" controlSize="mini" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="VoI-wH-Gl0">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                 </button>
             </subviews>
@@ -2966,7 +2967,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" title="No modifiers active" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2189" id="16854">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <menu key="menu" title="OtherViews" id="2181">
                             <items>
                                 <menuItem title="No modifiers active" state="on" id="2189"/>
@@ -2989,7 +2990,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" title="1 to 1" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2179" id="16855">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <menu key="menu" title="OtherViews" id="2174">
                             <items>
                                 <menuItem title="1 to 1" state="on" id="2179"/>
@@ -3012,7 +3013,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Aspect ratio:" bezelStyle="regularSquare" imagePosition="leading" alignment="left" controlSize="mini" inset="2" id="16856">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                     <connections>
                         <action selector="update:" target="2654" id="6429"/>
@@ -3023,7 +3024,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="help" bezelStyle="helpButton" alignment="center" controlSize="mini" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Vda-jT-ZLR">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                 </button>
             </subviews>
@@ -3041,7 +3042,7 @@ Gw
                     <rect key="frame" x="77" y="3" width="128" height="12"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <sliderCell key="cell" controlSize="mini" continuous="YES" alignment="left" maxValue="255" doubleValue="15" tickMarkPosition="above" sliderType="linear" id="16859">
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </sliderCell>
                     <connections>
                         <action selector="toleranceSliderChanged:" target="1869" id="9TN-jJ-Avc"/>
@@ -3051,7 +3052,7 @@ Gw
                     <rect key="frame" x="4" y="4" width="79" height="11"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" controlSize="mini" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="left" title="Tolerance: 15" id="16860">
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -3069,7 +3070,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="push" title="Textures" bezelStyle="rounded" alignment="center" controlSize="mini" borderStyle="border" inset="2" id="16861">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                     <connections>
                         <action selector="toggleTextures:" target="1869" id="12013"/>
@@ -3080,7 +3081,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" title="No modifiers active" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2165" id="16858">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <menu key="menu" title="OtherViews" id="2163">
                             <items>
                                 <menuItem title="No modifiers active" state="on" id="2165"/>
@@ -3095,7 +3096,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="help" bezelStyle="helpButton" alignment="center" controlSize="mini" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3Ph-TO-4EY">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                 </button>
             </subviews>
@@ -3118,7 +3119,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="push" title="Textures" bezelStyle="rounded" alignment="center" controlSize="mini" borderStyle="border" inset="2" id="16872">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                     <connections>
                         <action selector="toggleTextures:" target="1871" id="11994"/>
@@ -3129,7 +3130,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="push" title="Brushes" bezelStyle="rounded" alignment="center" controlSize="mini" borderStyle="border" inset="2" id="16871">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                     <connections>
                         <action selector="toggleBrushes:" target="1871" id="11995"/>
@@ -3140,7 +3141,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" title="No modifiers active" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2153" id="16865">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <menu key="menu" title="OtherViews" id="2150">
                             <items>
                                 <menuItem title="No modifiers active" state="on" id="2153"/>
@@ -3159,7 +3160,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Brush scaling" bezelStyle="regularSquare" imagePosition="leading" alignment="left" controlSize="mini" tag="5" inset="2" id="16866">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                 </button>
                 <popUpButton toolTip="Applies transform to pressure readings" verticalHuggingPriority="750" fixedFrame="YES" tag="4" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2135">
@@ -3167,7 +3168,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" title="Normal" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="clipping" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2146" id="16867">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <menu key="menu" title="OtherViews" id="2143">
                             <items>
                                 <menuItem title="Lighter" id="2144"/>
@@ -3185,7 +3186,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Pressure sensitive:" bezelStyle="regularSquare" imagePosition="leading" alignment="left" controlSize="mini" tag="3" inset="2" id="16868">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                     <connections>
                         <action selector="update:" target="1871" id="6438"/>
@@ -3196,7 +3197,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Fade-out: 100" bezelStyle="regularSquare" imagePosition="leading" alignment="left" controlSize="mini" tag="1" inset="2" id="16869">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                     <connections>
                         <action selector="update:" target="1871" id="6436"/>
@@ -3218,7 +3219,7 @@ Gw
                     <rect key="frame" x="92" y="3" width="123" height="12"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <sliderCell key="cell" controlSize="mini" continuous="YES" alignment="left" tag="2" minValue="1" maxValue="120" doubleValue="10" tickMarkPosition="above" allowsTickMarkValuesOnly="YES" sliderType="linear" id="16870">
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </sliderCell>
                     <connections>
                         <action selector="update:" target="1871" id="6437"/>
@@ -3229,7 +3230,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="help" bezelStyle="helpButton" alignment="center" controlSize="mini" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="j9f-Lx-j2b">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                 </button>
             </subviews>
@@ -3252,7 +3253,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" title="No modifiers active" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2129" id="16874">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <menu key="menu" title="OtherViews" id="2128">
                             <items>
                                 <menuItem title="No modifiers active" state="on" id="2129"/>
@@ -3270,7 +3271,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Anchor by clicking outside the selection" bezelStyle="regularSquare" imagePosition="leading" alignment="left" controlSize="mini" inset="2" id="16875">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                 </button>
                 <button horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lw2-UZ-eqC">
@@ -3278,7 +3279,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="help" bezelStyle="helpButton" alignment="center" controlSize="mini" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="q98-ug-ZpK">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                 </button>
             </subviews>
@@ -3297,7 +3298,7 @@ Gw
                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                     <buttonCell key="cell" type="push" title="Brushes" bezelStyle="rounded" alignment="center" controlSize="mini" borderStyle="border" inset="2" id="16879">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                     <connections>
                         <action selector="toggleBrushes:" target="1872" id="12024"/>
@@ -3311,7 +3312,7 @@ Gw
                     <rect key="frame" x="84" y="4" width="100" height="12"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <sliderCell key="cell" controlSize="mini" continuous="YES" alignment="left" maxValue="100" doubleValue="100" tickMarkPosition="below" sliderType="linear" id="16877">
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </sliderCell>
                     <connections>
                         <action selector="rateChanged:" target="1872" id="6603"/>
@@ -3322,14 +3323,14 @@ Gw
                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                     <buttonCell key="cell" type="help" bezelStyle="helpButton" alignment="center" controlSize="mini" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Lpc-Ma-gXA">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                 </button>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2118">
                     <rect key="frame" x="7" y="5" width="55" height="11"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="left" title="Rate: 100%" id="16878">
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -3354,7 +3355,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" title="No modifiers active" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2113" id="16881">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <menu key="menu" title="OtherViews" id="2112">
                             <items>
                                 <menuItem title="No modifiers active" state="on" id="2113"/>
@@ -3372,7 +3373,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="push" title="Crop Image" bezelStyle="rounded" alignment="center" controlSize="mini" borderStyle="border" inset="2" id="16882">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                     <connections>
                         <action selector="cropImage:" target="1878" id="2582"/>
@@ -3391,7 +3392,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" title="1 to 1" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2104" id="16883">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <menu key="menu" title="OtherViews" id="2103">
                             <items>
                                 <menuItem title="1 to 1" state="on" id="2104"/>
@@ -3414,7 +3415,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Aspect ratio:" bezelStyle="regularSquare" imagePosition="leading" alignment="left" controlSize="mini" inset="2" id="16884">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                     <connections>
                         <action selector="update:" target="2653" id="6611"/>
@@ -3425,7 +3426,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="help" bezelStyle="helpButton" alignment="center" controlSize="mini" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="D5C-ma-k9K">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                 </button>
                 <button verticalHuggingPriority="750" fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tre-Pl-vY3">
@@ -3433,7 +3434,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="push" title="Crop Layer" bezelStyle="rounded" alignment="center" controlSize="mini" borderStyle="border" inset="2" id="Ae9-KW-yby">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                     <connections>
                         <action selector="cropLayer:" target="1878" id="oE1-dq-ECv"/>
@@ -3455,7 +3456,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="push" title="Brushes" bezelStyle="rounded" alignment="center" controlSize="mini" borderStyle="border" inset="2" id="16889">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                     <connections>
                         <action selector="toggleBrushes:" target="1874" id="12023"/>
@@ -3478,7 +3479,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" title="No modifiers active" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2095" id="16886">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <menu key="menu" title="OtherViews" id="2093">
                             <items>
                                 <menuItem title="No modifiers active" state="on" id="2095"/>
@@ -3495,7 +3496,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Use sample from all layers" bezelStyle="regularSquare" imagePosition="leading" alignment="left" controlSize="mini" inset="2" id="16887">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                     <connections>
                         <action selector="mergedChanged:" target="1874" id="6607"/>
@@ -3506,14 +3507,14 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="help" bezelStyle="helpButton" alignment="center" controlSize="mini" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="e0u-P2-7ug">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                 </button>
                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6621">
                     <rect key="frame" x="4" y="7" width="208" height="11"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" controlSize="mini" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" state="on" alignment="left" title="Source: Unset" usesSingleLineMode="YES" id="16888">
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -3530,7 +3531,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" title="Triangular Wave" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="clipping" state="on" borderStyle="borderAndBezel" tag="2" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2078" id="16893">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <menu key="menu" title="OtherViews" id="2075">
                             <items>
                                 <menuItem title="None" id="2076"/>
@@ -3544,7 +3545,7 @@ Gw
                     <rect key="frame" x="206" y="4" width="89" height="11"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="left" title="Repeating pattern:" id="16894">
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -3553,7 +3554,7 @@ Gw
                     <rect key="frame" x="4" y="3" width="71" height="12"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="left" title="Gradient style:" id="16895">
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -3563,7 +3564,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" title="Linear" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="clipping" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2065" id="16896">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <menu key="menu" title="OtherViews" id="2063">
                             <items>
                                 <menuItem title="Linear" state="on" id="2065"/>
@@ -3583,7 +3584,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" title="No modifiers active" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2083" id="16891">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <menu key="menu" title="OtherViews" id="2082">
                             <items>
                                 <menuItem title="No modifiers active" state="on" id="2083"/>
@@ -3609,7 +3610,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="help" bezelStyle="helpButton" alignment="center" controlSize="mini" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="lFb-Z1-SvN">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                 </button>
             </subviews>
@@ -3623,7 +3624,7 @@ Gw
                     <rect key="frame" x="453" y="2" width="62" height="16"/>
                     <buttonCell key="cell" type="push" title="Textures" bezelStyle="rounded" alignment="center" controlSize="mini" borderStyle="border" inset="2" id="16904">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                     <connections>
                         <action selector="toggleTextures:" target="1882" id="12005"/>
@@ -3641,13 +3642,13 @@ Gw
                 <box horizontalHuggingPriority="750" verticalHuggingPriority="248" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="6460">
                     <rect key="frame" x="294" y="0.0" width="9" height="21"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="5" id="Srj-CZ-Jwe"/>
+                        <constraint firstAttribute="width" constant="5" id="EAp-B4-0yp"/>
                     </constraints>
                 </box>
                 <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6458">
                     <rect key="frame" x="19" y="2" width="68" height="16"/>
                     <segmentedCell key="cell" controlSize="mini" state="on" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="16903">
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <segments>
                             <segment image="left-align" imageScaling="none" width="20" selected="YES"/>
                             <segment image="center-align" imageScaling="none" width="20" tag="1"/>
@@ -3661,7 +3662,7 @@ Gw
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="2036">
                     <rect key="frame" x="307" y="5" width="37" height="11"/>
                     <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" title="No font" id="16899">
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -3670,7 +3671,7 @@ Gw
                     <rect key="frame" x="349" y="2" width="89" height="16"/>
                     <buttonCell key="cell" type="push" title="Change Font..." bezelStyle="rounded" alignment="center" controlSize="mini" borderStyle="border" inset="2" id="16900">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                     <connections>
                         <action selector="showFonts:" target="1882" id="6444"/>
@@ -3679,10 +3680,10 @@ Gw
                 <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2038">
                     <rect key="frame" x="192" y="4" width="96" height="12"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="96" id="5KK-2w-7Yr"/>
+                        <constraint firstAttribute="width" constant="96" id="tvf-2X-Dlq"/>
                     </constraints>
                     <sliderCell key="cell" controlSize="mini" continuous="YES" alignment="left" minValue="1" maxValue="24" doubleValue="5" tickMarkPosition="below" allowsTickMarkValuesOnly="YES" sliderType="linear" id="16901">
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </sliderCell>
                     <connections>
                         <action selector="update:" target="1882" id="6443"/>
@@ -3691,57 +3692,71 @@ Gw
                 <button imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2039">
                     <rect key="frame" x="99" y="2" width="87" height="18"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="81" id="z4E-xe-mXr"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="81" id="bPw-KS-12u"/>
                     </constraints>
                     <buttonCell key="cell" type="check" title="Outline: 100 pt" bezelStyle="regularSquare" imagePosition="leading" alignment="left" controlSize="mini" inset="2" id="16902">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                     <connections>
                         <action selector="update:" target="1882" id="6442"/>
                     </connections>
                 </button>
-                <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="E1M-35-llW">
-                    <rect key="frame" x="535" y="-3" width="16" height="26"/>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OrG-xV-9dT">
+                    <rect key="frame" x="527" y="1" width="69" height="21"/>
+                    <buttonCell key="cell" type="check" title="New Layer" bezelStyle="regularSquare" imagePosition="left" controlSize="mini" state="on" inset="2" id="g5R-uf-gCS">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="label" size="9"/>
+                    </buttonCell>
+                </button>
+                <box horizontalHuggingPriority="750" misplaced="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="VvE-4B-eSo">
+                    <rect key="frame" x="605" y="-5" width="5" height="23"/>
+                </box>
+                <button horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E1M-35-llW">
+                    <rect key="frame" x="616" y="-3" width="16" height="24"/>
                     <buttonCell key="cell" type="help" bezelStyle="helpButton" alignment="center" controlSize="mini" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="sHc-W6-FjS">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                 </button>
             </subviews>
             <constraints>
-                <constraint firstItem="6461" firstAttribute="baseline" secondItem="6460" secondAttribute="baseline" id="1c3-AD-hur"/>
-                <constraint firstItem="6461" firstAttribute="top" secondItem="6460" secondAttribute="top" id="1sg-Ed-s72"/>
-                <constraint firstItem="12002" firstAttribute="leading" secondItem="6464" secondAttribute="trailing" constant="8" symbolic="YES" id="4e3-Gd-g9t"/>
-                <constraint firstItem="12000" firstAttribute="leading" secondItem="12002" secondAttribute="trailing" constant="8" symbolic="YES" id="4vm-Yu-4Oy"/>
-                <constraint firstItem="6464" firstAttribute="baseline" secondItem="12000" secondAttribute="baseline" id="7mq-nK-Az3"/>
-                <constraint firstItem="6464" firstAttribute="centerY" secondItem="12002" secondAttribute="centerY" id="93J-xc-nSX"/>
-                <constraint firstItem="2039" firstAttribute="baseline" secondItem="2038" secondAttribute="baseline" id="Dio-WD-uuy"/>
-                <constraint firstItem="2037" firstAttribute="leading" secondItem="2036" secondAttribute="trailing" constant="8" symbolic="YES" id="JXQ-8v-XaE"/>
-                <constraint firstItem="2038" firstAttribute="baseline" secondItem="2037" secondAttribute="baseline" id="K5s-Fr-e6Y"/>
-                <constraint firstItem="6460" firstAttribute="baseline" secondItem="6464" secondAttribute="baseline" id="RoE-Hh-opn"/>
-                <constraint firstItem="2037" firstAttribute="baseline" secondItem="12002" secondAttribute="baseline" id="Sui-1L-vul"/>
-                <constraint firstItem="E1M-35-llW" firstAttribute="leading" secondItem="12000" secondAttribute="trailing" constant="12" symbolic="YES" id="Tei-vd-kvY"/>
-                <constraint firstItem="6461" firstAttribute="top" secondItem="1894" secondAttribute="top" id="UpS-tZ-Xcj"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="E1M-35-llW" secondAttribute="trailing" constant="10" id="XL3-Df-iVH"/>
-                <constraint firstItem="2038" firstAttribute="leading" secondItem="2039" secondAttribute="trailing" constant="8" symbolic="YES" id="XkD-11-qax"/>
-                <constraint firstItem="6461" firstAttribute="leading" secondItem="6458" secondAttribute="trailing" constant="8" symbolic="YES" id="YAO-IG-FQr"/>
-                <constraint firstItem="12000" firstAttribute="centerY" secondItem="E1M-35-llW" secondAttribute="centerY" id="ZJx-4m-bfK"/>
-                <constraint firstItem="6464" firstAttribute="top" secondItem="12000" secondAttribute="top" id="a0b-D7-i5I"/>
-                <constraint firstItem="E1M-35-llW" firstAttribute="top" secondItem="1894" secondAttribute="top" constant="-2" id="co3-Tw-3ul"/>
-                <constraint firstItem="2039" firstAttribute="leading" secondItem="6461" secondAttribute="trailing" constant="8" symbolic="YES" id="jse-hh-9Is"/>
-                <constraint firstItem="2039" firstAttribute="baseline" secondItem="6458" secondAttribute="firstBaseline" id="k1J-CC-7Hl"/>
-                <constraint firstItem="2036" firstAttribute="leading" secondItem="6460" secondAttribute="trailing" constant="8" symbolic="YES" id="kMQ-xD-2Lr"/>
-                <constraint firstItem="6458" firstAttribute="top" secondItem="1894" secondAttribute="top" constant="3" id="nSE-dB-mG9"/>
-                <constraint firstItem="2038" firstAttribute="bottom" secondItem="2036" secondAttribute="bottom" id="o1t-a5-gTr"/>
-                <constraint firstItem="6458" firstAttribute="leading" secondItem="1894" secondAttribute="leading" constant="20" symbolic="YES" id="pGN-mU-dIA"/>
-                <constraint firstItem="6460" firstAttribute="top" secondItem="6464" secondAttribute="top" id="r70-7K-BNM"/>
-                <constraint firstItem="2036" firstAttribute="baseline" secondItem="2038" secondAttribute="firstBaseline" id="rK3-FB-0A0"/>
-                <constraint firstItem="6460" firstAttribute="leading" secondItem="2038" secondAttribute="trailing" constant="8" symbolic="YES" id="sDc-1j-dqH"/>
-                <constraint firstItem="2037" firstAttribute="baseline" secondItem="12002" secondAttribute="firstBaseline" id="tpA-JI-Cze"/>
-                <constraint firstItem="6464" firstAttribute="leading" secondItem="2037" secondAttribute="trailing" constant="8" symbolic="YES" id="xWk-Yx-Elt"/>
+                <constraint firstItem="VvE-4B-eSo" firstAttribute="leading" secondItem="OrG-xV-9dT" secondAttribute="trailing" constant="8" symbolic="YES" id="0eN-ui-kEN"/>
+                <constraint firstItem="2036" firstAttribute="leading" secondItem="6460" secondAttribute="trailing" constant="8" symbolic="YES" id="3MJ-YP-0ph"/>
+                <constraint firstItem="6460" firstAttribute="top" secondItem="6464" secondAttribute="top" id="4tn-F9-9t2"/>
+                <constraint firstItem="6460" firstAttribute="baseline" secondItem="6464" secondAttribute="baseline" id="5dH-Em-nzF"/>
+                <constraint firstItem="6464" firstAttribute="leading" secondItem="2037" secondAttribute="trailing" constant="8" symbolic="YES" id="7in-yg-4hk"/>
+                <constraint firstItem="12000" firstAttribute="top" secondItem="VvE-4B-eSo" secondAttribute="top" id="9Mc-Lz-rpQ"/>
+                <constraint firstItem="E1M-35-llW" firstAttribute="leading" secondItem="VvE-4B-eSo" secondAttribute="trailing" constant="14" id="9pZ-sH-dqZ"/>
+                <constraint firstItem="2039" firstAttribute="centerY" secondItem="VvE-4B-eSo" secondAttribute="centerY" id="Eim-Jq-ONJ"/>
+                <constraint firstItem="2036" firstAttribute="baseline" secondItem="2038" secondAttribute="firstBaseline" id="F6K-e3-hx0"/>
+                <constraint firstItem="12000" firstAttribute="bottom" secondItem="E1M-35-llW" secondAttribute="bottom" id="IkJ-gA-Thf"/>
+                <constraint firstItem="2038" firstAttribute="leading" secondItem="2039" secondAttribute="trailing" constant="8" symbolic="YES" id="IuF-Rm-8gK"/>
+                <constraint firstItem="6461" firstAttribute="leading" secondItem="6458" secondAttribute="trailing" constant="8" symbolic="YES" id="KCP-XU-MAk"/>
+                <constraint firstItem="6461" firstAttribute="top" secondItem="6460" secondAttribute="top" id="N7v-Za-j4h"/>
+                <constraint firstItem="6458" firstAttribute="leading" secondItem="1894" secondAttribute="leading" constant="20" symbolic="YES" id="ORg-bu-mFb"/>
+                <constraint firstItem="2039" firstAttribute="baseline" secondItem="2038" secondAttribute="baseline" id="Qbo-Pf-0Zm"/>
+                <constraint firstItem="12000" firstAttribute="leading" secondItem="12002" secondAttribute="trailing" constant="8" symbolic="YES" id="XcS-ds-LUa"/>
+                <constraint firstItem="2038" firstAttribute="bottom" secondItem="2036" secondAttribute="bottom" id="Xyf-r8-6Kc"/>
+                <constraint firstItem="12002" firstAttribute="leading" secondItem="6464" secondAttribute="trailing" constant="8" symbolic="YES" id="cvg-gd-jez"/>
+                <constraint firstItem="2036" firstAttribute="baseline" secondItem="OrG-xV-9dT" secondAttribute="baseline" id="dKL-26-AsH"/>
+                <constraint firstItem="6461" firstAttribute="top" secondItem="1894" secondAttribute="top" id="iIm-AX-tue"/>
+                <constraint firstItem="6464" firstAttribute="baseline" secondItem="12000" secondAttribute="baseline" id="ibJ-6P-J0J"/>
+                <constraint firstItem="6464" firstAttribute="top" secondItem="12000" secondAttribute="top" id="jOt-RR-8LG"/>
+                <constraint firstItem="6460" firstAttribute="leading" secondItem="2038" secondAttribute="trailing" constant="8" symbolic="YES" id="mhB-8E-CK3"/>
+                <constraint firstItem="OrG-xV-9dT" firstAttribute="leading" secondItem="12000" secondAttribute="trailing" constant="8" symbolic="YES" id="nDz-2M-V8m"/>
+                <constraint firstItem="12000" firstAttribute="centerY" secondItem="OrG-xV-9dT" secondAttribute="centerY" id="nTy-zi-k5B"/>
+                <constraint firstItem="6460" firstAttribute="centerY" secondItem="2036" secondAttribute="centerY" id="oiI-Ic-5rX"/>
+                <constraint firstItem="E1M-35-llW" firstAttribute="top" secondItem="1894" secondAttribute="top" constant="-2" id="p5s-nf-bHX"/>
+                <constraint firstItem="2037" firstAttribute="baseline" secondItem="12002" secondAttribute="baseline" id="pDw-SJ-BxW"/>
+                <constraint firstItem="2038" firstAttribute="baseline" secondItem="2037" secondAttribute="baseline" id="pU9-ux-exx"/>
+                <constraint firstItem="2039" firstAttribute="baseline" secondItem="6458" secondAttribute="firstBaseline" id="q0N-b1-NV9"/>
+                <constraint firstItem="2037" firstAttribute="leading" secondItem="2036" secondAttribute="trailing" constant="8" symbolic="YES" id="sZz-nw-oKV"/>
+                <constraint firstItem="6461" firstAttribute="baseline" secondItem="6460" secondAttribute="baseline" id="uHp-u6-pdT"/>
+                <constraint firstItem="2039" firstAttribute="leading" secondItem="6461" secondAttribute="trailing" constant="8" symbolic="YES" id="w71-5K-EUT"/>
+                <constraint firstItem="6458" firstAttribute="top" secondItem="1894" secondAttribute="top" constant="3" id="y27-PN-f2S"/>
             </constraints>
-            <point key="canvasLocation" x="-571" y="325.5"/>
+            <point key="canvasLocation" x="-571.5" y="325.5"/>
         </customView>
         <customView id="1895" userLabel="Eyedrop Options">
             <rect key="frame" x="0.0" y="0.0" width="593" height="21"/>
@@ -3764,7 +3779,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" title="No modifiers active" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2033" id="16906">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <menu key="menu" title="OtherViews" id="2032">
                             <items>
                                 <menuItem title="No modifiers active" state="on" id="2033"/>
@@ -3781,21 +3796,21 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Use sample from all layers" bezelStyle="regularSquare" imagePosition="leading" alignment="left" controlSize="mini" inset="2" id="16907">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                 </button>
                 <slider toolTip="Size of the sampling square" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2020">
                     <rect key="frame" x="78" y="2" width="100" height="16"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <sliderCell key="cell" controlSize="mini" alignment="left" minValue="1" maxValue="11" doubleValue="1" tickMarkPosition="below" numberOfTickMarks="11" allowsTickMarkValuesOnly="YES" sliderType="linear" id="16908">
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </sliderCell>
                 </slider>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2021">
                     <rect key="frame" x="57" y="5" width="21" height="11"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="center" title="1" id="16909">
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -3804,7 +3819,7 @@ Gw
                     <rect key="frame" x="4" y="5" width="65" height="11"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="left" title="Sample size:" id="16910">
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -3813,7 +3828,7 @@ Gw
                     <rect key="frame" x="183" y="5" width="21" height="11"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="center" title="11" id="16911">
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -3823,7 +3838,7 @@ Gw
                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                     <buttonCell key="cell" type="help" bezelStyle="helpButton" alignment="center" controlSize="mini" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="N6f-pI-IWp">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                 </button>
             </subviews>
@@ -3846,7 +3861,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="push" title="Textures" bezelStyle="rounded" alignment="center" controlSize="mini" borderStyle="border" inset="2" id="16918">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                     <connections>
                         <action selector="toggleTextures:" target="1870" id="11999"/>
@@ -3861,7 +3876,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" title="No modifiers active" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2015" id="16913">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <menu key="menu" title="OtherViews" id="2011">
                             <items>
                                 <menuItem title="No modifiers active" state="on" id="2015"/>
@@ -3879,7 +3894,7 @@ Gw
                     <rect key="frame" x="52" y="7" width="21" height="11"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="center" title="1" id="16914">
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -3888,7 +3903,7 @@ Gw
                     <rect key="frame" x="178" y="6" width="21" height="13"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="21" id="16915">
-                        <font key="font" metaFont="system" size="10"/>
+                        <font key="font" metaFont="menu" size="10"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -3897,14 +3912,14 @@ Gw
                     <rect key="frame" x="73" y="4" width="100" height="16"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <sliderCell key="cell" controlSize="mini" alignment="left" minValue="1" maxValue="21" doubleValue="1" tickMarkPosition="below" numberOfTickMarks="21" allowsTickMarkValuesOnly="YES" sliderType="linear" id="16916">
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </sliderCell>
                 </slider>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2003">
                     <rect key="frame" x="4" y="7" width="56" height="11"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="left" title="Pencil size:" id="16917">
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -3914,7 +3929,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="help" bezelStyle="helpButton" alignment="center" controlSize="mini" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="oVb-hS-mxD">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                 </button>
             </subviews>
@@ -3933,7 +3948,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="push" title="Brushes" bezelStyle="rounded" alignment="center" controlSize="mini" borderStyle="border" inset="2" id="16924">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                     <connections>
                         <action selector="toggleBrushes:" target="1883" id="12009"/>
@@ -3952,7 +3967,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" title="No modifiers active" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="1995" id="16920">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <menu key="menu" title="OtherViews" id="1993">
                             <items>
                                 <menuItem title="No modifiers active" state="on" id="1995"/>
@@ -3974,14 +3989,14 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Mimic paintbrush fading" bezelStyle="regularSquare" imagePosition="leading" alignment="left" controlSize="mini" inset="2" id="16921">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                 </button>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1987">
                     <rect key="frame" x="4" y="7" width="73" height="11"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="left" title="Opacity: 100%" id="16923">
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -3990,7 +4005,7 @@ Gw
                     <rect key="frame" x="77" y="6" width="104" height="12"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <sliderCell key="cell" controlSize="mini" continuous="YES" alignment="left" maxValue="100" doubleValue="100" tickMarkPosition="below" sliderType="linear" id="16922">
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </sliderCell>
                     <connections>
                         <action selector="opacityChanged:" target="1883" id="6454"/>
@@ -4001,7 +4016,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="help" bezelStyle="helpButton" alignment="center" controlSize="mini" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="HQ6-m8-Ebs">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                 </button>
             </subviews>
@@ -4020,7 +4035,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="help" bezelStyle="helpButton" alignment="center" controlSize="mini" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="4D3-co-zWi">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                 </button>
                 <popUpButton verticalHuggingPriority="750" fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1970">
@@ -4028,7 +4043,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" title="No modifiers active" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="1976" id="16926">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <menu key="menu" title="OtherViews" id="1974">
                             <items>
                                 <menuItem title="No modifiers active" state="on" id="1976"/>
@@ -4065,7 +4080,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" title="No modifiers active" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="1968" id="16928">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <menu key="menu" title="OtherViews" id="1966">
                             <items>
                                 <menuItem title="No modifiers active" state="on" id="1968"/>
@@ -4081,7 +4096,7 @@ Gw
                     <rect key="frame" x="4" y="5" width="103" height="11"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="left" title="Current zoom: 100%" id="16929">
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -4091,7 +4106,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="help" bezelStyle="helpButton" alignment="center" controlSize="mini" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Pho-eE-3a0">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                 </button>
             </subviews>
@@ -4106,7 +4121,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" title="No modifiers active" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="11383" id="16935">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <menu key="menu" title="OtherViews" id="11375">
                             <items>
                                 <menuItem title="No modifiers active" state="on" id="11383"/>
@@ -4129,7 +4144,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Corner radius: 8" bezelStyle="regularSquare" imagePosition="leading" alignment="left" controlSize="mini" inset="2" id="16931">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                     <connections>
                         <action selector="update:" target="1875" id="5296"/>
@@ -4140,7 +4155,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" title="1 to 1" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="1947" id="16932">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <menu key="menu" title="OtherViews" id="1943">
                             <items>
                                 <menuItem title="1 to 1" state="on" id="1947"/>
@@ -4163,7 +4178,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Aspect ratio:" bezelStyle="regularSquare" imagePosition="leading" alignment="left" controlSize="mini" inset="2" id="16933">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                     <connections>
                         <action selector="update:" target="2652" id="5297"/>
@@ -4173,7 +4188,7 @@ Gw
                     <rect key="frame" x="114" y="3" width="82" height="13"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <sliderCell key="cell" controlSize="mini" continuous="YES" alignment="left" maxValue="80" doubleValue="8" tickMarkPosition="below" sliderType="linear" id="16934">
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </sliderCell>
                     <connections>
                         <action selector="update:" target="1875" id="5295"/>
@@ -4184,7 +4199,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="help" bezelStyle="helpButton" alignment="center" controlSize="mini" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rQ6-7B-tQo">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                 </button>
                 <box horizontalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="70R-yb-Qip">
@@ -4214,7 +4229,7 @@ Gw
                     <rect key="frame" x="80" y="6" width="103" height="12"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <sliderCell key="cell" controlSize="mini" continuous="YES" state="on" alignment="left" maxValue="255" doubleValue="129.69827324151993" tickMarkPosition="above" sliderType="linear" id="16938">
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </sliderCell>
                     <connections>
                         <action selector="toleranceSliderChanged:" target="1881" id="UF7-yW-bKR"/>
@@ -4224,7 +4239,7 @@ Gw
                     <rect key="frame" x="7" y="6" width="73" height="12"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="left" title="Tolerance: 15" id="16939">
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -4234,7 +4249,7 @@ Gw
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Select All Regions" bezelStyle="regularSquare" imagePosition="left" controlSize="mini" inset="2" id="LjL-wy-ibI">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                 </button>
                 <box horizontalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="MOl-VA-wwH">
@@ -4250,7 +4265,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" title="No modifiers active" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="1932" id="16937">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <menu key="menu" title="OtherViews" id="1925">
                             <items>
                                 <menuItem title="No modifiers active" state="on" id="1932"/>
@@ -4269,7 +4284,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="help" bezelStyle="helpButton" alignment="center" controlSize="mini" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="7rP-I4-53x">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                 </button>
             </subviews>
@@ -4288,7 +4303,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" title="No modifiers active" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="1915" id="16943">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                         <menu key="menu" title="OtherViews" id="1908">
                             <items>
                                 <menuItem title="No modifiers active" state="on" id="1915"/>
@@ -4310,7 +4325,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="help" bezelStyle="helpButton" alignment="center" controlSize="mini" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="9Bm-h7-7YB">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
+                        <font key="font" metaFont="label" size="9"/>
                     </buttonCell>
                 </button>
             </subviews>
@@ -4408,7 +4423,7 @@ Gw
                         <rect key="frame" x="100" y="67" width="35" height="13"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="to" id="16948">
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -4481,7 +4496,7 @@ DQ
                         <rect key="frame" x="100" y="67" width="35" height="13"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="to" id="16953">
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -4554,7 +4569,7 @@ DQ
                         <rect key="frame" x="100" y="67" width="35" height="13"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="to" id="16957">
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -5128,7 +5143,7 @@ DQ
                         <rect key="frame" x="167" y="74" width="120" height="13"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Untitled" id="16986">
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -5147,7 +5162,7 @@ DQ
                         <rect key="frame" x="27" y="74" width="120" height="14"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Opacity: 100%" id="16988">
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -5206,7 +5221,7 @@ DQ
                         <rect key="frame" x="164" y="83" width="120" height="13"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Untitled" id="16991">
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -5225,7 +5240,7 @@ DQ
                         <rect key="frame" x="24" y="83" width="120" height="14"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Spacing: 100%" id="16993">
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -5565,7 +5580,7 @@ DQ
                         <rect key="frame" x="18" y="106" width="120" height="14"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Spacing - 100%" id="ReR-pH-LEt">
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>

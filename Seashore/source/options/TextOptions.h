@@ -21,7 +21,10 @@
 	// The checkbox specifying the outline of the font
 	IBOutlet id outlineCheckbox;
 	
-	// The slider specifying the outline of the font
+    // if checked, create a new layer on text add
+    IBOutlet id newLayerCheckbox;
+    
+    // The slider specifying the outline of the font
 	IBOutlet id outlineSlider;
 		
 	// A label specifying the font
@@ -68,6 +71,13 @@
 	@result		Returns YES if subpixel rendering should be used, NO otherwise.
 */
 - (BOOL)useSubpixel;
+
+/*!
+    @method        shouldAddTextAsNewLayer
+    @discussion    Returns whether text should be added as a new layer
+    @result        Returns YES if text should be added as a new layer, NO otherwise.
+*/
+- (BOOL)shouldAddTextAsNewLayer;
 
 /*!
 	@method		outline
