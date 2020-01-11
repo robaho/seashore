@@ -28,11 +28,11 @@
 - (void)smudgeWithBrush:(id)brush at:(NSPoint)point
 {
 	id contents = [document contents];
-	id layer = [contents activeLayer];
-	unsigned char *overlay = [[document whiteboard] overlay], *data = [(SeaLayer *)layer data], *replace = [(SeaWhiteboard *)[document whiteboard] replace];
+	SeaLayer *layer = [contents activeLayer];
+	unsigned char *overlay = [[document whiteboard] overlay], *data = [layer data], *replace = [[document whiteboard] replace];
 	unsigned char *brushData, basePixel[4];
 	int brushWidth = [(SeaBrush *)brush fakeWidth], brushHeight = [(SeaBrush *)brush fakeHeight];
-	int width = [(SeaLayer *)layer width], height = [(SeaLayer *)layer height];
+	int width = [layer width], height = [layer height];
 	int i, j, k, tx, ty, t1, t2, pos, spp = [[document contents] spp];
 	int rate = [(SmudgeOptions *)options rate];
 	IntPoint ipoint = NSPointMakeIntPoint(point);
@@ -97,9 +97,9 @@
 
 - (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event
 {
-	id layer = [[document contents] activeLayer];
-	int layerWidth = [(SeaLayer *)layer width], layerHeight = [(SeaLayer *)layer height];
-	unsigned char *data = [(SeaLayer *)layer data];
+	SeaLayer *layer = [[document contents] activeLayer];
+	int layerWidth = [layer width], layerHeight = [layer height];
+	unsigned char *data = [layer data];
 	id curBrush = [[document brushUtility] activeBrush];
 	int brushWidth = [(SeaBrush *)curBrush fakeWidth], brushHeight = [(SeaBrush *)curBrush fakeHeight];
 	int i, j, k, tx, ty, spp = [[document contents] spp];
@@ -159,7 +159,7 @@
 	rect.size.height = [(SeaBrush *)curBrush fakeHeight] + 1;
 	temp = NSMakePoint((int)curPoint.x - [(SeaBrush *)curBrush width] / 2, (int)curPoint.y - [(SeaBrush *)curBrush height] / 2);
 	rect.origin = NSPointMakeIntPoint(temp);
-	rect = IntConstrainRect(rect, IntMakeRect(0, 0, [(SeaLayer *)layer width], [(SeaLayer *)layer height]));
+	rect = IntConstrainRect(rect, IntMakeRect(0, 0, [layer width], [layer height]));
 	if (rect.size.width > 0 && rect.size.height > 0) {
 		[self smudgeWithBrush:curBrush at:temp];
 		[[document helpers] overlayChanged:rect];
@@ -172,8 +172,8 @@
 
 - (void)mouseDraggedTo:(IntPoint)where withEvent:(NSEvent *)event
 {
-	id layer = [[document contents] activeLayer];
-	int layerWidth = [(SeaLayer *)layer width], layerHeight = [(SeaLayer *)layer height];
+	SeaLayer *layer = [[document contents] activeLayer];
+	int layerWidth = [layer width], layerHeight = [layer height];
 	id curBrush = [[document brushUtility] activeBrush];
 	int brushWidth = [(SeaBrush *)curBrush fakeWidth], brushHeight = [(SeaBrush *)curBrush fakeHeight];
 	NSPoint curPoint = IntPointMakeNSPoint(where);
