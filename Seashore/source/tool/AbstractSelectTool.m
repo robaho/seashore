@@ -24,11 +24,7 @@
              withMaskRect: IntMakeRect(maskOffset.x,maskOffset.y,maskSize.width,maskSize.height)
 				  andMask: [(SeaSelection*)[document selection] mask]];
 		
-		// Also, we universally float the selection if alt is down
-        if(![self isMovingOrScaling] && [[self getOptions] modifier] == kAltModifier) {
-			[[document contents] makeSelectionFloat:NO];
-		}
-	}	
+	}
 }
 
 - (void)mouseDraggedTo:(IntPoint)localPoint withEvent:(NSEvent *)event
@@ -55,6 +51,11 @@
 		[self mouseUpAt: localPoint
 				forRect: [[document selection] globalRect]
 				andMask: [(SeaSelection*)[document selection] mask]];
+        
+        // Also, we universally float the selection if alt is down
+        if([[self getOptions] modifier] == kAltModifier) {
+            [[document contents] makeSelectionFloat:NO];
+        }
 	}
 }
 

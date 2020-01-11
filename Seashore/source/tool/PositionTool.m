@@ -35,18 +35,13 @@
 - (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event
 {
 	id contents = [document contents];
-	id activeLayer = [contents activeLayer];
+	SeaLayer * activeLayer = [contents activeLayer];
 	IntPoint oldOffsets;
 	int whichLayer;
 	int function = kMovingLayer;
 	
-	// Determine the function
-	if ([activeLayer floating] && [options canAnchor] && (where.x < 0 || where.y < 0 || where.x >= [(SeaLayer *)activeLayer width] || where.y >= [(SeaLayer *)activeLayer height])){
-		function = kAnchoringLayer;
-	}else{
-		function = [options toolFunction];
-	}
-
+    function = [options toolFunction];
+    
 	// Record the inital point for dragging
 	initialPoint = where;
 
@@ -96,12 +91,6 @@
 			// Start scaling layer
 			scale = 1.0;
 			[[document docView] setNeedsDisplay:YES];
-			
-		break;
-		case kAnchoringLayer:
-		
-			// Anchor the layer
-			[contents anchorSelection];
 			
 		break;
 	}
@@ -169,12 +158,22 @@
 	id layer;
 	int deltax;
 	int newWidth, newHeight;
+    
+    id contents = [document contents];
+    SeaLayer *activeLayer = [contents activeLayer];
 	
 	// Determine the delta
 	deltax = where.x - initialPoint.x;
+    
+    int function = [options toolFunction];
+    
+    // Determine the function
+    if ([activeLayer floating] && [options canAnchor] && (where.x < 0 || where.y < 0 || where.x >= [activeLayer width] || where.y >= [activeLayer height])){
+        function = kAnchoringLayer;
+    }
 	
 	// Vary behaviour based on function
-	switch ([options toolFunction]) {
+	switch (function) {
 		case kRotatingLayer:
 			// Finish rotating layer
 			[[seaOperations seaRotation] rotate:rotation * 180.0 / 3.1415 withTrim:YES];
@@ -186,6 +185,10 @@
 			newHeight = scale * [(SeaLayer *)layer height];
 			[[seaOperations seaScale] scaleToWidth:newWidth height:newHeight interpolation:NSImageInterpolationHigh index:kActiveLayer];
 		break;
+        case kAnchoringLayer:
+            [contents anchorSelection];
+        break;
+
 	}
 	
 	// Cancel the previewing
