@@ -15,17 +15,17 @@
     __weak IBOutlet id document;
 
 	// The exporting panel
-	IBOutlet id sheet;
+	__weak IBOutlet id sheet;
 
-	IBOutlet id categoryTable;
+	__weak IBOutlet id categoryTable;
 	
-	IBOutlet id categoryTextbox;
+	__weak IBOutlet id categoryTextbox;
 	
-	IBOutlet id existingCategoryRadio;
+	__weak IBOutlet id existingCategoryRadio;
 	
-	IBOutlet id newCategoryRadio;
+	__weak IBOutlet id newCategoryRadio;
 	
-	IBOutlet id nameTextbox;
+	__weak IBOutlet id nameTextbox;
 }
 
 @property int spacing;
