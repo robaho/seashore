@@ -101,7 +101,6 @@
 @property (strong) IBOutlet TextureUtility *textureUtility;
 @property (strong) IBOutlet BrushUtility *brushUtility;
 @property (strong) IBOutlet PegasusUtility *pegasusUtility;
-@property (strong) IBOutlet id transparentUtility;
 @property (strong) IBOutlet ToolboxUtility *toolboxUtility;
 @property (strong) IBOutlet OptionsUtility *optionsUtility;
 @property (strong) IBOutlet InfoUtility *infoUtility;

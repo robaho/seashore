@@ -166,9 +166,10 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	if (guideColor < 0 || guideColor >= kMaxColor)
 		guideColor = kYellowColor;
 	
+    NSString *osxMode = [[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"];
+    
 	// Determine the initial color (from preferences if possible)
 	if ([gUserDefaults objectForKey:@"windowBackColor"] == NULL) {
-        NSString *osxMode = [[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"];
         if(osxMode && [osxMode isEqualToString:@"@Dark"]){
             windowBackColor = [NSColor windowBackgroundColor];
         } else {
@@ -180,6 +181,21 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 		if (tempData != nil)
             windowBackColor = (NSColor *)[NSUnarchiver unarchiveObjectWithData:tempData];
 	}
+    
+    // Determine the initial color (from preferences if possible)
+    if ([gUserDefaults objectForKey:@"transparency color data"] == NULL) {
+        // use reverse defaults from window back
+        if(osxMode && ![osxMode isEqualToString:@"@Dark"]){
+            transparencyColor = [NSColor windowBackgroundColor];
+        } else {
+            transparencyColor = [NSColor controlShadowColor];
+        }
+    }
+    else {
+        tempData = [gUserDefaults dataForKey:@"transparency color data"];
+        if (tempData != nil)
+            transparencyColor = (NSColor *)[NSUnarchiver unarchiveObjectWithData:tempData];
+    }
 	
 	// Get the default document size
 	width = 512;
@@ -307,6 +323,7 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	[gUserDefaults setObject:(transparentBackground ? @"YES" : @"NO") forKey:@"transparentBackground"];
 	[gUserDefaults setObject:(useCheckerboard ? @"YES" : @"NO") forKey:@"useCheckerboard"];
 	[gUserDefaults setObject:[NSArchiver archivedDataWithRootObject:windowBackColor] forKey:@"windowBackColor"];
+    [gUserDefaults setObject:[NSArchiver archivedDataWithRootObject:transparencyColor] forKey:@"transparency color data"];
 	[gUserDefaults setInteger:selectionColor forKey:@"selectionColor"];
 	[gUserDefaults setObject:(whiteLayerBounds ? @"YES" : @"NO") forKey:@"whiteLayerBounds"];
 	[gUserDefaults setInteger:guideColor forKey:@"guideColor"];
@@ -372,6 +389,7 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	[checkerboardMatrix	selectCellAtRow: useCheckerboard column: 0];
 	[layerBoundsMatrix selectCellAtRow: whiteLayerBounds column: 0];
 	[windowBackWell setColor:windowBackColor];
+    [transparencyColorWell setColor:transparencyColor];
 	[transparentBackgroundCheckbox setState:transparentBackground];
 	[fewerWarningsCheckbox setState:fewerWarnings];
 	[effectsPanelCheckbox setState:effectsPanel];
@@ -655,9 +673,26 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	}
 }
 
+- (IBAction)transparencyColorChanged:(id)sender
+{
+    NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
+    int i;
+
+    transparencyColor = [transparencyColorWell color];
+    for (i = 0; i < [documents count]; i++) {
+        [[[documents objectAtIndex:i] docView] setNeedsDisplay:YES];
+    }
+}
+
+
 - (NSColor *)windowBack
 {
 	return windowBackColor;
+}
+
+- (NSColor *)transparencyColor
+{
+    return transparencyColor;
 }
 
 - (NSColor *)selectionColor:(float)alpha

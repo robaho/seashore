@@ -6,7 +6,6 @@
 #import "AbstractTool.h"
 #import "TextureUtility.h"
 #import "SeaTexture.h"
-#import "TransparentUtility.h"
 #import "TextureUtility.h"
 #import "SeaWhiteboard.h"
 #import "ToolboxUtility.h"

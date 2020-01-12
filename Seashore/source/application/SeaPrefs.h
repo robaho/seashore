@@ -67,7 +67,10 @@ enum {
 	// The color well for the window back
 	IBOutlet id windowBackWell;
 	
-	// The text field for the suggested width value for a new image
+    // the color well for the transparency color
+    IBOutlet id transparencyColorWell;
+    
+    // The text field for the suggested width value for a new image
 	IBOutlet id widthValue;
 	
 	// The text field for the suggested height value for a new image
@@ -128,7 +131,10 @@ enum {
 	
 	// The color of the back of the window
 	NSColor *windowBackColor;
-	
+
+    // The color of to use for transparency
+    NSColor *transparencyColor;
+    
 	// Is this the first run?
 	BOOL firstRun;
 	
@@ -476,6 +482,21 @@ enum {
 	@result		True if a pattern; false would use the transparency color.
 */
 - (BOOL)useCheckerboard;
+
+/*!
+    @method        transparecyColorChanged
+    @discussion    Called when the transparency color changes.
+    @param        sender
+                The Color Well sending the message.
+*/
+- (IBAction)transparencyColorChanged:(id)sender;
+
+/*!
+    @method        transparencyColor
+    @discussion    Returns the color of the transparecy when using non-checkboard
+    @result        Returns a RGB NSColor object representing the color.
+*/
+- (NSColor *)transparencyColor;
 
 /*!
 	@method		defaultWindowBack:

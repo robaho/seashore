@@ -945,7 +945,7 @@ CA
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <textView ambiguous="YES" editable="NO" importsGraphics="NO" verticallyResizable="YES" baseWritingDirection="leftToRight" usesFontPanel="YES" usesRuler="YES" spellingCorrection="YES" smartInsertDelete="YES" id="4078">
-                                    <rect key="frame" x="0.0" y="-234" width="423" height="5850"/>
+                                    <rect key="frame" x="0.0" y="-351" width="423" height="5850"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1494,7 +1494,6 @@ This General Public License does not permit incorporating your program into prop
                 </subviews>
             </view>
         </window>
-        <customObject id="6652" userLabel="Transparent Utility" customClass="TransparentUtility"/>
         <customObject id="235" userLabel="SeaHelp" customClass="SeaHelp">
             <connections>
                 <outlet property="instantHelpLabel" destination="918" id="920"/>
@@ -1554,6 +1553,7 @@ This General Public License does not permit incorporating your program into prop
                 <outlet property="resolutionMenu" destination="2984" id="3018"/>
                 <outlet property="selectionColorMenu" destination="3690" id="3708"/>
                 <outlet property="smartInterpolationCheckbox" destination="2714" id="2772"/>
+                <outlet property="transparencyColorWell" destination="ur0-Fq-68q" id="05v-2I-eXQ"/>
                 <outlet property="transparentBackgroundCheckbox" destination="2994" id="3019"/>
                 <outlet property="widthValue" destination="2983" id="3016"/>
                 <outlet property="windowBackWell" destination="3759" id="3761"/>
@@ -2345,7 +2345,7 @@ DQ
                     </connections>
                 </button>
                 <colorWell fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3759">
-                    <rect key="frame" x="147" y="139" width="52" height="24"/>
+                    <rect key="frame" x="144" y="140" width="52" height="24"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <color key="color" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
@@ -2428,17 +2428,6 @@ DQ
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button verticalHuggingPriority="750" fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3696">
-                    <rect key="frame" x="315" y="314" width="92" height="28"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <buttonCell key="cell" type="push" title="Set Color…" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" inset="2" id="7345">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="message" size="11"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="toggle:" target="6652" id="6654"/>
-                    </connections>
-                </button>
                 <popUpButton verticalHuggingPriority="750" fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3690">
                     <rect key="frame" x="141" y="263" width="130" height="22"/>
                     <autoresizingMask key="autoresizingMask"/>
@@ -2519,8 +2508,16 @@ DQ
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <colorWell id="ur0-Fq-68q">
+                    <rect key="frame" x="314" y="318" width="52" height="23"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <color key="color" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="transparencyColorChanged:" target="507" id="7Wf-K5-PTq"/>
+                    </connections>
+                </colorWell>
             </subviews>
-            <point key="canvasLocation" x="83" y="-385"/>
+            <point key="canvasLocation" x="234.5" y="-549.5"/>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="X1R-xm-eP3"/>
     </objects>

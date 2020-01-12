@@ -251,7 +251,6 @@
 		A8EDF110078959C80022BB31 /* SeaBrush.m in Sources */ = {isa = PBXBuildFile; fileRef = A8FBD15E0410B5EC00DF7825 /* SeaBrush.m */; };
 		A8EDF111078959C80022BB31 /* BrushUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = A8A64F84041216EB00B2D42F /* BrushUtility.m */; };
 		A8EDF112078959C80022BB31 /* BrushView.m in Sources */ = {isa = PBXBuildFile; fileRef = A8C105DF0412E58E00AC6F4B /* BrushView.m */; };
-		A8EDF113078959C80022BB31 /* TransparentUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = F5CE257503D693B7013D2EC9 /* TransparentUtility.m */; };
 		A8EDF114078959C80022BB31 /* OptionsUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E5085904576FB200A80207 /* OptionsUtility.m */; };
 		A8EDF115078959C80022BB31 /* AbstractOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = A8ABCA94045A109800A80207 /* AbstractOptions.m */; };
 		A8EDF116078959C80022BB31 /* BucketOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = A8ABCA98045A10BF00A80207 /* BucketOptions.m */; };
@@ -994,8 +993,6 @@
 		F5CC155C03EA41EF01FE6414 /* XCFExporter.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = XCFExporter.m; sourceTree = "<group>"; };
 		F5CE256503D66572013D2EC9 /* SeaController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SeaController.h; sourceTree = "<group>"; };
 		F5CE256603D66572013D2EC9 /* SeaController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = SeaController.m; sourceTree = "<group>"; };
-		F5CE257403D693B7013D2EC9 /* TransparentUtility.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = TransparentUtility.h; sourceTree = "<group>"; };
-		F5CE257503D693B7013D2EC9 /* TransparentUtility.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = TransparentUtility.m; sourceTree = "<group>"; };
 		F5CE259303D6FD67013D2EC9 /* SeaProxy.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = SeaProxy.m; sourceTree = "<group>"; };
 		F5CE259403D6FD67013D2EC9 /* SeaProxy.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SeaProxy.h; sourceTree = "<group>"; };
 		F5CE259903D709B1013D2EC9 /* SeaPrefs.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SeaPrefs.h; sourceTree = "<group>"; };
@@ -1480,8 +1477,6 @@
 				F577AC2A040760E401092A6C /* SeaUtilityPanel.m */,
 				DC9C46780FFC2CCF00C44AA4 /* AbstractPanelUtility.h */,
 				DC9C46790FFC2CCF00C44AA4 /* AbstractPanelUtility.m */,
-				F5CE257403D693B7013D2EC9 /* TransparentUtility.h */,
-				F5CE257503D693B7013D2EC9 /* TransparentUtility.m */,
 				A8823C4504AD43EE00000007 /* InfoUtility.h */,
 				A8823C4404AD43EE00000007 /* InfoUtility.m */,
 				F5B9A82B0401D5BE017A821F /* ToolboxUtility.h */,
@@ -2030,7 +2025,6 @@
 				A8EDF110078959C80022BB31 /* SeaBrush.m in Sources */,
 				A8EDF111078959C80022BB31 /* BrushUtility.m in Sources */,
 				A8EDF112078959C80022BB31 /* BrushView.m in Sources */,
-				A8EDF113078959C80022BB31 /* TransparentUtility.m in Sources */,
 				A8EDF114078959C80022BB31 /* OptionsUtility.m in Sources */,
 				A8EDF115078959C80022BB31 /* AbstractOptions.m in Sources */,
 				A8EDF116078959C80022BB31 /* BucketOptions.m in Sources */,

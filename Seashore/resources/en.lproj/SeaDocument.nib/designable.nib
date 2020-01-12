@@ -34,7 +34,6 @@
                 <outlet property="tiffExporter" destination="330" id="334"/>
                 <outlet property="toolboxUtility" destination="1598" id="sEf-ps-7lU"/>
                 <outlet property="tools" destination="259" id="290"/>
-                <outlet property="transparentUtility" destination="1596" id="lv6-SJ-2IB"/>
                 <outlet property="view" destination="63" id="69"/>
                 <outlet property="warnings" destination="16701" id="16704"/>
                 <outlet property="window" destination="5" id="18"/>
@@ -381,7 +380,7 @@
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <clipView key="contentView" ambiguous="YES" drawsBackground="NO" id="sE3-sQ-GEf">
                                             <rect key="frame" x="0.0" y="0.0" width="198" height="379"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <outlineView focusRingType="none" verticalHuggingPriority="750" ambiguous="YES" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="44" indentationPerLevel="16" outlineTableColumn="9834" id="7811" customClass="SeaOutlineView">
                                                     <rect key="frame" x="0.0" y="0.0" width="198" height="379"/>
@@ -2688,7 +2687,6 @@ Gw
                 <outlet property="newButton" destination="1611" id="1672"/>
             </connections>
         </customObject>
-        <customObject id="1596" userLabel="TransparentUtility" customClass="TransparentUtility"/>
         <customObject id="1597" userLabel="BrushUtility" customClass="BrushUtility">
             <connections>
                 <outlet property="brushGroupPopUp" destination="7413" id="7428"/>

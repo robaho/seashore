@@ -2,7 +2,6 @@
 #import "SeaDocument.h"
 #import "SeaContent.h"
 #import "CenteringClipView.h"
-#import "TransparentUtility.h"
 #import "SeaController.h"
 #import "SeaPrefs.h"
 #import "SeaLayer.h"
@@ -386,7 +385,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
         if([(SeaPrefs *)[SeaController seaPrefs] useCheckerboard]){
             [[NSColor colorWithPatternImage: [NSImage imageNamed:@"checkerboard"] ] set];
         }else{
-            [(NSColor*)[[document transparentUtility] color] set];
+            [[(SeaPrefs *)[SeaController seaPrefs] transparencyColor] set];
         }
         [[NSBezierPath bezierPathWithRect:rect] fill];
     }
