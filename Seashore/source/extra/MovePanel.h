@@ -12,8 +12,7 @@
 @interface MovePanel : NSPanel {
 
 	// The associated text tool
-	IBOutlet id textTool;
-
+	__weak IBOutlet id textTool;
 }
 
 /*!

@@ -30,11 +30,11 @@ enum
 @interface SeaWindowContent : NSView {
 	__weak IBOutlet SeaDocument *document;
 
-	IBOutlet SeaOptionsView* optionsBar;
+	__weak IBOutlet SeaOptionsView* optionsBar;
 	IBOutlet NSView *nonOptionsBar;
 	
 	IBOutlet NSView* sidebar;
-	IBOutlet NSScrollView* layers;
+	__weak IBOutlet NSScrollView* layers;
 	IBOutlet NSView* pointInformation;
 	IBOutlet LayerControlView* sidebarStatusbar;
 	

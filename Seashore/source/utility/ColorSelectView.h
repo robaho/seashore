@@ -18,8 +18,7 @@
 	BOOL mouseDownOnSwap;
 
 	// The texture utility
-	IBOutlet id textureUtility;
-	
+	__weak IBOutlet id textureUtility;
 }
 
 /*!

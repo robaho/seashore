@@ -90,7 +90,6 @@
 {
 	[gUserDefaults setInteger:activeTextureIndex forKey:@"active texture"];
 	[gUserDefaults setInteger:activeGroupIndex forKey:@"active texture group"];
-
 }
 
 - (void)update
@@ -132,7 +131,7 @@
         NSString *filepath =[path stringByAppendingPathComponent:files[i]];
         
         [gFileManager fileExistsAtPath:filepath isDirectory:&isDirectory];
-        if(isDirectory){
+        if(isDirectory || ![[filepath pathExtension] isEqualToString:@"png"]){
             continue;
         }
 

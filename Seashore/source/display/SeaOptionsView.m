@@ -7,7 +7,7 @@
     NSColor *fillColor;
     NSBezierPath *path;
 
-    if([window isMainWindow]){
+    if([[self window] isMainWindow]){
         fillColor = [NSColor windowBackgroundColor];
         [fillColor set];
         path = [NSBezierPath bezierPathWithRect:NSMakeRect(0.0, 1.0, [self frame].size.width, [self frame].size.height)];
