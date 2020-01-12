@@ -206,3 +206,8 @@ inline NSPoint NSPointRotateNSPoint (NSPoint initialPoint, NSPoint centerPoint, 
 	return result;
 }
 
+
+inline NSString* NSStringFromIntRect(IntRect rect)
+{
+    return [NSString stringWithFormat:@"%d,%d,%d,%d",rect.origin.x,rect.origin.y,rect.size.width,rect.size.height];
+}

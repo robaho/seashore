@@ -246,3 +246,14 @@ NSRect IntRectMakeNSRect(IntRect rect);
 NSPoint NSPointRotateNSPoint (NSPoint initialPoint, NSPoint centerPoint, float radians);
 
 extern IntRect IntZeroRect;
+
+/*!
+    @function    NSStringFromIntRect
+    @discussion    Given an IntRect convert to string representation
+    @param        rect
+                The IntRect to convert.
+    @result        Returns an NSString representation of the IntRect.
+*/
+NSString* NSStringFromIntRect(IntRect rect);
+
+

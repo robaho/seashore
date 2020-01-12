@@ -99,7 +99,7 @@
 	IntRect draggedRect = [self mouseDraggedTo: where
 									   forRect: cropRect
 									   andMask: NULL];
-	
+    
 	if(![self isMovingOrScaling]){
 	
 		int aspectType = [options aspectType];
@@ -160,11 +160,9 @@
 			
 		}
 		else {
-			cropRect.origin.x = where.x;
-			cropRect.origin.y = where.y;
-		}
-
-		// Update the changes
+            cropRect.origin.x = where.x;
+            cropRect.origin.y = where.y;
+        }
         [self cropRectChanged:IntSumRects(old,cropRect)];
 	} else {
         if(translating){
@@ -174,6 +172,15 @@
             [self setCropRect:IntMakeRect(cropRect.origin.x +xoff,cropRect.origin.y + yoff,cropRect.size.width,cropRect.size.height)];
             moveOrigin = where;
         } else {
+            if(draggedRect.size.width < 0){
+                draggedRect.origin.x += draggedRect.size.width;
+                draggedRect.size.width *= -1;
+            }
+
+            if(draggedRect.size.height < 0){
+                draggedRect.origin.y += draggedRect.size.height;
+                draggedRect.size.height *= -1;
+            }
             [self setCropRect:draggedRect];
         }
 	}
