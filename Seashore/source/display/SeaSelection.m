@@ -448,12 +448,10 @@
 
 - (void)clearSelection
 {
-	if (![self floating]) {
-		active = NO;
-		if (mask) { free(mask); mask = NULL; }
-		if (maskBitmap) { free(maskBitmap); maskBitmap = NULL; maskImage = NULL; }
-		[[document helpers] selectionChanged];
-	}
+    active = NO;
+    if (mask) { free(mask); mask = NULL; }
+    if (maskBitmap) { free(maskBitmap); maskBitmap = NULL; maskImage = NULL; }
+    [[document helpers] selectionChanged];
 }
 
 - (void)invertSelection

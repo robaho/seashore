@@ -104,8 +104,7 @@ static inline float mod_float(float value, float divisor)
 	undoRecord.withTrim = trim;
 	[[[document undoManager] prepareWithInvocationTarget:self] undoRotation:undoCount];
 	[activeLayer setRotation:degrees interpolation:NSImageInterpolationHigh withTrim:trim];
-	if ([activeLayer floating] && trim) [[document selection] selectOpaque];
-	else [[document selection] clearSelection];
+	[[document selection] clearSelection];
 	if (!trim && ![activeLayer hasAlpha]) {
 		undoRecord.disableAlpha = YES;
 		[activeLayer toggleAlpha];

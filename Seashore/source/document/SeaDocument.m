@@ -210,7 +210,7 @@ extern BOOL globalReadOnlyWarning;
 	return whiteboard;
 }
 
-- (id)selection
+- (SeaSelection *)selection
 {
 	return selection;
 }
@@ -236,7 +236,7 @@ extern BOOL globalReadOnlyWarning;
 	return helpers;
 }
 
-- (id)warnings
+- (WarningsUtility*)warnings
 {
 	return warnings;
 }

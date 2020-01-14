@@ -66,27 +66,12 @@
 	
 	if (document && layer) {
 		
-		// Set the opacity correctly
-		if ([layer floating]) {
-			[opacitySlider setIntValue:[layer opacity]];
-			[opacitySlider setEnabled:NO];
-			[opacityLabel setStringValue:[NSString stringWithFormat:@"%.1f%%", (float)[layer opacity] / 2.55]];
-		}
-		else {
-			[opacitySlider setIntValue:[layer opacity]];
-			[opacitySlider setEnabled:YES];
-			[opacityLabel setStringValue:[NSString stringWithFormat:@"%.1f%%", (float)[layer opacity] / 2.55]];
-		}
+        [opacitySlider setIntValue:[layer opacity]];
+        [opacitySlider setEnabled:YES];
+        [opacityLabel setStringValue:[NSString stringWithFormat:@"%.1f%%", (float)[layer opacity] / 2.55]];
 		
-		// Set the mode correctly
-		if ([layer floating]) {
-			[modePopup selectItemAtIndex:[modePopup indexOfItemWithTag:[layer mode]]];
-			[modePopup setEnabled:NO];
-		}
-		else {
-			[modePopup selectItemAtIndex:[modePopup indexOfItemWithTag:[layer mode]]];
-			[modePopup setEnabled:YES];
-		}
+        [modePopup selectItemAtIndex:[modePopup indexOfItemWithTag:[layer mode]]];
+        [modePopup setEnabled:YES];
 		
 		[linkedCheckbox setEnabled: YES];
 		[linkedCheckbox setState:[layer linked]];

@@ -9,64 +9,6 @@
 
 @implementation SeaFlip
 
-- (void)floatingFlip:(int)type
-{	
-	// Fill out variables
-	[self simpleFlipOf:[(SeaLayer *)[[document contents] activeLayer] data] width: [(SeaLayer *)[[document contents] activeLayer] width] height: [(SeaLayer *)[[document contents] activeLayer] height] spp: [[document contents] spp] type: type];
-	
-	
-	// Reflect the changes
-	[[document helpers] layerContentsChanged:kActiveLayer];
-	
-	// Select the opaque part
-	[[document selection] selectOpaque];
-	
-	// Make action undoable
-	if (type == kHorizontalFlip)
-		[[[document undoManager] prepareWithInvocationTarget:self] floatingHorizontalFlip];
-	else
-		[[[document undoManager] prepareWithInvocationTarget:self] floatingVerticalFlip];
-}
-
-- (void)simpleFlipOf:(unsigned char*)data width:(int)width height:(int)height spp:(int)spp type:(int)type
-{
-	unsigned char temp;
-	int i, j, k;
-	
-	// Do the correct flip
-	if (type == kHorizontalFlip) {
-		for (i = 0; i < width / 2; i++) {
-			for (j = 0; j < height; j++) {
-				for (k = 0; k < spp; k++) {
-					temp = data[(j * width + i) * spp + k];
-					data[(j * width + i) * spp + k] = data[(j * width + (width - i - 1)) * spp + k];
-					data[(j * width + (width - i - 1)) * spp + k] = temp;
-				}
-			}
-		}
-	}
-	else {
-		for (i = 0; i < width; i++) {
-			for (j = 0; j < height / 2; j++) {
-				for (k = 0; k < spp; k++) {
-					temp = data[(j * width + i) * spp + k];
-					data[(j * width + i) * spp + k] = data[((height - j - 1) * width + i) * spp + k];
-					data[((height - j - 1) * width + i) * spp + k] = temp;
-				}
-			}
-		}
-	}
-}
-
-- (void)floatingHorizontalFlip
-{
-	[self floatingFlip:kHorizontalFlip];
-}
-
-- (void)floatingVerticalFlip
-{
-	[self floatingFlip:kVerticalFlip];
-}
 
 - (void)standardFlip:(int)type
 {
@@ -154,10 +96,7 @@
 
 - (void)run:(int)type
 {
-	if ([(SeaLayer *)[[document contents] activeLayer] floating])
-		[self floatingFlip:type];
-	else
-		[self standardFlip:type];	
+    [self standardFlip:type];
 }
 
 @end

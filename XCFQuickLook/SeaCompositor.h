@@ -96,17 +96,4 @@ typedef struct {
 */
 - (void)compositeLayer:(id)layer withOptions:(CompositorOptions)options andData:(unsigned char *)destPtr;
 
-/*!
-	@method		compositeLayer:withFloat:withOptions:
-	@discussion	Composites a layer on to the document's whiteboard using the
-				specified options with the specified floating layer.
-	@param		layer
-				The layer to composite.
-	@param		floatingLayer
-				The floating layer.
-	@param		options
-				The options for compositing.
-*/
-- (void)compositeLayer:(id)layer withFloat:(id)floatingLayer andOptions:(CompositorOptions)options;
-
 @end

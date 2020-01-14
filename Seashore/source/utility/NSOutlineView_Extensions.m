@@ -75,6 +75,14 @@
     [self selectRowIndexes:indexSet byExtendingSelection:extend];
 }
 
+- (void)selectRow:(int)row {
+    NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
+    
+    [indexSet addIndex:row];
+    [self selectRowIndexes:indexSet byExtendingSelection:NO];
+}
+
+
 @end
 
 @implementation SeaOutlineView

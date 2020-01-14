@@ -134,11 +134,7 @@
 
 - (IBAction)duplicateLayer:(id)sender
 {
-	id selection = [gCurrentDocument selection];
-	
-	if (![selection floating]) {
-		[(SeaContent *)[gCurrentDocument contents] duplicateLayer:kActiveLayer];
-	}
+    [(SeaContent *)[gCurrentDocument contents] duplicateLayer:kActiveLayer];
 }
 
 - (IBAction)layerAbove:(id)sender
@@ -172,7 +168,7 @@
 	id contents = [gCurrentDocument contents];
 	
 	if ([selection floating]) {
-		[contents anchorSelection];
+		[contents anchorLayer];
 	}
 	else {
 		[contents makeSelectionFloat:NO];
@@ -477,12 +473,12 @@
 				return NO;
 		break;
 		case 264:
-			if(![[document selection] active] || [[document selection] floating])
+			if(![[document selection] active])
 				return NO;
 		break;
 		case 300:
 			if ([[document selection] floating])
-				[menuItem setTitle:LOCALSTR(@"anchor selection", @"Anchor Selection")];
+				[menuItem setTitle:LOCALSTR(@"anchor layer", @"Anchor Layer")];
 			else
 				[menuItem setTitle:LOCALSTR(@"float selection", @"Float Selection")];
 			if (![[document selection] active])
@@ -500,14 +496,16 @@
 		case 411:
 		case 412:
 		case 413:
-			if ([[document selection] floating])
-				return NO;
+            // floating is like any other layer
+//			if ([[document selection] floating])
+//				return NO;
 		break;
 		case 450:
 		case 451:
 		case 452:
-			if([[document selection] floating])
-				return NO;
+            // floating is like any other layer
+//			if([[document selection] floating])
+//				return NO;
 			[menuItem setState: [[document contents] selectedChannel] == [menuItem tag] % 10];
 		break;
 		case 460:
@@ -520,8 +518,9 @@
 		case 346:
 		case 347:
 		case 349:
-			if (![[contents activeLayer] linked])
-				return NO;
+            // disabled check, because multiple floating layers are allowed
+//			if (![[contents activeLayer] linked])
+//				return NO;
 		break;
 		case 382:
 			if ([[contents activeLayer] linked]){

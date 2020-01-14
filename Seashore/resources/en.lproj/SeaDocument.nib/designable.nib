@@ -2266,7 +2266,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <clipView key="contentView" ambiguous="YES" id="Soe-9G-BN0">
                             <rect key="frame" x="1" y="1" width="231" height="94"/>
-                            <autoresizingMask key="autoresizingMask"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" ambiguous="YES" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" id="415" customClass="NSExtendedTableView">
                                     <rect key="frame" x="0.0" y="0.0" width="231" height="94"/>
@@ -5492,7 +5492,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <clipView key="contentView" ambiguous="YES" id="5IG-Ux-tar">
                             <rect key="frame" x="1" y="1" width="231" height="94"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" ambiguous="YES" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" id="8wZ-Nr-BCs" customClass="NSExtendedTableView">
                                     <rect key="frame" x="0.0" y="0.0" width="231" height="94"/>

@@ -1365,7 +1365,6 @@ static CGFloat white[4] = {0,3.5,2,.5};
     ToolboxUtility *toolbox = [document toolboxUtility];
     
     int curToolIndex = [toolbox tool];
-    BOOL floating = [[document selection] floating];
     
     // End the line drawing
     [[document helpers] endLineDrawing];
@@ -1444,7 +1443,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
                 
             
             }
-            else if ([[document selection] active] && ![[document selection] floating]) {
+            else if ([[document selection] active] ) {
             
                 // Make the adjustment
                 switch (key) {
@@ -1547,30 +1546,24 @@ static CGFloat white[4] = {0,3.5,2,.5};
                         [[document selection] clearSelection];
                 break;
                 case '`':
-                    if ([[document selection] active] && ![[document selection] floating]) {
+                    if ([[document selection] active]) {
                         [self selectInverse:NULL];
                     }
                 break;
                 case 'm':
-                    if (!floating) {
-                        if ([toolbox tool] == kRectSelectTool)
-                            [toolbox changeToolTo:kEllipseSelectTool];
-                        else
-                            [toolbox changeToolTo:kRectSelectTool];
-                    }
+                    if ([toolbox tool] == kRectSelectTool)
+                        [toolbox changeToolTo:kEllipseSelectTool];
+                    else
+                        [toolbox changeToolTo:kRectSelectTool];
                 break;
                 case 'l':
-                    if (!floating) {
-                        if ([toolbox tool] == kLassoTool)
-                            [toolbox changeToolTo:kPolygonLassoTool];
-                        else
-                            [toolbox changeToolTo:kLassoTool];
-                    }
+                    if ([toolbox tool] == kLassoTool)
+                        [toolbox changeToolTo:kPolygonLassoTool];
+                    else
+                        [toolbox changeToolTo:kLassoTool];
                 break;
                 case 'w':
-                    if (!floating) {
                         [toolbox changeToolTo:kWandTool];
-                    }
                 break;
                 case 'b':
                     if ([toolbox tool] == kBrushTool)
@@ -1706,7 +1699,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
     }else if (x < 0) {
         [[document contents] layerAbove];
     }else if (y < 0) {
-        [[document contents] anchorSelection];
+        [[document contents] anchorLayer];
     }else if (y > 0) {
         unsigned int mods = [event modifierFlags];
         [[document contents] makeSelectionFloat:(mods & NSAlternateKeyMask) >> 19];
@@ -1749,13 +1742,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
 
 - (IBAction)delete:(id)sender
 {
-    if ([[document selection] floating]) {
-        [[document contents] deleteLayer:kActiveLayer];
-        [[document selection] clearSelection];
-    }
-    else {
-        [[document selection] deleteSelection];
-    }
+    [[document selection] deleteSelection];
 }
 
 - (IBAction)selectAll:(id)sender
@@ -1838,12 +1825,12 @@ static CGFloat white[4] = {0,3.5,2,.5};
     // Accept copy operations if possible
     if (sourceDragMask & NSDragOperationCopy) {
         if ([[pboard types] containsObject:NSTIFFPboardType] || [[pboard types] containsObject:NSPICTPboardType]) {
-            if (layer != [[document contents] activeLayer] && ![document locked] && ![[document selection] floating] ) {
+            if (layer != [[document contents] activeLayer] && ![document locked] ) {
                 return NSDragOperationCopy;
             }
         }
         if([[pboard types] containsObject:NSFilesPromisePboardType]){
-            if (layer != [[document contents] activeLayer] && ![document locked] && ![[document selection] floating]) {
+            if (layer != [[document contents] activeLayer] && ![document locked] ) {
                 files = [pboard propertyListForType:NSFilesPromisePboardType];
                 success = YES;
                 for (i = 0; i < [files count]; i++)
@@ -1854,7 +1841,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
             }
         }
         if ([[pboard types] containsObject:NSFilenamesPboardType]) {
-            if (layer != [[document contents] activeLayer] && ![document locked] && ![[document selection] floating]) {
+            if (layer != [[document contents] activeLayer] && ![document locked] ) {
                 files = [pboard propertyListForType:NSFilenamesPboardType];
                 success = YES;
                 for (i = 0; i < [files count]; i++)
@@ -1865,7 +1852,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
             }
         }
         if ([[pboard types] containsObject:NSURLPboardType]) {
-            if (layer != [[document contents] activeLayer] && ![document locked] && ![[document selection] floating]) {
+            if (layer != [[document contents] activeLayer] && ![document locked] ) {
                 NSURL *url = [NSURL URLFromPasteboard:pboard];
                 if([url isFileURL]) {
                     NSString *path = [url path];
@@ -2036,7 +2023,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
                 return NO;
         break;
         case 260: /* Cut */
-            if (![[document selection] active] || [[document selection] floating])
+            if (![[document selection] active])
                 return NO;
         break;
         case 263: /* Delete */
@@ -2045,22 +2032,21 @@ static CGFloat white[4] = {0,3.5,2,.5};
         break;
         case 270: /* Select All */
         case 273: /* Select Alpha */
-            if ([[document selection] floating])
-                return NO;
+            // floating is like any other layer
+//            if ([[document selection] floating])
+//                return NO;
         break;
         case 271: /* Select None */
             if ([[document currentTool] toolId] == kPolygonLassoTool && [[document currentTool] intermediate])
                 return YES;
-            if (![[document selection] active] || [[document selection] floating])
+            if (![[document selection] active])
                 return NO;
         break;
         case 272: /* Select Inverse */
-            if (![[document selection] active] || [[document selection] floating])
+            if (![[document selection] active])
                 return NO;
         break;
         case 262: /* Paste */
-            if ([[document selection] floating])
-                return NO;
             availableType = [[NSPasteboard generalPasteboard] availableTypeFromArray:[NSArray arrayWithObjects:NSTIFFPboardType, NSPICTPboardType, NULL]];
             if (availableType)
                 return YES;

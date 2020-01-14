@@ -438,7 +438,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
         newIndex = activeLayerIndex + 1;
     }
     [self setActiveLayerIndex: newIndex];
-    [[document helpers] activeLayerChanged:kLayerSwitched rect:NULL];    
+    [[document helpers] activeLayerChanged:kLayerSwitched];
 }
 
 - (void)layerAbove
@@ -452,7 +452,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
         newIndex = activeLayerIndex - 1;
     }
     [self setActiveLayerIndex: newIndex];
-    [[document helpers] activeLayerChanged:kLayerSwitched rect:NULL];    
+    [[document helpers] activeLayerChanged:kLayerSwitched];
 }
 
 - (BOOL)canImportLayerFromFile:(NSString *)path
@@ -549,67 +549,41 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     NSArray *tempArray = [NSArray array];
     int i;
     
-    if([[document selection] floating]){
-        unsigned char *data;
-        int spp = [self spp];
-        IntRect dataRect;
-        id layer;
-        // Save the existing selection
-        layer = [layers objectAtIndex:activeLayerIndex];
-        dataRect = IntMakeRect([layer xoff], [layer yoff], [(SeaLayer *)layer width], [(SeaLayer *)layer height]);;
-        data = malloc(make_128(dataRect.size.width * dataRect.size.height * spp));
-        memcpy(data, [(SeaLayer *)layer data], dataRect.size.width * dataRect.size.height * spp);
-        
-        // Delete the floating layer
-        [self deleteLayer:activeLayerIndex];
-        
-        // Clear the selection
-        [[document selection] clearSelection];
+    if (index == kActiveLayer)
+        index = activeLayerIndex;
 
-        // Inform the helpers we will change the layer
-        [[document helpers] activeLayerWillChange];
-        
-        // Create a new array with all the existing layers and the one being added
-        layer = [[SeaLayer alloc] initWithDocument:document rect:dataRect data:data spp:spp];
-        for (i = 0; i < [layers count] + 1; i++) {
-            if (i == activeLayerIndex)
-                tempArray = [tempArray arrayByAddingObject:layer];
-            else
-                tempArray = [tempArray arrayByAddingObject:(i > activeLayerIndex) ? [layers objectAtIndex:i - 1] : [layers objectAtIndex:i]];
-        }
-        
-        // Now substitute in our new array
-        layers = tempArray;
-        
-        // Inform document of layer change
-        [[document helpers] activeLayerChanged:kLayerAdded rect:&dataRect];
-        
-        // Make action undoable
-        [(SeaContent *)[[document undoManager] prepareWithInvocationTarget:self] deleteLayer:activeLayerIndex];    
-    }else{
+    SeaLayer *layerToAdd;
     
-        // Inform the helpers we will change the layer
-        [[document helpers] activeLayerWillChange];
-        
-        // Correct index
-        if (index == kActiveLayer) index = activeLayerIndex;
-        
-        // Create a new array with all the existing layers and the one being added
-        for (i = 0; i < [layers count] + 1; i++) {
-            if (i == index)
-                tempArray = [tempArray arrayByAddingObject:[[SeaLayer alloc] initWithDocument:document width:width height:height opaque:NO spp:[self spp]]];
-            else
-                tempArray = [tempArray arrayByAddingObject:(i > index) ? [layers objectAtIndex:i - 1] : [layers objectAtIndex:i]];
-        }
-        
-        layers = tempArray;
-        
-        // Inform document of layer change
-        [[document helpers] activeLayerChanged:kTransparentLayerAdded rect:NULL];
-        
-        // Make action undoable
-        [(SeaContent *)[[document undoManager] prepareWithInvocationTarget:self] deleteLayer:index];
+    if([[layers objectAtIndex:index] floating]) {
+        SeaLayer *layer = [layers objectAtIndex:index];
+        layerToAdd = [[SeaLayer alloc] initWithDocument:document rect:[layer localRect] data:[layer data] spp:[self spp]];
+
+        // Delete the floating layer
+        [self deleteLayer:index];
+        [[document selection] clearSelection];
+    } else {
+        layerToAdd = [[SeaLayer alloc] initWithDocument:document width:width height:height opaque:NO spp:[self spp]];
     }
+
+    // Inform the helpers we will change the layer
+    [[document helpers] activeLayerWillChange];
+    
+    // Create a new array with all the existing layers and the one being added
+    for (i = 0; i < [layers count] + 1; i++) {
+        if (i == index)
+            tempArray = [tempArray arrayByAddingObject:layerToAdd];
+        else
+            tempArray = [tempArray arrayByAddingObject:(i > activeLayerIndex) ? [layers objectAtIndex:i - 1] : [layers objectAtIndex:i]];
+    }
+    
+    // Now substitute in our new array
+    layers = tempArray;
+    
+    // Inform document of layer change
+    [[document helpers] activeLayerChanged:kLayerAdded];
+    
+    // Make action undoable
+    [(SeaContent *)[[document undoManager] prepareWithInvocationTarget:self] deleteLayer:index];
 }
 
 - (void)addLayerObject:(id)layer
@@ -635,7 +609,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     layers = tempArray;
     
     // Inform document of layer change
-    [[document helpers] activeLayerChanged:kTransparentLayerAdded rect:NULL];
+    [[document helpers] activeLayerChanged:kLayerAdded];
     
     // Make action undoable
     [(SeaContent *)[[document undoManager] prepareWithInvocationTarget:self] deleteLayer:index];
@@ -706,7 +680,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     layers = tempArray;
     
     // Inform document of layer change
-    [[document helpers] activeLayerChanged:kLayerAdded rect:&rect];
+    [[document helpers] activeLayerChanged:kLayerAdded];
     
     // Make action undoable
     [(SeaContent *)[[document undoManager] prepareWithInvocationTarget:self] deleteLayer:activeLayerIndex];    
@@ -732,7 +706,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     layers = tempArray;
     
     // Inform document of layer change
-    [[document helpers] activeLayerChanged:kLayerAdded rect:NULL];
+    [[document helpers] activeLayerChanged:kLayerAdded];
     
     // Make action undoable
     [(SeaContent *)[[document undoManager] prepareWithInvocationTarget:self] deleteLayer:index];
@@ -762,7 +736,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     
     // Inform document of layer change
     rect = IntMakeRect([[layers objectAtIndex:index] xoff], [[layers objectAtIndex:index] yoff], [(SeaLayer *)[layers objectAtIndex:index] width], [(SeaLayer *)[layers objectAtIndex:index] height]);
-    [[document helpers] activeLayerChanged:kLayerAdded rect:&rect];
+    [[document helpers] activeLayerChanged:kLayerAdded];
     
     // Make action undoable
     [(SeaContent *)[[document undoManager] prepareWithInvocationTarget:self] deleteLayer:index];
@@ -782,13 +756,6 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     // Inform the helpers we will change the layer
     [[document helpers] activeLayerWillChange];
     
-    // Clear the selection if the layer is a floating one
-    if ([layer floating]){
-        [[document selection] clearSelection];
-        [[document toolboxUtility] anchorTool];
-        [[document toolboxUtility] update:YES];
-    }
-        
     // Create a new array with all the existing layers except the one being deleted
     for (i = 0; i < [layers count]; i++) {
         if (i != index) {
@@ -806,22 +773,18 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     
     // Update Seashore with the changes
     rect = IntMakeRect([layer xoff], [layer yoff], [(SeaLayer *)layer width], [(SeaLayer *)layer height]);
-    [[document helpers] activeLayerChanged:kLayerDeleted rect:&rect];
+    [[document helpers] activeLayerChanged:kLayerDeleted];
     
     // Unset the clone tool
     [[[document tools] getTool:kCloneTool] unset];
     
     // Make action undoable
     [[[document undoManager] prepareWithInvocationTarget:self] restoreLayer:index fromLostIndex:[deletedLayers count] - 1];
-    
-    // Update toolbox
-    if ([layer floating])
-        [[document toolboxUtility] update:YES];
 }
 
 - (void)restoreLayer:(int)index fromLostIndex:(int)lostIndex
 {
-    id layer = [deletedLayers objectAtIndex:lostIndex];
+    SeaLayer *layer = [deletedLayers objectAtIndex:lostIndex];
     NSArray *tempArray;
     IntRect rect;
     int i;
@@ -856,13 +819,9 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     // Update Seashore with the changes
     activeLayerIndex = index;
         
-    // Wrap selection to the opaque if the layer is a floating one
-    if ([layer floating])
-        [[document selection] selectOpaque];
-        
     // Update Seashore with the changes
-    rect = IntMakeRect([layer xoff], [layer yoff], [(SeaLayer *)layer width], [(SeaLayer *)layer height]);
-    [[document helpers] activeLayerChanged:kLayerAdded rect:&rect];
+    rect = IntMakeRect([layer xoff], [layer yoff], [layer width], [layer height]);
+    [[document helpers] activeLayerChanged:kLayerAdded];
     
     // Make action undoable
     [(SeaContent *)[[document undoManager] prepareWithInvocationTarget:self] deleteLayer:index];
@@ -926,7 +885,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     [[document selection] selectOpaque];
     
     // Inform document of layer change
-    [[document helpers] activeLayerChanged:kLayerAdded rect:&rect];
+    [[document helpers] activeLayerChanged:kLayerAdded];
     
     // Inform the tools of the floating
     [[document toolboxUtility] floatTool];
@@ -943,7 +902,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
 -(void)toggleFloatingSelection
 {    
     if ([[document selection] floating]) {
-        [self anchorSelection];
+        [self anchorLayer];
     }
     else {
         [self makeSelectionFloat:NO];
@@ -1042,7 +1001,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     [[document selection] selectOpaque];
     
     // Inform document of layer change
-    [[document helpers] activeLayerChanged:kLayerAdded rect:&rect];
+    [[document helpers] activeLayerChanged:kLayerAdded];
     
     // Inform the tools of the floating
     [[document toolboxUtility] floatTool];
@@ -1051,45 +1010,68 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     [(SeaContent *)[[document undoManager] prepareWithInvocationTarget:self] deleteLayer:activeLayerIndex];
 }
 
-- (void)anchorSelection
+- (void)anchorLayer
 {
     unsigned char *data, *overlay;
     IntRect dataRect, layerRect;
     int i, j, destXPos, destYPos, spp = [self spp];
+    
     int floatingLayerIndex = -1;
-    id layer;
+    int topNonFloatingIndex = -1;
+    
+    SeaLayer *layer;
     
     // Don't do anything if there's no selection
     if (![[document selection] floating])
         return;
     
-    // We need to figure out what layer is floating
-    // This isn't nessisarily the current active layer since people can select different
-    // layers while there is a floating layer.
+    SeaLayer *floating = [[document contents] activeLayer];
+    if(!floating) {
+        NSLog(@"There were no floating layers!");
+        return;
+    }
+    
     for(i = 0; i < [layers count]; i++){
-        if([[layers objectAtIndex:i] floating]){
-            if(floatingLayerIndex != -1){
-                NSLog(@"Multiple floating layers?");
-            }else {
-                floatingLayerIndex = i;
-            }
+        if([layers objectAtIndex:i] == floating){
+            floatingLayerIndex = i;
+            break;
         }
     }
     
     if(floatingLayerIndex == -1){
-        NSLog(@"There were no floating layers!");
+        NSLog(@"Could not find floating layer!");
+        return;
     }
-    // Save the existing selection
-    layer = [layers objectAtIndex:floatingLayerIndex];
-    dataRect = IntMakeRect([layer xoff], [layer yoff], [(SeaLayer *)layer width], [(SeaLayer *)layer height]);;
+    
+    for(i=floatingLayerIndex; i<[layers count];i++) {
+        if(![[layers objectAtIndex:i] floating]){
+            topNonFloatingIndex = i;
+            break;
+        }
+    }
+             
+    if(topNonFloatingIndex == -1){
+        NSLog(@"Could not find top non-floating layer!");
+        return;
+    }
+    // anchor to top non-floating layer below
+    
+    layer = floating;
+                                  
+    dataRect = IntMakeRect([layer xoff], [layer yoff], [layer width], [layer height]);;
     data = malloc(make_128(dataRect.size.width * dataRect.size.height * spp));
-    memcpy(data, [(SeaLayer *)layer data], dataRect.size.width * dataRect.size.height * spp);
+    memcpy(data, [layer data], dataRect.size.width * dataRect.size.height * spp);
     
     // Delete the floating layer
     [self deleteLayer:floatingLayerIndex];
     
     // Work out the new layer rectangle
-    layer = [layers objectAtIndex:activeLayerIndex];
+    layer = [layers objectAtIndex:topNonFloatingIndex-1]; // need to subtract 1 because we deleted a layer
+    
+    [[document helpers] activeLayerWillChange];
+    [self setActiveLayerIndex:topNonFloatingIndex-1];
+    [[document helpers] activeLayerChanged:kLayerSwitched];
+
     layerRect = IntMakeRect([layer xoff], [layer yoff], [(SeaLayer *)layer width], [(SeaLayer *)layer height]);
     
     // Copy the selection to the overlay
@@ -1108,10 +1090,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     
     // Clear the selection
     [[document selection] clearSelection];
-
-    // We would inform the tools of the floating but this is already called in the deleteLayer method
-
-    // Apply the overlay
+    // Apply the overlay (only works on active layer)
     [(SeaHelpers *)[document helpers] applyOverlay];
 }
 
@@ -1124,7 +1103,6 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
 - (BOOL)canLower:(int)index
 {
     if (index == kActiveLayer) index = activeLayerIndex;
-    if ([[layers objectAtIndex:index] floating] && index == [layers count] - 2) return NO;
     return !(index == [layers count] - 1);
 }
 
@@ -1350,10 +1328,6 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
 
 - (BOOL)canFlatten
 {
-    // No, if there is a floating selection active
-    if ([[document selection] floating])
-        return NO;
-    
     // Yes, if there are one or more layers
     if ([layers count] != 1)
         return YES;

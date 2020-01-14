@@ -87,13 +87,11 @@ dispatch_group_t group;
 	BOOL overlayOkay, overlayReplacing;
 	IntPoint point, maskOffset, trueMaskOffset;
 	IntSize maskSize;
-	BOOL floating;
 	
 	// Fill out the local variables
 	selectRect = [[document selection] localRect];
 	selectedChannel = [[document contents] selectedChannel];
 	layer = [[document contents] activeLayer];
-	floating = [layer floating];
 	srcPtr = [layer data];
 	lwidth = [layer width];
 	lheight = [layer height];
@@ -167,7 +165,7 @@ dispatch_group_t group;
 				point.y = j;
 				if (IntPointInRect(point, selectRect)) {
 					overlayOkay = YES;
-					if (mask && !floating)
+					if (mask)
 						selectOpacity = int_mult(selectOpacity, mask[(trueMaskOffset.y + point.y) * maskSize.width + (trueMaskOffset.x + point.x)], t1);
 				}
 			}
@@ -181,7 +179,7 @@ dispatch_group_t group;
 			
 			// Apply the overlay
 			if (overlayOkay) {
-				if (selectedChannel == kAllChannels && !floating) {
+				if (selectedChannel == kAllChannels) {
 					
 					// For the general case
 					switch (overlayBehaviour) {
@@ -197,7 +195,7 @@ dispatch_group_t group;
 					}
 					
 				}
-				else if (selectedChannel == kPrimaryChannels || floating) {
+				else if (selectedChannel == kPrimaryChannels) {
 				
 					// For the primary channels
 					switch (overlayBehaviour) {
@@ -332,13 +330,7 @@ dispatch_group_t group;
 	altData = NULL;
     cachedImage = NULL;
     
-	// Change layer if appropriate
-	if ([[document selection] floating]) {
-		layer = [contents layer:[contents activeLayerIndex] + 1];
-	}
-	else {
-		layer = [contents activeLayer];
-	}
+    layer = [contents activeLayer];
 	
 	// Create room for alternative data if necessary
 	if (!trueView && selectedChannel == kPrimaryChannels) {
@@ -367,43 +359,30 @@ dispatch_group_t group;
 - (void)toggleSoftProof:(SeaColorProfile*)profile
 {
     proofProfile = profile;
-	[self readjustAltData:YES];
+    [[document docView] setNeedsDisplay:YES];
 	[[document toolboxUtility] update:NO];
     [[document statusUtility] update];
 }
 
 - (void)forcedChannelUpdate:(IntRect)updateRect
 {
-	SeaLayer *layer, *flayer;
+	SeaLayer *layer;
 	int layerWidth, layerHeight, lxoff, lyoff;
-	unsigned char *layerData, tempSpace[4], tempSpace2[4], *mask, *floatingData;
-	int i, j, k, temp, tx, ty, t, selectOpacity, nextOpacity;
+	unsigned char *layerData, tempSpace[4], tempSpace2[4], *mask;
+	int i, j, k, temp, t, selectOpacity, nextOpacity;
 	IntRect selectRect, minorUpdateRect;
 	IntSize maskSize = IntMakeSize(0, 0);
 	IntPoint point, maskOffset = IntMakePoint(0, 0);
-	BOOL useSelection, floating;
+	BOOL useSelection;
 	
 	// Prepare variables for later use
 	mask = NULL;
 	selectRect = IntMakeRect(0, 0, 0, 0);
 	useSelection = [[document selection] active];
-	floating = [[document selection] floating];
-	floatingData = [[[document contents] activeLayer] data];
-	if (useSelection && floating) {
-		layer = [[document contents] layer:[[document contents] activeLayerIndex] + 1];
-	}
-	else {
-		layer = [[document contents] activeLayer];
-	}
+    layer = [[document contents] activeLayer];
 	if (useSelection) {
-		if (floating) {
-			flayer = [[document contents] activeLayer];
-			selectRect = IntMakeRect([flayer xoff] - [layer xoff], [flayer yoff] - [layer yoff], [flayer width], [flayer height]);
-		}
-		else {
-			selectRect = [[document selection] globalRect];
-		}
-		mask = [(SeaSelection*)[document selection] mask];
+        selectRect = [[document selection] localRect];
+		mask = [[document selection] mask];
 		maskOffset = [[document selection] maskOffset];
 		maskSize = [[document selection] maskSize];
 	}
@@ -415,7 +394,7 @@ dispatch_group_t group;
 	layerData = [layer data];
 		
     minorUpdateRect = updateRect;
-    minorUpdateRect = IntOffsetRect(minorUpdateRect, -[layer xoff],  -[layer yoff]);
+    minorUpdateRect = IntOffsetRect(minorUpdateRect, -lxoff,  -lyoff);
     minorUpdateRect = IntConstrainRect(minorUpdateRect, IntMakeRect(0, 0, layerWidth, layerHeight));
 
 	// Go through pixel-by-pixel working out the channel update
@@ -439,93 +418,40 @@ dispatch_group_t group;
 				point.x = i;
 				point.y = j;
 				if (IntPointInRect(point, selectRect)) {
-					if (floating) {
-						tx = i - selectRect.origin.x;
-						ty = j - selectRect.origin.y;
-						if (viewType == kPrimaryChannelsView) {
-							memcpy(&tempSpace2, &(floatingData[(ty * selectRect.size.width + tx) * spp]), spp);
-						}
-						else {
-							tempSpace2[0] = floatingData[(ty * selectRect.size.width + tx) * spp];
-							tempSpace2[1] = floatingData[(ty * selectRect.size.width + tx + 1) * spp - 1];
-						}
-						normalMerge((viewType == kPrimaryChannelsView) ? spp : 2, tempSpace, 0, tempSpace2, 0, 255);
-					}
 					if (mask)
 						selectOpacity = mask[(point.y - selectRect.origin.y + maskOffset.y) * maskSize.width + (point.x - selectRect.origin.x + maskOffset.x)];
 				}
 			}
 			
-			// Check for floating layer
-			if (useSelection && floating) {
-			
-				// Insert the overlay
-				point.x = i;
-				point.y = j;
-				if (IntPointInRect(point, selectRect)) {
-					tx = i - selectRect.origin.x;
-					ty = j - selectRect.origin.y;
-					if (selectOpacity > 0) {
-						if (viewType == kPrimaryChannelsView) {
-							memcpy(&tempSpace2, &(overlay[(ty * selectRect.size.width + tx) * spp]), spp);
-							if (overlayOpacity < 255)
-								tempSpace2[spp - 1] = int_mult(tempSpace2[spp - 1], overlayOpacity, t);
-						}
-						else {
-							tempSpace2[0] = overlay[(ty * selectRect.size.width + tx) * spp];
-							if (overlayOpacity == 255)
-								tempSpace2[1] = overlay[(ty * selectRect.size.width + tx + 1) * spp - 1];
-							else
-								tempSpace2[1] = int_mult(overlay[(ty * selectRect.size.width + tx + 1) * spp - 1], overlayOpacity, t);
-						}
-						if (overlayBehaviour == kReplacingBehaviour) {
-							nextOpacity = int_mult(replace[ty * selectRect.size.width + tx], selectOpacity, t); 
-							replaceMerge((viewType == kPrimaryChannelsView) ? spp : 2, tempSpace, 0, tempSpace2, 0, nextOpacity);
-						}
-						else if (overlayBehaviour ==  kMaskingBehaviour) {
-							nextOpacity = int_mult(replace[ty * selectRect.size.width + tx], selectOpacity, t); 
-							normalMerge((viewType == kPrimaryChannelsView) ? spp : 2, tempSpace, 0, tempSpace2, 0, nextOpacity);
-						}
-						else {							
-							normalMerge((viewType == kPrimaryChannelsView) ? spp : 2, tempSpace, 0, tempSpace2, 0, selectOpacity);
-						}
-					}
-				}
-				
-			}
-			else {
-				
-				// Insert the overlay
-				point.x = i;
-				point.y = j;
-				if (IntPointInRect(point, selectRect) || !useSelection) {
-					if (selectOpacity > 0) {
-						if (viewType == kPrimaryChannelsView) {
-							memcpy(&tempSpace2, &(overlay[temp * spp]), spp);
-							if (overlayOpacity < 255)
-								tempSpace2[spp - 1] = int_mult(tempSpace2[spp - 1], overlayOpacity, t);
-						}
-						else {
-							tempSpace2[0] = overlay[temp * spp];
-							if (overlayOpacity == 255)
-								tempSpace2[1] = overlay[(temp + 1) * spp - 1];
-							else
-								tempSpace2[1] = int_mult(overlay[(temp + 1) * spp - 1], overlayOpacity, t);
-						}
-						if (overlayBehaviour == kReplacingBehaviour) {
-							nextOpacity = int_mult(replace[temp], selectOpacity, t); 
-							replaceMerge((viewType == kPrimaryChannelsView) ? spp : 2, tempSpace, 0, tempSpace2, 0, nextOpacity);
-						}
-						else if (overlayBehaviour ==  kMaskingBehaviour) {
-							nextOpacity = int_mult(replace[temp], selectOpacity, t); 
-							normalMerge((viewType == kPrimaryChannelsView) ? spp : 2, tempSpace, 0, tempSpace2, 0, nextOpacity);
-						}
-						else
-							normalMerge((viewType == kPrimaryChannelsView) ? spp : 2, tempSpace, 0, tempSpace2, 0, selectOpacity);
-					}
-				}
-				
-			}
+            // Insert the overlay
+            point.x = i;
+            point.y = j;
+            if (IntPointInRect(point, selectRect) || !useSelection) {
+                if (selectOpacity > 0) {
+                    if (viewType == kPrimaryChannelsView) {
+                        memcpy(&tempSpace2, &(overlay[temp * spp]), spp);
+                        if (overlayOpacity < 255)
+                            tempSpace2[spp - 1] = int_mult(tempSpace2[spp - 1], overlayOpacity, t);
+                    }
+                    else {
+                        tempSpace2[0] = overlay[temp * spp];
+                        if (overlayOpacity == 255)
+                            tempSpace2[1] = overlay[(temp + 1) * spp - 1];
+                        else
+                            tempSpace2[1] = int_mult(overlay[(temp + 1) * spp - 1], overlayOpacity, t);
+                    }
+                    if (overlayBehaviour == kReplacingBehaviour) {
+                        nextOpacity = int_mult(replace[temp], selectOpacity, t);
+                        replaceMerge((viewType == kPrimaryChannelsView) ? spp : 2, tempSpace, 0, tempSpace2, 0, nextOpacity);
+                    }
+                    else if (overlayBehaviour ==  kMaskingBehaviour) {
+                        nextOpacity = int_mult(replace[temp], selectOpacity, t);
+                        normalMerge((viewType == kPrimaryChannelsView) ? spp : 2, tempSpace, 0, tempSpace2, 0, nextOpacity);
+                    }
+                    else
+                        normalMerge((viewType == kPrimaryChannelsView) ? spp : 2, tempSpace, 0, tempSpace2, 0, selectOpacity);
+                }
+            }
 			
 			// Finally update the channel
 			if (viewType == kPrimaryChannelsView) {
@@ -582,7 +508,6 @@ dispatch_group_t group;
 {
 	int i, count = 0, layerCount = [[document contents] layerCount];
 	CompositorOptions options;
-	BOOL floating;
 
 	// Handle non-channel updates here
 	if (majorUpdateRect.size.width > 0 && majorUpdateRect.size.height > 0) {
@@ -606,36 +531,14 @@ dispatch_group_t group;
 		options.overlayBehaviour = overlayBehaviour;
 		options.useSelection = NO;
 		
-		if ([[document selection] floating]) {
-	
-			// Go through compositing each visible layer
-			for (i = layerCount - 1; i >= 0; i--) {
-				if (i >= 1) floating = [[[document contents] layer:i - 1] floating];
-				else floating = NO;
-				if ([[[document contents] layer:i] visible]) {
-					options.insertOverlay = floating;
-					if (floating)
-						[compositor compositeLayer:[[document contents] layer:i] withFloat:[[document contents] layer:i - 1] andOptions:options];
-					else
-						[compositor compositeLayer:[[document contents] layer:i] withOptions:options];
-				}
-				if (floating) i--;
-			}
-			
-		}
-		else {
-
-			// Go through compositing each visible layer
-			for (i = layerCount - 1; i >= 0; i--) {
-				if ([[[document contents] layer:i] visible]) {
-					options.insertOverlay = (i == [[document contents] activeLayerIndex]);
-					options.useSelection = (i == [[document contents] activeLayerIndex]) && [[document selection] active];
-					[compositor compositeLayer:[[document contents] layer:i] withOptions:options];
-				}
-			}
-			
-		}
-		
+        // Go through compositing each visible layer
+        for (i = layerCount - 1; i >= 0; i--) {
+            if ([[[document contents] layer:i] visible]) {
+                options.insertOverlay = (i == [[document contents] activeLayerIndex]);
+                options.useSelection = (i == [[document contents] activeLayerIndex]) && [[document selection] active];
+                [compositor compositeLayer:[[document contents] layer:i] withOptions:options];
+            }
+        }
 	}
 	
 	// Handle channel updates here
@@ -665,10 +568,7 @@ dispatch_group_t group;
 	SeaLayer *layer;
 	
 	if (viewType == kPrimaryChannelsView || viewType == kAlphaChannelView) {
-		if ([[document selection] floating])
-			layer = [[document contents] layer:[[document contents] activeLayerIndex] + 1];
-		else
-			layer = [[document contents] activeLayer];
+        layer = [[document contents] activeLayer];
 		return IntMakeRect([layer xoff], [layer yoff], [layer width], [layer height]);
 	}
 	else {
@@ -688,12 +588,7 @@ dispatch_group_t group;
 	int xwidth, xheight;
     
 	if (altData) {
-		if ([[document selection] floating]) {
-			layer = [contents layer:[contents activeLayerIndex] + 1];
-		}
-		else {
-			layer = [contents activeLayer];
-		}
+        layer = [contents activeLayer];
 		if (viewType == kPrimaryChannelsView) {
 			xwidth = [layer width];
 			xheight = [layer height];

@@ -221,12 +221,7 @@ static NSString*  SelectionEditIdentifier = @"Selection Edit Identifier";
 {
 	if (full) {
 		/* Disable or enable the tool */
-		if ([[document selection] floating]) {
-			[selectionMenu setEnabled:NO];
-		}
-		else {
-			[selectionMenu setEnabled:YES];
-		}
+        [selectionMenu setEnabled:YES];
 		// Implement the change
 		[[document docView] setNeedsDisplay:YES];
 		[optionsUtility update];
@@ -310,18 +305,8 @@ static NSString*  SelectionEditIdentifier = @"Selection Edit Identifier";
 
 -(void)floatTool
 {
-	// Show the banner
-	[[document warnings] showFloatBanner];
-	
 	oldTool = tool;
 	[self changeToolTo: kPositionTool];
-}
-
--(void)anchorTool
-{
-	// Hide the banner
-	[[document warnings] hideFloatBanner];
-	if (oldTool != -1) [self changeToolTo: oldTool];
 }
 
 - (void)setEffectEnabled:(BOOL)enable

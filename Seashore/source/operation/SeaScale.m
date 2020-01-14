@@ -242,9 +242,6 @@
 	// Adjust for floating selections
 	if (index != kAllLayers) {
 		curLayer = [[document contents] layer:index];
-		if ([curLayer floating]) {
-			[[document selection] selectOpaque];
-		}
 	}
 }
 
@@ -382,9 +379,6 @@
 	// Adjust for floating selections
 	if (undoRecord.index != kAllLayers) {
 		curLayer = [[document contents] layer:undoRecord.index];
-		if ([curLayer floating]) {
-			[[document selection] selectOpaque];
-		}
 	}
 }
 

@@ -180,7 +180,7 @@
 		break;
         default:
             if ([activeLayer floating] && [options canAnchor] && (where.x < 0 || where.y < 0 || where.x >= [activeLayer width] || where.y >= [activeLayer height])){
-                [contents anchorSelection];
+                [contents anchorLayer];
             }
         break;
 	}

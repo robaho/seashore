@@ -29,6 +29,8 @@ enum {
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli	
 */
 
+@class SeaDocument;
+
 @interface PegasusUtility : NSObject {
 	
 	// The LayersView which appears in this utility
@@ -51,7 +53,7 @@ enum {
 	IBOutlet id deleteButton;
 	
 	// The document which is the focus of this utility
-	__weak IBOutlet id document;
+	__weak IBOutlet SeaDocument *document;
 	
 	// Whether or not the utility is enabled
 	BOOL enabled;

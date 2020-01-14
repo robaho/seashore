@@ -9,6 +9,7 @@
 #import "RecentsUtility.h"
 #import "PegasusUtility.h"
 #import "StatusUtility.h"
+#import "WarningsUtility.h"
 #import "SeaView.h"
 
 /*!
@@ -20,6 +21,7 @@
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
 @class SeaHelpers;
+@class SeaSelection;
 
 @interface SeaDocument : NSDocument {
 
@@ -166,7 +168,7 @@
 	@discussion	Returns the selection manager of the document.
 	@result		Returns an instance of SeaSelection.
 */
-- (id)selection;
+- (SeaSelection*)selection;
 
 /*!
 	@method		operations
@@ -201,7 +203,7 @@
 	@discussion	Returns an object contaning the warning related methods.
 	@result		Returns an instance of WarningsUtility.
 */
-- (id)warnings;
+- (WarningsUtility*)warnings;
 
 /*!
 	@method		pluginData

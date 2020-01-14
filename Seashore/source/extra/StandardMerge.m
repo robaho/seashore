@@ -84,10 +84,12 @@ void normalMerge(int spp, unsigned char *destPtr, int destLoc, unsigned char *sr
 	int t1, t2;
     
     unsigned char *sPtr = srcPtr+srcLoc;
-    unsigned char *sPtrEnd = srcPtr+srcLoc+alphaPos;
+    unsigned char *sPtrEnd = sPtr+alphaPos;
     unsigned char *dPtr = destPtr+destLoc;
 
 	alpha = int_mult(*(sPtrEnd), srcOpacity, t1);
+    unsigned char alpha0 = 255-alpha;
+    
 	if (alpha == 0)
 		return;
 		
@@ -99,11 +101,11 @@ void normalMerge(int spp, unsigned char *destPtr, int destLoc, unsigned char *sr
 	}
 	else {
         while(sPtr<sPtrEnd) {
-			*dPtr = int_mult (*sPtr, alpha, t1) + int_mult (*dPtr, (255 - alpha), t2);
+			*dPtr = int_mult (*sPtr, alpha, t1) + int_mult (*dPtr,alpha0, t2);
             sPtr++;
             dPtr++;
         }
-		*dPtr = alpha + int_mult((255 - alpha), *dPtr, t1);
+		*dPtr = alpha + int_mult(alpha0, *dPtr, t1);
 	}
 }
 
@@ -162,9 +164,9 @@ void blendPixel(int spp, unsigned char *destPtr, int destLoc, unsigned char *src
     int a1, a2, a;
     
     unsigned char *sPtr = srcPtr+srcLoc;
-    unsigned char *sPtrEnd = srcPtr+srcLoc+alphaPos;
+    unsigned char *sPtrEnd = sPtr+alphaPos;
     unsigned char *dPtr = destPtr+destLoc;
-    unsigned char *dPtrEnd = destPtr+destLoc+alphaPos;
+    unsigned char *dPtrEnd = dPtr+alphaPos;
 
 	a1 = blend1 * *sPtrEnd;
 	a2 = blend2 * *dPtrEnd;

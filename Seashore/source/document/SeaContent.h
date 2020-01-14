@@ -564,10 +564,10 @@ typedef struct {
 - (void)makePasteboardFloat;
 
 /*!
-	@method		anchorSelection
-	@discussion	Anchors the currently floating selection.
+	@method		anchorLayer
+	@discussion	Anchors the currently floating layer
 */
-- (void)anchorSelection;
+- (void)anchorLayer;
 
 /*!
 	@method		canRaise:

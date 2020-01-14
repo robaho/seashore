@@ -10,6 +10,7 @@
 
 - (NSArray *)allSelectedItems;
 - (void)selectItems:(NSArray *)items byExtendingSelection:(BOOL)extend;
+- (void)selectRow:(int)row;
 
 @end
 

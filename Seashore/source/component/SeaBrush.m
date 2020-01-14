@@ -231,8 +231,6 @@ extern void determineBrushMask(unsigned char *input, unsigned char *output, int 
                 templateMask[(width*row+col)*2+1]=mask[row*width+col];
             }
         }
-        premultiplyBitmap(2,templateMask,templateMask,width*height);
-        
 		tempRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&templateMask pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:2 hasAlpha:YES isPlanar:NO colorSpaceName:NSDeviceWhiteColorSpace bytesPerRow:width * 2 bitsPerPixel:8 * 2];
     }
 	

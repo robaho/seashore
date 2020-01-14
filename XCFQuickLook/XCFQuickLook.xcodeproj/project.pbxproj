@@ -12,6 +12,7 @@
 		2BC964B721CE0D2A004B22DB /* Bitmap.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BC964B621CE0D2A004B22DB /* Bitmap.m */; };
 		2BC964BC21CE0E37004B22DB /* Rects.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BC964B821CE0E37004B22DB /* Rects.m */; };
 		2BC964BD21CE0E37004B22DB /* RLE.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BC964BB21CE0E37004B22DB /* RLE.m */; };
+		2BE97F4623CBAC9200A09AAC /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE97F4523CBAC9200A09AAC /* Accelerate.framework */; };
 		2C05A19C06CAA52B00D84F6F /* GeneratePreviewForURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C05A19B06CAA52B00D84F6F /* GeneratePreviewForURL.m */; };
 		61E3BCFB0870B4F2002186A0 /* GenerateThumbnailForURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E3BCFA0870B4F2002186A0 /* GenerateThumbnailForURL.m */; };
 		8D576312048677EA00EA77CD /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 08FB77B6FE84183AC02AAC07 /* main.c */; settings = {ATTRIBUTES = (); }; };
@@ -50,6 +51,7 @@
 		2BC964B921CE0E37004B22DB /* Rects.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Rects.h; path = ../Seashore/source/extra/Rects.h; sourceTree = "<group>"; };
 		2BC964BA21CE0E37004B22DB /* RLE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RLE.h; path = ../Seashore/source/extra/RLE.h; sourceTree = "<group>"; };
 		2BC964BB21CE0E37004B22DB /* RLE.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RLE.m; path = ../Seashore/source/extra/RLE.m; sourceTree = "<group>"; };
+		2BE97F4523CBAC9200A09AAC /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		2BF173CC21D58A8200579D9D /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = ../Seashore/source/main/Constants.h; sourceTree = "<group>"; };
 		2C05A19B06CAA52B00D84F6F /* GeneratePreviewForURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratePreviewForURL.m; sourceTree = "<group>"; };
 		61E3BCFA0870B4F2002186A0 /* GenerateThumbnailForURL.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = GenerateThumbnailForURL.m; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 				8D576314048677EA00EA77CD /* CoreFoundation.framework in Frameworks */,
 				C86B05270671AA6E00DD9006 /* CoreServices.framework in Frameworks */,
 				F28CFBFD0A3EC0AF000ABFF5 /* ApplicationServices.framework in Frameworks */,
+				2BE97F4623CBAC9200A09AAC /* Accelerate.framework in Frameworks */,
 				F28CFC030A3EC0C6000ABFF5 /* QuickLook.framework in Frameworks */,
 				DC0E916C1041DD6300C3FC48 /* Cocoa.framework in Frameworks */,
 			);
@@ -97,6 +100,7 @@
 				089C167CFE841241C02AAC07 /* Resources */,
 				089C1671FE841209C02AAC07 /* External Frameworks and Libraries */,
 				19C28FB6FE9D52B211CA2CBB /* Products */,
+				2BE97F4423CBAC9100A09AAC /* Frameworks */,
 			);
 			name = XCFQuickLook;
 			sourceTree = "<group>";
@@ -162,6 +166,14 @@
 				8D576316048677EA00EA77CD /* XCFQuickLook.qlgenerator */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		2BE97F4423CBAC9100A09AAC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2BE97F4523CBAC9200A09AAC /* Accelerate.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

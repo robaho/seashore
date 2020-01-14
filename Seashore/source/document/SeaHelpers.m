@@ -100,31 +100,23 @@
 	[self endLineDrawing];
 }
 
-- (void)activeLayerChanged:(int)eventType rect:(IntRect *)rect
+- (void)activeLayerChanged:(int)eventType
 {
 	id whiteboard = [document whiteboard];
 	id docView = [document docView];
 	
 	[[document selection] readjustSelection];
-	if (![[[document contents] activeLayer] hasAlpha] && ![[document selection] floating] && [[document contents] selectedChannel] == kAlphaChannel) {
+    
+	if (![[[document contents] activeLayer] hasAlpha] && [[document contents] selectedChannel] == kAlphaChannel) {
 		[[document contents] setSelectedChannel:kAllChannels];
 		[[document helpers] channelChanged];
 	}
+    
 	switch (eventType) {
 		case kLayerSwitched:
-		case kTransparentLayerAdded:
-			[whiteboard readjustLayer];
-			if ([whiteboard whiteboardIsLayerSpecific]) {
-				[whiteboard readjustAltData:YES];
-			}
-			else if ([[SeaController seaPrefs] layerBounds]) {
-				[docView setNeedsDisplay:YES];
-			}
-		break;
 		case kLayerAdded:
 		case kLayerDeleted:
 			[whiteboard readjustLayer];
-			[whiteboard readjustAltData:YES];
 		break;
 	}
     
@@ -132,6 +124,13 @@
 
 	[(LayerDataSource *)[document dataSource] update];
 	[[document pegasusUtility] update:kPegasusUpdateAll];
+    
+    // Show the banner
+    if([[[document contents] activeLayer] floating]) {
+        [[document warnings] showFloatBanner];
+    } else {
+        [[document warnings] hideFloatBanner];
+    }
 }
 
 - (void)documentWillFlatten
@@ -141,7 +140,7 @@
 
 - (void)documentFlattened
 {
-	[self activeLayerChanged:kLayerAdded rect:NULL];
+	[self activeLayerChanged:kLayerAdded];
 }
 
 - (void)typeChanged
@@ -154,11 +153,8 @@
 
 - (void)applyOverlay
 {
-	id contents = [document contents], layer;
-	IntRect rect;
-	
-	rect = [[document whiteboard] applyOverlay];
-	layer = [contents activeLayer];
+	IntRect rect = [[document whiteboard] applyOverlay];
+	SeaLayer *layer = [[document contents] activeLayer];
 	[layer updateThumbnail];
 	[[document whiteboard] update:rect];
 	[[document pegasusUtility] update:kPegasusUpdateLayerView];

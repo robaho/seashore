@@ -48,7 +48,7 @@
     
     [[document helpers] activeLayerWillChange];
     [[document contents] setActiveLayerIndex:index];
-    [[document helpers] activeLayerChanged:kLayerSwitched rect:NULL];
+    [[document helpers] activeLayerChanged:kLayerSwitched];
 }
 
 // ================================================================
@@ -291,6 +291,7 @@ NSFileHandle *NewFileHandleForWritingFile(NSString *dirpath, NSString *basename,
         return;
     reloading=true;
 	[outlineView reloadData];
+    [outlineView selectRow:[[document contents] activeLayerIndex]];
     reloading=false;
 }
 

@@ -194,12 +194,6 @@
 */
 - (void)floatTool;
 
-/*!
-	@method		anchorTool
-	@discussion	Selects the last tool to call floatTool
-*/
-- (void)anchorTool;
-
 /*
 	@method		setEffectEnabled:
 	@discussion	Sets whether the effect tool is enabled or not.

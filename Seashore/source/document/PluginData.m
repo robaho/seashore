@@ -47,10 +47,7 @@
 
 - (int)channel
 {
-	if ([[(SeaDocument *)document selection] floating])
-		return kAllChannels;
-	else
-		return [[document contents] selectedChannel];	
+    return [[document contents] selectedChannel];	
 }
 
 - (int)width

@@ -13,7 +13,6 @@
 */
 enum {
 	kLayerSwitched,
-	kTransparentLayerAdded,
 	kLayerAdded,
 	kLayerDeleted
 };
@@ -91,18 +90,13 @@ enum {
 - (void)activeLayerWillChange;
 
 /*!
-	@method		activeLayerChanged:rect:
+	@method		activeLayerChanged:
 	@discussion	Called after the document's active layer is changed.
 	@param		eventType
 				The layer event type associated with the change (see  constants
 				in the header).
-	@param		rect
-				The rectangle specifying the deleted layer's boundaries for
-				kLayerDeleted events or the added layer's boundaries for
-				kLayerAdded events or NULL. This is used to allow more effective
-				updating.
 */
-- (void)activeLayerChanged:(int)eventType rect:(IntRect *)rect;
+- (void)activeLayerChanged:(int)eventType;
 
 /*!
 	@method		documentWillFlatten

@@ -8,8 +8,8 @@
 	<string>Seashore is unable to open the given SVG file because the SVG Importer is not installed. The installer for this importer can be found on Seashore&apos;s website.</string>
 	<key>all group</key>
 	<string>All</string>
-	<key>anchor selection</key>
-	<string>Anchor Selection</string>
+	<key>anchor layer</key>
+	<string>Anchor Layer</string>
 	<key>background</key>
 	<string>Background</string>
 	<key>gif trans</key>

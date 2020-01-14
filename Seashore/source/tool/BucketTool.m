@@ -147,10 +147,7 @@
 		tolerance = [(BucketOptions*)options tolerance];
 	else
 		tolerance = 255;
-	if ([layer floating])
-		channel = kPrimaryChannels;
-	else
-		channel = [[document contents] selectedChannel];
+    channel = [[document contents] selectedChannel];
 	if ([[document selection] active])
 		rect = bucketFill(spp, [[document selection] localRect], overlay, data, width, height, seeds, intervals, basePixel, tolerance, channel);
 	else

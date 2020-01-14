@@ -479,9 +479,6 @@
 {
 	int i;
 	
-	if (floating)
-		return NO;
-	
 	if (hasAlpha) {
 		for (i = 0; i < width * height; i++) {
 			if (data[(i + 1) * spp - 1] != 255)
