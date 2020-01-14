@@ -5,9 +5,6 @@
       location = "group:Seashore.xcconfig">
    </FileRef>
    <FileRef
-      location = "group:current.xml">
-   </FileRef>
-   <FileRef
       location = "container:Seashore/Seashore.xcodeproj">
    </FileRef>
    <Group
