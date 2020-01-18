@@ -109,3 +109,12 @@ unsigned char averagedComponentValue(int spp, unsigned char *data, int width, in
 unsigned char *stripAlpha(unsigned char *srcData,int width,int height,int spp);
 
 NSImage *getTinted(NSImage *src,NSColor *tint);
+
+NS_INLINE bool isSameColor(unsigned char *data,int width,int spp,int x,int y,int x0,int y0) {
+    for(int i=0;i<spp;i++) {
+        if(data[(width*y+x)*spp+i]!=data[(width*y0+x0)*spp+i]){
+            return false;
+        }
+    }
+    return true;
+}

@@ -14,6 +14,7 @@
 #import "SeaController.h"
 #import "TextureUtility.h"
 #import "RecentsUtility.h"
+#import "Bitmap.h"
 
 @implementation BucketTool
 
@@ -137,8 +138,15 @@
         int y = startPoint.y + (int)ceil(yDelta * ((float)seedIndex / intervals));
         if(x<0 || x>=width || y <0 || y>=height)
             continue;
+        // check if color already exists in seeds
+        for(int i=0;i<inrect;i++) {
+            if(isSameColor(data,width,spp,x,y,seeds[i].x,seeds[i].y))
+                goto next_seed;
+        }
         seeds[inrect] = IntMakePoint(x, y);
         inrect++;
+    next_seed:
+        continue;
     }
     intervals=inrect;
 	

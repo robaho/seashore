@@ -7,6 +7,7 @@
 #import "SeaWhiteboard.h"
 #import "WandOptions.h"
 #import "SeaSelection.h"
+#import "Bitmap.h"
 
 @implementation WandTool
 
@@ -79,18 +80,26 @@
     IntPoint* seeds = malloc(sizeof(IntPoint) * (intervals));
     
     int inrect=0;
+    
     for(seedIndex = 0; seedIndex < intervals; seedIndex++){
         int x = startPoint.x + (int)ceil(xDelta * ((float)seedIndex / intervals));
         int y = startPoint.y + (int)ceil(yDelta * ((float)seedIndex / intervals));
         if(x<0 || x>=width || y <0 || y>=height)
             continue;
+        // check if color already exists in seeds
+        for(int i=0;i<inrect;i++) {
+            if(isSameColor(data,width,spp,x,y,seeds[i].x,seeds[i].y))
+                goto next_seed;
+        }
         seeds[inrect] = IntMakePoint(x, y);
         inrect++;
+    next_seed:
+        continue;
     }
     intervals=inrect;
 
     if(selectAllRegions) {
-        memset(overlay,width*height*spp,0);
+        memset(overlay,0,width*height*spp);
         rect = IntMakeRect(0,0,width,height);
         for(int row=0;row<height;row++){
             for(int col=0;col<width;col++){
