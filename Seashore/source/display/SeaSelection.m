@@ -66,7 +66,6 @@
 		premultiplyBitmap(4, maskBitmap, maskBitmap, rect.size.width * rect.size.height);
 		selectionColorIndex = [[SeaController seaPrefs] selectionColorIndex];
 	}
-	[maskImage setFlipped:YES];
 	
 	return maskImage;
 }
@@ -119,9 +118,10 @@
 			maskBitmap[i * 4 + 3] = 0xFF - mask[i];
 		}
 		premultiplyBitmap(4, maskBitmap, maskBitmap, rect.size.width * rect.size.height);
-		maskBitmapRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&maskBitmap pixelsWide:rect.size.width pixelsHigh:rect.size.height bitsPerSample:8 samplesPerPixel:4 hasAlpha:YES isPlanar:NO colorSpaceName:MyRGBSpace bytesPerRow:rect.size.width * 4 bitsPerPixel:8 * 4];
+		NSBitmapImageRep *maskBitmapRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&maskBitmap pixelsWide:rect.size.width pixelsHigh:rect.size.height bitsPerSample:8 samplesPerPixel:4 hasAlpha:YES isPlanar:NO colorSpaceName:MyRGBSpace bytesPerRow:rect.size.width * 4 bitsPerPixel:8 * 4];
 		maskImage = [[NSImage alloc] init];
 		[maskImage addRepresentation:maskBitmapRep];
+        [maskImage setFlipped:YES];
 	}
 }
 

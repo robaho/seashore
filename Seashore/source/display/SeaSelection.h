@@ -50,7 +50,6 @@ enum {
 	// Help present the user with a visual representation of the mask
 	int selectionColorIndex;
 	unsigned char *maskBitmap;
-	NSBitmapImageRep *maskBitmapRep;
 	NSImage *maskImage;
 	
 	// The point of the last copied selection and its size
