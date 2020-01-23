@@ -324,7 +324,6 @@
 		DC56186810CC73CF009CF792 /* BannerView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA87C0A105A195800234465 /* BannerView.m */; };
 		DC5ED8E90FF2E06400DB0897 /* InfoPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5ED8E80FF2E06400DB0897 /* InfoPanel.m */; };
 		DC5ED8FB0FF2E3A900DB0897 /* InfoPanelBacking.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5ED8FA0FF2E3A900DB0897 /* InfoPanelBacking.m */; };
-		DC5ED9030FF2FAE500DB0897 /* NSBezierPath_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5ED9020FF2FAE500DB0897 /* NSBezierPath_Extensions.m */; };
 		DC709EE60A61A35C000B8333 /* Units.m in Sources */ = {isa = PBXBuildFile; fileRef = DC709EE50A61A35C000B8333 /* Units.m */; };
 		DC70A07F0A6205DC000B8333 /* GeneralPrefsIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC70A07D0A6205DC000B8333 /* GeneralPrefsIcon.png */; };
 		DC70A0800A6205DC000B8333 /* NewPrefsIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC70A07E0A6205DC000B8333 /* NewPrefsIcon.png */; };
@@ -339,7 +338,6 @@
 		DC9C467A0FFC2CCF00C44AA4 /* AbstractPanelUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = DC9C46790FFC2CCF00C44AA4 /* AbstractPanelUtility.m */; };
 		DC9C46E70FFC508900C44AA4 /* done.png in Resources */ = {isa = PBXBuildFile; fileRef = DC9C46E60FFC508900C44AA4 /* done.png */; };
 		DC9C47120FFC685500C44AA4 /* selectnoneTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = DC9C47110FFC685500C44AA4 /* selectnoneTemplate.png */; };
-		DCA8928E0FD4AAA3002BEC8A /* NSArray_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA8928B0FD4AAA3002BEC8A /* NSArray_Extensions.m */; };
 		DCA8928F0FD4AAA3002BEC8A /* NSOutlineView_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA8928D0FD4AAA3002BEC8A /* NSOutlineView_Extensions.m */; };
 		DCB08D9110463653009DE7C3 /* selectalphaTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = DCB08D8E10463652009DE7C3 /* selectalphaTemplate.png */; };
 		DCB08D9210463653009DE7C3 /* selectinverseTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = DCB08D8F10463653009DE7C3 /* selectinverseTemplate.png */; };
@@ -899,8 +897,6 @@
 		DC5ED8E80FF2E06400DB0897 /* InfoPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoPanel.m; sourceTree = "<group>"; };
 		DC5ED8F90FF2E3A900DB0897 /* InfoPanelBacking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoPanelBacking.h; sourceTree = "<group>"; };
 		DC5ED8FA0FF2E3A900DB0897 /* InfoPanelBacking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoPanelBacking.m; sourceTree = "<group>"; };
-		DC5ED9010FF2FAE500DB0897 /* NSBezierPath_Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSBezierPath_Extensions.h; path = ../utility/NSBezierPath_Extensions.h; sourceTree = "<group>"; };
-		DC5ED9020FF2FAE500DB0897 /* NSBezierPath_Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSBezierPath_Extensions.m; path = ../utility/NSBezierPath_Extensions.m; sourceTree = "<group>"; };
 		DC709EE30A61A173000B8333 /* Units.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Units.h; sourceTree = "<group>"; };
 		DC709EE50A61A35C000B8333 /* Units.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Units.m; sourceTree = "<group>"; };
 		DC70A07D0A6205DC000B8333 /* GeneralPrefsIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GeneralPrefsIcon.png; sourceTree = "<group>"; };
@@ -925,8 +921,6 @@
 		DC9C47110FFC685500C44AA4 /* selectnoneTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = selectnoneTemplate.png; sourceTree = "<group>"; };
 		DCA87C09105A195800234465 /* BannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BannerView.h; sourceTree = "<group>"; };
 		DCA87C0A105A195800234465 /* BannerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BannerView.m; sourceTree = "<group>"; };
-		DCA8928A0FD4AAA3002BEC8A /* NSArray_Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSArray_Extensions.h; path = ../utility/NSArray_Extensions.h; sourceTree = "<group>"; };
-		DCA8928B0FD4AAA3002BEC8A /* NSArray_Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSArray_Extensions.m; path = ../utility/NSArray_Extensions.m; sourceTree = "<group>"; };
 		DCA8928C0FD4AAA3002BEC8A /* NSOutlineView_Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSOutlineView_Extensions.h; path = ../utility/NSOutlineView_Extensions.h; sourceTree = "<group>"; };
 		DCA8928D0FD4AAA3002BEC8A /* NSOutlineView_Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSOutlineView_Extensions.m; path = ../utility/NSOutlineView_Extensions.m; sourceTree = "<group>"; };
 		DCB08D8E10463652009DE7C3 /* selectalphaTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = selectalphaTemplate.png; sourceTree = "<group>"; };
@@ -1432,12 +1426,8 @@
 			isa = PBXGroup;
 			children = (
 				DC5C1F1712349FF500C0A5FE /* NSEvent_Extensions.h */,
-				DCA8928A0FD4AAA3002BEC8A /* NSArray_Extensions.h */,
-				DCA8928B0FD4AAA3002BEC8A /* NSArray_Extensions.m */,
 				DCA8928C0FD4AAA3002BEC8A /* NSOutlineView_Extensions.h */,
 				DCA8928D0FD4AAA3002BEC8A /* NSOutlineView_Extensions.m */,
-				DC5ED9010FF2FAE500DB0897 /* NSBezierPath_Extensions.h */,
-				DC5ED9020FF2FAE500DB0897 /* NSBezierPath_Extensions.m */,
 			);
 			name = "Cocoa Extensions";
 			sourceTree = "<group>";
@@ -2131,11 +2121,9 @@
 				DC3B6F5E0FD37C14000F0427 /* LayerDataSource.m in Sources */,
 				2BF4050A228258A90091E1EA /* HEICExporter.m in Sources */,
 				DC3B6F850FD48F9B000F0427 /* LayerCell.m in Sources */,
-				DCA8928E0FD4AAA3002BEC8A /* NSArray_Extensions.m in Sources */,
 				DCA8928F0FD4AAA3002BEC8A /* NSOutlineView_Extensions.m in Sources */,
 				DC5ED8E90FF2E06400DB0897 /* InfoPanel.m in Sources */,
 				DC5ED8FB0FF2E3A900DB0897 /* InfoPanelBacking.m in Sources */,
-				DC5ED9030FF2FAE500DB0897 /* NSBezierPath_Extensions.m in Sources */,
 				DC9C46220FFC1F4400C44AA4 /* AbstractPaintOptions.m in Sources */,
 				DC9C467A0FFC2CCF00C44AA4 /* AbstractPanelUtility.m in Sources */,
 				DC414BAA102F54FD00B66F04 /* StatusUtility.m in Sources */,
