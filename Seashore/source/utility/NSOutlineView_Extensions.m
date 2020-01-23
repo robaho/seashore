@@ -57,7 +57,10 @@
 	int i;
 	for(i = 0; i < [self numberOfRows]; i++){
 		if([selectedIndexes containsIndex:i]){
-			[items addObject: [self itemAtRow: i]];
+            id entry = [self itemAtRow:i];
+            if(entry!=NULL) {
+                [items addObject: entry];
+            }
 		}
 	}
     return items;
