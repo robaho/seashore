@@ -1,7 +1,6 @@
 #import "SeaDocument.h"
 #import "SeaContent.h"
 #import "LayerCell.h"
-#import "NSArray_Extensions.h"
 #import "NSOutlineView_Extensions.h"
 #import "SeaLayer.h"
 #import "SeaHelpers.h"

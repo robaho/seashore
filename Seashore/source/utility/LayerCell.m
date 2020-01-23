@@ -1,5 +1,4 @@
 #import "LayerCell.h"
-#import "NSBezierPath_Extensions.h"
 
 @implementation LayerCell
 
