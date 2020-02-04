@@ -929,17 +929,38 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     if ([[document selection] floating])
         return;
     
-    // Get the data from the pasteboard
-    imageRepDataType = [pboard availableTypeFromArray:[NSArray arrayWithObject:NSTIFFPboardType]];
-    if (imageRepDataType == NULL) {
-        imageRepDataType = [pboard availableTypeFromArray:[NSArray arrayWithObject:NSPICTPboardType]];
-        imageRepData = [pboard dataForType:imageRepDataType];
-        image = [[NSImage alloc] initWithData:imageRepData];
-        imageRep = [[NSBitmapImageRep alloc] initWithData:[image TIFFRepresentation]];
+    // Ensure that the document is valid
+    if(![[NSPasteboard generalPasteboard] availableTypeFromArray:[NSArray arrayWithObjects:NSTIFFPboardType, NSPICTPboardType, NSURLPboardType, NULL]]){
+        NSBeep();
+        return;
     }
-    else {
-        imageRepData = [pboard dataForType:imageRepDataType];
-        imageRep = [[NSBitmapImageRep alloc] initWithData:imageRepData];
+    
+    NSPasteboardType ptype = [pboard availableTypeFromArray:[NSArray arrayWithObjects:NSURLPboardType,NSTIFFPboardType,NSPICTPboardType,nil]];
+    if([ptype isEqualToString:NSURLPboardType]){
+        NSURL *url = [NSURL URLFromPasteboard:pboard];
+        if([url isFileURL]) {
+            NSString *path = [url path];
+            NSString *extension = [path pathExtension];
+            image = [[NSImage alloc] initByReferencingFile:path];
+            imageRep = [[NSBitmapImageRep alloc] initWithData:[image TIFFRepresentation]];
+        } else {
+            // we'll try the image types below
+        }
+    }
+    
+    if(imageRep==NULL){
+        // Get the data from the pasteboard
+        imageRepDataType = [pboard availableTypeFromArray:[NSArray arrayWithObject:NSTIFFPboardType]];
+        if (imageRepDataType == NULL) {
+            imageRepDataType = [pboard availableTypeFromArray:[NSArray arrayWithObject:NSPICTPboardType]];
+            imageRepData = [pboard dataForType:imageRepDataType];
+            image = [[NSImage alloc] initWithData:imageRepData];
+            imageRep = [[NSBitmapImageRep alloc] initWithData:[image TIFFRepresentation]];
+        }
+        else {
+            imageRepData = [pboard dataForType:imageRepDataType];
+            imageRep = [[NSBitmapImageRep alloc] initWithData:imageRepData];
+        }
     }
     
     // Work out the correct center point
