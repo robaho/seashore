@@ -244,14 +244,16 @@ typedef struct {
 {
 	// Apply the changes
 	if (running) {
+        IntRect oldRect = previewRect;
 		[[document whiteboard] clearOverlay];
-		if (previewRect.size.width != 0) {
-			[[document helpers] overlayChanged:previewRect];
-		}
 		if ([[[textbox textStorage] string] length] > 0) {
             result r = [self drawOverlay:YES];
-			[[document helpers] overlayChanged:r.rect];
+            previewRect = r.rect;
 		}
+        IntRect dirty = previewRect;
+        if(oldRect.size.height>0 || oldRect.size.width>0)
+            dirty = IntSumRects(dirty,oldRect);
+        [[document helpers] overlayChanged:dirty];
 	}
 }
 
