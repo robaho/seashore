@@ -229,7 +229,7 @@ enum {
 	@discussion	Specifies the maximum size of an image, this restricts images to
 				256 MB.
 */
-#define kMaxImageSize 8192
+#define kMaxImageSize 8192*2
 
 /*!
 	@defined	kMinImageSize
@@ -241,7 +241,7 @@ enum {
 	@defined	kMaxResolution
 	@discussion	Specifies the maximum resolution of an image.
 */
-#define kMaxResolution 8192*2
+#define kMaxResolution 3000
 
 /*!
 	@defined	kMinResolution
