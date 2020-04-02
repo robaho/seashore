@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		2B1F6AF521D763C000D6F371 /* Plugins.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1F6AF421D763C000D6F371 /* Plugins.framework */; };
+		2B80E948243563190046979F /* CIBloom.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B80E946243563190046979F /* CIBloom.xib */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		A831E1410789471D0009080F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A831E13F0789471D0009080F /* Localizable.strings */; };
 		A86E1A9A0BF2132D00CCFBB8 /* CIBloomClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A86E1A990BF2132D00CCFBB8 /* CIBloomClass.m */; };
-		A86E1AAB0BF2138F00CCFBB8 /* CIBloom.nib in Resources */ = {isa = PBXBuildFile; fileRef = A86E1AA90BF2138F00CCFBB8 /* CIBloom.nib */; };
 		A89CC2C409A9DF410072B19D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A89CC2C309A9DF410072B19D /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
@@ -20,7 +20,7 @@
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		2B1F6AF421D763C000D6F371 /* Plugins.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Plugins.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2B65AC0D22763B5A005CE6C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/CIBloom.nib; sourceTree = "<group>"; };
+		2B80E947243563190046979F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CIBloom.xib; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* Bloom+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Bloom+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A831E1400789471D0009080F /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -67,7 +67,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				A86E1AA90BF2138F00CCFBB8 /* CIBloom.nib */,
+				2B80E946243563190046979F /* CIBloom.xib */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				A831E13F0789471D0009080F /* Localizable.strings */,
 			);
@@ -163,7 +163,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A831E1410789471D0009080F /* Localizable.strings in Resources */,
-				A86E1AAB0BF2138F00CCFBB8 /* CIBloom.nib in Resources */,
+				2B80E948243563190046979F /* CIBloom.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -181,20 +181,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		2B80E946243563190046979F /* CIBloom.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2B80E947243563190046979F /* en */,
+			);
+			name = CIBloom.xib;
+			sourceTree = "<group>";
+		};
 		A831E13F0789471D0009080F /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				A831E1400789471D0009080F /* English */,
 			);
 			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-		A86E1AA90BF2138F00CCFBB8 /* CIBloom.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2B65AC0D22763B5A005CE6C9 /* en */,
-			);
-			name = CIBloom.nib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

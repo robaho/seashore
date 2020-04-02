@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="SeaPrintOptionsController">
+            <connections>
+                <outlet property="view" destination="a0M-NX-jrf" id="jn9-ot-DvR"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="a0M-NX-jrf" userLabel="Panel">
+            <rect key="frame" x="0.0" y="0.0" width="315" height="118"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <button verticalHuggingPriority="750" tag="1" id="8Q8-be-Uyj">
+                    <rect key="frame" x="19" y="75" width="59" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="radio" title="Scale:" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Nih-hb-Yj4">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="message"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="scaleTypeChange:" target="-2" id="fsX-Sj-ogg"/>
+                        <binding destination="-2" name="value" keyPath="self.scaleByAmount" id="9ty-Qv-5rh"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" tag="2" id="BlW-9Z-xzy">
+                    <rect key="frame" x="19" y="47" width="94" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="radio" title="Scale to Fit:" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="KoD-RD-ytW">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="message"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="scaleTypeChange:" target="-2" id="pzJ-5d-x89"/>
+                        <binding destination="-2" name="value" keyPath="self.scaleToFit" id="MZa-um-Qyt"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" tag="1" id="mEc-tI-67H">
+                    <rect key="frame" x="167" y="47" width="130" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="radio" title="Print Entire Image" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="I5d-Zv-fMf">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="message"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="scaleFitTypeChange:" target="-2" id="vIj-9K-I7e"/>
+                        <binding destination="-2" name="value" keyPath="self.scaleEntireImage" id="kn2-sn-fJr"/>
+                        <binding destination="-2" name="enabled" keyPath="self.scaleToFit" id="j2I-OA-7zx"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" tag="2" id="SUQ-Zr-QqP">
+                    <rect key="frame" x="167" y="19" width="117" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="radio" title="Fill Entire Paper" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="8dH-cv-0Ll">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="message"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="scaleFitTypeChange:" target="-2" id="V5e-Jf-LiZ"/>
+                        <binding destination="-2" name="value" keyPath="self.scaleFillPaper" id="YIG-Wk-MSk"/>
+                        <binding destination="-2" name="enabled" keyPath="self.scaleToFit" id="WHZ-kM-SZW"/>
+                    </connections>
+                </button>
+                <textField verticalHuggingPriority="750" id="UB5-16-0g2">
+                    <rect key="frame" x="168" y="76" width="96" height="22"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" truncatesLastVisibleLine="YES" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="iWg-nr-GwG">
+                        <numberFormatter key="formatter" formatterBehavior="custom10_4" numberStyle="percent" lenient="YES" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" id="sl6-P5-XAO">
+                            <integer key="multiplier" value="100"/>
+                        </numberFormatter>
+                        <font key="font" metaFont="message"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <binding destination="-2" name="value" keyPath="self.scaleAmount" id="fcQ-33-P1U"/>
+                        <binding destination="-2" name="enabled" keyPath="self.scaleByAmount" id="l4X-Tu-YJ9"/>
+                    </connections>
+                </textField>
+            </subviews>
+            <point key="canvasLocation" x="-2030.5" y="-702"/>
+        </customView>
+    </objects>
+</document>

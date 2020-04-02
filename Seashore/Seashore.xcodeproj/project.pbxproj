@@ -34,8 +34,12 @@
 		2B2D8CC721F996A5004527F2 /* Alpha2Gray.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B2D8CC521F995BB004527F2 /* Alpha2Gray.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2B2D8CCA21F9A870004527F2 /* ZoomTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B2D8CC921F9A870004527F2 /* ZoomTool.m */; };
 		2B70A88B22061F4300E51F69 /* Plugins.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2BD5906D21E3BCF0002D150B /* Plugins.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B80E9CF243567FB0046979F /* SeaDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B80E9C7243567FB0046979F /* SeaDocument.xib */; };
+		2B80E9D0243567FB0046979F /* SVGContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B80E9C9243567FB0046979F /* SVGContent.xib */; };
+		2B80E9D1243567FB0046979F /* CocoaContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B80E9CB243567FB0046979F /* CocoaContent.xib */; };
+		2B80E9D2243567FB0046979F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B80E9CD243567FB0046979F /* MainMenu.xib */; };
+		2B80E9D42435689B0046979F /* PrintPanelAccessory.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B80E9D32435689B0046979F /* PrintPanelAccessory.xib */; };
 		2B8BD34721EA565C00FD9AC5 /* SeaPrintOptionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8BD34521EA565C00FD9AC5 /* SeaPrintOptionsController.m */; };
-		2B8BD35221EA727500FD9AC5 /* PrintPanelAccessory.nib in Resources */ = {isa = PBXBuildFile; fileRef = 2B8BD35121EA6E1800FD9AC5 /* PrintPanelAccessory.nib */; };
 		2B8BD35621EC71EC00FD9AC5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B8BD35521EC71EC00FD9AC5 /* QuartzCore.framework */; };
 		2B8BD59121ED16AB00FD9AC5 /* BrushExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8BD59021ED16AB00FD9AC5 /* BrushExporter.m */; };
 		2B96A50C23A5522D00A04B72 /* SeaContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B96A50923A5522C00A04B72 /* SeaContent.m */; };
@@ -150,7 +154,6 @@
 		56C8A64D1055A1DA0056E36F /* normalTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 56C8A64C1055A1DA0056E36F /* normalTemplate.png */; };
 		A80983D70871420900F7412F /* JP2Exporter.m in Sources */ = {isa = PBXBuildFile; fileRef = A80983D50871420900F7412F /* JP2Exporter.m */; };
 		A80EB8A6086F05E300369324 /* JP2 Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A80EB8A5086F05E300369324 /* JP2 Icon.icns */; };
-		A81240C707E81A7A00F275BF /* SVGContent.nib in Resources */ = {isa = PBXBuildFile; fileRef = A81240C507E81A7A00F275BF /* SVGContent.nib */; };
 		A8138D660CEFD5FA00C2F880 /* Seashore Effects Guide.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A8138D640CEFD5FA00C2F880 /* Seashore Effects Guide.pdf */; };
 		A81EC6B0094A6C5C00F7D365 /* GIF Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A81EC6AF094A6C5C00F7D365 /* GIF Icon.icns */; };
 		A81F6EB307C2EE35005C2DBD /* XBMImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = A81F6EB107C2EE35005C2DBD /* XBMImporter.m */; };
@@ -219,9 +222,6 @@
 		A8EDF0E7078959C80022BB31 /* PICT Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A8F6B65206CA1C97003A4C65 /* PICT Icon.icns */; };
 		A8EDF0E8078959C80022BB31 /* TIFF Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A8F6B65306CA1C97003A4C65 /* TIFF Icon.icns */; };
 		A8EDF0E9078959C80022BB31 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A87E672506D1F4A000A5C89A /* Credits.rtf */; };
-		A8EDF0EA078959C80022BB31 /* SeaDocument.nib in Resources */ = {isa = PBXBuildFile; fileRef = A87E672706D1F4A000A5C89A /* SeaDocument.nib */; };
-		A8EDF0EB078959C80022BB31 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = A87E672B06D1F4A000A5C89A /* MainMenu.nib */; };
-		A8EDF0EC078959C80022BB31 /* CocoaContent.nib in Resources */ = {isa = PBXBuildFile; fileRef = A87E672D06D1F4A000A5C89A /* CocoaContent.nib */; };
 		A8EDF0ED078959C80022BB31 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8CA47A306D82C10006F0681 /* Localizable.strings */; };
 		A8EDF0EE078959C80022BB31 /* Seashore Guide.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A843451C075893FB008C6517 /* Seashore Guide.pdf */; };
 		A8EDF0F0078959C80022BB31 /* checkerboard.png in Resources */ = {isa = PBXBuildFile; fileRef = A86295E007700FE300C66FF4 /* checkerboard.png */; };
@@ -535,13 +535,13 @@
 		2B2D8CC921F9A870004527F2 /* ZoomTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZoomTool.m; sourceTree = "<group>"; };
 		2B4046692185672100BCC2A2 /* ColorSync.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ColorSync.framework; path = System/Library/Frameworks/ColorSync.framework; sourceTree = SDKROOT; };
 		2B40466A2185672300BCC2A2 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
-		2B65AC05227612E1005CE6C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/SVGContent.nib; sourceTree = "<group>"; };
-		2B65AC06227612E1005CE6C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/CocoaContent.nib; sourceTree = "<group>"; };
-		2B65AC07227612E1005CE6C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/SeaDocument.nib; sourceTree = "<group>"; };
-		2B65AC08227612E1005CE6C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/MainMenu.nib; sourceTree = "<group>"; };
+		2B80E9C8243567FB0046979F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SeaDocument.xib; sourceTree = "<group>"; };
+		2B80E9CA243567FB0046979F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SVGContent.xib; sourceTree = "<group>"; };
+		2B80E9CC243567FB0046979F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CocoaContent.xib; sourceTree = "<group>"; };
+		2B80E9CE243567FB0046979F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		2B80E9D32435689B0046979F /* PrintPanelAccessory.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrintPanelAccessory.xib; sourceTree = "<group>"; };
 		2B8BD34421EA565C00FD9AC5 /* SeaPrintOptionsController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaPrintOptionsController.h; sourceTree = "<group>"; };
 		2B8BD34521EA565C00FD9AC5 /* SeaPrintOptionsController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeaPrintOptionsController.m; sourceTree = "<group>"; };
-		2B8BD35121EA6E1800FD9AC5 /* PrintPanelAccessory.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = PrintPanelAccessory.nib; path = /Users/robertengels/seashore/Seashore/resources/PrintPanelAccessory.nib; sourceTree = "<absolute>"; };
 		2B8BD35521EC71EC00FD9AC5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		2B8BD58F21ED169B00FD9AC5 /* BrushExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrushExporter.h; sourceTree = "<group>"; };
 		2B8BD59021ED16AB00FD9AC5 /* BrushExporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrushExporter.m; sourceTree = "<group>"; };
@@ -1131,16 +1131,16 @@
 		2A37F4B8FDCFA73011CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2B80E9D32435689B0046979F /* PrintPanelAccessory.xib */,
+				2B80E9CB243567FB0046979F /* CocoaContent.xib */,
+				2B80E9CD243567FB0046979F /* MainMenu.xib */,
+				2B80E9C7243567FB0046979F /* SeaDocument.xib */,
+				2B80E9C9243567FB0046979F /* SVGContent.xib */,
 				A8F6B64706CA192F003A4C65 /* Icons */,
 				F50687F1039B8B18016F7F19 /* Graphics */,
 				A8FBD1FE0410E1DB00DF7825 /* Additions */,
 				A87E672506D1F4A000A5C89A /* Credits.rtf */,
 				A8CA47A306D82C10006F0681 /* Localizable.strings */,
-				A87E672706D1F4A000A5C89A /* SeaDocument.nib */,
-				A87E672B06D1F4A000A5C89A /* MainMenu.nib */,
-				A87E672D06D1F4A000A5C89A /* CocoaContent.nib */,
-				A81240C507E81A7A00F275BF /* SVGContent.nib */,
-				2B8BD35121EA6E1800FD9AC5 /* PrintPanelAccessory.nib */,
 				A843451C075893FB008C6517 /* Seashore Guide.pdf */,
 				A8138D640CEFD5FA00C2F880 /* Seashore Effects Guide.pdf */,
 				A8EDF16707895A9F0022BB31 /* Info.plist */,
@@ -1869,9 +1869,9 @@
 			files = (
 				2BED227621F3FB40005B496C /* lassoTemplate.png in Resources */,
 				2BED227421F3FB40005B496C /* zoomTemplate.png in Resources */,
-				2B8BD35221EA727500FD9AC5 /* PrintPanelAccessory.nib in Resources */,
 				A8EDF0B9078959C80022BB31 /* duplicateTemplate.png in Resources */,
 				A8EDF0BA078959C80022BB31 /* newTemplate.png in Resources */,
+				2B80E9D1243567FB0046979F /* CocoaContent.xib in Resources */,
 				2BED226C21F3FB40005B496C /* wandTemplate.png in Resources */,
 				A8EDF0C4078959C80022BB31 /* move-cursor.png in Resources */,
 				A8EDF0C5078959C80022BB31 /* zoom-cursor.png in Resources */,
@@ -1904,18 +1904,16 @@
 				A8EDF0E7078959C80022BB31 /* PICT Icon.icns in Resources */,
 				A8EDF0E8078959C80022BB31 /* TIFF Icon.icns in Resources */,
 				A8EDF0E9078959C80022BB31 /* Credits.rtf in Resources */,
-				A8EDF0EA078959C80022BB31 /* SeaDocument.nib in Resources */,
-				A8EDF0EB078959C80022BB31 /* MainMenu.nib in Resources */,
-				A8EDF0EC078959C80022BB31 /* CocoaContent.nib in Resources */,
+				2B80E9CF243567FB0046979F /* SeaDocument.xib in Resources */,
 				A8EDF0ED078959C80022BB31 /* Localizable.strings in Resources */,
 				A8EDF0EE078959C80022BB31 /* Seashore Guide.pdf in Resources */,
 				A8EDF0F0078959C80022BB31 /* checkerboard.png in Resources */,
 				A86C61F807C834EF00ABCC82 /* help-bigTemplate.png in Resources */,
-				A81240C707E81A7A00F275BF /* SVGContent.nib in Resources */,
 				A8CAF01E0815E55300A6D5A6 /* vMarker.png in Resources */,
 				A8CAF0260815E56000A6D5A6 /* hMarker.png in Resources */,
 				2BED227121F3FB40005B496C /* cropTemplate.png in Resources */,
 				A89C5138086E7F8E0032AEBE /* vStatMarker.png in Resources */,
+				2B80E9D42435689B0046979F /* PrintPanelAccessory.xib in Resources */,
 				A89C5139086E7F8E0032AEBE /* hStatMarker.png in Resources */,
 				A80EB8A6086F05E300369324 /* JP2 Icon.icns in Resources */,
 				2BB338C423C1119600647008 /* toFitTemplate.png in Resources */,
@@ -1923,6 +1921,7 @@
 				2BED226A21F3FB40005B496C /* moveTemplate.png in Resources */,
 				2BED227021F3FB40005B496C /* circleTemplate.png in Resources */,
 				A8E57D0E09EFE9200009FCE2 /* cross.png in Resources */,
+				2B80E9D2243567FB0046979F /* MainMenu.xib in Resources */,
 				2BED227E21F4D958005B496C /* clone-cursor.png in Resources */,
 				DC70A07F0A6205DC000B8333 /* GeneralPrefsIcon.png in Resources */,
 				DC70A0800A6205DC000B8333 /* NewPrefsIcon.png in Resources */,
@@ -1953,6 +1952,7 @@
 				DC9C47120FFC685500C44AA4 /* selectnoneTemplate.png in Resources */,
 				2BED227521F3FB40005B496C /* smudgeTemplate.png in Resources */,
 				DC414D09102FE08400B66F04 /* trueviewTemplate.png in Resources */,
+				2B80E9D0243567FB0046979F /* SVGContent.xib in Resources */,
 				2BDD5E63220F33A300F9BC74 /* pencilLargeTemplate.png in Resources */,
 				DC414D27102FE71E00B66F04 /* channels-menuTemplate.png in Resources */,
 				2BED226D21F3FB40005B496C /* gradientTemplate.png in Resources */,
@@ -2146,12 +2146,36 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		A81240C507E81A7A00F275BF /* SVGContent.nib */ = {
+		2B80E9C7243567FB0046979F /* SeaDocument.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				2B65AC05227612E1005CE6C9 /* en */,
+				2B80E9C8243567FB0046979F /* en */,
 			);
-			name = SVGContent.nib;
+			name = SeaDocument.xib;
+			sourceTree = "<group>";
+		};
+		2B80E9C9243567FB0046979F /* SVGContent.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2B80E9CA243567FB0046979F /* en */,
+			);
+			name = SVGContent.xib;
+			sourceTree = "<group>";
+		};
+		2B80E9CB243567FB0046979F /* CocoaContent.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2B80E9CC243567FB0046979F /* en */,
+			);
+			name = CocoaContent.xib;
+			sourceTree = "<group>";
+		};
+		2B80E9CD243567FB0046979F /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2B80E9CE243567FB0046979F /* en */,
+			);
+			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
 		A8138D640CEFD5FA00C2F880 /* Seashore Effects Guide.pdf */ = {
@@ -2176,30 +2200,6 @@
 				A87E672606D1F4A000A5C89A /* English */,
 			);
 			name = Credits.rtf;
-			sourceTree = "<group>";
-		};
-		A87E672706D1F4A000A5C89A /* SeaDocument.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2B65AC07227612E1005CE6C9 /* en */,
-			);
-			name = SeaDocument.nib;
-			sourceTree = "<group>";
-		};
-		A87E672B06D1F4A000A5C89A /* MainMenu.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2B65AC08227612E1005CE6C9 /* en */,
-			);
-			name = MainMenu.nib;
-			sourceTree = "<group>";
-		};
-		A87E672D06D1F4A000A5C89A /* CocoaContent.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2B65AC06227612E1005CE6C9 /* en */,
-			);
-			name = CocoaContent.nib;
 			sourceTree = "<group>";
 		};
 		A8CA47A306D82C10006F0681 /* Localizable.strings */ = {
@@ -2258,7 +2258,7 @@
 				CODE_SIGN_ENTITLEMENTS = Seashore.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2020021401;
+				CURRENT_PROJECT_VERSION = 2020040101;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2273,7 +2273,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.5.7;
+				MARKETING_VERSION = 2.5.8;
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore;
 				PRODUCT_NAME = Seashore;
