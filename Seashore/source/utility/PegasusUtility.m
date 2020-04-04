@@ -120,8 +120,6 @@
 
 - (IBAction)duplicateLayer:(id)sender
 {
-	id selection = [document selection];
-	
     [[document contents] duplicateLayer:kActiveLayer];
 }
 
