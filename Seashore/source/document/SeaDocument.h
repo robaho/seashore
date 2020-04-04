@@ -22,6 +22,7 @@
 */
 @class SeaHelpers;
 @class SeaSelection;
+@class PluginClass;
 
 @interface SeaDocument : NSDocument {
 
@@ -95,8 +96,6 @@
     NSString *selectedType;
     
     BOOL layerWarningShown;
-    
-    // utilities
 }
 
 @property (strong) IBOutlet RecentsUtility *recentsUtility;
@@ -107,6 +106,8 @@
 @property (strong) IBOutlet OptionsUtility *optionsUtility;
 @property (strong) IBOutlet InfoUtility *infoUtility;
 @property (strong) IBOutlet StatusUtility *statusUtility;
+
+@property (strong) PluginClass *lastPlugin;
 
 // CREATION METHODS
 

@@ -51,9 +51,6 @@ BOOL checkRun(NSString *path, NSString *file)
 {
     NSString *pluginsPath;
     
-    // Set the last effect to nothing
-    lastEffect = -1;
-    
     // Add standard plug-ins
     plugins = [NSArray array];
     pluginsPath = [gMainBundle builtInPlugInsPath];
@@ -127,15 +124,7 @@ BOOL checkRun(NSString *path, NSString *file)
         if (bundle && [bundle principalClass]) {
             plugin = [[bundle principalClass] alloc];
             if (plugin) {
-                if ([plugin respondsToSelector:@selector(initWithManager:)]) {
-                    plugin = [plugin initWithManager:self];
-                    // TODO check for system plugins only
-                    //                    if ([plugin respondsToSelector:@selector(sanity)] && [[plugin sanity] isEqualToString:@"Seashore Approved (Bobo)"]) {
-                    //                    }
-                    if(plugin){
-                        plugins = [plugins arrayByAddingObject:plugin];
-                    }
-                }
+                plugins = [plugins arrayByAddingObject:plugin];
             } else {
                 NSLog(@"unable to instantiate plugin class %@",[bundle principalClass]);
             }
@@ -150,7 +139,7 @@ BOOL checkRun(NSString *path, NSString *file)
 {
     id menuItem, submenuItem;
     NSMenu *submenu;
-    id plugin;
+    PluginClass *plugin;
     int i;
     
     // Set up
@@ -162,7 +151,7 @@ BOOL checkRun(NSString *path, NSString *file)
         plugin = [plugins objectAtIndex:i];
         
         // If the plug-in is a basic plug-in add it to the effects menu
-        if ([(PluginClass *)plugin type] == kBasicPlugin) {
+        if ([plugin type] == kBasicPlugin) {
             
             // Add or find group submenu
             submenuItem = [effectMenu itemWithTitle:[plugin groupName]];
@@ -186,7 +175,7 @@ BOOL checkRun(NSString *path, NSString *file)
             }
             
         }
-        else if ([(PluginClass *)plugin type] == kPointPlugin) {
+        else if ([plugin type] == kPointPlugin) {
             pointPluginsNames = [pointPluginsNames arrayByAddingObject:[NSString stringWithFormat:@"%@ / %@", [plugin groupName], [plugin name]]];
             pointPlugins = [pointPlugins arrayByAddingObject:plugin];
         }
@@ -216,23 +205,38 @@ BOOL checkRun(NSString *path, NSString *file)
 - (IBAction)run:(id)sender
 {
     int index = (int)([sender tag] - 10000);
-    [(PluginClass *)[plugins objectAtIndex:index] run];
-    lastEffect = index;
+    PluginClass *base = [plugins objectAtIndex:index];
+    PluginClass *plugin;
+    if (gCurrentDocument.lastPlugin && [gCurrentDocument.lastPlugin class] == [base class]){
+        plugin = gCurrentDocument.lastPlugin;
+    } else {
+        plugin = [[base class] alloc];
+    }
+    
+    if ([plugin respondsToSelector:@selector(initWithManager:)]) {
+        plugin = [plugin initWithManager:self];
+    }
+    if (plugin) {
+        [plugin run];
+        gCurrentDocument.lastPlugin = plugin;
+    }
 }
 
 - (IBAction)reapplyEffect:(id)sender
 {
-    [[plugins objectAtIndex:lastEffect] reapply];
+    if([self hasLastEffect]) {
+        [gCurrentDocument.lastPlugin reapply];
+    }
 }
 
 - (void)cancelReapply
 {
-    lastEffect = -1;
+    gCurrentDocument.lastPlugin = nil;
 }
 
 - (BOOL)hasLastEffect
 {
-    return lastEffect != -1 && [[plugins objectAtIndex:lastEffect] canReapply];
+    return gCurrentDocument.lastPlugin && [gCurrentDocument.lastPlugin canReapply];
 }
 
 - (NSArray *)pointPluginsNames

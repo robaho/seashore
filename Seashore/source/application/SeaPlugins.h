@@ -2,6 +2,8 @@
 #import "SeaDocument.h"
 #import "SeaController.h"
 
+@class PluginClass;
+
 /*!
 	@enum		k...Plugin
 	@constant	kBasicPlugin
@@ -23,14 +25,13 @@ enum {
 				<b>License:</b> Public Domain<br>
 				<b>Copyright:</b> N/A
 */
-
 @interface SeaPlugins : NSObject <SeaTerminate> {
 
 	// The SeaController object
 	IBOutlet id controller;
 
 	// An array of all Seahore's plug-ins
-	NSArray *plugins;
+	NSArray<PluginClass*> *plugins;
 
 	// The plug-ins used by the effect tool
 	NSArray *pointPlugins;
@@ -40,9 +41,6 @@ enum {
 
 	// The submenu to add plug-ins to
 	IBOutlet id effectMenu;
-	
-	// The last effect applied
-	int lastEffect;
 }
 
 /*!
