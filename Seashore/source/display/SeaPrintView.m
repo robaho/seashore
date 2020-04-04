@@ -77,11 +77,12 @@
 {
     int width = [[document contents] width];
     int height = [[document contents] height];
+    int xres = [[document contents] xres], yres = [[document contents] yres];
 
     NSPrintInfo *pi = [[NSPrintOperation currentOperation] printInfo];
     float scale = [pi scalingFactor];
     
-    NSRect rect = NSMakeRect(0,0,width*scale,height*scale);
+    NSRect rect = NSMakeRect(0,0,width*scale*(72.0/xres),height*scale*(72.0/yres));
     [self setFrameSize:rect.size];
     return rect;
 }
