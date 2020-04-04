@@ -607,8 +607,7 @@ extern BOOL globalReadOnlyWarning;
 
 - (BOOL)locked
 {
-//	return locked || ([docWindow attachedSheet] != NULL);
-    return locked;
+	return locked || ([docWindow attachedSheet] != NULL);
 }
 
 - (void)lock
