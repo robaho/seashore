@@ -113,7 +113,6 @@ static CGFloat white[4] = {0,3.5,2,.5};
     [[document scrollView] setHasVerticalRuler:YES];
     horizontalRuler = [[document scrollView] horizontalRulerView];
     verticalRuler = [[document scrollView] verticalRulerView];
-    [self updateRulers];
     
     // Change the ruler client views
     [verticalRuler setClientView:self];
@@ -130,6 +129,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
     [horizontalRuler addMarker:hStatMarker];
     
     // Make the rulers visible/invsible
+    [self updateRulers];
     [self updateRulersVisiblity];
     
     // Warn if bad resolution
@@ -179,7 +179,6 @@ static CGFloat white[4] = {0,3.5,2,.5};
     NSRect frame;
     
     zoom = 1.0;
-    [self updateRulers];
     frame = NSMakeRect(0, 0, [[document contents] width], [[document contents] height]);
     if (gScreenResolution.x != 0 && [[document contents] xres] != gScreenResolution.x) frame.size.width /= ((float)[[document contents] xres] / gScreenResolution.x);
     if (gScreenResolution.y != 0 && [[document contents] yres] != gScreenResolution.y) frame.size.height /= ((float)[[document contents] yres] / gScreenResolution.y);
@@ -194,21 +193,23 @@ static CGFloat white[4] = {0,3.5,2,.5};
 {
     NSRect frame = [(CenteringClipView *)[self superview] frame];
     
+    if (gScreenResolution.x != 0 && [[document contents] xres] != gScreenResolution.x) frame.size.width *= ((float)[[document contents] xres] / gScreenResolution.x);
+    if (gScreenResolution.y != 0 && [[document contents] yres] != gScreenResolution.y) frame.size.height *= ((float)[[document contents] yres] / gScreenResolution.y);
+    
     double xscale = frame.size.width / [[document contents] width];
     double yscale = frame.size.height / [[document contents] height];
     
     zoom = MIN(xscale,yscale);
     
-    [self updateRulers];
-    
     frame = NSMakeRect(0, 0, [[document contents] width] * zoom, [[document contents] height] * zoom);
-
     if (gScreenResolution.x != 0 && [[document contents] xres] != gScreenResolution.x) frame.size.width /= ((float)[[document contents] xres] / gScreenResolution.x);
     if (gScreenResolution.y != 0 && [[document contents] yres] != gScreenResolution.y) frame.size.height /= ((float)[[document contents] yres] / gScreenResolution.y);
-    [(NSClipView *)[self superview] scrollToPoint:NSMakePoint(0, 0)];
     [self setFrame:frame];
+
+    [(NSClipView *)[self superview] scrollToPoint:NSMakePoint(0, 0)];
     [(CenteringClipView *)[self superview] setCenterPoint:NSMakePoint(frame.size.width / 2.0, frame.size.height / 2.0)];
     [self setNeedsDisplay:YES];
+    
     [[document helpers] zoomChanged];
 }
 
@@ -242,7 +243,6 @@ static CGFloat white[4] = {0,3.5,2,.5};
     NSRect frame;
     
     zoom *= 2.0; point.x *= 2.0; point.y *= 2.0;
-    [self updateRulers];
     frame = NSMakeRect(0, 0, [(SeaContent *)[document contents] width], [(SeaContent *)[document contents] height]);
     if (gScreenResolution.x != 0 && [[document contents] xres] != gScreenResolution.x) frame.size.width /= ((float)[[document contents] xres] / gScreenResolution.x);
     if (gScreenResolution.y != 0 && [[document contents] yres] != gScreenResolution.y) frame.size.height /= ((float)[[document contents] yres] / gScreenResolution.y);
@@ -268,7 +268,6 @@ static CGFloat white[4] = {0,3.5,2,.5};
     NSRect frame;
     
     zoom /= 2.0; point.x = roundf(point.x / 2.0); point.y = roundf(point.y / 2.0);
-    [self updateRulers];
     frame = NSMakeRect(0, 0, [(SeaContent *)[document contents] width], [(SeaContent *)[document contents] height]);
     if (gScreenResolution.x != 0 && [[document contents] xres] != gScreenResolution.x) frame.size.width /= ((float)[[document contents] xres] / gScreenResolution.x);
     if (gScreenResolution.y != 0 && [[document contents] yres] != gScreenResolution.y) frame.size.height /= ((float)[[document contents] yres] / gScreenResolution.y);
@@ -1971,9 +1970,9 @@ static CGFloat white[4] = {0,3.5,2,.5};
     // Set up the rulers for the new settings
     switch ([document measureStyle]) {
         case kPixelUnits:
-            [NSRulerView registerUnitWithName:@"Custom Horizontal Pixels" abbreviation:@"px" unitToPointsConversionFactor:((float)[[document contents] xres] / 72.0) * zoom stepUpCycle:[NSArray arrayWithObject:[NSNumber numberWithFloat:10.0]] stepDownCycle:[NSArray arrayWithObject:[NSNumber numberWithFloat:0.5]]];
+            [NSRulerView registerUnitWithName:@"Custom Horizontal Pixels" abbreviation:@"px" unitToPointsConversionFactor:zoom / ((float)[[document contents] xres] / 72.0) stepUpCycle:[NSArray arrayWithObject:[NSNumber numberWithFloat:10.0]] stepDownCycle:[NSArray arrayWithObject:[NSNumber numberWithFloat:0.5]]];
             [horizontalRuler setMeasurementUnits:@"Custom Horizontal Pixels"];
-            [NSRulerView registerUnitWithName:@"Custom Vertical Pixels" abbreviation:@"px" unitToPointsConversionFactor:((float)[[document contents] yres] / 72.0) * zoom stepUpCycle:[NSArray arrayWithObject:[NSNumber numberWithFloat:10.0]] stepDownCycle:[NSArray arrayWithObject:[NSNumber numberWithFloat:0.5]]];
+            [NSRulerView registerUnitWithName:@"Custom Vertical Pixels" abbreviation:@"px" unitToPointsConversionFactor:zoom / ((float)[[document contents] yres] / 72.0) stepUpCycle:[NSArray arrayWithObject:[NSNumber numberWithFloat:10.0]] stepDownCycle:[NSArray arrayWithObject:[NSNumber numberWithFloat:0.5]]];
             [verticalRuler setMeasurementUnits:@"Custom Vertical Pixels"];
         break;
         case kInchUnits:

@@ -75,6 +75,7 @@
 
 - (void)zoomChanged
 {
+    [[document docView] updateRulers];
 	[[document optionsUtility] update];
 	[[document statusUtility] update];
 }
@@ -103,7 +104,6 @@
 - (void)activeLayerChanged:(int)eventType
 {
 	id whiteboard = [document whiteboard];
-	id docView = [document docView];
 	
 	[[document selection] readjustSelection];
     
