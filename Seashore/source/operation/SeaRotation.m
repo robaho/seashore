@@ -51,7 +51,7 @@
 	id layer = NULL;
 	
 	// End the sheet
-	[NSApp stopModal];
+    [sheet makeFirstResponder:sender];
 	[NSApp endSheet:sheet];
 	[sheet orderOut:self];
 
@@ -65,7 +65,6 @@
 - (IBAction)cancel:(id)sender
 {
 	// End the sheet
-	[NSApp stopModal];
 	[NSApp endSheet:sheet];
 	[sheet orderOut:self];
 }

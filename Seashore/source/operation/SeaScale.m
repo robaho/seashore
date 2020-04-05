@@ -115,10 +115,12 @@
 	xres = [contents xres];
 	yres = [contents yres];
 	
+    
+    [sheet makeFirstResponder:sender];
+    [NSApp endSheet:[sender window]];
+    [sheet orderOut:self];
+    
 	// End the sheet
-	[NSApp stopModal];
-	[NSApp endSheet:sheet];
-	[sheet orderOut:self];
 	[gUserDefaults setInteger:[interpolationPopup indexOfSelectedItem] forKey:@"interpolation"];
 
 	// Parse width and height	
@@ -143,7 +145,6 @@
 
 - (IBAction)cancel:(id)sender
 {
-	[NSApp stopModal];
 	[NSApp endSheet:sheet];
 	[sheet orderOut:self];
 }
@@ -156,7 +157,7 @@
 	float xScale, yScale;
 	int x, y;
 	
-	// Correct the index if necessary
+    // Correct the index if necessary
 	if (index == kActiveLayer)
 		index = [[document contents] activeLayerIndex];
 	

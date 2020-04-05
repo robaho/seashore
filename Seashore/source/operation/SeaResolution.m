@@ -45,7 +45,7 @@ extern IntPoint gScreenResolution;
 	newRes.y = [yValue intValue];
 	
 	// End the sheet
-	[NSApp stopModal];
+    [sheet makeFirstResponder:sender];
 	[NSApp endSheet:sheet];
 	[sheet orderOut:self];
 	
@@ -67,7 +67,6 @@ extern IntPoint gScreenResolution;
 
 - (IBAction)cancel:(id)sender
 {
-	[NSApp stopModal];
 	[NSApp endSheet:sheet];
 	[sheet orderOut:self];
 }
