@@ -1966,24 +1966,28 @@ static CGFloat white[4] = {0,3.5,2,.5};
 }
 
 - (void)updateRulers
-{    
+{
+    NSString *uniqueId = [NSString stringWithFormat:@"%p", document];;
+    NSString *uniqueIdX = [uniqueId stringByAppendingString:@"x"];
+    NSString *uniqueIdY = [uniqueId stringByAppendingString:@"y"];
+
     // Set up the rulers for the new settings
     switch ([document measureStyle]) {
         case kPixelUnits:
-            [NSRulerView registerUnitWithName:@"Custom Horizontal Pixels" abbreviation:@"px" unitToPointsConversionFactor:zoom / ((float)[[document contents] xres] / 72.0) stepUpCycle:[NSArray arrayWithObject:[NSNumber numberWithFloat:10.0]] stepDownCycle:[NSArray arrayWithObject:[NSNumber numberWithFloat:0.5]]];
-            [horizontalRuler setMeasurementUnits:@"Custom Horizontal Pixels"];
-            [NSRulerView registerUnitWithName:@"Custom Vertical Pixels" abbreviation:@"px" unitToPointsConversionFactor:zoom / ((float)[[document contents] yres] / 72.0) stepUpCycle:[NSArray arrayWithObject:[NSNumber numberWithFloat:10.0]] stepDownCycle:[NSArray arrayWithObject:[NSNumber numberWithFloat:0.5]]];
-            [verticalRuler setMeasurementUnits:@"Custom Vertical Pixels"];
+            [NSRulerView registerUnitWithName:uniqueIdX abbreviation:@"px" unitToPointsConversionFactor:zoom / ((float)[[document contents] xres] / 72.0) stepUpCycle:[NSArray arrayWithObject:[NSNumber numberWithFloat:10.0]] stepDownCycle:[NSArray arrayWithObject:[NSNumber numberWithFloat:0.5]]];
+            [horizontalRuler setMeasurementUnits:uniqueIdX];
+            [NSRulerView registerUnitWithName:uniqueIdY abbreviation:@"px" unitToPointsConversionFactor:zoom / ((float)[[document contents] yres] / 72.0) stepUpCycle:[NSArray arrayWithObject:[NSNumber numberWithFloat:10.0]] stepDownCycle:[NSArray arrayWithObject:[NSNumber numberWithFloat:0.5]]];
+            [verticalRuler setMeasurementUnits:uniqueIdY];
         break;
         case kInchUnits:
-            [NSRulerView registerUnitWithName:@"Custom Inches" abbreviation:@"in" unitToPointsConversionFactor:72.0 * zoom stepUpCycle:[NSArray arrayWithObject:[NSNumber numberWithFloat:2.0]] stepDownCycle:[NSArray arrayWithObject:[NSNumber numberWithFloat:0.5]]];
-            [horizontalRuler setMeasurementUnits:@"Custom Inches"];
-            [verticalRuler setMeasurementUnits:@"Custom Inches"];
+            [NSRulerView registerUnitWithName:uniqueId abbreviation:@"in" unitToPointsConversionFactor:72.0 * zoom stepUpCycle:[NSArray arrayWithObject:[NSNumber numberWithFloat:2.0]] stepDownCycle:[NSArray arrayWithObject:[NSNumber numberWithFloat:0.5]]];
+            [horizontalRuler setMeasurementUnits:uniqueId];
+            [verticalRuler setMeasurementUnits:uniqueId];
         break;
         case kMillimeterUnits:
-            [NSRulerView registerUnitWithName:@"Custom Millimetres" abbreviation:@"mm" unitToPointsConversionFactor:2.83464 * zoom stepUpCycle:[NSArray arrayWithObject:[NSNumber numberWithFloat:5.0]] stepDownCycle:[NSArray arrayWithObject:[NSNumber numberWithFloat:0.5]]];
-            [horizontalRuler setMeasurementUnits:@"Custom Millimetres"];
-            [verticalRuler setMeasurementUnits:@"Custom Millimetres"];
+            [NSRulerView registerUnitWithName:uniqueId abbreviation:@"mm" unitToPointsConversionFactor:2.83464 * zoom stepUpCycle:[NSArray arrayWithObject:[NSNumber numberWithFloat:5.0]] stepDownCycle:[NSArray arrayWithObject:[NSNumber numberWithFloat:0.5]]];
+            [horizontalRuler setMeasurementUnits:uniqueId];
+            [verticalRuler setMeasurementUnits:uniqueId];
         break;
     }
 }
