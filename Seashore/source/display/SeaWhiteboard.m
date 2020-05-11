@@ -340,12 +340,14 @@ dispatch_group_t group;
 		xwidth = [(SeaLayer *)layer width];
 		xheight = [(SeaLayer *)layer height];
 		altData = malloc(make_128(xwidth * xheight * (spp - 1)));
+        CHECK_MALLOC(altData);
 	}
 	else if (!trueView && selectedChannel == kAlphaChannel) {
 		viewType = kAlphaChannelView;
 		xwidth = [(SeaLayer *)layer width];
 		xheight = [(SeaLayer *)layer height];
 		altData = malloc(make_128(xwidth * xheight));
+        CHECK_MALLOC(altData);
 	}
 	
 	// Update ourselves (if advised to)
