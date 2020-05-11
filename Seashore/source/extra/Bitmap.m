@@ -44,6 +44,7 @@ unsigned char *convertImageRep(NSImageRep *imageRep,int spp) {
     
     if(spp==2) {
         unsigned char *dbuffer = calloc(width*height*2,sizeof(unsigned char));
+        CHECK_MALLOC(dbuffer);
         convertRGBA2GrayA(dbuffer,buffer,width,height);
         free(buffer);
         buffer=dbuffer;

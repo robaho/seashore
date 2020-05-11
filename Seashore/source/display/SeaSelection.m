@@ -580,6 +580,8 @@
 	
 	// Copy the image data
 	destPtr = malloc(make_128(globalRect.size.width * globalRect.size.height * spp));
+    CHECK_MALLOC(destPtr);
+    
 	srcPtr = [(SeaLayer *)layer data];
 	for (i = 0; i < globalRect.size.height; i++) {
 		memcpy(&(destPtr[i * globalRect.size.width * spp]), &(srcPtr[((i + localRect.origin.y) * width + localRect.origin.x) * spp]), globalRect.size.width * spp); 

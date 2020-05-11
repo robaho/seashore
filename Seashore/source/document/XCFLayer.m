@@ -210,9 +210,10 @@ static inline void fix_endian_readl(long *input, int size)
 					lostprops = malloc(lostprops_len);
 				}
 				else {
-					lostprops_len += 2 * sizeof(int) + propSize;
+					lostprops_len += (2 * sizeof(int) + propSize);
 					lostprops = realloc(lostprops, lostprops_len);
 				}
+                CHECK_MALLOC(lostprops);
 				fread(&(lostprops[lostprops_pos]), sizeof(char), 2 * sizeof(int) + propSize, file);
 				
 			break;
@@ -428,7 +429,7 @@ static inline int alphaReplaceMerge(int dstOpacity,int srcOpacity)
     
 	int tileHeight, tileWidth;
     long tileOffset, oldOffset;
-    int srcLoc, destLoc, expectedSize, srcSize;
+    int srcLoc, destLoc, expectedSize, srcSize, allocSize;
 	unsigned char *srcData, *tileData;
 	int whichTile = 0, i, j;
 	BOOL finished;
@@ -469,6 +470,8 @@ static inline int alphaReplaceMerge(int dstOpacity,int srcOpacity)
 					
 					// In case of no compression...
 					srcData = malloc(expectedSize);
+                    CHECK_MALLOC(srcData);
+                    
 					if (fread(srcData, sizeof(char), expectedSize, file) != expectedSize) {
 						// NSRunAlertPanel(@"Unexpected end-of-file", @"The data being loaded has unexpectedly ended, this could be due to an incomplete or corrupted XCF file. As such this file cannot be properly loaded.", @"OK", NULL, NULL);
 						NSLog(@"Unexpected end-of-file (no compression mask)");
@@ -483,8 +486,10 @@ static inline int alphaReplaceMerge(int dstOpacity,int srcOpacity)
 				case COMPRESS_RLE:
 					
 					// In case of RLE compression (typical case)...
-					srcData = malloc(expectedSize * 1.3 + 1);
-					srcSize = fread(srcData, sizeof(char), expectedSize * 1.3 + 1, file);
+                    allocSize = (expectedSize * 1.3)+1;
+					srcData = malloc(allocSize);
+                    CHECK_MALLOC(srcData);
+                    srcSize = fread(srcData, sizeof(char), allocSize, file);
 					if (!RLEDecompress(tileData, srcData, srcSize, tileWidth, tileHeight, 1)) {
 						// NSRunAlertPanel(@"RLE decompression failed", @"The RLE decompression of a certain part of this file failed, this could be due to an incomplete or corrupted XCF file. As such this file cannot be properly loaded.", @"OK", NULL, NULL);
 						NSLog(@"RLE decompression failed (mask)");
@@ -568,42 +573,59 @@ static inline int alphaReplaceMerge(int dstOpacity,int srcOpacity)
 	if (![super initWithDocument:doc])
 		return NULL;
     
-    version = info->version;
+    @try {
     
-	// Go to the given offset
-	fseek(file, offset, SEEK_SET);
-	
-	// NSLog(@"Layer Header Begin: %d", ftell(file));
-	
-	// Read the header
-	if ([self readHeader:file] == NO) {
-		return NULL;
-	}
-	
-	// NSLog(@"Layer Properties Begin: %d", ftell(file));
-	
-	// Read the properties
-	if ([self readProperties:file sharedInfo:info] == NO) {
-		return NULL;
-	}
-	
-	// NSLog(@"Layer Properties End: %d", ftell(file));
-	
-	// Read the body
-	if ([self readBody:file sharedInfo:info] == NO) {
-		return NULL;
-	}
-	
-	// Check the alpha
-	hasAlpha = YES;
-	/* This is just a pain, let's just always have alpha  
-	hasAlpha = NO;
-	for (i = 0; i < width * height; i++) {
-		if (data[(i + 1) * spp - 1] != 255)
-			hasAlpha = YES;
-	}*/
-	
-	return self;
+        version = info->version;
+        
+        // Go to the given offset
+        fseek(file, offset, SEEK_SET);
+        
+        // NSLog(@"Layer Header Begin: %d", ftell(file));
+        
+        // Read the header
+        if ([self readHeader:file] == NO) {
+            return NULL;
+        }
+        
+        // NSLog(@"Layer Properties Begin: %d", ftell(file));
+        
+        // Read the properties
+        if ([self readProperties:file sharedInfo:info] == NO) {
+            return NULL;
+        }
+        
+        // NSLog(@"Layer Properties End: %d", ftell(file));
+        
+        // Read the body
+        if ([self readBody:file sharedInfo:info] == NO) {
+            return NULL;
+        }
+        
+        // Check the alpha
+        hasAlpha = YES;
+        /* This is just a pain, let's just always have alpha
+        hasAlpha = NO;
+        for (i = 0; i < width * height; i++) {
+            if (data[(i + 1) * spp - 1] != 255)
+                hasAlpha = YES;
+        }*/
+        
+        return self;
+    }
+    @catch (NSException *exception) {
+        NSMutableDictionary * info = [NSMutableDictionary dictionary];
+        [info setValue:exception.name forKey:@"ExceptionName"];
+        [info setValue:exception.reason forKey:@"ExceptionReason"];
+        [info setValue:exception.callStackReturnAddresses forKey:@"ExceptionCallStackReturnAddresses"];
+        [info setValue:exception.callStackSymbols forKey:@"ExceptionCallStackSymbols"];
+        [info setValue:exception.userInfo forKey:@"ExceptionUserInfo"];
+        [info setValue:@"Error reading XCF file. Please report to the developer using 'Help->Report A Problem' and attach the file." forKey:NSLocalizedRecoverySuggestionErrorKey];
+        [info setValue:exception.reason forKey:NSLocalizedFailureReasonErrorKey];
+
+        NSError *error = [[NSError alloc] initWithDomain:@"Seashore" code:100 userInfo:info];
+        [[NSAlert alertWithError:error] runModal];
+        return NULL;
+    }
 }
 
 @end

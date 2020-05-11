@@ -702,6 +702,9 @@
 - (void)setWidth:(int)newWidth height:(int)newHeight interpolation:(int)interpolation
 {
     unsigned char *buffer = malloc(newWidth*newHeight*spp);
+    
+    CHECK_MALLOC(buffer);
+    
     memset(buffer,0,newWidth*newHeight*spp);
     
     NSBitmapImageRep *bitmap = [self bitmap];

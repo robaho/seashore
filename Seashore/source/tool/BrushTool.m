@@ -189,6 +189,7 @@
     
     // Create the points list
     points = malloc(kMaxBTPoints * sizeof(BTPointRecord));
+    CHECK_MALLOC(points);
     pos = drawingPos = 0;
     lastPressure = -1;
     intermediate = YES;

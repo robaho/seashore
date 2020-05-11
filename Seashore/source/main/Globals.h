@@ -98,3 +98,9 @@
 				as IntPoint.
 */
 typedef IntPoint IntResolution;
+
+#define CHECK_MALLOC(p) \
+    if (p==nil) { \
+        [NSException raise:@"OutOfMemory" format:@"Unable to allocate memory for operation."];\
+    }
+
