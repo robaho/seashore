@@ -1141,7 +1141,12 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
         return;
     
     // Correct index
-    if (source == kActiveLayer) source = activeLayerIndex;
+    if (source == kActiveLayer)
+        source = activeLayerIndex;
+    
+    if(source==-1)
+        return;
+    
     id activeLayer = [layers objectAtIndex:activeLayerIndex];
     
     // Allocate space for a new array

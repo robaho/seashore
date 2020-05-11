@@ -269,8 +269,12 @@
     SeaLayer *layer;
     int xoff, yoff;
 
-	if (index == kActiveLayer)
+    if (index == kActiveLayer) {
 		index = [contents activeLayerIndex];
+        if(index==-1) {
+            return;
+        }
+    }
 	
 	switch (index) {
 		case kAllLayers:
