@@ -176,8 +176,13 @@ BOOL checkRun(NSString *path, NSString *file)
             
         }
         else if ([plugin type] == kPointPlugin) {
-            pointPluginsNames = [pointPluginsNames arrayByAddingObject:[NSString stringWithFormat:@"%@ / %@", [plugin groupName], [plugin name]]];
-            pointPlugins = [pointPlugins arrayByAddingObject:plugin];
+            if ([plugin respondsToSelector:@selector(initWithManager:)]) {
+                plugin = [plugin initWithManager:self];
+            }
+            if (plugin!=nil){
+                pointPluginsNames = [pointPluginsNames arrayByAddingObject:[NSString stringWithFormat:@"%@ / %@", [plugin groupName], [plugin name]]];
+                pointPlugins = [pointPlugins arrayByAddingObject:plugin];
+            }
         }
         
     }

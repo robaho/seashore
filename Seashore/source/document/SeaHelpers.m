@@ -56,6 +56,7 @@
 	// Special case for the effect tool
 	if ([[document toolboxUtility] tool] == kEffectTool) {
 		[curTool reset];
+        [[document docView] setNeedsDisplay:YES];
 	}
 }
 
