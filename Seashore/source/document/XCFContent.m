@@ -214,6 +214,8 @@ hard_error:
 						parasites_count++;
 						parasites = realloc(parasites, sizeof(ParasiteData) * parasites_count);
 					}
+                    CHECK_MALLOC(parasites);
+                    
 					pos = parasites_count - 1;
                     
 					// Remember name
