@@ -1,10 +1,8 @@
 # seashore
 
-![icon](doc/icon.png)
+![icon](doc/icon.png) [![Download](doc/download.png)](https://geo.itunes.apple.com/us/app/seashore/id1448648921?mt=12&app=apps)
 
 Seashore is now on the App Store !!!
-
-[![Download](doc/download.png)](https://geo.itunes.apple.com/us/app/seashore/id1448648921?mt=12&app=apps)
 
 Please add your positive review/rating there (I believe people are trying to tank the project by posting clearly incorrect reviews). Also, if you use it for your website, business, whatever, giving credit to Seashore and a link to the App Store will help the project survive and prosper.
 
