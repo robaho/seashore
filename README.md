@@ -1,6 +1,6 @@
-# seashore
+# seashore ![icon](doc/icon.png)
 
-![icon](doc/icon.png) [![Download](doc/download.png)](https://geo.itunes.apple.com/us/app/seashore/id1448648921?mt=12&app=apps)
+[![Download](doc/download.png)](https://geo.itunes.apple.com/us/app/seashore/id1448648921?mt=12&app=apps)
 
 Seashore is now on the [App Store](https://geo.itunes.apple.com/us/app/seashore/id1448648921?mt=12&app=apps) !!!
 
