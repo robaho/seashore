@@ -422,6 +422,8 @@ extern BOOL globalReadOnlyWarning;
     [exportersPopUp selectItemAtIndex:exporterIndex];
     selectedType = [[exporters objectAtIndex:exporterIndex] title];
     
+    [savePanel setAllowedFileTypes:@[ [[exporters objectAtIndex:[exportersPopUp indexOfSelectedItem]] extension] ] ];
+    
     // Finally set the options button state appropriately
     [optionsButton setEnabled:[[exporters objectAtIndex:[exportersPopUp indexOfSelectedItem]] hasOptions]];
     [optionsSummary setStringValue:[[exporters objectAtIndex:[exportersPopUp indexOfSelectedItem]] optionsString]];
