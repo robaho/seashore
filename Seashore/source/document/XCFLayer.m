@@ -587,6 +587,10 @@ static inline int alphaReplaceMerge(int dstOpacity,int srcOpacity)
             return NULL;
         }
         
+        if(width<=0 || height <=0) {
+            return NULL;
+        }
+        
         // NSLog(@"Layer Properties Begin: %d", ftell(file));
         
         // Read the properties
