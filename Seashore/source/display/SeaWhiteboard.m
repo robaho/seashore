@@ -282,6 +282,7 @@ dispatch_group_t group;
 	// Revise the data
 	if (data) free(data);
 	data = malloc(make_128(width * height * spp));
+    CHECK_MALLOC(data);
     cachedImage = NULL;
     
 	// Adjust the alternate data as necessary
@@ -290,9 +291,11 @@ dispatch_group_t group;
 	// Update the overlay
 	if (overlay) free(overlay);
 	overlay = malloc(make_128([[[document contents] activeLayer] width] * [[[document contents] activeLayer] height] * spp));
+    CHECK_MALLOC(overlay);
 	memset(overlay, 0, [[[document contents] activeLayer] width] * [[[document contents] activeLayer] height] * spp);
 	if (replace) free(replace);
 	replace = malloc(make_128([[[document contents] activeLayer] width] * [[[document contents] activeLayer] height]));
+    CHECK_MALLOC(replace);
 	memset(replace, 0, [[[document contents] activeLayer] width] * [[[document contents] activeLayer] height]);
 
 	// Update ourselves
