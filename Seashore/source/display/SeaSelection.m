@@ -108,6 +108,7 @@
 		selectionColorIndex = [[SeaController seaPrefs] selectionColorIndex];
 		selectionColor = [[SeaController seaPrefs] selectionColor:0.4];
 		maskBitmap = malloc(rect.size.width * rect.size.height * 4);
+        CHECK_MALLOC(maskBitmap);
 		basePixel[0] = roundf([selectionColor redComponent] * 255.0);
 		basePixel[1] = roundf([selectionColor greenComponent] * 255.0);
 		basePixel[2] = roundf([selectionColor blueComponent] * 255.0);
@@ -151,6 +152,7 @@
     int mheight = rect.size.height;
     
     newMask = malloc(mwidth*mheight);
+    CHECK_MALLOC(newMask);
     memset(newMask,0,mwidth*mheight);
     
     if(mwidth>0 && mheight>0) {
