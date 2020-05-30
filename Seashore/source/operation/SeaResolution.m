@@ -37,7 +37,7 @@ extern IntPoint gScreenResolution;
 
 - (IBAction)apply:(id)sender
 {
-	id contents = [document contents];
+	SeaContent* contents = [document contents];
 	IntResolution newRes;
 	
 	// Get the values
@@ -61,8 +61,23 @@ extern IntPoint gScreenResolution;
 	}
 	
 	// Make the changes
-	if ([preserveSize state]) [seaScale scaleToWidth:[(SeaContent *)contents width] * ((float)newRes.x / (float)[contents xres]) height:[(SeaContent *)contents height] * ((float)newRes.y / (float)[contents yres]) interpolation:NSImageInterpolationHigh index:kAllLayers];
-	[self setResolution:newRes];
+    if ([preserveSize state]) {
+        int width = [contents width] * ((float)newRes.x / (float)[contents xres]);
+        int height = [contents height] * ((float)newRes.y / (float)[contents yres]);
+        
+        if(width < kMinImageSize || width > kMaxImageSize) {
+            NSBeep();
+            return;
+        }
+        if(height < kMinImageSize || height > kMaxImageSize) {
+            NSBeep();
+            return;
+        }
+
+        [seaScale scaleToWidth:width height:height interpolation:NSImageInterpolationHigh index:kAllLayers];
+    }
+    
+    [self setResolution:newRes];
 }
 
 - (IBAction)cancel:(id)sender
