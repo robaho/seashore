@@ -35,7 +35,7 @@
 		2B2D8CCA21F9A870004527F2 /* ZoomTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B2D8CC921F9A870004527F2 /* ZoomTool.m */; };
 		2B70A88B22061F4300E51F69 /* Plugins.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2BD5906D21E3BCF0002D150B /* Plugins.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2B8BD34721EA565C00FD9AC5 /* SeaPrintOptionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8BD34521EA565C00FD9AC5 /* SeaPrintOptionsController.m */; };
-		2B8BD35221EA727500FD9AC5 /* PrintPanelAccessory.nib in Resources */ = {isa = PBXBuildFile; fileRef = 2B8BD35121EA6E1800FD9AC5 /* PrintPanelAccessory.nib */; };
+		2B8BD35221EA727500FD9AC5 /* PrintPanelAccessory.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B8BD35121EA6E1800FD9AC5 /* PrintPanelAccessory.xib */; };
 		2B8BD35621EC71EC00FD9AC5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B8BD35521EC71EC00FD9AC5 /* QuartzCore.framework */; };
 		2B8BD59121ED16AB00FD9AC5 /* BrushExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8BD59021ED16AB00FD9AC5 /* BrushExporter.m */; };
 		2B96A50C23A5522D00A04B72 /* SeaContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B96A50923A5522C00A04B72 /* SeaContent.m */; };
@@ -150,7 +150,7 @@
 		56C8A64D1055A1DA0056E36F /* normalTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 56C8A64C1055A1DA0056E36F /* normalTemplate.png */; };
 		A80983D70871420900F7412F /* JP2Exporter.m in Sources */ = {isa = PBXBuildFile; fileRef = A80983D50871420900F7412F /* JP2Exporter.m */; };
 		A80EB8A6086F05E300369324 /* JP2 Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A80EB8A5086F05E300369324 /* JP2 Icon.icns */; };
-		A81240C707E81A7A00F275BF /* SVGContent.nib in Resources */ = {isa = PBXBuildFile; fileRef = A81240C507E81A7A00F275BF /* SVGContent.nib */; };
+		A81240C707E81A7A00F275BF /* SVGContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = A81240C507E81A7A00F275BF /* SVGContent.xib */; };
 		A8138D660CEFD5FA00C2F880 /* Seashore Effects Guide.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A8138D640CEFD5FA00C2F880 /* Seashore Effects Guide.pdf */; };
 		A81EC6B0094A6C5C00F7D365 /* GIF Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A81EC6AF094A6C5C00F7D365 /* GIF Icon.icns */; };
 		A81F6EB307C2EE35005C2DBD /* XBMImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = A81F6EB107C2EE35005C2DBD /* XBMImporter.m */; };
@@ -219,9 +219,9 @@
 		A8EDF0E7078959C80022BB31 /* PICT Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A8F6B65206CA1C97003A4C65 /* PICT Icon.icns */; };
 		A8EDF0E8078959C80022BB31 /* TIFF Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A8F6B65306CA1C97003A4C65 /* TIFF Icon.icns */; };
 		A8EDF0E9078959C80022BB31 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A87E672506D1F4A000A5C89A /* Credits.rtf */; };
-		A8EDF0EA078959C80022BB31 /* SeaDocument.nib in Resources */ = {isa = PBXBuildFile; fileRef = A87E672706D1F4A000A5C89A /* SeaDocument.nib */; };
-		A8EDF0EB078959C80022BB31 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = A87E672B06D1F4A000A5C89A /* MainMenu.nib */; };
-		A8EDF0EC078959C80022BB31 /* CocoaContent.nib in Resources */ = {isa = PBXBuildFile; fileRef = A87E672D06D1F4A000A5C89A /* CocoaContent.nib */; };
+		A8EDF0EA078959C80022BB31 /* SeaDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = A87E672706D1F4A000A5C89A /* SeaDocument.xib */; };
+		A8EDF0EB078959C80022BB31 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A87E672B06D1F4A000A5C89A /* MainMenu.xib */; };
+		A8EDF0EC078959C80022BB31 /* CocoaContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = A87E672D06D1F4A000A5C89A /* CocoaContent.xib */; };
 		A8EDF0ED078959C80022BB31 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8CA47A306D82C10006F0681 /* Localizable.strings */; };
 		A8EDF0EE078959C80022BB31 /* Seashore Guide.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A843451C075893FB008C6517 /* Seashore Guide.pdf */; };
 		A8EDF0F0078959C80022BB31 /* checkerboard.png in Resources */ = {isa = PBXBuildFile; fileRef = A86295E007700FE300C66FF4 /* checkerboard.png */; };
@@ -535,13 +535,13 @@
 		2B2D8CC921F9A870004527F2 /* ZoomTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZoomTool.m; sourceTree = "<group>"; };
 		2B4046692185672100BCC2A2 /* ColorSync.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ColorSync.framework; path = System/Library/Frameworks/ColorSync.framework; sourceTree = SDKROOT; };
 		2B40466A2185672300BCC2A2 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
-		2B65AC05227612E1005CE6C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/SVGContent.nib; sourceTree = "<group>"; };
-		2B65AC06227612E1005CE6C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/CocoaContent.nib; sourceTree = "<group>"; };
-		2B65AC07227612E1005CE6C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/SeaDocument.nib; sourceTree = "<group>"; };
-		2B65AC08227612E1005CE6C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/MainMenu.nib; sourceTree = "<group>"; };
+		2B65AC05227612E1005CE6C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SVGContent.xib; sourceTree = "<group>"; };
+		2B65AC06227612E1005CE6C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CocoaContent.xib; sourceTree = "<group>"; };
+		2B65AC07227612E1005CE6C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SeaDocument.xib; sourceTree = "<group>"; };
+		2B65AC08227612E1005CE6C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		2B8BD34421EA565C00FD9AC5 /* SeaPrintOptionsController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaPrintOptionsController.h; sourceTree = "<group>"; };
 		2B8BD34521EA565C00FD9AC5 /* SeaPrintOptionsController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeaPrintOptionsController.m; sourceTree = "<group>"; };
-		2B8BD35121EA6E1800FD9AC5 /* PrintPanelAccessory.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = PrintPanelAccessory.nib; sourceTree = "<group>"; };
+		2B8BD35121EA6E1800FD9AC5 /* PrintPanelAccessory.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PrintPanelAccessory.xib; sourceTree = "<group>"; };
 		2B8BD35521EC71EC00FD9AC5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		2B8BD58F21ED169B00FD9AC5 /* BrushExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrushExporter.h; sourceTree = "<group>"; };
 		2B8BD59021ED16AB00FD9AC5 /* BrushExporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrushExporter.m; sourceTree = "<group>"; };
@@ -666,7 +666,7 @@
 		A80983D50871420900F7412F /* JP2Exporter.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = JP2Exporter.m; sourceTree = "<group>"; };
 		A80983D60871420900F7412F /* JP2Exporter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = JP2Exporter.h; sourceTree = "<group>"; };
 		A80EB8A5086F05E300369324 /* JP2 Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "JP2 Icon.icns"; sourceTree = "<group>"; };
-		A8138D650CEFD5FA00C2F880 /* English */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = English; path = "English.lproj/Seashore Effects Guide.pdf"; sourceTree = "<group>"; };
+		A8138D650CEFD5FA00C2F880 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = en; path = "en.lproj/Seashore Effects Guide.pdf"; sourceTree = "<group>"; };
 		A81A23E504C2A86B00A80207 /* next.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = next.png; sourceTree = "<group>"; };
 		A81A8486046431A300A80207 /* vecLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = vecLib.framework; path = /System/Library/Frameworks/vecLib.framework; sourceTree = "<absolute>"; };
 		A81BC5F604BA615500A80207 /* SeaSelection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeaSelection.h; sourceTree = "<group>"; };
@@ -689,7 +689,7 @@
 		A835EAB405355C3800A80207 /* IndiciesKeeper.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IndiciesKeeper.h; sourceTree = "<group>"; };
 		A842BF5104A2D5D400A80207 /* LayerSettings.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = LayerSettings.m; sourceTree = "<group>"; };
 		A842BF5204A2D5D400A80207 /* LayerSettings.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = LayerSettings.h; sourceTree = "<group>"; };
-		A843451D075893FB008C6517 /* English */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = English; path = "English.lproj/Seashore Guide.pdf"; sourceTree = "<group>"; };
+		A843451D075893FB008C6517 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = en; path = "en.lproj/Seashore Guide.pdf"; sourceTree = "<group>"; };
 		A845B94E07F3B5F3007A1B94 /* SeaRotation.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SeaRotation.h; sourceTree = "<group>"; };
 		A845B94F07F3B5F3007A1B94 /* SeaRotation.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = SeaRotation.m; sourceTree = "<group>"; };
 		A849725A07C4BE750033BE1B /* NSExtendedTableView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NSExtendedTableView.m; sourceTree = "<group>"; };
@@ -725,7 +725,7 @@
 		A8786AB906B1EAE400B828FE /* wand-cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wand-cursor.png"; sourceTree = "<group>"; };
 		A87DDE3F0694ED7400A80207 /* GradientOptions.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = GradientOptions.h; sourceTree = "<group>"; };
 		A87DDE400694ED7400A80207 /* GradientOptions.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = GradientOptions.m; sourceTree = "<group>"; };
-		A87E672606D1F4A000A5C89A /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = English.lproj/Credits.rtf; sourceTree = "<group>"; };
+		A87E672606D1F4A000A5C89A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		A87F84B804B6C93400A80207 /* crosspoint-cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crosspoint-cursor.png"; sourceTree = "<group>"; };
 		A881AC6E09EFC6E400B176A8 /* CloneOptions.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CloneOptions.h; sourceTree = "<group>"; };
 		A881AC6F09EFC6E400B176A8 /* CloneOptions.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = CloneOptions.m; sourceTree = "<group>"; };
@@ -815,7 +815,7 @@
 		A8C268190554875500A80207 /* RectSelectTool.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = RectSelectTool.h; sourceTree = "<group>"; };
 		A8C2681A0554875500A80207 /* RectSelectTool.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = RectSelectTool.m; sourceTree = "<group>"; };
 		A8C47DA4045285AE00A80207 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
-		A8CA47A406D82C10006F0681 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A8CA47A406D82C10006F0681 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A8CA58EB07936EBF004BE921 /* PluginData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PluginData.h; sourceTree = "<group>"; };
 		A8CA58EC07936EBF004BE921 /* PluginData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PluginData.m; sourceTree = "<group>"; };
 		A8CAF01D0815E55300A6D5A6 /* vMarker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vMarker.png; sourceTree = "<group>"; };
@@ -1136,11 +1136,11 @@
 				A8FBD1FE0410E1DB00DF7825 /* Additions */,
 				A87E672506D1F4A000A5C89A /* Credits.rtf */,
 				A8CA47A306D82C10006F0681 /* Localizable.strings */,
-				A87E672706D1F4A000A5C89A /* SeaDocument.nib */,
-				A87E672B06D1F4A000A5C89A /* MainMenu.nib */,
-				A87E672D06D1F4A000A5C89A /* CocoaContent.nib */,
-				A81240C507E81A7A00F275BF /* SVGContent.nib */,
-				2B8BD35121EA6E1800FD9AC5 /* PrintPanelAccessory.nib */,
+				A87E672706D1F4A000A5C89A /* SeaDocument.xib */,
+				A87E672B06D1F4A000A5C89A /* MainMenu.xib */,
+				A87E672D06D1F4A000A5C89A /* CocoaContent.xib */,
+				A81240C507E81A7A00F275BF /* SVGContent.xib */,
+				2B8BD35121EA6E1800FD9AC5 /* PrintPanelAccessory.xib */,
 				A843451C075893FB008C6517 /* Seashore Guide.pdf */,
 				A8138D640CEFD5FA00C2F880 /* Seashore Effects Guide.pdf */,
 				A8EDF16707895A9F0022BB31 /* Info.plist */,
@@ -1843,14 +1843,13 @@
 			};
 			buildConfigurationList = A8D01E0D09BD8EA3007CFE76 /* Build configuration list for PBXProject "Seashore" */;
 			compatibilityVersion = "Xcode 9.3";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
-				English,
-				Japanese,
-				French,
-				German,
 				en,
+				ja,
+				fr,
+				de,
 			);
 			mainGroup = 2A37F4AAFDCFA73011CA2CEA /* Seashore */;
 			projectDirPath = "";
@@ -1869,7 +1868,7 @@
 			files = (
 				2BED227621F3FB40005B496C /* lassoTemplate.png in Resources */,
 				2BED227421F3FB40005B496C /* zoomTemplate.png in Resources */,
-				2B8BD35221EA727500FD9AC5 /* PrintPanelAccessory.nib in Resources */,
+				2B8BD35221EA727500FD9AC5 /* PrintPanelAccessory.xib in Resources */,
 				A8EDF0B9078959C80022BB31 /* duplicateTemplate.png in Resources */,
 				A8EDF0BA078959C80022BB31 /* newTemplate.png in Resources */,
 				2BED226C21F3FB40005B496C /* wandTemplate.png in Resources */,
@@ -1904,14 +1903,14 @@
 				A8EDF0E7078959C80022BB31 /* PICT Icon.icns in Resources */,
 				A8EDF0E8078959C80022BB31 /* TIFF Icon.icns in Resources */,
 				A8EDF0E9078959C80022BB31 /* Credits.rtf in Resources */,
-				A8EDF0EA078959C80022BB31 /* SeaDocument.nib in Resources */,
-				A8EDF0EB078959C80022BB31 /* MainMenu.nib in Resources */,
-				A8EDF0EC078959C80022BB31 /* CocoaContent.nib in Resources */,
+				A8EDF0EA078959C80022BB31 /* SeaDocument.xib in Resources */,
+				A8EDF0EB078959C80022BB31 /* MainMenu.xib in Resources */,
+				A8EDF0EC078959C80022BB31 /* CocoaContent.xib in Resources */,
 				A8EDF0ED078959C80022BB31 /* Localizable.strings in Resources */,
 				A8EDF0EE078959C80022BB31 /* Seashore Guide.pdf in Resources */,
 				A8EDF0F0078959C80022BB31 /* checkerboard.png in Resources */,
 				A86C61F807C834EF00ABCC82 /* help-bigTemplate.png in Resources */,
-				A81240C707E81A7A00F275BF /* SVGContent.nib in Resources */,
+				A81240C707E81A7A00F275BF /* SVGContent.xib in Resources */,
 				A8CAF01E0815E55300A6D5A6 /* vMarker.png in Resources */,
 				A8CAF0260815E56000A6D5A6 /* hMarker.png in Resources */,
 				2BED227121F3FB40005B496C /* cropTemplate.png in Resources */,
@@ -2146,18 +2145,18 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		A81240C507E81A7A00F275BF /* SVGContent.nib */ = {
+		A81240C507E81A7A00F275BF /* SVGContent.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				2B65AC05227612E1005CE6C9 /* en */,
 			);
-			name = SVGContent.nib;
+			name = SVGContent.xib;
 			sourceTree = "<group>";
 		};
 		A8138D640CEFD5FA00C2F880 /* Seashore Effects Guide.pdf */ = {
 			isa = PBXVariantGroup;
 			children = (
-				A8138D650CEFD5FA00C2F880 /* English */,
+				A8138D650CEFD5FA00C2F880 /* en */,
 			);
 			name = "Seashore Effects Guide.pdf";
 			sourceTree = "<group>";
@@ -2165,7 +2164,7 @@
 		A843451C075893FB008C6517 /* Seashore Guide.pdf */ = {
 			isa = PBXVariantGroup;
 			children = (
-				A843451D075893FB008C6517 /* English */,
+				A843451D075893FB008C6517 /* en */,
 			);
 			name = "Seashore Guide.pdf";
 			sourceTree = "<group>";
@@ -2173,39 +2172,39 @@
 		A87E672506D1F4A000A5C89A /* Credits.rtf */ = {
 			isa = PBXVariantGroup;
 			children = (
-				A87E672606D1F4A000A5C89A /* English */,
+				A87E672606D1F4A000A5C89A /* en */,
 			);
 			name = Credits.rtf;
 			sourceTree = "<group>";
 		};
-		A87E672706D1F4A000A5C89A /* SeaDocument.nib */ = {
+		A87E672706D1F4A000A5C89A /* SeaDocument.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				2B65AC07227612E1005CE6C9 /* en */,
 			);
-			name = SeaDocument.nib;
+			name = SeaDocument.xib;
 			sourceTree = "<group>";
 		};
-		A87E672B06D1F4A000A5C89A /* MainMenu.nib */ = {
+		A87E672B06D1F4A000A5C89A /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				2B65AC08227612E1005CE6C9 /* en */,
 			);
-			name = MainMenu.nib;
+			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
-		A87E672D06D1F4A000A5C89A /* CocoaContent.nib */ = {
+		A87E672D06D1F4A000A5C89A /* CocoaContent.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				2B65AC06227612E1005CE6C9 /* en */,
 			);
-			name = CocoaContent.nib;
+			name = CocoaContent.xib;
 			sourceTree = "<group>";
 		};
 		A8CA47A306D82C10006F0681 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				A8CA47A406D82C10006F0681 /* English */,
+				A8CA47A406D82C10006F0681 /* en */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
