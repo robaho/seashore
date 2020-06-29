@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="ThresholdClass">
+            <connections>
+                <outlet property="bottomSlider" destination="35" id="36"/>
+                <outlet property="panel" destination="6" id="32"/>
+                <outlet property="rangeLabel" destination="21" id="41"/>
+                <outlet property="topSlider" destination="14" id="30"/>
+                <outlet property="view" destination="39" id="40"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application"/>
+        <window title="Threshold" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="6" userLabel="Panel" customClass="NSPanel">
+            <windowStyleMask key="styleMask" titled="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="334" y="375" width="365" height="268"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="1002"/>
+            <view key="contentView" id="5">
+                <rect key="frame" x="0.0" y="0.0" width="365" height="268"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button verticalHuggingPriority="750" imageHugsTitle="YES" id="7">
+                        <rect key="frame" x="259" y="12" width="92" height="32"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <buttonCell key="cell" type="push" title="Ok" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="44">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="apply:" target="-2" id="26"/>
+                        </connections>
+                    </button>
+                    <slider verticalHuggingPriority="750" id="14">
+                        <rect key="frame" x="18" y="79" width="329" height="21"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <sliderCell key="cell" continuous="YES" alignment="left" maxValue="255" tickMarkPosition="above" allowsTickMarkValuesOnly="YES" sliderType="linear" id="45">
+                            <font key="font" metaFont="user"/>
+                        </sliderCell>
+                        <connections>
+                            <action selector="update:" target="-2" id="23"/>
+                        </connections>
+                    </slider>
+                    <button verticalHuggingPriority="750" imageHugsTitle="YES" id="16">
+                        <rect key="frame" x="167" y="12" width="92" height="32"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="46">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent">.</string>
+                            <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="cancel:" target="-2" id="25"/>
+                        </connections>
+                    </button>
+                    <textField verticalHuggingPriority="750" id="21">
+                        <rect key="frame" x="48" y="106" width="262" height="14"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="center" title="0 - 255" id="47">
+                            <font key="font" metaFont="controlContent" size="11"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <slider verticalHuggingPriority="750" id="35">
+                        <rect key="frame" x="18" y="56" width="329" height="21"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <sliderCell key="cell" continuous="YES" alignment="left" maxValue="255" doubleValue="255" tickMarkPosition="above" allowsTickMarkValuesOnly="YES" sliderType="linear" id="48">
+                            <font key="font" metaFont="user"/>
+                        </sliderCell>
+                        <connections>
+                            <action selector="update:" target="-2" id="38"/>
+                        </connections>
+                    </slider>
+                    <customView id="39" customClass="ThresholdView">
+                        <rect key="frame" x="51" y="128" width="256" height="120"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <connections>
+                            <outlet property="thresholdClass" destination="-2" id="42"/>
+                        </connections>
+                    </customView>
+                </subviews>
+            </view>
+        </window>
+    </objects>
+</document>
