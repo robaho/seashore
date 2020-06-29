@@ -20,6 +20,7 @@
 		2B8BD54421ECEE6D00FD9AC5 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		2B8BD54621ECEE6D00FD9AC5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		2B8BD54821ECEE6D00FD9AC5 /* Plugins.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Plugins.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		551068C924A9B695004C2486 /* Seashore.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Seashore.xcconfig; path = ../../Seashore.xcconfig; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* Pixellate.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Pixellate.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A831E1400789471D0009080F /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -44,6 +45,7 @@
 		089C166AFE841209C02AAC07 /* Sharpen */ = {
 			isa = PBXGroup;
 			children = (
+				551068C924A9B695004C2486 /* Seashore.xcconfig */,
 				08FB77AFFE84173DC02AAC07 /* Classes */,
 				089C167CFE841241C02AAC07 /* Resources */,
 				19C28FB8FE9D52D311CA2CBB /* Products */,
@@ -116,7 +118,7 @@
 		089C1669FE841209C02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1000;
+				LastUpgradeCheck = 1130;
 			};
 			buildConfigurationList = A8090BF509BD8F23006BC0DE /* Build configuration list for PBXProject "Pixellate" */;
 			compatibilityVersion = "Xcode 9.3";
@@ -179,6 +181,7 @@
 /* Begin XCBuildConfiguration section */
 		2B1F69E921D7560200D6F371 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 551068C924A9B695004C2486 /* Seashore.xcconfig */;
 			buildSettings = {
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -197,9 +200,11 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -220,8 +225,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_VERSION_i386 = 4.0;
-				GCC_VERSION_ppc = 4.0;
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.Pixellate;
 				PRODUCT_NAME = Pixellate;
@@ -232,6 +235,7 @@
 		};
 		2B1F69EB21D7560600D6F371 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 551068C924A9B695004C2486 /* Seashore.xcconfig */;
 			buildSettings = {
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -250,6 +254,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -271,8 +276,6 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_VERSION_i386 = 4.0;
-				GCC_VERSION_ppc = 4.0;
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.Pixellate;
 				PRODUCT_NAME = Pixellate;
@@ -290,7 +293,7 @@
 				2B1F69EC21D7560600D6F371 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		A8090BF509BD8F23006BC0DE /* Build configuration list for PBXProject "Pixellate" */ = {
 			isa = XCConfigurationList;
@@ -299,7 +302,7 @@
 				2B1F69EB21D7560600D6F371 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

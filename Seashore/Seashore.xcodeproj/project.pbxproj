@@ -118,7 +118,6 @@
 		2BD5926921E53B74002D150B /* GIMPCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2BD5906F21E3BCF5002D150B /* GIMPCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BDD5E5C2208A05D00F9BC74 /* RecentsUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BDD5E5B2208A05D00F9BC74 /* RecentsUtility.m */; };
 		2BDD5E5F2208AE3200F9BC74 /* RecentsBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BDD5E5E2208AE3200F9BC74 /* RecentsBarView.m */; };
-		2BE76CD221EE937400B6C65F /* Seashore.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 2BE76CD121EE937400B6C65F /* Seashore.xcconfig */; };
 		2BE97F4823CBACB000A09AAC /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE97F4723CBACB000A09AAC /* Accelerate.framework */; };
 		2BF4050A228258A90091E1EA /* HEICExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF40509228258A90091E1EA /* HEICExporter.m */; };
 		2BF4050C228734690091E1EA /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BF4050B228734690091E1EA /* ImageIO.framework */; };
@@ -1513,7 +1512,7 @@
 		2A37F4A9FDCFA73011CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1130;
 				TargetAttributes = {
 					A8EDF05C078959C80022BB31 = {
 						SystemCapabilities = {
@@ -1564,7 +1563,6 @@
 				A8EDF0EE078959C80022BB31 /* Seashore Guide.pdf in Resources */,
 				A81240C707E81A7A00F275BF /* SVGContent.xib in Resources */,
 				A8138D660CEFD5FA00C2F880 /* Seashore Effects Guide.pdf in Resources */,
-				2BE76CD221EE937400B6C65F /* Seashore.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

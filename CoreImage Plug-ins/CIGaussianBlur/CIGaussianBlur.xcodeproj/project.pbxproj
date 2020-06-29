@@ -3,13 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		2B8BD3BC21ECE88F00FD9AC5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B8BD3B921ECE88F00FD9AC5 /* QuartzCore.framework */; };
 		2B8BD3BD21ECE88F00FD9AC5 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B8BD3BA21ECE88F00FD9AC5 /* Cocoa.framework */; };
 		2B8BD3BE21ECE88F00FD9AC5 /* Plugins.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B8BD3BB21ECE88F00FD9AC5 /* Plugins.framework */; };
+		5510689824A9AD61004C2486 /* Seashore.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5510689724A9AD61004C2486 /* Seashore.xcconfig */; };
 		A8080AE30C07BF260026D06E /* CIGaussianBlurClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A8080AE20C07BF260026D06E /* CIGaussianBlurClass.m */; };
 		A8080AF10C07BF8D0026D06E /* CIGaussianBlur.nib in Resources */ = {isa = PBXBuildFile; fileRef = A8080AEF0C07BF8D0026D06E /* CIGaussianBlur.nib */; };
 		A831E1410789471D0009080F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A831E13F0789471D0009080F /* Localizable.strings */; };
@@ -19,12 +20,13 @@
 		2B65AC1922763BCA005CE6C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/CIGaussianBlur.nib; sourceTree = "<group>"; };
 		2B8BD3B921ECE88F00FD9AC5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		2B8BD3BA21ECE88F00FD9AC5 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		2B8BD3BB21ECE88F00FD9AC5 /* Plugins.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Plugins.framework; path = ../../Build/Products/Debug/Plugins.framework; sourceTree = "<group>"; };
+		2B8BD3BB21ECE88F00FD9AC5 /* Plugins.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Plugins.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5510689724A9AD61004C2486 /* Seashore.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Seashore.xcconfig; path = ../../Seashore.xcconfig; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* Gaussian+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Gaussian+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A8080AE10C07BF260026D06E /* CIGaussianBlurClass.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CIGaussianBlurClass.h; sourceTree = "<group>"; };
-		A8080AE20C07BF260026D06E /* CIGaussianBlurClass.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = CIGaussianBlurClass.m; sourceTree = "<group>"; };
-		A831E1400789471D0009080F /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A8080AE10C07BF260026D06E /* CIGaussianBlurClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CIGaussianBlurClass.h; sourceTree = "<group>"; };
+		A8080AE20C07BF260026D06E /* CIGaussianBlurClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CIGaussianBlurClass.m; sourceTree = "<group>"; };
+		A831E1400789471D0009080F /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +46,7 @@
 		089C166AFE841209C02AAC07 /* CICrystallize */ = {
 			isa = PBXGroup;
 			children = (
+				5510689724A9AD61004C2486 /* Seashore.xcconfig */,
 				08FB77AFFE84173DC02AAC07 /* Classes */,
 				089C167CFE841241C02AAC07 /* Resources */,
 				19C28FB8FE9D52D311CA2CBB /* Products */,
@@ -119,12 +122,11 @@
 				LastUpgradeCheck = 1000;
 			};
 			buildConfigurationList = A8F2BD5D0BCD1EE6001DB353 /* Build configuration list for PBXProject "CIGaussianBlur" */;
-			compatibilityVersion = "Xcode 2.4";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				en,
-				English,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* CICrystallize */;
 			projectDirPath = "";
@@ -142,6 +144,7 @@
 			files = (
 				A831E1410789471D0009080F /* Localizable.strings in Resources */,
 				A8080AF10C07BF8D0026D06E /* CIGaussianBlur.nib in Resources */,
+				5510689824A9AD61004C2486 /* Seashore.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -170,7 +173,7 @@
 		A831E13F0789471D0009080F /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				A831E1400789471D0009080F /* English */,
+				A831E1400789471D0009080F /* en */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -180,6 +183,7 @@
 /* Begin XCBuildConfiguration section */
 		2B1F6B3F21D7CF9E00D6F371 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5510689724A9AD61004C2486 /* Seashore.xcconfig */;
 			buildSettings = {
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -198,9 +202,11 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -218,15 +224,12 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				COPY_PHASE_STRIP = NO;
-				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_AUTO_VECTORIZATION = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_VERSION_i386 = 4.0;
-				GCC_VERSION_ppc = 4.0;
 				INFOPLIST_FILE = Info.plist;
 				OTHER_CFLAGS = "-DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.GaussianPlus;
@@ -238,6 +241,7 @@
 		};
 		2B1F6B4121D7CFA200D6F371 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5510689724A9AD61004C2486 /* Seashore.xcconfig */;
 			buildSettings = {
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -256,6 +260,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -273,14 +278,11 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_AUTO_VECTORIZATION = YES;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_VERSION_i386 = 4.0;
-				GCC_VERSION_ppc = 4.0;
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.GaussianPlus;
 				PRODUCT_NAME = "Gaussian+";
@@ -298,7 +300,7 @@
 				2B1F6B4221D7CFA200D6F371 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		A8F2BD5D0BCD1EE6001DB353 /* Build configuration list for PBXProject "CIGaussianBlur" */ = {
 			isa = XCConfigurationList;
@@ -307,7 +309,7 @@
 				2B1F6B4121D7CFA200D6F371 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -16,6 +16,7 @@
 		2B2D8CBF21F98ACE004527F2 /* Alpha2GrayClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Alpha2GrayClass.h; sourceTree = "<group>"; };
 		2B2D8CC021F98ACE004527F2 /* Alpha2GrayClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Alpha2GrayClass.m; sourceTree = "<group>"; };
 		2B2D8CC321F98B1D004527F2 /* Plugins.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Plugins.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		551068BD24A9B31A004C2486 /* Seashore.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Seashore.xcconfig; path = ../../Seashore.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +34,7 @@
 		2B2D8CAC21F98A38004527F2 = {
 			isa = PBXGroup;
 			children = (
+				551068BD24A9B31A004C2486 /* Seashore.xcconfig */,
 				2B2D8CBE21F98AA1004527F2 /* Classes */,
 				2B2D8CB621F98A38004527F2 /* Products */,
 				2B2D8CC221F98B1D004527F2 /* Frameworks */,
@@ -90,7 +92,7 @@
 		2B2D8CAD21F98A38004527F2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "robert engels";
 				TargetAttributes = {
 					2B2D8CB421F98A38004527F2 = {
@@ -139,6 +141,7 @@
 /* Begin XCBuildConfiguration section */
 		2B2D8CB921F98A38004527F2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 551068BD24A9B31A004C2486 /* Seashore.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -170,6 +173,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -195,6 +199,7 @@
 		};
 		2B2D8CBA21F98A38004527F2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 551068BD24A9B31A004C2486 /* Seashore.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -226,6 +231,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
