@@ -61,17 +61,15 @@
         [trueViewCheckbox setState:[contents trueView]];
 		
 		int newUnits = [document measureStyle];
-		NSString *statusString = @"";
-		unichar ch = 0x00B7; // replace this with your code pointNSString
-		NSString *divider = [NSString stringWithCharacters:&ch length:1];
-        statusString = [statusString stringByAppendingFormat: @"%@ %C %@ %@", StringFromPixels([contents width] , newUnits, [contents xres]), 0x00D7, StringFromPixels([contents height], newUnits, [contents yres]), UnitsString(newUnits)];
-        statusString = [[NSString stringWithFormat:@"%.0f%% %@ ", [contents xscale] * 100, divider] stringByAppendingString: statusString];
-        statusString = [statusString stringByAppendingFormat: @" %@ %d dpi", divider, [contents xres]];
-        statusString = [statusString stringByAppendingFormat: @" %@ %@", divider, [contents type] ? @"Grayscale" : @"Full Color"];
+		NSMutableString *statusString = [NSMutableString string];
+        [statusString appendFormat: @"%@ × %@ %@", StringFromPixels([contents width] , newUnits, [contents xres]), StringFromPixels([contents height], newUnits, [contents yres]), UnitsString(newUnits)];
+        [statusString insertString:[NSString stringWithFormat:@"%.0f%% · ", [contents xscale] * 100] atIndex:0];
+        [statusString appendFormat: @" · %d dpi", [contents xres]];
+        [statusString appendFormat: @" · %@", [contents type] ? @"Grayscale" : @"Full Color"];
         
         SeaColorProfile *cp = [[document whiteboard] proofProfile];
         if(cp!=NULL && cp.cs!=NULL) {
-            statusString = [statusString stringByAppendingFormat: @" %@ %@", divider, [cp desc]];
+            [statusString appendFormat: @" · %@", [cp desc]];
         }
 		
 		[dimensionLabel setStringValue: statusString];		

@@ -21,7 +21,7 @@
 	IBOutlet id trueViewCheckbox;
 
 	// The label that displays at the center of the status bar
-	IBOutlet id dimensionLabel;
+	IBOutlet NSTextField *dimensionLabel;
 	
 	// The actual view that is the status bar
 	IBOutlet id view;
