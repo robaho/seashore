@@ -83,6 +83,7 @@
 	
 	// Copy over the bitmap data
 	data = malloc(make_128(width * height * spp));
+    CHECK_MALLOC(data);
 	memcpy(data, ldata, width * height * spp);
 
 	// We should always have an alpha layer unless you turn it off

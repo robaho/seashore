@@ -119,7 +119,13 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     }
     
     // Add layer
-    layers = [[NSArray alloc] initWithObjects:[[SeaLayer alloc] initWithDocument:doc rect:IntMakeRect(0, 0, width, height) data:data spp:dspp], NULL];
+    SeaLayer *new_layer = [[SeaLayer alloc] initWithDocument:doc rect:IntMakeRect(0, 0, width, height) data:data spp:dspp];
+    if(new_layer==NULL){
+        NSLog(@"Unable to add layer.");
+        return NULL;
+    }
+    
+    layers = [[NSArray alloc] initWithObjects:new_layer, NULL];
     activeLayerIndex = 0;
     
     return self;
@@ -641,6 +647,11 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
         imageRep = [[NSBitmapImageRep alloc] initWithData:imageRepData];
     }
     
+    if(imageRep == NULL) {
+        NSLog(@"Unable to load image from pasteboard.");
+        return;
+    }
+    
     // Work out the correct center point
     if (height > 64 && width > 64 && [imageRep pixelsHigh] > height - 12 && [imageRep pixelsWide] > width - 12) { 
         rect = IntMakeRect(width / 2 - [imageRep pixelsWide] / 2, height / 2 - [imageRep pixelsHigh] / 2, [imageRep pixelsWide], [imageRep pixelsHigh]);
@@ -669,6 +680,11 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     
     // Create a new array with all the existing layers and the one being added
     layer = [[SeaLayer alloc] initWithDocument:document rect:rect data:data spp:spp];
+    if(layer==NULL){
+        NSLog(@"Unable to load create layer.");
+        [[document helpers] activeLayerChanged:kLayerSwitched];
+        return;
+    }
     for (i = 0; i < [layers count] + 1; i++) {
         if (i == activeLayerIndex)
             tempArray = [tempArray arrayByAddingObject:layer];
