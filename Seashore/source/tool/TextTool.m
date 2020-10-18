@@ -125,6 +125,7 @@ typedef struct {
 	off.y = [layer yoff];
     
     initData = malloc(fontSize.width * fontSize.height * spp);
+    CHECK_MALLOC(initData);
     
     if(!preview && [options shouldAddTextAsNewLayer]) {
         memset(initData,0,fontSize.width * fontSize.height * spp);

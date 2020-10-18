@@ -68,6 +68,7 @@
 	// Record the details
     records[records_len].rect = rect;
     temp_ptr = records[records_len].data = (unsigned char*)malloc(sectionSize);
+    CHECK_MALLOC(temp_ptr);
 	for (i = 0; i < rect.size.height; i++) {
 		memcpy(temp_ptr, data + ((rect.origin.y + i) * width + rect.origin.x) * spp, rect.size.width * spp);
 		temp_ptr += rect.size.width * spp;
