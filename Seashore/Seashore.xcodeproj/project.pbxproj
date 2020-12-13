@@ -180,15 +180,15 @@
 		A89B83F50A426E4800AD6941 /* Wilber.xcf in CopyFiles */ = {isa = PBXBuildFile; fileRef = A89B83E90A426E3200AD6941 /* Wilber.xcf */; };
 		A89B83F60A426E4800AD6941 /* Zipf.xcf in CopyFiles */ = {isa = PBXBuildFile; fileRef = A89B83EA0A426E3200AD6941 /* Zipf.xcf */; };
 		A89B84080A4272FA00AD6941 /* Seashore Website.webloc in CopyFiles */ = {isa = PBXBuildFile; fileRef = A89B84070A4272FA00AD6941 /* Seashore Website.webloc */; };
-		A89C5138086E7F8E0032AEBE /* vStatMarker.png in Resources */ = {isa = PBXBuildFile; fileRef = A89C5136086E7F8E0032AEBE /* vStatMarker.png */; };
-		A89C5139086E7F8E0032AEBE /* hStatMarker.png in Resources */ = {isa = PBXBuildFile; fileRef = A89C5137086E7F8E0032AEBE /* hStatMarker.png */; };
+		A89C5138086E7F8E0032AEBE /* vStatMarkerTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = A89C5136086E7F8E0032AEBE /* vStatMarkerTemplate.png */; };
+		A89C5139086E7F8E0032AEBE /* hStatMarkerTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = A89C5137086E7F8E0032AEBE /* hStatMarkerTemplate.png */; };
 		A8A948C50B8AAFE300BBD71C /* CropTool.m in Sources */ = {isa = PBXBuildFile; fileRef = A8A948C30B8AAFE300BBD71C /* CropTool.m */; };
 		A8A9496C0B8AB04900BBD71C /* CropOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = A8A9496A0B8AB04900BBD71C /* CropOptions.m */; };
 		A8A949740B8AB1FC00BBD71C /* AspectRatio.m in Sources */ = {isa = PBXBuildFile; fileRef = A8A949720B8AB1FC00BBD71C /* AspectRatio.m */; };
 		A8BF652708E6FEAB006E9BFC /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8BF652608E6FEAB006E9BFC /* Carbon.framework */; };
 		A8CA58EE07936EBF004BE921 /* PluginData.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CA58EC07936EBF004BE921 /* PluginData.m */; };
-		A8CAF01E0815E55300A6D5A6 /* vMarker.png in Resources */ = {isa = PBXBuildFile; fileRef = A8CAF01D0815E55300A6D5A6 /* vMarker.png */; };
-		A8CAF0260815E56000A6D5A6 /* hMarker.png in Resources */ = {isa = PBXBuildFile; fileRef = A8CAF0250815E56000A6D5A6 /* hMarker.png */; };
+		A8CAF01E0815E55300A6D5A6 /* vMarkerTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = A8CAF01D0815E55300A6D5A6 /* vMarkerTemplate.png */; };
+		A8CAF0260815E56000A6D5A6 /* hMarkerTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = A8CAF0250815E56000A6D5A6 /* hMarkerTemplate.png */; };
 		A8D52D2F0A8C26A100927657 /* AbstractSelectOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = A8D52D2D0A8C26A100927657 /* AbstractSelectOptions.m */; };
 		A8D6BCEC07C215E000B91A1D /* CocoaImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = A8D6BCEA07C215E000B91A1D /* CocoaImporter.m */; };
 		A8D6C11D07C2323200B91A1D /* XCFImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = A8D6C11B07C2323200B91A1D /* XCFImporter.m */; };
@@ -752,8 +752,8 @@
 		A89B83E90A426E3200AD6941 /* Wilber.xcf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Wilber.xcf; path = ../Pictures/Wilber.xcf; sourceTree = SOURCE_ROOT; };
 		A89B83EA0A426E3200AD6941 /* Zipf.xcf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Zipf.xcf; path = ../Pictures/Zipf.xcf; sourceTree = SOURCE_ROOT; };
 		A89B84070A4272FA00AD6941 /* Seashore Website.webloc */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "Seashore Website.webloc"; sourceTree = "<group>"; };
-		A89C5136086E7F8E0032AEBE /* vStatMarker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vStatMarker.png; sourceTree = "<group>"; };
-		A89C5137086E7F8E0032AEBE /* hStatMarker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hStatMarker.png; sourceTree = "<group>"; };
+		A89C5136086E7F8E0032AEBE /* vStatMarkerTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vStatMarkerTemplate.png; sourceTree = "<group>"; };
+		A89C5137086E7F8E0032AEBE /* hStatMarkerTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hStatMarkerTemplate.png; sourceTree = "<group>"; };
 		A8A64F83041216EB00B2D42F /* BrushUtility.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BrushUtility.h; sourceTree = "<group>"; };
 		A8A64F84041216EB00B2D42F /* BrushUtility.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = BrushUtility.m; sourceTree = "<group>"; };
 		A8A6C05704C7DC6100A80207 /* SeaHelpers.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SeaHelpers.h; sourceTree = "<group>"; };
@@ -818,8 +818,8 @@
 		A8CA47A406D82C10006F0681 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A8CA58EB07936EBF004BE921 /* PluginData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PluginData.h; sourceTree = "<group>"; };
 		A8CA58EC07936EBF004BE921 /* PluginData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PluginData.m; sourceTree = "<group>"; };
-		A8CAF01D0815E55300A6D5A6 /* vMarker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vMarker.png; sourceTree = "<group>"; };
-		A8CAF0250815E56000A6D5A6 /* hMarker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hMarker.png; sourceTree = "<group>"; };
+		A8CAF01D0815E55300A6D5A6 /* vMarkerTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vMarkerTemplate.png; sourceTree = "<group>"; };
+		A8CAF0250815E56000A6D5A6 /* hMarkerTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hMarkerTemplate.png; sourceTree = "<group>"; };
 		A8CB36A40456C87500A80207 /* BucketTool.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BucketTool.h; sourceTree = "<group>"; };
 		A8CB36A50456C87500A80207 /* BucketTool.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = BucketTool.m; sourceTree = "<group>"; };
 		A8CFD7F904A843E300A80207 /* TextTool.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = TextTool.m; sourceTree = "<group>"; };
@@ -1719,10 +1719,10 @@
 				A81A23E504C2A86B00A80207 /* next.png */,
 				A86C61F707C834EF00ABCC82 /* help-bigTemplate.png */,
 				A8BDA2540576105400A80207 /* selection.png */,
-				A8CAF01D0815E55300A6D5A6 /* vMarker.png */,
-				A8CAF0250815E56000A6D5A6 /* hMarker.png */,
-				A89C5136086E7F8E0032AEBE /* vStatMarker.png */,
-				A89C5137086E7F8E0032AEBE /* hStatMarker.png */,
+				A8CAF01D0815E55300A6D5A6 /* vMarkerTemplate.png */,
+				A8CAF0250815E56000A6D5A6 /* hMarkerTemplate.png */,
+				A89C5136086E7F8E0032AEBE /* vStatMarkerTemplate.png */,
+				A89C5137086E7F8E0032AEBE /* hStatMarkerTemplate.png */,
 			);
 			name = miscellanea;
 			path = graphics/miscellanea;
@@ -1909,12 +1909,12 @@
 				A8EDF0EE078959C80022BB31 /* Seashore Guide.pdf in Resources */,
 				A8EDF0F0078959C80022BB31 /* checkerboard.png in Resources */,
 				A86C61F807C834EF00ABCC82 /* help-bigTemplate.png in Resources */,
-				A8CAF01E0815E55300A6D5A6 /* vMarker.png in Resources */,
-				A8CAF0260815E56000A6D5A6 /* hMarker.png in Resources */,
+				A8CAF01E0815E55300A6D5A6 /* vMarkerTemplate.png in Resources */,
+				A8CAF0260815E56000A6D5A6 /* hMarkerTemplate.png in Resources */,
 				2BED227121F3FB40005B496C /* cropTemplate.png in Resources */,
-				A89C5138086E7F8E0032AEBE /* vStatMarker.png in Resources */,
+				A89C5138086E7F8E0032AEBE /* vStatMarkerTemplate.png in Resources */,
 				2B80E9D42435689B0046979F /* PrintPanelAccessory.xib in Resources */,
-				A89C5139086E7F8E0032AEBE /* hStatMarker.png in Resources */,
+				A89C5139086E7F8E0032AEBE /* hStatMarkerTemplate.png in Resources */,
 				A80EB8A6086F05E300369324 /* JP2 Icon.icns in Resources */,
 				2BB338C423C1119600647008 /* toFitTemplate.png in Resources */,
 				A81EC6B0094A6C5C00F7D365 /* GIF Icon.icns in Resources */,

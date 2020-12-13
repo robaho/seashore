@@ -42,6 +42,7 @@
 #import "NSEvent_Extensions.h"
 #import <Carbon/Carbon.h>
 #import <CoreImage/CoreImage.h>
+#import <AppKit/NSEvent.h>
 
 extern IntPoint gScreenResolution;
 
@@ -119,13 +120,13 @@ static CGFloat white[4] = {0,3.5,2,.5};
     [horizontalRuler setClientView:self];
     
     // Add the markers
-    vMarker = [[NSRulerMarker alloc]initWithRulerView:verticalRuler markerLocation:0 image:[NSImage imageNamed:@"vMarker"] imageOrigin:NSMakePoint(4.0,4.0)];
+    vMarker = [[NSRulerMarker alloc]initWithRulerView:verticalRuler markerLocation:0 image:[NSImage imageNamed:@"vMarkerTemplate"] imageOrigin:NSMakePoint(4.0,4.0)];
     [verticalRuler addMarker:vMarker];
-    hMarker = [[NSRulerMarker alloc]initWithRulerView:horizontalRuler markerLocation:0 image:[NSImage imageNamed:@"hMarker"] imageOrigin:NSMakePoint(4.0,0.0)];
+    hMarker = [[NSRulerMarker alloc]initWithRulerView:horizontalRuler markerLocation:0 image:[NSImage imageNamed:@"hMarkerTemplate"] imageOrigin:NSMakePoint(4.0,0.0)];
     [horizontalRuler addMarker:hMarker];
-    vStatMarker = [[NSRulerMarker alloc]initWithRulerView:verticalRuler markerLocation:-256e6 image:[NSImage imageNamed:@"vStatMarker"] imageOrigin:NSMakePoint(4.0,4.0)];
+    vStatMarker = [[NSRulerMarker alloc]initWithRulerView:verticalRuler markerLocation:-256e6 image:[NSImage imageNamed:@"vStatMarkerTemplate"] imageOrigin:NSMakePoint(4.0,4.0)];
     [verticalRuler addMarker:vStatMarker];
-    hStatMarker = [[NSRulerMarker alloc]initWithRulerView:horizontalRuler markerLocation:-256e6 image:[NSImage imageNamed:@"hStatMarker"] imageOrigin:NSMakePoint(4.0,0.0)];
+    hStatMarker = [[NSRulerMarker alloc]initWithRulerView:horizontalRuler markerLocation:-256e6 image:[NSImage imageNamed:@"hStatMarkerTemplate"] imageOrigin:NSMakePoint(4.0,0.0)];
     [horizontalRuler addMarker:hStatMarker];
     
     // Make the rulers visible/invsible
@@ -1096,9 +1097,9 @@ static CGFloat white[4] = {0,3.5,2,.5};
     
     // Turn mouse coalescing on or off
     if ([curTool useMouseCoalescing] || [(SeaPrefs *)[SeaController seaPrefs] mouseCoalescing] || scrollingMode){
-        SetMouseCoalescingEnabled(true, NULL);
+        NSEvent.mouseCoalescingEnabled = true;
     }else{
-        SetMouseCoalescingEnabled(false, NULL);
+        NSEvent.mouseCoalescingEnabled = false;
     }
     
     if (tabletEraser < 2) {
@@ -1300,8 +1301,8 @@ static CGFloat white[4] = {0,3.5,2,.5};
     yScale = [[document contents] yscale];
     
     // Return to normal coalescing
-    SetMouseCoalescingEnabled(true, NULL);
-    
+    NSEvent.mouseCoalescingEnabled = true;
+
     // Check if we are in scrolling mode
     if (scrollingMode) {
         [cursorsManager setScrollingMode: YES mouseDown: NO];
