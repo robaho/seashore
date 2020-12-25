@@ -15,11 +15,8 @@
 @interface LayerSettings : NSObject {
 
 	// The document in focus
-	IBOutlet id document;
+	__weak IBOutlet id document;
 	
-	// The PegasusUtility controlling us
-	IBOutlet id pegasusUtility;
-
 	// The settings panel
     IBOutlet id panel;
 	

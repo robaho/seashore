@@ -22,12 +22,12 @@
 	__weak IBOutlet id rightPane;
 	
 	// The buttons
-	IBOutlet id newButton;
-	IBOutlet id dupButton;
-	IBOutlet id delButton;
-	IBOutlet id infoButton;
+	__weak IBOutlet id newButton;
+	__weak IBOutlet id dupButton;
+	__weak IBOutlet id delButton;
+	__weak IBOutlet id infoButton;
 	
-    IBOutlet id grabberImage;
+    __weak IBOutlet id grabberImage;
 }
 - (IBAction)newLayer:(id)sender;
 - (IBAction)duplicateLayer:(id)sender;

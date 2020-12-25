@@ -19,7 +19,7 @@
 	id priorContentView;
 	
 	// Used for window shading
-	IBOutlet id nullView;
+	__weak IBOutlet id nullView;
 	
 }
 

@@ -40,7 +40,7 @@ enum {
 	IBOutlet id layerSettingsPanel;
 	
 	// The object for handling layer settings
-	__weak IBOutlet id layerSettings;
+	IBOutlet id layerSettings;
 	
 	// The colour select view (this needs to be updated when the channel is changed on an RGBA image)
 	IBOutlet id colorSelectView;

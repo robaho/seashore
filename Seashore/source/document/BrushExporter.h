@@ -15,16 +15,11 @@
     __weak IBOutlet id document;
 
 	// The exporting panel
-	__weak IBOutlet id sheet;
-
+    __unsafe_unretained IBOutlet id sheet;
 	__weak IBOutlet id categoryTable;
-	
 	__weak IBOutlet id categoryTextbox;
-	
 	__weak IBOutlet id existingCategoryRadio;
-	
 	__weak IBOutlet id newCategoryRadio;
-	
 	__weak IBOutlet id nameTextbox;
 }
 

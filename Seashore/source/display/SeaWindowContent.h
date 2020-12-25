@@ -31,18 +31,18 @@ enum
 	__weak IBOutlet SeaDocument *document;
 
 	__weak IBOutlet SeaOptionsView* optionsBar;
-	IBOutlet NSView *nonOptionsBar;
+	__weak IBOutlet NSView *nonOptionsBar;
 	
-	IBOutlet NSView* sidebar;
+	__weak IBOutlet NSView* sidebar;
 	__weak IBOutlet NSScrollView* layers;
-	IBOutlet NSView* pointInformation;
-	IBOutlet LayerControlView* sidebarStatusbar;
+	__weak IBOutlet NSView* pointInformation;
+	__weak IBOutlet LayerControlView* sidebarStatusbar;
 	
-	IBOutlet NSView *nonSidebar;
-	IBOutlet BannerView *warningsBar;
-	IBOutlet NSView *mainDocumentView;
-	IBOutlet LayerControlView *statusBar;
-    IBOutlet NSView *recentsBar;
+	__weak IBOutlet NSView *nonSidebar;
+	__weak IBOutlet BannerView *warningsBar;
+	__weak IBOutlet NSView *mainDocumentView;
+	__weak IBOutlet LayerControlView *statusBar;
+    __weak IBOutlet NSView *recentsBar;
 	
 	// Dictionary for all properties
 	NSDictionary *dict;

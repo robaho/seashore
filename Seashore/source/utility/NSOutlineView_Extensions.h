@@ -15,8 +15,6 @@
 @end
 
 @interface SeaOutlineView : NSOutlineView{
-	// The document the outline view is in
-	__weak IBOutlet id document;
 }
 @end
 

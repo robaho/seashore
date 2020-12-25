@@ -33,7 +33,7 @@
     @public SeaTexture *texture;
     @public NSColor *foreground,*background;
     @public int opacity;
-    @public id document;
+    @public __weak id document;
 }
 -(NSColor*)foreground
 {

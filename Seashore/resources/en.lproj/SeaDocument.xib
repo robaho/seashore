@@ -426,7 +426,6 @@
                                                     <connections>
                                                         <outlet property="dataSource" destination="7818" id="13311"/>
                                                         <outlet property="delegate" destination="7818" id="13312"/>
-                                                        <outlet property="document" destination="-2" id="14093"/>
                                                         <outlet property="menu" destination="ioB-zZ-bnU" id="h1T-z0-izz"/>
                                                     </connections>
                                                 </outlineView>
@@ -1909,7 +1908,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <clipView key="contentView" drawsBackground="NO" id="zX2-tZ-Cdx">
                             <rect key="frame" x="1" y="1" width="427" height="54"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <textView importsGraphics="NO" verticallyResizable="YES" usesFontPanel="YES" usesRuler="YES" spellingCorrection="YES" smartInsertDelete="YES" id="1007" customClass="NSTextViewRedirect">
                                     <rect key="frame" x="0.0" y="0.0" width="479" height="54"/>
@@ -2258,7 +2257,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <clipView key="contentView" id="Soe-9G-BN0">
                             <rect key="frame" x="1" y="1" width="231" height="94"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" id="415" customClass="NSExtendedTableView">
                                     <rect key="frame" x="0.0" y="0.0" width="240" height="94"/>
@@ -2335,7 +2334,7 @@ Gw
                 <outlet property="existingCategoryRadio" destination="2uC-RG-btB" id="xeT-f3-gVx"/>
                 <outlet property="nameTextbox" destination="xuJ-hD-wnh" id="vph-LQ-oOq"/>
                 <outlet property="newCategoryRadio" destination="YK1-Lg-K6Z" id="sib-Kf-gqC"/>
-                <outlet property="sheet" destination="TWH-fZ-9Wd" id="Ppb-2u-RJp"/>
+                <outlet property="sheet" destination="TWH-fZ-9Wd" id="vK2-XF-pAW"/>
             </connections>
         </customObject>
         <numberFormatter formatterBehavior="10_0" positiveFormat="0.######" negativeFormat="-0.######" localizesFormat="NO" hasThousandSeparators="NO" thousandSeparator="," id="523" userLabel="Decimal Formatter">
@@ -4610,7 +4609,6 @@ DQ
                 <outlet property="opacityLabel" destination="6534" id="7382"/>
                 <outlet property="opacitySlider" destination="6536" id="7383"/>
                 <outlet property="panel" destination="2893" id="2931"/>
-                <outlet property="pegasusUtility" destination="1595" id="2938"/>
                 <outlet property="topValue" destination="6520" id="7363"/>
                 <outlet property="widthValue" destination="6526" id="7361"/>
             </connections>
@@ -5321,7 +5319,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <clipView key="contentView" id="lgO-ZC-m12">
                             <rect key="frame" x="1" y="1" width="199" height="160"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="14" id="11980">
                                     <rect key="frame" x="0.0" y="0.0" width="206" height="160"/>
@@ -5394,11 +5392,6 @@ DQ
             <real key="minimum" value="0.0"/>
             <real key="maximum" value="255"/>
         </numberFormatter>
-        <customView id="16657" userLabel="BannerView" customClass="BannerView">
-            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
-            <autoresizingMask key="autoresizingMask"/>
-            <point key="canvasLocation" x="-112" y="512"/>
-        </customView>
         <customObject id="16701" userLabel="WarningsUtility" customClass="WarningsUtility">
             <connections>
                 <outlet property="document" destination="-2" id="16707"/>
@@ -5541,10 +5534,10 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <sliderCell key="cell" continuous="YES" alignment="left" maxValue="1000" doubleValue="100" tickMarkPosition="below" numberOfTickMarks="11" sliderType="linear" id="Ak6-QP-LW3">
                             <font key="font" usesAppearanceFont="YES"/>
-                            <connections>
-                                <binding destination="IbU-IZ-DpL" name="value" keyPath="self.spacing" id="rxO-Tz-MOb"/>
-                            </connections>
                         </sliderCell>
+                        <connections>
+                            <binding destination="IbU-IZ-DpL" name="value" keyPath="spacing" id="waQ-zf-PCW"/>
+                        </connections>
                     </slider>
                     <button verticalHuggingPriority="750" fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sBY-vA-g5d">
                         <rect key="frame" x="205" y="13" width="96" height="32"/>
@@ -5563,15 +5556,15 @@ DQ
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SoJ-1F-rbl">
                         <rect key="frame" x="18" y="106" width="120" height="14"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Spacing - 100%" id="ReR-pH-LEt">
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Spacing %" id="ReR-pH-LEt">
                             <font key="font" metaFont="menu" size="10"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                         <connections>
-                            <binding destination="IbU-IZ-DpL" name="displayPatternValue1" keyPath="self.spacing" id="XYB-8s-tjp">
+                            <binding destination="IbU-IZ-DpL" name="displayPatternValue1" keyPath="spacing" id="QbI-2h-GfA">
                                 <dictionary key="options">
-                                    <string key="NSDisplayPattern">Spacing - %{value1}@%</string>
+                                    <string key="NSDisplayPattern">Spacing %{value1}@%</string>
                                 </dictionary>
                             </binding>
                         </connections>

@@ -11,10 +11,13 @@ enum {
 
 @implementation BrushExporter
 
+@synthesize spacing;
+
 - (void)awakeFromNib
 {
 	[self selectButton:kExistingCategoryButton];
     [self setSpacing:100];
+    [super awakeFromNib];
 }
 
 - (IBAction)exportAsBrush:(id)sender
@@ -50,7 +53,7 @@ enum {
     SeaDocument *doc = document;
     
 	// Write document
-    [self writeToFile:path spacing:_spacing data:[[doc whiteboard] data] spp:[[doc contents] spp] width:[[doc contents] width] height:[[doc contents] height]];
+    [self writeToFile:path spacing:self.spacing data:[[doc whiteboard] data] spp:[[doc contents] spp] width:[[doc contents] width] height:[[doc contents] height]];
     
 	// Refresh textures
 	[[document brushUtility] addBrushFromPath:path];
