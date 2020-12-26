@@ -13,7 +13,7 @@
 @interface ThresholdClass : NSObject <PluginClass> {
 
 	// The plug-in's manager
-	SeaPlugins *seaPlugins;
+	PluginData *pluginData;
 
 	// The threshold range
 	IBOutlet id rangeLabel;

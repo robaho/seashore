@@ -4,9 +4,9 @@
 
 @implementation VertStripesClass
 
-- (id)initWithManager:(SeaPlugins *)manager
+- (id)initWithManager:(PluginData *)data
 {
-	seaPlugins = manager;
+	pluginData = data;
 	
 	return self;
 }
@@ -61,10 +61,7 @@ static inline specmod(int a, int b)
 	int spp, channel, pos;
 	int i, j, k;
 	BOOL black;
-	PluginData *pluginData;
 	
-	// Get plug-in data
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	width = [pluginData width];
 	height = [pluginData height];
 	spp = [pluginData spp];
@@ -132,7 +129,7 @@ static inline specmod(int a, int b)
 	return NO;
 }
 
-- (BOOL)validateMenuItem:(id)menuItem
++ (BOOL)validatePlugin:(PluginData*)pluginData
 {
 	return YES;
 }

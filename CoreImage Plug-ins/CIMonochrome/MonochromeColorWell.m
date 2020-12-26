@@ -5,7 +5,7 @@
 
 - (void)activate:(BOOL)exclusive
 {
-	[super activate:exclusive];
+	[super activate:true];
 	[gColorPanel setContinuous:NO];
 	[gColorPanel setAction:NULL];
 	[gColorPanel setTitle:@"Monochrome"];

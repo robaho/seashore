@@ -6,9 +6,9 @@
 
 @implementation CIParallelogramTileClass
 
-- (id)initWithManager:(SeaPlugins *)manager
+- (id)initWithManager:(PluginData *)data
 {
-	seaPlugins = manager;
+	pluginData = data;
 	[NSBundle loadNibNamed:@"CIParallelogramTile" owner:self];
 	
 	return self;
@@ -46,8 +46,6 @@
 
 - (void)run
 {
-	PluginData *pluginData;
-	
 	if ([gUserDefaults objectForKey:@"CIParallelogramTile.acute"])
 		acute = [gUserDefaults floatForKey:@"CIParallelogramTile.acute"];
 	else
@@ -61,7 +59,6 @@
 	
 	refresh = YES;
 	success = NO;
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[self preview:self];
 	if ([pluginData window])
 		[NSApp beginSheet:panel modalForWindow:[pluginData window] modalDelegate:NULL didEndSelector:NULL contextInfo:NULL];
@@ -72,9 +69,6 @@
 
 - (IBAction)apply:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	if (refresh) [self execute];
 	[pluginData apply];
 	
@@ -90,9 +84,6 @@
 
 - (void)reapply
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[self execute];
 	[pluginData apply];
 }
@@ -104,9 +95,6 @@
 
 - (IBAction)preview:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	if (refresh) [self execute];
 	[pluginData preview];
 	refresh = NO;
@@ -114,9 +102,6 @@
 
 - (IBAction)cancel:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[pluginData cancel];
 	
 	[panel setAlphaValue:1.0];
@@ -129,8 +114,6 @@
 
 - (IBAction)update:(id)sender
 {
-    PluginData *pluginData;
-    
     acute = roundf([acuteSlider floatValue]) / 100.0;
     if (acute > -0.015 && acute < 0.00) acute = 0.00; /* Force a zero point */
     
@@ -141,15 +124,12 @@
     refresh = YES;
     if ([[NSApp currentEvent] type] == NSLeftMouseUp) {
         [self preview:self];
-        pluginData = [(SeaPlugins *)seaPlugins data];
         if ([pluginData window]) [panel setAlphaValue:0.4];
     }
 }
 
 - (void)execute
 {
-    PluginData *pluginData = [seaPlugins data];
-    
     int height = [pluginData height];
     IntPoint point = [pluginData point:0];
     IntPoint apoint = [pluginData point:1];
@@ -176,7 +156,7 @@
 
 }
 
-- (BOOL)validateMenuItem:(id)menuItem
++ (BOOL)validatePlugin:(PluginData*)pluginData
 {
 	return YES;
 }

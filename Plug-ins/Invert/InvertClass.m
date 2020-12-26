@@ -4,9 +4,9 @@
 
 @implementation InvertClass
 
-- (id)initWithManager:(SeaPlugins *)manager
+- (id)initWithManager:(PluginData *)data
 {
-	seaPlugins = manager;
+	pluginData = data;
 	
 	return self;
 }
@@ -33,12 +33,10 @@
 
 - (void)run
 {
-	PluginData *pluginData;
 	IntRect selection;
 	unsigned char *data, *overlay, *replace;
 	int pos, i, j, k, width, spp, channel;
 	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[pluginData setOverlayOpacity:255];
 	[pluginData setOverlayBehaviour:kReplacingBehaviour];
 	selection = [pluginData selection];
@@ -90,7 +88,7 @@
 	return YES;
 }
 
-- (BOOL)validateMenuItem:(id)menuItem
++ (BOOL)validatePlugin:(PluginData*)pluginData
 {
 	return YES;
 }

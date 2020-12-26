@@ -15,6 +15,6 @@
 @interface MedianClass : NSObject {
 
 	// The plug-in's manager
-	SeaPlugins *seaPlugins;
+	PluginData *pluginData;
 }
 @end

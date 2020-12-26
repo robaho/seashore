@@ -15,7 +15,7 @@
 @interface GaussianClass : NSObject <PluginClass> {
 
 	// The plug-in's manager
-	id seaPlugins;
+	PluginData *pluginData;
 
 	// The label displaying the radius of the blur
 	IBOutlet id radiusLabel;

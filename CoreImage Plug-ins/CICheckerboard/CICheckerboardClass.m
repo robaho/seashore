@@ -4,9 +4,9 @@
 
 @implementation CICheckerboardClass
 
-- (id)initWithManager:(SeaPlugins *)manager
+- (id)initWithManager:(PluginData *)data
 {
-	seaPlugins = manager;
+	pluginData = data;
 	
 	return self;
 }
@@ -43,9 +43,6 @@
 
 - (void)run
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[self execute];
 	[pluginData apply];
 	success = YES;
@@ -63,8 +60,6 @@
 
 - (void)execute
 {
-    PluginData *pluginData = [seaPlugins data];
-    
     CIColor *backColorAlpha, *foreColorAlpha;
     
     IntPoint point = [pluginData point:0];
@@ -87,10 +82,10 @@
     [filter setValue:[NSNumber numberWithInt:amount] forKey:@"inputWidth"];
     [filter setValue:[NSNumber numberWithFloat:1.0] forKey:@"inputSharpness"];
 
-    applyFilter([seaPlugins data],filter);
+    applyFilter(pluginData,filter);
 }
 
-- (BOOL)validateMenuItem:(id)menuItem
++ (BOOL)validatePlugin:(PluginData*)pluginData
 {
 	return YES;
 }

@@ -6,9 +6,9 @@
 
 @implementation CIBloomClass
 
-- (id)initWithManager:(SeaPlugins *)manager
+- (id)initWithManager:(PluginData *)data
 {
-	seaPlugins = manager;
+	pluginData = data;
 	[NSBundle loadNibNamed:@"CIBloom" owner:self];
 	
 	return self;
@@ -36,8 +36,6 @@
 
 - (void)run
 {
-	PluginData *pluginData;
-	
 	if ([gUserDefaults objectForKey:@"CIBloom.radius"])
 		radius = [gUserDefaults integerForKey:@"CIBloom.radius"];
 	else
@@ -62,7 +60,6 @@
 	[intensityLabel setStringValue:[NSString stringWithFormat:@"%.0f%%", intensity * 100.0]];
 	[intensitySlider setFloatValue:intensity];
 	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[self preview:self];
 	success = NO;
 	if ([pluginData window])
@@ -74,9 +71,6 @@
 
 - (IBAction)apply:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	if (refresh) [self execute];
 	[pluginData apply];
 	
@@ -93,9 +87,6 @@
 
 - (void)reapply
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[self execute];
 	[pluginData apply];
 }
@@ -107,9 +98,6 @@
 
 - (IBAction)preview:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	if (refresh) [self execute];
 	[pluginData preview];
 	refresh = NO;
@@ -117,9 +105,6 @@
 
 - (IBAction)cancel:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[pluginData cancel];
 	
 	[panel setAlphaValue:1.0];
@@ -132,8 +117,6 @@
 
 - (IBAction)update:(id)sender
 {
-	PluginData *pluginData;
-	
 	radius = [radiusSlider intValue];
 	intensity = [intensitySlider floatValue];
 	
@@ -145,7 +128,6 @@
 	refresh = YES;
 	if ([[NSApp currentEvent] type] == NSLeftMouseUp) { 
 		[self preview:self];
-		pluginData = [(SeaPlugins *)seaPlugins data];
 		if ([pluginData window]) [panel setAlphaValue:0.4];
 	}
 }
@@ -160,10 +142,10 @@
     [filter setValue:[NSNumber numberWithInt:radius] forKey:@"inputRadius"];
     [filter setValue:[NSNumber numberWithFloat:intensity] forKey:@"inputIntensity"];
     
-    applyFilter([seaPlugins data],filter);
+    applyFilter(pluginData,filter);
 }
 
-- (BOOL)validateMenuItem:(id)menuItem
++ (BOOL)validatePlugin:(PluginData*)pluginData
 {
 	return YES;
 }

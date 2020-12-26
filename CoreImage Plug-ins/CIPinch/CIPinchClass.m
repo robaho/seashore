@@ -6,9 +6,9 @@
 
 @implementation CIPinchClass
 
-- (id)initWithManager:(SeaPlugins *)manager
+- (id)initWithManager:(PluginData *)data
 {
-	seaPlugins = manager;
+	pluginData = data;
 	[NSBundle loadNibNamed:@"CIPinch" owner:self];
 	
 	return self;
@@ -46,8 +46,6 @@
 
 - (void)run
 {
-	PluginData *pluginData;
-	
 	if ([gUserDefaults objectForKey:@"CIPinch.scale"])
 		scale = [gUserDefaults floatForKey:@"CIPinch.scale"];
 	else
@@ -61,7 +59,6 @@
 	[scaleSlider setFloatValue:scale];
 	
 	success = NO;
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[self preview:self];
 	if ([pluginData window])
 		[NSApp beginSheet:panel modalForWindow:[pluginData window] modalDelegate:NULL didEndSelector:NULL contextInfo:NULL];
@@ -72,9 +69,6 @@
 
 - (IBAction)apply:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	if (refresh) [self execute];
 	[pluginData apply];
 	
@@ -90,9 +84,6 @@
 
 - (void)reapply
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[self execute];
 	[pluginData apply];
 }
@@ -104,9 +95,6 @@
 
 - (IBAction)preview:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	if (refresh) [self execute];
 	[pluginData preview];
 	refresh = NO;
@@ -114,9 +102,6 @@
 
 - (IBAction)cancel:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[pluginData cancel];
 	
 	[panel setAlphaValue:1.0];
@@ -129,8 +114,6 @@
 
 - (IBAction)update:(id)sender
 {
-	PluginData *pluginData;
-	
 	scale = [scaleSlider floatValue];
 	
 	[panel setAlphaValue:1.0];
@@ -140,15 +123,12 @@
 	refresh = YES;
 	if ([[NSApp currentEvent] type] == NSLeftMouseUp) {
 		[self preview:self];
-		pluginData = [(SeaPlugins *)seaPlugins data];
 		if ([pluginData window]) [panel setAlphaValue:0.4];
 	}
 }
 
 - (void)execute
 {
-    PluginData *pluginData = [seaPlugins data];
-    
     int height = [pluginData height];
     IntPoint point = [pluginData point:0];
     IntPoint apoint = [pluginData point:1];
@@ -172,7 +152,7 @@
     }
 }
 
-- (BOOL)validateMenuItem:(id)menuItem
++ (BOOL)validatePlugin:(PluginData*)pluginData
 {
 	return YES;
 }

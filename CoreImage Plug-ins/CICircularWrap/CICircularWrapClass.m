@@ -6,9 +6,9 @@
 
 @implementation CICircularWrapClass
 
-- (id)initWithManager:(SeaPlugins *)manager
+- (id)initWithManager:(PluginData *)data
 {
-	seaPlugins = manager;
+	pluginData = data;
 	[NSBundle loadNibNamed:@"CICircularWrap" owner:self];
 	
 	return self;
@@ -48,11 +48,8 @@
 
 - (void)run
 {
-	PluginData *pluginData;
 	IntPoint point, apoint;
 	int radius;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	
     CGRect bounds = determineContentBorders(pluginData);
 
@@ -80,9 +77,6 @@
 
 - (IBAction)apply:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	if (refresh) [self execute];
 	[pluginData apply];
 	
@@ -98,9 +92,6 @@
 
 - (void)reapply
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[self execute];
 	[pluginData apply];
 }
@@ -112,9 +103,6 @@
 
 - (IBAction)preview:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	if (refresh) [self execute];
 	[pluginData preview];
 	refresh = NO;
@@ -122,9 +110,6 @@
 
 - (IBAction)cancel:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[pluginData cancel];
 	
 	[panel setAlphaValue:1.0];
@@ -137,8 +122,6 @@
 
 - (IBAction)update:(id)sender
 {
-	PluginData *pluginData;
-	
 	angle = [angleSlider floatValue] / -100.0;
 	if (angle > 0.0 && angle < 0.02) angle = 0.0; /* Force a zero point */
 	
@@ -149,15 +132,12 @@
 	refresh = YES;
 	if ([[NSApp currentEvent] type] == NSLeftMouseUp) {
 		[self preview:self];
-		pluginData = [(SeaPlugins *)seaPlugins data];
 		if ([pluginData window]) [panel setAlphaValue:0.4];
 	}
 }
 
 - (void)execute
 {
-    PluginData *pluginData = [seaPlugins data];
-    
     int width = [pluginData width];
     int height = [pluginData height];
     IntPoint point = [pluginData point:0];
@@ -199,7 +179,7 @@
     renderCIImage(pluginData,outputImage);
 }
 
-- (BOOL)validateMenuItem:(id)menuItem
++ (BOOL)validatePlugin:(PluginData*)pluginData
 {
 	return YES;
 }

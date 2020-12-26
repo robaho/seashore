@@ -6,9 +6,9 @@
 
 @implementation BrightnessClass
 
-- (id)initWithManager:(SeaPlugins *)manager
+- (id)initWithManager:(PluginData *)data
 {
-	seaPlugins = manager;
+	pluginData = data;
 	[NSBundle loadNibNamed:@"Brightness" owner:self];
 	
 	return self;
@@ -36,8 +36,6 @@
 
 - (void)run
 {
-	PluginData *pluginData;
-
 	refresh = NO;
 	
 	brightness = contrast = 0.0;
@@ -49,7 +47,6 @@
 	[contrastSlider setFloatValue:contrast];
 	
 	success = NO;
-	pluginData = [(SeaPlugins *)seaPlugins data];		
 	[self preview:self];
 	if ([pluginData window])
 		[NSApp beginSheet:panel modalForWindow:[pluginData window] modalDelegate:NULL didEndSelector:NULL contextInfo:NULL];
@@ -60,9 +57,6 @@
 
 - (IBAction)apply:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	if (refresh) [self adjust];
 	[pluginData apply];
 	
@@ -76,9 +70,6 @@
 
 - (void)reapply
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[self adjust];
 	[pluginData apply];
 }
@@ -90,9 +81,6 @@
 
 - (IBAction)preview:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	if (refresh) [self adjust];
 	[pluginData preview];
 	refresh = NO;
@@ -100,9 +88,6 @@
 
 - (IBAction)cancel:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[pluginData cancel];
 	
 	[panel setAlphaValue:1.0];
@@ -115,9 +100,6 @@
 
 - (IBAction)update:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	brightness = [brightnessSlider floatValue];
 	contrast = [contrastSlider floatValue];
 	
@@ -129,21 +111,18 @@
 	refresh = YES;
 	if ([[NSApp currentEvent] type] == NSLeftMouseUp) {
 		[self preview:self];
-		pluginData = [(SeaPlugins *)seaPlugins data];
 		if ([pluginData window]) [panel setAlphaValue:0.4];
 	}
 }
 
 - (void)adjust
 {
-	PluginData *pluginData;
 	IntRect selection;
 	int spp, i, j, k, width, channel, pos;
 	unsigned char *data, *overlay, *replace;
 	float nvalue, value;
 	double power;
 	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[pluginData setOverlayOpacity:255];
 	[pluginData setOverlayBehaviour:kReplacingBehaviour];
 	selection = [pluginData selection];
@@ -236,7 +215,7 @@
 	}
 }
 
-- (BOOL)validateMenuItem:(id)menuItem
++ (BOOL)validatePlugin:(PluginData*)pluginData
 {
 	return YES;
 }

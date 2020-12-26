@@ -18,7 +18,7 @@
     return @"Sample";
 }
 
-- (id)initWithManager:(SeaPlugins *)manager {
+- (id)initWithManager:(PluginData *)data {
     return self;
 }
 
@@ -40,7 +40,7 @@
     return 0;
 }
 
-- (BOOL)validateMenuItem:(id)menuItem
++ (BOOL)validatePlugin:(PluginData*)pluginData
 {
     return YES;
 }

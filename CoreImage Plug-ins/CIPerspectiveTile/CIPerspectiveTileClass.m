@@ -4,9 +4,9 @@
 
 @implementation CIPerspectiveTileClass
 
-- (id)initWithManager:(SeaPlugins *)manager
+- (id)initWithManager:(PluginData *)data
 {
-	seaPlugins = manager;
+	pluginData = data;
 	
 	return self;
 }
@@ -43,10 +43,6 @@
 
 - (void)run
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
-		
 	[self execute];
 	[pluginData apply];
 	success = YES;
@@ -54,9 +50,6 @@
 
 - (void)reapply
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[self execute];
 	[pluginData apply];
 }
@@ -68,8 +61,6 @@
 
 - (void)execute
 {
-    PluginData *pluginData = [seaPlugins data];
-    
     int height = [pluginData height];
     
     IntPoint point_tl = [pluginData point:0];
@@ -95,7 +86,7 @@
     renderCIImage(pluginData,outputImage);
 }
 
-- (BOOL)validateMenuItem:(id)menuItem
++ (BOOL)validatePlugin:(PluginData*)pluginData
 {
 	return YES;
 }

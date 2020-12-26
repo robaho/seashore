@@ -13,6 +13,6 @@
 @interface RandomClass : NSObject <PluginClass> {
 
 	// The plug-in's manager
-	SeaPlugins *seaPlugins;
+	PluginData *pluginData;
 }
 @end

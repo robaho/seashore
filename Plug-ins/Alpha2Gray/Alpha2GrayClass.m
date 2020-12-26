@@ -24,8 +24,8 @@
     return [gOurBundle localizedStringForKey:@"groupName" value:@"Color Effect" table:NULL];
 }
 
-- (id)initWithManager:(SeaPlugins *)manager {
-    seaPlugins = manager;
+- (id)initWithManager:(PluginData *)data {
+    pluginData = data;
     [NSBundle loadNibNamed:@"Alpha2Gray" owner:self];
     
     return self;
@@ -38,12 +38,10 @@
 
 
 - (void)run {
-    PluginData *pluginData;
     IntRect selection;
     unsigned char *data, *overlay, *replace;
     int pos, i, j, k, width, spp, channel;
     
-    pluginData = [(SeaPlugins *)seaPlugins data];
     [pluginData setOverlayOpacity:255];
     [pluginData setOverlayBehaviour:kReplacingBehaviour];
     selection = [pluginData selection];
@@ -103,20 +101,13 @@
     return YES;
 }
 
-- (BOOL)validateMenuItem:(id)menuItem
++ (BOOL)validatePlugin:(PluginData*)pluginData
 {
-    PluginData *pluginData;
+    if ([pluginData channel] != kAllChannels)
+        return NO;
     
-    pluginData = [(SeaPlugins *)seaPlugins data];
-    
-    if (pluginData != NULL) {
-        
-        if ([pluginData channel] != kAllChannels)
-            return NO;
-        
-        if ([pluginData spp] != 4)
-            return NO;
-    }
+    if ([pluginData spp] != 4)
+        return NO;
     
     return YES;
 }

@@ -1,5 +1,6 @@
 #import <Cocoa/Cocoa.h>
 #import "SeaPlugins.h"
+#import "PluginData.h"
 
 /*!
 	@class		PluginClass
@@ -22,7 +23,7 @@
 				The SeaPlugins instance responsible for managing the plug-ins.
 	@result		Returns instance upon success (or NULL otherwise).
 */
-- (id)initWithManager:(SeaPlugins *)manager;
+- (id)initWithManager:(PluginData *)data;
 
 /*!
 	@method		type
@@ -90,13 +91,12 @@
 - (BOOL)canReapply;
 
 /*!
- @method        validateMenuItem:
- @discussion    Determines whether a given menu item should be enabled or
+ @method        validatePlugin:
+ @discussion    Determines whether a given plugin should be enabled or
  disabled.
- @param        menuItem
- The menu item to be validated.
- @result        YES if the menu item should be enabled, NO otherwise.
+ @param        pluginData
+ @result        YES if the plugin should be enabled, NO otherwise.
  */
-- (BOOL)validateMenuItem:(id)menuItem;
++ (BOOL)validatePlugin:(PluginData*)pluginData;
 
 @end

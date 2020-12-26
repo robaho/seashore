@@ -16,7 +16,7 @@
 @interface CIDisplacementDistortionClass : NSObject <PluginClass> {
 
 	// The plug-in's manager
-	SeaPlugins *seaPlugins;
+	PluginData *pluginData;
 
 	// The label displaying the scale
 	IBOutlet id scaleLabel;

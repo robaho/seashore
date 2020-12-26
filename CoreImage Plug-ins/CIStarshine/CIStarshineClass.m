@@ -6,9 +6,9 @@
 
 @implementation CIStarshineClass
 
-- (id)initWithManager:(SeaPlugins *)manager
+- (id)initWithManager:(PluginData *)data
 {
-    seaPlugins = manager;
+    pluginData = data;
     [NSBundle loadNibNamed:@"CIStarshine" owner:self];
     mainNSColor = NULL;
     running = NO;
@@ -48,8 +48,6 @@
 
 - (void)run
 {
-    PluginData *pluginData;
-    
     if ([gUserDefaults objectForKey:@"CIStarshine.scale"])
         scale = [gUserDefaults floatForKey:@"CIStarshine.scale"];
     else
@@ -82,7 +80,6 @@
     refresh = YES;
     success = NO;
     running = YES;
-    pluginData = [(SeaPlugins *)seaPlugins data];
     [self preview:self];
     if ([pluginData window])
         [NSApp beginSheet:panel modalForWindow:[pluginData window] modalDelegate:NULL didEndSelector:NULL contextInfo:NULL];
@@ -93,9 +90,6 @@
 
 - (IBAction)apply:(id)sender
 {
-    PluginData *pluginData;
-    
-    pluginData = [(SeaPlugins *)seaPlugins data];
     if (refresh) [self execute];
     [pluginData apply];
     
@@ -117,9 +111,6 @@
 
 - (void)reapply
 {
-    PluginData *pluginData;
-    
-    pluginData = [(SeaPlugins *)seaPlugins data];
     [self execute];
     [pluginData apply];
 }
@@ -131,9 +122,6 @@
 
 - (IBAction)preview:(id)sender
 {
-    PluginData *pluginData;
-    
-    pluginData = [(SeaPlugins *)seaPlugins data];
     if (refresh) [self execute];
     [pluginData preview];
     refresh = NO;
@@ -141,9 +129,6 @@
 
 - (IBAction)cancel:(id)sender
 {
-    PluginData *pluginData;
-    
-    pluginData = [(SeaPlugins *)seaPlugins data];
     [pluginData cancel];
     
     [panel setAlphaValue:1.0];
@@ -158,21 +143,16 @@
 
 - (void)setColor:(NSColor *)color
 {
-    PluginData *pluginData;
-    
     mainNSColor = color;
     if (running) {
         refresh = YES;
         [self preview:self];
-        pluginData = [(SeaPlugins *)seaPlugins data];
         if ([pluginData window]) [panel setAlphaValue:0.4];
     }
 }
 
 - (IBAction)update:(id)sender
 {
-    PluginData *pluginData;
-    
     scale = [scaleSlider intValue];
     opacity = [opacitySlider floatValue];
     star_width = [widthSlider floatValue];
@@ -186,15 +166,12 @@
     refresh = YES;
     if ([[NSApp currentEvent] type] == NSLeftMouseUp) { 
         [self preview:self];
-        pluginData = [(SeaPlugins *)seaPlugins data];
         if ([pluginData window]) [panel setAlphaValue:0.4];
     }
 }
 
 - (void)execute
 {
-    PluginData *pluginData = [seaPlugins data];
-    
     int height = [pluginData height];
     
     IntPoint point = [pluginData point:0];
@@ -230,12 +207,8 @@
     renderCIImage(pluginData,output);
 }
 
-- (BOOL)validateMenuItem:(id)menuItem
++ (BOOL)validatePlugin:(PluginData*)pluginData
 {
-    PluginData *pluginData;
-    
-    pluginData = [(SeaPlugins *)seaPlugins data];
-    
     if (pluginData != NULL) {
 
         if ([pluginData channel] == kAlphaChannel)

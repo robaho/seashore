@@ -15,7 +15,7 @@
 @interface CIVortexClass : NSObject <PluginClass> {
 
 	// The plug-in's manager
-	SeaPlugins *seaPlugins;
+	PluginData *pluginData;
 
 	// The label displaying the angle
 	IBOutlet id angleLabel;

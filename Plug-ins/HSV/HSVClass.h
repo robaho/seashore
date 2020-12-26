@@ -14,7 +14,7 @@
 @interface HSVClass : NSObject <PluginClass> {
 
 	// The plug-in's manager
-	SeaPlugins *seaPlugins;
+	PluginData *pluginData;
 
 	// The label displaying the hue
 	IBOutlet id hueLabel;

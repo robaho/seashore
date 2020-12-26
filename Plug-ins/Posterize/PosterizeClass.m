@@ -6,9 +6,9 @@
 
 @implementation PosterizeClass
 
-- (id)initWithManager:(SeaPlugins *)manager
+- (id)initWithManager:(PluginData *)data
 {
-	seaPlugins = manager;
+	pluginData = data;
 	[NSBundle loadNibNamed:@"Posterize" owner:self];
 	
 	return self;
@@ -36,8 +36,6 @@
 
 - (void)run
 {
-	PluginData *pluginData;
-
 	if ([gUserDefaults objectForKey:@"Posterize.posterize"])
 		posterize = [gUserDefaults integerForKey:@"Posterize.posterize"];
 	else
@@ -53,8 +51,6 @@
 	
 	refresh = YES;
 	
-	pluginData = [(SeaPlugins *)seaPlugins data];
-	
 	success = NO;
 	[self preview:self];
 	if ([pluginData window])
@@ -66,9 +62,6 @@
 
 - (IBAction)apply:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	if (refresh) [self posterize];
 	[pluginData apply];
 	
@@ -84,9 +77,6 @@
 
 - (void)reapply
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[self posterize];
 	[pluginData apply];
 }
@@ -98,9 +88,6 @@
 
 - (IBAction)preview:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	if (refresh) [self posterize];
 	[pluginData preview];
 	refresh = NO;
@@ -108,9 +95,6 @@
 
 - (IBAction)cancel:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[pluginData cancel];
 	
 	[panel setAlphaValue:1.0];
@@ -123,28 +107,22 @@
 
 - (IBAction)update:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	posterize = [posterizeSlider intValue];
 	[posterizeLabel setStringValue:[NSString stringWithFormat:@"%d", posterize]];
 	[panel setAlphaValue:1.0];
 	refresh = YES;
 	if ([[NSApp currentEvent] type] == NSLeftMouseUp) {
 		[self preview:self];
-		pluginData = [(SeaPlugins *)seaPlugins data];
 		if ([pluginData window]) [panel setAlphaValue:0.4];
 	}
 }
 
 - (void)posterize
 {
-	PluginData *pluginData;
 	IntRect selection;
 	int i, j, k, t1, t2, spp, width, channel, value;
 	unsigned char *data, *overlay, *replace;
 	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[pluginData setOverlayOpacity:255];
 	[pluginData setOverlayBehaviour:kReplacingBehaviour];
 	
@@ -191,7 +169,7 @@
 	}
 }
 
-- (BOOL)validateMenuItem:(id)menuItem
++ (BOOL)validatePlugin:(PluginData*)pluginData
 {
 	return YES;
 }

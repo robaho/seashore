@@ -8,9 +8,9 @@
 
 @implementation CICircularScreenClass
 
-- (id)initWithManager:(SeaPlugins *)manager
+- (id)initWithManager:(PluginData *)data
 {
-	seaPlugins = manager;
+	pluginData = data;
 	[NSBundle loadNibNamed:@"CICircularScreen" owner:self];
 	
 	return self;
@@ -48,8 +48,6 @@
 
 - (void)run
 {
-	PluginData *pluginData;
-	
 	if ([gUserDefaults objectForKey:@"CICircularScreen.width"])
 		dotWidth = [gUserDefaults integerForKey:@"CICircularScreen.width"];
 	else
@@ -71,7 +69,6 @@
 	
 	refresh = YES;
 	success = NO;
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[self preview:self];
 	if ([pluginData window])
 		[NSApp beginSheet:panel modalForWindow:[pluginData window] modalDelegate:NULL didEndSelector:NULL contextInfo:NULL];
@@ -82,9 +79,6 @@
 
 - (IBAction)apply:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	if (refresh) [self execute];
 	[pluginData apply];
 	
@@ -101,9 +95,6 @@
 
 - (void)reapply
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[self execute];
 	[pluginData apply];
 }
@@ -115,9 +106,6 @@
 
 - (IBAction)preview:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	if (refresh) [self execute];
 	[pluginData preview];
 	refresh = NO;
@@ -125,9 +113,6 @@
 
 - (IBAction)cancel:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[pluginData cancel];
 	
 	[panel setAlphaValue:1.0];
@@ -140,8 +125,6 @@
 
 - (IBAction)update:(id)sender
 {
-	PluginData *pluginData;
-	
 	dotWidth = [dotWidthSlider intValue];
 	sharpness = [sharpnessSlider floatValue];
 	
@@ -153,15 +136,12 @@
 	refresh = YES;
 	if ([[NSApp currentEvent] type] == NSLeftMouseUp) { 
 		[self preview:self];
-		pluginData = [(SeaPlugins *)seaPlugins data];
 		if ([pluginData window]) [panel setAlphaValue:0.4];
 	}
 }
 
 - (void)execute
 {
-    PluginData *pluginData = [seaPlugins data];
-    
     int height = [pluginData height];
     IntPoint point = [pluginData point:0];
     
@@ -177,21 +157,13 @@
     applyFilter(pluginData,filter);
 }
 
-- (BOOL)validateMenuItem:(id)menuItem
++ (BOOL)validatePlugin:(PluginData*)pluginData
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
-	
-	if (pluginData != NULL) {
-
-		if ([pluginData channel] == kAlphaChannel)
-			return NO;
-		
-		if ([pluginData spp] == 2)
-			return NO;
-	
-	}
+    if ([pluginData channel] == kAlphaChannel)
+        return NO;
+    
+    if ([pluginData spp] == 2)
+        return NO;
 	
 	return YES;
 }

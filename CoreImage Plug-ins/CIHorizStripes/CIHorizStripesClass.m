@@ -4,9 +4,9 @@
 
 @implementation CIHorizStripesClass
 
-- (id)initWithManager:(SeaPlugins *)manager
+- (id)initWithManager:(PluginData *)data
 {
-	seaPlugins = manager;
+	pluginData = data;
 	
 	return self;
 }
@@ -43,9 +43,6 @@
 
 - (void)run
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[self execute];
 	[pluginData apply];
 	success = YES;
@@ -63,8 +60,6 @@
 
 - (void)execute
 {
-    PluginData *pluginData = [seaPlugins data];
-    
     int height = [pluginData height];
     IntPoint point = [pluginData point:0];
     IntPoint apoint = [pluginData point:1];
@@ -99,7 +94,7 @@
     renderCIImage(pluginData,output);
 }
 
-- (BOOL)validateMenuItem:(id)menuItem
++ (BOOL)validatePlugin:(PluginData*)pluginData
 {
 	return YES;
 }

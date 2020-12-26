@@ -126,9 +126,9 @@ static inline void HSVtoRGB(int *ih, int *is, int *iv)
 	*iv = b * 255.0;
 }
 
-- (id)initWithManager:(SeaPlugins *)manager
+- (id)initWithManager:(PluginData *)data
 {
-	seaPlugins = manager;
+	pluginData = data;
 	[NSBundle loadNibNamed:@"HSV" owner:self];
 	
 	return self;
@@ -156,8 +156,6 @@ static inline void HSVtoRGB(int *ih, int *is, int *iv)
 
 - (void)run
 {
-	PluginData *pluginData;
-
 	refresh = NO;
 	
 	hue = saturation = value = 0.0;
@@ -171,7 +169,6 @@ static inline void HSVtoRGB(int *ih, int *is, int *iv)
 	[valueSlider setFloatValue:value];
 	
 	success = NO;
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[self preview:self];
 	if ([pluginData window])
 		[NSApp beginSheet:panel modalForWindow:[pluginData window] modalDelegate:NULL didEndSelector:NULL contextInfo:NULL];
@@ -182,9 +179,6 @@ static inline void HSVtoRGB(int *ih, int *is, int *iv)
 
 - (IBAction)apply:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	if (refresh) [self adjust];
 	[pluginData apply];
 	
@@ -198,9 +192,6 @@ static inline void HSVtoRGB(int *ih, int *is, int *iv)
 
 - (void)reapply
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[self adjust];
 	[pluginData apply];
 }
@@ -212,9 +203,6 @@ static inline void HSVtoRGB(int *ih, int *is, int *iv)
 
 - (IBAction)preview:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	if (refresh) [self adjust];
 	[pluginData preview];
 	refresh = NO;
@@ -222,9 +210,6 @@ static inline void HSVtoRGB(int *ih, int *is, int *iv)
 
 - (IBAction)cancel:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[pluginData cancel];
 	
 	[panel setAlphaValue:1.0];
@@ -237,9 +222,6 @@ static inline void HSVtoRGB(int *ih, int *is, int *iv)
 
 - (IBAction)update:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	hue = [hueSlider floatValue];
 	saturation = [saturationSlider floatValue];
 	value = [valueSlider floatValue];
@@ -252,7 +234,6 @@ static inline void HSVtoRGB(int *ih, int *is, int *iv)
 	refresh = YES;
 	if ([[NSApp currentEvent] type] == NSLeftMouseUp) {
 		[self preview:self];
-		pluginData = [(SeaPlugins *)seaPlugins data];
 		if ([pluginData window]) [panel setAlphaValue:0.4];
 	}
 }
@@ -262,14 +243,12 @@ static inline unsigned char WRAPAROUND(int x) { return (x < 0) ? (255 + ((x + 1)
 
 - (void)adjust
 {
-	PluginData *pluginData;
 	IntRect selection;
 	int spp, i, j, k, width, channel, pos;
 	unsigned char *data, *overlay, *replace;
 	double power;
 	int r, g, b;
 	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[pluginData setOverlayOpacity:255];
 	[pluginData setOverlayBehaviour:kReplacingBehaviour];
 	selection = [pluginData selection];
@@ -302,21 +281,13 @@ static inline unsigned char WRAPAROUND(int x) { return (x < 0) ? (255 + ((x + 1)
 	}
 }
 
-- (BOOL)validateMenuItem:(id)menuItem
++ (BOOL)validatePlugin:(PluginData*)pluginData
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
-	
-	if (pluginData != NULL) {
-
-		if ([pluginData channel] == kAlphaChannel)
-			return NO;
-		
-		if ([pluginData spp] == 2)
-			return NO;
-	
-	}
+    if ([pluginData channel] == kAlphaChannel)
+        return NO;
+    
+    if ([pluginData spp] == 2)
+        return NO;
 	
 	return YES;
 }

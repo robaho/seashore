@@ -15,7 +15,7 @@
 @interface CINoiseReductionClass : NSObject <PluginClass> {
 
 	// The plug-in's manager
-	SeaPlugins *seaPlugins;
+	PluginData *pluginData;
 
 	// The label displaying the noise
 	IBOutlet id noiseLabel;

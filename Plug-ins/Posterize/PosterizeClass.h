@@ -13,7 +13,7 @@
 @interface PosterizeClass : NSObject <PluginClass> {
 
 	// The plug-in's manager
-	SeaPlugins *seaPlugins;
+	PluginData *pluginData;
 
 	// The posterize slider
 	IBOutlet id posterizeSlider;

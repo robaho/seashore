@@ -26,7 +26,7 @@
 				The SeaPlugins instance responsible for managing the plug-ins.
 	@result		Returns instance upon success (or NULL otherwise).
 */
-- (id)initWithManager:(SeaPlugins *)manager;
+- (id)initWithManager:(PluginData *)data;
 
 /*!
 	@method		type
@@ -69,6 +69,13 @@
 */
 - (BOOL)canReapply;
 
+/*!
+ @method        validateMenuItem
+ @discussion    return YES if the plugin can be run given the current layer conditions - obtained from the SeaPlugins reference
+ @result        return YES if it can be run, else NO
+ */
++ (BOOL)validatePugin:(PluginData*)pluginData;
+
 @end
 
 @protocol PointPlugin <PluginClass>
@@ -90,15 +97,6 @@
  requires to operate.
  */
 - (int)points;
-
-/*!
- @method        validateMenuItem
- @discussion    return YES if the plugin can be run given the current layer conditions - obtained from the SeaPlugins reference
- @result        return YES if it can be run, else NO
- */
-- (BOOL)validateMenuItem:(id)menuItem;
-
-
 
 @end
 

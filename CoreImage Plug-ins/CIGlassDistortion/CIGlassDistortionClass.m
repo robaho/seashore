@@ -6,9 +6,9 @@
 
 @implementation CIGlassDistortionClass
 
-- (id)initWithManager:(SeaPlugins *)manager
+- (id)initWithManager:(PluginData *)data
 {
-	seaPlugins = manager;
+	pluginData = data;
 	[NSBundle loadNibNamed:@"CIGlassDistortion" owner:self];
 	texturePath = NULL;
 	
@@ -37,8 +37,6 @@
 
 - (void)run
 {
-	PluginData *pluginData;
-	
 	if ([gUserDefaults objectForKey:@"CIGlassDistortion.scale"])
 		scale = [gUserDefaults integerForKey:@"CIGlassDistortion.scale"];
 	else
@@ -53,7 +51,6 @@
 	[scaleSlider setIntValue:scale];
 	
 	success = NO;
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[self preview:self];
 	if ([pluginData window])
 		[NSApp beginSheet:panel modalForWindow:[pluginData window] modalDelegate:NULL didEndSelector:NULL contextInfo:NULL];
@@ -64,9 +61,6 @@
 
 - (IBAction)apply:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	if (refresh) [self execute];
 	[pluginData apply];
 	
@@ -82,9 +76,6 @@
 
 - (void)reapply
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[self execute];
 	[pluginData apply];
 }
@@ -96,9 +87,6 @@
 
 - (IBAction)preview:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	if (refresh) [self execute];
 	[pluginData preview];
 	refresh = NO;
@@ -106,9 +94,6 @@
 
 - (IBAction)cancel:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[pluginData cancel];
 	
 	[panel setAlphaValue:1.0];
@@ -121,8 +106,6 @@
 
 - (IBAction)update:(id)sender
 {
-	PluginData *pluginData;
-	
 	scale = roundf([scaleSlider floatValue]);
 	
 	[panel setAlphaValue:1.0];
@@ -131,7 +114,6 @@
 	refresh = YES;
 	if ([[NSApp currentEvent] type] == NSLeftMouseUp) {
 		[self preview:self];
-		pluginData = [(SeaPlugins *)seaPlugins data];
 		if ([pluginData window]) [panel setAlphaValue:0.4];
 	}
 }
@@ -150,12 +132,10 @@
 
 - (IBAction)selectTexture:(id)sender
 {
-	PluginData *pluginData;
 	NSOpenPanel *openPanel;
 	NSString *path, *localStr, *startPath;
 	int retval;
 
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	openPanel = [NSOpenPanel openPanel];
 	[openPanel setTreatsFilePackagesAsDirectories:YES];
 	[openPanel setDelegate:self];
@@ -174,8 +154,6 @@
 
 - (void)execute
 {
-    PluginData *pluginData = [seaPlugins data];
-    
     int width = [pluginData width];
     int height = [pluginData height];
     
@@ -202,7 +180,7 @@
     }
 }
 
-- (BOOL)validateMenuItem:(id)menuItem
++ (BOOL)validatePlugin:(PluginData*)pluginData
 {
 	return YES;
 }

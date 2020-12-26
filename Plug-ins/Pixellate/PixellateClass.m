@@ -6,9 +6,9 @@
 
 @implementation PixellateClass
 
-- (id)initWithManager:(SeaPlugins *)manager
+- (id)initWithManager:(PluginData *)data
 {
-	seaPlugins = manager;
+	pluginData = data;
 	[NSBundle loadNibNamed:@"Pixellate" owner:self];
 	
 	return self;
@@ -36,8 +36,6 @@
 
 - (void)run
 {
-	PluginData *pluginData;
-	
 	if ([gUserDefaults objectForKey:@"Pixellate.scale"])
 		scale = [gUserDefaults integerForKey:@"Pixellate.scale"];
 	else
@@ -52,7 +50,6 @@
 	
 	refresh = YES;
 	success = NO;
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[self preview:self];
 	if ([pluginData window])
 		[NSApp beginSheet:panel modalForWindow:[pluginData window] modalDelegate:NULL didEndSelector:NULL contextInfo:NULL];
@@ -63,9 +60,6 @@
 
 - (IBAction)apply:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	if (refresh) [self pixellate];
 	[pluginData apply];
 	
@@ -81,9 +75,6 @@
 
 - (void)reapply
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[pluginData apply];
 }
 
@@ -94,9 +85,6 @@
 
 - (IBAction)preview:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	if (refresh) [self pixellate];
 	[pluginData preview];
 	refresh = NO;
@@ -104,9 +92,6 @@
 
 - (IBAction)cancel:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[pluginData cancel];
 	
 	[panel setAlphaValue:1.0];
@@ -119,9 +104,6 @@
 
 - (IBAction)update:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	scale = [scaleSlider intValue];
 	
 	[scaleLabel setStringValue:[NSString stringWithFormat:@"%d", scale]];
@@ -129,20 +111,17 @@
 	refresh = YES;
 	if ([[NSApp currentEvent] type] == NSLeftMouseUp) {
 		[self preview:self];
-		pluginData = [(SeaPlugins *)seaPlugins data];
 		if ([pluginData window]) [panel setAlphaValue:0.4];
 	}
 }
 
 - (void)pixellate
 {
-	PluginData *pluginData;
 	IntRect selection;
 	unsigned char *data, *overlay, *replace, newPixel[4];
 	int pos, i, j, k, i2, j2, width, height, spp, channel;
 	int total[4], n, x_stblk, x_endblk, y_stblk, y_endblk;
 	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[pluginData setOverlayOpacity:255];
 	[pluginData setOverlayBehaviour:kReplacingBehaviour];
 	selection = [pluginData selection];
@@ -216,7 +195,7 @@
 	}
 }
 
-- (BOOL)validateMenuItem:(id)menuItem
++ (BOOL)validatePlugin:(PluginData*)pluginData
 {
 	return YES;
 }

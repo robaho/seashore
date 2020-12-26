@@ -13,7 +13,7 @@
 @interface InvertClass : NSObject <PluginClass> {
 
 	// The plug-in's manager
-	SeaPlugins *seaPlugins;
+	PluginData *pluginData;
 
 }
 @end

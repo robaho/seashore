@@ -177,7 +177,7 @@ BOOL checkRun(NSString *path, NSString *file)
         }
         else if ([plugin type] == kPointPlugin) {
             if ([plugin respondsToSelector:@selector(initWithManager:)]) {
-                plugin = [plugin initWithManager:self];
+                plugin = [plugin initWithManager:[self data]];
             }
             if (plugin!=nil){
                 pointPluginsNames = [pointPluginsNames arrayByAddingObject:[NSString stringWithFormat:@"%@ / %@", [plugin groupName], [plugin name]]];
@@ -219,7 +219,7 @@ BOOL checkRun(NSString *path, NSString *file)
     }
     
     if ([plugin respondsToSelector:@selector(initWithManager:)]) {
-        plugin = [plugin initWithManager:self];
+        plugin = [plugin initWithManager:[self data]];
     }
     if (plugin) {
         [plugin run];
@@ -274,7 +274,7 @@ BOOL checkRun(NSString *path, NSString *file)
     
     // Never if we are told not to
     if ([menuItem tag] >= 10000 && [menuItem tag] < 17500) {
-        if (![[plugins objectAtIndex:[menuItem tag] - 10000] validateMenuItem:menuItem])
+        if (![[[plugins objectAtIndex:[menuItem tag] - 10000] class] validatePlugin:[document pluginData]])
             return NO;
     }
 

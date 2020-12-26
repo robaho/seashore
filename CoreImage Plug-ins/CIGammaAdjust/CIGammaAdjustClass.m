@@ -4,9 +4,9 @@
 
 @implementation CIGammaAdjustClass
 
-- (id)initWithManager:(SeaPlugins *)manager
+- (id)initWithManager:(PluginData *)data
 {
-	seaPlugins = manager;
+	pluginData = data;
 	[NSBundle loadNibNamed:@"CIGammaAdjust" owner:self];
 	
 	return self;
@@ -34,8 +34,6 @@
 
 - (void)run
 {
-	PluginData *pluginData;
-	
 	gamma = 1.0;
 	
 	[gammaLabel setStringValue:[NSString stringWithFormat:@"%.2f", gamma]];
@@ -43,7 +41,6 @@
 	[gammaSlider setIntValue:gamma * 100];
 	
 	success = NO;
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[self preview:self];
 	if ([pluginData window])
 		[NSApp beginSheet:panel modalForWindow:[pluginData window] modalDelegate:NULL didEndSelector:NULL contextInfo:NULL];
@@ -54,9 +51,6 @@
 
 - (IBAction)apply:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	if (refresh) [self execute];
 	[pluginData apply];
 	
@@ -70,9 +64,6 @@
 
 - (void)reapply
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[self execute];
 	[pluginData apply];
 }
@@ -84,9 +75,6 @@
 
 - (IBAction)preview:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	if (refresh) [self execute];
 	[pluginData preview];
 	refresh = NO;
@@ -94,9 +82,6 @@
 
 - (IBAction)cancel:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[pluginData cancel];
 	
 	[panel setAlphaValue:1.0];
@@ -109,8 +94,6 @@
 
 - (IBAction)update:(id)sender
 {
-	PluginData *pluginData;
-	
 	gamma = roundf([gammaSlider floatValue]) / 100.0;
 	if (gamma > 1.0 && gamma < 1.02) gamma = 1.0; /* Force one point */
 	
@@ -121,15 +104,12 @@
 	refresh = YES;
 	if ([[NSApp currentEvent] type] == NSLeftMouseUp) { 
 		[self preview:self];
-		pluginData = [(SeaPlugins *)seaPlugins data];
 		if ([pluginData window]) [panel setAlphaValue:0.4];
 	}
 }
 
 - (void)execute
 {
-    PluginData *pluginData = [seaPlugins data];
-    
     CIFilter *filter = [CIFilter filterWithName:@"CIGammaAdjust"];
     if (filter == NULL) {
         @throw [NSException exceptionWithName:@"CoreImageFilterNotFoundException" reason:[NSString stringWithFormat:@"The Core Image filter named \"%@\" was not found.", @"CIGammaAdjust"] userInfo:NULL];
@@ -140,7 +120,7 @@
     applyFilter(pluginData,filter);
 }
 
-- (BOOL)validateMenuItem:(id)menuItem
++ (BOOL)validatePlugin:(PluginData*)pluginData
 {
 	return YES;
 }

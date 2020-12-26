@@ -16,7 +16,7 @@
 @interface CIGloomClass : NSObject <PluginClass> {
 
 	// The plug-in's manager
-	SeaPlugins *seaPlugins;
+	PluginData *pluginData;
 
 	// The label displaying the radius
 	IBOutlet id radiusLabel;

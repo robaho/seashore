@@ -4,9 +4,9 @@
 
 @implementation CMYKClass
 
-- (id)initWithManager:(SeaPlugins *)manager
+- (id)initWithManager:(PluginData *)data
 {
-	seaPlugins = manager;
+	pluginData = data;
 	
 	return self;
 }
@@ -33,13 +33,11 @@
 
 - (void)run
 {
-    PluginData *pluginData;
     IntRect selection;
     
     unsigned char *data, *overlay, *replace;
     int width, height, spp;
     
-    pluginData = [(SeaPlugins *)seaPlugins data];
     [pluginData setOverlayOpacity:255];
     [pluginData setOverlayBehaviour:kReplacingBehaviour];
     selection = [pluginData selection];
@@ -124,21 +122,13 @@
 	return YES;
 }
 
-- (BOOL)validateMenuItem:(id)menuItem
++ (BOOL)validatePlugin:(PluginData*)pluginData
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
-	
-	if (pluginData != NULL) {
-
-		if ([pluginData channel] == kAlphaChannel)
-			return NO;
-		
-		if ([pluginData spp] == 2)
-			return NO;
-	
-	}
+    if ([pluginData channel] == kAlphaChannel)
+        return NO;
+    
+    if ([pluginData spp] == 2)
+        return NO;
 	
 	return YES;
 }

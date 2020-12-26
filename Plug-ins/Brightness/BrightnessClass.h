@@ -14,7 +14,7 @@
 @interface BrightnessClass : NSObject <PluginClass> {
 
 	// The plug-in's manager
-	SeaPlugins *seaPlugins;
+	PluginData *pluginData;
 
 	// The label displaying the brightness
 	IBOutlet id brightnessLabel;

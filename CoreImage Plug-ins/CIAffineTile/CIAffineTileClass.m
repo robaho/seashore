@@ -4,9 +4,9 @@
 
 @implementation CIAffineTileClass
 
-- (id)initWithManager:(SeaPlugins *)manager
+- (id)initWithManager:(PluginData *)data
 {
-	seaPlugins = manager;
+	pluginData = data;
 	
 	return self;
 }
@@ -43,9 +43,6 @@
 
 - (void)run
 {
-	PluginData *pluginData;
-		
-	pluginData = [seaPlugins data];
 	[self execute];
 	[pluginData apply];
 	success = YES;
@@ -63,8 +60,6 @@
 
 - (void)execute
 {
-    PluginData *pluginData = [seaPlugins data];
-    
     int width = [pluginData width];
     int height = [pluginData height];
     IntPoint point = [pluginData point:0];
@@ -104,7 +99,7 @@
     renderCIImage(pluginData,outputImage);
 }
 
-- (BOOL)validateMenuItem:(id)menuItem
++ (BOOL)validatePlugin:(PluginData*)pluginData
 {
 	return YES;
 }

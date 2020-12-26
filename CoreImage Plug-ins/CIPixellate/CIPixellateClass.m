@@ -6,9 +6,9 @@
 
 @implementation CIPixellateClass
 
-- (id)initWithManager:(SeaPlugins *)manager
+- (id)initWithManager:(PluginData *)data
 {
-	seaPlugins = manager;
+	pluginData = data;
 	[NSBundle loadNibNamed:@"CIPixellate" owner:self];
 	
 	return self;
@@ -36,8 +36,6 @@
 
 - (void)run
 {
-	PluginData *pluginData;
-	
 	if ([gUserDefaults objectForKey:@"CIPixellate.scale"])
 		scale = [gUserDefaults floatForKey:@"CIPixellate.scale"];
 	else
@@ -59,7 +57,6 @@
 	
 	refresh = YES;
 	success = NO;
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[self preview:self];
 	if ([pluginData window])
 		[NSApp beginSheet:panel modalForWindow:[pluginData window] modalDelegate:NULL didEndSelector:NULL contextInfo:NULL];
@@ -70,9 +67,6 @@
 
 - (IBAction)apply:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	if (refresh) [self execute];
 	[pluginData apply];
 	
@@ -89,9 +83,6 @@
 
 - (void)reapply
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[self execute];
 	[pluginData apply];
 }
@@ -103,9 +94,6 @@
 
 - (IBAction)preview:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	if (refresh) [self execute];
 	[pluginData preview];
 	refresh = NO;
@@ -113,9 +101,6 @@
 
 - (IBAction)cancel:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[pluginData cancel];
 	
 	[panel setAlphaValue:1.0];
@@ -128,8 +113,6 @@
 
 - (IBAction)update:(id)sender
 {
-	PluginData *pluginData;
-	
 	scale = [scaleSlider intValue];
 	centerBased = ([typeRadios selectedColumn] == 1);
 	[panel setAlphaValue:1.0];
@@ -139,15 +122,12 @@
 	refresh = YES;
 	if ([[NSApp currentEvent] type] == NSLeftMouseUp) { 
 		[self preview:self];
-		pluginData = [(SeaPlugins *)seaPlugins data];
 		if ([pluginData window]) [panel setAlphaValue:0.4];
 	}
 }
 
 - (void)execute
 {
-    PluginData *pluginData = [seaPlugins data];
-    
     int width = [pluginData width];
     int height = [pluginData height];
     
@@ -174,7 +154,6 @@
 
 - (void)finishing
 {
-	PluginData *pluginData;
 	IntRect selection;
 	unsigned char *data, *overlay, *replace, newPixel[4];
 	int pos, i, j, k, i2, j2, width, height, spp, channel;
@@ -183,7 +162,6 @@
 	
 	if (centerBased) return;
 	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	selection = [pluginData selection];
 	spp = [pluginData spp];
 	width = [pluginData width];
@@ -282,7 +260,7 @@
 }
 
 
-- (BOOL)validateMenuItem:(id)menuItem
++ (BOOL)validatePlugin:(PluginData*)pluginData
 {
 	return YES;
 }

@@ -4,9 +4,9 @@
 
 @implementation RandomClass
 
-- (id)initWithManager:(SeaPlugins *)manager
+- (id)initWithManager:(PluginData *)data
 {
-	seaPlugins = manager;
+	pluginData = data;
 	
 	return self;
 }
@@ -52,14 +52,12 @@ static inline void specialMerge(int spp, unsigned char *destPtr, int destLoc, un
 
 - (void)run
 {
-	PluginData *pluginData;
 	IntRect selection;
 	unsigned char *data, *overlay, *replace;
 	int pos, i, j, k, width, spp, channel;
 	unsigned char background[4], random[4];
 	BOOL opaque;
 	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[pluginData setOverlayOpacity:255];
 	[pluginData setOverlayBehaviour:kReplacingBehaviour];
 	selection = [pluginData selection];
@@ -114,7 +112,7 @@ static inline void specialMerge(int spp, unsigned char *destPtr, int destLoc, un
 	return YES;
 }
 
-- (BOOL)validateMenuItem:(id)menuItem
++ (BOOL)validatePlugin:(PluginData*)pluginData
 {
 	return YES;
 }

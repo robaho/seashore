@@ -6,9 +6,9 @@
 
 @implementation GaussianClass
 
-- (id)initWithManager:(SeaPlugins *)manager
+- (id)initWithManager:(PluginData *)data
 {
-	seaPlugins = manager;
+	pluginData = data;
 	[NSBundle loadNibNamed:@"Gaussian" owner:self];
 	
 	return self;
@@ -36,8 +36,6 @@
 
 - (void)run
 {
-	PluginData *pluginData;
-	
 	if ([gUserDefaults objectForKey:@"Gaussian.radius"])
 		radius = [gUserDefaults integerForKey:@"Gaussian.radius"];
 	else
@@ -52,7 +50,6 @@
 	[radiusSlider setIntValue:radius];
 	
 	success = NO;
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	if ([pluginData window])
 		[NSApp beginSheet:panel modalForWindow:[pluginData window] modalDelegate:NULL didEndSelector:NULL contextInfo:NULL];
 	else
@@ -62,9 +59,6 @@
 
 - (IBAction)apply:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	if (refresh) [self gauss:BLUR_RLE];
 	[pluginData apply];
 	
@@ -80,9 +74,6 @@
 
 - (void)reapply
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[self gauss:BLUR_RLE];
 	[pluginData apply];
 }
@@ -94,9 +85,6 @@
 
 - (IBAction)preview:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	if (refresh) [self gauss:BLUR_RLE];
 	[pluginData preview];
 	if ([pluginData window]) [panel setAlphaValue:0.4];
@@ -105,9 +93,6 @@
 
 - (IBAction)cancel:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[pluginData cancel];
 	
 	[panel setAlphaValue:1.0];
@@ -129,7 +114,6 @@
 
 - (void)gauss:(BlurMethod)method
 {
-	PluginData *pluginData;
 	IntRect selection;
 	int i, j, k, l, spp, fspp, width, height, fwidth, channel;
 	unsigned char *data, *overlay, *replace, *workpad;
@@ -160,7 +144,6 @@
 	int val;
 	int initial_pp, initial_mm;
 
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[pluginData setOverlayOpacity:255];
 	[pluginData setOverlayBehaviour:kReplacingBehaviour];
 	selection = [pluginData selection];
@@ -543,7 +526,7 @@
 	free(dest);
 }
 
-- (BOOL)validateMenuItem:(id)menuItem
++ (BOOL)validatePlugin:(PluginData*)pluginData
 {
 	return YES;
 }

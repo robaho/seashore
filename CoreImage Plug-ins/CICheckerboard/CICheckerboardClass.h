@@ -15,7 +15,7 @@
 @interface CICheckerboardClass : NSObject <PluginClass> {
 
 	// The plug-in's manager
-	SeaPlugins *seaPlugins;
+	PluginData *pluginData;
 
 	// YES if the application succeeded
 	BOOL success;

@@ -6,9 +6,9 @@
 
 @implementation MedianClass
 
-- (id)initWithManager:(SeaPlugins *)manager
+- (id)initWithManager:(PluginData *)data
 {
-	seaPlugins = manager;
+	pluginData = data;
 	
 	return self;
 }
@@ -40,13 +40,11 @@ int compar(const void *a, const void *b)
 
 - (void)run
 {
-	PluginData *pluginData;
 	IntRect selection;
 	unsigned char *data, *overlay, *replace;
 	int pos, i, j, x, y, z, k, width, spp, channel;
 	unsigned char vals[4][9];
 	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[pluginData setOverlayOpacity:255];
 	[pluginData setOverlayBehaviour:kReplacingBehaviour];
 	selection = [pluginData selection];
@@ -138,7 +136,7 @@ int compar(const void *a, const void *b)
 	return YES;
 }
 
-- (BOOL)validateMenuItem:(id)menuItem
++ (BOOL)validatePlugin:(PluginData*)pluginData
 {
 	return YES;
 }

@@ -13,8 +13,7 @@
 {
 
 	// The instance of the same new
-	IBOutlet id ciMonochrome;
-
+    IBOutlet id ciMonochrome;
 }
 
 /*!

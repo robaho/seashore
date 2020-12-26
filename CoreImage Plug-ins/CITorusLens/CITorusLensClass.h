@@ -15,7 +15,7 @@
 @interface CITorusLensClass : NSObject <PluginClass>{
 
 	// The plug-in's manager
-	SeaPlugins *seaPlugins;
+	PluginData *pluginData;
 
 	// The label displaying the refraction
 	IBOutlet id refractionLabel;

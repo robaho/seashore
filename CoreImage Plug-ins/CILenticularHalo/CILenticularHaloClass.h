@@ -17,7 +17,7 @@
 @interface CILenticularHaloClass : NSObject <PluginClass> {
 
 	// The plug-in's manager
-	SeaPlugins *seaPlugins;
+	PluginData *pluginData;
 
 	// The label displaying the overlap
 	IBOutlet id overlapLabel;

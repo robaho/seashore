@@ -4,9 +4,9 @@
 
 @implementation CIInvertClass
 
-- (id)initWithManager:(SeaPlugins *)manager
+- (id)initWithManager:(PluginData *)data
 {
-	seaPlugins = manager;
+	pluginData = data;
 	
 	return self;
 }
@@ -33,9 +33,6 @@
 
 - (void)run
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[self execute];
 	[pluginData apply];
 	success = YES;
@@ -53,8 +50,6 @@
 
 - (void)execute
 {
-    PluginData *pluginData = [seaPlugins data];
-    
     CIFilter *filter = [CIFilter filterWithName:@"CIColorInvert"];
     if (filter == NULL) {
         @throw [NSException exceptionWithName:@"CoreImageFilterNotFoundException" reason:[NSString stringWithFormat:@"The Core Image filter named \"%@\" was not found.", @"CIColorInvert"] userInfo:NULL];
@@ -63,7 +58,7 @@
 
     applyFilter(pluginData,filter);
 }
-- (BOOL)validateMenuItem:(id)menuItem
++ (BOOL)validatePlugin:(PluginData*)pluginData
 {
 	return YES;
 }

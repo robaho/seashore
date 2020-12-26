@@ -17,7 +17,7 @@
 @interface CIMonochromeClass : NSObject <PluginClass> {
 
 	// The plug-in's manager
-	SeaPlugins *seaPlugins;
+	PluginData *pluginData;
 
 	// The label displaying the intensity
 	IBOutlet id intensityLabel;
@@ -29,7 +29,7 @@
 	IBOutlet id mainColorWell;
 
 	// The panel for the plug-in
-	IBOutlet id panel;
+    IBOutlet id panel;
 
 	// The value of the intensity
 	float intensity;

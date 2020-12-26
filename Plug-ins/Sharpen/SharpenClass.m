@@ -7,9 +7,9 @@
 
 @implementation SharpenClass
 
-- (id)initWithManager:(SeaPlugins *)manager
+- (id)initWithManager:(PluginData *)data
 {
-	seaPlugins = manager;
+	pluginData = data;
 	[NSBundle loadNibNamed:@"Sharpen" owner:self];
 	
 	return self;
@@ -37,8 +37,6 @@
 
 - (void)run
 {
-	PluginData *pluginData;
-	
 	if ([gUserDefaults objectForKey:@"Sharpen.extent"])
 		extent = [gUserDefaults integerForKey:@"Sharpen.extent"];
 	else
@@ -53,7 +51,6 @@
 	[extentSlider setIntValue:extent];
 	
 	success = NO;
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[self preview:self];
 	if ([pluginData window])
 		[NSApp beginSheet:panel modalForWindow:[pluginData window] modalDelegate:NULL didEndSelector:NULL contextInfo:NULL];
@@ -64,9 +61,6 @@
 
 - (IBAction)apply:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	if (refresh) [self sharpen];
 	[pluginData apply];
 	
@@ -82,9 +76,6 @@
 
 - (void)reapply
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[pluginData apply];
 }
 
@@ -95,9 +86,6 @@
 
 - (IBAction)preview:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	if (refresh) [self sharpen];
 	[pluginData preview];
 	refresh = NO;
@@ -105,9 +93,6 @@
 
 - (IBAction)cancel:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[pluginData cancel];
 	
 	[panel setAlphaValue:1.0];
@@ -120,9 +105,6 @@
 
 - (IBAction)update:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	extent = roundf([extentSlider floatValue]);
 	
 	[extentLabel setStringValue:[NSString stringWithFormat:@"%d", extent]];
@@ -130,7 +112,6 @@
 	refresh = YES;
 	if ([[NSApp currentEvent] type] == NSLeftMouseUp) {
 		[self preview:self];
-		pluginData = [(SeaPlugins *)seaPlugins data];
 		if ([pluginData window]) [panel setAlphaValue:0.4];
 	}
 }
@@ -171,7 +152,6 @@ static inline set_row(unsigned char *out_row, unsigned char *in_row, int spp, in
 
 - (void)sharpen
 {
-	PluginData *pluginData;
 	IntRect selection;
 	unsigned char *src_rows[4], *dst_row;
 	unsigned char *data, *overlay, *replace, *workpad;
@@ -182,7 +162,6 @@ static inline set_row(unsigned char *out_row, unsigned char *in_row, int spp, in
 	void (*filter)(int, guchar *, guchar *, intneg *, intneg *, intneg *);
 	int y1, y2, x1, width;
 	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[pluginData setOverlayOpacity:255];
 	[pluginData setOverlayBehaviour:kReplacingBehaviour];
 	selection = [pluginData selection];
@@ -270,7 +249,7 @@ static inline set_row(unsigned char *out_row, unsigned char *in_row, int spp, in
 		memset(&(replace[i * width + x1]), 255, selection.size.width);
 }
 
-- (BOOL)validateMenuItem:(id)menuItem
++ (BOOL)validatePlugin:(PluginData*)pluginData
 {
 	return YES;
 }

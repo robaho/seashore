@@ -7,9 +7,9 @@
 
 @implementation ThresholdClass
 
-- (id)initWithManager:(SeaPlugins *)manager
+- (id)initWithManager:(PluginData *)data
 {
-	seaPlugins = manager;
+	pluginData = data;
 	[NSBundle loadNibNamed:@"Threshold" owner:self];
 	
 	return self;
@@ -37,11 +37,7 @@
 
 - (void)run
 {
-	PluginData *pluginData;
-
 	refresh = YES;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	
 	topValue = 0;
 	bottomValue = 255;
@@ -63,9 +59,6 @@
 
 - (IBAction)apply:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	if (refresh) [self adjust];
 	[pluginData apply];
 	
@@ -79,9 +72,6 @@
 
 - (void)reapply
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[self adjust];
 	[pluginData apply];
 }
@@ -93,9 +83,6 @@
 
 - (IBAction)preview:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	if (refresh) [self adjust];
 	[pluginData preview];
 	refresh = NO;
@@ -103,9 +90,6 @@
 
 - (IBAction)cancel:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[pluginData cancel];
 	
 	[panel setAlphaValue:1.0];
@@ -118,9 +102,6 @@
 
 - (IBAction)update:(id)sender
 {
-	PluginData *pluginData;
-	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	topValue = [topSlider intValue];
 	bottomValue = [bottomSlider intValue];
 	
@@ -135,19 +116,16 @@
 	[view setNeedsDisplay:YES];
 	if ([[NSApp currentEvent] type] == NSLeftMouseUp) {
 		[self preview:self];
-		pluginData = [(SeaPlugins *)seaPlugins data];
 		if ([pluginData window]) [panel setAlphaValue:0.4];
 	}
 }
 
 - (void)adjust
 {
-	PluginData *pluginData;
 	IntRect selection;
 	int i, j, k, t1, t2, spp, width, channel, mid;
 	unsigned char *data, *overlay, *replace;
 	
-	pluginData = [(SeaPlugins *)seaPlugins data];
 	[pluginData setOverlayOpacity:255];
 	[pluginData setOverlayBehaviour:kReplacingBehaviour];
 	
@@ -209,7 +187,7 @@
 	return bottomValue;
 }
 
-- (BOOL)validateMenuItem:(id)menuItem
++ (BOOL)validatePlugin:(PluginData*)pluginData
 {
 	return YES;
 }

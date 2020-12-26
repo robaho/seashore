@@ -15,7 +15,7 @@
 @interface CIPosterizeClass : NSObject <PluginClass> {
 
 	// The plug-in's manager
-	SeaPlugins *seaPlugins;
+	PluginData *pluginData;
 
 	// The label displaying the levels
 	IBOutlet id levelsLabel;
