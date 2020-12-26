@@ -2273,7 +2273,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.5.9;
+				MARKETING_VERSION = 2.5.10;
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore;
 				PRODUCT_NAME = Seashore;
@@ -2355,7 +2355,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.5.9;
+				MARKETING_VERSION = 2.5.10;
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore;
 				PRODUCT_NAME = Seashore;
