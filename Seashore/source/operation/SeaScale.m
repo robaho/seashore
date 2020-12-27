@@ -60,9 +60,9 @@
 	}
 	
 	// Set paper name
-	if ([[gCurrentDocument printInfo] respondsToSelector:@selector(localizedPaperName)]) {
+	if ([[document printInfo] respondsToSelector:@selector(localizedPaperName)]) {
 		menuItem = [presetsMenu itemAtIndex:[presetsMenu indexOfItemWithTag:2]];
-		string = [NSString stringWithFormat:@"%@ (%@)", LOCALSTR(@"paper size", @"Paper size"), [[gCurrentDocument printInfo] localizedPaperName]];
+		string = [NSString stringWithFormat:@"%@ (%@)", LOCALSTR(@"paper size", @"Paper size"), [[document printInfo] localizedPaperName]];
 		[menuItem setTitle:string];
 	}
 	
@@ -524,9 +524,9 @@
 			size = NSSizeMakeIntSize([[NSScreen mainScreen] frame].size);
 		break;
 		case 2:
-			paperSize = [[gCurrentDocument printInfo] paperSize];
-			paperSize.height -= [[gCurrentDocument printInfo] topMargin] + [[gCurrentDocument printInfo] bottomMargin];
-			paperSize.width -= [[gCurrentDocument printInfo] leftMargin] + [[gCurrentDocument printInfo] rightMargin];
+			paperSize = [[document printInfo] paperSize];
+			paperSize.height -= [[document printInfo] topMargin] + [[document printInfo] bottomMargin];
+			paperSize.width -= [[document printInfo] leftMargin] + [[document printInfo] rightMargin];
 			size = NSSizeMakeIntSize(paperSize);
 			size.width = (float)size.width * (xres / 72.0);
 			size.height = (float)size.height * (yres / 72.0);

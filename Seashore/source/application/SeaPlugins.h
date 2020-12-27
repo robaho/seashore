@@ -116,15 +116,6 @@ enum {
 */
 - (NSArray *)pointPlugins;
 
-
-/*!
-	@method		activePointEffect
-	@discussion	Returns the presently active plug-in according to
-				the effect table.
-	@result		Returns an instance of the plug-in's class.
-*/
-- (id)activePointEffect;
-
 /*!
 	@method		validateMenuItem:
 	@discussion	Determines whether a given menu item should be enabled or

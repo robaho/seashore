@@ -176,15 +176,9 @@ BOOL checkRun(NSString *path, NSString *file)
             
         }
         else if ([plugin type] == kPointPlugin) {
-            if ([plugin respondsToSelector:@selector(initWithManager:)]) {
-                plugin = [plugin initWithManager:[self data]];
-            }
-            if (plugin!=nil){
-                pointPluginsNames = [pointPluginsNames arrayByAddingObject:[NSString stringWithFormat:@"%@ / %@", [plugin groupName], [plugin name]]];
-                pointPlugins = [pointPlugins arrayByAddingObject:plugin];
-            }
+            pointPluginsNames = [pointPluginsNames arrayByAddingObject:[NSString stringWithFormat:@"%@ / %@", [plugin groupName], [plugin name]]];
+            pointPlugins = [pointPlugins arrayByAddingObject:plugin];
         }
-        
     }
     
     // Finish off
@@ -218,9 +212,7 @@ BOOL checkRun(NSString *path, NSString *file)
         plugin = [[base class] alloc];
     }
     
-    if ([plugin respondsToSelector:@selector(initWithManager:)]) {
-        plugin = [plugin initWithManager:[self data]];
-    }
+    plugin = [plugin initWithManager:[self data]];
     if (plugin) {
         [plugin run];
         gCurrentDocument.lastPlugin = plugin;
@@ -252,12 +244,6 @@ BOOL checkRun(NSString *path, NSString *file)
 - (NSArray *)pointPlugins
 {
     return pointPlugins;
-}
-
-- (id)activePointEffect
-{
-    EffectOptions *options = (EffectOptions*)[[gCurrentDocument optionsUtility] getOptions:kEffectTool];
-    return [pointPlugins objectAtIndex:[options selectedRow] ];
 }
 
 - (BOOL)validateMenuItem:(id)menuItem

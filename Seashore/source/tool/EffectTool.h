@@ -20,10 +20,6 @@
 */
 
 @interface EffectTool : AbstractTool {
-
-	// The instance of the SeaPlugins class
-	SeaPlugins *seaPlugins;
-
 	// The points so far registered
 	IntPoint points[kMaxEffectToolPoints];
 
@@ -31,6 +27,8 @@
 	int count;
     
     EffectOptions *options;
+    
+    PluginClass *currentPlugin;
 }
 
 /*!
@@ -44,9 +42,18 @@
 */
 - (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event;
 
+
+/*!
+    @method        selectEffect
+    @param         plugin
+                 The newly selected effect/plugin.
+    @discussion    Call to select a new effect.
+*/
+- (void)selectEffect:(PluginClass*)plugin;
+
 /*!
 	@method		reset
-	@discussion	Resets the number of points so far registered.
+	@discussion	Reset the effect.
 */
 - (void)reset;
 
@@ -67,5 +74,12 @@
 	@result		Returns an integer indicating the number of clicks thus far.
 */
 - (int)clickCount;
+
+/*!
+    @method        plugin
+    @discussion    returns the current effect or nil.
+    @result        returns the current effect or nil.
+*/
+- (PluginClass*)plugin;
 
 @end

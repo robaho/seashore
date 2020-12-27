@@ -131,7 +131,7 @@
 
 - (IBAction)changeCustomAspectType:(id)sender
 {
-	float xres = [[gCurrentDocument contents] xres], yres = [[gCurrentDocument contents] yres];
+	float xres = [[document contents] xres], yres = [[document contents] yres];
 	int oldType;
 	
 	oldType = aspectType;

@@ -20,13 +20,15 @@
 	if(![super init])
 		return NULL;
 	count = 0;
-	seaPlugins = [SeaController seaPlugins];
 	return self;
 }
 
 - (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event
 {
-	id pointEffect = [seaPlugins activePointEffect];
+    if(!currentPlugin) {
+        return;
+    }
+    
 	float xScale, yScale;
 	IntPoint layerOff;
 	
@@ -40,13 +42,24 @@
 		[[document docView] setNeedsDisplayInRect:NSMakeRect((where.x + layerOff.x) * xScale - 4, (where.y + layerOff.y) * yScale - 4, 8, 8)];
 	}
 	
-	if (count == [pointEffect points]) {
-		[pointEffect run];
-		[seaPlugins cancelReapply];
+	if (count == [currentPlugin points]) {
+		[currentPlugin run];
 		count = 0;
 	}
 	
 	[options updateClickCount:self];
+}
+
+- (void)selectEffect:(PluginClass*)plugin
+{
+    PluginData* data = [document pluginData];
+    if(![[plugin class] validatePlugin:data]){
+        currentPlugin = nil;
+        return;
+    }
+    currentPlugin = [[plugin class] alloc];
+    currentPlugin = [currentPlugin initWithManager:data];
+    [self reset];
 }
 
 - (void)reset
@@ -78,6 +91,10 @@
 - (void)setOptions:(AbstractOptions*)newoptions
 {
     options = (EffectOptions*)newoptions;
+}
+- (PluginClass*)plugin
+{
+    return currentPlugin;
 }
 
 

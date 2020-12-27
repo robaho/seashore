@@ -19,8 +19,8 @@
 /*!
 	@method		initWithManager:
 	@discussion	Initializes an instance of this class with the given manager.
-	@param		manager
-				The SeaPlugins instance responsible for managing the plug-ins.
+	@param		data
+				The Plugin services callback.
 	@result		Returns instance upon success (or NULL otherwise).
 */
 - (id)initWithManager:(PluginData *)data;

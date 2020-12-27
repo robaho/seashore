@@ -4,26 +4,31 @@
 #import "SeaTools.h"
 #import "PluginClass.h"
 #import "InfoPanel.h"
-
+#import "EffectTool.h"
 
 @implementation EffectOptions
 - (void)awakeFromNib
 {
-	int effectIndex;
+	int effectIndex=-1;
 	parentWin = nil;
 	NSArray *pointPlugins = [[SeaController seaPlugins] pointPlugins];
 	if ([pointPlugins count]) {
 		if ([gUserDefaults objectForKey:@"effectIndex"]) effectIndex = [gUserDefaults integerForKey:@"effectIndex"];
-		else effectIndex = 0;
-		if (effectIndex < 0 || effectIndex >= [pointPlugins count]) effectIndex = 0;
+        if (effectIndex < 0 || effectIndex >= [pointPlugins count]) {
+            [effectTableInstruction setStringValue:@""];
+            [clickCountLabel setStringValue:@""];
+            return;
+        }
+        
+        PluginClass* plugin = [pointPlugins objectAtIndex:effectIndex];
 
 		[effectTable noteNumberOfRowsChanged];
 		[effectTable selectRowIndexes:[NSIndexSet indexSetWithIndex:effectIndex] byExtendingSelection:NO];
 		[effectTable scrollRowToVisible:effectIndex];
-		[effectTableInstruction setStringValue:[[pointPlugins objectAtIndex:effectIndex] instruction]];
-		[clickCountLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"click count", @"Clicks remaining: %d"), [[pointPlugins objectAtIndex:effectIndex] points]]];
+		[effectTableInstruction setStringValue:[plugin instruction]];
+		[clickCountLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"click count", @"Clicks remaining: %d"), [plugin points]]];
 		[(InfoPanel *)panel setPanelStyle:kVerticalPanelStyle];
-    }	
+    }
 }
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(int)rowIndex
@@ -39,8 +44,10 @@
 - (void)tableViewSelectionDidChange:(NSNotification *)notification
 {
 	NSArray *pointPlugins = [[SeaController seaPlugins] pointPlugins];
-	[effectTableInstruction setStringValue:[[pointPlugins objectAtIndex:[effectTable selectedRow]] instruction]];
-	[[[gCurrentDocument tools] getTool:kEffectTool] reset];
+    PluginClass* plugin =[pointPlugins objectAtIndex:[effectTable selectedRow]];
+	[effectTableInstruction setStringValue:[plugin instruction]];
+    EffectTool* tool = (EffectTool*)[[document tools] getTool:kEffectTool];
+    [tool selectEffect:plugin];
 }
 
 - (int)selectedRow
@@ -50,12 +57,19 @@
 
 - (void)updateClickCount:(id)sender
 {
-	[clickCountLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"click count", @"Clicks remaining: %d"), [[[[SeaController seaPlugins] pointPlugins] objectAtIndex:[effectTable selectedRow]] points] - [[[gCurrentDocument tools] getTool:kEffectTool] clickCount]]];
+    EffectTool* tool = (EffectTool*)[[document tools] getTool:kEffectTool];
+    if(![tool plugin]) {
+        [effectTableInstruction setStringValue:@""];
+        [clickCountLabel setStringValue:@""];
+    } else {
+        [clickCountLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"click count", @"Clicks remaining: %d"),
+                                         [[tool plugin] points] - [tool clickCount]]];
+    }
 }
 
 - (IBAction)showEffects:(id)sender
 {
-	NSWindow *w = [gCurrentDocument window];
+	NSWindow *w = [document window];
 	NSPoint p = [w convertBaseToScreen:[w mouseLocationOutsideOfEventStream]];
 	[panel orderFrontToGoal:p onWindow: w];
 	parentWin = w;

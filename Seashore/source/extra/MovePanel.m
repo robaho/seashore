@@ -9,7 +9,7 @@
 
 - (IBAction)changeSpecialFont:(id)sender
 {
-	[[[gCurrentDocument optionsUtility] getOptions:kTextTool] changeFont:sender];
+	[[[[textTool document] optionsUtility] getOptions:kTextTool] changeFont:sender];
 }
 
 - (void)keyDown:(NSEvent *)theEvent
