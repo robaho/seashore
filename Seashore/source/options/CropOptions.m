@@ -39,10 +39,10 @@
 	if (cropRect.size.height < kMinImageSize) { NSBeep(); return; }
 	if (cropRect.size.width > kMaxImageSize) { NSBeep(); return; }
 	if (cropRect.size.height > kMaxImageSize) { NSBeep(); return; }
-	width = [(SeaContent *)[gCurrentDocument contents] width];
-	height = [(SeaContent *)[gCurrentDocument contents] height];
-	[(SeaMargins *)[(SeaOperations *)[gCurrentDocument operations] seaMargins] setMarginLeft:-cropRect.origin.x top:-cropRect.origin.y right:(cropRect.origin.x + cropRect.size.width) - width bottom:(cropRect.origin.y + cropRect.size.height) - height index:kAllLayers];
-    [[gCurrentDocument currentTool] clearCrop];
+	width = [(SeaContent *)[document contents] width];
+	height = [(SeaContent *)[document contents] height];
+	[(SeaMargins *)[(SeaOperations *)[document operations] seaMargins] setMarginLeft:-cropRect.origin.x top:-cropRect.origin.y right:(cropRect.origin.x + cropRect.size.width) - width bottom:(cropRect.origin.y + cropRect.size.height) - height index:kAllLayers];
+    [[document currentTool] clearCrop];
 }
 
 - (IBAction)cropLayer:(id)sender {

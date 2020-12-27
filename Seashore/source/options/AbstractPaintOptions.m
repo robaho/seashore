@@ -10,14 +10,14 @@
 {
 	NSWindow *w = [document window];
 	NSPoint p = [w convertBaseToScreen:[w mouseLocationOutsideOfEventStream]];
-	[[gCurrentDocument textureUtility] showPanelFrom: p onWindow: w];
+	[[document textureUtility] showPanelFrom: p onWindow: w];
 }
 
 - (IBAction)toggleBrushes:(id)sender
 {
 	NSWindow *w = [document window];
 	NSPoint p = [w convertBaseToScreen:[w mouseLocationOutsideOfEventStream]];
-    [[gCurrentDocument brushUtility] showPanelFrom: p onWindow: w];
+    [[document brushUtility] showPanelFrom: p onWindow: w];
 }
 
 @end
