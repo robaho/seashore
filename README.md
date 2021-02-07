@@ -22,7 +22,7 @@ As of late more enhancements have been added, like the UI refresh and Mojave "da
 
 If you are looking for an free, easy to use, image editing application with "layers", this is the one.
 
-Here's a nice article (with screenshots) on the Seashore project at [Libre Graphics World](http://libregraphicsworld.org/blog/entry/meet-seashore-free-image-editor-for-macos)
+Here's a nice article (with screenshots) on the Seashore project at [Libre Graphics World](https://librearts.org/2019/01/meet-seashore-free-image-editor-for-macos/)
 
 # screenshots
 ![screenshot](doc/ss1.png)
