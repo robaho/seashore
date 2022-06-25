@@ -42,7 +42,7 @@
 	int activeGroupIndex;
 	
 	// The index of the currently active texture
-	int activeTextureIndex;
+    SeaTexture *selected;
 	
 	// The opacity value to be used with the texture
 	int opacity;

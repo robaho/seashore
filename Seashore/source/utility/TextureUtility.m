@@ -18,10 +18,8 @@
 
 - (id)init
 {		
-	// Load the textures
 	[self loadTextures:NO];
 	
-	// Determine the currently active texture group
 	if ([gUserDefaults objectForKey:@"active texture group"] == NULL)
 		activeGroupIndex = 0;
 	else
@@ -29,15 +27,7 @@
 	if (activeGroupIndex < 0 || activeGroupIndex >= [groups count])
 		activeGroupIndex = 0;
 		
-	// Determine the currently active texture 	
-	if ([gUserDefaults objectForKey:@"active texture"] == NULL)
-		activeTextureIndex = 0;
-	else
-		activeTextureIndex = [gUserDefaults integerForKey:@"active texture"];
-	if (activeTextureIndex < 0 || activeTextureIndex >= [[groups objectAtIndex:activeGroupIndex] count])
-		activeTextureIndex = 0;
-		
-	// Set the opacity
+
 	[opacitySlider setIntValue:100];
 	[opacityLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"opacity", @"Opacity: %d%%"), [opacitySlider intValue]]];
 	opacity = 255;
@@ -47,21 +37,14 @@
 
 - (void)awakeFromNib
 {
-	int yoff, i;
+	int i;
 	
 	[super awakeFromNib];
 
-	// Configure the view
 	[view setHasVerticalScroller:YES];
 	[view setDocumentView:[[TextureView alloc] initWithMaster:self]];
-	if ([[view documentView] bounds].size.height > 3 * kTexturePreviewSize) {
-		yoff = MIN((activeTextureIndex / kTexturesPerRow) * kTexturePreviewSize, ([[self textures] count] / kTexturesPerRow - 2) * kTexturePreviewSize);
-		[[view contentView] scrollToPoint:NSMakePoint(0, yoff)];
-	}
-	[view reflectScrolledClipView:[view contentView]];
 	[view setLineScroll:kTexturePreviewSize];
 	
-	// Configure the pop-up menu
 	[textureGroupPopUp removeAllItems];
 	[textureGroupPopUp addItemWithTitle:[groupNames objectAtIndex:0]];
 	[[textureGroupPopUp itemAtIndex:0] setTag:0];
@@ -71,14 +54,19 @@
 		[[textureGroupPopUp itemAtIndex:[[textureGroupPopUp menu] numberOfItems] - 1] setTag:i];
 	}
 	[textureGroupPopUp selectItemAtIndex:[textureGroupPopUp indexOfItemWithTag:activeGroupIndex]];
+
+    [window setDelegate:self];
 	
-	// Inform the texture that it is active
-	[self setActiveTextureIndex:-1];
+    // Determine the currently active texture
+    if ([gUserDefaults objectForKey:@"active texture"] == NULL)
+        selected = NULL;
+    else
+        [self setActiveTextureIndex:[gUserDefaults integerForKey:@"active texture"]];
 }
 
 - (void)shutdown
 {
-	[gUserDefaults setInteger:activeTextureIndex forKey:@"active texture"];
+	[gUserDefaults setInteger:[self activeTextureIndex] forKey:@"active texture"];
 	[gUserDefaults setInteger:activeGroupIndex forKey:@"active texture group"];
 }
 
@@ -87,9 +75,13 @@
 	activeGroupIndex = [[textureGroupPopUp selectedItem] tag];
 	if (activeGroupIndex >= [groups count])
 		activeGroupIndex = 0;
-	if (activeTextureIndex >= [[groups objectAtIndex:activeGroupIndex] count])
-		activeTextureIndex = 0;
-	[self setActiveTextureIndex:activeTextureIndex];
+    [[view documentView] update];
+    [view setNeedsDisplay:YES];
+}
+
+- (void)windowDidBecomeMain:(NSNotification*)notification
+{
+    [[view documentView] update];
 }
 
 - (void)loadTextures:(BOOL)update
@@ -201,7 +193,6 @@
 	}
 	[textureGroupPopUp selectItemAtIndex:[textureGroupPopUp indexOfItemWithTag:activeGroupIndex]];
 	
-	// Update utility
 	[self setActiveTextureIndex:-1];
 }
 
@@ -235,14 +226,18 @@
 
 - (id)activeTexture
 {
-    if(activeTextureIndex==-1)
-        return NULL;
-	return [[groups objectAtIndex:activeGroupIndex] objectAtIndex:activeTextureIndex];
+    return selected;
 }
 
 - (int)activeTextureIndex
 {
-    return activeTextureIndex;
+    return [[groups objectAtIndex:activeGroupIndex] indexOfObject:selected];
+}
+
+- (void)setActiveGroupIndex:(int)index
+{
+    activeGroupIndex = index;
+    [textureGroupPopUp selectItemAtIndex:[textureGroupPopUp indexOfItemWithTag:activeGroupIndex]];
 }
 
 - (void)setActiveTexture:(SeaTexture*)texture
@@ -254,6 +249,7 @@
             NSArray *textures = [groups objectAtIndex:group];
             for(int index=0;index<[textures count];index++){
                 if([textures objectAtIndex:index]==texture){
+                    [self setActiveGroupIndex:group];
                     [self setActiveTextureIndex:index];
                     return;
                 }
@@ -264,19 +260,18 @@
 
 - (void)setActiveTextureIndex:(int)index
 {
-	if (index == -1) {
-        activeTextureIndex=-1;
-		[textureNameLabel setStringValue:@""];
-		[opacitySlider setEnabled:NO];
-	}
-	else {
-		id newTexture = [[groups objectAtIndex:activeGroupIndex] objectAtIndex:index];
-		activeTextureIndex = index;
-		[textureNameLabel setStringValue:[newTexture name]];
-		[opacitySlider setEnabled:YES];
-	}
-
+    selected = NULL;
+    NSArray *textures = [groups objectAtIndex:activeGroupIndex];
+    if (index>=0 && index<[textures count]) {
+        selected = [textures objectAtIndex:index];
+        [textureNameLabel setStringValue:[selected name]];
+        [opacitySlider setEnabled:YES];
+    } else {
+        [textureNameLabel setStringValue:@""];
+        [opacitySlider setEnabled:NO];
+    }
     [view setNeedsDisplay:YES];
+    [[view documentView] update];
     [colorSelectView setNeedsDisplay:YES];
     [[document docView] setNeedsDisplay:YES];
 }

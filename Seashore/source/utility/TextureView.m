@@ -72,7 +72,9 @@
 
                 NSRect rect0 = NSMakeRect(elemRect.origin.x + (kTexturePreviewSize-w)/2,elemRect.origin.y+(kTexturePreviewSize-h)/2,w,h);
 
-                [thumbnail drawInRect:rect0];
+                NSRect drawRect = NSInsetRect(rect0,3,3);
+
+                [thumbnail drawInRect:drawRect];
 
                 if (elemNo == activeTextureIndex) {
                     [NSBezierPath setDefaultLineWidth:2];
@@ -95,6 +97,13 @@
 	
 	[self setFrameSize:size];
     [self setNeedsDisplay:YES];
+
+    int activeTextureIndex = [master activeTextureIndex];
+    if(activeTextureIndex!=-1) {
+        int row = activeTextureIndex / kTexturesPerRow;
+
+        [self scrollRectToVisible:NSMakeRect(0,row*kTexturePreviewSize,kTexturePreviewSize,kTexturePreviewSize)];
+    }
 }
 
 - (BOOL)isFlipped

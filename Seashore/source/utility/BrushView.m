@@ -77,9 +77,16 @@
 {
 	NSArray *brushes = [master brushes];
 	int brushCount =  [brushes count];
-	
+    int activeBrushIndex = [master activeBrushIndex];
+
 	[self setFrameSize:NSMakeSize(kBrushPreviewSize * kBrushesPerRow + 1, ((brushCount % kBrushesPerRow == 0) ? (brushCount / kBrushesPerRow) : (brushCount / kBrushesPerRow + 1)) * kBrushPreviewSize)];
     [self setNeedsDisplay:YES];
+
+    if(activeBrushIndex!=-1) {
+        int row = activeBrushIndex / kBrushesPerRow;
+
+        [self scrollRectToVisible:NSMakeRect(0,row*kBrushPreviewSize,kBrushPreviewSize,kBrushPreviewSize)];
+    }
 }
 
 - (BOOL)acceptsFirstMouse:(NSEvent *)event

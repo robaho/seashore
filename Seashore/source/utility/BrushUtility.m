@@ -12,10 +12,8 @@
 
 - (id)init
 {		
-	// Load the brushes
-	[self loadBrushes:NO];
+	[self loadBrushes];
 	
-	// Determine the currently active brush group
 	if ([gUserDefaults objectForKey:@"active brush group"] == NULL)
 		activeGroupIndex = 0;
 	else
@@ -23,31 +21,19 @@
 	if (activeGroupIndex < 0 || activeGroupIndex >= [groups count])
 		activeGroupIndex = 0;
 		
-	// Determine the currently active brush 	
-	if ([gUserDefaults objectForKey:@"active brush"] == NULL)
-		activeBrushIndex = 12;
-	else
-		activeBrushIndex = [gUserDefaults integerForKey:@"active brush"];
-	if (activeBrushIndex < 0 || activeBrushIndex >= [[groups objectAtIndex:activeGroupIndex] count])
-		activeBrushIndex = 0;
-	
+
 	return self;
 }
 
 - (void)awakeFromNib
 {
-	int yoff, i;
+	int i;
 
 	[super awakeFromNib];
 	
 	// Configure the view
 	[view setHasVerticalScroller:YES];
 	[view setDocumentView:[[BrushView alloc] initWithMaster:self]];
-	if ([[view documentView] bounds].size.height > 3 * kBrushPreviewSize) {
-		yoff = MIN((activeBrushIndex / kBrushesPerRow) * kBrushPreviewSize, ([[self brushes] count] / kBrushesPerRow - 2) * kBrushPreviewSize);
-		[[view contentView] scrollToPoint:NSMakePoint(0, yoff)];
-	}
-	[view reflectScrolledClipView:[view contentView]];
 	[view setLineScroll:kBrushPreviewSize];
 	
 	// Configure the pop-up menu
@@ -68,16 +54,20 @@
 	}
 	[brushGroupPopUp selectItemAtIndex:[brushGroupPopUp indexOfItemWithTag:activeGroupIndex]];
 	
-	// Inform the brush that it is active
-	[self setActiveBrushIndex:activeBrushIndex];
-	
+    // Determine the currently active brush
+    if ([gUserDefaults objectForKey:@"active brush"] == NULL)
+        selected = NULL;
+    else
+        [self setActiveBrushIndex:[gUserDefaults integerForKey:@"active brush"]];
+
 	// Set the window's properties
 	[(InfoPanel *)window setPanelStyle:kVerticalPanelStyle];
+    [window setDelegate:self];
 }
 
 - (void)shutdown
 {
-	[gUserDefaults setInteger:activeBrushIndex forKey:@"active brush"];
+	[gUserDefaults setInteger:[self activeBrushIndex] forKey:@"active brush"];
 	[gUserDefaults setInteger:activeGroupIndex forKey:@"active brush group"];
 }
 
@@ -86,23 +76,23 @@
 	activeGroupIndex = [[brushGroupPopUp selectedItem] tag];
 	if (activeGroupIndex >= [groups count])
 		activeGroupIndex = 0;
-	if (activeBrushIndex >= [[groups objectAtIndex:activeGroupIndex] count])
-		activeBrushIndex = 0;
-	[self setActiveBrushIndex:activeBrushIndex];
 	[[view documentView] update];
 	[view setNeedsDisplay:YES];
 }
 
-// Apologies for the bad code in the next method
+- (void)windowDidBecomeMain:(NSNotification*)notification
+{
+    [[view documentView] update];
+}
 
-- (void)loadBrushes:(BOOL)update
+- (void)loadBrushes
 {
     brushes = [NSDictionary dictionary];
     [self loadBrushesFromPath:[[gMainBundle resourcePath] stringByAppendingPathComponent:@"/brushes"]];
     [self loadBrushesFromPath:[NSHomeDirectory() stringByAppendingPathComponent:@"Library/Application Support/Seashore/brushes"]];
     [self createGroups];
-
 }
+
 - (void)loadBrushesFromPath:(NSString*)path
 {
     NSArray *files;
@@ -227,12 +217,12 @@
 
 - (id)activeBrush
 {
-	return [[groups objectAtIndex:activeGroupIndex] objectAtIndex:activeBrushIndex];
+    return selected;
 }
 
 - (int)activeBrushIndex
 {
-	return activeBrushIndex;
+    return [[groups objectAtIndex:activeGroupIndex] indexOfObject:selected];
 }
 
 - (int)activeGroupIndex
@@ -242,19 +232,21 @@
 
 - (void)setActiveGroupIndex:(int)index
 {
-    activeBrushIndex=-1;
     activeGroupIndex = index;
     [brushGroupPopUp selectItemAtIndex:[brushGroupPopUp indexOfItemWithTag:activeGroupIndex]];
 }
 
 - (void)setActiveBrushIndex:(int)index
 {
-    activeBrushIndex = index;
-    
-    if(index!=-1) {
-        SeaBrush *newBrush = [[groups objectAtIndex:activeGroupIndex] objectAtIndex:index];
-        [brushNameLabel setStringValue:[newBrush name]];
-        [self setSpacing:[newBrush spacing]];
+    selected = NULL;
+    NSArray *brushes = [groups objectAtIndex:activeGroupIndex];
+    if (index>=0 && index<[brushes count]) {
+        selected = [brushes objectAtIndex:index];
+        [brushNameLabel setStringValue:[selected name]];
+        [self setSpacing:[selected spacing]];
+    } else {
+        [brushNameLabel setStringValue:@""];
+        [self setSpacing:0];
     }
     [view setNeedsDisplay:YES];
     [[view documentView] update];

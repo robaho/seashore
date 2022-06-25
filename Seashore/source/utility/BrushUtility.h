@@ -38,10 +38,9 @@
 	
 	// The index of the currently active group
 	int activeGroupIndex;
-	
-	// The index of the currently active brush
-	int activeBrushIndex;
-	
+
+    SeaBrush *selected;
+
 	// The number of custom groups
 	int customGroups;
 	
@@ -65,16 +64,6 @@
 	@discussion	Saves currently selected brush upon shutdown.
 */
 - (void)shutdown;
-
-/*!
-	@method		loadBrushes:
-	@discussion	Frees (if necessary) and then reloads all the brushes from
-				Seashore's brushes directory.
-	@param		update
-				YES if the brush utility should be updated after reloading all
-				the brushes (typical case), NO otherwise.
-*/
-- (void)loadBrushes:(BOOL)update;
 
 /*!
  @method        addBrushFromPath:toGroup:

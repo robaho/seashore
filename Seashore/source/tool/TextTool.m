@@ -35,14 +35,22 @@
     [[document helpers] selectionChanged:dirty];
 }
 
+- (void)switchingTools:(BOOL)active
+{
+    if(active) {
+        SeaContent *contents = [document contents];
+
+        if(textRect.size.width==0 || textRect.size.height==0){
+            textRect.size.width = [contents width]/3;
+            textRect.size.height = [contents height]/3;
+            textRect.origin.x = textRect.size.width;
+            textRect.origin.y = textRect.size.height;
+        }
+    }
+}
+
 - (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event
 {
-    int modifier = [(TextOptions*)options modifier];
-
-    if (modifier == kControlModifier) {
-        [self clearTextRect];
-    }
-
     if(textRect.size.width > 0 && textRect.size.height > 0){
         [self mouseDownAt: where
                   forRect: textRect
@@ -60,9 +68,6 @@
 
         // Check if location is in existing rect
         startPoint = where;
-
-        // Start the cropping rectangle
-        oneToOne = (modifier == kShiftModifier);
 
         textRect.origin.x = startPoint.x;
         textRect.origin.y = startPoint.y;
@@ -147,7 +152,6 @@
     [[document helpers] applyOverlay];
 
     [options reset];
-    [self clearTextRect];
 }
 
 - (IBAction)addAsNewLayer:(id)sender {
@@ -160,8 +164,10 @@
     CGContextTranslateCTM(ctx, -r.origin.x, -r.origin.y);
     [self drawText:ctx];
 
+    unpremultiplyBitmap(spp, data, data, r.size.width*r.size.height);
+
     SeaLayer *layer = [[SeaLayer alloc] initWithDocument:document rect:r data:data spp:[[document contents] spp]];
-    free(data);
+    [layer trimLayer];
 
     NSString *text = [options text];
 
@@ -175,7 +181,6 @@
     [[document contents] addLayerObject:layer];
     
     [options reset];
-    [self clearTextRect];
 }
 
 - (void)mouseUpAt:(IntPoint)where withEvent:(NSEvent *)event
@@ -199,12 +204,6 @@
 - (IntRect)textRect
 {
     return textRect;
-}
-
-- (void)clearTextRect
-{
-    textRect.size.width = textRect.size.height = 0;
-    [[document helpers] selectionChanged];
 }
 
 - (void)setTextRect:(IntRect)newTextRect
@@ -243,6 +242,8 @@
     }
 
     float size = [font pointSize];
+
+    size = size * [[document contents] yres] / 72.0;
 
     font = [NSFont fontWithDescriptor:[font fontDescriptor] size:size];
 
