@@ -14,16 +14,6 @@
 
 @implementation Alpha2GrayClass
 
-- (NSString *)name
-{
-    return [gOurBundle localizedStringForKey:@"name" value:@"Alpha To Gray" table:NULL];
-}
-
-- (NSString *)groupName
-{
-    return [gOurBundle localizedStringForKey:@"groupName" value:@"Color Effect" table:NULL];
-}
-
 - (id)initWithManager:(PluginData *)data {
     pluginData = data;
     [NSBundle loadNibNamed:@"Alpha2Gray" owner:self];
@@ -36,8 +26,23 @@
     return @"Seashore Approved (Bobo)";
 }
 
+- (NSString *)name
+{
+    return [gOurBundle localizedStringForKey:@"name" value:@"Alpha To Gray" table:NULL];
+}
 
-- (void)run {
+- (NSString *)groupName
+{
+    return [gOurBundle localizedStringForKey:@"groupName" value:@"Color Effect" table:NULL];
+}
+
+- (int)points
+{
+    return 0;
+}
+
+
+- (void)execute {
     IntRect selection;
     unsigned char *data, *overlay, *replace;
     int pos, i, j, k, width, spp, channel;
@@ -51,8 +56,6 @@
     overlay = [pluginData overlay];
     replace = [pluginData replace];
     channel = [pluginData channel];
-    
-    // 0.3R+0.6G+0.11B
     
     for (j = selection.origin.y; j < selection.origin.y + selection.size.height; j++) {
         for (i = selection.origin.x; i < selection.origin.x + selection.size.width; i++) {
@@ -84,21 +87,6 @@
             replace[pos] = 255;
         }
     }
-    [pluginData apply];
-}
-
-- (int)type {
-    return 0;
-}
-
-- (IBAction)reapply
-{
-    [self run];
-}
-
-- (BOOL)canReapply
-{
-    return YES;
 }
 
 + (BOOL)validatePlugin:(PluginData*)pluginData
@@ -111,6 +99,5 @@
     
     return YES;
 }
-
 
 @end

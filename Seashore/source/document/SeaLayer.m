@@ -3,12 +3,13 @@
 #import "SeaDocument.h"
 #import "SeaLayerUndo.h"
 #import "SeaController.h"
-#import "PegasusUtility.h"
-#import "Bitmap.h"
-#import "SeaWarning.h"
+#import "LayersUtility.h"
 #import "SeaPrefs.h"
 #import "SeaPlugins.h"
-#import "CIAffineTransformClass.h"
+#import "SeaTools.h"
+#import "PositionTool.h"
+#import "NSAffineTransform_Extensions.h"
+
 #import <ApplicationServices/ApplicationServices.h>
 #import <CoreImage/CoreImage.h>
 #import <sys/stat.h>
@@ -24,8 +25,6 @@
 	spp = 4; visible = YES; data = NULL; hasAlpha = YES;
 	lostprops = NULL; lostprops_len = 0;
 	document = doc;
-	thumbnail = NULL; thumbData = NULL;
-	floating = NO;
 	seaLayerUndo = [[SeaLayerUndo alloc] initWithDocument:doc forLayer:self];
 	uniqueLayerID = [(SeaDocument *)doc uniqueLayerID];
 	if (uniqueLayerID == 0)
@@ -54,6 +53,7 @@
 	
 	// Create a representation in memory of the blank canvas
 	data = malloc(make_128(width * height * spp));
+
 	if (opaque)
 		memset(data, 255, width * height * spp);
 	else
@@ -74,18 +74,14 @@
 	// Derive the width and height from the imageRep
 	xoff = lrect.origin.x; yoff = lrect.origin.y;
 	width = lrect.size.width; height = lrect.size.height;
-    
+    data = ldata;
+
     if(width<=0 || height<=0)
         return NULL;
 	
 	// Get the appropriate samples per pixel
 	spp = lspp;
 	
-	// Copy over the bitmap data
-	data = malloc(make_128(width * height * spp));
-    CHECK_MALLOC(data);
-	memcpy(data, ldata, width * height * spp);
-
 	// We should always have an alpha layer unless you turn it off
 	hasAlpha = YES;
 	
@@ -109,6 +105,7 @@
 	mode = [layer mode];
 	spp = [[[layer document] contents] spp];
 	data = malloc(make_128(width * height * spp));
+
 	data = memcpy(data, [layer data], width * height * spp);
 	xoff = [layer xoff];
 	yoff = [layer yoff];
@@ -125,40 +122,11 @@
 	return self;
 }
 
-- (id)initFloatingWithDocument:(id)doc rect:(IntRect)lrect data:(unsigned char *)ldata
-{
-	// Set the offsets, height and width
-	xoff = lrect.origin.x;
-	yoff = lrect.origin.y;
-    
-	width = lrect.size.width;
-	height = lrect.size.height;
-	
-	// Set the other variables according to the arguments
-	document = doc;
-	data = ldata;
-	
-	// And then make some sensible choices for the other variables
-	mode = 0;
-	opacity = 255;
-	spp = [[document contents] spp];
-	visible = YES;
-	hasAlpha = YES;
-	thumbnail = NULL; thumbData = NULL;
-	floating = YES;
-	
-	// Setup for undoing
-	seaLayerUndo = [[SeaLayerUndo alloc] initWithDocument:doc forLayer:self];
-	uniqueLayerID = [(SeaDocument *)doc uniqueFloatingLayerID];
-	name = NULL; oldNames = NULL;
-	
-	return self;
-}
-
 - (void)dealloc
 {	
     if (data) free(data);
-	if (thumbData) free(thumbData);
+
+    CGImageRelease(pre_bitmap);
 }
 
 - (id)document
@@ -186,9 +154,29 @@
 	return yoff;
 }
 
-- (IntRect)localRect
+- (BOOL)active
+{
+    return self == [[document contents] activeLayer];
+}
+
+- (IntRect)globalRect
 {
 	return IntMakeRect(xoff, yoff, width, height);
+}
+
+- (IntRect)translateView:(IntRect)viewRect
+{
+    return IntMakeRect(viewRect.origin.x-xoff,viewRect.origin.y-yoff,viewRect.size.width,viewRect.size.height);
+}
+
+- (IntPoint)origin
+{
+    return IntMakePoint(xoff, yoff);
+}
+
+- (IntSize)size
+{
+    return IntMakeSize(width, height);
 }
 
 - (void)setOffsets:(IntPoint)newOffsets
@@ -199,51 +187,70 @@
 
 - (void)trimLayer
 {
-	int i, j;
-	int left, right, top, bottom;
-	
-	// Start out with invalid content borders
-	left = right = top = bottom =  -1;
-	
-	// Determine left content margin
-	for (i = 0; i < width && left == -1; i++) {
-		for (j = 0; j < height && left == -1; j++) {
-			if (data[j * width * spp + i * spp + (spp - 1)] != 0) {
-				left = i;
-			}
-		}
-	}
-	
-	// Determine right content margin
-	for (i = width - 1; i >= 0 && right == -1; i--) {
-		for (j = 0; j < height && right == -1; j++) {
-			if (data[j * width * spp + i * spp + (spp - 1)] != 0) {
-				right = width - 1 - i;
-			}
-		}
-	}
-	
-	// Determine top content margin
-	for (j = 0; j < height && top == -1; j++) {
-		for (i = 0; i < width && top == -1; i++) {
-			if (data[j * width * spp + i * spp + (spp - 1)] != 0) {
-				top = j;
-			}
-		}
-	}
-	
-	// Determine bottom content margin
-	for (j = height - 1; j >= 0 && bottom == -1; j--) {
-		for (i = 0; i < width && bottom == -1; i++) {
-			if (data[j * width * spp + i * spp + (spp - 1)] != 0) {
-				bottom = height - 1 - j;
-			}
-		}
-	}
-	
-	// Make the change
-	if (left != 0 || top != 0 || right != 0 || bottom != 0)
-		[self setMarginLeft:-left top:-top right:-right bottom:-bottom];
+    Margins m = [self contentMargins];
+    
+	if (m.left != 0 || m.top != 0 || m.right != 0 || m.bottom != 0)
+		[self setMarginLeft:-m.left top:-m.top right:-m.right bottom:-m.bottom];
+}
+
+- (Margins)contentMargins
+{
+    int i, j, k;
+    int left, right, top, bottom;
+
+    // Start out with invalid content borders
+    left = right = top = bottom = -1;
+
+    // Determine left content margin
+    for (i = 0; i < width && left == -1; i++) {
+        for (j = 0; j < height && left == -1; j++) {
+            if (data[j * width * spp + i * spp + (spp - 1)] != 0) {
+                for (k = 0; k < spp; k++) {
+                    if (data[j * width * spp + i * spp + k] != data[k])
+                        left = i;
+                }
+            }
+        }
+    }
+
+    // Determine right content margin
+    for (i = width - 1; i >= 0 && right == -1; i--) {
+        for (j = 0; j < height && right == -1; j++) {
+            if (data[j * width * spp + i * spp + (spp - 1)] != 0) {
+                for (k = 0; k < spp; k++) {
+                    if (data[j * width * spp + i * spp + k] != data[k])
+                        right = width - 1 - i;
+                }
+            }
+        }
+    }
+
+    // Determine top content margin
+    for (j = 0; j < height && top == -1; j++) {
+        for (i = 0; i < width && top == -1; i++) {
+            if (data[j * width * spp + i * spp + (spp - 1)] != 0) {
+                for (k = 0; k < spp; k++) {
+                    if (data[j * width * spp + i * spp + k] != data[k])
+                        top = j;
+                }
+            }
+        }
+    }
+
+    // Determine bottom content margin
+    for (j = height - 1; j >= 0 && bottom == -1; j--) {
+        for (i = 0; i < width && bottom == -1; i++) {
+            if (data[j * width * spp + i * spp + (spp - 1)] != 0) {
+                for (k = 0; k < spp; k++) {
+                    if (data[j * width * spp + i * spp + k] != data[k])
+                        bottom = height - 1 - j;
+                }
+            }
+        }
+    }
+
+    Margins m = { left:left, top:top, right:right, bottom:bottom};
+    return m;
 }
 
 - (void)flipHorizontally
@@ -258,8 +265,7 @@
 			memcpy(&(data[(j * width + (width - i - 1)) * spp]), temp, spp);
 		}
 	}
-	
-	xoff = [(SeaContent *)[document contents] width] - xoff - width;
+
 }
 
 - (void)flipVertically
@@ -274,122 +280,92 @@
 			memcpy(&(data[((height - j - 1) * width + i) * spp]), temp, spp);
 		}
 	}
-	
-	yoff = [(SeaContent *)[document contents] height] - yoff - height;
 }
 
 - (void)rotateLeft
 {
-	int newWidth, newHeight, ox, oy;
-	unsigned char *newData;
-	int i, j, k;
-	
-	newWidth = height;
-	newHeight = width;
-	newData = malloc(make_128(newWidth * newHeight * spp));
-	
-	for (j = 0; j < height; j++) {
-		for (i = 0; i < width; i++) {
-			for (k = 0; k < spp; k++) {
-				newData[((newHeight - i - 1) * newWidth + j) * spp + k] = data[(j * width + i) * spp + k]; 
-			}
-		}
-	}
-	free(data);
-	
-	ox = [(SeaContent *)[document contents] width] - xoff - width;
-	oy = yoff;
-	
-	width = newWidth;
-	height = newHeight;
-	data = newData;
-	
-	xoff = oy;
-	yoff = ox;
+    int ox = [[document contents] width] - xoff - width;
+    int oy = yoff;
+
+    [self setRotation:-90 interpolation:0 withTrim:FALSE];
+    xoff = oy;
+    yoff = ox;
 }
 
 - (void)rotateRight
 {
-	int newWidth, newHeight, ox, oy;
-	unsigned char *newData;
-	int i, j, k;
-	
-	newWidth = height;
-	newHeight = width;
-	newData = malloc(make_128(newWidth * newHeight * spp));
-	
-	for (j = 0; j < height; j++) {
-		for (i = 0; i < width; i++) {
-			for (k = 0; k < spp; k++) {
-				newData[(i * newWidth + (newWidth - j - 1)) * spp + k] = data[(j * width + i) * spp + k]; 
-			}
-		}
-	}
-	free(data);
-	
-	ox = xoff;
-	oy = [(SeaContent *)[document contents] height] - yoff - height;
-	
-	width = newWidth;
-	height = newHeight;
-	data = newData;
-	
-	xoff = oy;
-	yoff = ox;
+    int ox = xoff;
+    int oy = [[document contents] height] - yoff - height;
+    [self setRotation:90 interpolation:0 withTrim:FALSE];
+    xoff = oy;
+    yoff = ox;
 }
 
 - (void)setRotation:(float)degrees interpolation:(int)interpolation withTrim:(BOOL)trim
 {
-    
-    NSRect bounds = NSMakeRect(0,0,width,height);
-    NSBezierPath *path = [NSBezierPath bezierPathWithRect:bounds];
-    NSAffineTransform *at = [NSAffineTransform transform];
-    [at rotateByDegrees:degrees];
-    [path transformUsingAffineTransform:at];
-    NSRect rotatedBounds = [path bounds];
+    float radians = degrees * PI / 180.0;
 
-    int newWidth = (int)NSWidth(rotatedBounds);
-    int newHeight = (int)NSHeight(rotatedBounds);
+    int oldWidth = width;
+    int oldHeight = height;
 
-    unsigned char *buffer = malloc(newWidth*newHeight*spp);
-    memset(buffer,0,newWidth*newHeight*spp);
+    [self scaleX:1 scaleY:1 rotate:radians];
 
-    NSBitmapImageRep *new = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&buffer
-                                                                    pixelsWide:newWidth pixelsHigh:newHeight
-                                                                 bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO
-                                                                colorSpaceName:spp>2 ? MyRGBSpace : MyGraySpace bytesPerRow:newWidth*spp
-                                                                  bitsPerPixel:8*spp];
-    
-    
-    [NSGraphicsContext saveGraphicsState];
-    NSGraphicsContext *ctx = [NSGraphicsContext graphicsContextWithBitmapImageRep:new];
-    [NSGraphicsContext setCurrentContext:ctx];
-    
-    [ctx setImageInterpolation:interpolation];
-    
-    at = [NSAffineTransform transform];
-    [at translateXBy:NSWidth(rotatedBounds)/2 yBy:NSHeight(rotatedBounds)/2];
-    [at rotateByDegrees:degrees];
-    [at concat];
-    
-    [[self bitmap] drawAtPoint:NSMakePoint(-NSWidth(bounds)/2,-NSHeight(bounds)/2)];
-    [NSGraphicsContext restoreGraphicsState];
-    
-    unpremultiplyBitmap(spp,buffer,buffer,newWidth*newHeight);
-    
-    free(data);
-    data = buffer;
-    
-    xoff += width / 2 - newWidth / 2;
-    yoff += height / 2 - newHeight / 2;
-    width = newWidth; height = newHeight;
-    
-    // Destroy the thumbnail data
-    if (thumbData) free(thumbData);
-    thumbnail = NULL; thumbData = NULL;
+    xoff += oldWidth / 2 - width / 2;
+    yoff += oldHeight / 2 - height / 2;
+
+    image = NULL;
     
     // Make margin changes
     if (trim) [self trimLayer];
+}
+
+- (IntRect)bounds:(NSAffineTransform*)tx
+{
+    NSRect r = NSMakeRect(0,0, width, height);
+    NSBezierPath *tempPath = [NSBezierPath bezierPathWithRect:r];
+    [tempPath transformUsingAffineTransform:tx];
+
+    return NSRectMakeIntRect([tempPath bounds]);
+}
+
+- (void)scaleX:(float)xscale scaleY:(float)yscale rotate:(float)rotation
+{
+    CGContextRef bm = CGBitmapContextCreate(data,width,height,8,width*spp,COLOR_SPACE,kCGImageAlphaPremultipliedLast);
+
+    CGImageRef image = CGBitmapContextCreateImage(bm);
+
+    NSAffineTransform *tx = [NSAffineTransform transform];
+
+    [tx translateXBy:width/2 yBy:height/2];
+    [tx rotateByRadians:-rotation];
+    [tx scaleXBy:xscale yBy:yscale];
+    [tx translateXBy:-(width/2) yBy:-(height/2)];
+
+    IntRect bounds = [self bounds:tx];
+
+    int w = bounds.size.width;
+    int h = bounds.size.height;
+
+    unsigned char *new_data = calloc(w*h*spp,1);
+    CGContextRef ctx = CGBitmapContextCreate(new_data,w,h,8,w*spp, COLOR_SPACE, kCGImageAlphaPremultipliedLast);
+
+    CGContextTranslateCTM(ctx,w/2,h/2);
+    CGContextRotateCTM(ctx,-rotation);
+    CGContextScaleCTM(ctx,xscale,yscale);
+    CGContextTranslateCTM(ctx,-(width/2),-(height/2));
+
+    CGContextDrawImage(ctx,CGRectMake(0,0,width,height),image);
+
+    CGImageRelease(image);
+    CGContextRelease(bm);
+
+    CGContextRelease(ctx);
+
+    free(data);
+
+    data = new_data;
+    width=w;
+    height=h;
 }
 
 - (BOOL)visible
@@ -415,6 +391,11 @@
 - (int)opacity
 {
 	return opacity;
+}
+
+- (float)opacity_float
+{
+    return opacity/255.0;
 }
 
 - (void)setOpacity:(int)value
@@ -461,13 +442,8 @@
 	if (![self canToggleAlpha])
 		return;
 	
-	// Change the alpha channel treatment
 	hasAlpha = !hasAlpha;
-	
-	// Update the Pegasus utility
-	[[document pegasusUtility] update:kPegasusUpdateAll]; 
-
-	// Make action undoable
+	[[document layersUtility] update:kLayersUpdateAll];
 	[[[document undoManager] prepareWithInvocationTarget:self] toggleAlpha];
 }
 
@@ -517,11 +493,6 @@
 	return -1;
 }
 
-- (BOOL)floating
-{
-	return floating;
-}
-
 - (id)seaLayerUndo
 {
 	return seaLayerUndo;
@@ -529,86 +500,12 @@
 
 - (NSImage *)thumbnail
 {
-	NSBitmapImageRep *tempRep;
-	
-	// Check if we need an update
-	if (thumbData == NULL) {
-		
-		// Determine the size for the image
-		thumbWidth = width; thumbHeight = height;
-		if (width > 40 || height > 32) {
-			if ((float)width / 40.0 > (float)height / 32.0) {
-				thumbHeight = (int)((float)height * (40.0 / (float)width));
-				thumbWidth = 40;
-			}
-			else {
-				thumbWidth = (int)((float)width * (32.0 / (float)height));
-				thumbHeight = 32;
-			}
-		}
-		if(thumbWidth <= 0){
-			thumbWidth = 1;
-		}
-		if(thumbHeight <= 0){
-			thumbHeight = 1;
-		}
-		// Create the thumbnail
-		thumbData = malloc(thumbWidth * thumbHeight * spp);
-		
-		// Determine the thumbnail data
-		[self updateThumbnail];
-		
-	}
-	
-	// Create the representation
-	tempRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&thumbData pixelsWide:thumbWidth pixelsHigh:thumbHeight bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO colorSpaceName:(spp == 4) ? NSDeviceRGBColorSpace : NSDeviceWhiteColorSpace bytesPerRow:thumbWidth * spp bitsPerPixel:8 * spp];
-	
-	thumbnail = [[NSImage alloc] initWithSize:NSMakeSize(thumbWidth, thumbHeight)];
-	[thumbnail addRepresentation:tempRep];
-    [thumbnail setFlipped:true];
-		
-	return thumbnail;
+    return [self image];
 }
 
 - (void)updateThumbnail
 {
-	float horizStep, vertStep;
-	int i, j, k, temp;
-	int srcPos, destPos;
-	
-	if (thumbData) {
-	
-		// Determine the thumbnail data
-		horizStep = (float)width / (float)thumbWidth;
-		vertStep = (float)height / (float)thumbHeight;
-		for (j = 0; j < thumbHeight; j++) {
-			for (i = 0; i < thumbWidth; i++) {
-                int srcRow = (int)(j*vertStep);
-                int srcCol = (int)(i*horizStep);
-                
-                if(srcRow>=height || srcCol>=width)
-                    continue;
-                
-				srcPos = (srcRow * width + srcCol) * spp;
-				destPos = (j * thumbWidth + i) * spp;
-				
-				if (data[srcPos + (spp - 1)] == 255) {
-					for (k = 0; k < spp; k++)
-						thumbData[destPos + k] = data[srcPos + k];
-				}
-				else if (data[srcPos + (spp - 1)] == 0) {
-					for (k = 0; k < spp; k++)
-						thumbData[destPos + k] = 0;
-				}
-				else {
-					for (k = 0; k < spp - 1; k++)
-						thumbData[destPos + k] = int_mult(data[srcPos + k], data[srcPos + (spp - 1)], temp);
-					thumbData[destPos + (spp - 1)] = data[srcPos + (spp - 1)];
-				}
-			}
-		}
-		
-	}
+    image = NULL;
 }
 
 - (NSData *)TIFFRepresentation
@@ -626,10 +523,7 @@
 		
 	// If there is an alpha channel...
 	if (hasAlpha) {
-		
-		// Formulate the premultiplied data from the data
-		premultiplyBitmap(spp, pmImageData, data, width * height);
-	
+		// images are pre multiplied
 	}
 	else {
 	
@@ -696,8 +590,7 @@
 	width = newWidth; height = newHeight;
 	xoff -= left; yoff -= top; 
 	
-	if (thumbData) free(thumbData);
-	thumbnail = NULL; thumbData = NULL;
+    image = NULL;
 }
 
 - (void)setWidth:(int)newWidth height:(int)newHeight interpolation:(int)interpolation
@@ -707,61 +600,62 @@
     CHECK_MALLOC(buffer);
     
     memset(buffer,0,newWidth*newHeight*spp);
-    
-    NSBitmapImageRep *bitmap = [self bitmap];
-    NSBitmapImageRep *new = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&buffer
-                                                                    pixelsWide:newWidth pixelsHigh:newHeight
-                                                                 bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO
-                                                                colorSpaceName:spp>2 ? MyRGBSpace : MyGraySpace bytesPerRow:newWidth*spp
-                                                                  bitsPerPixel:8*spp];
-    
-    
-    NSRect newRect = NSMakeRect(0,0,newWidth,newHeight);
-    
-    [NSGraphicsContext saveGraphicsState];
-    NSGraphicsContext *ctx = [NSGraphicsContext graphicsContextWithBitmapImageRep:new];
-    [NSGraphicsContext setCurrentContext:ctx];
-    
-    [ctx setImageInterpolation:interpolation];
-    
-    [bitmap drawInRect:newRect fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:1.0 respectFlipped:NO hints:NULL];
-    [NSGraphicsContext restoreGraphicsState];
-    
+
+    CGContextRef ctx = CGBitmapContextCreate(buffer, newWidth, newHeight, 8, newWidth*spp, COLOR_SPACE, kCGImageAlphaPremultipliedLast);
+    CGContextSetInterpolationQuality(ctx, interpolation);
+
+    CGImageRef bitmap = [self bitmap];
+
+    CGContextDrawImage(ctx, CGRectMake(0,0,newWidth,newHeight),bitmap);
+
     free(data);
     
-    unpremultiplyBitmap(spp,buffer,buffer,newWidth*newHeight);
-    
     data = buffer;
-    
+
     width = newWidth; height = newHeight;
-    
-    if (thumbData) free(thumbData);
-    thumbnail = NULL; thumbData = NULL;
+
+    unpremultiplyBitmap(spp, data, data, width*height);
+
+    image = NULL;
 }
 
-- (NSBitmapImageRep *)bitmap
+- (CGImageRef)bitmap
 {
-    NSBitmapImageRep *imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data
-                                                                         pixelsWide:width pixelsHigh:height bitsPerSample:8
-                                                                    samplesPerPixel:spp hasAlpha:TRUE isPlanar:NO
-                                                                     colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace
-                                                                       bitmapFormat:NSBitmapFormatAlphaNonpremultiplied
-                                                                        bytesPerRow:width * spp bitsPerPixel:8 * spp];
-    return imageRep;
+    CGDataProviderRef dp = CGDataProviderCreateWithData(NULL,data,width*height*spp,NULL);
+    CGImageRef image = CGImageCreate(width,height,8,8*spp,width*spp,COLOR_SPACE,kCGImageAlphaLast,dp,nil,false,0);
+    CGDataProviderRelease(dp);
+    return image;
+}
+
+- (NSImage *)image
+{
+    if(image==NULL){
+        CGImageRelease(pre_bitmap);
+        CGImageRef img = [self bitmap];
+        CGContextRef ctx = CGBitmapContextCreate(nil, width, height, 8, spp*width, COLOR_SPACE, kCGImageAlphaPremultipliedLast);
+        CGContextDrawImage(ctx, CGRectMake(0,0,width,height), img);
+        pre_bitmap = CGBitmapContextCreateImage(ctx);
+        CGContextRelease(ctx);
+        image = [[NSImage alloc] initWithCGImage:pre_bitmap size:NSZeroSize];
+        CGImageRelease(img);
+        [image setCacheMode:NSImageCacheAlways];
+    }
+    return image;
 }
 
 - (void)convertFromType:(int)srcType to:(int)destType
 {
-	if (thumbData) free(thumbData);
-	thumbnail = NULL; thumbData = NULL;
-    
 	// Don't do anything if there is nothing to do
 	if (srcType == destType)
 		return;
     
+    image = NULL;
+
     unsigned char *newdata;
     
-    NSBitmapImageRep *imageRep = [self bitmap];
+    CGImageRef bitmap = [self bitmap];
+    NSBitmapImageRep *imageRep = [[NSBitmapImageRep alloc] initWithCGImage:bitmap];
+    CGImageRelease(bitmap);
 		
 	if (srcType == XCF_RGB_IMAGE && destType == XCF_GRAY_IMAGE) {
         spp=2;
@@ -772,8 +666,97 @@
     newdata = convertImageRep(imageRep,spp);
 
     free(data);
-    
+
     data = newdata;
+}
+
+- (void)drawLayer:(CGContextRef)context
+{
+    CGImageRef image = [self bitmap];
+
+    CGContextSaveGState(context);
+    CGContextSetBlendMode(context, mode);
+
+    SeaLayer *active = [[document contents] activeLayer];
+
+    bool shouldTransform = active==self || ([active linked] && linked);
+
+    if([document currentToolId]==kPositionTool && shouldTransform) {
+        PositionTool *positionTool = (PositionTool*)[document currentTool];
+        CGAffineTransform tx = [[positionTool transform:self] cgtransform];
+        CGContextConcatCTM(context, tx);
+    } else {
+        CGContextTranslateCTM(context,xoff,yoff);
+    }
+
+    CGContextTranslateCTM(context,0,height);
+    CGContextScaleCTM(context,1,-1);
+
+    CGContextSetAlpha(context,[self opacity_float]);
+    [self image]; // force premultipled bitmap to be created if needed
+    CGContextDrawImage(context,CGRectMake(0,0,width,height),pre_bitmap);
+    CGImageRelease(image);
+    CGContextRestoreGState(context);
+}
+
+- (void)drawChannelLayer:(CGContextRef)context withImage:(unsigned char *)data0
+{
+    int channel = [[document contents] selectedChannel];
+
+    CGDataProviderRef dp = CGDataProviderCreateWithData(NULL,data0!=nil?data0:data,width*height*spp,NULL);
+    CGImageRef image = CGImageCreate(width,height,8,8*spp,width*spp,COLOR_SPACE,channel==kAlphaChannelView ? kCGImageAlphaLast : kCGImageAlphaNoneSkipLast,dp,nil,false,0);
+    CGDataProviderRelease(dp);
+
+    CGContextSaveGState(context);
+
+    SeaLayer *active = [[document contents] activeLayer];
+
+    bool shouldTransform = active==self || ([active linked] && linked);
+
+    if([document currentToolId]==kPositionTool && shouldTransform) {
+        PositionTool *positionTool = (PositionTool*)[document currentTool];
+        CGAffineTransform tx = [[positionTool transform:self] cgtransform];
+        CGContextConcatCTM(context, tx);
+    } else {
+        CGContextTranslateCTM(context,xoff,yoff);
+    }
+
+    CGRect r = CGRectMake(0,0,width,height);
+
+    CGContextTranslateCTM(context,0,height);
+    CGContextScaleCTM(context,1,-1);
+
+    CGContextSetAlpha(context,1.0);
+
+    if(channel==kAlphaChannelView) {
+        CGContextSetFillColorWithColor(context, CGColorCreateGenericRGB(1,1,1,1));
+        CGContextFillRect(context, r);
+        CGContextSetBlendMode(context, kCGBlendModeDestinationIn);
+    } else {
+        CGContextSetBlendMode(context, kCGBlendModeNormal);
+    }
+
+    CGContextDrawImage(context,r,image);
+    CGImageRelease(image);
+    CGContextRestoreGState(context);
+}
+
+
+- (NSColor *) getPixelX:(int)x Y:(int)y
+{
+    x = x-xoff;
+    y = y-yoff;
+    
+    if(x<0 || x>=width || y<0 || y>=height)
+        return NULL;
+
+    unsigned char *pixelData = data + (width*y+x) * spp;
+
+    if(spp==2){
+        return [NSColor colorWithRed:pixelData[0]/255.0 green:pixelData[0]/255.0 blue:pixelData[0]/255.0 alpha:pixelData[1]/255.0];
+    } else {
+        return [NSColor colorWithRed:pixelData[0]/255.0 green:pixelData[1]/255.0 blue:pixelData[2]/255.0 alpha:pixelData[3]/255.0];
+    }
 }
 
 @end

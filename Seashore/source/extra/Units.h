@@ -6,7 +6,7 @@
 				<b>License:</b> GNU General Public License<br>
 */
 
-#import "Globals.h"
+#import "Seashore.h"
 
 /*!
 	@enum		k...Units

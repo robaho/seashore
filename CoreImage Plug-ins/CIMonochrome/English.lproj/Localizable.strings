@@ -7,7 +7,7 @@
 	<key>copyright</key>
 	<string>Public Domain 2007</string>
 	<key>description</key>
-	<string>Applies a crystillising effect to the selection.</string>
+	<string>Applies a coloring effect to the selection.</string>
 	<key>groupName</key>
 	<string>Color Effect</string>
 	<key>license</key>

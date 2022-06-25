@@ -4,10 +4,38 @@
 #import "SeaDocument.h"
 #import "SeaWhiteboard.h"
 #import "SeaController.h"
-#import "SeaWarning.h"
-#import "RLE.h"
+#import <SeaLibrary/SeaLibrary.h>
+#import "ParasiteData.h"
 
 @implementation XCFExporter
+
+static NSDictionary *modeMap = NULL;
+
++ (void)initialize
+{
+    if (self == [XCFExporter class]) {
+        modeMap = @{
+            @(kCGBlendModeNormal): @(GIMP_LAYER_MODE_NORMAL),
+            @(kCGBlendModeDarken): @(GIMP_LAYER_MODE_DARKEN_ONLY),
+            @(kCGBlendModeMultiply): @(GIMP_LAYER_MODE_MULTIPLY),
+            @(kCGBlendModeColorBurn): @(GIMP_LAYER_MODE_BURN),
+            @(kCGBlendModeLighten): @(GIMP_LAYER_MODE_LIGHTEN_ONLY),
+            @(kCGBlendModeScreen): @(GIMP_LAYER_MODE_SCREEN),
+            @(kCGBlendModeColorDodge): @(GIMP_LAYER_MODE_DODGE),
+            @(kCGBlendModePlusLighter): @(GIMP_LAYER_MODE_ADDITION),
+//            @(kCGBlendModePlusDarker): @(GIMP_LAYER_MODE_NORMAL),
+            @(kCGBlendModeOverlay): @(GIMP_LAYER_MODE_OVERLAY),
+            @(kCGBlendModeSoftLight): @(GIMP_LAYER_MODE_SOFTLIGHT),
+            @(kCGBlendModeHardLight): @(GIMP_LAYER_MODE_HARDLIGHT),
+            @(kCGBlendModeDifference): @(GIMP_LAYER_MODE_DIFFERENCE),
+            @(kCGBlendModeExclusion): @(GIMP_LAYER_MODE_EXCLUSION),
+            @(kCGBlendModeHue): @(GIMP_LAYER_MODE_LCH_HUE),
+            @(kCGBlendModeSaturation): @(GIMP_LAYER_MODE_LCH_CHROMA),
+            @(kCGBlendModeColor): @(GIMP_LAYER_MODE_HSL_COLOR),
+            @(kCGBlendModeLuminosity): @(GIMP_LAYER_MODE_LCH_LIGHTNESS),
+        };
+    }
+}
 
 static inline void fix_endian_write(int *input, int size)
 {
@@ -41,40 +69,12 @@ static inline void fix_endian_write(int *input, int size)
 
 - (BOOL)writeHeader:(FILE *)file
 {
-	int i;
 	id contents = [document contents];
-	
-	// Start with lowest version possible
-	version = 0;
-		
-	// Determine if file must be version 2 - we don't match exactly with 1.3.x but I think we have it correct
-	for (i = 0; i < [contents layerCount]; i++) {
-		switch ([(SeaLayer *)[contents layer:i] mode]) {
-			case XCF_DODGE_MODE:
-			case XCF_BURN_MODE:
-			case XCF_HARDLIGHT_MODE:
-			case XCF_SOFTLIGHT_MODE:
-			case XCF_GRAIN_EXTRACT_MODE:
-			case XCF_GRAIN_MERGE_MODE:
-				if (version < 2)
-					version = 2;
-			break;
-		}
-	}
-	if (version == 2)
-		[[SeaController seaWarning] addMessage:LOCALSTR(@"compatibility (gimp) message", @"This file contains layer modes which will not be recognized by the GIMP 1.2 series and earlier.") level:kVeryLowImportance];
 
-	
-	// Write the correct signature to file according to the version
-	if (version > 0) {
-		fprintf(file, "gimp xcf v%03d", version);
-		fputc(0, file);
-	}
-	else {
-		fprintf(file, "gimp xcf file");
-		fputc(0, file);
-	}
-	
+    int version = 2; // assume at least version 2
+    fprintf(file, "gimp xcf v%03d", version);
+    fputc(0, file);
+
 	// Write the width, height and type to file
 	tempIntString[0] = [(SeaContent *)contents width];
 	tempIntString[1] = [(SeaContent *)contents height];
@@ -91,11 +91,11 @@ static inline void fix_endian_write(int *input, int size)
 
 - (BOOL)writeProperties:(FILE *)file
 {
-	id contents = [document contents];
+	SeaContent *contents = [document contents];
 	int offsetPos, count, size, i;
-	ParasiteData *parasites;
-	ParasiteData parasite;
-	
+
+    ParasiteData *parasites = [contents parasites];
+
 	// Write compression
 	tempIntString[0] = PROP_COMPRESSION;
 	tempIntString[1] = sizeof(char);
@@ -113,16 +113,15 @@ static inline void fix_endian_write(int *input, int size)
 	fwrite(tempString, sizeof(float), 2, file);
 	
 	// Write parasites
-	count = [contents parasites_count];
+    count = [parasites parasites_count];
 	if (count > 0) {
 		tempIntString[0] = PROP_PARASITES;
 		tempIntString[1] = 0;
 		fix_endian_write(tempIntString, 2);
 		fwrite(tempIntString, sizeof(int), 2, file);
 		offsetPos = ftell(file);
-		parasites = [contents parasites];
 		for (i = 0; i < count; i++) {
-			parasite = parasites[i];
+			Parasite parasite = [parasites parasites][i];
 			tempIntString[0] = strlen(parasite.name) + 1;
 			fix_endian_write(tempIntString, 1);
 			fwrite(tempIntString, sizeof(int), 1, file);
@@ -203,16 +202,6 @@ static inline void fix_endian_write(int *input, int size)
 		fwrite(tempIntString, sizeof(int), 2, file);
 	}
 	
-	// Write if the layer is floating
-	if ([layer floating]) {
-		floatingFiller = ftell(file) + 2 * sizeof(int);
-		tempIntString[0] = PROP_FLOATING_SELECTION;
-		tempIntString[1] = sizeof(int);
-		tempIntString[2] = 0;
-		fix_endian_write(tempIntString, 3);
-		fwrite(tempIntString, sizeof(int), 3, file);
-	}
-	
 	// Write the layer's opacity
 	tempIntString[0] = PROP_OPACITY;
 	tempIntString[1] = sizeof(int);
@@ -245,7 +234,8 @@ static inline void fix_endian_write(int *input, int size)
 	// Write the layer's mode
 	tempIntString[0] = PROP_MODE;
 	tempIntString[1] = sizeof(int);
-	tempIntString[2] = [(SeaLayer *)layer mode];
+    NSNumber *mode = modeMap[@([(SeaLayer *)layer mode])];
+    tempIntString[2] = mode ? [mode intValue] : GIMP_LAYER_MODE_NORMAL;
 	fix_endian_write(tempIntString, 3);
 	fwrite(tempIntString, sizeof(int), 3, file);
 
@@ -293,8 +283,9 @@ static inline void fix_endian_write(int *input, int size)
 	// Allocate memory for the tile data, point to the total data
 	tileData = malloc(XCF_TILE_HEIGHT * XCF_TILE_WIDTH * spp);
 	compressedTileData = malloc(XCF_TILE_HEIGHT * XCF_TILE_WIDTH * spp * 1.3 + 1);
-	totalData = [(SeaLayer *)layer data];
-	
+
+    totalData = malloc(width*height*spp);
+
 	// Write in our default tile height and width
 	tempIntString[0] = width;
 	tempIntString[1] = height;
@@ -351,6 +342,7 @@ static inline void fix_endian_write(int *input, int size)
 	// Free memory we've assigned to ourselves
 	free(tileData);
 	free(compressedTileData);
+    free(totalData);
 	
 	// Check for any problems
 	if (ferror(file))
@@ -363,17 +355,6 @@ static inline void fix_endian_write(int *input, int size)
 - (BOOL)writeLayer:(int)index file:(FILE *)file
 {	
 	int storedOffset;
-	
-	// If the previous layer was a floating one we need to make some changes
-	if (floatingFiller != -1) {
-		storedOffset = ftell(file);
-		fseek(file, floatingFiller, SEEK_SET);
-		tempIntString[0] = storedOffset;
-		fix_endian_write(tempIntString, 1);
-		fwrite(tempIntString, sizeof(int), 1, file);
-		fseek(file, storedOffset, SEEK_SET);
-		floatingFiller = -1;
-	}
 	
 	// Write the header
 	if ([self writeLayerHeader:index file:file] == NO) {
@@ -397,13 +378,12 @@ static inline void fix_endian_write(int *input, int size)
 {
 	FILE *file;
 	int i, offsetPos, oldPos, layerCount;
-	ParasiteData exifParasite;
+	Parasite exifParasite;
 	NSString *errorString;
 	NSData *exifContainer;
 	
 	// Remember the document
 	document = doc;
-	floatingFiller = -1;
 	layerCount = [[document contents] layerCount];
 		
 	// Add EXIF parasite
@@ -415,7 +395,7 @@ static inline void fix_endian_write(int *input, int size)
 			exifParasite.size = [exifContainer length];
 			exifParasite.data = malloc(exifParasite.size);
 			memcpy(exifParasite.data, (char *)[exifContainer bytes], exifParasite.size);
-			[[document contents] addParasite:exifParasite];
+            [[[document contents] parasites] addParasite:exifParasite];
 		}
 	}	
 	
@@ -472,7 +452,7 @@ static inline void fix_endian_write(int *input, int size)
 	
 	// Remove EXIF parasite
 	if ([[document contents] exifData]) {
-		[[document contents] deleteParasiteWithName:"exif-plist"];
+        [[[document contents] parasites] deleteParasiteWithName:"exif-plist"];
 	}
 	
 	return YES;

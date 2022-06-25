@@ -21,9 +21,7 @@
 
 - (void)setImage:(NSImage *)anImage
 {
-    if (anImage != image) {
-        image = anImage;
-    }
+    image = anImage;
 }
 
 - (NSImage *)image
@@ -35,7 +33,7 @@
 {
     NSRect result;
     if (image != nil) {
-        result.size = [image size];
+        result.size = NSMakeSize(48,48);
         result.origin = cellFrame.origin;
         result.origin.x += 3;
         result.origin.y += ceil((cellFrame.size.height - result.size.height) / 2);
@@ -83,26 +81,37 @@
 		[shadow setShadowColor:[NSColor shadowColor]];
 		[shadow set];
 		
-		NSRect	imageFrame;
-        NSSize imageSize = [image size];
-        NSDivideRect(cellFrame, &imageFrame, &cellFrame, 8 + imageSize.width, NSMinXEdge);
+		NSRect imageFrame;
+        NSDivideRect(cellFrame, &imageFrame, &cellFrame, 8 + 48, NSMinXEdge);
         if ([self drawsBackground]) {
             [[self backgroundColor] set];
             NSRectFill(imageFrame);
         }
         imageFrame.origin.x += 3;
-        imageFrame.size = imageSize;
-		
-        if ([controlView isFlipped])
-            imageFrame.origin.y += ceil((cellFrame.size.height + imageFrame.size.height) / 2);
-        else
-            imageFrame.origin.y += ceil((cellFrame.size.height - imageFrame.size.height) / 2);
+        imageFrame.size.width -= 6;
+        imageFrame.size.height -= 6;
+        imageFrame.origin.y += 3;
 
-        [[NSImage imageNamed:@"checkerboard"] drawInRect:NSMakeRect(imageFrame.origin.x, imageFrame.origin.y - imageSize.height, imageSize.width, imageSize.height) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction: 1.0];
+        NSSize imageSize = [image size];
+
+        float image_proportion = imageSize.width / imageSize.height;
+
+        if(image_proportion>1) {
+            float new_height = imageFrame.size.width/image_proportion;
+            imageFrame.origin.y += (imageFrame.size.height - new_height)/2;
+            imageFrame.size.height = new_height;
+        }
+        else {
+            float new_width = image_proportion*imageFrame.size.height;
+            imageFrame.origin.x += (imageFrame.size.width - new_width)/2;
+            imageFrame.size.width = new_width;
+        }
+
+        [[NSImage imageNamed:@"checkerboard"] drawInRect:imageFrame fromRect:NSZeroRect operation:NSCompositeSourceOver fraction: 1.0];
         
         [NSGraphicsContext restoreGraphicsState];
         
-        [image drawInRect:NSMakeRect(imageFrame.origin.x, imageFrame.origin.y - imageSize.height, imageSize.width, imageSize.height) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction: 1.0];
+        [image drawInRect:imageFrame fromRect:NSZeroRect operation:NSCompositeSourceOver fraction: 1.0 respectFlipped:TRUE hints:NULL];
         
 		cellFrame.size.height = 18;
 		cellFrame.origin.y += 10;
@@ -123,7 +132,7 @@
 - (NSSize)cellSize
 {
     NSSize cellSize = [super cellSize];
-    cellSize.width += (image ? [image size].width : 0) + 3;
+    cellSize.width += (48+8);
     return cellSize;
 }
 

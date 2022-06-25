@@ -23,24 +23,22 @@ static BOOL forceAlt = NO;
 	}
 }
 
-- (void)update
+- (IBAction)update:(id)sender
 {
 }
 
 - (void)forceAlt
 {
-	int index;
-	
-	index = [modifierPopup indexOfItemWithTag:kAltModifier];
-	if (index > 0) [modifierPopup selectItemAtIndex:index];
 	forceAlt = YES;
+    int modifiers = [self modifier];
+    [self updateModifiers:modifiers];
 }
 
 - (void)unforceAlt
 {
 	if (forceAlt) {
+        forceAlt = NO;
 		[self updateModifiers:0];
-		forceAlt = NO;
 	}
 }
 
@@ -49,6 +47,10 @@ static BOOL forceAlt = NO;
 	int index;
 	
 	if (modifierPopup) {
+
+        if(forceAlt){
+            modifiers |= NSAlternateKeyMask;
+        }
 	
 		if ((modifiers & NSAlternateKeyMask) >> 19 && (modifiers & NSControlKeyMask) >> 18) {
 			index = [modifierPopup indexOfItemWithTag:kAltControlModifier];
@@ -74,14 +76,6 @@ static BOOL forceAlt = NO;
 			[modifierPopup selectItemAtIndex:kNoModifier];
 		}
 	}
-	// We now need to update all of the documents because the modifiers, and thus possibly
-	// the cursors and guides may have changed.
-	int i;
-	NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
-	for (i = 0; i < [documents count]; i++) {
-		[[[documents objectAtIndex:i] docView] setNeedsDisplay:YES];
-	}
-	
 }
 
 - (int)modifier
@@ -91,6 +85,7 @@ static BOOL forceAlt = NO;
 
 - (IBAction)modifierPopupChanged:(id)sender
 {
+//
 }
 
 - (BOOL)useTextures

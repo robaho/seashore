@@ -2,7 +2,7 @@
 #import "SeaDocument.h"
 #import "SeaContent.h"
 #import "SeaLayer.h"
-#import "PegasusUtility.h"
+#import "LayersUtility.h"
 #import "SeaDocument.h"
 #import "SeaHelpers.h"
 #import "Units.h"
@@ -16,34 +16,21 @@
 	[(InfoPanel *)panel setPanelStyle:kHorizontalPanelStyle];	
 }
 
-- (void)activate
-{
-}
-
-- (void)deactivate
-{
-}
-
 - (void)showSettings:(SeaLayer *)layer from:(NSPoint)point
 {
 	id contents = [document contents];
 	float xres, yres;
+
+    [[document helpers] endLineDrawing];
 	
 	// Get the resolutions
 	xres = [contents xres];
 	yres = [contents yres];
 	units = [document measureStyle];
 	
-	// Set the layer title correctly
-	if ([layer name]) {
-		[layerTitle setStringValue:[layer name]];
-		[layerTitle setEnabled:YES];
-	}
-	else {
-		[layerTitle setStringValue:LOCALSTR(@"floating", @"Floating Selection")];
-		[layerTitle setEnabled:NO];
-	}
-	
+    [layerTitle setStringValue:[layer name]];
+    [layerTitle setEnabled:YES];
+
 	[leftValue setStringValue:StringFromPixels([layer xoff],units,xres)];
 	[topValue setStringValue:StringFromPixels([layer yoff], units, yres)];
 	[widthValue setStringValue:StringFromPixels([layer width],units,xres)];
@@ -52,17 +39,6 @@
 	[topUnits setTitle:UnitsString(units)];	
 	[widthUnits setTitle:UnitsString(units)];
 	[heightUnits setTitle:UnitsString(units)];
-	
-	[channelEditingMatrix selectCellAtRow:[[document contents] selectedChannel] column:0];
-
-	if([layer hasAlpha]){
-		[[channelEditingMatrix cellAtRow:1 column:0] setEnabled:YES];
-		[[channelEditingMatrix cellAtRow:2 column:0] setEnabled:YES];
-	}else {
-		[[channelEditingMatrix cellAtRow:1 column:0] setEnabled:NO];
-		[[channelEditingMatrix cellAtRow:2 column:0] setEnabled:NO];
-	}
-
 	
 	if (document && layer) {
 		
@@ -96,6 +72,10 @@
 	[panel orderFrontToGoal:point onWindow: [document window]];
 	
 	settingsLayer = layer;
+
+    xoff = [layer xoff];
+    yoff = [layer yoff];
+
 	[NSApp runModalForWindow:panel];
 }
 
@@ -114,7 +94,7 @@
 	newLeftValue = PixelsFromFloat([leftValue floatValue],units, xres);
 	newTopValue = PixelsFromFloat([topValue floatValue],units,yres);
 	
-	if ([layer xoff] != newLeftValue || [layer yoff] != newTopValue)
+	if (xoff != newLeftValue || yoff != newTopValue)
 		[self setOffsetsLeft:newLeftValue top:newTopValue index:[layer index]];
 	
 	// Change the layer's name
@@ -184,7 +164,7 @@
 	SeaLayer* layer = settingsLayer;
 	
 	[[[document undoManager] prepareWithInvocationTarget:self] undoMode:[layer index] to:[layer mode]];
-	[layer setMode:[[modePopup selectedItem] tag]];
+	[layer setMode:(int)[[modePopup selectedItem] tag]];
 	[[document helpers] layerAttributesChanged:kActiveLayer hold:YES];
 }
 
@@ -203,10 +183,10 @@
 	
 	if ([[NSApp currentEvent] type] == NSLeftMouseDown)
 		[[[document undoManager] prepareWithInvocationTarget:self] undoOpacity:[layer index] to:[layer opacity]];
-	if ([layer width] * [layer height] < kMaxPixelsForLiveUpdate || [[NSApp currentEvent] type] == NSLeftMouseUp) {
-		[layer setOpacity:[opacitySlider intValue]];
-		[[document helpers] layerAttributesChanged:kActiveLayer hold:YES];
-	}
+
+    [layer setOpacity:[opacitySlider intValue]];
+    [[document helpers] layerAttributesChanged:kActiveLayer hold:YES];
+    
 	[opacityLabel setStringValue:[NSString stringWithFormat:@"%.1f%%", (float)[opacitySlider intValue] / 2.55]];
 }
 
@@ -235,12 +215,5 @@
 	}
 	[alphaEnabledCheckbox setState: [layer hasAlpha]];
 }
-
-- (IBAction)changeChannelEditing:(id)sender
-{
-	[[document contents] setSelectedChannel:[channelEditingMatrix selectedRow]];
-	[[document helpers] channelChanged];
-}
-
 
 @end

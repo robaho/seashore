@@ -1,5 +1,6 @@
-#import "Globals.h"
+#import "Seashore.h"
 #import "AbstractOptions.h"
+#import "AbstractSelectOptions.h"
 
 /*!
 	@class		ZoomOptions
@@ -10,17 +11,11 @@
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
 
-@interface ZoomOptions : AbstractOptions {
+@interface ZoomOptions : AbstractSelectOptions {
 
 	// A label specifying the current zoom
     IBOutlet id zoomLabel;
 	
 }
-
-/*!
-	@method		update
-	@discussion	Updates the options panel.
-*/
-- (void)update;
 
 @end

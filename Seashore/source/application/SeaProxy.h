@@ -1,4 +1,4 @@
-#import "Globals.h"
+#import "Seashore.h"
 
 /*!
 	@class		SeaProxy
@@ -26,9 +26,9 @@
 
 // To methods in SeaWhiteboard...
 - (IBAction)toggleSoftProof:(id)sender;
-#ifdef PERFORMANCE
-- (IBAction)resetPerformance:(id)sender;
-#endif
+
+// To methods in SeaSupport
+- (IBAction)showSupportSeashore:(id)sender;
 
 // To methods in SeaContent....
 - (IBAction)importLayer:(id)sender;
@@ -48,7 +48,7 @@
 - (IBAction)setColorSpace:(id)sender;
 - (IBAction)toggleLinked:(id)sender;
 - (IBAction)clearAllLinks:(id)sender;
-- (IBAction)toggleFloatingSelection:(id)sender;
+- (IBAction)layerFromSelection:(id)sender;
 - (IBAction)duplicate:(id)sender;
 - (IBAction)changeSelectedChannel:(id)sender;
 - (IBAction)changeTrueView:(id)sender;
@@ -71,7 +71,6 @@
 
 // To methods in SeaMargins...
 - (IBAction)setMargins:(id)sender;
-- (IBAction)setLayerMargins:(id)sender;
 - (IBAction)condenseLayer:(id)sender;
 - (IBAction)condenseToSelection:(id)sender;
 - (IBAction)expandLayer:(id)sender;
@@ -90,8 +89,10 @@
 // To methods in SeaFlip...
 - (IBAction)flipDocHorizontally:(id)sender;
 - (IBAction)flipDocVertically:(id)sender;
-- (IBAction)flipHorizontally:(id)sender;
-- (IBAction)flipVertically:(id)sender;
+- (IBAction)flipLayerHorizontally:(id)sender;
+- (IBAction)flipLayerVertically:(id)sender;
+- (IBAction)flipSelectionHorizontally:(id)sender;
+- (IBAction)flipSelectionVertically:(id)sender;
 
 // To methods in SeaPlugins...
 - (IBAction)reapplyEffect:(id)sender;

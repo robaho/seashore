@@ -11,7 +11,7 @@
 				Copyright (c) 1995 Spencer Kimball and Peter Mattis
 */
 
-#import "Globals.h"
+#import "Seashore.h"
 
 /*!
 	@function	RGBtoHSV

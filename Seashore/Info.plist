@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleDisplayName</key>
-	<string></string>
+	<string>$(PRODUCT_NAME)</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
@@ -401,20 +401,10 @@
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>
-		<dict>
-			<key>seashore.sourceforge.net</key>
-			<dict>
-				<key>NSIncludesSubdomains</key>
-				<true/>
-				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
-				<key>NSTemporaryExceptionMinimumTLSVersion</key>
-				<string>TLSv1.1</string>
-			</dict>
-		</dict>
+		<dict/>
 	</dict>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright (c) 1995-2019 Mark Pazolli et al.
+	<string>Copyright (c) 1995-2022 Mark Pazolli et al.
 GNU General Public License v2.0</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>

@@ -26,8 +26,7 @@
 
 - (void)cropRectChanged:(IntRect)dirty
 {
-    SeaLayer *activeLayer = [[document contents] activeLayer];
-    [[document helpers] selectionChanged:IntOffsetRect(dirty,-[activeLayer xoff],-[activeLayer yoff])];
+    [[document helpers] selectionChanged:dirty];
 }
 
 - (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event
@@ -200,11 +199,7 @@
 
 - (IntRect)cropRect
 {
-	int width, height;
-	
-	width = [[document contents] width];
-	height = [[document contents] height];
-	return IntConstrainRect(cropRect, IntMakeRect(0, 0, width, height));
+    return cropRect;
 }
 
 - (void)clearCrop
@@ -237,6 +232,10 @@
     options = (CropOptions*)newoptions;
 }
 
+- (void)updateCursor:(IntPoint)p cursors:(SeaCursors*)cursors
+{
+    return [cursors handleRectCursors:cropRect point:p cursor:[cursors crosspointCursor]];
+}
 
 
 @end

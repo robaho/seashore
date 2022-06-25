@@ -1,5 +1,5 @@
-#import "Globals.h"
-#import "AbstractSelectOptions.h"
+#import "Seashore.h"
+#import "RectSelectOptions.h"
 #import "AspectRatio.h"
 
 /*!
@@ -11,23 +11,7 @@
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
 
-@interface EllipseSelectOptions : AbstractSelectOptions {
-	
-	// The AspectRatio instance linked to this options panel
-	IBOutlet id aspectRatio;
-	
+@interface EllipseSelectOptions : RectSelectOptions {
 }
-
-/*!
-	@method		awakeFromNib
-	@discussion	Loads previous options from preferences.
-*/
-- (void)awakeFromNib;
-
-/*!
-	@method		shutdown
-	@discussion	Saves current options upon shutdown.
-*/
-- (void)shutdown;
 
 @end

@@ -1,10 +1,10 @@
-#import "Globals.h"
+#import "Seashore.h"
 #import <sys/sysctl.h>
-
-BOOL globalReadOnlyWarning;
 
 int main(int argc, const char *argv[])
 {
-	globalReadOnlyWarning = NO;
+    rgbCS = CGColorSpaceCreateDeviceRGB();
+    grayCS = CGColorSpaceCreateDeviceGray();
+
 	return NSApplicationMain(argc, argv);
 }

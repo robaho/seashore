@@ -5,7 +5,7 @@
 //  Created by robert engels on 1/2/19.
 //
 
-#import "Globals.h"
+#import "Seashore.h"
 
 @interface SeaColorProfile : NSObject {
 }

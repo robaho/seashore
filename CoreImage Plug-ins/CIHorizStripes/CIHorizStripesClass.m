@@ -1,87 +1,16 @@
 #import "CIHorizStripesClass.h"
 
-#define gOurBundle [NSBundle bundleForClass:[self class]]
-
 @implementation CIHorizStripesClass
 
 - (id)initWithManager:(PluginData *)data
 {
-	pluginData = data;
-	
-	return self;
+    return [super initWithManager:data filter:@"CIStripesGenerator" points:2 properties:kCI_PointCenter,kCI_PointWidth,kCI_Color0,kCI_Color1,kCI_Sharpness,0];
 }
 
-- (int)type
+- (void)applyFilter:(CIFilter*)filter
 {
-	return 1;
-}
-
-- (int)points
-{
-	return 2;
-}
-
-- (NSString *)name
-{
-	return [gOurBundle localizedStringForKey:@"name" value:@"Horizontal Stripes" table:NULL];
-}
-
-- (NSString *)groupName
-{
-	return [gOurBundle localizedStringForKey:@"groupName" value:@"Generate" table:NULL];
-}
-
-- (NSString *)instruction
-{
-	return [gOurBundle localizedStringForKey:@"instruction" value:@"Needs localization." table:NULL];
-}
-
-- (NSString *)sanity
-{
-	return @"Seashore Approved (Bobo)";
-}
-
-- (void)run
-{
-	[self execute];
-	[pluginData apply];
-	success = YES;
-}
-
-- (void)reapply
-{
-	[self run];
-}
-
-- (BOOL)canReapply
-{
-	return NO;
-}
-
-- (void)execute
-{
-    int height = [pluginData height];
-    IntPoint point = [pluginData point:0];
-    IntPoint apoint = [pluginData point:1];
-    
-    int amount = abs(apoint.y - point.y);
-
-    
-    CIColor *foreColor = createCIColor([pluginData foreColor]);
-    CIColor *backColor = createCIColor([pluginData backColor]);
-    
-    CIFilter *filter = [CIFilter filterWithName:@"CIStripesGenerator"];
-    if (filter == NULL) {
-        @throw [NSException exceptionWithName:@"CoreImageFilterNotFoundException" reason:[NSString stringWithFormat:@"The Core Image filter named \"%@\" was not found.", @"CICircleSplash"] userInfo:NULL];
-    }
-    [filter setDefaults];
-    [filter setValue:[CIVector vectorWithX:height - point.y Y:point.x] forKey:@"inputCenter"];
-    [filter setValue:foreColor forKey:@"inputColor0"];
-    [filter setValue:backColor forKey:@"inputColor1"];
-    [filter setValue:[NSNumber numberWithInt:amount] forKey:@"inputWidth"];
-    [filter setValue:[NSNumber numberWithFloat:1.0] forKey:@"inputSharpness"];
     CIImage *pre_output = [filter valueForKey: @"outputImage"];
-    
+
     // Run rotation
     filter = [CIFilter filterWithName:@"CIAffineTransform"];
     [filter setDefaults];
@@ -94,9 +23,5 @@
     renderCIImage(pluginData,output);
 }
 
-+ (BOOL)validatePlugin:(PluginData*)pluginData
-{
-	return YES;
-}
 
 @end

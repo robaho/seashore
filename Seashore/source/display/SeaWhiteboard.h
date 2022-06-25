@@ -1,6 +1,6 @@
-#import "Globals.h"
-#import "SeaCompositor.h"
+#import "Seashore.h"
 #import "SeaColorProfiles.h"
+#import <CoreImage/CoreImage.h>
 
 /*!
 	@enum		k...ChannelsView
@@ -16,8 +16,7 @@
 enum {
 	kAllChannelsView,
 	kPrimaryChannelsView,
-	kAlphaChannelView,
-	kCMYKPreviewView
+	kAlphaChannelView
 };
 
 
@@ -37,7 +36,7 @@ enum {
 	kNormalBehaviour,
 	kErasingBehaviour,
 	kReplacingBehaviour,
-	kMaskingBehaviour
+    kMaskingBehavior,
 };
 
 
@@ -54,44 +53,48 @@ enum {
 
 @class SeaDocument;
 
-@interface SeaWhiteboard : NSObject {
+@interface SeaWhiteboard : NSView <CALayerDelegate> {
 
 	// The document associated with this whiteboard
 	__weak SeaDocument *document;
 	
-	// The compositor for this whiteboard
-	id compositor;
-	
-	// The width and height of the whitebaord
+	// The width and height of the whiteboard
 	int width, height;
 	
 	// The whiteboard's data
 	unsigned char *data;
-	unsigned char *altData;
-    
-    // the cached NSImage
-    CIImage * cachedImage;
-	
+
 	// The overlay for the current layer
 	unsigned char *overlay;
-	
+
 	// The replace mask for the current layer
 	unsigned char *replace;
+
+    // The temporary ares for compositing the overlay into the layer
+    unsigned char *temp;
 	
 	// The behaviour of the overlay
 	int overlayBehaviour;
 	
 	// The opacity for the overlay
 	int overlayOpacity;
-	
+    float overlayOpacity_float;
+
+    IntRect overlayModifiedRect;
+    IntRect whiteboardModifiedRect;
+
 	// The whiteboard's samples per pixel
 	int spp;
 	
 	// Remembers whether is or is not active
     SeaColorProfile *proofProfile;
 	
-	// One of the above constants to specify what is seen by the user
-	int viewType;
+    CGContextRef overlayCtx;
+    CGContextRef dataCtx;
+    CGContextRef tempCtx;
+    CGContextRef proofCtx;
+
+    CIFilter *alphaToGray;
 }
 
 // CREATION METHODS
@@ -110,12 +113,6 @@ enum {
 	@discussion	Frees memory occupied by an instance of this class.
 */
 - (void)dealloc;
-
-/*!
-	@method		compositor
-	@discussion	Returns the instance of the compositor
-*/
-- (SeaCompositor *)compositor;
 
 // OVERLAY METHODS
 
@@ -139,11 +136,8 @@ enum {
 /*!
 	@method		applyOverlay
 	@discussion	Applies and clears the overlay.
-	@result		Returns a rectangle representing the changed content in the
-				document's co-ordinates. This rectangle can then be passed to
-				update:.
 */
-- (IntRect)applyOverlay;
+- (void)applyOverlay;
 
 /*!
 	@method		clearOverlay
@@ -191,16 +185,6 @@ enum {
 */
 - (void)readjustLayer;
 
-/*!
-	@method		readjustAltData
-	@discussion	Readjusts the whiteboard's alternate data after the view type is
-				changed. (Also called by readjust.)
-	@param		update
-				YES if the document should be updated after the readjustment, NO
-				otherwise.
-*/
-- (void)readjustAltData:(BOOL)update;
-
 // ColorSync PREVIEWING METHODS
 
 /*!
@@ -234,25 +218,9 @@ enum {
 */
 - (void)update:(IntRect)rect;
 
+- (void)overlayModified:(IntRect)rect;
+
 // ACCESSOR METHODS
-
-/*!
-	@method		imageRect
-	@discussion	Returns the rectangle in which the whiteboard's image should be
-				plotted. This is only not equal to the document rectangle if
-				whiteboardIsLayerSpecific returns YES.
-	@result		Returns an IntRect indicating the rectangle in which the
-				whiteboard's image should be plotted. 
-*/
-- (IntRect)imageRect;
-
-/*!
-	@method		image
-	@discussion	Returns an image representing the whiteboard (which may be CMYK
-				or channel-specific depending on user settings).
-	@result		Returns an NSImage representing the whiteboard.
-*/
-- (CIImage *)image;
 
 /*!
 	@method		printableImage
@@ -270,13 +238,14 @@ enum {
 */
 - (unsigned char *)data;
 
-/*!
-	@method		altData
-	@discussion	Returns the alternate bitmap data for the whiteboard.
-	@result		Returns a pointer to the alternate bitmap data for the
-				whiteboard.
-*/
-- (unsigned char *)altData;
+- (void)drawRect:(NSRect)rect;
 
+- (CGContextRef)overlayCtx;
+
+- (NSColor*) getPixelX:(int)x Y:(int)y;
+
+- (NSBitmapImageRep *)sampleImage;
+
+- (NSBitmapImageRep *)bitmap;
 
 @end

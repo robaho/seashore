@@ -1,5 +1,4 @@
 #import "SeaTexture.h"
-#import "Bitmap.h"
 
 @implementation SeaTexture
 
@@ -57,14 +56,6 @@
 {
 	if (colorTexture) free(colorTexture);
 	if (greyTexture) free(greyTexture);
-}
-
-- (void)activate
-{
-}
-
-- (void)deactivate
-{
 }
 
 - (NSImage *)thumbnail

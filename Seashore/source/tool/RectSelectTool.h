@@ -1,4 +1,4 @@
-#import "Globals.h"
+#import "Seashore.h"
 #import "RectSelectOptions.h"
 #import "AbstractSelectTool.h"
 
@@ -13,16 +13,6 @@
 */
 
 @interface RectSelectTool : AbstractSelectTool {
-
-	// The point where the selection begun
-	IntPoint startPoint;
-	
-	// The selection rectangle
-	IntRect selectionRect;
-
-	// Make the selection one-to-one
-	BOOL oneToOne;
-    
     RectSelectOptions *options;
 }
 
@@ -70,6 +60,11 @@
 	@method		cancelSelection
 	@discussion	Stops making the selection
 */
-
 - (void)cancelSelection;
+
+/*!
+ @method        createMask
+ @discussion    Creates the selection mask from the in-progress selection.
+ */
+- (void)createMask;
 @end

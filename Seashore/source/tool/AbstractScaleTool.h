@@ -1,4 +1,4 @@
-#import "Globals.h"
+#import "Seashore.h"
 
 /*!
  @enum		k...Dir
@@ -105,16 +105,6 @@ enum {
 - (void)mouseUpAt:(IntPoint)localPoint forRect:(IntRect)globalRect andMask:(unsigned char *)mask;
 
 /*!
-	@method		point:isInHandleFor:
-	@discussion	Tests to see if the point is in a handle for the given rectangle.
-	@param		point
-				The point to be tested.
-	@param		rect
-				The specified rectangle to check for handles.
-*/
-- (int)point:(NSPoint) point isInHandleFor:(IntRect)rect;
-
-/*!
 	@method		preScaledRect
 	@discussion	For determining the previous rect for scaling.
 	@result		An IntRect
@@ -126,7 +116,7 @@ enum {
 	@discussion	For determining the old mask.
 	@result		An bitmap
 */
-- (unsigned char *) preScaledMask;
+- (unsigned char *)preScaledMask;
 
 /*!
 	@method		postScaledRect
@@ -136,3 +126,5 @@ enum {
 - (IntRect) postScaledRect;
 
 @end
+
+extern int getHandle(IntPoint point,IntRect rect,float scale);

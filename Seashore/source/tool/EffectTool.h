@@ -1,4 +1,4 @@
-#import "Globals.h"
+#import "Seashore.h"
 #import "AbstractTool.h"
 #import "SeaPlugins.h"
 #import "EffectOptions.h"
@@ -29,6 +29,12 @@
     EffectOptions *options;
     
     PluginClass *currentPlugin;
+    
+    NSView *pluginView;
+    
+    long lastPointTime;
+    
+    PluginClass *lastPlugin;
 }
 
 /*!
@@ -41,7 +47,6 @@
 				The mouse down event.
 */
 - (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event;
-
 
 /*!
     @method        selectEffect
@@ -81,5 +86,15 @@
     @result        returns the current effect or nil.
 */
 - (PluginClass*)plugin;
+
+- (void)settingsChanged;
+
+- (IBAction)apply:(id)sender;
+- (IBAction)reset:(id)sender;
+
+- (IBAction)reapply:(id)sender;
+- (BOOL)hasLastEffect;
+
+-(BOOL)shouldDrawPoints;
 
 @end

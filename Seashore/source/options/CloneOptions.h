@@ -1,5 +1,5 @@
-#import "Globals.h"
-#import "AbstractPaintOptions.h"
+#import "Seashore.h"
+#import "BrushOptions.h"
 
 /*!
 	@class		CloneOptions
@@ -10,7 +10,7 @@
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
 
-@interface CloneOptions : AbstractPaintOptions {
+@interface CloneOptions : BrushOptions {
 
 	// A checkbox that when checked implies that the tool should consider all pixels not those just in the current layer
 	IBOutlet id mergedCheckbox;
@@ -18,6 +18,8 @@
 	// A label indicating the source of the clone
 	IBOutlet id sourceLabel;
 	
+    __weak IBOutlet NSTextField *opacityLabel;
+    __weak IBOutlet NSSlider *opacitySlider;
 }
 
 /*!
@@ -43,12 +45,6 @@
 				Ignored.
 */
 - (IBAction)mergedChanged:(id)sender;
-
-/*!
-	@method		update
-	@discussion	Updates the options panel.
-*/
-- (void)update;
 
 /*!
 	@method		shutdown

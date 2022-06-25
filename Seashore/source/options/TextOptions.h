@@ -1,5 +1,6 @@
-#import "Globals.h"
-#import "AbstractPaintOptions.h"
+#import "Seashore.h"
+#import "AbstractScaleOptions.h"
+#import "NSTextFieldRedirect.h"
 
 /*!
 	@class		TextOptions
@@ -10,7 +11,7 @@
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
 
-@interface TextOptions : AbstractPaintOptions {
+@interface TextOptions : AbstractScaleOptions {
 
 	// The proxy object
 	IBOutlet id seaProxy;
@@ -20,19 +21,24 @@
 
 	// The checkbox specifying the outline of the font
 	IBOutlet id outlineCheckbox;
-	
-    // if checked, create a new layer on text add
-    IBOutlet id newLayerCheckbox;
-    
+
     // The slider specifying the outline of the font
 	IBOutlet id outlineSlider;
 		
 	// A label specifying the font
 	IBOutlet id fontLabel;
+
+    IBOutlet NSTextFieldRedirect *textArea;
 	
-	// The font manager associated with the text tool
-	id fontManager;
+    __weak IBOutlet NSTextField *lineSpacingLabel;
+
+    __weak IBOutlet NSSlider *lineSpacing;
+
+    // The font manager associated with the text tool
+	NSFontManager *fontManager;
 	
+    __weak IBOutlet NSButton *addNewLayerButton;
+    __weak IBOutlet NSButton *mergeWithLayerButton;
 }
 
 /*!
@@ -66,20 +72,6 @@
 - (NSTextAlignment)alignment;
 
 /*!
-	@method		useSubpixel
-	@discussion	Returns whether subpxiel rendering should be used.
-	@result		Returns YES if subpixel rendering should be used, NO otherwise.
-*/
-- (BOOL)useSubpixel;
-
-/*!
-    @method        shouldAddTextAsNewLayer
-    @discussion    Returns whether text should be added as a new layer
-    @result        Returns YES if text should be added as a new layer, NO otherwise.
-*/
-- (BOOL)shouldAddTextAsNewLayer;
-
-/*!
 	@method		outline
 	@discussion	Returns the number of points the outline should be.
 	@result		Returns an integer indicating the number of points the outline should be
@@ -95,18 +87,16 @@
 */
 - (BOOL)useTextures;
 
-/*!
-	@method		update
-	@discusison	Updates the options and tool after a change.
-	@param		sender
-				Ignored.
-*/
-- (IBAction)update:(id)seder;
+-(float)lineSpacing;
 
 /*!
 	@method		shutdown
 	@discussion	Saves current options upon shutdown.
 */
 - (void)shutdown;
+
+- (NSString*)text;
+
+-(void)reset;
 
 @end

@@ -5,67 +5,73 @@
 #import "SeaSelection.h"
 #import "AbstractOptions.h"
 #import "SeaContent.h"
+#import "AbstractSelectOptions.h"
 
 @implementation AbstractSelectTool
 
-- (void)mouseDownAt:(IntPoint)localPoint withEvent:(NSEvent *)event
+- (void)downHandler:(IntPoint)localPoint withEvent:(NSEvent *)event
 {	
-	if([[document selection] active]){
-		/* incidentally, we should only be translating when the mode is default
-		 However, we don't know how to pass that logic in yet
-		 here it is:
-		 [(AbstractSelectOptions *)options selectionMode] == kDefaultMode
-		 */
-        IntPoint maskOffset = [[document selection] maskOffset];
-        IntSize maskSize = [[document selection] maskSize];
-		
-		[self mouseDownAt: localPoint
-				  forRect: [[document selection] globalRect]
-             withMaskRect: IntMakeRect(maskOffset.x,maskOffset.y,maskSize.width,maskSize.height)
-				  andMask: [(SeaSelection*)[document selection] mask]];
-		
-	}
+    [self mouseDownAt: localPoint
+              forRect: [[document selection] maskRect]
+         withMaskRect: [[document selection] maskRect]
+              andMask: [[document selection] mask]];
 }
 
-- (void)mouseDraggedTo:(IntPoint)localPoint withEvent:(NSEvent *)event
+- (void)dragHandler:(IntPoint)localPoint withEvent:(NSEvent *)event
 {
-	if([[document selection] active]){
-		IntRect newRect = [self mouseDraggedTo: localPoint
-									   forRect: [[document selection] globalRect]
-									   andMask: [(SeaSelection*)[document selection] mask]];
-		if(scalingDir > kNoDir && !translating){
-			[[document selection] scaleSelectionTo: newRect
-											  from: [self preScaledRect]
-									 interpolation: NSImageInterpolationHigh
-										 usingMask: [self preScaledMask]];
-		}else if (translating && scalingDir == kNoDir){
-            [[document selection] moveSelection:localPoint fromOrigin:moveOrigin];
-            moveOrigin = localPoint;
-		}
-	}
+    IntRect newRect = [self mouseDraggedTo: localPoint
+                                   forRect: [[document selection] maskRect] // TODO
+                                   andMask: [[document selection] mask]];
+    if(scalingDir > kNoDir && !translating){
+        [[document selection] scaleSelectionTo: newRect
+                                          from: [self preScaledRect]
+                                 interpolation: NSImageInterpolationHigh
+                                     usingMask: [self preScaledMask]];
+    }else if (translating && scalingDir == kNoDir){
+        [[document selection] moveSelection:localPoint fromOrigin:moveOrigin];
+        moveOrigin = localPoint;
+    }
 }
 
-- (void)mouseUpAt:(IntPoint)localPoint withEvent:(NSEvent *)event
+- (void)upHandler:(IntPoint)localPoint withEvent:(NSEvent *)event
 {
-	if([[document selection] active]){
-		[self mouseUpAt: localPoint
-				forRect: [[document selection] globalRect]
-				andMask: [(SeaSelection*)[document selection] mask]];
-        
-        // Also, we universally float the selection if alt is down
-        if([[self getOptions] modifier] == kAltModifier) {
-            [[document contents] makeSelectionFloat:NO];
-        }
-	}
+    [self mouseUpAt: localPoint
+            forRect: [[document selection] maskRect] // TODO
+            andMask: [[document selection] mask]];
+
 }
 
 - (void)cancelSelection
 {
 	translating = NO;
 	scalingDir = kNoDir;
-
 	intermediate = NO;
 	[[document helpers] selectionChanged];
+}
+
+- (void)switchingTools:(BOOL)active
+{
+    intermediate=FALSE;
+}
+
+- (void)updateCursor:(IntPoint)p cursors:(SeaCursors*)cursors
+{
+    int selectionMode = [(AbstractSelectOptions *)[self getOptions] selectionMode];
+
+    if(selectionMode == kAddMode){
+        [[cursors addCursor] set];
+        return;
+    }else if (selectionMode == kSubtractMode) {
+        [[cursors subtractCursor] set];
+        return;
+    }
+
+    if([[document selection] active]){
+        IntRect selectionRect = [[document selection] maskRect];
+        return [cursors handleRectCursors:selectionRect point:p cursor:[cursors crosspointCursor]];
+    }
+    [[cursors crosspointCursor] set];
+    return;
 }
 
 @end

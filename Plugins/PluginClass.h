@@ -1,11 +1,17 @@
 #import <Cocoa/Cocoa.h>
-#import "SeaPlugins.h"
+#import "PluginData.h"
 
 #define MyRGBSpace NSDeviceRGBColorSpace
 #define MyGraySpace NSDeviceWhiteColorSpace
 
 #define MyRGBCS NSColorSpace.deviceRGBColorSpace
 #define MyGrayCS NSColorSpace.deviceGrayColorSpace
+
+#define gOurBundle [NSBundle bundleForClass:[self class]]
+#define gUserDefaults [NSUserDefaults standardUserDefaults]
+
+#define UserIntDefault(key,def) ([gUserDefaults objectForKey:key] ? [gUserDefaults integerForKey:key] : def)
+#define UserFloatDefault(key,def) ([gUserDefaults objectForKey:key] ? [gUserDefaults floatForKey:key] : def)
 
 /*!
 	@protocol	PluginClass
@@ -29,14 +35,6 @@
 - (id)initWithManager:(PluginData *)data;
 
 /*!
-	@method		type
-	@discussion	Returns the type of plug-in so Seashore can correctly interact
-				with the plug-in.
-	@result		Returns an integer indicating the plug-in's type.
-*/
-- (int)type;
-
-/*!
 	@method		name
 	@discussion	Returns the plug-in's name.
 	@result		Returns an NSString indicating the plug-in's name.
@@ -51,23 +49,23 @@
 - (NSString *)groupName;
 
 /*!
-	@method		run
-	@discussion	Runs the plug-in.
-*/
-- (void)run;
+ @method        instruction
+ @discussion    Returns the plug-in's instructions.
+ @result        Returns a NSString indicating the plug-in's instructions
+ (127 chars max).
+ */
+- (NSString *)instruction;
 
 /*!
-	@method		reapply
-	@discussion	Applies the plug-in with previous settings.
-*/
-- (void)reapply;
+ @method        sanity
+ @discussion    Returns a string to indicate this is a Seashore plug-in.
+ @result        Returns the NSString "Seashore Approved (Bobo)".
+ */
+- (NSString *)sanity;
 
-/*!
-	@method		canReapply
-	@discussion Returns whether or not the plug-in can be applied again.
-	@result		Returns YES if the plug-in can be applied again, NO otherwise.
-*/
-- (BOOL)canReapply;
+- (NSView*)initialize;
+
+- (void)execute;
 
 /*!
  @method        validateMenuItem
@@ -78,51 +76,15 @@
 
 @end
 
-@protocol PointPlugin <PluginClass>
-
-/*!
- @method        instruction
- @discussion    Returns the plug-in's instructions.
- @result        Returns a NSString indicating the plug-in's instructions
- (127 chars max).
- */
-- (NSString *)instruction;
-
-
-/*!
- @method        points
- @discussion    Returns the number of points that the plug-in requires from the
- effect tool to operate.
- @result        Returns an integer indicating the number of points the plug-in
- requires to operate.
- */
-- (int)points;
-
-@end
-
-@protocol PreviewPlugin
-/*!
- @method        preview:
- @discussion    Previews the plug-in's changes.
- @param        sender
- Ignored.
- */
-- (IBAction)preview:(id)sender;
-
-/*!
- @method        cancel:
- @discussion    Cancels the plug-in's changes.
- @param        sender
- Ignored.
- */
-- (IBAction)cancel:(id)sender;
-
-@end
-
 /*!
  @discussion apply a core image filter to the current plugin data - modifies the overlay and replace entries. Do not set the image on the filter.
  */
 void applyFilter(PluginData *pluginData,CIFilter *filter);
+
+/*!
+ @discussion apply a core image filter to the current plugin data - modifies the overlay for source compositing
+ */
+void applyFilterAsOverlay(PluginData *pluginData,CIFilter *filter);
 
 /*!
  @discussion apply a core image filter to the current plugin data - modifies the overlay and replace entries. Do not set the image on the filter.

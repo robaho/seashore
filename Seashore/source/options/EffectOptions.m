@@ -7,85 +7,73 @@
 #import "EffectTool.h"
 
 @implementation EffectOptions
+
 - (void)awakeFromNib
 {
-	int effectIndex=-1;
-	parentWin = nil;
-	NSArray *pointPlugins = [[SeaController seaPlugins] pointPlugins];
-	if ([pointPlugins count]) {
-		if ([gUserDefaults objectForKey:@"effectIndex"]) effectIndex = [gUserDefaults integerForKey:@"effectIndex"];
-        if (effectIndex < 0 || effectIndex >= [pointPlugins count]) {
-            [effectTableInstruction setStringValue:@""];
-            [clickCountLabel setStringValue:@""];
-            return;
-        }
-        
-        PluginClass* plugin = [pointPlugins objectAtIndex:effectIndex];
-
-		[effectTable noteNumberOfRowsChanged];
-		[effectTable selectRowIndexes:[NSIndexSet indexSetWithIndex:effectIndex] byExtendingSelection:NO];
-		[effectTable scrollRowToVisible:effectIndex];
-		[effectTableInstruction setStringValue:[plugin instruction]];
-		[clickCountLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"click count", @"Clicks remaining: %d"), [plugin points]]];
-		[(InfoPanel *)panel setPanelStyle:kVerticalPanelStyle];
-    }
-}
-
-- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(int)rowIndex
-{
-	return [[[SeaController seaPlugins] pointPluginsNames] objectAtIndex:rowIndex];
-}
-
-- (int)numberOfRowsInTableView:(NSTableView *)tableView
-{
-	return [[[SeaController seaPlugins] pointPluginsNames] count];
-}
-
-- (void)tableViewSelectionDidChange:(NSNotification *)notification
-{
-	NSArray *pointPlugins = [[SeaController seaPlugins] pointPlugins];
-    PluginClass* plugin =[pointPlugins objectAtIndex:[effectTable selectedRow]];
-	[effectTableInstruction setStringValue:[plugin instruction]];
-    EffectTool* tool = (EffectTool*)[[document tools] getTool:kEffectTool];
-    [tool selectEffect:plugin];
-}
-
-- (int)selectedRow
-{
-	return [effectTable selectedRow];
+    [self updateClickCount:self];
 }
 
 - (void)updateClickCount:(id)sender
 {
     EffectTool* tool = (EffectTool*)[[document tools] getTool:kEffectTool];
-    if(![tool plugin]) {
-        [effectTableInstruction setStringValue:@""];
-        [clickCountLabel setStringValue:@""];
+    if(!currentPlugin) {
+        [effectsLabel setStringValue:@"No effect selected."];
+//        [effectTableInstruction setHidden:TRUE];
+//        [clickCountLabel setHidden:TRUE];
+        [instructionsArea setHidden:TRUE];
+        if([tool hasLastEffect]){
+            [reapplyButton setHidden:FALSE];
+        } else {
+            [reapplyButton setHidden:TRUE];
+        }
+        [resetButton setHidden:TRUE];
+        [applyButton setHidden:TRUE];
     } else {
-        [clickCountLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"click count", @"Clicks remaining: %d"),
-                                         [[tool plugin] points] - [tool clickCount]]];
+        [reapplyButton setHidden:TRUE];
+        [applyButton setHidden:FALSE];
+        [resetButton setHidden:FALSE];
+        [instructionsArea setHidden:FALSE];
+        [effectsLabel setStringValue:[currentPlugin name]];
+        [effectTableInstruction setStringValue:[currentPlugin instruction]];
+        if([currentPlugin points]>0) {
+            [clickCountLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"click count", @"Clicks remaining: %d"),
+                                             [[tool plugin] points] - [tool clickCount]]];
+        }
+        [applyButton setEnabled:[currentPlugin points]==[tool clickCount]];
     }
 }
 
 - (IBAction)showEffects:(id)sender
 {
-	NSWindow *w = [document window];
-	NSPoint p = [w convertBaseToScreen:[w mouseLocationOutsideOfEventStream]];
-	[panel orderFrontToGoal:p onWindow: w];
-	parentWin = w;
-	
-	[NSApp runModalForWindow:panel];
+    NSMenu *menu = [[SeaController seaPlugins] menu];
+
+    [NSMenu popUpContextMenu:menu withEvent:[[NSApplication sharedApplication] currentEvent] forView:(NSButton *)sender];
 }
 
-- (IBAction)closeEffects:(id)sender
+- (void)installPlugin:(PluginClass*)plugin View:(NSView *)view
 {
+    [pluginViewContainer setSubviews:[NSArray array]];
 
-	[NSApp stopModal];
-	if (parentWin){
-		[parentWin removeChildWindow:panel];
-		parentWin = NULL;
-	}
-	[panel orderOut:self];	
+    if(view) {
+        [pluginViewContainer addSubview:view];
+    }
+    [pluginViewContainer setNeedsLayout:TRUE];
+
+    currentPlugin = plugin;
+
+    [self updateClickCount:self];
+
+    [instructionsArea setNeedsLayout:TRUE];
+
+    NSView *parent = [pluginViewContainer superview];
+    [view setNeedsLayout:TRUE];
+    [parent setNeedsLayout:TRUE];
+    [parent setNeedsDisplay:TRUE];
+}
+
+-(PluginClass*)currentPlugin
+{
+    return currentPlugin;
 }
 
 @end

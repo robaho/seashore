@@ -1,4 +1,4 @@
-#import "Globals.h"
+#import "Seashore.h"
 
 /*!
 	@enum		kMeasure...
@@ -74,18 +74,6 @@ enum {
 	@discussion	Saves current transparency colour upon shutdown.
 */
 - (void)shutdown;
-
-/*!
-	@method		activate
-	@discussion	Activates this utility with its document.
-*/
-- (void)activate;
-
-/*!
-	@method		deactivate
-	@discussion	Deactivates this utility.
-*/
-- (void)deactivate;
 
 /*!
 	@method		show:

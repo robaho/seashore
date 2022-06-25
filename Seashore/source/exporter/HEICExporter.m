@@ -3,9 +3,7 @@
 #import "SeaLayer.h"
 #import "SeaDocument.h"
 #import "SeaWhiteboard.h"
-#import "Bitmap.h"
 #import "SeaDocument.h"
-#import "Bitmap.h"
 #import <CoreImage/CoreImage.h>
 
 @implementation HEICExporter
@@ -85,19 +83,6 @@
     return result;
 }
 
-/*
-    if (spp == 4) {
-        for (k = 0; k < 3; k++)
-            sampleData[(j * 40 + i) * 4 + k + 1] = data[(y * width + x) * 4 + k];
-        sampleData[(j * 40 + i) * 4] = data[(y * width + x) * 4 + 3];
-    }
-    else {
-        for (k = 0; k < 3; k++)
-            sampleData[(j * 40 + i) * 4 + k + 1] = data[(y * width + x) * 2];
-        sampleData[(j * 40 + i) * 4] = data[(y * width + x) * 2 + 1];
-    }
-*/
-
 - (void)showOptions:(id)document
 {
     unsigned char *data;
@@ -118,32 +103,8 @@
     else
         [compressSlider setIntValue:printCompression];
     value = [self reviseCompression];
-    
-    // Set-up the sample data
-    data = [(SeaWhiteboard *)[document whiteboard] data];
-    sampleData = malloc(40 * 40 * 4);
-    memset(sampleData, 0x00, 40 * 40 * 4);
-    for (j = 0; j < 40; j++) {
-        for (i = 0; i < 40; i++) {
-            x = width / 2 - 20 + i;
-            y = height / 2 - 20 + j;
-            if (x >= 0 && x < width && y >= 0 && y < height) {
-                if (spp == 4) {
-                    for (k = 0; k < 4; k++)
-                        sampleData[(j * 40 + i) * 4 + k] = data[(y * width + x) * 4 + k];
-                }
-                else {
-                    for (k = 0; k < 3; k++)
-                        sampleData[(j * 40 + i) * 4 + k] = data[(y * width + x) * 2];
-                    sampleData[(j * 40 + i) * 4 + 3] = data[(y * width + x) * 2 + 1];
-                }
-            }
-        }
-    }
-    premultiplyBitmap(4, sampleData, sampleData, 40 * 40);
-    
-    // Now make an image for the view
-    realImageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&sampleData pixelsWide:40 pixelsHigh:40 bitsPerSample:8 samplesPerPixel:4 hasAlpha:YES isPlanar:NO colorSpaceName:NSDeviceRGBColorSpace bytesPerRow:40 * 4 bitsPerPixel:8 * 4];
+
+    realImageRep = [[document whiteboard] sampleImage];
     realImage = [[NSImage alloc] initWithSize:NSMakeSize(160, 160)];
     [realImage addRepresentation:realImageRep];
     [realImageView setImage:realImage];
@@ -162,7 +123,6 @@
         [gUserDefaults setInteger:webCompression forKey:@"heic web compression"];
     else
         [gUserDefaults setInteger:printCompression forKey:@"heic print compression"];
-    free(sampleData);
 }
 
 - (IBAction)compressionChanged:(id)sender
@@ -230,30 +190,17 @@
 - (BOOL)writeDocument:(id)document toFile:(NSString *)path
 {
     int width, height, spp, xres, yres;
-    unsigned char *srcData, *destData;
-    NSBitmapImageRep *imageRep;
     BOOL hasAlpha = true;
     
     // Get the data to write
-    srcData = [(SeaWhiteboard *)[document whiteboard] data];
     width = [(SeaContent *)[document contents] width];
     height = [(SeaContent *)[document contents] height];
     spp = [(SeaContent *)[document contents] spp];
     xres = [[document contents] xres];
     yres = [[document contents] yres];
 
-//    // Strip the alpha channel if necessary
-//    destData = stripAlpha(srcData,width,height,spp);
-//    if (destData!=srcData) {
-//        spp--;
-//        hasAlpha=false;
-//    }
-    
-    destData = srcData;
-    
-    // Make an image representation from the data
-    imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&destData pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:hasAlpha isPlanar:NO colorSpaceName:(spp > 2) ? MyRGBSpace : MyGraySpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
-    
+    NSBitmapImageRep *imageRep = [[document whiteboard] bitmap];
+
     if (!targetWeb) {
         // use color space of display device where the window is
         NSColorSpace *cs = [[[[document docView] window] screen] colorSpace];
@@ -272,8 +219,6 @@
     
     CIImage *ciImage = [[CIImage alloc] initWithBitmapImageRep:imageRep];
     
-//    CGColorSpaceRef csp = (spp == 4 ? CGColorSpaceCreateDeviceRGB() : CGColorSpaceCreateDeviceGray());
-    
     CIContext *ctx = [CIContext context];
     
     NSURL *url = [NSURL fileURLWithPath:path];
@@ -283,16 +228,7 @@
     if (@available(macOS 10.13.4, *)) {
         [ctx writeHEIFRepresentationOfImage:ciImage toURL:url format:ciFormat colorSpace:ciCS options:options error:nil];
     }
-//    // Finally build the JPEG 2000 data
-//    imageData = [imageRep representationUsingType:NSJPEG2000FileType properties:[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:[self reviseCompression]] forKey:NSImageCompressionFactor]];
-//
-//    // Save our file and let's go
-//    [imageData writeToFile:path atomically:YES];
-//
-    // If the destination data is not equivalent to the source data free the former
-    if (destData != srcData)
-        free(destData);
-    
+
     return YES;
 }
 

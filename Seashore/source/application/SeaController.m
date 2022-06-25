@@ -3,7 +3,7 @@
 #import "SeaDocument.h"
 #import "SeaWhiteboard.h"
 #import "SeaSelection.h"
-#import "SeaWarning.h"
+#import "SeaSupport.h"
 #import "SeaPrefs.h"
 #import "SeaHelp.h"
 #import "SeaTools.h"
@@ -23,7 +23,7 @@ id seaController;
 	
 	// Specify ourselves as NSApp's delegate
     [NSApp setDelegate:seaController];
-	
+
 	return self;
 }
 
@@ -51,9 +51,9 @@ id seaController;
 	return seaHelp;
 }
 
-- (id)seaWarning
+- (id)seaSupport
 {
-	return seaWarning;
+    return seaSupport;
 }
 
 + (id)seaPlugins
@@ -76,9 +76,9 @@ id seaController;
 	return [seaController seaHelp];
 }
 
-+ (id)seaWarning
++ (id)seaSupport
 {
-	return [seaController seaWarning];
+    return [seaController seaSupport];
 }
 
 - (IBAction)revert:(id)sender
@@ -95,12 +95,14 @@ id seaController;
 		[gCurrentDocument close];
 		newDocument = [[NSDocumentController sharedDocumentController] openDocumentWithContentsOfFile:filename display:NO];
 		window = [[[newDocument windowControllers] objectAtIndex:0] window];
-		[window setFrame:frame display:YES];
+		[window setFrame:frame display:NO];
 		[window makeKeyAndOrderFront:self];
-        
+
         if([[SeaController seaPrefs] zoomToFitAtOpen]) {
             [[newDocument docView] zoomToFit:self];
         }
+
+        [window setIsVisible:YES];
 	}
 }
 
@@ -118,13 +120,16 @@ id seaController;
     currentFrame.origin.x = screen.origin.x;
     
     NSRect lastFrame = NSMakeRect(currentFrame.origin.x+currentFrame.size.width+1,currentFrame.origin.y,currentFrame.size.width-1,currentFrame.size.height);
-    [[[currentDocument docView] window] setFrame:currentFrame display:YES];
-    [[[lastDocument docView] window] setFrame:lastFrame display:YES];
-    
+    [[[currentDocument docView] window] setFrame:currentFrame display:NO];
+    [[[lastDocument docView] window] setFrame:lastFrame display:NO];
+
     if([[SeaController seaPrefs] zoomToFitAtOpen]) {
         [[currentDocument docView] zoomToFit:self];
         [[lastDocument docView] zoomToFit:self];
     }
+
+    [[[currentDocument docView] window] setIsVisible:YES];
+    [[[lastDocument docView] window] setIsVisible:YES];
 }
 
 - (IBAction)showLicense:(id)sender
@@ -138,7 +143,7 @@ id seaController;
 	NSDocument *document;
 	
 	// Ensure that the document is valid
-	if(![[NSPasteboard generalPasteboard] availableTypeFromArray:[NSArray arrayWithObjects:NSTIFFPboardType, NSPICTPboardType, NSURLPboardType, NULL]]){
+	if(![[NSPasteboard generalPasteboard] availableTypeFromArray:[NSArray arrayWithObjects:NSTIFFPboardType, NSURLPboardType, NULL]]){
 		NSBeep();
 		return;
 	}
@@ -208,7 +213,7 @@ id seaController;
 			return gCurrentDocument && [gCurrentDocument fileName];
 		break;
 		case 400:
-			availableType = [[NSPasteboard generalPasteboard] availableTypeFromArray:[NSArray arrayWithObjects:NSTIFFPboardType, NSPICTPboardType, NSURLPboardType, NULL]];
+			availableType = [[NSPasteboard generalPasteboard] availableTypeFromArray:[NSArray arrayWithObjects:NSTIFFPboardType, NSURLPboardType, NULL]];
 			if (availableType)
 				return YES;
 			else

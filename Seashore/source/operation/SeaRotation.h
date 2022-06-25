@@ -1,11 +1,5 @@
-#import "Globals.h"
-
-/*!
-	@defined	kNumberOfRotationRecordsPerMalloc
-	@discussion	Defines the number of rotation undo records to allocate at a
-				single time.
-*/
-#define kNumberOfRotationRecordsPerMalloc 10
+#import "Seashore.h"
+#import "SeaLayerUndo.h"
 
 /*!
 	@struct		RotationUndoRecord
@@ -26,15 +20,20 @@
 				YES if the layer's alpha channel should be disabled after an
 				undo, NO otherwise.
 */
-typedef struct {
-	int index;
+
+@interface RotationUndoRecord : NSObject
+{
+    @public
+    
+    int index;
 	float rotation;
-	int undoIndex;
+	LayerSnapshot* snapshot;
 	IntRect rect;
 	BOOL isRotated;
 	BOOL withTrim;
 	BOOL disableAlpha;
-} RotationUndoRecord;
+}
+@end
 
 /*!
 	@class		SeaRotation
@@ -57,11 +56,6 @@ typedef struct {
 	
 	// The rotation value (in degrees)
 	IBOutlet id rotateValue;
-
-	// A list of rotation undo records required for undoing
-	RotationUndoRecord *undoRecords;
-	int undoMax, undoCount; 
-	
 }
 
 /*!
@@ -70,12 +64,6 @@ typedef struct {
 	@result		Returns instance upon success (or NULL otherwise).
 */
 - (id)init;
-
-/*!
-	@method		dealloc
-	@discussion	Frees memory occupied by an instance of this class.
-*/
-- (void)dealloc;
 
 /*!
 	@method		run:
@@ -115,15 +103,5 @@ typedef struct {
 				otherwise.
 */
 - (void)rotate:(float)degrees withTrim:(BOOL)trim;
-
-/*!
-	@method		undoRotation:
-	@discussion	Undoes the rotation of a layer (this method should only ever be
-				called by the undo manager following a call to
-				mouseUpAt:withEvent:).
-	@param		undoIndex
-				The index of the undo record to be used.
-*/
-- (void)undoRotation:(int)undoIndex;
 
 @end

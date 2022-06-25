@@ -34,7 +34,7 @@
 	IntRect cropRect;
 	int width, height;
 	
-	cropRect = [[document currentTool] cropRect];
+	cropRect = [(CropTool*)[document currentTool] cropRect];
 	if (cropRect.size.width < kMinImageSize) { NSBeep(); return; }
 	if (cropRect.size.height < kMinImageSize) { NSBeep(); return; }
 	if (cropRect.size.width > kMaxImageSize) { NSBeep(); return; }
@@ -42,7 +42,7 @@
 	width = [(SeaContent *)[document contents] width];
 	height = [(SeaContent *)[document contents] height];
 	[(SeaMargins *)[(SeaOperations *)[document operations] seaMargins] setMarginLeft:-cropRect.origin.x top:-cropRect.origin.y right:(cropRect.origin.x + cropRect.size.width) - width bottom:(cropRect.origin.y + cropRect.size.height) - height index:kAllLayers];
-    [[document currentTool] clearCrop];
+    [(CropTool*)[document currentTool] clearCrop];
 }
 
 - (IBAction)cropLayer:(id)sender {
@@ -52,8 +52,8 @@
     int index = [[document contents] activeLayerIndex];
     SeaLayer *activeLayer = [[document contents] layer:index];
     
-    cropRect = [[document currentTool] cropRect];
-    cropRect = IntConstrainRect([activeLayer localRect], cropRect);
+    cropRect = [(CropTool*)[document currentTool] cropRect];
+    cropRect = IntConstrainRect([activeLayer globalRect], cropRect);
     
     cropRect.origin.x -= [activeLayer xoff];
     cropRect.origin.y -= [activeLayer yoff];
@@ -68,7 +68,7 @@
     
     [(SeaMargins *)[(SeaOperations *)[document operations] seaMargins] setMarginLeft:-cropRect.origin.x top:-cropRect.origin.y right:(cropRect.origin.x + cropRect.size.width) - width bottom:(cropRect.origin.y + cropRect.size.height) - height index:index];
     
-    [[document currentTool] clearCrop];
+    [(CropTool*)[document currentTool] clearCrop];
 }
 
 

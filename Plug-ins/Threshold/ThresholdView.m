@@ -3,6 +3,15 @@
 
 @implementation ThresholdView
 
+#define HEIGHT 80
+
+- (ThresholdView*)initWithClass:(id)class
+{
+    self = [super init];
+    thresholdClass = class;
+    return self;
+}
+
 - (void)calculateHistogram:(PluginData *)pluginData
 {
 	unsigned char *data;
@@ -40,21 +49,32 @@
 	}
 	
 	for (i = 0; i < 256; i++) {
-		histogram[i] = (int)(((float)histogram[i] / (float)max) * 120.0);
+		histogram[i] = (int)(((float)histogram[i] / (float)max) * HEIGHT);
 	}
 }
 
 - (void)drawRect:(NSRect)rect
 {
 	int i;
+
+    NSSize size = [self bounds].size;
+    NSAffineTransform *tx = [NSAffineTransform transform];
+    [tx scaleXBy:size.width/256.0 yBy:size.height/HEIGHT];
+    [tx concat];
 	
-	[[NSColor blackColor] set];
+	[[NSColor controlTextColor] set];
 	for (i = 0; i < 256; i++) {
-		[NSBezierPath fillRect:NSMakeRect(i, 0, 1, histogram[i])];
+        NSRectFill(NSMakeRect(i, 0, 1, histogram[i]));
 	}
-	
-	[[NSColor colorWithCalibratedRed:0.0 green:0.0 blue:1.0 alpha:0.4] set];
-	[NSBezierPath fillRect:NSMakeRect(MIN([thresholdClass topValue], [thresholdClass bottomValue]), 0, abs([thresholdClass topValue] - [thresholdClass bottomValue]) + 1, 120)];
+
+    NSColor *accent = [[NSColor selectedControlTextColor] colorUsingColorSpace:MyRGBCS];
+    [[accent colorWithAlphaComponent:.4] set];
+    NSRectFillUsingOperation(NSMakeRect(MIN([thresholdClass topValue], [thresholdClass bottomValue]), 0, abs([thresholdClass topValue] - [thresholdClass bottomValue]) + 1, HEIGHT),NSCompositeSourceOver);
+}
+
+- (NSSize)intrinsicContentSize
+{
+    return NSMakeSize(256,HEIGHT);
 }
 
 @end

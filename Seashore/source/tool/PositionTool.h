@@ -1,108 +1,56 @@
-#import "Globals.h"
+#import "Seashore.h"
 #import "PositionOptions.h"
-#import "AbstractTool.h"
+#import "AbstractScaleTool.h"
+#import "SeaLayer.h"
+
+#define kNumberOfTransformRecordsPerMalloc 10
+
 
 /*!
 	@class		PositionTool
-	@abstract	The position tool allows layers to be repositioned within the
+	@abstract   	The position tool allows layers to be repositioned, scaled and rotated within the
 				document.
-	@discussion	N/A
-				<br><br>
-				<b>License:</b> GNU General Public License<br>
-				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
-
 @interface PositionTool : AbstractTool {
 
-	// The point from which the drag started
-	IntPoint initialPoint;
-	
-	// The mode of positioning
-	int mode;
+    // The point where the selection begun
+    IntPoint initialPoint;
 
-	// An outlet to an instance of a class with the same name
-	IBOutlet id seaOperations;
-	
-	// The scale and rotation values
-	float scale;
+    int x,y;
+    float scaleX,scaleY;
     // rotation is in radians
 	float rotation;
-	BOOL rotationDefined;
-    
+
+    float tempScaleX, tempScaleY;
+    float tempRotation;
+    int tempX,tempY;
+
+    int function;
+    int handle;
+
+    __weak IBOutlet NSButton *resetButton;
+    __weak IBOutlet NSButton *applyButton;
+    __weak IBOutlet NSButton *mergeButton;
+    __weak IBOutlet NSButton *scaleToFitButton;
+
     PositionOptions *options;
 
+    NSMutableArray *undoRecords;
+    int undoCount;
 }
 
-/*!
-	@method		mouseDownAt:withEvent:
-	@discussion	Handles mouse down events.
-	@param		where
-				Where in the document the mouse down event occurred (in terms of
-				the document's pixels).
-	@param		modifiers
-				The state of the modifiers at the time (see NSEvent).
-	@param		event
-				The mouse down event.
-*/
-- (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event;
+- (void)adjustOffset:(IntPoint)offset;
 
-/*!
-	@method		mouseDraggedTo:withEvent:
-	@discussion	Handles mouse dragging events.
-	@param		where
-				Where in the document the mouse down event occurred (in terms of
-				the document's pixels).
-	@param		modifiers
-				The state of the modifiers at the time (see NSEvent).
-	@param		event
-				The mouse dragged event.
-*/
-- (void)mouseDraggedTo:(IntPoint)where withEvent:(NSEvent *)event;
+- (NSAffineTransform*)transform:(SeaLayer*)layer;
 
-/*!
-	@method		mouseUpAt:withEvent:
-	@discussion	Handles mouse up events.
-	@param		where
-				Where in the document the mouse up event occurred (in terms of
-				the document's pixels).
-	@param		modifiers
-				The state of the modifiers at the time (see NSEvent).
-	@param		event
-				The mouse up event.
-*/
-- (void)mouseUpAt:(IntPoint)where withEvent:(NSEvent *)event;
+- (IntRect)bounds;
+- (IntRect)bounds:(SeaLayer*)layer;
 
-/*!
-	@method		scale
-	@discussion	Returns the scale value.
-	@result		Returns an floating point number representing the scale value.
-*/
-- (float)scale;
+- (IBAction)apply:(id)sender;
 
-/*!
-	@method		rotation
-	@discussion	Returns the rotation value.
-	@result		Returns an float representing the rotation value in degrees.
-*/
-- (float)rotation;
+- (IBAction)reset:(id)sender;
 
-/*!
-	@method		rotationDefined
-	@discussion	Returns whether or not the rotation value is defined.
-	@result		Returns YES if the rotation value is defined, NO otherwise.
-*/
-- (BOOL)rotationDefined;
+- (IBAction)zoomToFitBoundary:(id)sender;
 
-/*!
-	@method		undoToOrigin:forLayer:
-	@discussion	Undoes the repositioning of a layer (this method should only
-				ever be called by the undo manager following a call to
-				mouseDownAt:withEvent:).
-	@param		origin
-				The position to restore the given layer's origin to.
-	@param		index
-				The index of the layer to restore.
-*/
-- (void)undoToOrigin:(IntPoint)origin forLayer:(int)index;
-
+- (IBAction)scaleToFit:(id)sender;
 @end

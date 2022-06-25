@@ -53,18 +53,8 @@
     [[NSColor whiteColor] set];
     [[NSBezierPath bezierPathWithRect:rect] fill];
     
-	NSImage *image = NULL;
-
-	// Get the correct image for displaying, this has the correct dpi
-	image = [[document whiteboard] printableImage];
-	
-	// Set the background color
-    
-	// We want our image flipped
-	[image setFlipped:YES];
-	
-	// Draw the image to screen
-    [image drawInRect:rect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+    NSImage *image = [[document whiteboard] printableImage];;
+    [image drawInRect:rect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:TRUE hints:NULL];
 }
 
 - (BOOL)knowsPageRange:(NSRangePointer)range

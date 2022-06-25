@@ -57,17 +57,15 @@
 	[[gCurrentDocument docView] zoomOut:sender];
 }
 
+- (IBAction)showSupportSeashore:(id)sender
+{
+    [[SeaController seaSupport] showSupportSeashore:sender];
+}
+
 - (IBAction)toggleSoftProof:(id)sender
 {
     [[gCurrentDocument whiteboard] toggleSoftProof:(ColorSyncProfileRef)NULL];
 }
-
-#ifdef PERFORMANCE
-- (IBAction)resetPerformance:(id)sender
-{
-	[[gCurrentDocument whiteboard] resetPerformance];
-}
-#endif
 
 - (IBAction)importLayer:(id)sender
 {
@@ -118,7 +116,7 @@
 
 - (IBAction)deleteLayer:(id)sender
 {
-	id document = gCurrentDocument;
+	SeaDocument *document = gCurrentDocument;
 	
 	if ([[document contents] layerCount] > 1)
 		[(SeaContent *)[document contents] deleteLayer:kActiveLayer];
@@ -162,22 +160,14 @@
 	[[gCurrentDocument contents] clearAllLinks];
 }
 
-- (IBAction)toggleFloatingSelection:(id)sender
+- (IBAction)layerFromSelection:(id)sender
 {
-	id selection = [gCurrentDocument selection];
-	id contents = [gCurrentDocument contents];
-	
-	if ([selection floating]) {
-		[contents anchorLayer];
-	}
-	else {
-		[contents makeSelectionFloat:NO];
-	}
+    [[gCurrentDocument contents] layerFromSelection:NO];
 }
 
 - (IBAction)duplicate:(id)sender
 {
-	[[gCurrentDocument contents] makeSelectionFloat: YES];
+	[[gCurrentDocument contents] layerFromSelection: YES];
 }
 
 - (IBAction)toggleLayerAlpha:(id)sender
@@ -245,12 +235,7 @@
 
 - (IBAction)setMargins:(id)sender
 {
-	[(SeaMargins *)[(SeaOperations *)[gCurrentDocument operations] seaMargins] run:YES];
-}
-
-- (IBAction)setLayerMargins:(id)sender
-{
-	[(SeaMargins *)[(SeaOperations *)[gCurrentDocument operations] seaMargins] run:NO];
+	[(SeaMargins *)[(SeaOperations *)[gCurrentDocument operations] seaMargins] show];
 }
 
 - (IBAction)flipDocHorizontally:(id)sender;
@@ -303,14 +288,24 @@
 	[(SeaScale *)[(SeaOperations *)[gCurrentDocument operations] seaScale] run:NO];
 }
 
-- (IBAction)flipHorizontally:(id)sender
+- (IBAction)flipLayerHorizontally:(id)sender
 {
-	[(SeaFlip *)[(SeaOperations *)[gCurrentDocument operations] seaFlip] run:kHorizontalFlip];
+    [(SeaFlip *)[(SeaOperations *)[gCurrentDocument operations] seaFlip] flipLayerHorizontally];
 }
 
-- (IBAction)flipVertically:(id)sender
+- (IBAction)flipLayerVertically:(id)sender
 {
-	[(SeaFlip *)[(SeaOperations *)[gCurrentDocument operations] seaFlip] run:kVerticalFlip];
+    [(SeaFlip *)[(SeaOperations *)[gCurrentDocument operations] seaFlip] flipLayerVertically];
+}
+
+- (IBAction)flipSelectionHorizontally:(id)sender
+{
+	[(SeaFlip *)[(SeaOperations *)[gCurrentDocument operations] seaFlip] flipSelectionHorizontally];
+}
+
+- (IBAction)flipSelectionVertically:(id)sender
+{
+	[(SeaFlip *)[(SeaOperations *)[gCurrentDocument operations] seaFlip] flipSelectionVertically];
 }
 
 - (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)sender
@@ -331,7 +326,7 @@
 
 - (IBAction)toggleLayers:(id)sender
 {
-	[[gCurrentDocument pegasusUtility] toggleLayers:sender];
+	[[gCurrentDocument layersUtility] toggleLayers:sender];
 }
 
 - (IBAction)toggleInformation:(id)sender
@@ -376,23 +371,19 @@
 
 - (BOOL)validateMenuItem:(id)menuItem
 {
-	id document = gCurrentDocument;
-	id contents = [document contents];
+	SeaDocument *document = gCurrentDocument;
+	SeaContent *contents = [document contents];
 	
 	// Never when there is no document
 	if (document == NULL)
 		return NO;
-	
+
     int tag = (int)[menuItem tag];
 	
 	// Sometimes we always enable
 	if (tag == 999)
 		return YES;
 	
-	// Never when the document is locked
-	if ([document locked])
-		return NO;
-    
     if(tag>=270 && tag<=273){
         return [[gCurrentDocument docView] validateMenuItem:menuItem];
     }
@@ -400,7 +391,7 @@
 	// Sometimes in other cases
 	switch (tag) {
 		case 200:
-			if([[[document window] contentView] visibilityForRegion: kSidebar])
+			if([[[document window] contentView] visibilityForRegion: kLayersPanel])
 				[menuItem setTitle:@"Hide Layers"];
 			else
 				[menuItem setTitle:@"Show Layers"];
@@ -414,7 +405,7 @@
 			return YES;
 		break;
 		case 191:
-			if([[[document window] contentView] visibilityForRegion: kOptionsBar])
+			if([[[document window] contentView] visibilityForRegion: kOptionsPanel])
 				[menuItem setTitle:@"Hide Options Bar"];
 			else
 				[menuItem setTitle:@"Show Options Bar"];
@@ -462,7 +453,7 @@
 		break;
 		case 240:
 		case 241:
-			[menuItem setState:[menuItem tag] == 240 + [(SeaContent *)contents type]];
+			[menuItem setState:[menuItem tag] == 240 + [contents type]];
 		break;
 		case 250:
 			if ([[contents activeLayer] hasAlpha])
@@ -477,13 +468,15 @@
 				return NO;
 		break;
 		case 300:
-			if ([[document selection] floating])
-				[menuItem setTitle:LOCALSTR(@"anchor layer", @"Anchor Layer")];
-			else
-				[menuItem setTitle:LOCALSTR(@"float selection", @"Float Selection")];
+            [menuItem setTitle:LOCALSTR(@"layer from selection", @"New Layer from Selection")];
 			if (![[document selection] active])
 				return NO;
 		break;
+        case 310:
+        case 311:
+            if (![[document selection] active])
+                return NO;
+            break;
 		case 320:
 		case 321:
 		case 322:
@@ -496,16 +489,10 @@
 		case 411:
 		case 412:
 		case 413:
-            // floating is like any other layer
-//			if ([[document selection] floating])
-//				return NO;
 		break;
 		case 450:
 		case 451:
 		case 452:
-            // floating is like any other layer
-//			if([[document selection] floating])
-//				return NO;
 			[menuItem setState: [[document contents] selectedChannel] == [menuItem tag] % 10];
 		break;
 		case 460:
@@ -518,9 +505,6 @@
 		case 346:
 		case 347:
 		case 349:
-            // disabled check, because multiple floating layers are allowed
-//			if (![[contents activeLayer] linked])
-//				return NO;
 		break;
 		case 382:
 			if ([[contents activeLayer] linked]){

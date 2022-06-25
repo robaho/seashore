@@ -49,4 +49,14 @@
 	return ignoresMove;
 }
 
+- (void)setOneToOne:(BOOL)b
+{
+    oneToOne = b;
+}
+
+- (BOOL)isOneToOne
+{
+    return oneToOne;
+}
+
 @end

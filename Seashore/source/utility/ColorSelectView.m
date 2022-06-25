@@ -6,10 +6,8 @@
 #import "AbstractTool.h"
 #import "TextureUtility.h"
 #import "SeaTexture.h"
-#import "TextureUtility.h"
 #import "SeaWhiteboard.h"
 #import "ToolboxUtility.h"
-#import "Bitmap.h"
 
 @implementation ColorSelectView
 
@@ -22,6 +20,8 @@
 	// Initialize the super
 	if (![super initWithFrame:frame])
 		return NULL;
+
+    [self setFrameSize:NSMakeSize(48,48)];
 	
 	// Set data members appropriately
 	mouseDownOnSwap = NO;
@@ -230,7 +230,6 @@
 			[gColorPanel setColor:[[document toolboxUtility] background]];
 		
 	}
-	
 	// Call for an update of the view
 	[self setNeedsDisplay:YES];
 }

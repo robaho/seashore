@@ -1,4 +1,4 @@
-#import "Globals.h"
+#import "Seashore.h"
 
 /*!
 	@class		LayerDataSource
@@ -9,9 +9,11 @@
 	<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli	
 */
 
+@class SeaDocument;
+
 @interface LayerDataSource : NSObject {
 	// The document this data source is connected to
-	__weak IBOutlet id document;
+	__weak IBOutlet SeaDocument *document;
 
 	// The nodes that are being dragged (if any)
 	// This should be null during no dragging

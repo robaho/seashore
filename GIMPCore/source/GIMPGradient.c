@@ -659,11 +659,19 @@ void GCFillGradient(unsigned char *dest, int destWidth, int destHeight, IntRect 
 	rbd.fg.b = (double)info.start_color[2] / 255.0;
 	rbd.fg.a = (double)info.start_color[3] / 255.0;
 
+    rbd.fg.r *= rbd.fg.a;
+    rbd.fg.b *= rbd.fg.a;
+    rbd.fg.g *= rbd.fg.a;
+
 	rbd.bg.r = (double)info.end_color[0] / 255.0;
 	rbd.bg.g = (double)info.end_color[1] / 255.0;
 	rbd.bg.b = (double)info.end_color[2] / 255.0;
 	rbd.bg.a = (double)info.end_color[3] / 255.0;
-	
+
+    rbd.bg.r *= rbd.bg.a;
+    rbd.bg.b *= rbd.bg.a;
+    rbd.bg.g *= rbd.bg.a;
+
 	switch (info.repeat) {
 		case GIMP_REPEAT_NONE:
 			rbd.repeat_func = gradient_repeat_none;

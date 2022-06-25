@@ -9,58 +9,40 @@
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
 #import <CoreGraphics/CoreGraphics.h>
+#import <Accelerate/Accelerate.h>
 
 #import "PluginClass.h"
+#import "PluginData.h"
 
 inline void premultiplyBitmap(int spp, unsigned char *output, unsigned char *input, int length)
 {
-    int i, j, alphaPos, temp;
-    
-    for (i = 0; i < length; i++) {
-        alphaPos = (i + 1) * spp - 1;
-        if (input[alphaPos] == 255) {
-            for (j = 0; j < spp; j++)
-                output[i * spp + j] = input[i * spp + j];
-        }
-        else {
-            if (input[alphaPos] != 0) {
-                for (j = 0; j < spp - 1; j++)
-                    output[i * spp + j] = int_mult(input[i * spp + j], input[alphaPos], temp);
-                output[alphaPos] = input[alphaPos];
-            }
-            else {
-                for (j = 0; j < spp; j++)
-                    output[i * spp + j] = 0;
-            }
+    if(spp==4) {
+        vImage_Buffer obuf = {.data=output,.height=1,.width=length,.rowBytes=length*spp};
+        vImage_Buffer ibuf = {.data=input,.height=1,.width=length,.rowBytes=length*spp};
+
+        vImagePremultiplyData_RGBA8888(&ibuf,&obuf,0);
+    } else { // spp==2 which is grayscale with alpha
+        int temp;
+        for(int i=0;i<length;i++) {
+            *output = int_mult(*input,*(input+1), temp);
+            output+=2;
+            input+=2;
         }
     }
 }
 
 inline void unpremultiplyBitmap(int spp, unsigned char *output, unsigned char *input, int length)
 {
-    int i, j, alphaPos, newValue;
-    double alphaRatio;
-    
-    for (i = 0; i < length; i++) {
-        alphaPos = (i + 1) * spp - 1;
-        if (input[alphaPos] == 255) {
-            for (j = 0; j < spp; j++)
-                output[i * spp + j] = input[i * spp + j];
-        }
-        else {
-            if (input[alphaPos] != 0) {
-                alphaRatio = 255.0 / input[alphaPos];
-                for (j = 0; j < spp - 1; j++) {
-                    newValue = 0.5 + input[i * spp + j] * alphaRatio;
-                    newValue = MIN(newValue, 255);
-                    output[i * spp + j] = newValue;
-                }
-                output[alphaPos] = input[alphaPos];
-            }
-            else {
-                for (j = 0; j < spp; j++)
-                    output[i * spp + j] = 0;
-            }
+    if(spp==4) {
+        vImage_Buffer obuf = {.data=output,.height=1,.width=length,.rowBytes=length*spp};
+        vImage_Buffer ibuf = {.data=input,.height=1,.width=length,.rowBytes=length*spp};
+
+        vImageUnpremultiplyData_RGBA8888(&ibuf,&obuf,0);
+    } else {
+        for(int i=0;i<length;i++) {
+            *output = MIN((*input * 255 + 128)/ *(input+1),255);
+            output+=2;
+            input+=2;
         }
     }
 }
@@ -68,7 +50,7 @@ inline void unpremultiplyBitmap(int spp, unsigned char *output, unsigned char *i
 /*
  convert NSImageRep to a format Seashore can work with, which is RGBA, or GrayA. If spp is 4, then RGBA, if 2, the GrayA
  */
-void convertImageRep(NSImageRep *imageRep,unsigned char *dest,int width,int height,int spp) {
+void convertImageRepWithData(NSImageRep *imageRep,unsigned char *dest,int width,int height,int spp) {
     
     NSColorSpaceName csname = MyRGBSpace;
     if (spp==2) {
@@ -89,23 +71,13 @@ void convertImageRep(NSImageRep *imageRep,unsigned char *dest,int width,int heig
     [NSGraphicsContext setCurrentContext:ctx];
     [imageRep drawInRect:rect fromRect:rect operation:NSCompositingOperationCopy fraction:1.0 respectFlipped:NO hints:NULL];
     [NSGraphicsContext restoreGraphicsState];
-    
-    unpremultiplyBitmap(spp,dest,dest,width*height);
 }
 
 CIImage *createCIImage(PluginData *pluginData){
-    int spp = [pluginData spp];
-    int width = [pluginData width];
-    int height = [pluginData height];
-    
-    unsigned char *data = [pluginData data];
-    
-    NSBitmapFormat bmf = NSBitmapFormatAlphaNonpremultiplied;
-    
-    NSBitmapImageRep *imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:TRUE isPlanar:NO colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace bitmapFormat:bmf bytesPerRow:width * spp bitsPerPixel:8 * spp];
-    
-    CIImage *inputImage = [[CIImage alloc] initWithBitmapImageRep:imageRep];
-    
+    CGImageRef bitmap = [pluginData bitmap];
+    CIImage *inputImage = [CIImage imageWithCGImage:bitmap];
+    CGImageRelease(bitmap);
+
     return inputImage;
 }
 
@@ -119,10 +91,10 @@ void renderCIImage(PluginData *pluginData,CIImage *image){
     [pluginData setOverlayBehaviour:kReplacingBehaviour];
     
     unsigned char *overlay = [pluginData overlay];
-    
+
     NSCIImageRep *imageRep = [NSCIImageRep imageRepWithCIImage:image];
     
-    convertImageRep(imageRep,overlay,width,height,spp);
+    convertImageRepWithData(imageRep,overlay,width,height,spp);
     
     unsigned char *replace = [pluginData replace];
     int i;
@@ -141,11 +113,31 @@ void renderCIImage(PluginData *pluginData,CIImage *image){
 void applyFilter(PluginData *pluginData,CIFilter *filter) {
     CIImage *inputImage = createCIImage(pluginData);
 
-    [filter setValue:inputImage forKey:@"inputImage"];
+    if([[filter inputKeys] containsObject:@"inputImage"]){
+        [filter setValue:inputImage forKey:@"inputImage"];
+    }
+
     CIImage *outputImage = [filter valueForKey: @"outputImage"];
     
     renderCIImage(pluginData,outputImage);
 }
+
+void applyFilterAsOverlay(PluginData *pluginData,CIFilter *filter) {
+    CIImage *outputImage = [filter valueForKey: @"outputImage"];
+
+    [pluginData setOverlayOpacity:255];
+    [pluginData setOverlayBehaviour:kNormalBehaviour];
+    int width = [pluginData width];
+    int height = [pluginData height];
+    int spp = [pluginData spp];
+
+    unsigned char *overlay = [pluginData overlay];
+
+    NSCIImageRep *imageRep = [NSCIImageRep imageRepWithCIImage:outputImage];
+
+    convertImageRepWithData(imageRep,overlay,width,height,spp);
+}
+
 
 void applyFilters(PluginData *pluginData,CIFilter *filterA,CIFilter *filterB) {
     CIImage *inputImage = createCIImage(pluginData);
@@ -163,7 +155,9 @@ void applyFilterBG(PluginData *pluginData,CIFilter *filter) {
     
     CIColor *backColor = createCIColor([pluginData backColor]);
 
-    [filter setValue:inputImage forKey:@"inputImage"];
+    if([[filter inputKeys] containsObject:@"inputImage"]){
+        [filter setValue:inputImage forKey:@"inputImage"];
+    }
     CIImage *outputImage = [filter valueForKey: @"outputImage"];
     
     filter = [CIFilter filterWithName:@"CIConstantColorGenerator"];
@@ -184,7 +178,9 @@ void applyFilterFG(PluginData *pluginData,CIFilter *filter) {
     
     CIColor *foreColor = createCIColor([pluginData foreColor]);
 
-    [filter setValue:inputImage forKey:@"inputImage"];
+    if([[filter inputKeys] containsObject:@"inputImage"]){
+        [filter setValue:inputImage forKey:@"inputImage"];
+    }
     CIImage *outputImage = [filter valueForKey: @"outputImage"];
     
     filter = [CIFilter filterWithName:@"CIConstantColorGenerator"];

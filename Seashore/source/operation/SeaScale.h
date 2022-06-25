@@ -1,11 +1,5 @@
-#import "Globals.h"
-
-/*!
-	@defined	kNumberOfScaleRecordsPerMalloc
-	@discussion	Defines the number of scale undo records to allocate at a single
-				time.
-*/
-#define kNumberOfScaleRecordsPerMalloc 10
+#import "Seashore.h"
+#import "SeaLayerUndo.h"
 
 /*!
 	@struct		ScaleUndoRecord
@@ -39,7 +33,18 @@
 				specifying the layers' sizes and origins before they were
 				scaled.
 */
-typedef struct {
+
+@interface ScaleSnapshotUndoRecord : NSObject
+{
+    @public
+    LayerSnapshot *snapshot;
+    IntRect rect;
+}
+@end
+
+@interface ScaleUndoRecord : NSObject
+{
+    @public
 	int index;
 	int unscaledWidth;
 	int unscaledHeight;
@@ -50,9 +55,9 @@ typedef struct {
 	int interpolation;
 	BOOL isMoving;
 	BOOL isScaled;
-	int *indicies;
-	IntRect *rects;
-} ScaleUndoRecord;
+	NSMutableArray<ScaleSnapshotUndoRecord*> *records;
+}
+@end
 
 /*!
 	@class		SeaScale
@@ -91,10 +96,6 @@ typedef struct {
 	// The interpolation style to be used for scaling. The "tag" for each item is the associated NSImageInterpolation value.
 	IBOutlet id interpolationPopup;
 	
-	// A list of various undo records required for undoing
-	ScaleUndoRecord *undoRecords;
-	int undoMax, undoCount; 
-	
 	// A label specifying the layer or document being scaled
     IBOutlet id selectionLabel;
 	
@@ -111,12 +112,6 @@ typedef struct {
 	@result		Returns instance upon success (or NULL otherwise).
 */
 - (id)init;
-
-/*!
-	@method		dealloc
-	@discussion	Frees memory occupied by an instance of this class.
-*/
-- (void)dealloc;
 
 /*!
 	@method		run:
@@ -184,18 +179,6 @@ typedef struct {
 				the entire document).
 */
 - (void)scaleToWidth:(int)width height:(int)height xorg:(int)xorg yorg:(int)yorg interpolation:(int)interpolation index:(int)index;
-
-
-/*!
-	@method		undoScale:
-	@discussion	Undoes a scaling operation (this method should only ever be
-				called by the undo manager following a call to
-				scaleToWidth:height:interpolation:index:).
-	@param		undoIndex
-				The index of the undo record corresponding to the scale
-				operation to be undone.
-*/
-- (void)undoScale:(int)undoIndex;
 
 /*!
 	@method		togglePreserveSize:

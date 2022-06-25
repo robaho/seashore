@@ -11,7 +11,7 @@
 	return self;
 }
 
-- (int)type
+- (int)points
 {
 	return 0;
 }
@@ -31,7 +31,7 @@
 	return @"Seashore Approved (Bobo)";
 }
 
-- (void)run
+- (void)execute
 {
     IntRect selection;
     
@@ -92,10 +92,11 @@
         for(int col=0;col<selwidth;col++){
             int index = (row+selection.origin.y)*width+(col+selection.origin.x);
             int sindex = (row*selwidth)*dspp+col*dspp;
-            int c = buffer[sindex]/255.0;
-            int m = buffer[sindex+1]/255.0;
-            int y = buffer[sindex+2]/255.0;
-            int k = buffer[sindex+3]/255.0;
+
+            double c = buffer[sindex]/255.0;
+            double m = buffer[sindex+1]/255.0;
+            double y = buffer[sindex+2]/255.0;
+            double k = buffer[sindex+3]/255.0;
 
             int r = 255 * (1-c)*(1-k);
             int g = 255 * (1-m)*(1-k);
@@ -105,21 +106,9 @@
             overlay[index*spp+1]=g;
             overlay[index*spp+2]=b;
             overlay[index*spp+3]=data[index*spp+3];
-            replace[index]=25;
+            replace[index]=255;
         }
     }
-
-    [pluginData apply];
-}
-
-- (void)reapply
-{
-	[self run];
-}
-
-- (BOOL)canReapply
-{
-	return YES;
 }
 
 + (BOOL)validatePlugin:(PluginData*)pluginData

@@ -21,26 +21,19 @@
 
 - (void)awakeFromNib
 {
+    view.borderMargin=16;
     [view addSubview:blankView positioned:NSWindowAbove relativeTo:horizontalLine ];
     lastView = blankView;
-    
+
+    [view setNeedsLayout:YES];
+    [view setNeedsDisplay:YES];
+
     NSArray *allTools = [[document tools] allTools];
     NSEnumerator *e = [allTools objectEnumerator];
     AbstractTool *tool;
     while(tool = [e nextObject]){
         [tool setOptions: [self getOptions:[tool toolId]]];
     }
-}
-
-
-- (void)activate
-{
-    [self update];
-}
-
-- (void)deactivate
-{
-    [self update];
 }
 
 - (void)shutdown
@@ -128,40 +121,43 @@
 - (void)update
 {
     AbstractOptions *currentOptions = [self currentOptions];
-    
+
+    NSRect frame = [lastView frame];
     // If there are no current options put up a blank view
     if (currentOptions == NULL) {
         [view replaceSubview:lastView with:blankView];
         lastView = blankView;
         currentTool = -1;
-        return;
-    }
-    
-    // Otherwise select the current options are up-to-date with the current tool
-    if (currentTool != [toolboxUtility tool]) {
+    } else if (currentTool != [toolboxUtility tool]) {
         [view replaceSubview:lastView with:[currentOptions view]];
         lastView = [currentOptions view];
         currentTool = [toolboxUtility tool];
     }
-    
-    NSRect vbounds = [lastView bounds];
-    NSRect bounds = [view bounds];
-    
-    [lastView setFrameOrigin:NSMakePoint(0,(bounds.size.height-vbounds.size.height)/2)];
-    
-    // Update the options
-    [currentOptions activate:document];
-    [currentOptions update];
+
+    NSView *parent = [view superview];
+
+    [view setNeedsLayout:TRUE];
+    [view setNeedsDisplay:TRUE];
+    [parent setNeedsLayout:TRUE];
+    [parent setNeedsDisplay:TRUE];
+    [lastView setFrame:frame];
+    [lastView setNeedsLayout:TRUE];
+    [lastView setNeedsDisplay:TRUE];
+
+    if(currentOptions) {
+        [currentOptions activate:document];
+        [currentOptions update:self];
+    }
 }
 
 - (IBAction)show:(id)sender
 {
-    [[[document window] contentView] setVisibility:YES forRegion:kOptionsBar];
+    [[[document window] contentView] setVisibility:YES forRegion:kOptionsPanel];
 }
 
 - (IBAction)hide:(id)sender
 {
-    [[[document window] contentView] setVisibility:NO forRegion:kOptionsBar];
+    [[[document window] contentView] setVisibility:NO forRegion:kOptionsPanel];
 }
 
 
@@ -181,7 +177,7 @@
 
 - (BOOL)visible
 {
-    return [[[document window] contentView] visibilityForRegion: kOptionsBar];
+    return [[[document window] contentView] visibilityForRegion: kOptionsPanel];
 }
 
 @end

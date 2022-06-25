@@ -1,4 +1,4 @@
-#import "Globals.h"
+#import "Seashore.h"
 
 /*!
 	@class		SeaDocRotation
@@ -8,12 +8,13 @@
 				<b>License:</b> GNU General Public License<br>
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
+@class SeaDocument;
 
 @interface SeaDocRotation : NSObject
 {
 
 	// The document and sheet associated with this object
-    __weak IBOutlet id document;
+    __weak IBOutlet SeaDocument *document;
 	
 }
 

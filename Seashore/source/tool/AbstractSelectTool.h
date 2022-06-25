@@ -19,4 +19,8 @@
 */
 - (void)cancelSelection;
 
+- (void)downHandler:(IntPoint)localPoint withEvent:(NSEvent *)event;
+- (void)dragHandler:(IntPoint)localPoint withEvent:(NSEvent *)event;
+- (void)upHandler:(IntPoint)localPoint withEvent:(NSEvent *)event;
+
 @end

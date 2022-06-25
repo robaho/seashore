@@ -11,7 +11,7 @@
 	<key>groupName</key>
 	<string>Generate</string>
 	<key>instruction</key>
-	<string>Click three times: first to locate the centre of the halo, then to specify its radius and width.</string>
+	<string>Click twice: first to locate the centre of the halo, then to specify its radius.</string>
 	<key>license</key>
 	<string>Public Domain</string>
 	<key>name</key>

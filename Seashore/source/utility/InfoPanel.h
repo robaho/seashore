@@ -1,4 +1,4 @@
-#import "Globals.h"
+#import "Seashore.h"
 
 /*!
 	@enum		k...PanelStyle
@@ -18,6 +18,8 @@ enum {
 	kHorizontalPanelStyle
 };
 
+#define WINDOW_FRAME_PADDING 15
+
 /*!
 	@class		InfoPanel
 	@abstract	A class for Seashore-specific modal information panels. 
@@ -29,7 +31,7 @@ enum {
 	<b>License:</b> GNU General Public License<br>
 	<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
-@interface InfoPanel : NSPanel {
+@interface InfoPanel : NSWindow {
 	// Info panels can come in a few different styles.
 	// This stores what we currently think the style is.
 	int panelStyle;
@@ -37,6 +39,8 @@ enum {
 	// Sometimes the panel is too close to the edge of the screen
 	// to fit, so it has to be flipped
 	BOOL panelFilpped;
+
+    NSView *childContentView;
 }
 
 /*!

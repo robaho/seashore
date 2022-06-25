@@ -1,53 +1,20 @@
-#import "Globals.h"
+#import "Seashore.h"
 #import "SeaBrushFuncs.h"
 
 /*!
-	@struct		CachedMask
-	@discussion	Specifies a cached mask entry.
-	@param		index1
-				The corresponding horizontal subsample entry.
-	@param		index2
-				The corresponding horizontal subsample entry.
-	@param		scale
-				The corresponding scaling entry (major axis).
-	@param		lastCheck
-				The time the entry was last used.
+	@class      SeaBrush
+	@abstract   Represents a single brush.
 */
-typedef struct {
-	unsigned char *cache;
-	int index1;
-	int index2;
-	int scale;
-	int lastCheck;
-} CachedMask;
-
-/*!
-	@defined	kBrushCacheSize
-	@discussion	Specifies the number of brush masks to keep in the cache.
-*/
-#define kBrushCacheSize 25
-
-/*!
-	@class		SeaBrush
-	@abstract	Represents a single brush.
-*/
-
 @interface SeaBrush : NSObject {
 	
 	// A grayscale mask of the brush
-    unsigned char *mask, *scaled, *templateMask;
-	BOOL maskLibraryValid;
-	
-	// A cache of all the brushes
-    CachedMask *maskCache;
-	int checkCount;
-	
+    unsigned char *mask;
+
 	// A coloured pixmap of the brush (RGBA)
 	unsigned char *pixmap;
-	
-	// A premultiplied colour pixmap of the brush (RGBA)
-	unsigned char *prePixmap;
-	
+
+    CGImageRef bitmap;
+
 	// The spacing between brush strokes
 	int spacing;
 	
@@ -60,7 +27,6 @@ typedef struct {
 	
 	// Do we use the pixmap or the mask?
 	BOOL usePixmap;
-	
 }
 
 /*!
@@ -78,18 +44,6 @@ typedef struct {
 	@discussion	Frees memory occupied by an instance of this class.
 */
 - (void)dealloc;
-
-/*!
-	@method		activate
-	@discussion	Activates the brush.
-*/
-- (void)activate;
-
-/*!
-	@method		deactivate
-	@discussion	Deactivates the brush.
-*/
-- (void)deactivate;
 
 /*!
 	@method		pixelTag
@@ -137,22 +91,6 @@ typedef struct {
 	@result		Returns the height of the original brush bitmap in pixels.
 */
 - (int)height;
-
-/*!
-	@method		fakeWidth
-	@discussion	Returns the width of the anti-aliased brush bitmaps (i.e. those
-				returned by maskForPoint: or pixmapForPoint:).
-	@result		Returns the width of the anti-aliased brush bitmaps in pixels.
-*/
-- (int)fakeWidth;
-
-/*!
-	@method		fakeHeight
-	@discussion	Returns the height of the anti-aliased brush bitmaps (i.e. those
-				returned by maskForPoint: or pixmapForPoint:).
-	@result		Returns the height of the anti-aliased brush bitmaps in pixels.
-*/
-- (int)fakeHeight;
 
 /*!
 	@method		mask
@@ -211,5 +149,7 @@ typedef struct {
 - (NSComparisonResult)compare:(id)other;
 
 -(void)drawBrushAt:(NSRect)rect;
+
+-(CGImageRef)bitmap;
 
 @end

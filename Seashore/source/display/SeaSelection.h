@@ -1,4 +1,5 @@
-#import "Globals.h"
+#import "Seashore.h"
+#import <AppKit/AppKit.h>
 
 /*!
 	@enum		k...Mode
@@ -25,12 +26,8 @@ enum {
 };
 
 /*!
-	@class		SeaSelection
+	@class	SeaSelection
 	@abstract	Manages user selections.
-	@discussion	This class is yet to be fully implemented.
-				<br><br>
-				<b>License:</b> GNU General Public License<br>
-				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
 
 @interface SeaSelection : NSObject {
@@ -38,10 +35,9 @@ enum {
 	// The document associated with this object
 	__weak id document;
 
-	// The current selection rectangle
-	IntRect rect, globalRect;
-	
-	// The current selection bitmap and mask
+	// The current selection rectangle in document coordinates
+	IntRect maskRect;
+	// The current selection bitmap and mask - the size is the size of the maskRect
 	unsigned char *mask;
 	
 	// Used to determine if the selection is active
@@ -49,13 +45,14 @@ enum {
 	
 	// Help present the user with a visual representation of the mask
 	int selectionColorIndex;
-	unsigned char *maskBitmap;
-	NSImage *maskImage;
-	
+    float lastScale;
+
+    CGImageRef maskImage;
+    CGPathRef maskPath;
+    
 	// The point of the last copied selection and its size
 	IntPoint sel_point;
 	IntSize sel_size;
-	
 }
 
 /*!
@@ -81,15 +78,6 @@ enum {
 - (BOOL)active;
 
 /*!
-	@method		floating
-	@discussion	Returns whether the current selection is floating or not.
-				Floating implies that the selection's bitmap data is a detached
-				from the layer.
-	@result		Returns YES if the selection is floating, NO otherwise.
-*/
-- (BOOL)floating;
-
-/*!
 	@method		mask
 	@discussion	Returns a mask indicating the opacity of the selection, if NULL
 				is returned the selection rectangle should be assumed to be
@@ -103,38 +91,47 @@ enum {
 	@discussion	Returns an image of the mask in the current selection colour.
 				This is used so the selection can be represented to users.
 */
-- (NSImage *)maskImage;
+- (CGImageRef)maskImage;
 
 /*!
-	@method		maskOffset
-	@discussion	Returns the offset of the mask.
-	@result		Returns an IntPoint indicating the point in the mask that
-				corresponds to the top-left corner of localRect.
-*/
-- (IntPoint)maskOffset;
+ @method        maskPath
+ @discussion    Returns the path of the outline of the selection mask.
+ */
+- (CGPathRef)maskPath;
 
 /*!
-	@method		maskSize
-	@discussion	Returns the size of the mask.
-	@result		Returns an IntSize indicating the size of the mask.
+	@method		maskRect
+	@discussion	Returns the unclipped document rect mask.
 */
-- (IntSize)maskSize;
+- (IntRect)maskRect;
 
 /*!
-	@method		globalRect
-	@discussion	Returns a rectangle enclosing the current selection.
-	@result		Returns an IntRect reprensenting the rectangle that encloses the
-				current selection in the document's co-ordinates.
-*/
+ @method        inSelection
+ @discussion    Returns true if no selection, or the point is valid in the mask
+ */
+- (BOOL)inSelection:(IntPoint)p;
+
+/*!
+ @method        globalRect
+ @discussion    Returns a rectangle enclosing the current mask clipped to the current layer in document coords
+ @result        Returns an IntRect reprensenting the rectangle that encloses the
+ current selection in the document's co-ordinates.
+ */
 - (IntRect)globalRect;
 
 /*!
 	@method		localRect
-	@discussion	Returns a rectangle enclosing the current selection.
+	@discussion	Returns a rectangle enclosing the current msk clipped to the current layer
 	@result		Returns an IntRect reprensenting the rectangle that encloses the
 				current selection in the overlay's co-ordinates.
 */
 - (IntRect)localRect;
+
+/*!
+     @method localOffset
+     @return the offset into 'mask' that represents the upper left in the selection localRect
+ */
+- (int)localOffset;
 
 /*!
 	@method		selectRect:
@@ -174,16 +171,15 @@ enum {
 /*!
 	@method		selectOverlay:inRect:mode:
 	@discussion Selects the area given by the overlay's alpha channel.
-	@param		destructively
-				YES if the overlay is to be destroyed during the selection, NO
-				otherwise.
 	@param		rect
 				The rectangle contianing the section of the overlay to be
 				considered for selection.
 	@param		mode
 				The mode of the selection (see above).
 */
-- (void)selectOverlay:(BOOL)destructively inRect:(IntRect)selectionRect mode:(int)mode;
+- (void)selectOverlay:(IntRect)selectionRect mode:(int)mode;
+
+- (void)selectPath:(NSBezierPath*)path mode:(int)mode;
 
 /*!
 	@method		selectOpaque
@@ -199,13 +195,6 @@ enum {
 				The new origin.
 */
 - (void)moveSelection:(IntPoint)newOrigin fromOrigin:(IntPoint)oldOrigin;
-
-/*!
-	@method		readjustSelection
-	@discussion	Readjusts the selection so it does not extend beyond the layer's
-				boundaries.
-*/
-- (void)readjustSelection;
 
 /*!
 	@method		clearSelection
@@ -235,12 +224,10 @@ enum {
 	@method		selectionData
 	@discussion	Returns a block of memory containing the layer data encapsulated
 				by the rectangle.
-	@param		premultiplied
-				YES if the returned data should be premultiplied, NO otherwise.
 	@result		Returns a pointer to a block of memory containing the layer data
 				encapsulated by the rectangle.
 */
-- (unsigned char *)selectionData:(BOOL)premultiplied;
+- (unsigned char *)selectionData;
 
 /*!
 	@method		selectionSizeMatch:
@@ -320,5 +307,6 @@ enum {
 				so every line in the mask contains some white.
 */
 - (void)trimSelection;
+
 
 @end

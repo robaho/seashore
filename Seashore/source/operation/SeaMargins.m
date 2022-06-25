@@ -10,13 +10,26 @@
 #import "SeaSelection.h"
 #import "Units.h"
 
+@interface MarginUndoRecord : NSObject
+{
+    @public
+    int index;
+    int left;
+    int top;
+    int right;
+    int bottom;
+    BOOL isChanged;
+    LayerSnapshot* snapshots[4];
+}
+@end
+
+@implementation MarginUndoRecord
+@end
+
 @implementation SeaMargins
 
 - (id)init
 {
-	undoMax = kNumberOfMarginRecordsPerMalloc;
-	undoRecords = malloc(undoMax * sizeof(MarginUndoRecord));
-	undoCount = 0;
 	sheetShown = FALSE;
 	
 	return self;
@@ -24,234 +37,82 @@
 
 - (void)dealloc
 {
-	free(undoRecords);
 }
 
 - (void)determineContentBorders
 {
-	int width, height;
-	int spp = [[document contents] spp];
-	unsigned char *data;
-	int i, j, k;
-	id layer;
-	
-	// Start out with invalid content borders
-	contentLeft = contentRight = contentTop = contentBottom =  -1;
-	
-	// Select the appropriate data for working out the content borders
-	if (workingIndex == kAllLayers) {
-		data = [(SeaWhiteboard *)[document whiteboard] data];
-		width = [(SeaContent *)[document contents] width];
-		height = [(SeaContent *)[document contents] height];
-	}
-	else {
-		layer = [[document contents] layer:workingIndex];
-		data = [(SeaLayer *)layer data];
-		width = [(SeaLayer *)layer width];
-		height = [(SeaLayer *)layer height];
-	}
-	
-	// Determine left content margin
-	for (i = 0; i < width && contentLeft == -1; i++) {
-		for (j = 0; j < height && contentLeft == -1; j++) {
-			if (data[j * width * spp + i * spp + (spp - 1)] != 0) {
-				for (k = 0; k < spp; k++) {
-					if (data[j * width * spp + i * spp + k] != data[k])
-						contentLeft = i;
-				}
-			}
-		}
-	}
-	
-	// Determine right content margin
-	for (i = width - 1; i >= 0 && contentRight == -1; i--) {
-		for (j = 0; j < height && contentRight == -1; j++) {
-			if (data[j * width * spp + i * spp + (spp - 1)] != 0) {
-				for (k = 0; k < spp; k++) {
-					if (data[j * width * spp + i * spp + k] != data[k])
-						contentRight = width - 1 - i;
-				}
-			}
-		}
-	}
-	
-	// Determine top content margin
-	for (j = 0; j < height && contentTop == -1; j++) {
-		for (i = 0; i < width && contentTop == -1; i++) {
-			if (data[j * width * spp + i * spp + (spp - 1)] != 0) {
-				for (k = 0; k < spp; k++) {
-					if (data[j * width * spp + i * spp + k] != data[k])
-						contentTop = j;
-				}
-			}
-		}
-	}
-	
-	// Determine bottom content margin
-	for (j = height - 1; j >= 0 && contentBottom == -1; j--) {
-		for (i = 0; i < width && contentBottom == -1; i++) {
-			if (data[j * width * spp + i * spp + (spp - 1)] != 0) {
-				for (k = 0; k < spp; k++) {
-					if (data[j * width * spp + i * spp + k] != data[k])
-						contentBottom = height - 1 - j;
-				}
-			}
-		}
-	}
 }
 
-- (void)run:(BOOL)global
+- (void)show
 {
-	id contents = [document contents];
-	id layer = NULL;
-	id menuItem;
-	NSString *string;
-	float xres, yres;
-	
-	// Determine the working index
-	if (global)
-		workingIndex = kAllLayers;
-	else
-		workingIndex = [[document contents] activeLayerIndex];
-		
-	// Set the selection label correctly
-	if (workingIndex == kAllLayers) {
-		[selectionLabel setStringValue:LOCALSTR(@"whole document", @"Whole Document")];
-	}
-	else {
-		layer = [contents layer:workingIndex];
-		[selectionLabel setStringValue:[layer name]];
-		
-	}
-	
-	// Set paper name
-	if ([[document printInfo] respondsToSelector:@selector(localizedPaperName)]) {
-		menuItem = [presetsMenu itemAtIndex:[presetsMenu indexOfItemWithTag:2]];
-		string = [NSString stringWithFormat:@"%@ (%@)", LOCALSTR(@"paper size", @"Paper size"), [[document printInfo] localizedPaperName]];
-		[menuItem setTitle:string];
-	}
-
-	// Set units
 	units = [document measureStyle];
 	
-	// Get the resolutions
-	xres = [contents xres];
-	yres = [contents yres];
+	float xres = [[document contents] xres];
+	float yres = [[document contents] yres];
 	
-	// Set the values properly
-	[widthLabel setTitle:UnitsString(units)];
-	[heightLabel setTitle:UnitsString(units)];
-	[topPopdown selectItemAtIndex:units];
-	[bottomLabel setTitle:UnitsString(units)];
-	[leftLabel setTitle:UnitsString(units)];
-	[rightLabel setTitle:UnitsString(units)];
+	[heightLabel setStringValue:UnitsString(units)];
+	[widthPopdown selectItemAtIndex:units];
 
-	[topValue setStringValue:StringFromPixels(0, units, yres)]; [bottomValue setStringValue:StringFromPixels(0, units, yres)];
-	[leftValue setStringValue:StringFromPixels(0, units, xres)]; [rightValue setStringValue:StringFromPixels(0, units, xres)];
-	if (workingIndex == kAllLayers) {
-		[widthValue setStringValue:StringFromPixels([(SeaContent *)contents width], units, xres)];
-		[heightValue setStringValue:StringFromPixels([(SeaContent *)contents height],units, yres)];
-	}
-	else {
-		[widthValue setStringValue:StringFromPixels([(SeaLayer *)layer width], units, xres)];
-		[heightValue setStringValue:StringFromPixels([(SeaLayer *)layer height], units, yres)];
-	}
-	
-	// Determine the content borders
-	[self determineContentBorders];
-	
-	// If we have invalid content borders don't allow them to be used
-	[contentRelative setState:NSOffState];
-	if (contentLeft == -1 || contentTop == -1)
-		[contentRelative setEnabled:NO];
-	else
-		[contentRelative setEnabled:YES];
-		
-	// If we are not playing with the whole document don't let the user apply to all
-	if (workingIndex == kAllLayers){
-		[clippingMatrix setHidden:NO];
-		[sheet setFrame:NSMakeRect([sheet frame].origin.x, [sheet frame].origin.y, [sheet frame].size.width, 376) display: TRUE];
-	}else{
-		[clippingMatrix setHidden:YES];
-		[sheet setFrame:NSMakeRect([sheet frame].origin.x, [sheet frame].origin.y, [sheet frame].size.width, 318) display: TRUE];
-	}
-	// Make sure the size is correct depending on when we display it
-	if(!sheetShown){
-		[sheet setFrame:NSMakeRect([sheet frame].origin.x, [sheet frame].origin.y, [sheet frame].size.width, [sheet frame].size.height + 22) display: TRUE];
-		sheetShown = TRUE;
-	}
-	// Update values
-	[self marginsChanged:NULL];
+    [widthValue setStringValue:StringFromPixels([[document contents] width], units, xres)];
+    [heightValue setStringValue:StringFromPixels([[document contents] height],units, yres)];
 
-	// Show the sheet
 	[NSApp beginSheet:sheet modalForWindow:[document window] modalDelegate:NULL didEndSelector:NULL contextInfo:NULL];
 }
 
 - (IBAction)apply:(id)sender
 {
-
-	float trueLeft, trueRight, trueBottom, trueTop;
-	float oldWidth, oldHeight;
-	float xres, yres;
-	SeaLayer *layer;
-	int i;
-	
-	// End the sheet
     [sheet makeFirstResponder:sender];
 	[NSApp endSheet:sheet];
 	[sheet orderOut:self];
-	
+
+    int oldWidth = [[document contents] width];
+    int oldHeight = [[document contents] height];
+
 	// Find the resolution
-	xres = [[document contents] xres];
-	yres = [[document contents] yres];
+	float xres = [[document contents] xres];
+	float yres = [[document contents] yres];
 	
 	// Calculate the margin changes in pixels
-	trueLeft = PixelsFromFloat([leftValue floatValue], units, xres);
-	trueRight = PixelsFromFloat([rightValue floatValue], units, xres);
-	trueTop = PixelsFromFloat([topValue floatValue], units, yres);
-	trueBottom = PixelsFromFloat([bottomValue floatValue], units, yres);
-	
-	// Make changes if values are content relative 
-	if ([contentRelative state]) {
-		trueLeft -= contentLeft; trueRight -= contentRight;
-		trueTop -= contentTop; trueBottom -= contentBottom;
-	}
-	
-	// Work out the old width and height
-	if (workingIndex == kAllLayers) {
-		oldWidth = [(SeaContent *)[document contents] width];
-		oldHeight = [(SeaContent *)[document contents] height];
-	}
-	else {
-		oldWidth = [(SeaLayer *)[[document contents] layer:workingIndex] width];
-		oldHeight = [(SeaLayer *)[[document contents] layer:workingIndex] height];
-	}
-	
-	// Don't continue if values are unreasonable or unchanged
-	if (trueLeft + oldWidth + trueRight < kMinImageSize) { NSBeep(); return; }
-	if (trueTop + oldHeight + trueBottom < kMinImageSize) { NSBeep(); return; }
-	if (trueLeft + oldWidth + trueRight > kMaxImageSize) { NSBeep(); return; }
-	if (trueTop + oldHeight + trueBottom > kMaxImageSize) { NSBeep(); return; }
-	if (trueLeft == 0 && trueRight == 0 && trueTop == 0 && trueBottom == 0) { return; }
-	
-	// Make the margin changes
-	if (workingIndex == kAllLayers && [clippingMatrix selectedRow] > kNoClipMode) {
-		for (i = 0; i < [[document contents] layerCount]; i++) {
-			layer = [[document contents] layer:i];
-			if ([layer width] == oldWidth && [layer height] == oldHeight && [layer xoff] == 0 && [layer yoff] == 0){
-				[self setMarginLeft:trueLeft top:trueTop right:trueRight bottom:trueBottom index:i];
-			}else if([clippingMatrix selectedRow] == kAllClipMode){
-				int newLeft = 0, newRight = 0, newTop = 0, newBottom = 0;
-				if([layer xoff] < -1 * trueLeft) newLeft = trueLeft + [layer xoff];
-				if([layer yoff] < -1 * trueTop) newTop = trueTop + [layer yoff];
-				if([layer xoff] + [layer width] > oldWidth + trueRight) newRight = (int)(oldWidth + trueRight) - ([layer width] + [layer xoff]);
-				if([layer yoff] + [layer height] > oldHeight + trueBottom) newBottom = (int)(oldHeight + trueBottom) - ([layer height] + [layer yoff]);
-				if((newLeft + newRight + [layer width] < kMinImageSize) || (newTop + newBottom + [layer height] < kMinImageSize)) NSLog(@"Delete Layer?");
-				else [self setMarginLeft:newLeft top:newTop right:newRight bottom:newBottom index:i];
-			}
-		}
-	}
-	[self setMarginLeft:trueLeft top:trueTop right:trueRight bottom:trueBottom index:workingIndex];
+	int width = PixelsFromFloat([widthValue floatValue], units, xres);
+    int height = PixelsFromFloat([heightValue floatValue], units, yres);
+
+    if(width > kMaxImageSize || height > kMaxImageSize) {
+        NSBeep();
+        return;
+    }
+
+    [[document helpers] endLineDrawing];
+
+    if([contentRelative state]) {
+        IntRect r = [self contentRect];
+        int left = r.origin.x;
+        int top = r.origin.y;
+        int right = oldWidth-r.size.width-left;
+        int bottom = oldHeight-r.size.height-top;
+        [self setMarginLeft:-left top:-top right:-right bottom:-bottom index:kAllLayers];
+    } else if([adjustLayerBoundaries state]) {
+        int diffx = (width-oldWidth)/2;
+        int diffy = (height-oldHeight)/2;
+        [self setMarginLeft:diffx top:diffy right:diffx bottom:diffy index:kAllLayers];
+    } else {
+        [self setMarginLeft:0 top:0 right:(width-oldWidth) bottom:(height-oldHeight) index:kAllLayers];
+    }
+}
+
+- (IntRect)contentRect
+{
+    IntRect r = IntZeroRect;
+    for(int i=0;i<[[document contents] layerCount];i++){
+        SeaLayer *layer = [[document contents] layer:i];
+        Margins m = [layer contentMargins];
+        IntRect r0 = IntMakeRect([layer xoff]+m.left,[layer yoff]+m.top,[layer width]-(m.right+m.left),[layer height]-(m.top+m.bottom));
+        if(IntRectIsEmpty(r)) {
+            r = r0;
+        } else {
+            r = IntSumRects(r,r0);
+        }
+    }
+    return r;
 }
 
 - (IBAction)cancel:(id)sender
@@ -262,23 +123,21 @@
 
 - (IBAction)condenseLayer:(id)sender
 {
+    Margins m = [[[document contents] activeLayer] contentMargins];
 	int index = [[document contents] activeLayerIndex];
-	
-	workingIndex = index;
-	[self determineContentBorders];
-	[self setMarginLeft:-contentLeft top:-contentTop right:-contentRight bottom:-contentBottom index:index];
+
+	[self setMarginLeft:-m.left top:-m.top right:-m.right bottom:-m.bottom index:index];
 }
 
 - (IBAction)condenseToSelection:(id)sender
 {
 	int index = [[document contents] activeLayerIndex];
-	workingIndex = index;
 
 	SeaLayer *activeLayer = [[document contents] activeLayer];
-	IntRect selRect = [[document selection] localRect];
+	IntRect selRect = [[document selection] globalRect];
 
-	int top = [(SeaLayer *)activeLayer height] - selRect.origin.y - selRect.size.height;
-	int right = [(SeaLayer *)activeLayer width] - selRect.origin.x - selRect.size.width;
+	int top = [activeLayer height] - selRect.origin.y - selRect.size.height;
+	int right = [activeLayer width] - selRect.origin.x - selRect.size.width;
 	
 	[self setMarginLeft:-selRect.origin.x top:-selRect.origin.y right:-right bottom:-top index:index];
 }
@@ -296,7 +155,9 @@
 
 - (void)setMarginLeft:(int)left top:(int)top right:(int)right bottom:(int)bottom index:(int)index undoRecord:(MarginUndoRecord *)undoRecord
 {
-	id contents = [document contents], layer = NULL;
+    id contents = [document contents];
+    SeaLayer *layer = NULL;
+
 	int i;
 	
 	// Correct the index if necessary
@@ -315,15 +176,15 @@
 		undoRecord->bottom = bottom;
 		if (index != kAllLayers) {
 			for (i = 0; i < 4; i++)
-				undoRecord->indicies[i] = -1;
+				undoRecord->snapshots[i] = NULL;
 			if (left < 0)
-				undoRecord->indicies[0] = [[layer seaLayerUndo] takeSnapshot:IntMakeRect(0, 0, -left, [(SeaLayer *)layer height]) automatic:NO];
+				undoRecord->snapshots[0] = [[layer seaLayerUndo] takeSnapshot:IntMakeRect(0, 0, -left, [layer height]) automatic:NO];
 			if (top < 0)
-				undoRecord->indicies[1] = [[layer seaLayerUndo] takeSnapshot:IntMakeRect(0, 0, [(SeaLayer *)layer width],  -top) automatic:NO];
+				undoRecord->snapshots[1] = [[layer seaLayerUndo] takeSnapshot:IntMakeRect(0, 0, [layer width],  -top) automatic:NO];
 			if (right < 0)
-				undoRecord->indicies[2] = [[layer seaLayerUndo] takeSnapshot:IntMakeRect([(SeaLayer *)layer width] + right, 0, -right, [(SeaLayer *)layer height]) automatic:NO];
+				undoRecord->snapshots[2] = [[layer seaLayerUndo] takeSnapshot:IntMakeRect([layer width] + right, 0, -right, [layer height]) automatic:NO];
 			if (bottom < 0)
-				undoRecord->indicies[3] = [[layer seaLayerUndo] takeSnapshot:IntMakeRect(0, [(SeaLayer *)layer height] + bottom, [(SeaLayer *)layer width], -bottom) automatic:NO];
+				undoRecord->snapshots[3] = [[layer seaLayerUndo] takeSnapshot:IntMakeRect(0, [layer height] + bottom, [layer width], -bottom) automatic:NO];
 		}
 	}
 	
@@ -344,308 +205,92 @@
 
 - (void)setMarginLeft:(int)left top:(int)top right:(int)right bottom:(int)bottom index:(int)index
 {	
-	MarginUndoRecord undoRecord;
+    MarginUndoRecord* undoRecord = [[MarginUndoRecord alloc] init];
 	
 	// Don't do anything if no changes are needed
 	if (left == 0 && top == 0 && right == 0 && bottom == 0)
 		return;
 	
 	// Do the adjustment
-	[self setMarginLeft:left top:top right:right bottom:bottom index:index undoRecord:&undoRecord];
+	[self setMarginLeft:left top:top right:right bottom:bottom index:index undoRecord:undoRecord];
 
-	// Allow the undo
-	if (undoCount + 1 > undoMax) {
-		undoMax += kNumberOfMarginRecordsPerMalloc;
-		undoRecords = realloc(undoRecords, undoMax * sizeof(MarginUndoRecord));
-	}
-	undoRecords[undoCount] = undoRecord;
-	[[[document undoManager] prepareWithInvocationTarget:self] undoMargins:undoCount];
-	undoCount++;
-	
+	[[[document undoManager] prepareWithInvocationTarget:self] undoMargins:undoRecord];
+
 	// Do appropriate updating
 	if (index == kAllLayers)
-		[[document helpers] boundariesAndContentChanged:NO];
+		[[document helpers] boundariesAndContentChanged];
 	else
 		[[document helpers] layerBoundariesChanged:index];
 }
 
-- (void)undoMargins:(int)undoIndex
+- (void)undoMargins:(MarginUndoRecord*)undoRecord
 {
-	MarginUndoRecord undoRecord;
 	id layer, contents = [document contents];
 	int i;
 	
-	// Get the undo record
-	undoRecord = undoRecords[undoIndex];
-	
 	// We have different responses depending on whether the change is current or not
-	if (undoRecord.isChanged) {
-		if (undoRecord.index == kAllLayers) {
-			[contents setMarginLeft:-undoRecord.left top:-undoRecord.top right:-undoRecord.right bottom:-undoRecord.bottom];
+	if (undoRecord->isChanged) {
+		if (undoRecord->index == kAllLayers) {
+			[contents setMarginLeft:-undoRecord->left top:-undoRecord->top right:-undoRecord->right bottom:-undoRecord->bottom];
 		}
 		else {
-			layer = [contents layer:undoRecord.index];
-			[layer setMarginLeft:-undoRecord.left top:-undoRecord.top right:-undoRecord.right bottom:-undoRecord.bottom];
+			layer = [contents layer:undoRecord->index];
+			[layer setMarginLeft:-undoRecord->left top:-undoRecord->top right:-undoRecord->right bottom:-undoRecord->bottom];
 			for (i = 0; i < 4; i++) {
-				if (undoRecord.indicies[i] != -1) {
-					[[layer seaLayerUndo] restoreSnapshot:undoRecord.indicies[i] automatic: NO];
+				if (undoRecord->snapshots[i] != NULL) {
+					[[layer seaLayerUndo] restoreSnapshot:undoRecord->snapshots[i] automatic: NO];
 				}
 			}
 		}
-		undoRecord.isChanged = NO;
+		undoRecord->isChanged = NO;
 	}
 	else {
-		[self setMarginLeft:undoRecord.left top:undoRecord.top right:undoRecord.right bottom:undoRecord.bottom index:undoRecord.index undoRecord:NULL];
-		undoRecord.isChanged = YES;
+		[self setMarginLeft:undoRecord->left top:undoRecord->top right:undoRecord->right bottom:undoRecord->bottom index:undoRecord->index undoRecord:NULL];
+		undoRecord->isChanged = YES;
 	}
 	
-	// Put the updated undo record back and allow the undo
-	undoRecords[undoIndex] = undoRecord;
-	[[[document undoManager] prepareWithInvocationTarget:self] undoMargins:undoIndex];
+	[[[document undoManager] prepareWithInvocationTarget:self] undoMargins:undoRecord];
 	
 	// Do appropriate updating
-	if (undoRecord.index == kAllLayers)
-		[[document helpers] boundariesAndContentChanged:NO];
+	if (undoRecord->index == kAllLayers)
+		[[document helpers] boundariesAndContentChanged];
 	else
-		[[document helpers] layerBoundariesChanged:undoRecord.index];
+		[[document helpers] layerBoundariesChanged:undoRecord->index];
 }
 
 - (IBAction)marginsChanged:(id)sender
 {
-	int trueLeft, trueRight, trueBottom, trueTop;
-	float xres, yres;
-	int width, height;
-	
-	// Find the resolution
-	xres = [[document contents] xres];
-	yres = [[document contents] yres];
-	
-	// Calculate the margin changes in pixels
-	trueLeft = PixelsFromFloat([leftValue floatValue], units, xres);
-	trueRight = PixelsFromFloat([rightValue floatValue], units, xres);
-	trueTop = PixelsFromFloat([topValue floatValue], units, yres);
-	trueBottom = PixelsFromFloat([bottomValue floatValue], units, yres);
-	
-	// Make changes if values are content relative
-	if ([contentRelative state]) {
-		trueLeft -= contentLeft; trueRight -= contentRight;
-		trueTop -= contentTop; trueBottom -= contentBottom;
-	}
-	
-	// Determine the new width and height
-	if (workingIndex == kAllLayers) {
-		width = [(SeaContent *)[document contents] width] + trueLeft + trueRight;
-		height = [(SeaContent *)[document contents] height] + trueTop + trueBottom;
-	}
-	else {
-		width = [(SeaLayer *)[[document contents] layer:workingIndex] width] + trueLeft + trueRight;
-		height = [(SeaLayer *)[[document contents] layer:workingIndex] height] + trueTop + trueBottom;
-	}
+    bool relative = [contentRelative state];
 
-	// Finally display the changes
-	[widthValue setStringValue:StringFromPixels(width, units, xres)];
-	[heightValue setStringValue:StringFromPixels(height, units, yres)];
+    [widthValue setEnabled:!relative];
+    [heightValue setEnabled:!relative];
+    [adjustLayerBoundaries setEnabled:!relative];
+
+    if(relative) {
+        IntRect r = [self contentRect];
+        float xres = [[document contents] xres];
+        float yres = [[document contents] yres];
+        [widthValue setStringValue:StringFromPixels(r.size.width, units, xres)];
+        [heightValue setStringValue:StringFromPixels(r.size.height, units, yres)];
+    }
 }
 
-- (IBAction)dimensionsChanged:(id)sender
-{
-	float xres, yres;
-	int width, height, curLeft, curRight, curTop, curBottom;
-	
-	// Find the resolution
-	xres = [[document contents] xres];
-	yres = [[document contents] yres];
-	
-	// Determine the new width and height
-	width = PixelsFromFloat([widthValue floatValue], units, xres);
-	height = PixelsFromFloat([heightValue floatValue], units, yres);
-
-	IntSize delta = IntMakeSize(0,0);
-	// Work out the margin adjustment needed
-	if ([contentRelative state]) {
-		if (workingIndex == kAllLayers) {
-			delta.width = (width + contentLeft + contentRight) - [(SeaContent *)[document contents] width];
-			delta.height = (height + contentTop + contentBottom) - [(SeaContent *)[document contents] height];
-		}
-		else {
-			delta.width = (width + contentLeft + contentRight) - [(SeaLayer *)[[document contents] layer:workingIndex] width];
-			delta.height = (height + contentTop + contentBottom) - [(SeaLayer *)[[document contents] layer:workingIndex] height];
-		}
-	}
-	else {
-		if (workingIndex == kAllLayers) {
-			delta.width = width - [(SeaContent *)[document contents] width];
-			delta.height = height - [(SeaContent *)[document contents] height];
-		}
-		else {
-			delta.width = width - [(SeaLayer *)[[document contents] layer:workingIndex] width];
-			delta.height = height - [(SeaLayer *)[[document contents] layer:workingIndex] height];
-		}
-	}
-	
-	// Calculate how this affects the current margins
-	curLeft = PixelsFromFloat([leftValue floatValue], units, xres);
-	curRight = PixelsFromFloat([rightValue floatValue], units, xres);
-	curTop = PixelsFromFloat([topValue floatValue], units, yres);
-	curBottom = PixelsFromFloat([bottomValue floatValue], units, yres);
-	delta.width -= (curLeft + curRight);
-	delta.height -= (curTop + curBottom);
-
-	// Finally display the changes
-	[leftValue setStringValue:StringFromPixels(delta.width / 2 + curLeft, units, xres)];
-	[rightValue setStringValue:StringFromPixels(delta.width / 2 + delta.width % 2 + curRight , units, xres)];
-	[topValue setStringValue:StringFromPixels(delta.height / 2 + curTop, units, yres)];
-	[bottomValue setStringValue:StringFromPixels(delta.height / 2 + delta.height % 2 + curBottom, units, yres)];
-}
 
 - (IBAction)unitsChanged:(id)sender
 {
-	id contents = [document contents];
-	float xres, yres;
-	int oldTopValue, oldLeftValue, oldBottomValue, oldRightValue;
+	float xres = [[document contents] xres];
+	float yres = [[document contents] yres];
 	
-	// Get the resolutions
-	xres = [contents xres];
-	yres = [contents yres];
-	
-	// Remember the old values
-	oldTopValue = PixelsFromFloat([topValue floatValue], units, yres);
-	oldBottomValue = PixelsFromFloat([bottomValue floatValue], units, yres);
-	oldLeftValue = PixelsFromFloat([leftValue floatValue], units, xres);
-	oldRightValue = PixelsFromFloat([rightValue floatValue], units, xres);
-				
-	// Set units
+    // Determine the new width and height
+    int width = PixelsFromFloat([widthValue floatValue], units, xres);
+    int height = PixelsFromFloat([heightValue floatValue], units, yres);
+
 	units = [sender indexOfSelectedItem];
-	
-	// Set the new labels
-	[widthLabel setTitle:UnitsString(units)];
-	[heightLabel setTitle:UnitsString(units)];
-	[topPopdown selectItemAtIndex:units];
-	[bottomLabel setTitle:UnitsString(units)];
-	[leftLabel setTitle:UnitsString(units)];
-	[rightLabel setTitle:UnitsString(units)];
 
-	// Set the new margins
-	[topValue setStringValue:StringFromPixels(oldTopValue, units, yres)];
-	[bottomValue setStringValue:StringFromPixels(oldBottomValue, units, yres)];
-	[leftValue setStringValue:StringFromPixels(oldLeftValue, units, xres)];
-	[rightValue setStringValue:StringFromPixels(oldRightValue, units, xres)];
-	
-	// Update the rest
-	[self marginsChanged:NULL];
-}
+	[heightLabel setStringValue :UnitsString(units)];
 
-- (IBAction)changeToPreset:(id)sender
-{
-	NSPasteboard *pboard;
-	NSString *availableType;
-	NSImage *image;
-	NSSize paperSize;
-	IntSize size = IntMakeSize(0, 0);
-	float xres, yres;
-	id focusObject;
-	id contents = [document contents];
-	BOOL customOrigin = NO;
-	
-	// Get the preset's size
-	if (workingIndex == kAllLayers)
-		focusObject = contents;
-	else
-		focusObject = [contents layer:workingIndex];
-	xres = [contents xres];
-	yres = [contents yres];
-    
-    int width,height;
-    
-	switch ([[presetsMenu selectedItem] tag]) {
-		case 0:
-			pboard = [NSPasteboard generalPasteboard];
-			availableType = [pboard availableTypeFromArray:[NSArray arrayWithObjects:NSTIFFPboardType, NSPICTPboardType, NULL]];
-			if (availableType) {
-				image = [[NSImage alloc] initWithData:[pboard dataForType:availableType]];
-				size = NSSizeMakeIntSize([image size]);
-			}
-			else {
-				NSBeep();
-				return;
-			}
-		break;
-		case 1:
-			size = NSSizeMakeIntSize([[NSScreen mainScreen] frame].size);
-		break;
-		case 2:
-			paperSize = [[document printInfo] paperSize];
-			paperSize.height -= [[document printInfo] topMargin] + [[document printInfo] bottomMargin];
-			paperSize.width -= [[document printInfo] leftMargin] + [[document printInfo] rightMargin];
-			size = NSSizeMakeIntSize(paperSize);
-			size.width = (float)size.width * (xres / 72.0);
-			size.height = (float)size.height * (yres / 72.0);
-		break;
-		case 3:
-			if(![[document selection] active])
-				return;
-			size = [[document selection] localRect].size;
-			customOrigin = YES;
-		break;
-        case 4:
-            if(workingIndex!=kAllLayers)
-                return;
-            width=height=0;
-            for(int i=0;i<[[document contents] layerCount];i++) {
-                width = MAX(width,[(SeaLayer*)[[document contents] layer:i] width]);
-                height = MAX(height,[(SeaLayer*)[[document contents] layer:i] height]);
-            }
-            size = IntMakeSize(width,height);
-            break;
-		default:
-			NSLog(@"Preset not supported.");
-		break;
-	}
-	
-	// Work out the margin adjustment needed
-	if(customOrigin){
-		IntPoint origin;
-		if(workingIndex == kAllLayers){
-			origin = [[document selection] globalRect].origin;
-			[rightValue setStringValue:StringFromPixels( origin.x + size.width - [(SeaContent *)[document contents] width], units, xres)];
-			[bottomValue setStringValue:StringFromPixels(origin.y + size.height - [(SeaContent *)[document contents] height] , units, yres)];
-		}else{
-			origin = [[document selection] localRect].origin;
-			[rightValue setStringValue:StringFromPixels(origin.x + size.width - [(SeaLayer *)[[document contents] layer:workingIndex] width] , units, xres)];
-			[bottomValue setStringValue:StringFromPixels(origin.y + size.height  - [(SeaLayer *)[[document contents] layer:workingIndex] height], units, yres)];
-		}
-		[leftValue setStringValue:StringFromPixels(-1 * origin.x, units, xres)];
-		[topValue setStringValue:StringFromPixels(-1 * origin.y, units, yres)];
-	}else{
-		if ([contentRelative state]) {
-			if (workingIndex == kAllLayers) {
-				size.width = (size.width + contentLeft + contentRight) - [(SeaContent *)[document contents] width];
-				size.height = (size.height + contentTop + contentBottom) - [(SeaContent *)[document contents] height];
-			}
-			else {
-				size.width = (size.width + contentLeft + contentRight) - [(SeaLayer *)[[document contents] layer:workingIndex] width];
-				size.height = (size.height + contentTop + contentBottom) - [(SeaLayer *)[[document contents] layer:workingIndex] height];
-			}
-		}
-		else {
-			if (workingIndex == kAllLayers) {
-				size.width = size.width - [(SeaContent *)[document contents] width];
-				size.height = size.height - [(SeaContent *)[document contents] height];
-			}
-			else {
-				size.width = size.width - [(SeaLayer *)[[document contents] layer:workingIndex] width];
-				size.height = size.height - [(SeaLayer *)[[document contents] layer:workingIndex] height];
-			}
-		}
-		
-		// Fill out the panel correctly
-		[leftValue setStringValue:StringFromPixels(size.width / 2, units, xres)];
-		[rightValue setStringValue:StringFromPixels(size.width / 2 + size.width % 2, units, xres)];
-		[topValue setStringValue:StringFromPixels(size.height / 2, units, yres)];
-		[bottomValue setStringValue:StringFromPixels(size.height / 2 + size.height % 2, units, yres)];
-	}
-	
-	[self marginsChanged:NULL];
+    [widthValue setStringValue:StringFromPixels(width, units, xres)];
+    [heightValue setStringValue:StringFromPixels(height, units, yres)];
 }
 
 @end

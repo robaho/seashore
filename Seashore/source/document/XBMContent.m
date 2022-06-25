@@ -2,7 +2,6 @@
 #import "XBMLayer.h"
 #import "SeaController.h"
 #import "SeaDocumentController.h"
-#import "SeaWarning.h"
 
 @implementation XBMContent
 

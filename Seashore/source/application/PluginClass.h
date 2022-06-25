@@ -26,12 +26,11 @@
 - (id)initWithManager:(PluginData *)data;
 
 /*!
-	@method		type
-	@discussion	Returns the type of plug-in so Seashore can correctly interact
-				with the plug-in.
-	@result		Returns an integer indicating the plug-in's type.
-*/
-- (int)type;
+ @method        initialize
+ @discussion    Initializes the plugin from any saved defaults.
+ @result        Returns the NSView to be used for options, or NULL.
+ */
+- (NSView*)initialize;
 
 /*!
 	@method		points
@@ -72,23 +71,10 @@
 - (NSString *)sanity;
 
 /*!
-	@method		run
+	@method		execute
 	@discussion	Runs the plug-in.
 */
-- (void)run;
-
-/*!
-	@method		reapply
-	@discussion	Applies the plug-in with previous settings.
-*/
-- (void)reapply;
-
-/*!
-	@method		canReapply
-	@discussion Returns whether or not the plug-in can be applied again.
-	@result		Returns YES if the plug-in can be applied again, NO otherwise.
-*/
-- (BOOL)canReapply;
+- (void)execute;
 
 /*!
  @method        validatePlugin:

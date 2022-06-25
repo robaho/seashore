@@ -1,15 +1,8 @@
-//
-//  RecentsUtility.m
-//  Seashore
-//
-//  Created by robert engels on 2/4/19.
-//
 #import "SeaController.h"
 #import "SeaDocument.h"
 #import "SeaContent.h"
 #import "SeaHelpers.h"
 #import "Units.h"
-#import "LayerControlView.h"
 #import "ToolboxUtility.h"
 #import "SeaView.h"
 #import "SeaWindowContent.h"
@@ -22,7 +15,7 @@
 #import "TextureUtility.h"
 #import "SeaTools.h"
 #import "OptionsUtility.h"
-#import "Bitmap.h"
+#import "RecentsItem.h"
 
 @interface RememberedBase : NSObject
 {
@@ -126,7 +119,6 @@
     [toolbox changeToolTo:kPencilTool];
     PencilOptions *opts = [options getOptions:kPencilTool];
     [opts setPencilSize:pencilSize];
-    [options update];
 }
 @end
 
@@ -153,7 +145,6 @@
 {
     ToolboxUtility *toolbox = [document toolboxUtility];
     TextureUtility *textures =[document textureUtility];
-    OptionsUtility *options = [document optionsUtility];
     
     [toolbox setForeground:foreground];
     [toolbox setBackground:background];
@@ -162,7 +153,6 @@
     [textures setOpacity:opacity];
     
     [toolbox changeToolTo:kBucketTool];
-    [options update];
 }
 @end
 
@@ -177,6 +167,15 @@
 
 - (void)awakeFromNib
 {
+    [recentsView setItemPrototype:[[RecentsItem alloc] init]];
+    [recentsView setMinItemSize:NSMakeSize(kPreviewWidth,kPreviewHeight)];
+    [recentsView setMaxItemSize:NSMakeSize(kPreviewWidth,kPreviewHeight)];
+    [recentsView setDelegate:self];
+}
+
+- (NSCollectionViewItem *)newItemForRepresentedObject:(id)object
+{
+    return [[RecentsItem alloc] init];
 }
 
 - (IBAction)show:(id)sender
@@ -198,8 +197,17 @@
         [self show:sender];
     }
 }
+
 - (void)update
 {
+    int i;
+
+    NSMutableArray *items = [[NSMutableArray alloc] init];
+    for (i=0; i < [self memoryCount]; i++) {
+        [items addObject:[self memoryAt:i]];
+    }
+    [recentsView setContent:items];
+    [recentsView setSelectionIndexes:[NSIndexSet new]];
 }
 
 - (void)shutdown
@@ -255,7 +263,7 @@
         [memories insertObject:memory atIndex:0];
     }
     
-    [view update];
+    [self update];
 }
 
 - (void)rememberPencil:(PencilOptions*)options
@@ -299,7 +307,7 @@
         [memories insertObject:memory atIndex:0];
     }
     
-    [view update];
+    [self update];
 }
 
 - (void)rememberBucket:(BucketOptions*)options
@@ -342,7 +350,7 @@
         [memories insertObject:memory atIndex:0];
     }
     
-    [view update];
+    [self update];
 }
 
 

@@ -47,9 +47,14 @@ static bool profileIterate (CFDictionaryRef profileInfo, void *refCon)
     profiles=[NSMutableArray arrayWithCapacity:0];
     CFErrorRef error;
     uint32_t seed = 0;
-    
-    ColorSyncIterateInstalledProfiles(profileIterate,&seed,(__bridge void*)profiles,&error);
-    
+
+    NSDictionary *options;
+    if (@available(macOS 10.16, *)) {
+        options = [NSDictionary dictionaryWithObject:(NSNumber*)kCFBooleanTrue forKey:(__bridge id<NSCopying> _Nonnull)(kColorSyncWaitForCacheReply)];
+    }
+
+    ColorSyncIterateInstalledProfilesWithOptions(profileIterate,&seed,(__bridge void*)profiles,(__bridge CFDictionaryRef)options,nil);
+
     return self;
 }
 
@@ -84,9 +89,6 @@ static bool profileIterate (CFDictionaryRef profileInfo, void *refCon)
     
     // Never when there is no document
     if (document == NULL)
-        return NO;
-    
-    if ([document locked])
         return NO;
     
     SeaColorProfile *current = [[document whiteboard] proofProfile];

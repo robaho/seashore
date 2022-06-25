@@ -8,9 +8,14 @@
 
 @implementation ZoomOptions
 
-- (void)update
+- (IBAction)update:(id)sender
 {
 	[zoomLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"zoom", @"Zoom: %.0f%%"), [[document docView] zoom] * 100.0]];
+}
+
+- (BOOL)ignoresMove
+{
+    return TRUE;
 }
 
 @end

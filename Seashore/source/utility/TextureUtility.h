@@ -1,6 +1,7 @@
-#import "Globals.h"
+#import "Seashore.h"
 #import "AbstractPanelUtility.h"
 #import "SeaTexture.h"
+#import "ColorSelectView.h"
 
 /*!
 	@class		TextureUtility
@@ -30,9 +31,6 @@
 	IBOutlet id opacitySlider;
 	IBOutlet id opacityLabel;
 	
-	// The document which is the focus of this utility
-	__weak IBOutlet SeaDocument *document;
-	
 	// An dictionary of all brushes known to Seashore
 	NSDictionary<NSString*,SeaTexture*> *textures;
 	
@@ -48,7 +46,11 @@
 	
 	// The opacity value to be used with the texture
 	int opacity;
-	
+
+    // The document which is the focus of this utility
+    __weak IBOutlet id document;
+
+    __weak IBOutlet ColorSelectView *colorSelectView;
 }
 
 /*!
@@ -69,20 +71,6 @@
 	@discussion	Frees memory occupied by an instance of this class.
 */
 - (void)dealloc;
-
-/*!
-	@method		activate:
-	@discussion	Activates this utility with the given document.
-	@param		sender
-				The document to activate the utility with.
-*/
-- (void)activate:(id)sender;
-
-/*!
-	@method		deactivate
-	@discussion	Deactivates this utility.
-*/
-- (void)deactivate;
 
 /*!
 	@method		shutdown
@@ -133,6 +121,7 @@
 */
 - (int)opacity;
 
+- (float)opacity_float;
 
 /*!
  @method        setOpacity

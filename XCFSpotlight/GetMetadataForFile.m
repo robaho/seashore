@@ -2,8 +2,8 @@
 #include <CoreServices/CoreServices.h> 
 #include <Cocoa/Cocoa.h>
 
-#import "XCFContent.h"
-#import "XCFLayer.h"
+#import <SeaMinimal/XCFContent.h>
+#import <SeaMinimal/XCFLayer.h>
 
 /* -----------------------------------------------------------------------------
  Step 1

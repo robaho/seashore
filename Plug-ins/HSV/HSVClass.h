@@ -10,48 +10,14 @@
 
 #import <Cocoa/Cocoa.h>
 #import <Plugins/PluginClass.h>
+#import <SeaComponents/SeaComponents.h>
 
 @interface HSVClass : NSObject <PluginClass> {
 
-	// The plug-in's manager
 	PluginData *pluginData;
 
-	// The label displaying the hue
-	IBOutlet id hueLabel;
-	
-	// The slider for the hue
-	IBOutlet id hueSlider;
-
-	// The label displaying the saturation
-	IBOutlet id saturationLabel;
-	
-	// The slider for the saturation
-	IBOutlet id saturationSlider;
-
-	// The label displaying the value
-	IBOutlet id valueLabel;
-	
-	// The slider for the value
-	IBOutlet id valueSlider;
-
-	// The panel for the plug-in
-	IBOutlet id panel;
-
-	// The hue
-	float hue;
-
-	// The saturation
-	float saturation;
-
-	// The value
-	float value;
-
-	// YES if the effect must be refreshed
-	BOOL refresh;
-
-	// YES if the application succeeded
-	BOOL success;
-
+    SeaSlider *hue,*saturation,*value;
+    VerticalView *panel;
 }
 
 @end

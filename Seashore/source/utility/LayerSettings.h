@@ -1,4 +1,4 @@
-#import "Globals.h"
+#import "Seashore.h"
 
 /*!
 	@class		LayerSettings
@@ -52,25 +52,12 @@
 	
 	// Whether or not the alpha layer is enabled
 	IBOutlet id alphaEnabledCheckbox;
-	
-	// Channel editing
-	IBOutlet id channelEditingMatrix;
-	
+
+    int xoff,yoff;
+
 	// The layer whose settings are currently being changed
 	SeaLayer* settingsLayer;
 }
-
-/*!
-	@method		activate
-	@discussion	Activates the layer settings manager with the document.
-*/
-- (void)activate;
-
-/*!
-	@method		deactivate
-	@discussion	Deactivates the layer settings manager.
-*/
-- (void)deactivate;
 
 /*!
 	@method		showSettings:from:
@@ -177,13 +164,5 @@
 				Ignored.
 */
 - (IBAction)changeEnabledAlpha:(id)sender;
-
-/*!
-	@method		changeChannelEditing:
-	@discussion	Called when the matrix for channel editing is changed.
-	@param		sender
-				Ignored.
-*/
-- (IBAction)changeChannelEditing:(id)sender;
 
 @end

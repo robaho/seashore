@@ -8,138 +8,7 @@
 
 - (id)initWithManager:(PluginData *)data
 {
-	pluginData = data;
-	[NSBundle loadNibNamed:@"CIGlassLozenge" owner:self];
-	
-	return self;
-}
-
-- (int)type
-{
-	return 1;
-}
-
-- (int)points
-{
-	return 2;
-}
-
-- (NSString *)name
-{
-	return [gOurBundle localizedStringForKey:@"name" value:@"Glass Lozenge" table:NULL];
-}
-
-- (NSString *)groupName
-{
-	return [gOurBundle localizedStringForKey:@"groupName" value:@"Distort" table:NULL];
-}
-
-- (NSString *)instruction
-{
-	return [gOurBundle localizedStringForKey:@"instruction" value:@"Needs localization." table:NULL];
-}
-
-- (NSString *)sanity
-{
-	return @"Seashore Approved (Bobo)";
-}
-
-- (void)run
-{
-	if ([gUserDefaults objectForKey:@"CIGlassLozenge.refraction"])
-		refraction = [gUserDefaults floatForKey:@"CIGlassLozenge.refraction"];
-	else
-		refraction = 1.7;
-	
-	if (refraction < -5.0 || refraction > 5.0)
-		refraction = 1.7;
-		
-	if ([gUserDefaults objectForKey:@"CIGlassLozenge.radius"])
-		radius = [gUserDefaults integerForKey:@"CIGlassLozenge.radius"];
-	else
-		radius = 100;
-	
-	if (radius < 0 || radius > 1000)
-		radius = 100;
-	
-	[refractionLabel setStringValue:[NSString stringWithFormat:@"%.1f", refraction]];
-	[refractionSlider setFloatValue:refraction];
-	
-	[radiusLabel setStringValue:[NSString stringWithFormat:@"%d", radius]];
-	[radiusSlider setIntValue:radius % 200];
-	[radiusStepper setIntValue:radius - radius % 200];
-	
-	refresh = YES;
-	success = NO;
-	[self preview:self];
-	if ([pluginData window])
-		[NSApp beginSheet:panel modalForWindow:[pluginData window] modalDelegate:NULL didEndSelector:NULL contextInfo:NULL];
-	else
-		[NSApp runModalForWindow:panel];
-	// Nothing to go here
-}
-
-- (IBAction)apply:(id)sender
-{
-	if (refresh) [self execute];
-	[pluginData apply];
-	
-	[panel setAlphaValue:1.0];
-	
-	[NSApp stopModal];
-	if ([pluginData window]) [NSApp endSheet:panel];
-	[panel orderOut:self];
-	success = YES;
-		
-	[gUserDefaults setFloat:refraction forKey:@"CIGlassLozenge.refraction"];
-	[gUserDefaults setInteger:radius forKey:@"CIGlassLozenge.radius"];
-}
-
-- (void)reapply
-{
-	[self execute];
-	[pluginData apply];
-}
-
-- (BOOL)canReapply
-{
-	return success;
-}
-
-- (IBAction)preview:(id)sender
-{
-	if (refresh) [self execute];
-	[pluginData preview];
-	refresh = NO;
-}
-
-- (IBAction)cancel:(id)sender
-{
-	[pluginData cancel];
-	
-	[panel setAlphaValue:1.0];
-	
-	[NSApp stopModal];
-	[NSApp endSheet:panel];
-	[panel orderOut:self];
-	success = NO;
-}
-
-- (IBAction)update:(id)sender
-{
-	refraction = [refractionSlider floatValue];
-	radius = [radiusSlider intValue] + [radiusStepper intValue];
-	
-	[panel setAlphaValue:1.0];
-	
-	[refractionLabel setStringValue:[NSString stringWithFormat:@"%.1f", refraction]];
-	[radiusLabel setStringValue:[NSString stringWithFormat:@"%d", radius]];
-	
-	refresh = YES;
-	if ([[NSApp currentEvent] type] == NSLeftMouseUp || [sender tag] == 99) {
-		[self preview:self];
-		if ([pluginData window]) [panel setAlphaValue:0.4];
-	}
+    return [super initWithManager:data filter:@"CIGlassLozenge" points:2 properties:kCI_Radius,kCI_Refraction,kCI_Point0,kCI_Point1,0];
 }
 
 - (void)execute
@@ -157,19 +26,14 @@
     [filter setDefaults];
     [filter setValue:[CIVector vectorWithX:point.x Y:height - point.y] forKey:@"inputPoint0"];
     [filter setValue:[CIVector vectorWithX:apoint.x Y:height - apoint.y] forKey:@"inputPoint1"];
-    [filter setValue:[NSNumber numberWithInt:radius] forKey:@"inputRadius"];
-    [filter setValue:[NSNumber numberWithFloat:refraction] forKey:@"inputRefraction"];
+    [filter setValue:[NSNumber numberWithInt:[self intValue:kCI_Radius]] forKey:@"inputRadius"];
+    [filter setValue:[NSNumber numberWithFloat:[self floatValue:kCI_Refraction]] forKey:@"inputRefraction"];
     
     if (opaque){
         applyFilterBG(pluginData,filter);
     } else {
         applyFilter(pluginData,filter);
     }
-}
-
-+ (BOOL)validatePlugin:(PluginData*)pluginData
-{
-	return YES;
 }
 
 @end

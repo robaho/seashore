@@ -3,9 +3,7 @@
 #import "SeaLayer.h"
 #import "SeaDocument.h"
 #import "SeaWhiteboard.h"
-#import "Bitmap.h"
 #import "SeaDocument.h"
-#import "Bitmap.h"
 
 
 @implementation JPEGExporter
@@ -86,9 +84,6 @@
 
 - (void)showOptions:(id)document
 {
-	unsigned char *temp, *data;
-	int width = [(SeaContent *)[document contents] width], height = [(SeaContent *)[document contents] height], spp = [[document contents] spp];
-	int i, j, k, x, y;
 	id realImage, compressImage;
 	float value;
 	
@@ -105,33 +100,8 @@
 		[compressSlider setIntValue:printCompression];
 	value = [self reviseCompression];
 	
-	// Set-up the sample data
-	data = [(SeaWhiteboard *)[document whiteboard] data];
-	sampleData = malloc(40 * 40 * 3);
-	temp = malloc(40 * 40 * 4);
-	memset(temp, 0x00, 40 * 40 * 4);
-	for (j = 0; j < 40; j++) {
-		for (i = 0; i < 40; i++) {
-			x = width / 2 - 20 + i;
-			y = height / 2 - 20 + j;
-			if (x >= 0 && x < width && y >= 0 && y < height) {
-				if (spp == 4) {
-					for (k = 0; k < 4; k++)
-						temp[(j * 40 + i) * 4 + k] = data[(y * width + x) * 4 + k];
-				}
-				else {
-					for (k = 0; k < 3; k++)
-						temp[(j * 40 + i) * 4 + k] = data[(y * width + x) * 2];
-					temp[(j * 40 + i) * 4 + 3] = data[(y * width + x) * 2 + 1];
-				}
-			}
-		}
-	}
-	stripAlphaToWhite(4, sampleData, temp, 40 * 40);
-	free(temp);
-	
-	// Now make an image for the view
-	realImageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&sampleData pixelsWide:40 pixelsHigh:40 bitsPerSample:8 samplesPerPixel:3 hasAlpha:NO isPlanar:NO colorSpaceName:MyRGBSpace bytesPerRow:40 * 3 bitsPerPixel:8 * 3];
+    realImageRep = [[document whiteboard] sampleImage];
+
 	realImage = [[NSImage alloc] initWithSize:NSMakeSize(160, 160)];
 	[realImage addRepresentation:realImageRep];
 	[realImageView setImage:realImage];
@@ -150,7 +120,6 @@
 		[gUserDefaults setInteger:webCompression forKey:@"jpeg web compression"];
 	else
 		[gUserDefaults setInteger:printCompression forKey:@"jpeg print compression"];
-	free(sampleData);
 }
 
 - (IBAction)compressionChanged:(id)sender
@@ -163,6 +132,7 @@
 	else
 		printCompression = [compressSlider intValue];
 	value = [self reviseCompression];
+
 	compressImage = [[NSImage alloc] initWithData:[realImageRep representationUsingType:NSJPEGFileType properties:[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:[self reviseCompression]] forKey:NSImageCompressionFactor]]];
 	[compressImage setSize:NSMakeSize(160, 160)];
 	[compressImageView setImage:compressImage];
@@ -187,7 +157,11 @@
 		[compressSlider setIntValue:printCompression];
     
 	value = [self reviseCompression];
-	compressImage = [[NSImage alloc] initWithData:[realImageRep representationUsingType:NSJPEGFileType properties:[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:[self reviseCompression]] forKey:NSImageCompressionFactor]]];
+
+    NSImage *img = [realImageView image];
+    NSBitmapImageRep *rep = [[img representations] objectAtIndex:0];
+
+	compressImage = [[NSImage alloc] initWithData:[rep representationUsingType:NSJPEGFileType properties:[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:[self reviseCompression]] forKey:NSImageCompressionFactor]]];
 	[compressImage setSize:NSMakeSize(160, 160)];
 	[compressImageView setImage:compressImage];
 	[compressImageView display];
@@ -218,32 +192,12 @@
 
 - (BOOL)writeDocument:(id)document toFile:(NSString *)path
 {
-	int width, height, xres, yres, spp;
-	unsigned char *srcData, *destData;
-	NSBitmapImageRep *imageRep;
-	NSData *imageData;
-	NSDictionary *exifData;
-    bool hasAlpha=true;
-	
-	// Get the data to write
-	srcData = [(SeaWhiteboard *)[document whiteboard] data];
-	width = [(SeaContent *)[document contents] width];
-	height = [(SeaContent *)[document contents] height];
-	spp = [(SeaContent *)[document contents] spp];
-	xres = [[document contents] xres];
-	yres = [[document contents] yres];
+	int xres = [[document contents] xres];
+	int yres = [[document contents] yres];
     
-    destData = stripAlpha(srcData,width,height,spp);
-    if (destData!=srcData) {
-        spp--;
-        hasAlpha=false;
-    }
+    NSBitmapImageRep *imageRep = [[document whiteboard] bitmap];
 
-    // Make an image representation from the data
-    imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&destData pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:hasAlpha isPlanar:NO colorSpaceName:(spp > 2) ? MyRGBSpace : MyGraySpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
-
-	// Add EXIF data
-	exifData = [[document contents] exifData];
+	NSDictionary *exifData = [[document contents] exifData];
 	if (exifData) [imageRep setProperty:@"NSImageEXIFData" withValue:exifData];
 	
     NSSize newSize;
@@ -252,16 +206,10 @@
     
     [imageRep setSize:newSize];
 	
-	// Finally build the JPEG data
-	imageData = [imageRep representationUsingType:NSJPEGFileType properties:[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:[self reviseCompression]] forKey:NSImageCompressionFactor]];
+	NSData *imageData = [imageRep representationUsingType:NSJPEGFileType properties:[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:[self reviseCompression]] forKey:NSImageCompressionFactor]];
 	
-	// Save our file and let's go
 	[imageData writeToFile:path atomically:NO];
 
-	// If the destination data is not equivalent to the source data free the former
-	if (destData != srcData)
-		free(destData);
-	
 	return YES;
 }
 

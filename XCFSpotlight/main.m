@@ -15,6 +15,8 @@
 #include <CoreFoundation/CoreFoundation.h>
 #include <CoreFoundation/CFPlugInCOM.h>
 #include <CoreServices/CoreServices.h>
+#include <Cocoa/Cocoa.h>
+
 
 // -----------------------------------------------------------------------------
 //	constants
@@ -29,7 +31,6 @@
 // You should not have to modify this code aside from changing
 // names if you decide to change the names defined in the Info.plist
 //
-
 
 // -----------------------------------------------------------------------------
 //	typedefs

@@ -34,7 +34,6 @@ static NSString*  SelectionEditIdentifier = @"Selection Edit Identifier";
 {
     foreground = [NSColor colorWithDeviceRed:0.0 green:0.0 blue:0.0 alpha:1.0];
     background = [NSColor colorWithDeviceRed:1.0 green:1.0 blue:1.0 alpha:1.0];
-	delay_timer = NULL;
 	tool = -1;
 	oldTool = -1;
 	selectionTools = [NSArray arrayWithObjects:
@@ -63,8 +62,6 @@ static NSString*  SelectionEditIdentifier = @"Selection Edit Identifier";
 					 [NSNumber numberWithInt: kZoomTool],
 					 [NSNumber numberWithInt: kPositionTool],
                       nil];
-	
-	
 	return self;
 }
 
@@ -106,7 +103,7 @@ static NSString*  SelectionEditIdentifier = @"Selection Edit Identifier";
 	}else if([itemIdent isEqual:EffectIdentifier]){
 		toolbarItem =[[SeaToolbarItem alloc] initWithItemIdentifier:EffectIdentifier];
 		[toolbarItem setView:effectTBView];
-        [toolbarItem setLabel:    @"Effect Tools"];
+        [toolbarItem setLabel:@"Effect Tools"];
 		[toolbarItem setPaletteLabel:@"Effect Tools"];
 		[toolbarItem setMenuFormRepresentation:effectMenu];
 	}else if([itemIdent isEqual:TransformIdentifier]){
@@ -129,8 +126,6 @@ static NSString*  SelectionEditIdentifier = @"Selection Edit Identifier";
         [toolbarItem setLabel:@"Colors"];
         [toolbarItem setPaletteLabel:@"Colors"];
         [toolbarItem setMenuFormRepresentation:colorsMenu];
-        [toolbarItem setMinSize:NSMakeSize(42,24)];
-        [toolbarItem setMaxSize:NSMakeSize(42,24)];
 	}
 	return toolbarItem;
 }
@@ -175,10 +170,9 @@ static NSString*  SelectionEditIdentifier = @"Selection Edit Identifier";
 - (void)setForeground:(NSColor *)color
 {
     foreground = color;
-	if (delay_timer) {
-		[delay_timer invalidate];
-	}
-	delay_timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:[[document tools] getTool:kTextTool]  selector:@selector(preview:) userInfo:NULL repeats:NO];
+    if(tool == kTextTool){
+        [[document docView] setNeedsDisplay:TRUE];
+    }
 }
 
 - (void)setBackground:(NSColor *)color
@@ -196,39 +190,20 @@ static NSString*  SelectionEditIdentifier = @"Selection Edit Identifier";
 	return YES;
 }
 
-- (void)activate
-{
-	if(tool == -1)
-		[self changeToolTo:kRectSelectTool];
-	// Set the document appropriately
-	[colorSelectView setDocument:document];
-		
-	// Then pretend a tool change
-	[self update:YES];
-}
-
-- (void)deactivate
-{
-	int i;
-	
-	[colorSelectView setDocument:document];
-	for (i = kFirstSelectionTool; i <= kLastSelectionTool; i++) {
-		[[toolbox cellWithTag:i] setEnabled:YES];
-	}
-}
-
 - (void)update:(BOOL)full
 {
 	if (full) {
-		/* Disable or enable the tool */
         [selectionMenu setEnabled:YES];
-		// Implement the change
 		[[document docView] setNeedsDisplay:YES];
 		[optionsUtility update];
 		[[SeaController seaHelp] updateInstantHelp:tool];
 
 	}
 	[colorSelectView update];
+    if(tool == kTextTool){
+        [[document docView] setNeedsDisplay:TRUE];
+    }
+    [[document currentTool] switchingTools:TRUE];
 }
 
 - (int)tool
@@ -276,10 +251,8 @@ static NSString*  SelectionEditIdentifier = @"Selection Edit Identifier";
 {
 	BOOL updateCrop = NO;
     
-    id currentTool = [document currentTool];
-    if([currentTool intermediate])
-        return;
-	
+    AbstractTool* currentTool = [document currentTool];
+
 	[[document helpers] endLineDrawing];
 	if (tool == kCropTool || newTool == kCropTool) {
 		updateCrop = YES;
@@ -288,12 +261,15 @@ static NSString*  SelectionEditIdentifier = @"Selection Edit Identifier";
 	if (tool == newTool && [[NSApp currentEvent] type] == NSLeftMouseUp && [[NSApp currentEvent] clickCount] > 1) {
 		[[document optionsUtility] show:NULL];
 	} else {
+        [currentTool switchingTools:FALSE];
         [selectionTBView setSelectedSegment:-1];
         [drawTBView setSelectedSegment:-1];
         [effectTBView setSelectedSegment:-1];
         [transformTBView setSelectedSegment:-1];
 
 		tool = newTool;
+        currentTool = [document currentTool];
+        [currentTool switchingTools:TRUE];
         [selectionTBView selectSegmentWithTag:tool];
         [drawTBView selectSegmentWithTag:tool];
         [effectTBView selectSegmentWithTag:tool];
@@ -303,9 +279,22 @@ static NSString*  SelectionEditIdentifier = @"Selection Edit Identifier";
 	if (updateCrop) [[document infoUtility] update];
 }
 
--(void)floatTool
+- (void)selectToolBarButton:(int)tool
+{
+    [selectionTBView setSelectedSegment:-1];
+    [drawTBView setSelectedSegment:-1];
+    [effectTBView setSelectedSegment:-1];
+    [transformTBView setSelectedSegment:-1];
+    [selectionTBView selectSegmentWithTag:tool];
+    [drawTBView selectSegmentWithTag:tool];
+    [effectTBView selectSegmentWithTag:tool];
+    [transformTBView selectSegmentWithTag:tool];
+}
+
+-(void)positionTool
 {
 	oldTool = tool;
+    NSLog(@"switching to position tool");
 	[self changeToolTo: kPositionTool];
 }
 

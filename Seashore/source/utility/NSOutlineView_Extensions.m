@@ -90,25 +90,25 @@
 
 @implementation SeaOutlineView
 
--(void)highlightSelectionInClipRect:(NSRect)theClipRect
-{
-    NSColor *select = [NSColor selectedControlColor];
-
-    NSIndexSet *indecies = [self selectedRowIndexes];
-    int i;
-    
-    for(i = 0; i < [self numberOfRows]; i++){
-        NSRect rect = [self rectOfRow:i];
-        if([indecies containsIndex: i]){
-            bool isMainWindow = [[self window] isMainWindow];
-            if(isMainWindow)
-                [select set];
-            else
-                [[select shadowWithLevel:.25] set];
-            [[NSBezierPath bezierPathWithRect: rect] fill];
-        }
-    }
-}
+//-(void)highlightSelectionInClipRect:(NSRect)theClipRect
+//{
+//    NSColor *select = [NSColor selectedControlColor];
+//
+//    NSIndexSet *indecies = [self selectedRowIndexes];
+//    int i;
+//    
+//    for(i = 0; i < [self numberOfRows]; i++){
+//        NSRect rect = [self rectOfRow:i];
+//        if([indecies containsIndex: i]){
+//            bool isMainWindow = [[self window] isMainWindow];
+//            if(isMainWindow)
+//                [select set];
+//            else
+//                [[select shadowWithLevel:.25] set];
+//            [[NSBezierPath bezierPathWithRect: rect] fill];
+//        }
+//    }
+//}
 
 -(BOOL)acceptsFirstResponder
 {

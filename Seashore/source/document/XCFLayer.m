@@ -1,5 +1,6 @@
 #import "XCFLayer.h"
-#import "RLE.h"
+#import <SeaLibrary/RLE.h>
+#import <SeaLibrary/Bitmap.h>
 
 @implementation XCFLayer
 
@@ -38,38 +39,6 @@ static inline void fix_endian_readl(long *input, int size)
         fix_endian_read(&offset,1);
         return offset;
     }
-}
-
--(int)mapV10Mode:(int)mode
-{
-    if(version<10)
-        return mode;
-    switch(mode){
-        case 28: return XCF_NORMAL_MODE;
-        case 29: return XCF_BEHIND_MODE;
-        case 30: return XCF_MULTIPLY_MODE;
-        case 31: return XCF_SCREEN_MODE;
-        case 32: return XCF_DIFFERENCE_MODE;
-        case 33: return XCF_ADDITION_MODE;
-        case 34: return XCF_SUBTRACT_MODE;
-        case 35: return XCF_DARKEN_ONLY_MODE;
-        case 36: return XCF_LIGHTEN_ONLY_MODE;
-        case 37: return XCF_HUE_MODE;
-        case 38: return XCF_SATURATION_MODE;
-        case 39: return XCF_COLOR_MODE;
-        case 40: return XCF_VALUE_MODE;
-        case 41: return XCF_DIVIDE_MODE;
-        case 42: return XCF_DODGE_MODE;
-        case 43: return XCF_BURN_MODE;
-        case 44: return XCF_HARDLIGHT_MODE;
-        case 45: return XCF_SOFTLIGHT_MODE;
-        case 46: return XCF_GRAIN_EXTRACT_MODE;
-        case 47: return XCF_GRAIN_MERGE_MODE;
-        case 57: return XCF_COLOR_ERASE_MODE;
-        case 58: return XCF_ERASE_MODE;
-    }
-    NSLog(@"unknown layer mode");
-    return XCF_NORMAL_MODE;
 }
 
 - (BOOL)readHeader:(FILE *)file
@@ -167,8 +136,12 @@ static inline void fix_endian_readl(long *input, int size)
 				// Store the layer's mode
 				fread(tempIntString, sizeof(int), 1, file);
 				fix_endian_read(tempIntString, 1);
-                mode = [self mapV10Mode:tempIntString[0]];;
-				
+                int xcf_mode = tempIntString[0];
+                if(XcfLayerModeMap[xcf_mode].blendMode==-1){
+                    info->unsupported_mode = TRUE;
+                    xcf_mode = GIMP_LAYER_MODE_NORMAL;
+                }
+                mode = XcfLayerModeMap[xcf_mode].blendMode;
 			break;
 			case PROP_ACTIVE_LAYER:
 				
@@ -185,12 +158,8 @@ static inline void fix_endian_readl(long *input, int size)
 				
 			break;
 			case PROP_FLOATING_SELECTION:
-				
-				// Store that the layer is floating
 				fread(tempIntString, sizeof(int), 1, file);
 				fix_endian_read(tempIntString, 1);
-				floating = YES;
-				
 			break;
 			case PROP_APPLY_MASK:
 			case PROP_EDIT_MASK:
@@ -605,15 +574,8 @@ static inline int alphaReplaceMerge(int dstOpacity,int srcOpacity)
             return NULL;
         }
         
-        // Check the alpha
         hasAlpha = YES;
-        /* This is just a pain, let's just always have alpha
-        hasAlpha = NO;
-        for (i = 0; i < width * height; i++) {
-            if (data[(i + 1) * spp - 1] != 255)
-                hasAlpha = YES;
-        }*/
-        
+
         return self;
     }
     @catch (NSException *exception) {

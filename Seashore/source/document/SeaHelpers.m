@@ -4,7 +4,7 @@
 #import "SeaLayer.h"
 #import "SeaController.h"
 #import "ToolboxUtility.h"
-#import "PegasusUtility.h"
+#import "LayersUtility.h"
 #import "SeaWhiteboard.h"
 #import "SeaPrefs.h"
 #import "SeaView.h"
@@ -21,10 +21,9 @@
 	[[document infoUtility] update];
 }
 
-- (void)selectionChanged:(IntRect)rect
+- (void)selectionChanged:(IntRect)documentRect
 {
-    SeaLayer *layer = [[document contents] activeLayer];
-    [[document docView] setNeedsDisplayInDocumentRect:IntOffsetRect(rect,[layer xoff],[layer yoff])];
+    [[document docView] setNeedsDisplayInDocumentRect:documentRect:16];
     [[document infoUtility] update];
 }
 
@@ -32,26 +31,10 @@
 {
 	id curTool = [document currentTool];
 
-	// We only need to act if the document is locked
-	if ([document locked] && [[document window] attachedSheet] == NULL) {
-		
-		// Apply the changes
-		[[document whiteboard] applyOverlay];
-		
-		// Notify ourselves of the change
-		[self layerContentsChanged:kActiveLayer];
-		
-		// End line drawing once
-		if ([curTool respondsToSelector:@selector(endLineDrawing)])
-			[curTool endLineDrawing];		
-		
-		// End line drawing twice
-		[[document docView] endLineDrawing];
-		
-		// Unlock the document
-		[document unlock];
-		
-	}
+    [curTool endLineDrawing];
+
+    // End line drawing twice
+    [[document docView] endLineDrawing];
 	
 	// Special case for the effect tool
 	if ([[document toolboxUtility] tool] == kEffectTool) {
@@ -64,35 +47,36 @@
 {
 	if ([[document contents] spp] != 2)
 		[[document toolboxUtility] update:NO];
-	[[document whiteboard] readjustAltData:YES];
+    [[document docView] setNeedsDisplay:YES];
 	[[document statusUtility] update];
 }
 
 - (void)resolutionChanged
 {
-	[[document docView] readjust:YES];
+	[[document docView] readjust];
 	[[document statusUtility] update];
 }
 
 - (void)zoomChanged
 {
-    [[document docView] updateRulers];
+    [[document scrollView] updateRulers];
 	[[document optionsUtility] update];
 	[[document statusUtility] update];
 }
 
-- (void)boundariesAndContentChanged:(BOOL)scaling
+- (void)boundariesAndContentChanged
 {
-	id contents = [document contents];
+	SeaContent *contents = [document contents];
 	int i;
 	
 	[[document whiteboard] readjust];
-	[[document docView] readjust:scaling];
+	[[document docView] readjust];
 	for (i = 0; i < [contents layerCount]; i++) {
 		[[contents layer:i] updateThumbnail];
 	}
-	[[document pegasusUtility] update:kPegasusUpdateLayerView];
+	[[document layersUtility] update:kLayersUpdateCurrent];
 	[[document statusUtility] update];
+    [[document toolboxUtility] update:FALSE];
 	[[document docView] setNeedsDisplay:YES]; 
 
 }
@@ -106,8 +90,6 @@
 {
 	id whiteboard = [document whiteboard];
 	
-	[[document selection] readjustSelection];
-    
 	if (![[[document contents] activeLayer] hasAlpha] && [[document contents] selectedChannel] == kAlphaChannel) {
 		[[document contents] setSelectedChannel:kAllChannels];
 		[[document helpers] channelChanged];
@@ -124,14 +106,11 @@
     [document maybeShowLayerWarning];
 
 	[(LayerDataSource *)[document dataSource] update];
-	[[document pegasusUtility] update:kPegasusUpdateAll];
-    
-    // Show the banner
-    if([[[document contents] activeLayer] floating]) {
-        [[document warnings] showFloatBanner];
-    } else {
-        [[document warnings] hideFloatBanner];
-    }
+	[[document layersUtility] update:kLayersUpdateAll];
+    [[document toolboxUtility] update:FALSE];
+    [[document infoUtility] update];
+    [[document statusUtility] update];
+    [[document docView] setNeedsDisplay:TRUE];
 }
 
 - (void)documentWillFlatten
@@ -147,27 +126,20 @@
 - (void)typeChanged
 {
 	[[document toolboxUtility] update:NO];
-	[[document whiteboard] readjust];
 	[self layerContentsChanged:kAllLayers];
+    [[document whiteboard] readjust];
 	[[document statusUtility] update];
 }
 
 - (void)applyOverlay
 {
-	IntRect rect = [[document whiteboard] applyOverlay];
-	SeaLayer *layer = [[document contents] activeLayer];
-	[layer updateThumbnail];
-	[[document whiteboard] update:rect];
-	[[document pegasusUtility] update:kPegasusUpdateLayerView];
+	[[document whiteboard] applyOverlay];
+    [self layerContentsChanged:kActiveLayer];
 }
 
-- (void)overlayChanged:(IntRect)rect
+- (void)overlayChanged:(IntRect)layerRect
 {
-	id contents = [document contents];
-	
-	rect.origin.x += [[contents activeLayer] xoff];
-	rect.origin.y += [[contents activeLayer] yoff];
-	[[document whiteboard] update:rect];
+    [[document whiteboard] overlayModified:layerRect];
 }
 
 - (void)layerAttributesChanged:(int)index hold:(BOOL)hold
@@ -191,13 +163,13 @@
 	}
 	
 	if (!hold)
-		[[document pegasusUtility] update:kPegasusUpdateAll];
+		[[document layersUtility] update:kLayersUpdateAll];
 }
 
 - (void)layerBoundariesChanged:(int)index
 {
-	id contents = [document contents], layer;
-	IntRect rect;
+    SeaContent *contents = [document contents];
+    SeaLayer *layer;
 	int i;
 	
 	if (index == kActiveLayer)
@@ -217,22 +189,20 @@
 		break;
 		default:
 			layer = [contents layer:index];
-			rect = IntMakeRect([layer xoff], [layer yoff], [(SeaLayer *)layer width], [(SeaLayer *)layer height]);
 			[layer updateThumbnail];
 		break;
 	}
 	
-	[[document selection] readjustSelection];
 	[[document whiteboard] readjustLayer];
-	[[document pegasusUtility] update:kPegasusUpdateAll];
-	[[document docView] setNeedsDisplay:YES]; 
-
+	[[document layersUtility] update:kLayersUpdateAll];
+	[[document docView] setNeedsDisplay:YES];
+    [[document toolboxUtility] update:FALSE];
 }
 
 - (void)layerContentsChanged:(int)index
 {
-	id contents = [document contents], layer;
-	IntRect rect;
+    SeaContent *contents = [document contents];
+    SeaLayer *layer;
 	int i;
 	
 	if (index == kActiveLayer)
@@ -243,31 +213,25 @@
 			for (i = 0; i < [contents layerCount]; i++) {
 				[[contents layer:i] updateThumbnail];
 			}
-			[[document whiteboard] update];
 		break;
 		case kLinkedLayers:
 			for (i = 0; i < [contents layerCount]; i++) {
 				if ([[contents layer:i] linked])
 					[[contents layer:i] updateThumbnail];
 			}
-			[[document whiteboard] update];
 		break;
 		default:
 			layer = [contents layer:index];
-			rect = IntMakeRect([layer xoff], [layer yoff], [(SeaLayer *)layer width], [(SeaLayer *)layer height]);
 			[layer updateThumbnail];
-			[(SeaWhiteboard *)[document whiteboard] update:rect];
 		break;
 	}
 	
-	[[document pegasusUtility] update:kPegasusUpdateLayerView];
+	[[document layersUtility] update:kLayersUpdateCurrent];
 }
 
 - (void)layerOffsetsChanged:(int)index from:(IntPoint)oldOffsets
 {
-    id contents = [document contents];
-    SeaLayer *layer;
-    int xoff, yoff;
+    SeaContent *contents = [document contents];
 
     if (index == kActiveLayer) {
 		index = [contents activeLayerIndex];
@@ -279,41 +243,23 @@
 	switch (index) {
 		case kAllLayers:
             [[document whiteboard] update];
-            layer = [contents activeLayer];
-            xoff = [layer xoff];
-            yoff = [layer yoff];
         break;
 		case kLinkedLayers:
 			[[document whiteboard] update];
-			layer = [contents activeLayer];
-			xoff = [layer xoff];
-			yoff = [layer yoff];
 		break;
-		default:
-			layer = [contents layer:index];
-            xoff = [layer xoff];
-            yoff = [layer yoff];
+        default: {
+			SeaLayer *layer = [contents layer:index];
             IntRect oldRect = IntMakeRect(oldOffsets.x,oldOffsets.y,[layer width],[layer height]);
-            [[document whiteboard] update:IntSumRects(oldRect,[layer localRect])];
+            [[document whiteboard] update:IntSumRects(oldRect,[layer globalRect])];
+        }
 		break;
 	}
-	
-	if ([[document selection] active]) {
-		[[document selection] adjustOffset:IntMakePoint(xoff - oldOffsets.x, yoff - oldOffsets.y)];
-	}
 }
 
-- (void)layerOffsetsChanged:(IntPoint)oldOffsets rect:(IntRect)dirty
+- (void)layerOffsetsChanged:(IntRect)dirty
 {
-    SeaLayer *layer = [[document contents] activeLayer];
-    IntPoint newOffsets = [layer localRect].origin;
     [[document whiteboard] update:dirty];
-    
-    if ([[document selection] active]) {
-        [[document selection] adjustOffset:IntMakePoint(newOffsets.x - oldOffsets.x, newOffsets.y - oldOffsets.y)];
-    }
 }
-
 
 - (void)layerLevelChanged:(int)index
 {
@@ -330,11 +276,11 @@
 		break;
 		default:
 			layer = [contents layer:index];
-			[[document whiteboard] update:[layer localRect]];
+			[[document whiteboard] update:[layer globalRect]];
 		break;
 	}
 	[(LayerDataSource *)[document dataSource] update];
-	[[document pegasusUtility] update:kPegasusUpdateAll];
+	[[document layersUtility] update:kLayersUpdateAll];
 }
 
 - (void)layerSnapshotRestored:(int)index rect:(IntRect)rect
@@ -344,15 +290,15 @@
 	layer = [[document contents] layer:index];
 	rect.origin.x += [layer xoff];
 	rect.origin.y += [layer yoff];
-	[(SeaWhiteboard *)[document whiteboard] update:rect];
+	[[document whiteboard] update:rect];
 	[layer updateThumbnail];
-	[[document pegasusUtility] update:kPegasusUpdateLayerView];
+	[[document layersUtility] update:kLayersUpdateCurrent];
 }
 
 - (void)layerTitleChanged
 {
 	[(LayerDataSource *)[document dataSource] update];
-	[[document pegasusUtility] update:kPegasusUpdateLayerView];
+	[[document layersUtility] update:kLayersUpdateCurrent];
 }
 
 @end

@@ -5,15 +5,15 @@
 #import "SeaLayer.h"
 #import "SeaHelpers.h"
 #import "SeaController.h"
-#import "PegasusUtility.h"
+#import "LayersUtility.h"
 #import "LayerSettings.h"
 
 #import "LayerDataSource.h"
 
-#define SEA_LAYER_PBOARD_TYPE 	@"Seashore Layer Pasteboard Type"
-#define LAYER_THUMB_NAME_COL @"Layer Thumbnail and Name Column"
-#define LAYER_VISIBLE_COL @"Layer Visible Checkbox Column"
-#define INFO_BUTTON_COL	@"Info Button Column"
+#define SEA_LAYER_PBOARD_TYPE   @"Seashore Layer Pasteboard Type"
+#define LAYER_THUMB_NAME_COL    @"Layer Details Column"
+#define LAYER_VISIBLE_COL       @"Layer Visible Column"
+#define INFO_BUTTON_COL         @"Layer Info Column"
 
 @implementation LayerDataSource
 - (void)awakeFromNib
@@ -24,7 +24,10 @@
 
 	[outlineView setIndentationPerLevel: 0.0];
 	[outlineView setOutlineTableColumn:[outlineView tableColumnWithIdentifier:LAYER_THUMB_NAME_COL]];
-    
+
+    [outlineView setDraggingSourceOperationMask:NSDragOperationMove forLocal:YES];
+    [outlineView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
+
 	draggedNodes = nil;
 }
 
@@ -85,11 +88,9 @@
 {
 	// There is only one colum so there's not much need to worry about this
     if ([[tableColumn identifier] isEqualToString:LAYER_THUMB_NAME_COL]) {
-		if([(SeaLayer *)item floating])
-			return @"Floating Layer";
 		return [(SeaLayer *)item name];
 	}else if([[tableColumn identifier] isEqualToString:LAYER_VISIBLE_COL]){
-		return [NSNumber numberWithBool:[(SeaLayer *)item visible]];
+		return [NSNull null];
 	}else if([[tableColumn identifier] isEqualToString:INFO_BUTTON_COL]){
 		return [NSNumber numberWithBool:NO];
 	}else{
@@ -104,10 +105,26 @@
     if ([[tableColumn identifier] isEqualToString:LAYER_THUMB_NAME_COL]) {
 		[(SeaLayer *)item setName:object];
 	}else if([[tableColumn identifier] isEqualToString:LAYER_VISIBLE_COL]){
-		[[document contents] setVisible:[object boolValue] forLayer:[(SeaLayer *)item index]];
+        bool visible = [(SeaLayer *)item visible];
+		[[document contents] setVisible:!visible forLayer:[(SeaLayer *)item index]];
 	}else if([[tableColumn identifier] isEqualToString:INFO_BUTTON_COL]){
-		NSPoint p = [[outlineView window] convertBaseToScreen:[[outlineView window] mouseLocationOutsideOfEventStream]];
-		[[[document pegasusUtility] layerSettings] showSettings:item from:p];
+        NSPoint p0 = [[ov window] mouseLocationOutsideOfEventStream];
+        NSPoint p = [ov convertPoint:p0 fromView:nil];
+        int row = [ov rowAtPoint:p];
+        int col = [ov columnAtPoint:p];
+        NSRect r = [ov frameOfCellAtColumn:col row:row];
+
+//        NSLog(@"point %@ rect %@",NSStringFromPoint(p),NSStringFromRect(r));
+
+        if(p.y > r.origin.y+r.size.height/2) {
+            SeaLayer *layer = (SeaLayer*)item;
+            bool linked = [layer linked];
+            [[document contents] setLinked:!linked forLayer:[layer index]];
+        }else {
+            p = [[ov window] convertBaseToScreen:p0];
+            [[[document layersUtility] layerSettings] showSettings:item from:p];
+        }
+
 	}else{
 		NSLog(@"Setting the value for unknown column %@", tableColumn);
 	}	
@@ -147,10 +164,11 @@
 			[layerCell setSelected: NO];
 		}
 	}else if([[tableColumn identifier] isEqualToString:LAYER_VISIBLE_COL]){
-		NSButtonCell *buttonCell = (NSButtonCell *)cell;
-        [buttonCell setState:([(SeaLayer *)item visible])];
+        [cell setRepresentedObject:item];
+        [cell setObjectValue:@TRUE];
 	}else if([[tableColumn identifier] isEqualToString:INFO_BUTTON_COL]){
-		[(NSButtonCell *)cell setImage:[NSImage imageNamed:@"layer-infoTemplate"]];
+        [cell setRepresentedObject:item];
+        [cell setObjectValue:@TRUE];
 	}else{
 		NSLog(@"Will display cell for unkown column %@", tableColumn);
 	}
@@ -212,7 +230,10 @@ NSFileHandle *NewFileHandleForWritingFile(NSString *dirpath, NSString *basename,
     for (i=0; i<count; i++) {
         SeaLayer *layer = (SeaLayer *)[items objectAtIndex:i];
         NSString *filename  = nil;
-        NSFileHandle *fileHandle = NewFileHandleForWritingFile([dropDestination path], [layer name], @"tif", &filename);
+        NSString *layerName = [layer name];
+        layerName = [layerName stringByDeletingPathExtension];
+
+        NSFileHandle *fileHandle = NewFileHandleForWritingFile([dropDestination path], layerName, @"tif", &filename);
         if (fileHandle) {
             [fileHandle writeData: [layer TIFFRepresentation]];
             fileHandle = nil;
@@ -274,8 +295,9 @@ NSFileHandle *NewFileHandleForWritingFile(NSString *dirpath, NSString *basename,
 		draggedNodes = nil;
         [ov selectItems:[NSArray arrayWithObject:current] byExtendingSelection:NO];
 		return YES;
-	}else{
-		return NO;
+	}else {
+        [[document contents] layerFromPasteboard:[info draggingPasteboard] atIndex:childIndex];
+		return YES;
 	}
 }
 

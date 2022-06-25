@@ -6,46 +6,9 @@
 
 - (id)initWithManager:(PluginData *)data
 {
-    pluginData = data;
-	
+    self = [super initWithManager:data filter:NULL points:0 properties:NULL];
+
 	return self;
-}
-
-- (int)type
-{
-	return 0;
-}
-
-- (NSString *)name
-{
-	return [gOurBundle localizedStringForKey:@"name" value:@"Median" table:NULL];
-}
-
-- (NSString *)groupName
-{
-	return [gOurBundle localizedStringForKey:@"groupName" value:@"Enhance" table:NULL];
-}
-
-- (NSString *)sanity
-{
-	return @"Seashore Approved (Bobo)";
-}
-
-- (void)run
-{
-	[self execute];
-	[pluginData apply];
-	success = YES;
-}
-
-- (void)reapply
-{
-	[self run];
-}
-
-- (BOOL)canReapply
-{
-	return success;
 }
 
 - (void)execute
@@ -59,11 +22,6 @@
     }
     
     renderCIImage(pluginData,myImage);
-}
-
-+ (BOOL)validatePlugin:(PluginData*)pluginData
-{
-	return YES;
 }
 
 @end

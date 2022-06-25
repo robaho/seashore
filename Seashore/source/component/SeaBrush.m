@@ -1,5 +1,5 @@
 #import "SeaBrush.h"
-#import "Bitmap.h"
+#import <Accelerate/Accelerate.h>
 
 typedef struct {
   unsigned int   header_size;  /*  header_size = sizeof (BrushHeader) + brush name  */
@@ -13,13 +13,7 @@ typedef struct {
 
 #define GBRUSH_MAGIC    (('G' << 24) + ('I' << 16) + ('M' << 8) + ('P' << 0))
 
-#ifdef TODO
-#warning Anti-aliasing for pixmap brushes?
-#endif
-
 #define BrushThumbnail 42
-
-extern void determineBrushMask(unsigned char *input, unsigned char *output, int width, int height, int index1, int index2);
 
 @implementation SeaBrush
 
@@ -93,7 +87,6 @@ extern void determineBrushMask(unsigned char *input, unsigned char *output, int 
 				NSLog(@"Brush \"%@\" failed to load\n", [path lastPathComponent]);
 				return NULL;
 			}
-            templateMask = malloc(width*height*2);
 		break;
 		case 4:
 			usePixmap = YES;
@@ -103,8 +96,6 @@ extern void determineBrushMask(unsigned char *input, unsigned char *output, int 
 				NSLog(@"Brush \"%@\" failed to load\n", [path lastPathComponent]);
 				return NULL;
 			}
-			prePixmap = malloc(tempSize);
-			premultiplyBitmap(4, prePixmap, pixmap, width * height);
 		break;
 		default:
 			NSLog(@"Brush \"%@\" failed to load\n", [path lastPathComponent]);
@@ -122,51 +113,10 @@ extern void determineBrushMask(unsigned char *input, unsigned char *output, int 
 {
 	int i;
 	
-	if (maskCache) {
-		for (i = 0; i < kBrushCacheSize; i++) {
-			if (maskCache[i].cache) free(maskCache[i].cache);
-		}
-		free(maskCache);
-	}
-	if (scaled) free(scaled);
 	if (mask) free(mask);
 	if (pixmap) free(pixmap);
-	if (prePixmap) free(prePixmap);
-    if (templateMask) free(templateMask);
-}
 
-- (void)activate
-{
-	int i;
-	
-	// Deactivate ourselves first (just in case)
-	[self deactivate];
-	
-	// Reset the cache
-	checkCount = 0;
-	maskCache = malloc(sizeof(CachedMask) * kBrushCacheSize);
-	for (i = 0; i < kBrushCacheSize; i++) {
-		maskCache[i].cache = malloc(make_128((width + 2) * (height + 2)));
-		maskCache[i].index1 = maskCache[i].index2 = maskCache[i].scale = -1;
-		maskCache[i].lastCheck = 0;
-	}
-	scaled = malloc(make_128(width * height));
-}
-
-- (void)deactivate
-{
-	int i;
-	
-	// Free the cache
-	if (maskCache) {
-		for (i = 0; i < kBrushCacheSize; i++) {
-			if (maskCache[i].cache) free(maskCache[i].cache);
-			maskCache[i].cache = NULL;
-		}
-		free(maskCache);
-		maskCache = NULL;
-	}
-	if (scaled) { free(scaled); scaled = NULL; }
+    CGImageRelease(bitmap);
 }
 
 - (NSString *)pixelTag
@@ -201,44 +151,16 @@ extern void determineBrushMask(unsigned char *input, unsigned char *output, int 
 
 - (NSImage *)thumbnail
 {
-	NSBitmapImageRep *tempRep;
-	int thumbWidth, thumbHeight;
-	NSImage *thumbnail;
-	
-	// Determine the thumbnail size
-	thumbWidth = width;
-	thumbHeight = height;
-	if (width > BrushThumbnail || height > BrushThumbnail) {
-		if (width > height) {
-			thumbHeight = (int)((float)height * (BrushThumbnail / (float)width));
-			thumbWidth = BrushThumbnail;
-		}
-		else {
-			thumbWidth = (int)((float)width * (BrushThumbnail / (float)height));
-			thumbHeight = BrushThumbnail;
-		}
-	}
-	
-	// Create the representation
-	if (usePixmap)
-		tempRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&prePixmap pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:4 hasAlpha:YES isPlanar:NO colorSpaceName:MyRGBSpace bytesPerRow:width * 4 bitsPerPixel:8 * 4];
-    else {
-        // create a temlate image using alpha
-        
-        for(int row=0;row<height;row++){
-            for(int col=0;col<width;col++){
-                templateMask[(width*row+col)*2]=0x00;
-                templateMask[(width*row+col)*2+1]=mask[row*width+col];
-            }
-        }
-		tempRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&templateMask pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:2 hasAlpha:YES isPlanar:NO colorSpaceName:NSDeviceWhiteColorSpace bytesPerRow:width * 2 bitsPerPixel:8 * 2];
-    }
-	
-	// Wrap it up in an NSImage
-	thumbnail = [[NSImage alloc] initWithSize:NSMakeSize(thumbWidth, thumbHeight)];
-	[thumbnail addRepresentation:tempRep];
-	
-	return thumbnail;
+    CGImageRef bm = [self bitmap];
+
+    CGImageRef thumbnail = getTintedCG(bm,[NSColor controlTextColor]);
+
+    NSImage *_thumbnail = [[NSImage alloc] initWithCGImage:thumbnail size:CGSizeMake(CGImageGetWidth(bm),CGImageGetHeight(bm))];
+    [_thumbnail setFlipped:TRUE];
+
+    CGImageRelease(thumbnail);
+
+    return _thumbnail;
 }
 
 - (NSString *)name
@@ -261,96 +183,12 @@ extern void determineBrushMask(unsigned char *input, unsigned char *output, int 
 	return height;
 }
 
-- (int)fakeWidth
-{
-	return usePixmap ? width : width + 2;
-}
-
-- (int)fakeHeight
-{
-	return usePixmap ? height : height + 2;
-}
-
 - (unsigned char *)mask
 {
 	return mask;
 }
 
 - (unsigned char *)pixmap
-{
-	return pixmap;
-}
-
-- (unsigned char *)maskForPoint:(NSPoint)point pressure:(int)value
-{
-	float remainder, factor, xextra, yextra;
-	int i, index1, index2, scale, scalew, scaleh, minCheckPos;
-	
-	// Determine the scale
-	factor = (0.30 * ((float)value / 255.0) + 0.70);
-	if (width >= height) {
-		scale = factor * width;
-	}
-	else {
-		scale = factor * height;
-	}
-	scalew = factor * width;
-	scaleh = factor * height;
-	if ((scalew % 2 == 1 && width % 2 == 0) || (scalew % 2 == 0 && width % 2 == 1)) xextra = 1;
-	else xextra = 0;
-	if ((scaleh % 2 == 1 && height % 2 == 0) || (scaleh % 2 == 0 && height % 2 == 1)) yextra = 1;
-	else yextra = 0;
-	 
-	// Determine the horizontal shift
-	remainder = (point.x + xextra) - floor (point.x + xextra);
-	index1 = (int)(remainder * (float)(kSubsampleLevel + 1));
-    if(index1>kSubsampleLevel){
-        index1=kSubsampleLevel;
-    }
-	
-	// Determine the vertical shift
-	remainder = (point.y + yextra) - floor (point.y + yextra);
-	index2 = (int)(remainder * (float)(kSubsampleLevel + 1));
-    if(index2>kSubsampleLevel){
-        index2=kSubsampleLevel;
-    }
-
-	 // Increment the checkCount
-	 checkCount++;
-	 minCheckPos = 0;
-	 
-	// Check for existing brushes
-	for (i = 0; i < kBrushCacheSize; i++) {
-		if (maskCache[i].index1 == index1) {
-			if (maskCache[i].index2 == index2) {
-				if (maskCache[i].scale == scale) {
-					maskCache[i].lastCheck = checkCount;
-					return maskCache[i].cache;
-				}
-			}
-		}
-		if (maskCache[minCheckPos].lastCheck > maskCache[i].lastCheck) {
-			minCheckPos = i;
-		}
-	}
-	
-	// Determine the mask
-	if ((width >= height && scale != width) || (height > width && scale != height)) {
-        scaleAndCenterMask(scaled, scalew, scaleh, mask, width, height);
-		determineBrushMask(scaled, maskCache[minCheckPos].cache, width, height, index1, index2);
-	}
-	else {
-		determineBrushMask(mask, maskCache[minCheckPos].cache, width, height, index1, index2);
-	}
-	maskCache[minCheckPos].index1 = index1;
-	maskCache[minCheckPos].index2 = index2;
-	maskCache[minCheckPos].scale = scale;
-	maskCache[minCheckPos].lastCheck = checkCount;
-	
-	return maskCache[minCheckPos].cache;
-}
-
-- (unsigned char *)pixmapForPoint:(NSPoint)point
 {
 	return pixmap;
 }
@@ -367,15 +205,28 @@ extern void determineBrushMask(unsigned char *input, unsigned char *output, int 
 
 - (void)drawBrushAt:(NSRect)rect
 {
-    
-    NSImage *thumbnail = usePixmap ? [self thumbnail] : getTinted([self thumbnail],[NSColor controlTextColor]);
-    
-    int xOffset = rect.size.width/2-[thumbnail size].width/2;
-    int yOffset = rect.size.height/2-[thumbnail size].height/2;
-    
+    if (width <= BrushThumbnail && height <= BrushThumbnail) {
+        rect = NSMakeRect(rect.origin.x+(rect.size.width-width)/2,rect.origin.y+(rect.size.height-height)/2,width,height);
+    } else {
+        float proportion = width/height;
+
+        if(proportion>1) {
+            float new_height = BrushThumbnail/proportion;
+            rect.origin.y += (rect.size.height - new_height)/2;
+            rect.size.height = new_height;
+        }
+        else {
+            float new_width = proportion*rect.size.height;
+            rect.origin.x += (rect.size.width - new_width)/2;
+            rect.size.width = new_width;
+        }
+    }
+
+    NSImage *thumbnail = [self thumbnail];
+
     // Draw the thumbnail
-    [thumbnail drawAtPoint:NSMakePoint(rect.origin.x+xOffset,rect.origin.y+yOffset) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
-    
+    [thumbnail drawInRect:rect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:TRUE hints:NULL];
+
     // Draw the pixel tag if needed
     NSString *pixelTag = [self pixelTag];
     if (pixelTag) {
@@ -384,6 +235,25 @@ extern void determineBrushMask(unsigned char *input, unsigned char *output, int 
         IntSize fontSize = NSSizeMakeIntSize([pixelTag sizeWithAttributes:attributes]);
         [pixelTag drawAtPoint:NSMakePoint(rect.origin.x + rect.size.width / 2 - fontSize.width / 2, rect.origin.y + rect.size.height / 2 - fontSize.height / 2) withAttributes:attributes];
     }
+}
+
+- (CGImageRef)bitmap
+{
+    if(bitmap!=NULL){
+        return bitmap;
+    }
+
+    if (usePixmap){
+        CGDataProviderRef dp = CGDataProviderCreateWithData(NULL, pixmap, width*height*4, NULL);
+        bitmap = CGImageCreate(width, height, 8, 8*4, 4*width, rgbCS, kCGImageAlphaLast,dp, NULL, TRUE, 0);
+        CGDataProviderRelease(dp);
+    } else {
+        CGDataProviderRef dp = CGDataProviderCreateWithData(NULL, mask, width*height, NULL);
+        bitmap = CGImageCreate(width, height, 8, 8, width, grayCS, kCGImageAlphaNone,dp, NULL, TRUE, 0);
+        CGDataProviderRelease(dp);
+    }
+
+    return bitmap;
 }
 
 @end

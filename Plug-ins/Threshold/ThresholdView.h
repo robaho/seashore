@@ -10,12 +10,15 @@
 #import <Cocoa/Cocoa.h>
 #import <Plugins/PluginData.h>
 
+
 @interface ThresholdView : NSView
 {
 	int histogram[256];
 	
-	IBOutlet id thresholdClass;
+	id thresholdClass;
 }
+
+- (ThresholdView*)initWithClass:(id)class;
 
 - (void)calculateHistogram:(PluginData *)pluginData; 
 

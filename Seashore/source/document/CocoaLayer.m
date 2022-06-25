@@ -2,7 +2,6 @@
 #import "SeaContent.h"
 #import "CocoaLayer.h"
 #import "CocoaContent.h"
-#import "Bitmap.h"
 
 @implementation CocoaLayer
 

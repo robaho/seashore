@@ -1,4 +1,4 @@
-#import "Globals.h"
+#import "Seashore.h"
 
 /*!
 	@enum 		kLayer...
@@ -27,10 +27,12 @@ enum {
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
 
+@class SeaDocument;
+
 @interface SeaHelpers : NSObject {
 	
 	// The document associated with this object
-    __weak IBOutlet id document;
+    __weak SeaDocument *document;
 	
 }
 
@@ -78,10 +80,8 @@ enum {
 	@discussion	Called after the document's boundaries and content are changed.
 				After calling this there is no need to subsequently call
 				layerContentsChanged:.
-	@param		scaling
-				YES if the change is due to scaling, NO otherwise.
 */
-- (void)boundariesAndContentChanged:(BOOL)scaling;
+- (void)boundariesAndContentChanged;
 
 /*!
 	@method		activeLayerWillChange
@@ -141,7 +141,7 @@ enum {
 				The index of the layer changed or kActiveLayer to indicate the
 				active layer or kAllLayers to indicate all layers.
 	@param		hold
-				YES if the Pegasus utility should not be updated, NO otherwise.
+				YES if the LayersUtility should not be updated, NO otherwise.
 */
 - (void)layerAttributesChanged:(int)index hold:(BOOL)hold;
 
@@ -188,12 +188,10 @@ enum {
 /*!
     @method        layerOffsetsChanged:rect:
     @discussion    Called after multiple layer offsets  are changed.
-    @param        oldOffsets
-                Theold offsets of the active layer
     @param        rect
                 The dirty rect containing the union of all old/new rects
 */
-- (void)layerOffsetsChanged:(IntPoint)oldOffsets rect:(IntRect)dirtyRect;
+- (void)layerOffsetsChanged:(IntRect)dirtyRect;
 
 /*!
 	@method		layerSnapshotRestored:rect:

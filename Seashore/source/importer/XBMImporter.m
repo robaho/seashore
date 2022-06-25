@@ -1,7 +1,6 @@
 #import "XBMImporter.h"
 #import "XBMLayer.h"
 #import "SeaController.h"
-#import "SeaWarning.h"
 #import "SeaContent.h"
 #import "SeaDocument.h"
 #import "SeaOperations.h"

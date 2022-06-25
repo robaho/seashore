@@ -68,12 +68,5 @@
 - (IBAction)modifierPopupChanged:(id)sender
 {
 	[self setModeFromModifier: [[sender selectedItem] tag]];
-	// Since the selection method changed via the popup menu, we need to update all of the docs
-	// This is not nessisary in the above method because that case is already handled
-	int i;
-	NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
-	for (i = 0; i < [documents count]; i++) {
-		[[(SeaDocument *)[documents objectAtIndex:i] docView] setNeedsDisplay:YES];
-	}
 }
 @end

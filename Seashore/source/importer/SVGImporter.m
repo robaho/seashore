@@ -3,13 +3,11 @@
 #import "SeaDocument.h"
 #import "SeaContent.h"
 #import "SeaView.h"
-#import "CenteringClipView.h"
 #import "SeaOperations.h"
 #import "SeaAlignment.h"
 #import "SeaController.h"
-#import "SeaWarning.h"
 
-#include <PocketSVG/PocketSVG.h>
+#import <PocketSVG/PocketSVG.h>
 
 @interface FlippedView : NSView
 @end

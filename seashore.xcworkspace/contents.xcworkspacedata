@@ -21,6 +21,15 @@
       location = "container:"
       name = "Frameworks">
       <FileRef
+         location = "group:SeaMinimal/SeaMinimal.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:SeaLibrary/SeaLibrary.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:SeaComponents/SeaComponents.xcodeproj">
+      </FileRef>
+      <FileRef
          location = "group:Seashore/../Plugins/Plugins.xcodeproj">
       </FileRef>
       <FileRef
@@ -203,52 +212,16 @@
          location = "group:Plug-ins/Alpha2Gray/Alpha2Gray.xcodeproj">
       </FileRef>
       <FileRef
-         location = "group:Plug-ins/Sharpen/Sharpen.xcodeproj">
-      </FileRef>
-      <FileRef
          location = "group:Plug-ins/Threshold/Threshold.xcodeproj">
-      </FileRef>
-      <FileRef
-         location = "group:Plug-ins/Brightness/Brightness.xcodeproj">
-      </FileRef>
-      <FileRef
-         location = "group:Plug-ins/Checkerboard/Checkerboard.xcodeproj">
       </FileRef>
       <FileRef
          location = "group:Plug-ins/CMYK/CMYK.xcodeproj">
       </FileRef>
       <FileRef
-         location = "group:Plug-ins/Gaussian/Gaussian.xcodeproj">
-      </FileRef>
-      <FileRef
          location = "group:Plug-ins/Greyscale/Greyscale.xcodeproj">
       </FileRef>
       <FileRef
-         location = "group:Plug-ins/HorizStripes/HorizStripes.xcodeproj">
-      </FileRef>
-      <FileRef
          location = "group:Plug-ins/HSV/HSV.xcodeproj">
-      </FileRef>
-      <FileRef
-         location = "group:Plug-ins/Invert/Invert.xcodeproj">
-      </FileRef>
-      <FileRef
-         location = "group:Plug-ins/Median/Median.xcodeproj">
-      </FileRef>
-      <FileRef
-         location = "group:Plug-ins/Pixellate/Pixellate.xcodeproj">
-      </FileRef>
-      <FileRef
-         location = "group:Plug-ins/Posterize/Posterize.xcodeproj">
-      </FileRef>
-      <FileRef
-         location = "group:Plug-ins/Random/Random.xcodeproj">
-      </FileRef>
-      <FileRef
-         location = "group:Plug-ins/Sepia/Sepia.xcodeproj">
-      </FileRef>
-      <FileRef
-         location = "group:Plug-ins/VertStripes/VertStripes.xcodeproj">
       </FileRef>
    </Group>
    <Group

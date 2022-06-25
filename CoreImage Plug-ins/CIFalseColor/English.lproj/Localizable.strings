@@ -7,7 +7,7 @@
 	<key>copyright</key>
 	<string>Public Domain 2007</string>
 	<key>description</key>
-	<string>Maps luminance of the selection to a color ramp of two colors.</string>
+	<string>Maps luminance of the selection to a color ramp of two colors using CIFalseColors.</string>
 	<key>groupName</key>
 	<string>Color Effect</string>
 	<key>license</key>

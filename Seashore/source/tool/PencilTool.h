@@ -1,6 +1,6 @@
-#import "Globals.h"
+#import "Seashore.h"
 #import "PencilOptions.h"
-#import "AbstractTool.h"
+#import "AbstractBrushTool.h"
 
 /*!
 	@class		PencilTool
@@ -14,19 +14,8 @@
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
 
-@interface PencilTool : AbstractTool {
-	
-	// The last point a point was made
-	IntPoint lastPoint;
-	
-	// The size of the pencil block (updated from options at initial mouse down)
-	int size;
-	
-	// The set of pixels upon which to base the pencil block
-	unsigned char basePixel[4];
-    
+@interface PencilTool : AbstractBrushTool {
     PencilOptions *options;
-	
 }
 
 /*!
@@ -77,29 +66,5 @@
 				The mouse up event.
 */
 - (void)mouseUpAt:(IntPoint)where withEvent:(NSEvent *)event;
-
-/*!
-	@method		startStroke:
-	@discussion	Starts a stroke at a specified point.
-	@param		where
-				Where in the document to start the stroke at.
-*/
-- (void)startStroke:(IntPoint)where;
-
-/*!
-	@method		intermediateStroke:
-	@discussion	Specifies an intermediate point in the stroke.
-	@param		Where in the document to place the intermediate
-				stroke.
-*/
-- (void)intermediateStroke:(IntPoint)where;
-
-/*!
-	@method		endStroke:
-	@discussion	Ends a stroke at a specified point.
-	@param		where
-				Where in the document to end the stroke at.
-*/
-- (void)endStroke:(IntPoint)where;
 
 @end

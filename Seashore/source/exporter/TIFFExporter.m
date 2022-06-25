@@ -3,7 +3,6 @@
 #import "SeaLayer.h"
 #import "SeaDocument.h"
 #import "SeaWhiteboard.h"
-#import "Bitmap.h"
 
 @implementation TIFFExporter
 
@@ -68,27 +67,11 @@
 
 - (BOOL)writeDocument:(id)document toFile:(NSString *)path
 {
-	int width, height, spp, xres, yres;
-	unsigned char *srcData,*destData;
-	BOOL hasAlpha = true;
-    NSDictionary *exifData;
+	int xres = [[document contents] xres];
+	int yres = [[document contents] yres];
+    
+    NSBitmapImageRep* imageRep = [[document whiteboard] bitmap];
 
-	// Get the data to write
-	srcData = [(SeaWhiteboard *)[document whiteboard] data];
-	width = [(SeaContent *)[document contents] width];
-	height = [(SeaContent *)[document contents] height];
-	spp = [(SeaContent *)[document contents] spp];
-	xres = [[document contents] xres];
-	yres = [[document contents] yres];
-    
-    destData = stripAlpha(srcData,width,height,spp);
-    if (destData!=srcData) {
-        spp--;
-        hasAlpha=false;
-    }
-    
-    NSBitmapImageRep* imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&destData pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:hasAlpha isPlanar:NO colorSpaceName:(spp > 2) ? MyRGBSpace : MyGraySpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
-    
     switch([targetRadios selectedRow]) {
         case 1: {
                 NSColorSpace* cs = [NSColorSpace deviceCMYKColorSpace];
@@ -111,22 +94,18 @@
     NSDictionary *imageProps = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:NSTIFFCompressionLZW] forKey:NSImageCompressionMethod];
     
     NSSize newSize;
-    newSize.width = [imageRep pixelsWide] * 72.0 / xres;  // x-resolution
-    newSize.height = [imageRep pixelsHigh] * 72.0 / yres;  // y-resolution
-    
+    newSize.width = [imageRep pixelsWide] * 72.0 / xres;
+    newSize.height = [imageRep pixelsHigh] * 72.0 / yres;
+
     [imageRep setSize:newSize];
     
-    exifData = [[document contents] exifData];
+    NSDictionary *exifData = [[document contents] exifData];
     if (exifData) [imageRep setProperty:@"NSImageEXIFData" withValue:exifData];
     
     NSData *imageData = [imageRep representationUsingType:NSBitmapImageFileTypeTIFF properties:imageProps];
 
     [imageData writeToFile:path atomically:NO];
 
-    // If the destination data is not equivalent to the source data free the former
-    if (destData != srcData)
-        free(destData);
-    
     return YES;
 }
 

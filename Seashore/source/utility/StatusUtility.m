@@ -4,7 +4,6 @@
 #import "SeaContent.h"
 #import "SeaHelpers.h"
 #import "Units.h"
-#import "LayerControlView.h"
 #import "ToolboxUtility.h"
 #import "SeaView.h"
 #import "SeaWindowContent.h"
@@ -45,18 +44,8 @@
 	if(document){
 		SeaContent *contents = [document contents];
         
-		// Set the channel selections correction
-		int i;
-		for(i = 0; i < 3; i++){
-			if([contents selectedChannel] == i){
-				[[channelSelectionPopup itemAtIndex: i + 1] setState: YES];
-			}else{
-				[[channelSelectionPopup itemAtIndex: i + 1] setState: NO];
-			}
-		}
-		
-		[channelSelectionPopup selectItemAtIndex:([contents selectedChannel] + 1)];
 		[channelSelectionPopup setEnabled:YES];
+        [channelSelectionPopup setState:[contents selectedChannel]!=kAllChannelsView];
 		[trueViewCheckbox setEnabled:YES];
         [trueViewCheckbox setState:[contents trueView]];
 		
@@ -65,7 +54,7 @@
 		unichar ch = 0x00B7; // replace this with your code pointNSString
 		NSString *divider = [NSString stringWithCharacters:&ch length:1];
         statusString = [statusString stringByAppendingFormat: @"%@ %C %@ %@", StringFromPixels([contents width] , newUnits, [contents xres]), 0x00D7, StringFromPixels([contents height], newUnits, [contents yres]), UnitsString(newUnits)];
-        statusString = [[NSString stringWithFormat:@"%.0f%% %@ ", [contents xscale] * 100, divider] stringByAppendingString: statusString];
+        statusString = [[NSString stringWithFormat:@"%.0f%% %@ ", [[document docView] zoom] * 100, divider] stringByAppendingString: statusString];
         statusString = [statusString stringByAppendingFormat: @" %@ %d dpi", divider, [contents xres]];
         statusString = [statusString stringByAppendingFormat: @" %@ %@", divider, [contents type] ? @"Grayscale" : @"Full Color"];
         
@@ -91,22 +80,24 @@
 -(void)updateZoom
 {
 	if(document){
-		[zoomSlider setIntValue: (int)log2([[document contents] xscale])];	
+        int val = (int)log2([[document docView] zoom]);
+		[zoomSlider setIntValue:val ];
 	}else{
 		[zoomSlider setEnabled: NO];
 		[zoomSlider setIntValue: 0];
 	}
 }
 
-
-- (IBAction)changeChannel:(id)sender
+- (IBAction)channelClicked:(id)sender
 {
-	[NSMenu popUpContextMenu:[sender menu] withEvent:[[NSEvent alloc] init]  forView: sender];
+    NSMenu *menu = [channelSelectionPopup menu];
+    [NSMenu popUpContextMenu:menu withEvent:[[NSApplication sharedApplication] currentEvent] forView:(NSButton *)sender];
 }
+
 
 - (IBAction)channelChanged:(id)sender
 {
-	[[document contents] setSelectedChannel:[sender tag] % 10];
+	[[document contents] setSelectedChannel:[sender tag] % 450];
 	[[document helpers] channelChanged];	
 }
 
@@ -145,6 +136,16 @@
 - (id)view
 {
 	return view;
+}
+
+- (BOOL)validateMenuItem:(id)menuItem
+{
+    int channel = [[document contents] selectedChannel];
+    int tag = 450 + channel;
+
+    [menuItem setState:[menuItem tag]==tag];
+
+    return TRUE;
 }
 
 @end

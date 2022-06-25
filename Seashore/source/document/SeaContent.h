@@ -1,25 +1,5 @@
-#import "Globals.h"
-#import "IndiciesKeeper.h"
-
-/*!
-	@struct		ParasiteData
-	@discussion	A record containing arbitrary data that will be saved with the
-				image using the XCF file format.
-	@field		name
-				The null terminated name of the parasite.
-	@field		flags
-				Any flags associated with the parasite.
-	@field		size
-				The size of the parasite's data.
-	@field		data
-				The parasite's data.
-*/
-typedef struct {
-	char *name;
-	unsigned int flags;
-	unsigned int size;
-	unsigned char *data;
-} ParasiteData;
+#import "Seashore.h"
+#import "ParasiteData.h"
 
 /*!
 	@class		SeaContent
@@ -32,11 +12,12 @@ typedef struct {
 */
 
 @class SeaLayer;
+@class SeaDocument;
 
 @interface SeaContent : NSObject {
 	
 	// The document associated with this object
-	__weak id document;
+	__weak SeaDocument* document;
 	
 	// The document's x and y resolution
 	int xres, yres;
@@ -51,12 +32,6 @@ typedef struct {
 	// The layers in the document
 	NSArray *layers;
 	
-	// These are layers that are no longer in the document but are kept for undo operations
-	NSArray *deletedLayers;	
-	NSMutableArray *layersToUndo;
-	NSMutableArray *layersToRedo;
-	NSMutableArray *orderings;
-	
 	// Stores index of layer that is active
 	int activeLayerIndex;
 	
@@ -65,20 +40,16 @@ typedef struct {
 	
 	//  If YES the user wants the typical view otherwise the user wants the channel-specific view
 	BOOL trueView;
-	
-	// The keeper we use to keep IndiciesRecords in memory
-	IndiciesKeeper keeper;
-	
+
 	// All the parasites
 	ParasiteData *parasites;
-	int parasites_count;
 	
 	// The EXIF data associated with this image
 	NSDictionary *exifData;
     
     // The color space retrieved from the original file load, or NULL
     NSColorSpace *fileColorSpace;
-	
+
 }
 
 // CREATION METHODS
@@ -126,31 +97,6 @@ typedef struct {
 */
 - (id)initWithDocument:(id)doc type:(int)dtype width:(int)dwidth height:(int)dheight res:(int)dres opaque:(BOOL)dopaque;
 
-/*!
-	@method		initWithDocument:data:type:width:height:res:
-	@discussion	Initializes an instance of this class with the given values.
-				Creates appropriate layer based upon values.
-	@param		doc
-				The document with which to initialize the instance.
-	@param		ddata
-				The data with which to initialize the instance.
-	@param		dtype
-				The type with which to initialize the instance (see
-				Constants documentation).
-	@param		dwidth
-				The width with which to initialize the instance.
-	@param		dheight
-				The height with which to initialize the instance.
-	@param		dres
-				The resolution with which to intialize the instance (note that
-				it is an integer not an IntResolution because this method only
-				accepts square resolutions).
-	@param		dopaque
-				YES if the background layer should be opaque, NO otherwise.
-	@result		Returns instance upon success (or NULL otherwise).
-*/
-- (id)initWithDocument:(id)doc data:(unsigned char *)ddata type:(int)dtype width:(int)dwidth height:(int)dheight res:(int)dres;
-
 // PROPERTY METHODS
 
 /*!
@@ -185,24 +131,6 @@ typedef struct {
 - (int)yres;
 
 /*!
-	@method		xscale
-	@discussion	Returns how much the image should be scaled by horizontally given
-				the current zoom and resolution.
-	@result		A floating-point number indicating how much the image should be scaled
-				by horizontally given the current zoom and resolution.
-*/
-- (float)xscale;
-
-/*!
-	@method		yscale
-	@discussion	Returns how much the image should be scaled by vertically given
-				the current zoom and resolution.
-	@result		A floating-point number indicating how much the image should be scaled
-				by vertically given the current zoom and resolution.
-*/
-- (float)yscale;
-
-/*!
 	@method		setResolution:
 	@discussion	Sets the horizontal and vertical resolutions for the document.
 	@param		newRes
@@ -224,6 +152,8 @@ typedef struct {
 	@result		Returns the width as an integer in pixels.
 */
 - (int)width;
+
+- (IntRect)rect;
 
 /*!
 	@method		setWidth:height:
@@ -288,53 +218,6 @@ typedef struct {
 */
 - (int)lostprops_len;
 
-/*!
-	@method		parasites
-	@discussion	Returns the parasistes of the document. Parasites are arbitrary
-				pieces of data that are saved by the GIMP and Seashore in XCF
-				documents.
-	@result		Returns an array of ParasiteData records of length given by the
-				parasites_count method.
-*/
-- (ParasiteData *)parasites;
-
-/*!
-	@method		parasites_count
-	@discussion	Returns the number of parasites in the document's parasite
-				array.
-	@result		Returns an integer representing the number of parasites in the
-				document's parasite array.
-*/
-- (int)parasites_count;
-
-/*!
-	@method		parasiteWithName:
-	@discussion	Returns a pointer to the parasite with the given name.
-	@param		name
-				The name of the parasite.
-	@result		Returns a pointer to the ParasiteData record with the requested
-				name or NULL if no parasites match.
-*/
-- (ParasiteData *)parasiteWithName:(char *)name;
-
-/*!
-	@method		deleteParasiteWithName:
-	@discussion	Deletes the parasite with the given name.
-	@param		name
-				The name of the parasite to delete.
-*/
-- (void)deleteParasiteWithName:(char *)name;
-
-/*!
-	@method		addParasite:
-	@discussion	Adds a parasite (replacing an existing one with the same name if
-				it exists).
-	@param		parasite
-				The ParasiteData record to add (no copying is done, the record
-				is inserted directly into the parasites array so don't use free
-				afterwards).
-*/
-- (void)addParasite:(ParasiteData)parasite;
 
 /*!
 	@method		trueView
@@ -398,7 +281,7 @@ typedef struct {
 				The index of the desired layer.
 	@result		An instance of SeaLayer corresponding to the specified index.
 */
-- (id)layer:(int)index;
+- (SeaLayer*)layer:(int)index;
 
 /*!
 	@method		layerCount
@@ -487,13 +370,14 @@ typedef struct {
 - (void)addLayerObject:(id)layer;
 
 /*!
-	@method		addLayerFromPasteboard:
-	@discussion	Adds a layer to the document based on the pasteboard's contents
-				handles updates and undos).
-	@param		pboard
-				
-*/
-- (void)addLayerFromPasteboard:(id)pboard;
+ @method       addLayerObject:
+ @discussion   Adds the given layer to the document (handles updates and undos).
+ @param        layer
+                The layer to add.
+ @param         index
+                The index to add the layer at.
+ */
+- (void)addLayerObject:(id)layer atIndex:(int)index;
 
 /*!
 	@method		copyLayer:
@@ -535,12 +419,12 @@ typedef struct {
 - (void)restoreLayer:(int)index fromLostIndex:(int)lostIndex;
 
 /*!
-	@method		makeSelectionFloat
-	@discussion	Makes the current selection a floating one.
+	@method		layerFromSelection
+	@discussion	Makes the current selection a new layer.
 	@param		duplicate
-				Should the floating layer be a duplicate.
+				Should the layer be a duplicate.
 */
-- (void)makeSelectionFloat:(BOOL)duplicate;
+- (void)layerFromSelection:(BOOL)duplicate;
 
 /*!
 	 @method		duplicate
@@ -551,23 +435,12 @@ typedef struct {
 - (IBAction)duplicate:(id)sender;
 
 /*!
-	@method		toggleFloatingSelection
-	@discussion	Toggles between making the selection float or not
-*/
-- (void)toggleFloatingSelection;
-
-/*!
-	@method		makePasteboardFloat
-	@discussion	Makes the current contents of the pasteboard into a floating
+	@method		layerFromPasteboard
+	@discussion	Makes the current contents of the pasteboard into a 
 				selection.
+         @param  index  The layer index to add at
 */
-- (void)makePasteboardFloat;
-
-/*!
-	@method		anchorLayer
-	@discussion	Anchors the currently floating layer
-*/
-- (void)anchorLayer;
+- (void)layerFromPasteboard:(NSPasteboard*)pasteboard atIndex:(int)index;
 
 /*!
 	@method		canRaise:
@@ -717,14 +590,6 @@ typedef struct {
 - (void)undoMergeWith:(int)origNoLayers andOrdering:(NSMutableDictionary *)ordering;
 
 /*!
-	@method		bitmapUnderneath:
-	@discussion	Returns the bitmap underneath the rectangle.
-	@param		rect
-				The rectangle concerned.
-*/
-- (unsigned char *)bitmapUnderneath:(IntRect)rect;
-
-/*!
 	@method		redoMergeWith:andOrdering:
 	@discussion	Redoes the merging of the  layers (this method should only
 				ever be called by the undo manager following a call to 
@@ -745,18 +610,6 @@ typedef struct {
 */
 - (void)convertToType:(int)newType;
 
-/*!
-	@method		revertToType:withRecord:
-	@discussion	Reverts the document to a previous type restoring previous
-				contents (this method should only ever be called by the undo
-				manager following a call to converToType:).
-	@param		newType
-				The type to revert the document to (see Constants
-				documentation).
-	@param		record
-				The record containing all the indicizes of the snapshots taken
-				before the conversion.
-*/
-- (void)revertToType:(int)newType withRecord:(IndiciesRecord)record;
+- (ParasiteData*)parasites;
 
 @end

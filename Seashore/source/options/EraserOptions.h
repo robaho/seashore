@@ -1,5 +1,6 @@
-#import "Globals.h"
+#import "Seashore.h"
 #import "AbstractPaintOptions.h"
+#import "BrushOptions.h"
 
 /*!
 	@class		EraserOptions
@@ -10,7 +11,7 @@
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
 
-@interface EraserOptions : AbstractPaintOptions {
+@interface EraserOptions : BrushOptions {
 	
 	// A slider indicating the opacity of the bucket
 	IBOutlet id opacitySlider;

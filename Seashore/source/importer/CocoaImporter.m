@@ -3,11 +3,9 @@
 #import "SeaDocument.h"
 #import "SeaContent.h"
 #import "SeaView.h"
-#import "CenteringClipView.h"
 #import "SeaOperations.h"
 #import "SeaAlignment.h"
 #import "SeaController.h"
-#import "SeaWarning.h"
 
 @implementation CocoaImporter
 
@@ -15,7 +13,7 @@
 {
 	id imageRep;
 	NSImage *image;
-	id layer;
+    SeaLayer * layer;
 	int value;
 	// NSPoint centerPoint;
 	
@@ -111,7 +109,7 @@
 		
 	// Warn if 16-bit image
 	if ([imageRep bitsPerSample] == 16) {
-		[[SeaController seaWarning] addMessage:LOCALSTR(@"16-bit message", @"Seashore does not support the editing of 16-bit images. This image has been resampled at 8-bits to be imported.") forDocument: doc level:kHighImportance];
+		[[doc warnings] addMessage:LOCALSTR(@"16-bit message", @"Seashore does not support the editing of 16-bit images. This image has been resampled at 8-bits to be imported.") level:kHighImportance];
 	}
 		
 	// Create the layer
@@ -121,7 +119,7 @@
 	}
 	
 	// Rename the layer
-	[(SeaLayer *)layer setName:[[NSString alloc] initWithString:[[path lastPathComponent] stringByDeletingPathExtension]]];
+	[layer setName:[[NSString alloc] initWithString:[path lastPathComponent]]];
 	
 	// Add the layer
 	[[doc contents] addLayerObject:layer];

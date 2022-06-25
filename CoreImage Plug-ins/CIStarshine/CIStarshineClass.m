@@ -8,203 +8,18 @@
 
 - (id)initWithManager:(PluginData *)data
 {
-    pluginData = data;
-    [NSBundle loadNibNamed:@"CIStarshine" owner:self];
-    mainNSColor = NULL;
-    running = NO;
-    
+    self = [super initWithManager:data filter:@"CIStarShineGenerator" points:2 bg:TRUE properties:kCI_PointCenter,kCI_PointRadius,kCI_PointAngle,kCI_Scale100,kCI_Opacity,kCI_Width,kCI_Color,0];
+    [self setFilterProperty:kCI_PointAngle property:@"inputCrossAngle"];
+    [self setFilterProperty:kCI_Scale100 property:@"inputCrossScale"];
+    [self setFilterProperty:kCI_Opacity property:@"inputCrossOpacity"];
+    [self setFilterProperty:kCI_Width property:@"inputCrossWidth"];
     return self;
-}
-
-- (int)type
-{
-    return 1;
-}
-
-- (int)points
-{
-    return 2;
-}
-
-- (NSString *)name
-{
-    return [gOurBundle localizedStringForKey:@"name" value:@"Starshine" table:NULL];
-}
-
-- (NSString *)groupName
-{
-    return [gOurBundle localizedStringForKey:@"groupName" value:@"Generate" table:NULL];
-}
-
-- (NSString *)instruction
-{
-    return [gOurBundle localizedStringForKey:@"instruction" value:@"Needs localization." table:NULL];
-}
-
-- (NSString *)sanity
-{
-    return @"Seashore Approved (Bobo)";
-}
-
-- (void)run
-{
-    if ([gUserDefaults objectForKey:@"CIStarshine.scale"])
-        scale = [gUserDefaults floatForKey:@"CIStarshine.scale"];
-    else
-        scale = 15;
-    if ([gUserDefaults objectForKey:@"CIStarshine.opacity"])
-        opacity = [gUserDefaults floatForKey:@"CIStarshine.opacity"];
-    else
-        opacity = -2.0;
-    if ([gUserDefaults objectForKey:@"CIStarshine.width"])
-        star_width = [gUserDefaults floatForKey:@"CIStarshine.width"];
-    else
-        star_width = 2.5;
-    
-    if (scale < 0 || scale > 100)
-        scale = 15;
-    if (opacity < -8.0 || opacity > 0.0)
-        opacity = -2.0;
-    if (star_width < 0.0 || star_width > 10.0)
-        star_width = 2.5;
-    
-    [scaleLabel setStringValue:[NSString stringWithFormat:@"%d", scale]];
-    [scaleSlider setFloatValue:scale];
-    [opacityLabel setStringValue:[NSString stringWithFormat:@"%.1f", opacity]];
-    [opacitySlider setFloatValue:opacity];
-    [widthLabel setStringValue:[NSString stringWithFormat:@"%.1f", star_width]];
-    [widthSlider setFloatValue:star_width];
-    
-    mainNSColor = [mainColorWell color];
-    
-    refresh = YES;
-    success = NO;
-    running = YES;
-    [self preview:self];
-    if ([pluginData window])
-        [NSApp beginSheet:panel modalForWindow:[pluginData window] modalDelegate:NULL didEndSelector:NULL contextInfo:NULL];
-    else
-        [NSApp runModalForWindow:panel];
-    // Nothing to go here
-}
-
-- (IBAction)apply:(id)sender
-{
-    if (refresh) [self execute];
-    [pluginData apply];
-    
-    [panel setAlphaValue:1.0];
-    
-    [NSApp stopModal];
-    if ([pluginData window]) [NSApp endSheet:panel];
-    [panel orderOut:self];
-    success = YES;
-    running = NO;
-    
-    [gUserDefaults setInteger:scale forKey:@"CIStarshine.scale"];
-    [gUserDefaults setFloat:opacity forKey:@"CIStarshine.opacity"];
-    [gUserDefaults setFloat:star_width forKey:@"CIStarshine.width"];
-    
-    [gColorPanel orderOut:self];
-
-}
-
-- (void)reapply
-{
-    [self execute];
-    [pluginData apply];
-}
-
-- (BOOL)canReapply
-{
-    return NO;
-}
-
-- (IBAction)preview:(id)sender
-{
-    if (refresh) [self execute];
-    [pluginData preview];
-    refresh = NO;
-}
-
-- (IBAction)cancel:(id)sender
-{
-    [pluginData cancel];
-    
-    [panel setAlphaValue:1.0];
-    
-    [NSApp stopModal];
-    [NSApp endSheet:panel];
-    [panel orderOut:self];
-    success = NO;
-    running = NO;
-    [gColorPanel orderOut:self];
-}
-
-- (void)setColor:(NSColor *)color
-{
-    mainNSColor = color;
-    if (running) {
-        refresh = YES;
-        [self preview:self];
-        if ([pluginData window]) [panel setAlphaValue:0.4];
-    }
-}
-
-- (IBAction)update:(id)sender
-{
-    scale = [scaleSlider intValue];
-    opacity = [opacitySlider floatValue];
-    star_width = [widthSlider floatValue];
-    
-    [panel setAlphaValue:1.0];
-    
-    [scaleLabel setStringValue:[NSString stringWithFormat:@"%d", scale]];
-    [opacityLabel setStringValue:[NSString stringWithFormat:@"%.1f", opacity]];
-    [widthLabel setStringValue:[NSString stringWithFormat:@"%.1f", star_width]];
-    
-    refresh = YES;
-    if ([[NSApp currentEvent] type] == NSLeftMouseUp) { 
-        [self preview:self];
-        if ([pluginData window]) [panel setAlphaValue:0.4];
-    }
 }
 
 - (void)execute
 {
-    int height = [pluginData height];
-    
-    IntPoint point = [pluginData point:0];
-    IntPoint apoint = [pluginData point:1];
-    
-    int radius = calculateRadius(point,apoint);
-    
-    CIColor *mainColor = createCIColor(mainNSColor);
-    float angle = calculateAngle(point,apoint);
-    
-    CIFilter *filter = [CIFilter filterWithName:@"CIStarShineGenerator"];
-    if (filter == NULL) {
-        @throw [NSException exceptionWithName:@"CoreImageFilterNotFoundException" reason:[NSString stringWithFormat:@"The Core Image filter named \"%@\" was not found.", @"CIStarshineGenerator"] userInfo:NULL];
-    }
-    [filter setDefaults];
-    [filter setValue:[CIVector vectorWithX:apoint.x Y:height - apoint.y] forKey:@"inputCenter"];
-    [filter setValue:mainColor forKey:@"inputColor"];
-    [filter setValue:[NSNumber numberWithFloat:radius] forKey:@"inputRadius"];
-    [filter setValue:[NSNumber numberWithInt:scale] forKey:@"inputCrossScale"];
-    [filter setValue:[NSNumber numberWithFloat:angle] forKey:@"inputCrossAngle"];
-    [filter setValue:[NSNumber numberWithFloat:opacity] forKey:@"inputCrossOpacity"];
-    [filter setValue:[NSNumber numberWithFloat:star_width] forKey:@"inputCrossWidth"];
-    [filter setValue:[NSNumber numberWithInt:-2] forKey:@"inputEpsilon"];
-    CIImage *halo = [filter valueForKey: @"outputImage"];
-    
-    // Run filter
-    filter = [CIFilter filterWithName:@"CISourceOverCompositing"];
-    [filter setDefaults];
-    [filter setValue:halo forKey:@"inputImage"];
-    [filter setValue:createCIImage(pluginData) forKey:@"inputBackgroundImage"];
-    CIImage *output = [filter valueForKey: @"outputImage"];
-
-    renderCIImage(pluginData,output);
+    CIFilter *filter = [super createFilter];
+    applyFilterAsOverlay(pluginData, filter);
 }
 
 + (BOOL)validatePlugin:(PluginData*)pluginData
@@ -218,7 +33,6 @@
             return NO;
     
     }
-    
     return YES;
 }
 

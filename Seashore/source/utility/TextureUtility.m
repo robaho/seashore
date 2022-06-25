@@ -76,16 +76,6 @@
 	[self setActiveTextureIndex:-1];
 }
 
-- (void)activate:(id)sender
-{
-	document = sender;
-}
-
-- (void)deactivate
-{
-	document = NULL;
-}
-
 - (void)shutdown
 {
 	[gUserDefaults setInteger:activeTextureIndex forKey:@"active texture"];
@@ -100,8 +90,6 @@
 	if (activeTextureIndex >= [[groups objectAtIndex:activeGroupIndex] count])
 		activeTextureIndex = 0;
 	[self setActiveTextureIndex:activeTextureIndex];
-	[[view documentView] update];
-	[view setNeedsDisplay:YES];
 }
 
 - (void)loadTextures:(BOOL)update
@@ -215,8 +203,6 @@
 	
 	// Update utility
 	[self setActiveTextureIndex:-1];
-	[[view documentView] update];
-	[view setNeedsDisplay:YES];
 }
 
 - (IBAction)changeGroup:(id)sender
@@ -233,6 +219,11 @@
 - (int)opacity
 {
 	return opacity;
+}
+
+- (float)opacity_float
+{
+    return opacity/255.0;
 }
 - (void)setOpacity:(int)value
 {
@@ -263,9 +254,7 @@
             NSArray *textures = [groups objectAtIndex:group];
             for(int index=0;index<[textures count];index++){
                 if([textures objectAtIndex:index]==texture){
-                    [textureGroupPopUp selectItemAtIndex:[textureGroupPopUp indexOfItemWithTag:group]];
-                    activeTextureIndex=index;
-                    [self update];
+                    [self setActiveTextureIndex:index];
                     return;
                 }
             }
@@ -279,18 +268,17 @@
         activeTextureIndex=-1;
 		[textureNameLabel setStringValue:@""];
 		[opacitySlider setEnabled:NO];
-        [[view documentView] update];
-        [view setNeedsDisplay:YES];
 	}
 	else {
 		id newTexture = [[groups objectAtIndex:activeGroupIndex] objectAtIndex:index];
 		activeTextureIndex = index;
 		[textureNameLabel setStringValue:[newTexture name]];
 		[opacitySlider setEnabled:YES];
-		[newTexture activate];
-		[[document toolboxUtility] update:NO];
-		[(TextTool *)[[document tools] getTool:kTextTool] preview:NULL];
 	}
+
+    [view setNeedsDisplay:YES];
+    [colorSelectView setNeedsDisplay:YES];
+    [[document docView] setNeedsDisplay:YES];
 }
 
 - (NSArray *)textures

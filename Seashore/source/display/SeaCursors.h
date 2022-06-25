@@ -1,4 +1,4 @@
-#import "Globals.h"
+#import "Seashore.h"
 
 /*!
 	@class		SeaCursors
@@ -18,76 +18,36 @@
 	__weak SeaDocument *document;
 	__weak SeaView *view;
 	
-	// The various cursors used by the toolbox
-	NSCursor *crosspointCursor, *wandCursor, *zoomCursor, *pencilCursor, *brushCursor, *bucketCursor, *eyedropCursor, *moveCursor, *eraserCursor, *smudgeCursor, *effectCursor, *addCursor, *subtractCursor, *noopCursor, *cloneCursor;
-
-	// The view-specific cursors
-    NSCursor *handCursor, *grabCursor, *udCursor, *lrCursor, *urdlCursor, *uldrCursor, *closeCursor, *resizeCursor;
-	
-	// The rects for the handles and selection
-	NSRect handleRects[8];
+    NSCursor *udCursor, *lrCursor, *urdlCursor, *uldrCursor;
 	NSCursor* handleCursors[8];
-	
-	// The close rect
-	NSRect closeRect;
 
-	// Scrolling mode variables
-	BOOL scrollingMode;
-	BOOL scrollingMouseDown;
+    float currentScale;
 }
 
-/*!
-	@method		initWithDocument:andView:
-	@discussion	Initializes an instance of this class.
-	@result		Returns instance upon success (or NULL otherwise).
-	@param			newDocument
-				The SeaDocument this cursor manager is in
-	@param			newView
-				The SeaView that uses these cursors
-*/
+@property (readonly) NSCursor *crosspointCursor;
+@property (readonly) NSCursor *wandCursor;
+@property (readonly) NSCursor *zoomCursor;
+@property (readonly) NSCursor *pencilCursor;
+@property (readonly) NSCursor *brushCursor;
+@property (readonly) NSCursor *bucketCursor;
+@property (readonly) NSCursor *eyedropCursor;
+@property (readonly) NSCursor *moveCursor;
+@property (readonly) NSCursor *eraserCursor;
+@property (readonly) NSCursor *smudgeCursor;
+@property (readonly) NSCursor *effectCursor;
+@property (readonly) NSCursor *addCursor;
+@property (readonly) NSCursor *subtractCursor;
+@property (readonly) NSCursor *noopCursor;
+@property (readonly) NSCursor *cloneCursor;
+@property (readonly) NSCursor *closeCursor;
+@property (readonly) NSCursor *resizeCursor;
+@property (readonly) NSCursor *handCursor;
+@property (readonly) NSCursor *grabCursor;
+
 - (id)initWithDocument:(id)newDocument andView:(id)newView;
-
-/*!
-	@method		resetCursorRects
-	@discussion	Sets the current cursor for the view (this is an overridden
-				method).
-*/
-- (void)resetCursorRects;
-
-/*!
-	@method		addCursorRect:cursor:
-	@discussion	We need this because we need to clip the cursor rect from the
-				image to the cursor rect for the superview (so the rects are
-				not outside the image).
-	@param		rect
-				The rect in the coordinates of the SeaView
-	@param		cursor
-				The cursor to add.
-*/
-- (void)addCursorRect:(NSRect)rect cursor:(NSCursor *)cursor;
-
-/*!
-	@method		handleRectsPointer
-	@discussion	Returns a pointer to the rectangles used for the handles.
-*/
-- (NSRect *)handleRectsPointer;
-
-/*!
-	@method		setCloseRect:
-	@discussion	For setting the rectangle used for the close cursor for the polygon lasso tool.
-	@param		rect
-				A NSRect containing the rectangle of the handle.
-*/
-- (void)setCloseRect:(NSRect)rect;
-
-/*!
-	@method		setScrollingMode:mouseDown:
-	@discussion	For letting the cursors manager know we are in scrolling mode.
-	@param		inMode
-				A BOOL if we are in the mode or not.
-	@param		mouseDown
-				A BOOL if the mouse is down or not.
-*/
-- (void)setScrollingMode:(BOOL)inMode mouseDown:(BOOL)mouseDown;
+- (void)updateCursor:(NSEvent*)event;
+- (IntRect)handleRect:(IntPoint)p;
+- (void)handleRectCursors:(IntRect)rect point:(IntPoint)p cursor:(NSCursor*)cursor;
+- (BOOL)usePreciseCursor;
 
 @end

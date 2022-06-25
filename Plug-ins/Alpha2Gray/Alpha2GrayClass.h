@@ -13,7 +13,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Alpha2GrayClass : NSObject <PluginClass>
 {
-    // The plug-in's manager
     PluginData *pluginData;
 }
 

@@ -10,7 +10,7 @@
 {
 	if (![super init])
 		return NULL;
-		
+
 	stopNotingRecentDocuments = NO;
 	
 	return self;
@@ -195,7 +195,7 @@
 		break;
 		case 2:
 			pboard = [NSPasteboard generalPasteboard];
-			availableType = [pboard availableTypeFromArray:[NSArray arrayWithObjects:NSTIFFPboardType, NSPICTPboardType, NULL]];
+			availableType = [pboard availableTypeFromArray:[NSArray arrayWithObjects:NSTIFFPboardType, NULL]];
 			if (availableType) {
 				image = [[NSImage alloc] initWithData:[pboard dataForType:availableType]];
 				size = NSSizeMakeIntSize([image size]);

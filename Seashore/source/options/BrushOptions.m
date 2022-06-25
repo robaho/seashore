@@ -3,7 +3,6 @@
 #import "SeaHelp.h"
 #import "SeaTools.h"
 #import "SeaController.h"
-#import "SeaWarning.h"
 #import "SeaDocument.h"
 
 enum {
@@ -78,11 +77,6 @@ enum {
 	return [fadeSlider intValue];
 }
 
-- (BOOL)pressureSensitive
-{
-	return [pressureCheckbox state];
-}
-
 - (int)pressureValue:(NSEvent *)event
 {
 	double p;
@@ -94,7 +88,7 @@ enum {
 		return 255;
 			
 	p = [event pressure];
-	
+
 	switch ([pressurePopup indexOfSelectedItem]) {
 		case kLinear:
 			return (int)(p * 255.0);
@@ -118,6 +112,11 @@ enum {
 - (BOOL)brushIsErasing
 {
 	return isErasing;
+}
+
+- (int)opacity
+{
+    return 255; // only color opacity is used
 }
 
 - (void)updateModifiers:(unsigned int)modifiers
@@ -145,13 +144,7 @@ enum {
 			isErasing = NO;
 			break;
 	}
-	// We now need to update all of the documents because the modifiers, and thus possibly
-	// the cursors and guides may have changed.
-	int i;
-	NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
-	for (i = 0; i < [documents count]; i++) {
-		[[(SeaDocument *)[documents objectAtIndex:i] docView] setNeedsDisplay:YES];
-	}
+    
 }
 
 - (void)shutdown

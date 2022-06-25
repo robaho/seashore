@@ -1,4 +1,4 @@
-#import "Globals.h"
+#import "Seashore.h"
 #import "SeaController.h"
 
 /*!
@@ -19,6 +19,8 @@ enum {
 	kMagentaColor,
 	kYellowColor,
 	kBlackColor,
+    kGrayColor,
+    kWhiteColor,
 	kMaxColor
 };
 
@@ -48,9 +50,6 @@ enum {
 	
 	// The color prefs view
 	IBOutlet id colorPrefsView;
-	
-	// A checkbox which when checked indicates that there should be fewer warnings
-	IBOutlet id fewerWarningsCheckbox;
 	
 	// The menu for selecting the selection colour
 	IBOutlet id selectionColorMenu;
@@ -96,10 +95,7 @@ enum {
 	
 	// The checkbox for transparency
 	IBOutlet id transparentBackgroundCheckbox;
-	
-	// A checkbox which when checked indicates effects should use a panel not a sheet
-	IBOutlet id effectsPanelCheckbox;
-	
+
 	// A checkbox which when checked indicates smart interpolations should be used
 	IBOutlet id smartInterpolationCheckbox;
 	
@@ -108,16 +104,20 @@ enum {
 
     // if checked, zoom document to fit at open
     IBOutlet id zoomToFitAtOpenCheckbox;
-    // A checkbox which when checked indicates the first pressure sensitive touch should be ignored
-	IBOutlet id ignoreFirstTouchCheckbox;
 	
 	// A checkbox which when checked indicates mouse coalescing should always be on
 	IBOutlet id coalescingCheckbox;
 	
 	// A checkbox which when checks indicates the precise cursor should be used
 	IBOutlet id preciseCursorCheckbox;
-	
-	// Stores whether or not layer boundaries are visible
+
+    IBOutlet id marchingAntsCheckbox;
+
+    IBOutlet id layerBoundaryLinesCheckbox;
+
+    IBOutlet id undoLevelsInput;
+
+    // Stores whether or not layer boundaries are visible
 	BOOL layerBounds;
 
 	// Stores whether or not guides are visible
@@ -128,22 +128,15 @@ enum {
 	
 	// Stores whether or not to use the checkerboard
 	BOOL useCheckerboard;
+
+    int undoLevels;
 	
 	// The color of the back of the window
 	NSColor *windowBackColor;
 
     // The color of to use for transparency
     NSColor *transparencyColor;
-    
-	// Is this the first run?
-	BOOL firstRun;
-	
-	// Whether fewer warnings should be shown
-	BOOL fewerWarnings;
-	
-	// Whether effects should appear as a panel or a sheet
-	BOOL effectsPanel;
-	
+
 	// Whether smart interpolation should be used
 	BOOL smartInterpolation;
 	
@@ -177,17 +170,14 @@ enum {
 	// The mode used for a new document
 	int mode;
 	
-	// How resolutions are handled
-	int resolutionHandling;
-	
 	// Whether images sholud have a transparent background
 	BOOL transparentBackground;
 
-	// Stores the number of times this version of Seashore has been run
-	int runCount;
-	
-	// Whether the first pressure-sensitive touch should be ignored
-	BOOL ignoreFirstTouch;
+    // whether marching ants is enabed
+    BOOL marchingAnts;
+
+    // if true user layer boundary lines, else shading
+    BOOL layerBoundaryLines;
 
 	// Whether mouse coalescing should always be on or not
 	BOOL mouseCoalescing;
@@ -197,7 +187,6 @@ enum {
 	
 	// The main screen resolution
 	IntPoint mainScreenResolution;
-	
 }
 
 /*!
@@ -287,14 +276,6 @@ enum {
 -(IBAction)changeUnits:(id)sender;
 
 /*!
-	@method		setResolution:
-	@discussion	Sets the default resolution.
-	@param		sender
-				Ignored.
-*/
--(IBAction)setResolution:(id)sender;
-
-/*!
 	@method		setMode:
 	@discussion	Sets the default mode.
 	@param		sender
@@ -309,22 +290,6 @@ enum {
 				Ignored.
 */
 -(IBAction)setTransparentBackground:(id)sender;
-
-/*!
-	@method		setFewerWarnings:
-	@discussion	Sets if fewer warnings are wanted.
-	@param		sender
-				Ignored.
-*/
--(IBAction)setFewerWarnings:(id)sender;
-
-/*!
-	@method		setEffectsPanel:
-	@discussion	Sets if the effects panels should be dialogues.
-	@param		sender
-				Ignored.
-*/
--(IBAction)setEffectsPanel:(id)sender;
 
 /*!
 	@method		setSmartInterpolation:
@@ -349,15 +314,6 @@ enum {
                 Ignored.
 */
 -(IBAction)setZoomToFitAtOpen:(id)sender;
-
-/*!
-	@method		setIgnoreFirstTouch:
-	@discussion	Sets if ignore first touch.
-	@param		sender
-				Ignored.
-*/
-
--(IBAction)setIgnoreFirstTouch:(id)sender;
 
 /*!
 	@method		setMouseCoalescing:
@@ -411,24 +367,6 @@ enum {
 	@result		YES if the rulers should be visible, NO otherwise.
 */
 - (BOOL)rulers;
-
-/*!
-	@method		firstRun
-	@discussion	Returns if this is the first time the application has been run
-				actually returns if the firstRun" boolean in user defaults is
-				YES).
-	@result		YES if it is the first time, NO otherwise.
-*/
-- (BOOL)firstRun;
-
-
-/*!
-	@method		warningLevel
-	@discussion	Returns the warning level. Only warnings with a priority less
-				than the returned to level shoule be displayed.
-	@result		Returns an integer indicating the warning level.
-*/
-- (int)warningLevel;
 
 /*!
 	@method		effectsPanel
@@ -554,9 +492,20 @@ enum {
 */
 - (IBAction)rotateSelectionColor:(id)sender;
 
+/*!
+ @method        marchingAnts
+ @result        Returns YES to use marching ants rather than transpaency
+ */
+- (BOOL)marchingAnts;
 
+/*!
+ @method        layerBoundaryLines
+ @result        Returns YES to use boundary lines, otherwise shading
+ */
+- (BOOL)layerBoundaryLines;
 
 - (BOOL)whiteLayerBounds;
+
 - (IBAction)layerBoundsColorChanged:(id)sender;
 
 /*!
@@ -585,14 +534,6 @@ enum {
 - (IBAction)guideColorChanged:(id)sender;
 
 /*!
-	@method		ignoreFirstTouch
-	@discussion	Returns whether the first pressure-sensitive touch should be
-				ignored.
-	@result		Returns YES if it should be ignored, NO otherwise.
-*/
-- (BOOL)ignoreFirstTouch;
-
-/*!
 	@method		mouseCoalescing
 	@discussion	Returns whether mouse coalescing should always be on.
 	@result		Returns YES if it should always be on, NO otherwise.
@@ -605,15 +546,6 @@ enum {
 	@result		Returns YES if the precise cursor should be used, NO otherwise.
 */
 - (BOOL)preciseCursor;
-
-/*!
-	@method		delayOverlay
-	@discussion	Returns whether the application of the overlay should be
-				delayed.
-	@result		Returns YES if it the application of the overlay should be
-				delayed, NO otherwise.
-*/
-- (BOOL)delayOverlay;
 
 /*!
 	@method		size
@@ -637,6 +569,13 @@ enum {
 - (int)mode;
 
 /*!
+ @method        undoLevels
+ @result        Returns the configured number of undo levels.
+ */
+
+- (int)undoLevels;
+
+/*!
 	@method		screenResolution
 	@discussion	Returns the screen resolution to be used when calculating view size.
 				Considers resolution handling preference.
@@ -658,14 +597,6 @@ enum {
 	@result		Returns an int that represents the units (see SeaDocument).
 */
 - (int)newUnits;
-
-/*!
-	@method		runCount
-	@discussion	Returns the number of times this version of Seashore has run.
-	@result		Returns an integer indicating the number of times this version
-				of Seashore has run.
-*/
-- (int)runCount;
 
 /*!
 	@method		openUntitled

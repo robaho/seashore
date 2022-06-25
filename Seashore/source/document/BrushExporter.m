@@ -2,7 +2,6 @@
 #import "SeaController.h"
 #import "BrushUtility.h"
 #import "SeaDocument.h"
-#import "Bitmap.h"
 
 enum {
 	kExistingCategoryButton,
@@ -145,7 +144,6 @@ typedef struct {
     file = fopen([path fileSystemRepresentation], "wb");
     if (file == NULL)
     return NO;
-    
     
     // Set-up the header
     header.header_size = strlen([name UTF8String]) + 1 + sizeof(header);

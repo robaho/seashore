@@ -6,7 +6,6 @@
 #import "SeaView.h"
 #import "CenteringClipView.h"
 #import "SeaController.h"
-#import "SeaWarning.h"
 #import "SeaWhiteboard.h"
 #import "TIFFExporter.h"
 #import "XCFExporter.h"
@@ -16,7 +15,7 @@
 #import "SeaSelection.h"
 #import "SeaLayer.h"
 #import "SeaHelpers.h"
-#import "PegasusUtility.h"
+#import "LayersUtility.h"
 #import "SeaPrintView.h"
 #import "SeaDocumentController.h"
 #import "Units.h"
@@ -25,10 +24,8 @@
 #import "SeaPrintOptionsController.h"
 #import "ToolboxUtility.h"
 #import "SeaTools.h"
-
-extern IntPoint gScreenResolution;
-
-extern BOOL globalReadOnlyWarning;
+#import "AbstractTool.h"
+#import "SeaScrollView.h"
 
 @implementation SeaDocument
 
@@ -40,8 +37,7 @@ extern BOOL globalReadOnlyWarning;
 	
 	// Reset uniqueLayerID
 	uniqueLayerID = -1;
-	uniqueFloatingLayerID = 4999;
-	
+
 	// Set data members appropriately
 	whiteboard = NULL;
 	
@@ -66,8 +62,7 @@ extern BOOL globalReadOnlyWarning;
     
     // Reset uniqueLayerID
     uniqueLayerID = -1;
-    uniqueFloatingLayerID = 4999;
-    
+
     // Set data members appropriately
     whiteboard = NULL;
     
@@ -91,7 +86,7 @@ extern BOOL globalReadOnlyWarning;
 - (id)initWithPasteboard
 {
     id pboard = [NSPasteboard generalPasteboard];
-    NSPasteboardType ptype = [pboard availableTypeFromArray:[NSArray arrayWithObjects:NSURLPboardType,NSTIFFPboardType,NSPICTPboardType,nil]];
+    NSPasteboardType ptype = [pboard availableTypeFromArray:[NSArray arrayWithObjects:NSURLPboardType,NSTIFFPboardType,nil]];
     if([ptype isEqualToString:NSURLPboardType]){
         NSURL *url = [NSURL URLFromPasteboard:pboard];
         if([url isFileURL]) {
@@ -109,8 +104,7 @@ extern BOOL globalReadOnlyWarning;
 	
 	// Reset uniqueLayerID
 	uniqueLayerID = -1;
-	uniqueFloatingLayerID = 4999;
-	
+
 	// Set data members appropriately
 	whiteboard = NULL;
 	
@@ -128,56 +122,52 @@ extern BOOL globalReadOnlyWarning;
 
 - (void)awakeFromNib
 {
-	id seaView;
-	id newClipView;
-    
-	// Believe it or not sometimes this function is called after it has already run
-	if (whiteboard == NULL) {
-        if (@available(macOS 10.13.4, *)) {
-            exporters = [NSArray arrayWithObjects:
-                         gifExporter,
-                         jpegExporter,
-                         jp2Exporter,
-                         pngExporter,
-                         tiffExporter,
-                         xcfExporter,
-                         heicExporter,
-                         NULL];
-        } else {
-            exporters = [NSArray arrayWithObjects:
-                         gifExporter,
-                         jpegExporter,
-                         jp2Exporter,
-                         pngExporter,
-                         tiffExporter,
-                         xcfExporter,
-                         NULL];
-        }
+    if (@available(macOS 10.13.4, *)) {
+        exporters = [NSArray arrayWithObjects:
+                     gifExporter,
+                     jpegExporter,
+                     jp2Exporter,
+                     pngExporter,
+                     tiffExporter,
+                     xcfExporter,
+                     heicExporter,
+                     NULL];
+    } else {
+        exporters = [NSArray arrayWithObjects:
+                     gifExporter,
+                     jpegExporter,
+                     jp2Exporter,
+                     pngExporter,
+                     tiffExporter,
+                     xcfExporter,
+                     NULL];
+    }
 
-		
-		// Create a fresh whiteboard and selection manager
-		whiteboard = [[SeaWhiteboard alloc] initWithDocument:self];
-		selection = [[SeaSelection alloc] initWithDocument:self];
-		[whiteboard update];
-		
-		// Setup the view to display the whiteboard
-		seaView = [[SeaView alloc] initWithDocument:self];
-		newClipView = [[CenteringClipView alloc] initWithFrame:[[view contentView] frame]];
-		[(NSScrollView *)view setContentView:newClipView];
-		[view setDocumentView:seaView];
-		[view setDrawsBackground:NO];
-		
-		[docWindow setFrame:[self standardFrame] display:YES];
-        if([[SeaController seaPrefs] zoomToFitAtOpen]) {
-            [[self docView] zoomToFit:self];
-        }
-        [(NSWindow*)[view window] center];
-		
-		// Finally, if the doc has any warnings we are ready for them
-		[(SeaWarning *)[SeaController seaWarning] triggerQueue: self];
-	}
+    [self setWindow:docWindow];
     
-	[docWindow setAcceptsMouseMovedEvents:YES];
+    // Create a fresh whiteboard and selection manager
+    whiteboard = [[SeaWhiteboard alloc] initWithDocument:self];
+    selection = [[SeaSelection alloc] initWithDocument:self];
+
+    [whiteboard update];
+
+    // Setup the view to display the whiteboard
+    seaView = [[SeaView alloc] initWithDocument:self];
+    scrollView = [[SeaScrollView alloc] initWithDocument:self andView:seaView andOverlay:[seaView extrasView]];
+    
+    [scrollView setFrameSize:[contentView frame].size];
+
+    [contentView addSubview:scrollView];
+
+    [docWindow setFrame:[self standardFrame] display:NO];
+
+    if([[SeaController seaPrefs] zoomToFitAtOpen]) {
+        [[self docView] zoomToFit:self];
+    }
+
+    [docWindow setIsVisible:TRUE];
+
+    [[self undoManager] setLevelsOfUndo:[[SeaController seaPrefs] undoLevels]];
 }
 
 - (void) encodeRestorableStateWithCoder:(NSCoder *) coder {
@@ -198,6 +188,11 @@ extern BOOL globalReadOnlyWarning;
 - (IBAction)saveDocumentAs:(id)sender
 {
 	[super saveDocumentAs:sender];
+}
+
+- (BOOL)shouldRunSavePanelWithAccessoryView
+{
+    return FALSE;
 }
 
 - (SeaContent*)contents
@@ -225,10 +220,15 @@ extern BOOL globalReadOnlyWarning;
 	return tools;
 }
 
-- (id)currentTool
+- (AbstractTool*)currentTool
 {
     int toolId = [[self toolboxUtility] tool];
     return [(SeaTools*)tools getTool:toolId];
+}
+
+- (int)currentToolId
+{
+    return [[self toolboxUtility] tool];
 }
 
 - (SeaHelpers*)helpers
@@ -248,8 +248,9 @@ extern BOOL globalReadOnlyWarning;
 
 - (SeaView*)docView
 {
-	return (SeaView*)[view documentView];
+	return seaView;
 }
+
 
 - (id)window
 {
@@ -258,7 +259,7 @@ extern BOOL globalReadOnlyWarning;
 
 - (void)updateWindowColor
 {
-	[view setBackgroundColor:[[SeaController seaPrefs] windowBack]];
+    [[[self scrollView] contentView] setNeedsDisplay:YES];
 }
 
 - (id)textureExporter
@@ -326,9 +327,8 @@ extern BOOL globalReadOnlyWarning;
 		return NO;
 	}
 	
-	if (readOnly && !globalReadOnlyWarning) {
-		[[SeaController seaWarning] addMessage:LOCALSTR(@"read only message", @"This file is in a read-only format, so you must Save As/Export any changes. This warning will not be displayed for subsequent files in a read-only format.") forDocument: self level:kLowImportance];
-		globalReadOnlyWarning = YES;
+	if (readOnly) {
+		[warnings addMessage:LOCALSTR(@"read only message", @"This file is in a read-only format, so you must Save As/Export any changes.")  level:kLowImportance];
 	}
 	
 	return YES;
@@ -394,10 +394,10 @@ extern BOOL globalReadOnlyWarning;
 - (BOOL)prepareSavePanel:(NSSavePanel *)savePanel
 {
     int i, exporterIndex = -1;
-    
-    [savePanel setAccessoryView:accessoryView];
-    [savePanel setAllowsOtherFileTypes:NO];
-    
+
+    if(![super prepareSavePanel:savePanel])
+        return false;
+
     // Find the default exporter's index
     for (i = 0; i < [exporters count]; i++) {
         if ([[SeaDocumentController sharedDocumentController]
@@ -422,6 +422,8 @@ extern BOOL globalReadOnlyWarning;
     [exportersPopUp selectItemAtIndex:exporterIndex];
     selectedType = [[exporters objectAtIndex:exporterIndex] title];
     
+    [savePanel setAccessoryView:accessoryView];
+    [savePanel setAllowsOtherFileTypes:NO];
     [savePanel setAllowedFileTypes:@[ [[exporters objectAtIndex:[exportersPopUp indexOfSelectedItem]] extension] ] ];
     
     // Finally set the options button state appropriately
@@ -446,47 +448,20 @@ extern BOOL globalReadOnlyWarning;
 	[optionsSummary setStringValue:[[exporters objectAtIndex:[exportersPopUp indexOfSelectedItem]] optionsString]];
 }
 
-- (void)windowWillBeginSheet:(NSNotification *)notification
-{
-	[[self pegasusUtility] setEnabled:NO];
-}
-
-- (void)windowDidEndSheet:(NSNotification *)notification
-{
-	[[self pegasusUtility] setEnabled:YES];
-}
-
 - (void)windowDidBecomeMain:(NSNotification *)notification
 {
-	NSPoint point;
-	
-	if ([docWindow attachedSheet])
-		[[self pegasusUtility] setEnabled:NO];
-	else
-		[[self pegasusUtility] setEnabled:YES];
-	point = [docWindow mouseLocationOutsideOfEventStream];
-	[[self docView] updateRulerMarkings:point andStationary:NSMakePoint(-256e6, -256e6)];
 	[[self optionsUtility] viewNeedsDisplay];
 }
 
 - (void)windowDidResignMain:(NSNotification *)notification
 {
-	NSPoint point;
-	
 	[helpers endLineDrawing];
-	if ([docWindow attachedSheet])
-		[[self pegasusUtility] setEnabled:NO];
-	else
-		[[self pegasusUtility] setEnabled:YES];
-	point = NSMakePoint(-256e6, -256e6);
-	[[self docView] updateRulerMarkings:point andStationary:point];
 	[[self optionsUtility] viewNeedsDisplay];
 	[gColorPanel orderOut:self];
 }
 
 - (void)windowDidResignKey:(NSNotification *)aNotification
 {
-	[[self docView] clearScrollingMode];
 }
 
 - (NSRect) windowWillUseStandardFrame:(NSWindow *)sender defaultFrame:(NSRect)defaultFrame
@@ -502,7 +477,7 @@ extern BOOL globalReadOnlyWarning;
 - (void)restoreStateWithCoder:(NSCoder *)coder
 {
     [super restoreStateWithCoder:coder];
-    
+
     if([[SeaController seaPrefs] zoomToFitAtOpen]) {
         [[self docView] zoomToFit:self];
     }
@@ -510,53 +485,7 @@ extern BOOL globalReadOnlyWarning;
 
 - (NSRect)standardFrame
 {
-	NSRect frame;
-	float xScale, yScale;
-	NSRect rect;
-	
-	// Get the old frame so we can preserve the top-left origin
-	frame = [docWindow frame];
-	float minHeight = 480;
-
-	// Store the initial conditions of the window 
-	rect.origin.x = frame.origin.x;
-	rect.origin.y = frame.origin.y;
-	xScale = [contents xscale];
-	yScale = [contents yscale];
-	rect.size.width = [contents width]  * xScale;
-	rect.size.height = [contents height] * yScale;
-		
-	 // Remember the rulers have dimension
-	 if([[SeaController seaPrefs] rulers]){
-		 rect.size.width += 22;
-		 rect.size.height += 31;
-	 }
-	// Titlebar
-	rect.size.height += 22;
-	minHeight += 22;
-	// Toolbar
-	if([[docWindow toolbar] isVisible]){
-		// This is innacurate because the toolbar can actually change in height,
-		// depending on settings (labels, small etc...)
-		rect.size.height += 35;
-		minHeight += 35;
-	}
-	rect.size.height += [[docWindow contentView] sizeForRegion: kOptionsBar];
-	rect.size.height += [[docWindow contentView] sizeForRegion: kStatusBar];
-	rect.size.width += [[docWindow contentView] sizeForRegion: kSidebar];
-    rect.size.width += [[docWindow contentView] sizeForRegion: kRecentsBar];
-
-	// Disallow ridiculously small or large windows
-	NSRect defaultFrame = [[docWindow screen] frame];
-	if (rect.size.width > defaultFrame.size.width) rect.size.width = defaultFrame.size.width;
-	if (rect.size.height > defaultFrame.size.height) rect.size.height = defaultFrame.size.height;
-	if (rect.size.width < 724) rect.size.width = 724;
-	if (rect.size.height < minHeight) rect.size.height = minHeight;
-	
-	// Reset the origin's y-value to keep the titlebar level
-	rect.origin.y = rect.origin.y - rect.size.height + frame.size.height;
-	
-	return rect;
+	return [docWindow frame];
 }
 
 - (void)close
@@ -576,12 +505,6 @@ extern BOOL globalReadOnlyWarning;
 	return uniqueLayerID;
 }
 
-- (int)uniqueFloatingLayerID
-{
-	uniqueFloatingLayerID++;
-	return uniqueFloatingLayerID;
-}
-
 - (NSString *)windowNibName
 {
     return @"SeaDocument";
@@ -589,11 +512,13 @@ extern BOOL globalReadOnlyWarning;
 
 - (IBAction)customUndo:(id)sender
 {
+    [[self helpers] endLineDrawing];
 	[[self undoManager] undo];
 }
 
 - (IBAction)customRedo:(id)sender
 {
+    [[self helpers] endLineDrawing];
 	[[self undoManager] redo];
 }
 
@@ -605,21 +530,6 @@ extern BOOL globalReadOnlyWarning;
 - (int)measureStyle
 {
 	return measureStyle;
-}
-
-- (BOOL)locked
-{
-	return locked || ([docWindow attachedSheet] != NULL);
-}
-
-- (void)lock
-{
-	locked = YES;
-}
-
-- (void)unlock
-{
-	locked = NO;
 }
 
 - (BOOL)validateMenuItem:(id)menuItem
@@ -637,16 +547,16 @@ extern BOOL globalReadOnlyWarning;
 	}
 	
 	if ([menuItem tag] == 180)
-		return ![self locked] && [[self undoManager] canUndo];
+		return [[self undoManager] canUndo];
 	if ([menuItem tag] == 181)
-		return ![self locked] && [[self undoManager] canRedo];
+		return [[self undoManager] canRedo];
 
 	return YES;
 }
 
-- (NSScrollView *)scrollView
+- (SeaScrollView*)scrollView
 {
-	return (NSScrollView *)view;
+    return scrollView;
 }
 
 - (id)dataSource
@@ -658,13 +568,20 @@ extern BOOL globalReadOnlyWarning;
 {
     bool isGIMP = [[self fileType]  isEqual: @"org.gimp.xcf"];
     if(!layerWarningShown && contents.layerCount > 1 && !isGIMP) {
-        [[SeaController seaWarning]
+        [warnings
          addMessage:LOCALSTR(@"layers warning",
                              @"Layers are not supported by the current file format and cannot be saved. To save layers, use 'Save As'/'Export' and select Seashore/GIMP as the file format.")
-         forDocument:self
          level:kLowImportance];
         layerWarningShown=YES;
     }
+}
+
+- (void) setDisplayName:(NSString *)displayNameOrNil
+{
+    if(displayNameOrNil && [contents layerCount]==1) {
+        [[contents layer:0] setName:displayNameOrNil];
+    }
+    [super setDisplayName:displayNameOrNil];
 }
 
 @end

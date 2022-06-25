@@ -1,7 +1,6 @@
 #import "SVGContent.h"
 #import "SeaController.h"
 #import "SeaDocumentController.h"
-#import "SeaWarning.h"
 #import "CocoaLayer.h"
 #import "SVGImporter.h"
 #import "SeaLayer.h"
@@ -34,7 +33,7 @@
 	xres = yres = 72; 
 	
     // Rename the layer
-    [(SeaLayer *)layer setName:[[NSString alloc] initWithString:[[path lastPathComponent] stringByDeletingPathExtension]]];
+    [(SeaLayer *)layer setName:[[NSString alloc] initWithString:[path lastPathComponent]]];
     
     layers = [NSArray arrayWithObject:layer];
 

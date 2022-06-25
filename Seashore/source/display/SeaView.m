@@ -30,7 +30,6 @@
 #import "PolygonLassoTool.h"
 #import "CropTool.h"
 #import "WandTool.h"
-#import "SeaWarning.h"
 #import "EffectTool.h"
 #import "GradientTool.h"
 #import "SeaFlip.h"
@@ -39,20 +38,19 @@
 #import "AspectRatio.h"
 #import "WarningsUtility.h"
 #import "SeaScale.h"
+#import "SeaBackground.h"
+#import "SeaExtrasView.h"
+
 #import "NSEvent_Extensions.h"
 #import <Carbon/Carbon.h>
 #import <CoreImage/CoreImage.h>
-#import <AppKit/NSEvent.h>
-
-extern IntPoint gScreenResolution;
+#import <AppKit/AppKit.h>
+#import <QuartzCore/QuartzCore.h>
 
 static NSString*    SelectNoneToolbarItemIdentifier = @"Select None Toolbar Item Identifier";
 static NSString*    SelectAllToolbarItemIdentifier = @"Select All Toolbar Item Identifier";
 static NSString*    SelectInverseToolbarItemIdentifier = @"Select Inverse Toolbar Item Identifier";
 static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar Item Identifier";
-
-static CGFloat black[4] = {0,.5,2,3.5};
-static CGFloat white[4] = {0,3.5,2,.5};
 
 @implementation SeaView
 
@@ -60,26 +58,16 @@ static CGFloat white[4] = {0,3.5,2,.5};
 {    
     NSRect frame;
     int xres, yres;
-    
-    // Set the last ruler update to take place in the distant past
-    lastRulerUpdate = [NSDate distantPast];
-    
+     
     // Remember the document this view is displaying
     document = doc;
     
     // Determine the frame at 100% 72-dpi
-    frame = NSMakeRect(0, 0, [[document contents] width], [[document contents] height]);
+    frame = IntRectMakeNSRect([[document contents] rect]);
 
     // Adjust frame for non 72 dpi resolutions
     xres = [[document contents] xres];
     yres = [[document contents] yres];
-    if (gScreenResolution.x != 0 && xres != gScreenResolution.x){
-        frame.size.width /= ((float)xres / gScreenResolution.x);
-    }
-    
-    if (gScreenResolution.y != 0 && yres != gScreenResolution.y) {
-        frame.size.height /= ((float)yres / gScreenResolution.y);
-    }
 
     // Initialize superclass
     if ([super initWithFrame:frame] == NULL){
@@ -89,8 +77,6 @@ static CGFloat white[4] = {0,3.5,2,.5};
     // Set data members appropriately
     lineDraw = NO;
     keyWasUp = YES;
-    scrollingMode = NO;
-    scrollTimer = NULL;
     magnifyTimer = NULL;
     magnifyFactor = 1.0;
     tabletEraser = 0;
@@ -100,156 +86,124 @@ static CGFloat white[4] = {0,3.5,2,.5};
     // Set the delta
     delta = IntMakePoint(0,0);
     
-    // Set the zoom appropriately
-    zoom = 1.0;
-    
     // Create the cursors manager
     cursorsManager = [[SeaCursors alloc] initWithDocument: doc andView: self];
     
     // Register for drag operations
-    [self registerForDraggedTypes:[NSArray arrayWithObjects:NSTIFFPboardType, NSPICTPboardType, NSFilenamesPboardType, NSURLPboardType, NSFilesPromisePboardType, nil]];
-    
-    // Set up the rulers
-    [[document scrollView] setHasHorizontalRuler:YES];
-    [[document scrollView] setHasVerticalRuler:YES];
-    horizontalRuler = [[document scrollView] horizontalRulerView];
-    verticalRuler = [[document scrollView] verticalRulerView];
-    
-    // Change the ruler client views
-    [verticalRuler setClientView:self];
-    [horizontalRuler setClientView:self];
-    
-    // Add the markers
-    vMarker = [[NSRulerMarker alloc]initWithRulerView:verticalRuler markerLocation:0 image:[NSImage imageNamed:@"vMarkerTemplate"] imageOrigin:NSMakePoint(4.0,4.0)];
-    [verticalRuler addMarker:vMarker];
-    hMarker = [[NSRulerMarker alloc]initWithRulerView:horizontalRuler markerLocation:0 image:[NSImage imageNamed:@"hMarkerTemplate"] imageOrigin:NSMakePoint(4.0,0.0)];
-    [horizontalRuler addMarker:hMarker];
-    vStatMarker = [[NSRulerMarker alloc]initWithRulerView:verticalRuler markerLocation:-256e6 image:[NSImage imageNamed:@"vStatMarkerTemplate"] imageOrigin:NSMakePoint(4.0,4.0)];
-    [verticalRuler addMarker:vStatMarker];
-    hStatMarker = [[NSRulerMarker alloc]initWithRulerView:horizontalRuler markerLocation:-256e6 image:[NSImage imageNamed:@"hStatMarkerTemplate"] imageOrigin:NSMakePoint(4.0,0.0)];
-    [horizontalRuler addMarker:hStatMarker];
-    
-    // Make the rulers visible/invsible
-    [self updateRulers];
-    [self updateRulersVisiblity];
-    
+    [self registerForDraggedTypes:[NSArray arrayWithObjects:NSTIFFPboardType, NSFilenamesPboardType, NSURLPboardType, NSFilesPromisePboardType, nil]];
+
     // Warn if bad resolution
     if (xres != yres || (xres < 72)) {
-        [[SeaController seaWarning] addMessage:LOCALSTR(@"strange res message", @"This image has an unusual resolution. As such, it may look different to what is expected at 100% zoom. To fix this use \"Image > Resolution...\" and set to 72 x 72 dpi.") forDocument: document level:kLowImportance];
+        [[document warnings] addMessage:LOCALSTR(@"strange res message", @"This image has an unusual resolution. To fix this use \"Image > Resolution...\" and set to 72 x 72 dpi.") level:kLowImportance];
     }
-    else if (xres > 300) {
-        [[SeaController seaWarning] addMessage:LOCALSTR(@"high res message", @"This image has a high resolution. Seashore's performance may therefore be reduced. You can reduce the resolution using \"Image > Resolution...\" (with \"Preserve size\" checked). This will result in a lower-quality image.") forDocument: document level:kLowImportance];
-    }
-    
+
+    background = [[SeaBackground alloc] initWithDocument:document];
+    whiteboard = [document whiteboard];
+    extrasView = [[SeaExtrasView alloc] initWithDocument:document];
+
+    [self addSubview:background];
+    [self addSubview:whiteboard];
+
+    [self layout];
+
     return self;
+}
+
+- (void)layout
+{
+    [super layout];
+
+    [background setFrame:[self frame]];
+    [whiteboard setFrame:[self frame]];
 }
 
 - (void)dealloc
 {
 }
 
+- (SeaExtrasView*)extrasView
+{
+    return extrasView;
+}
+
+- (IBAction)changeFont:(id)sender
+{
+    [[[document optionsUtility] getOptions:kTextTool] changeFont:sender];
+}
 - (IBAction)changeSpecialFont:(id)sender
 {
     [[[document optionsUtility] getOptions:kTextTool] changeFont:sender];
 }
 
-- (void)needsCursorsReset
-{
-    // Tell the parent that the cursors need to be invalidated
-    [[self window] invalidateCursorRectsForView:self];
-}
-    
-- (void)resetCursorRects
-{
-    // Inform the cursor manager that we will need the new cursor rects
-    [cursorsManager resetCursorRects];
-}
-
 - (BOOL)canZoomIn
 {
-    return (zoom <= 128.0);
+    NSScrollView *view = [document scrollView];
+    return [view magnification] < [view maxMagnification];
 }
 
 - (BOOL)canZoomOut
 {
-    return (zoom >= 1.0 / 32.0);
+    NSScrollView *view = [document scrollView];
+    return [view magnification] > [view minMagnification];
 }
 
 - (IBAction)zoomNormal:(id)sender
 {
-    NSRect frame;
-    
-    zoom = 1.0;
-    frame = NSMakeRect(0, 0, [[document contents] width], [[document contents] height]);
-    if (gScreenResolution.x != 0 && [[document contents] xres] != gScreenResolution.x) frame.size.width /= ((float)[[document contents] xres] / gScreenResolution.x);
-    if (gScreenResolution.y != 0 && [[document contents] yres] != gScreenResolution.y) frame.size.height /= ((float)[[document contents] yres] / gScreenResolution.y);
-    [(NSClipView *)[self superview] scrollToPoint:NSMakePoint(0, 0)];
-    [self setFrame:frame];
-    [(CenteringClipView *)[self superview] setCenterPoint:NSMakePoint(frame.size.width / 2.0, frame.size.height / 2.0)];
+    [[document scrollView] setMagnification:1.0];
     [self setNeedsDisplay:YES];
     [[document helpers] zoomChanged];
 }
 
 - (IBAction)zoomToFit:(id)sender
 {
-    NSRect frame = [(CenteringClipView *)[self superview] frame];
-    
-    if (gScreenResolution.x != 0 && [[document contents] xres] != gScreenResolution.x) frame.size.width *= ((float)[[document contents] xres] / gScreenResolution.x);
-    if (gScreenResolution.y != 0 && [[document contents] yres] != gScreenResolution.y) frame.size.height *= ((float)[[document contents] yres] / gScreenResolution.y);
-    
-    double xscale = frame.size.width / [[document contents] width];
-    double yscale = frame.size.height / [[document contents] height];
-    
-    zoom = MIN(xscale,yscale);
-    
-    frame = NSMakeRect(0, 0, [[document contents] width] * zoom, [[document contents] height] * zoom);
-    if (gScreenResolution.x != 0 && [[document contents] xres] != gScreenResolution.x) frame.size.width /= ((float)[[document contents] xres] / gScreenResolution.x);
-    if (gScreenResolution.y != 0 && [[document contents] yres] != gScreenResolution.y) frame.size.height /= ((float)[[document contents] yres] / gScreenResolution.y);
-    [self setFrame:frame];
+    [self zoomToFitRect:[[document contents] rect]];
+}
 
-    [(NSClipView *)[self superview] scrollToPoint:NSMakePoint(0, 0)];
-    [(CenteringClipView *)[self superview] setCenterPoint:NSMakePoint(frame.size.width / 2.0, frame.size.height / 2.0)];
+- (IBAction)zoomToFitRect:(IntRect)rect
+{
+    NSRect r = IntRectMakeNSRect(rect);
+
+    float adjust = ceilf(MAX(r.size.width,r.size.height)*.03); // add 3% border
+
+    r = NSGrowRect(r,adjust);
+    [[document scrollView] magnifyToFitRect:r];
     [self setNeedsDisplay:YES];
-    
     [[document helpers] zoomChanged];
 }
 
 - (IBAction)zoomIn:(id)sender
 {    
     NSPoint point = [(CenteringClipView *)[self superview] centerPoint];
-    
-//    CGSize size = [self bounds].size;
-//    [self setBoundsSize:NSMakeSize(size.width/2,size.height/2)];
     [self zoomInToPoint:point];
 }
 
 - (void)zoomTo:(int)power
 {
-    NSPoint point = NSZeroPoint;
-    point = [(CenteringClipView *)[self superview] centerPoint];
-    
-    if(zoom > pow(2, power)){
-        while(zoom > pow(2, power)){
+    NSPoint point = [(CenteringClipView *)[self superview] centerPoint];
+    NSLog(@"power %d",power);
+
+    if([self zoom] > pow(2, power)){
+        while([self zoom] > pow(2, power)){
+            float z0 = [self zoom];
             [self zoomOutFromPoint:point];
+            if([self zoom]==z0)
+                break;
         }
-    }else if(zoom < pow(2, power)){
-        while(zoom < pow(2, power)){
+    }else if([self zoom] < pow(2, power)){
+        while([self zoom] < pow(2, power)){
+            float z0 = [self zoom];
             [self zoomInToPoint:point];
+            if([self zoom]==z0)
+                break;
         }
     }
 }
 
 - (void)zoomInToPoint:(NSPoint)point
 {
-    NSRect frame;
-    
-    zoom *= 2.0; point.x *= 2.0; point.y *= 2.0;
-    frame = NSMakeRect(0, 0, [(SeaContent *)[document contents] width], [(SeaContent *)[document contents] height]);
-    if (gScreenResolution.x != 0 && [[document contents] xres] != gScreenResolution.x) frame.size.width /= ((float)[[document contents] xres] / gScreenResolution.x);
-    if (gScreenResolution.y != 0 && [[document contents] yres] != gScreenResolution.y) frame.size.height /= ((float)[[document contents] yres] / gScreenResolution.y);
-    frame.size.height *= zoom; frame.size.width *= zoom;
-    [self setFrame:frame];
-    [(CenteringClipView *)[self superview] setCenterPoint:point];
+    float magnification = [[document scrollView] magnification];
+    magnification *= 2;
+    [[document scrollView] setMagnification:magnification centeredAtPoint:point];
     [self setNeedsDisplay:YES];
     [[document helpers] zoomChanged];
 }
@@ -257,744 +211,53 @@ static CGFloat white[4] = {0,3.5,2,.5};
 - (IBAction)zoomOut:(id)sender
 {
     NSPoint point = [(CenteringClipView *)[self superview] centerPoint];
-    
-//    CGSize size = [self bounds].size;
-//    [self setBoundsSize:NSMakeSize(size.width*2,size.height*2)];
-
     [self zoomOutFromPoint:point];
 }
 
 - (void)zoomOutFromPoint:(NSPoint)point
 {
-    NSRect frame;
-    
-    zoom /= 2.0; point.x = roundf(point.x / 2.0); point.y = roundf(point.y / 2.0);
-    frame = NSMakeRect(0, 0, [(SeaContent *)[document contents] width], [(SeaContent *)[document contents] height]);
-    if (gScreenResolution.x != 0 && [[document contents] xres] != gScreenResolution.x) frame.size.width /= ((float)[[document contents] xres] / gScreenResolution.x);
-    if (gScreenResolution.y != 0 && [[document contents] yres] != gScreenResolution.y) frame.size.height /= ((float)[[document contents] yres] / gScreenResolution.y);
-    frame.size.height *= zoom; frame.size.width *= zoom;
-    [self setFrame:frame];
-    [(CenteringClipView *)[self superview] setCenterPoint:point];
+    float magnification = [[document scrollView] magnification];
+    magnification /= 2;
+    [[document scrollView] setMagnification:magnification centeredAtPoint:point];
     [self setNeedsDisplay:YES];
     [[document helpers] zoomChanged];
 }
 
 - (float)zoom
 {
-    return zoom;
+    return [[document scrollView] magnification];
 }
 
 -(void)setNeedsDisplay:(BOOL)b
 {
-    [super setNeedsDisplay:b];
+    [whiteboard setNeedsDisplay:b];
+    [background setNeedsDisplay:b];
+    [extrasView setNeedsDisplay:b];
 }
 
-- (BOOL)shouldDrawBoundaries
-{
-    ToolboxUtility *tUtil = [document toolboxUtility];
-    int curToolIndex = [tUtil tool];
-
-    return ([[SeaController seaPrefs] layerBounds] && ![[document whiteboard] whiteboardIsLayerSpecific]) ||
-     [[document selection] active] ||
-     (curToolIndex == kCropTool) ||
-     (curToolIndex == kRectSelectTool && [(RectSelectTool *)[[document tools] getTool: kRectSelectTool] intermediate]) ||
-     (curToolIndex == kEllipseSelectTool && [(EllipseSelectTool *)[[document tools] getTool: kEllipseSelectTool] intermediate]) ||
-     (curToolIndex == kLassoTool && [(LassoTool *)[[document tools] getTool:kLassoTool] intermediate]) ||
-     (curToolIndex == kPolygonLassoTool && [(PolygonLassoTool *)[[document tools] getTool:kPolygonLassoTool] intermediate]);
-     
-}
-
-- (void)setNeedsDisplayInDocumentRect:(IntRect)invalidRect
+- (void)setNeedsDisplayInDocumentRect:(IntRect)invalidRect : (int)scaledArea
 {
     NSRect displayUpdateRect = IntRectMakeNSRect(invalidRect);
-    float zoom = [[document docView] zoom];
-    int xres = [[document contents] xres], yres = [[document contents] yres];
-    
-    if (gScreenResolution.x != 0 && xres != gScreenResolution.x) {
-        displayUpdateRect.origin.x /= ((float)xres / gScreenResolution.x);
-        displayUpdateRect.size.width /= ((float)xres / gScreenResolution.x);
-    }
-    if (gScreenResolution.y != 0 && yres != gScreenResolution.y) {
-        displayUpdateRect.origin.y /= ((float)yres / gScreenResolution.y);
-        displayUpdateRect.size.height /= ((float)yres / gScreenResolution.y);
-    }
-    displayUpdateRect.origin.x *= zoom;
-    displayUpdateRect.size.width *= zoom;
-    displayUpdateRect.origin.y *= zoom;
-    displayUpdateRect.size.height *= zoom;
-    
-    if([self shouldDrawBoundaries]){
-        // need to account for selection handles
-        displayUpdateRect = NSMakeRect(displayUpdateRect.origin.x-5,displayUpdateRect.origin.y-5,displayUpdateRect.size.width+10,displayUpdateRect.size.height+10);
-    }
-    
-    displayUpdateRect = NSIntegralRectWithOptions(displayUpdateRect,NSAlignAllEdgesOutward);
-    
-    [self setNeedsDisplayInRect:displayUpdateRect];
+
+    float size = [self scaledSize:scaledArea];
+
+    displayUpdateRect = NSGrowRect(displayUpdateRect,size);
+    displayUpdateRect = NSIntegralRectWithOptions(displayUpdateRect,NSAlignAllEdgesOutward | NSAlignRectFlipped);
+
+    [extrasView setNeedsDisplayInRect:displayUpdateRect];
 }
 
-- (void)drawRect:(NSRect)rect
+- (float)scaledSize:(int)size
 {
-    NSRect srcRect, destRect;
-    CIImage *image = NULL;
-    
-    IntRect imageRect = [[document whiteboard] imageRect];
-    
-    int xres = [[document contents] xres], yres = [[document contents] yres];
-    float xResScale, yResScale;
-
-    // Get the correct image for displaying
-    image = [[document whiteboard] image];
-    
-    srcRect = [image extent];
-    
-    destRect = IntRectMakeNSRect(imageRect);
-    
-    [NSBezierPath clipRect:rect];
-    
-    // For non 72 dpi resolutions we must scale here
-     xResScale = yResScale = 1.0;
-     if (gScreenResolution.x != 0 && gScreenResolution.y != 0) {
-         if (xres != gScreenResolution.x) {
-             xResScale = ((float)xres / gScreenResolution.x);
-         }
-         if (yres != gScreenResolution.y) {
-             yResScale = ((float)yres / gScreenResolution.y);
-         }
-     }
-    
-     destRect.origin.x /= xResScale;
-     destRect.size.width /= xResScale;
-     destRect.origin.y /= yResScale;
-     destRect.size.height /= yResScale;
-     
-     // Then scale here for zoom
-     destRect.origin.x *= zoom;
-     destRect.size.width *= zoom;
-     destRect.origin.y *= zoom;
-     destRect.size.height *= zoom;
-     
-     destRect = NSIntegralRectWithOptions(destRect,NSAlignAllEdgesOutward);
-    
-    // Set the background color
-    if ([[document whiteboard] whiteboardIsLayerSpecific]) {
-        [[NSColor windowBackgroundColor] set];
-        [[NSBezierPath bezierPathWithRect:rect] fill];
-    }
-    else {
-        if([(SeaPrefs *)[SeaController seaPrefs] useCheckerboard]){
-            [[NSColor colorWithPatternImage: [NSImage imageNamed:@"checkerboard"] ] set];
-        }else{
-            [[(SeaPrefs *)[SeaController seaPrefs] transparencyColor] set];
-        }
-        [[NSBezierPath bezierPathWithRect:rect] fill];
-    }
-    
-    if ([[SeaController seaPrefs] smartInterpolation]) {
-        [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
-    } else {
-        [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
-    }
-    
-    CIContext *ctx = [[NSGraphicsContext currentContext] CIContext];
-    [ctx drawImage:image inRect:destRect fromRect:srcRect];
-    
-    // Clear out the old cursor rects
-    [self needsCursorsReset];
-    
-    // If we aren't using the view for printing draw the boundaries and the marching ants
-    if ([self shouldDrawBoundaries]) {
-        [self drawBoundaries];
-    }
-    [self drawExtras];
-}
-
-- (void)drawBoundaries
-{
-    int curToolIndex = [[document toolboxUtility] tool];
-    
-    if (curToolIndex == kCropTool) {
-        [self drawCropBoundaries];
-    }
-    else {
-        [self drawSelectBoundaries];
-    }
-}
-
-- (void)drawCropBoundaries
-{
-    NSRect tempRect;
-    IntRect cropRect,tempCropRect;
-    NSBezierPath *tempPath;
-    float xScale, yScale;
-    int width, height;
-    AbstractTool* curTool = [document currentTool];
-    
-    BOOL intermediate =  [(AbstractScaleTool *)curTool intermediate];
-
-    xScale = [[document contents] xscale];
-    yScale = [[document contents] yscale];
-    width = [[document contents] width];
-    height = [[document contents] height];
-    cropRect = [[document currentTool] cropRect];
-    
-    if (cropRect.size.width == 0 || cropRect.size.height == 0)
-        return;
-
-    tempCropRect = cropRect;
-    tempRect = IntRectMakeNSRect(tempCropRect);
-    tempRect.origin.x *= xScale; tempRect.origin.y *= yScale; tempRect.size.width *= xScale; tempRect.size.height *= yScale;
-    
-    // There are no rounded corners
-    tempRect.origin.x += .5;
-    tempRect.origin.y += .5;
-    tempRect.size.width -= 1;
-    tempRect.size.height -= 1;
-    
-    tempPath = [NSBezierPath bezierPathWithRect:tempRect];
-    
-    [[NSColor blackColor] set];
-    [tempPath setLineDash: black count: 4 phase: 0.0];
-    [tempPath stroke];
-    [[NSColor whiteColor] set];
-    [tempPath setLineDash: white count: 4 phase: 0.0];
-    [tempPath stroke];
-
-    if(!intermediate) {
-        tempRect.origin.x = floor(cropRect.origin.x * xScale);
-        tempRect.origin.y =  floor(cropRect.origin.y * yScale);
-        tempRect.size.width = ceil(cropRect.size.width * xScale);
-        tempRect.size.height = ceil(cropRect.size.height * yScale);
-        [[[SeaController seaPrefs] selectionColor:0.4] set];
-        tempPath = [NSBezierPath bezierPathWithRect:NSMakeRect(0, 0, width * xScale + 1.0, height * yScale + 1.0)];
-        [tempPath appendBezierPathWithRect:tempRect];
-        [tempPath setWindingRule:NSEvenOddWindingRule];
-        [tempPath fill];
-        [self drawDragHandles: tempRect type: kCropHandleType];
-    }
-    
-}
-
-
-- (void)drawSelectBoundaries
-{
-    float xScale, yScale;
-    NSRect tempRect, srcRect;
-    IntRect selectRect, tempSelectRect;
-    int xoff, yoff, width, height, lwidth, lheight;
-    BOOL useSelection, special, intermediate;
-    AbstractTool* curTool = [document currentTool];
-    int curToolIndex = [curTool toolId];
-    NSBezierPath *tempPath;
-    NSImage *maskImage;
-    int radius = 0;
-    float revCurveRadius, f;
-    
-    selectRect = [[document selection] globalRect];
-    useSelection = [[document selection] active];
-    xoff = [[[document contents] activeLayer] xoff];
-    yoff = [[[document contents] activeLayer] yoff];
-    width = [[document contents] width];
-    height = [[document contents] height];
-    lwidth = [[[document contents] activeLayer] width];
-    lheight = [[[document contents] activeLayer] height];
-    xScale = [[document contents] xscale];
-    yScale = [[document contents] yscale];
-
-    tempPath = [NSBezierPath bezierPathWithRect:NSMakeRect(0, 0, width * xScale + 1.0, height * yScale + 1.0)];
-
-    // First step is to draw the layer bounds
-    tempRect = NSMakeRect(xoff, yoff, lwidth, lheight);
-    tempRect.origin.x = floor(tempRect.origin.x * xScale);
-    tempRect.origin.y =  floor(tempRect.origin.y * yScale);
-    tempRect.size.width = ceil(tempRect.size.width * xScale);
-    tempRect.size.height = ceil(tempRect.size.height * yScale);
-    
-    [tempPath appendBezierPathWithRect:tempRect];
-    [tempPath setWindingRule:NSEvenOddWindingRule];
-
-    if([[SeaController seaPrefs] layerBounds] && [[SeaController seaPrefs] whiteLayerBounds]){
-        [[NSColor colorWithDeviceWhite:1.0 alpha:0.4] set];
-        [tempPath fill];
-    }else if(useSelection || [[SeaController seaPrefs] layerBounds]){
-        // If we are not drawing the layer bounds we should still draw the full selection boundaries
-        [[[SeaController seaPrefs] selectionColor:0.4] set];
-        [tempPath fill];
-    }
-    
-    // Change colors to just selection now
-    [[[SeaController seaPrefs] selectionColor:0.4] set];
-    
-    // The selection rectangle
-    if (useSelection){
-        tempPath = [NSBezierPath bezierPathWithRect:tempRect];
-        tempRect = NSMakeRect(selectRect.origin.x, selectRect.origin.y, selectRect.size.width, selectRect.size.height);
-
-        // Ensure we're drawing whole pixels, again
-        tempRect.origin.x = floor(tempRect.origin.x * xScale);
-        tempRect.origin.y =  floor(tempRect.origin.y * yScale);
-        tempRect.size.width = ceil(tempRect.size.width * xScale);
-        tempRect.size.height = ceil(tempRect.size.height * yScale);
-
-        [tempPath appendBezierPathWithRect:tempRect];
-        [tempPath setWindingRule:NSEvenOddWindingRule];
-        [tempPath fill];
-        
-        // Draw the mask image
-        maskImage = [[document selection] maskImage];
-        srcRect.origin = IntPointMakeNSPoint([[document selection] maskOffset]);
-        srcRect.size = IntSizeMakeNSSize(selectRect.size);
-        [maskImage drawInRect:tempRect fromRect:srcRect operation:NSCompositeSourceOver fraction:0.4];
-
-        // If the currently selected tool is a selection tool, draw the handles
-        if(curToolIndex >= kFirstSelectionTool && curToolIndex <= kLastSelectionTool){
-            [self drawDragHandles: tempRect type: kSelectionHandleType];
-        }
-    }
-    
-    // Get the data for drawing rounded rectangular selections
-    special = NO;
-    if (curToolIndex == kRectSelectTool) {
-        radius = [(RectSelectOptions *)[[document optionsUtility] currentOptions] radius];
-        tempSelectRect = [(RectSelectTool *)curTool selectionRect];
-        special = tempSelectRect.size.width < 2 * radius && tempSelectRect.size.height < 2 * radius;
-    }
-    
-    // Check to see if the user is currently dragging a selection
-    intermediate = NO;
-    if(curToolIndex >= kFirstSelectionTool && curToolIndex <= kLastSelectionTool){
-        intermediate =  [(AbstractScaleTool *)curTool intermediate] && ! [(AbstractScaleTool *)curTool isMovingOrScaling];
-    }
-    
-    [cursorsManager setCloseRect:NSMakeRect(0, 0, 0, 0)];
-    if (intermediate && (curToolIndex == kEllipseSelectTool || special)) {
-        // The ellipse tool is currently being dragged, so draw its marching ants
-        tempSelectRect = [(EllipseSelectTool *)curTool selectionRect];
-        tempRect = IntRectMakeNSRect(tempSelectRect);
-        tempRect.origin.x += xoff; tempRect.origin.y += yoff;
-        tempRect.origin.x *= xScale; tempRect.origin.y *= yScale; tempRect.size.width *= xScale; tempRect.size.height *= yScale;
-        tempRect = NSIntegralRectWithOptions(tempRect,NSAlignAllEdgesInward);
-        tempPath = [NSBezierPath bezierPathWithOvalInRect:tempRect];
-        [[NSColor blackColor] set];
-        [tempPath setLineDash: black count: 4 phase: 0.0];
-        [tempPath stroke];
-        [[NSColor whiteColor] set];
-        [tempPath setLineDash: white count: 4 phase: 0.0];
-        [tempPath stroke];
-    }
-    else if (curToolIndex == kRectSelectTool && intermediate) {
-        
-        // The rectangle tool is being dragged, so draw its marching ants
-        tempSelectRect = [(RectSelectTool *)curTool selectionRect];
-        tempRect = IntRectMakeNSRect(tempSelectRect);
-        tempRect.origin.x += xoff; tempRect.origin.y += yoff;        
-        tempRect.origin.x *= xScale; tempRect.origin.y *= yScale; tempRect.size.width *= xScale; tempRect.size.height *= yScale; 
-        tempRect = NSIntegralRectWithOptions(tempRect,NSAlignAllEdgesInward);
-        
-        // The corners have a rounding
-        if (radius) {
-            f = (4.0 / 3.0) * (sqrt(2) - 1);
-            
-            if (tempSelectRect.size.width < 2 * radius) revCurveRadius = tempSelectRect.size.width / 2.0;
-            else if (tempSelectRect.size.height < 2 * radius) revCurveRadius = tempSelectRect.size.height / 2.0;
-            else revCurveRadius = radius;
-            
-            tempPath = [NSBezierPath bezierPath];
-            [tempPath moveToPoint:NSMakePoint(tempRect.origin.x, tempRect.origin.y + revCurveRadius * yScale)];
-            [tempPath curveToPoint:NSMakePoint(tempRect.origin.x + revCurveRadius * xScale, tempRect.origin.y) controlPoint1:NSMakePoint(tempRect.origin.x, tempRect.origin.y + (1.0 - f) * revCurveRadius * yScale) controlPoint2:NSMakePoint(tempRect.origin.x + (1.0 - f) * revCurveRadius * xScale, tempRect.origin.y)];
-            [tempPath lineToPoint:NSMakePoint(tempRect.origin.x + tempRect.size.width - revCurveRadius * xScale, tempRect.origin.y)];
-            [tempPath curveToPoint:NSMakePoint(tempRect.origin.x + tempRect.size.width, tempRect.origin.y + revCurveRadius * yScale) controlPoint1:NSMakePoint(tempRect.origin.x + tempRect.size.width - (1.0 - f) * revCurveRadius * xScale, tempRect.origin.y) controlPoint2:NSMakePoint(tempRect.origin.x + tempRect.size.width, tempRect.origin.y + (1.0 - f) * revCurveRadius * yScale)];
-            [tempPath lineToPoint:NSMakePoint(tempRect.origin.x + tempRect.size.width, tempRect.origin.y + tempRect.size.height - revCurveRadius * yScale)];
-            [tempPath curveToPoint:NSMakePoint(tempRect.origin.x + tempRect.size.width - revCurveRadius * xScale, tempRect.origin.y + tempRect.size.height) controlPoint1:NSMakePoint(tempRect.origin.x + tempRect.size.width, tempRect.origin.y + tempRect.size.height - (1.0 - f) * revCurveRadius * yScale) controlPoint2:NSMakePoint(tempRect.origin.x + tempRect.size.width - (1.0 - f) * revCurveRadius * xScale, tempRect.origin.y + tempRect.size.height)];
-            [tempPath lineToPoint:NSMakePoint(tempRect.origin.x + revCurveRadius * xScale, tempRect.origin.y + tempRect.size.height)];
-            [tempPath curveToPoint:NSMakePoint(tempRect.origin.x, tempRect.origin.y + tempRect.size.height - revCurveRadius * yScale) controlPoint1:NSMakePoint(tempRect.origin.x + (1.0 - f) * revCurveRadius * xScale, tempRect.origin.y + tempRect.size.height) controlPoint2:NSMakePoint(tempRect.origin.x, tempRect.origin.y + tempRect.size.height - (1.0 - f) * revCurveRadius * yScale)];
-            [tempPath lineToPoint:NSMakePoint(tempRect.origin.x, tempRect.origin.y + revCurveRadius * yScale)];
-        }
-        else {
-            tempPath = [NSBezierPath bezierPathWithRect:tempRect];        
-        }
-        
-        [[NSColor blackColor] set];
-        [tempPath setLineDash: black count: 4 phase: 0.0];
-        [tempPath stroke];
-        [[NSColor whiteColor] set];
-        [tempPath setLineDash: white count: 4 phase: 0.0];
-        [tempPath stroke];
-    }else if((curToolIndex == kLassoTool || curToolIndex == kPolygonLassoTool) && intermediate){
-        // Finally, draw the marching ants for the lasso or polygon lasso tools
-        tempPath = [NSBezierPath bezierPath];
-        
-        LassoPoints lassoPoints;
-        NSPoint start;
-        lassoPoints = [(LassoTool *)curTool currentPoints];
-        start = NSMakePoint((lassoPoints.points[0].x + xoff) *xScale , (lassoPoints.points[0].y + yoff) * yScale );
-    
-        // Create a special start point for the polygonal lasso tool
-        // This allows the user to close the polygon by just clicking 
-        // near the first point in the polygon.
-        if(curToolIndex == kPolygonLassoTool){
-            [self drawHandle: start type:kPolygonalLassoType index: -1];
-        }
-        
-        // It is now the job of the SeaView instead of the tool itself to draw the edges because
-        // this way, the polygon can be persistent across view changes such as scrolling or resizing
-        [tempPath moveToPoint:start];
-        int i;
-        for(i = 1; i <= lassoPoints.pos; i++){
-            IntPoint thisPoint = lassoPoints.points[i];
-            [tempPath lineToPoint:NSMakePoint((thisPoint.x + xoff) * xScale , (thisPoint.y + yoff) * yScale )];
-        }
-        
-        [[NSColor blackColor] set];
-        [tempPath setLineDash: black count: 4 phase: 0.0];
-        [tempPath stroke];
-        [[NSColor whiteColor] set];
-        [tempPath setLineDash: white count: 4 phase: 0.0];
-        [tempPath stroke];
-    }
-}
-
-- (void)drawDragHandles:(NSRect) rect type: (int)type
-{
-    rect.origin.x -= 1;
-    rect.origin.y -= 1;
-    [self drawHandle: rect.origin type: type index: 0];
-    rect.origin.x += rect.size.width / 2 + 1;
-    [self drawHandle: rect.origin type: type index: 1];
-    rect.origin.x += rect.size.width / 2 + 1;
-    [self drawHandle: rect.origin type: type index: 2];
-    rect.origin.y += rect.size.height / 2 + 1;
-    [self drawHandle: rect.origin type: type index: 3];
-    rect.origin.y += rect.size.height / 2 + 1;
-    [self drawHandle: rect.origin type: type index: 4];
-    rect.origin.x -= rect.size.width / 2 + 1;
-    [self drawHandle: rect.origin type: type index: 5];
-    rect.origin.x -= rect.size.width / 2 + 1;
-    [self drawHandle: rect.origin type: type index: 6];
-    rect.origin.y -= rect.size.height / 2 + 1;
-    [self drawHandle: rect.origin type: type index: 7];
-}
-
-- (void)drawHandle:(NSPoint) origin  type: (int)type index:(int) index
-{
-    NSRect outside  = NSMakeRect(origin.x - 4,origin.y - 4,8,8);
-    // This function is also used to set the appropriate cursor rects
-    // The rectangles must be persistent because in the event loop, each view
-    // has its cursor rects reset AFTER the view is drawn, so setting the rects
-    // here would just have them immediately invalidated.
-    NSRect *handleRects = [(SeaCursors *) cursorsManager handleRectsPointer];
-    if(index >= 0)
-        handleRects[index] = outside;
-    
-    NSBezierPath *path = [NSBezierPath bezierPathWithOvalInRect: outside];
-    switch (type) {
-        case kSelectionHandleType:
-            [[NSColor whiteColor] set];
-            break;
-        case kLayerHandleType:
-            [[NSColor whiteColor] set];
-            break;
-        case kCropHandleType:
-            [[NSColor redColor] set];
-            break;
-        case kGradientStartType:
-            [[NSColor whiteColor] set];
-            break;
-        case kGradientEndType:
-            [[NSColor whiteColor] set];
-            break;
-        case kPolygonalLassoType:
-            [[NSColor blackColor] set];
-            [cursorsManager setCloseRect:outside];
-            break;
-        case kPositionType:
-            [[(SeaPrefs *)[SeaController seaPrefs] guideColor: 1.0] set];
-            outside = NSMakeRect(origin.x - 3, origin.y - 3, 6, 6);
-            path = [NSBezierPath bezierPathWithRect:outside];
-            break;
-        default:
-            NSLog(@"Handle type not understood.");
-            break;
-    }
-
-    // The handle should have a subtle shadow so that it can be visible on background
-    // where the color is the same as the inside and outside of the handle
-    [NSGraphicsContext saveGraphicsState];
-    NSShadow *shadow = [[NSShadow alloc] init];
-    [shadow setShadowOffset: NSMakeSize(0, 0)];
-    [shadow setShadowBlurRadius: 1];
-    
-    if(type == kPolygonalLassoType){
-        // This handle has inverted colors to make it obvious
-        [shadow setShadowColor:[NSColor whiteColor]];
-    }else{
-        [shadow setShadowColor:[NSColor blackColor]];
-    }
-    [shadow set];
-    [path fill];
-
-    [NSGraphicsContext restoreGraphicsState];
-
-    NSRect inside  = NSMakeRect(origin.x - 3,origin.y - 3,6,6);
-    path = [NSBezierPath bezierPathWithOvalInRect: inside];
-
-    switch (type) {
-        case kSelectionHandleType:
-            [[(SeaPrefs *)[SeaController seaPrefs] selectionColor:1] set];
-            break;
-        case kCropHandleType:
-            [[(SeaPrefs *)[SeaController seaPrefs] selectionColor:0.6] set];
-            inside  = NSMakeRect(origin.x - 2.5,origin.y - 3,5.5,6);
-            path = [NSBezierPath bezierPathWithOvalInRect: inside];
-            break;
-        case kLayerHandleType:
-            [[NSColor cyanColor] set];
-            break;
-        case kGradientStartType:
-            [[[document contents] foreground] set];
-            break;
-        case kGradientEndType:
-            [[[document contents] background] set];
-            break;
-        case kPolygonalLassoType:
-            [[NSColor whiteColor] set];
-            break;
-        case kPositionType:
-            inside = NSMakeRect(origin.x - 2, origin.y - 2, 4, 4);
-            path = [NSBezierPath bezierPathWithRect: inside];
-            [[NSColor whiteColor] set];
-            break;
-        default:
-            NSLog(@"Handle type not understood.");
-            break;
-    }
-    [path fill];
-    [[(SeaPrefs *)[SeaController seaPrefs] guideColor: 1.0] set];
-}
-
-- (void)drawExtras
-{    
-    int curToolIndex = [[document toolboxUtility] tool];
-    id cloneTool = [[document tools] getTool:kCloneTool];
-    id effectTool = [[document tools] getTool:kEffectTool];
-    NSPoint outPoint, hilightPoint;
-    float xScale, yScale;
-    int xoff, yoff, lwidth, lheight, i;
-    IntPoint sourcePoint;
-    NSImage *crossImage;
-    
-    if([[document contents] activeLayer]==NULL){
-        return;
-    }
-    
-    // Fill out various variables
-    xoff = [[[document contents] activeLayer] xoff];
-    yoff = [[[document contents] activeLayer] yoff];
-    lwidth = [(SeaLayer *)[[document contents] activeLayer] width];
-    lheight = [(SeaLayer *)[[document contents] activeLayer] height];
-    xScale = [[document contents] xscale];
-    yScale = [[document contents] yscale];
-
-    
-    if([(SeaPrefs *)[SeaController seaPrefs] guides] && xScale > 2 && yScale > 2){
-        NSBezierPath *tempPath = [NSBezierPath bezierPath];
-        [tempPath setLineWidth:1.0];
-        
-        [[[NSColor gridColor] colorWithAlphaComponent:0.25] set];
-        int i, j;
-        
-        for(i = 0; i < [self frame].size.width / xScale; i++){
-            [tempPath moveToPoint:NSMakePoint(xScale * i - 0.5, 0)];
-            [tempPath lineToPoint:NSMakePoint(xScale * i - 0.5, [self frame].size.height)];
-        }
-        
-        for(j = 0; j < [self frame].size.height / yScale; j++){
-            [tempPath moveToPoint:NSMakePoint(0, yScale * j - 0.5)];
-            [tempPath lineToPoint:NSMakePoint([self frame].size.width, yScale *j - 0.5)];
-        }        
-        [tempPath stroke];
-        [[[[NSColor gridColor] highlightWithLevel:.25] colorWithAlphaComponent:0.25] set];
-
-        for(i = 0; i < [self frame].size.width / xScale; i++){
-            [tempPath moveToPoint:NSMakePoint(xScale * i + 0.5, 0)];
-            [tempPath lineToPoint:NSMakePoint(xScale * i + 0.5, [self frame].size.height)];
-        }
-        
-        for(j = 0; j < [self frame].size.height / yScale; j++){
-            [tempPath moveToPoint:NSMakePoint(0, yScale * j + 0.5)];
-            [tempPath lineToPoint:NSMakePoint([self frame].size.width, yScale *j + 0.5)];
-        }        
-        [tempPath stroke];
-        
-    
-    }
-    
-    if(curToolIndex == kPositionTool && [(SeaPrefs *)[SeaController seaPrefs] guides]){
-        float radians = 0.0;
-        id positionTool = [[document tools] getTool:kPositionTool];
-
-        // The position tool now has guides (which the user can turn on or off)
-        // This makes it easy to see the dimensions and the boundaries of the moved layer
-        // or selection, even when there is currently an active selection.
-        xoff *= xScale;
-        lwidth *= xScale;
-        yoff *= yScale;
-        lheight *= yScale;
-        
-        [[(SeaPrefs *)[SeaController seaPrefs] guideColor: 1.0] set];
-        
-        if([positionTool intermediate]){
-            IntRect postScaledRect = [positionTool postScaledRect];
-            xoff = postScaledRect.origin.x;
-            yoff = postScaledRect.origin.y;
-            lwidth = postScaledRect.size.width;
-            lheight = postScaledRect.size.height;
-        }
-            
-        // [self drawDragHandles:NSMakeRect(xoff, yoff, lwidth, lheight) type:kPositionType];
-        
-        NSPoint centerPoint = NSMakePoint(xoff + lwidth / 2, yoff + lheight / 2);
-        // Additionally, the new guides are directly proportional to the amount of rotation or 
-        // of scaling done by the layer if these modifiers are used.
-        if ([(PositionTool *)positionTool scale] != -1) {
-            float scale = [(PositionTool *)positionTool scale];
-            lwidth *= scale;
-            lheight *= scale;
-            xoff = centerPoint.x - lwidth / 2;
-            yoff = centerPoint.y - lheight / 2;
-        }else if([(PositionTool *)positionTool rotationDefined]){
-            radians = [(PositionTool *)positionTool rotation];
-        }
-        NSBezierPath *tempPath = [NSBezierPath bezierPath];
-        [tempPath setLineWidth:1.0];
-
-        // All of the silliness with the 0.5's is because when drawing with Bezier paths
-        // the coordinates are at vertices between the pixels, not centered on them.
-        [tempPath moveToPoint:NSPointRotateNSPoint(NSMakePoint(xoff + 0.5, yoff +0.5), centerPoint, radians)];
-        [tempPath lineToPoint:NSPointRotateNSPoint(NSMakePoint(xoff + lwidth - 0.5, yoff +0.5), centerPoint, radians)];
-        [tempPath lineToPoint:NSPointRotateNSPoint(NSMakePoint(xoff+lwidth -0.5, yoff+ lheight -0.5), centerPoint, radians)];
-        [tempPath lineToPoint:NSPointRotateNSPoint(NSMakePoint(xoff +0.5, yoff+ lheight -0.5), centerPoint, radians)];
-        [tempPath lineToPoint:NSPointRotateNSPoint(NSMakePoint(xoff+0.5, yoff +0.5), centerPoint, radians)];
-        
-        // In addition to the 4 sides, there are guides that divide the rectangle into thirds.
-        // This is better than halves because that way scaling is visible
-        [tempPath moveToPoint:NSPointRotateNSPoint(NSMakePoint(floor(xoff + lwidth / 3) + 0.5, yoff), centerPoint, radians)];
-        [tempPath lineToPoint:NSPointRotateNSPoint(NSMakePoint(floor(xoff + lwidth / 3) + 0.5, yoff + lheight), centerPoint, radians)];
-        [tempPath moveToPoint:NSPointRotateNSPoint(NSMakePoint(ceil(xoff + 2 * lwidth / 3) - 0.5, yoff + lheight), centerPoint, radians)];
-        [tempPath lineToPoint:NSPointRotateNSPoint(NSMakePoint(ceil(xoff + 2 * lwidth / 3) - 0.5, yoff), centerPoint, radians)];
-        
-        [tempPath moveToPoint:NSPointRotateNSPoint(NSMakePoint(xoff, floor(yoff + lheight / 3) + 0.5), centerPoint, radians)];
-        [tempPath lineToPoint:NSPointRotateNSPoint(NSMakePoint(xoff + lwidth, floor(yoff + lheight / 3) + 0.5), centerPoint, radians)];
-        [tempPath moveToPoint:NSPointRotateNSPoint(NSMakePoint(xoff, ceil(yoff + 2* lheight / 3) -0.5), centerPoint, radians)];
-        [tempPath lineToPoint:NSPointRotateNSPoint(NSMakePoint(xoff + lwidth, ceil(yoff + 2* lheight / 3) - 0.5), centerPoint, radians)];
-
-        [tempPath stroke];
-
-    }else if(curToolIndex == kCloneTool){
-        // Draw source point
-        if ([cloneTool sourceSetting]) {
-            sourcePoint = [cloneTool sourcePoint:NO];
-            crossImage = [NSImage imageNamed:@"cross"];
-            outPoint = IntPointMakeNSPoint(sourcePoint);
-            outPoint.x *= xScale;
-            outPoint.y *= yScale;
-            outPoint.x -= 12;
-            outPoint.y -= 10;
-            outPoint.y += 26;
-            [crossImage compositeToPoint:outPoint operation:NSCompositeSourceOver fraction:(float)[cloneTool sourceSetting] / 100.0];
-        }
-    }else if (curToolIndex == kEffectTool){
-        // Draw effect tool dots
-        for (i = 0; i < [(EffectTool*)effectTool clickCount]; i++) {
-            [[[SeaController seaPrefs] selectionColor:0.6] set];
-            hilightPoint = IntPointMakeNSPoint([effectTool point:i]);
-            NSBezierPath *tempPath = [NSBezierPath bezierPath];
-            [tempPath moveToPoint:NSMakePoint((hilightPoint.x + xoff) * xScale - 4, (hilightPoint.y + yoff) * yScale + 4)];
-            [tempPath lineToPoint:NSMakePoint((hilightPoint.x + xoff) * xScale + 4, (hilightPoint.y + yoff) * yScale - 4)];
-            [tempPath moveToPoint:NSMakePoint((hilightPoint.x + xoff) * xScale + 4, (hilightPoint.y + yoff) * yScale + 4)];
-            [tempPath lineToPoint:NSMakePoint((hilightPoint.x + xoff) * xScale - 4, (hilightPoint.y + yoff) * yScale - 4)];
-            [tempPath setLineWidth:2.0];
-            [tempPath stroke];
-        }
-    }else if (curToolIndex == kGradientTool) {
-        GradientTool *tool = [[document tools] getTool:kGradientTool];
-        
-        if([tool intermediate]){
-            // Draw the connecting line
-            [[(SeaPrefs *)[SeaController seaPrefs] guideColor: 1.0] set];
-
-            NSBezierPath *tempPath = [NSBezierPath bezierPath];
-            [tempPath setLineWidth:1.0];
-            [tempPath moveToPoint:[tool start]];
-            [tempPath lineToPoint:[tool current]];
-            [tempPath stroke];
-            
-            // The handles are the appropriate color of the gradient.
-            [self drawHandle:[tool start] type:kGradientStartType index: -1];
-            [self drawHandle:[tool current] type:kGradientEndType index: -1];
-        }
-    }else if (curToolIndex == kWandTool || curToolIndex == kBucketTool){
-        WandTool *tool = [[document tools] getTool: curToolIndex];
-        if([tool intermediate] && (curToolIndex == kBucketTool || ![tool isMovingOrScaling])){
-            // Draw the connecting line
-            [[(SeaPrefs *)[SeaController seaPrefs] guideColor: 1.0] set];
-
-            NSBezierPath *tempPath = [NSBezierPath bezierPath];
-            [tempPath setLineWidth:1.0];
-            [tempPath moveToPoint:[tool start]];
-            [tempPath lineToPoint:[tool current]];
-            [tempPath stroke];
-            
-            [[NSBezierPath bezierPathWithOvalInRect:NSMakeRect([tool start].x - 3, [tool start].y-3, 6,6)] fill];
-            [[NSBezierPath bezierPathWithOvalInRect:NSMakeRect([tool current].x - 3, [tool current].y-3, 6,6)] fill];
-             
-        }
-    }
-}
-
-- (void)checkMouseTracking
-{
-    if ([[self window] isMainWindow]) {
-        if ([[document scrollView] rulersVisible] || [[document infoUtility] visible])
-            [[self window] setAcceptsMouseMovedEvents:YES];
-        else
-            [[self window] setAcceptsMouseMovedEvents:NO];
-    }
-}
-
-- (void)updateRulerMarkings:(NSPoint)mouseLocation andStationary:(NSPoint)statLocation
-{
-    NSPoint markersLocation, statMarkersLocation;
-    
-    // Only make a change if it has been more than 0.03 seconds
-    if ([[NSDate date] timeIntervalSinceDate:lastRulerUpdate] > 0.03) {
-    
-        // Record this as the new time of the last update
-        lastRulerUpdate = [NSDate date];
-    
-        // Get mouse location and convert it
-        markersLocation.x = [[horizontalRuler clientView] convertPoint:mouseLocation fromView:nil].x;
-        markersLocation.y = [[verticalRuler clientView] convertPoint:mouseLocation fromView:nil].y;
-        statMarkersLocation.x = [[horizontalRuler clientView] convertPoint:statLocation fromView:nil].x;
-        statMarkersLocation.y = [[verticalRuler clientView] convertPoint:statLocation fromView:nil].y;
-        
-        // Move the horizontal marker
-        [hMarker setMarkerLocation:markersLocation.x];
-        [hStatMarker setMarkerLocation:statMarkersLocation.x];
-        [horizontalRuler setNeedsDisplay:YES];
-        
-        // Move the vertical marker
-        [vMarker setMarkerLocation:markersLocation.y];
-        [vStatMarker setMarkerLocation:statMarkersLocation.y];
-        [verticalRuler setNeedsDisplay:YES];
-    
-    }
+    float magnification = [[document scrollView] magnification];
+    return size/magnification;
 }
 
 - (void)mouseMoved:(NSEvent *)theEvent
 {
-    if ([[document infoUtility] visible]) [[document infoUtility] update];
-    if ([[document scrollView] rulersVisible]) [self updateRulerMarkings:[theEvent locationInWindow] andStationary:NSMakePoint(-256e6, -256e6)];
+    [[document infoUtility] update];
+    [[document scrollView] updateRulerMarkings:[theEvent locationInWindow] andStationary:NSMakePoint(-256e6, -256e6)];
+    [cursorsManager updateCursor:theEvent];
 }
 
 - (void)scrollWheel:(NSEvent *)theEvent
@@ -1021,22 +284,11 @@ static CGFloat white[4] = {0,3.5,2,.5};
     }
 }
 
-- (void)readjust:(BOOL)scaling
+- (void)readjust
 {
-    NSPoint point = [(CenteringClipView *)[self superview] centerPoint];
-    NSRect frame;
-    
-    // Readjust the frame
-    frame = NSMakeRect(0, 0, [(SeaContent *)[document contents] width], [(SeaContent *)[document contents] height]);
-    if (gScreenResolution.x != 0 && [[document contents] xres] != gScreenResolution.x) frame.size.width /= ((float)[[document contents] xres] / gScreenResolution.x);
-    if (gScreenResolution.y != 0 && [[document contents] yres] != gScreenResolution.y) frame.size.height /= ((float)[[document contents] yres] / gScreenResolution.y);
-    frame.size.height *= zoom; frame.size.width *= zoom;
-    if (scaling) {
-        point.x *= frame.size.width / [self frame].size.width;
-        point.y *= frame.size.height / [self frame].size.height;
-    }
+    NSRect frame = NSMakeRect(0, 0, [[document contents] width], [[document contents] height]);
     [self setFrame:frame];
-    [(CenteringClipView *)[self superview] setCenterPoint:point];
+    [self layout];
     [self setNeedsDisplay:YES];
 }
 
@@ -1059,23 +311,12 @@ static CGFloat white[4] = {0,3.5,2,.5};
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
-    float xScale, yScale;
-    IntPoint localActiveLayerPoint;
-    NSPoint localPoint, globalPoint;
+    IntPoint localPoint;
+    NSPoint globalPoint;
     id options = [[document optionsUtility] currentOptions];
-    
-    // Get xScale, yScale    
-    xScale = [[document contents] xscale];
-    yScale = [[document contents] yscale];
-    
-    // Check if we are in scrolling mode
-    if (scrollingMode) {
-        [cursorsManager setScrollingMode: YES mouseDown:YES];
-        [self needsCursorsReset];
-        lastScrollPoint = [theEvent locationInWindow];
-        return;
-    }
-    
+
+    [cursorsManager updateCursor:theEvent];
+
     // Check if it is a line draw
     if (lineDraw) {
         [self mouseDragged:theEvent];
@@ -1085,18 +326,14 @@ static CGFloat white[4] = {0,3.5,2,.5};
     // Get the current tool
     AbstractTool *curTool = [document currentTool];
     
-    int curToolIndex = [curTool toolId];
-    
     // Calculate the localPoint and localActiveLayerPoint
     mouseDownLoc = [theEvent locationInWindow];
     globalPoint = [self convertPoint:[theEvent locationInWindow] fromView:NULL];
-    localPoint.x = globalPoint.x / xScale;
-    localPoint.y = globalPoint.y / yScale;
-    localActiveLayerPoint.x = localPoint.x - [[[document contents] activeLayer] xoff];
-    localActiveLayerPoint.y = localPoint.y - [[[document contents] activeLayer] yoff];
+    localPoint.x = globalPoint.x - [[[document contents] activeLayer] xoff];
+    localPoint.y = globalPoint.y - [[[document contents] activeLayer] yoff];
     
     // Turn mouse coalescing on or off
-    if ([curTool useMouseCoalescing] || [(SeaPrefs *)[SeaController seaPrefs] mouseCoalescing] || scrollingMode){
+    if ([curTool useMouseCoalescing] || [(SeaPrefs *)[SeaController seaPrefs] mouseCoalescing]){
         NSEvent.mouseCoalescingEnabled = true;
     }else{
         NSEvent.mouseCoalescingEnabled = false;
@@ -1113,36 +350,15 @@ static CGFloat white[4] = {0,3.5,2,.5};
     
     // Reset the deltas
     delta = IntMakePoint(0,0);
-    initialPoint = NSPointMakeIntPoint(localPoint);
+    initialPoint = localPoint;
     
-    // Determine special value
     if (([theEvent buttonNumber] == 1) || tabletEraser) {
         [options forceAlt];
+        [cursorsManager updateCursor:theEvent]; // might have changed mode
     }
     
-    // Run the event
-    [document lock];
-    if (curToolIndex == kZoomTool) {
-        if ([(AbstractOptions*)options modifier] == kAltModifier) {
-            if ([self canZoomOut])
-                [self zoomOutFromPoint:globalPoint];
-            else
-                NSBeep();
-        }
-        else {
-            if ([self canZoomIn])
-                [self zoomInToPoint:globalPoint];
-            else
-                NSBeep();
-        }
-    }
-    else if ([curTool isFineTool]) {
-        [curTool fineMouseDownAt:localPoint withEvent:theEvent];
-    }
-    else {
-        [curTool mouseDownAt:localActiveLayerPoint withEvent:theEvent];
-    }
-    lastActiveLayerPoint = localActiveLayerPoint;
+    [curTool mouseDownAt:localPoint withEvent:theEvent];
+    lastLocalPoint = localPoint;
 }
 
 - (void)rightMouseDragged:(NSEvent *)theEvent
@@ -1152,134 +368,47 @@ static CGFloat white[4] = {0,3.5,2,.5};
 
 - (void)mouseDragged:(NSEvent *)theEvent
 {
-    float xScale, yScale;
     id curTool;
-    IntPoint localActiveLayerPoint;
-    NSPoint localPoint;
+    IntPoint localPoint;
     int deltaX, deltaY;
     double angle;
-    NSPoint origin, newScrollPoint;
-    NSClipView *view;
     id options = [[document optionsUtility] currentOptions];
-    
-    NSRect visRect = [(NSClipView *)[self superview] documentVisibleRect];
-    localPoint = [self convertPoint:[theEvent locationInWindow] fromView:NULL];
-    
-    /* When the user drags the mouse out of the currently visible view rect, they expect it to 
-    scroll, probably proportionally to the distance they are outside of the view. Thus we need to
-    calculate if we're outside of the view, and the scroll the view by that much.*/
-    
-    // Cancel any previous scroll options
-    if(scrollTimer){
-        [scrollTimer invalidate];
-        scrollTimer = NULL;
-    }
-    
-    float horzScroll = 0;
-    float rightVis = visRect.origin.x + visRect.size.width;
-    float rightAct = [(SeaContent *)[document contents] width] * [[document contents] xscale];
-    if(localPoint.x < visRect.origin.x){
-        horzScroll = localPoint.x - visRect.origin.x;
-        // This is so users don't scroll past the beginning
-        if(-1 * horzScroll > visRect.origin.x){
-            horzScroll = visRect.origin.x < 0 ? 0 : -1 * visRect.origin.x;
-        }
-    }else if(localPoint.x > rightVis){
-        horzScroll = localPoint.x - rightVis;
-        // And this is so users don't scroll past the end
-        if(horzScroll > rightAct - rightVis){
-            horzScroll = rightVis > rightAct ? 0 : rightAct - rightVis;
-        }
-    }
-    
-    
-    float vertScroll = 0;
-    float botVis = visRect.origin.y + visRect.size.height;
-    float botAct = [(SeaContent *)[document contents] height] * [[document contents] yscale];
-    if(localPoint.y < visRect.origin.y){
-        vertScroll = localPoint.y - visRect.origin.y;
-        // This is so users don't scroll past the beginning
-        if(-1 *vertScroll > visRect.origin.y){
-            vertScroll = visRect.origin.y < 0 ? 0 : -1 * visRect.origin.y;
-        }
-    }else if(localPoint.y > botVis){
-        vertScroll = localPoint.y - botVis;
-        // And this is so users don't scroll past the end
-        if(vertScroll > botAct - botVis){
-            vertScroll = botVis > botAct ? 0 : botAct - botVis;
-        }
-    }
-    
-    // We will want the document to continue to scroll even if the user isn't sending mouse events
-    // This means there needs to be some sort of timer to call the method automatically
-    if(horzScroll != 0 || vertScroll != 0){
-        //NSDictionary *uInfo = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithFloat:horzScroll], @"x", [NSNumber numberWithFloat:vertScroll], @"y", nil];
-        NSClipView *view = (NSClipView *)[self superview];
-        NSPoint origin =  [view documentVisibleRect].origin;
-        origin.x += horzScroll;
-        origin.y += vertScroll;
-        [view scrollToPoint:[view constrainScrollPoint:origin]];
-        [(NSScrollView *)[view superview] reflectScrolledClipView:view];
-        
-        //scrollTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target: self selector:@selector(autoScroll:) userInfo: theEvent repeats: YES];
-    }
-    
-    // Check if we are in manual scrolling mode
-    if (scrollingMode) {
-        newScrollPoint = [theEvent locationInWindow];
-        view = (NSClipView *)[self superview];
-        origin = visRect.origin;
-        origin.x -= (newScrollPoint.x - lastScrollPoint.x) * 2;
-        origin.y += (newScrollPoint.y - lastScrollPoint.y) * 2;
-        [view scrollToPoint:[view constrainScrollPoint:origin]];
-        [(NSScrollView *)[view superview] reflectScrolledClipView:view];
-        lastScrollPoint = newScrollPoint;
-        return;
-    }
-    
-    // Set up tools
+
+    NSPoint globalPoint = [self convertPoint:[theEvent locationInWindow] fromView:NULL];
+
     curTool = [document currentTool];
     
-    // Calculate the localPoint and localActiveLayerPoint
-    xScale = [[document contents] xscale];
-    yScale = [[document contents] yscale];
-    localPoint.x /= xScale;
-    localPoint.y /= yScale;    
-    localActiveLayerPoint.x = localPoint.x - [[[document contents] activeLayer] xoff];
-    localActiveLayerPoint.y = localPoint.y - [[[document contents] activeLayer] yoff];
+    localPoint.x = globalPoint.x - [[[document contents] activeLayer] xoff];
+    localPoint.y = globalPoint.y - [[[document contents] activeLayer] yoff];
     
     // Snap to 45 degree intervals if requested
-    deltaX = localActiveLayerPoint.x - lastActiveLayerPoint.x;
-    deltaY = localActiveLayerPoint.y - lastActiveLayerPoint.y;
+    deltaX = localPoint.x - lastLocalPoint.x;
+    deltaY = localPoint.y - lastLocalPoint.y;
+
     if (lineDraw && ([(AbstractOptions*)options modifier] == kShiftControlModifier) && deltaX != 0) {
         angle = atan((double)deltaY / (double)abs(deltaX));
         if (angle > -0.3927 && angle < 0.3927)
-            localActiveLayerPoint.y = lastActiveLayerPoint.y;
+            localPoint.y = lastLocalPoint.y;
         else if (angle > 1.1781 || angle < -1.1781)
-            localActiveLayerPoint.x = lastActiveLayerPoint.x;
+            localPoint.x = lastLocalPoint.x;
         else if (angle > 0.0)
-            localActiveLayerPoint.y = lastActiveLayerPoint.y + abs(deltaX);
+            localPoint.y = lastLocalPoint.y + abs(deltaX);
         else 
-            localActiveLayerPoint.y = lastActiveLayerPoint.y - abs(deltaX);
+            localPoint.y = lastLocalPoint.y - abs(deltaX);
     }
     
     // Determine the delta
     delta.x = localPoint.x - initialPoint.x;
     delta.y = localPoint.y - initialPoint.y;
 
-    // Behave differently depending on current tool
-    if ([curTool isFineTool]) {
-        [(AbstractTool *)curTool fineMouseDraggedTo:localPoint withEvent:theEvent];
-    }
-    else {
-        [(AbstractTool *)curTool mouseDraggedTo:localActiveLayerPoint withEvent:theEvent];
-    }
-    lastActiveLayerPoint = localActiveLayerPoint;
+    [(AbstractTool *)curTool mouseDraggedTo:localPoint withEvent:theEvent];
+    lastLocalPoint = localPoint;
     lineDraw = NO;
+
+    [self autoscroll:theEvent];
     
-    // Update the info utility
-    if ([[document infoUtility] visible]) [[document infoUtility] update];
-    if ([[document scrollView] rulersVisible]) [self updateRulerMarkings:[theEvent locationInWindow] andStationary:mouseDownLoc];
+    [[document infoUtility] update];
+    [[document scrollView] updateRulerMarkings:[theEvent locationInWindow] andStationary:mouseDownLoc];
 }
 
 
@@ -1290,26 +419,14 @@ static CGFloat white[4] = {0,3.5,2,.5};
 
 - (void)mouseUp:(NSEvent *)theEvent
 {
-    float xScale, yScale;
     id curTool = [document currentTool];
     NSPoint localPoint;
     IntPoint localActiveLayerPoint;
     AbstractOptions *options = [[document optionsUtility] currentOptions];
-    
-    // Get xScale, yScale
-    xScale = [[document contents] xscale];
-    yScale = [[document contents] yscale];
-    
+
     // Return to normal coalescing
     NSEvent.mouseCoalescingEnabled = true;
 
-    // Check if we are in scrolling mode
-    if (scrollingMode) {
-        [cursorsManager setScrollingMode: YES mouseDown: NO];
-        [self needsCursorsReset];
-        return;
-    }
-    
     // Check if it is a line draw
     if ([curTool acceptsLineDraws] && ([(AbstractOptions*)options modifier] == kShiftModifier || [options modifier] == kShiftControlModifier)) {
         lineDraw = YES;
@@ -1319,8 +436,6 @@ static CGFloat white[4] = {0,3.5,2,.5};
     // Calculate the localPoint and localActiveLayerPoint
     mouseDownLoc = NSMakePoint(-256e6, -256e6);
     localPoint = [self convertPoint:[theEvent locationInWindow] fromView:NULL];
-    localPoint.x /= xScale;
-    localPoint.y /= yScale;
     localActiveLayerPoint.x = localPoint.x - [[[document contents] activeLayer] xoff];
     localActiveLayerPoint.y = localPoint.y - [[[document contents] activeLayer] yoff];
     
@@ -1330,14 +445,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
     // Reset the delta
     delta = IntMakePoint(0,0);
 
-    // Run the event
-    [document unlock];
-    if ([curTool isFineTool]) {
-        [curTool fineMouseUpAt:localPoint withEvent:theEvent];
-    }
-    else {
-        [curTool mouseUpAt:localActiveLayerPoint withEvent:theEvent];
-    }
+    [curTool mouseUpAt:localActiveLayerPoint withEvent:theEvent];
     
     // Unforce alt
     [options unforceAlt];
@@ -1351,7 +459,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
 - (void)flagsChanged:(NSEvent *)theEvent
 {
     [(AbstractOptions *)[[document optionsUtility] currentOptions] updateModifiers:[theEvent modifierFlags]];
-    [[document helpers] endLineDrawing];
+    [cursorsManager updateCursor:theEvent];
 }
 
 - (void)keyDown:(NSEvent *)theEvent
@@ -1398,46 +506,42 @@ static CGFloat white[4] = {0,3.5,2,.5};
             // Get the active layer
             activeLayer = [[document contents] activeLayer];
         
-            // Undo to the old position
-            if (keyWasUp) {
-            
-                // If the active layer is linked we have to move all associated layers
-                if ([activeLayer linked]) {
-                
-                    // Go through all linked layers allowing a satisfactory undo
-                    for (whichLayer = 0; whichLayer < [[document contents] layerCount]; whichLayer++) {
-                        curLayer = [[document contents] layer:whichLayer];
-                        if ([curLayer linked]) {
-                            oldOffsets.x = [curLayer xoff]; oldOffsets.y = [curLayer yoff];
-                            [[[document undoManager] prepareWithInvocationTarget:[[document tools] getTool:kPositionTool]] undoToOrigin:oldOffsets forLayer:whichLayer];            
-                        }
-                    }
-                    
-                }
-                else {
-                    oldOffsets.x = [activeLayer xoff]; oldOffsets.y = [activeLayer yoff];
-                    [[[document undoManager] prepareWithInvocationTarget:[[document tools] getTool:kPositionTool]] undoToOrigin:oldOffsets forLayer:[[document contents] activeLayerIndex]];
-                }
-                keyWasUp = NO;
-                
-            }
-            
             // If there is a selection active move the selection otherwise move the layer
-            if (curToolIndex == kCropTool) {
+            if (curToolIndex == kPositionTool) {
+                PositionTool *positionTool = [document currentTool];
+
+                // Make the adjustment
+                switch (key) {
+                    case NSUpArrowFunctionKey:
+                        [positionTool adjustOffset:IntMakePoint(0, -1 * nudge)];
+                        break;
+                    case NSDownArrowFunctionKey:
+                        [positionTool adjustOffset:IntMakePoint(0, nudge)];
+                        break;
+                    case NSLeftArrowFunctionKey:
+                        [positionTool adjustOffset:IntMakePoint(-1 * nudge, 0)];
+                        break;
+                    case NSRightArrowFunctionKey:
+                        [positionTool adjustOffset:IntMakePoint(nudge, 0)];
+                        break;
+                }
+            }
+            else if (curToolIndex == kCropTool) {
+                CropTool *cropTool = [document currentTool];
             
                 // Make the adjustment
                 switch (key) {
                     case NSUpArrowFunctionKey:
-                        [[document currentTool] adjustCrop:IntMakePoint(0, -1 * nudge)];
+                        [cropTool adjustCrop:IntMakePoint(0, -1 * nudge)];
                     break;
                     case NSDownArrowFunctionKey:
-                        [[document currentTool] adjustCrop:IntMakePoint(0, nudge)];
+                        [cropTool adjustCrop:IntMakePoint(0, nudge)];
                     break;
                     case NSLeftArrowFunctionKey:
-                        [[document currentTool] adjustCrop:IntMakePoint(-1 * nudge, 0)];
+                        [cropTool adjustCrop:IntMakePoint(-1 * nudge, 0)];
                     break;
                     case NSRightArrowFunctionKey:
-                        [[document currentTool] adjustCrop:IntMakePoint(nudge, 0)];
+                        [cropTool adjustCrop:IntMakePoint(nudge, 0)];
                     break;
                 }
                 
@@ -1541,7 +645,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
                 break;
                 case kEscapeCharCode:
                     if(curToolIndex >= kFirstSelectionTool && curToolIndex <= kLastSelectionTool && [[[document tools] currentTool] intermediate])
-                        [[[document tools] currentTool] cancelSelection];
+                        [(AbstractSelectTool*)[document currentTool] cancelSelection];
                     else
                         [[document selection] clearSelection];
                 break;
@@ -1614,22 +718,10 @@ static CGFloat white[4] = {0,3.5,2,.5};
                     eyedropToolMemory = [toolbox tool];
                     [toolbox changeToolTo:kEyedropTool];
                 break;
-                case '\r':
-                case kEnterCharCode:
-                    [[document warnings] keyTriggered];
-                break;
             }
-
-            // Activate scrolling mode
-            if (key == ' ' && ![document locked]) {
-                scrollingMode = YES;
-                [cursorsManager setScrollingMode: YES mouseDown: NO];
-                [self needsCursorsReset];
-            }
-            
         }
-        
     }
+    [cursorsManager updateCursor:theEvent];
 }
 
 - (void)keyUp:(NSEvent *)theEvent
@@ -1646,9 +738,6 @@ static CGFloat white[4] = {0,3.5,2,.5};
         // Deactivate scrolling mode
         switch (key) {
             case ' ':
-                scrollingMode = NO;
-                [cursorsManager setScrollingMode: NO mouseDown: NO];
-                [self needsCursorsReset];
             break;
             case '\t':
                 [[document toolboxUtility] changeToolTo:eyedropToolMemory];
@@ -1658,21 +747,6 @@ static CGFloat white[4] = {0,3.5,2,.5};
     }
     
     keyWasUp = YES;
-}
-
-- (void)autoScroll:(NSTimer *)theTimer
-{
-    // The point of autoscrolling is that we simulate another mouse event
-    // outside of the bounds, but that we're moving the viewport to keep
-    // that even inside what the user sees.
-    [self mouseDragged:[theTimer userInfo]];
-}
-
-- (void)clearScrollingMode
-{
-    scrollingMode = NO;
-    [cursorsManager setScrollingMode: NO mouseDown: NO];
-    [self needsCursorsReset];
 }
 
 - (void)magnifyWithEvent:(NSEvent *)event
@@ -1699,10 +773,10 @@ static CGFloat white[4] = {0,3.5,2,.5};
     }else if (x < 0) {
         [[document contents] layerAbove];
     }else if (y < 0) {
-        [[document contents] anchorLayer];
+        [[document contents] mergeDown];
     }else if (y > 0) {
         unsigned int mods = [event modifierFlags];
-        [[document contents] makeSelectionFloat:(mods & NSAlternateKeyMask) >> 19];
+        [[document contents] layerFromSelection:(mods & NSAlternateKeyMask) >> 19];
     }
 }
 
@@ -1737,7 +811,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
     if ([[document selection] active])
         [[document selection] clearSelection];
     [[document toolboxUtility] changeToolTo:kRectSelectTool];
-    [[document contents] makePasteboardFloat];
+    [[document contents] layerFromPasteboard:[NSPasteboard generalPasteboard] atIndex:0];
 }
 
 - (IBAction)delete:(id)sender
@@ -1755,7 +829,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
     int curToolIndex = [[document currentTool] toolId];
     
     if(curToolIndex >= kFirstSelectionTool && curToolIndex <= kLastSelectionTool && [[document currentTool] intermediate])
-        [[document currentTool] cancelSelection];
+        [(AbstractSelectTool*)[document currentTool] cancelSelection];
     else
         [[document selection] clearSelection];
 }
@@ -1777,28 +851,21 @@ static CGFloat white[4] = {0,3.5,2,.5};
 
 - (IntPoint)getMousePosition:(BOOL)compensation
 {
-    NSPoint tempPoint;
-    IntPoint localPoint;
-    float xScale, yScale;
-    id contents = [document contents];
+    SeaContent *contents = [document contents];
     
-    xScale = [[document contents] xscale];
-    yScale = [[document contents] yscale];
-    localPoint.x = localPoint.y = -1;
-    tempPoint = [self convertPoint:[[self window] convertScreenToBase:[NSEvent mouseLocation]] fromView:NULL];
+    NSPoint tempPoint = [self convertPoint:[[self window] convertScreenToBase:[NSEvent mouseLocation]] fromView:NULL];
+    IntPoint localPoint = NSPointMakeIntPoint(tempPoint);
     // tempPoint.y = [self bounds].size.height - tempPoint.y;
     if (!NSMouseInRect(tempPoint, [self visibleRect], YES) || ![[self window] isVisible])
         return localPoint;
-    localPoint.x = tempPoint.x / xScale;
-    localPoint.y = tempPoint.y / yScale;
     if ([[document whiteboard] whiteboardIsLayerSpecific] && compensation) {
         localPoint.x -= [[contents activeLayer] xoff];
         localPoint.y -= [[contents activeLayer] yoff];
-        if (localPoint.x < 0 || localPoint.x >= [(SeaLayer *)[contents activeLayer] width] || localPoint.y < 0 || localPoint.y >= [(SeaLayer *)[contents activeLayer] height])
+        if (localPoint.x < 0 || localPoint.x >= [(SeaLayer *)[contents activeLayer] width] || localPoint.y < 0 || localPoint.y >= [[contents activeLayer] height])
             localPoint.x = localPoint.y = -1;        
     }
     else {
-        if (localPoint.x < 0 || localPoint.x >= [(SeaContent *)[document contents] width] || localPoint.y < 0 || localPoint.y >= [(SeaContent *)[document contents] height])
+        if (localPoint.x < 0 || localPoint.x >= [(SeaContent *)[document contents] width] || localPoint.y < 0 || localPoint.y >= [[document contents] height])
             localPoint.x = localPoint.y = -1;
     }
     
@@ -1824,13 +891,13 @@ static CGFloat white[4] = {0,3.5,2,.5};
     
     // Accept copy operations if possible
     if (sourceDragMask & NSDragOperationCopy) {
-        if ([[pboard types] containsObject:NSTIFFPboardType] || [[pboard types] containsObject:NSPICTPboardType]) {
-            if (layer != [[document contents] activeLayer] && ![document locked] ) {
+        if ([[pboard types] containsObject:NSTIFFPboardType]) {
+            if (layer != [[document contents] activeLayer]) {
                 return NSDragOperationCopy;
             }
         }
         if([[pboard types] containsObject:NSFilesPromisePboardType]){
-            if (layer != [[document contents] activeLayer] && ![document locked] ) {
+            if (layer != [[document contents] activeLayer]) {
                 files = [pboard propertyListForType:NSFilesPromisePboardType];
                 success = YES;
                 for (i = 0; i < [files count]; i++)
@@ -1841,7 +908,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
             }
         }
         if ([[pboard types] containsObject:NSFilenamesPboardType]) {
-            if (layer != [[document contents] activeLayer] && ![document locked] ) {
+            if (layer != [[document contents] activeLayer]) {
                 files = [pboard propertyListForType:NSFilenamesPboardType];
                 success = YES;
                 for (i = 0; i < [files count]; i++)
@@ -1852,7 +919,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
             }
         }
         if ([[pboard types] containsObject:NSURLPboardType]) {
-            if (layer != [[document contents] activeLayer] && ![document locked] ) {
+            if (layer != [[document contents] activeLayer]) {
                 NSURL *url = [NSURL URLFromPasteboard:pboard];
                 if([url isFileURL]) {
                     NSString *path = [url path];
@@ -1871,11 +938,8 @@ static CGFloat white[4] = {0,3.5,2,.5};
 {
     NSPasteboard *pboard;
     NSDragOperation sourceDragMask;
-    NSArray *files;
-    BOOL success;
     id layer;
-    int i;
-    
+
     // Determine the pasteboard and acceptable dragging operations
     sourceDragMask = [sender draggingSourceOperationMask];
     pboard = [sender draggingPasteboard];
@@ -1884,114 +948,19 @@ static CGFloat white[4] = {0,3.5,2,.5};
     else
         layer = NULL;
 
-    if (sourceDragMask & NSDragOperationCopy) {
-    
-        // Accept TIFFs as new layers
-        if ([[pboard types] containsObject:NSTIFFPboardType]) {
-            if (layer != NULL) {
-                [[document contents] copyLayer:layer];
-                return YES;
-            }
-            else {
-                [[document contents] addLayerFromPasteboard:pboard];
-                return YES;
-            }
-        }
-        
-        // Accept PICTs as new layers
-        if ([[pboard types] containsObject:NSPICTPboardType]) {
-            [[document contents] addLayerFromPasteboard:pboard];
-            return YES;
-        }
-        
-        if ([[pboard types] containsObject:NSFilesPromisePboardType]) {
-            
-            NSError *error = nil;
-            NSString *tmpdir =[NSTemporaryDirectory() stringByAppendingPathComponent:@"dropfiles/"];
-            [[NSFileManager defaultManager] createDirectoryAtPath:tmpdir withIntermediateDirectories:NO attributes:NULL error:&error];
-            
-            NSURL* dropLocation = [NSURL fileURLWithPath:tmpdir];
-            
-            files = [sender namesOfPromisedFilesDroppedAtDestination:dropLocation];
-            success = YES;
-            for (i = 0; i < [files count]; i++) {
-                NSString *path = [[dropLocation path] stringByAppendingPathComponent:files[i]];
-                
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                    while (![[NSFileManager defaultManager] isReadableFileAtPath:path]) {
-                        // We need to wait for the file to be avaliable.
-                        // This is ugly as hell. You better use File System Events
-                        // API of the CoreService framework.
-                    };
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [[self->document contents] importLayerFromFile:path];
-                        [[NSFileManager defaultManager] removeItemAtPath:path error:NULL];
-                    });
-                });
-            }
-            return success;
-        }
-        
-        // Accept files as new layers
-        if ([[pboard types] containsObject:NSFilenamesPboardType]) {
-            files = [pboard propertyListForType:NSFilenamesPboardType];
-            success = YES;
-            for (i = 0; i < [files count]; i++)
-                success = success && [[document contents] importLayerFromFile:[files objectAtIndex:i]];
-            return success;
-        }
-        
-        if ([[pboard types] containsObject:NSURLPboardType]) {
-            NSURL *url = [NSURL URLFromPasteboard:pboard];
-            if([url isFileURL]) {
-                NSString *path = [url path];
-                return [[document contents] importLayerFromFile:path];
-            }
-        }
+    if (!(sourceDragMask & NSDragOperationCopy))
+        return NO;
 
+    if (layer != NULL) {
+        [[document contents] copyLayer:layer];
+        return YES;
     }
-
-    return NO;
-}
-
-- (void)updateRulersVisiblity
-{
-    NSView *superview = [[document scrollView] superview];
-    int i;
-    // This assumes that all of the subviews will actually respond to setRulersVisible
-    for(i = 0; i < [[superview subviews] count]; i++){
-        [[[superview subviews] objectAtIndex: i] setRulersVisible:[[SeaController seaPrefs] rulers]];
-    }
-    
-    [self checkMouseTracking];
-}
-
-- (void)updateRulers
-{
-    NSString *uniqueId = [NSString stringWithFormat:@"%p", document];;
-    NSString *uniqueIdX = [uniqueId stringByAppendingString:@"x"];
-    NSString *uniqueIdY = [uniqueId stringByAppendingString:@"y"];
-
-    // Set up the rulers for the new settings
-    switch ([document measureStyle]) {
-        case kPixelUnits:
-            [NSRulerView registerUnitWithName:uniqueIdX abbreviation:@"px" unitToPointsConversionFactor:zoom / ((float)[[document contents] xres] / 72.0) stepUpCycle:[NSArray arrayWithObject:[NSNumber numberWithFloat:10.0]] stepDownCycle:[NSArray arrayWithObject:[NSNumber numberWithFloat:0.5]]];
-            [horizontalRuler setMeasurementUnits:uniqueIdX];
-            [NSRulerView registerUnitWithName:uniqueIdY abbreviation:@"px" unitToPointsConversionFactor:zoom / ((float)[[document contents] yres] / 72.0) stepUpCycle:[NSArray arrayWithObject:[NSNumber numberWithFloat:10.0]] stepDownCycle:[NSArray arrayWithObject:[NSNumber numberWithFloat:0.5]]];
-            [verticalRuler setMeasurementUnits:uniqueIdY];
-        break;
-        case kInchUnits:
-            [NSRulerView registerUnitWithName:uniqueId abbreviation:@"in" unitToPointsConversionFactor:72.0 * zoom stepUpCycle:[NSArray arrayWithObject:[NSNumber numberWithFloat:2.0]] stepDownCycle:[NSArray arrayWithObject:[NSNumber numberWithFloat:0.5]]];
-            [horizontalRuler setMeasurementUnits:uniqueId];
-            [verticalRuler setMeasurementUnits:uniqueId];
-        break;
-        case kMillimeterUnits:
-            [NSRulerView registerUnitWithName:uniqueId abbreviation:@"mm" unitToPointsConversionFactor:2.83464 * zoom stepUpCycle:[NSArray arrayWithObject:[NSNumber numberWithFloat:5.0]] stepDownCycle:[NSArray arrayWithObject:[NSNumber numberWithFloat:0.5]]];
-            [horizontalRuler setMeasurementUnits:uniqueId];
-            [verticalRuler setMeasurementUnits:uniqueId];
-        break;
+    else {
+        [[document contents] layerFromPasteboard:pboard atIndex:0];
+        return YES;
     }
 }
+
 
 - (BOOL)isFlipped
 {
@@ -2005,16 +974,12 @@ static CGFloat white[4] = {0,3.5,2,.5};
 
 - (BOOL)acceptsFirstResponder
 {    
-    [[self window] makeFirstResponder:self];
-    
     return YES;
 }
 
 - (BOOL)resignFirstResponder 
 {
     return YES;
-    // WHY NOT?
-    //return NO;
 }
 
 - (BOOL)validateMenuItem:(id)menuItem
@@ -2036,9 +1001,6 @@ static CGFloat white[4] = {0,3.5,2,.5};
         break;
         case 270: /* Select All */
         case 273: /* Select Alpha */
-            // floating is like any other layer
-//            if ([[document selection] floating])
-//                return NO;
         break;
         case 271: /* Select None */
             if ([[document currentTool] toolId] == kPolygonLassoTool && [[document currentTool] intermediate])
@@ -2051,7 +1013,7 @@ static CGFloat white[4] = {0,3.5,2,.5};
                 return NO;
         break;
         case 262: /* Paste */
-            availableType = [[NSPasteboard generalPasteboard] availableTypeFromArray:[NSArray arrayWithObjects:NSTIFFPboardType, NSPICTPboardType, NULL]];
+            availableType = [[NSPasteboard generalPasteboard] availableTypeFromArray:[NSArray arrayWithObjects:NSTIFFPboardType, NULL]];
             if (availableType)
                 return YES;
             else

@@ -1,4 +1,4 @@
-#import "Globals.h"
+#import "Seashore.h"
 
 /*!
 	@class		ToolboxUtility
@@ -24,7 +24,7 @@
 	id foreground, background;
 	
 	// The colorSelectView associated with this utility
-	IBOutlet id colorSelectView;
+	id colorSelectView;
 	
 	// The toolbox
 	IBOutlet id toolbox;
@@ -58,10 +58,6 @@
 	NSArray *drawTools;
 	NSArray *effectTools;
 	NSArray *transformTools;
-	
-	// A timer that delays colour changes
-	id delay_timer;
-	
 }
 
 /*!
@@ -131,18 +127,6 @@
 - (BOOL)acceptsFirstMouse:(NSEvent *)event;
 
 /*!
-	@method		activate
-	@discussion	Activates this utility with its document.
-*/
-- (void)activate;
-
-/*!
-	@method		deactivate
-	@discussion	Deactivates this utility.
-*/
-- (void)deactivate;
-
-/*!
 	@method		update:
 	@discussion	Updates the utility for the current document.
 	@param		full
@@ -192,7 +176,7 @@
 	@method		floatTool
 	@discussion	Selects the position tool.
 */
-- (void)floatTool;
+- (void)positionTool;
 
 /*
 	@method		setEffectEnabled:

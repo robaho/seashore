@@ -1,6 +1,8 @@
 #import "ThresholdView.h"
 #import "ThresholdClass.h"
 
+#import <SeaComponents/SeaComponents.h>
+
 #define gOurBundle [NSBundle bundleForClass:[self class]]
 
 #define gUserDefaults [NSUserDefaults standardUserDefaults]
@@ -10,14 +12,23 @@
 - (id)initWithManager:(PluginData *)data
 {
 	pluginData = data;
-	[NSBundle loadNibNamed:@"Threshold" owner:self];
-	
-	return self;
+
+    panel = [VerticalView view];
+
+    histo = [[ThresholdView alloc] initWithClass:self];
+    top = [SeaSlider sliderWithTitle:@"Lower" Min:0 Max:255 Listener:self];
+    bottom = [SeaSlider sliderWithTitle:@"Upper" Min:0 Max:255 Listener:self];
+
+    [panel addSubview:histo];
+    [panel addSubview:top];
+    [panel addSubview:bottom];
+
+    return self;
 }
 
-- (int)type
+- (int)points
 {
-	return 0;
+    return 0;
 }
 
 - (NSString *)name
@@ -35,97 +46,30 @@
 	return @"Seashore Approved (Bobo)";
 }
 
-- (void)run
+- (NSView*)initialize
 {
-	refresh = YES;
-	
-	topValue = 0;
-	bottomValue = 255;
-	
-	[rangeLabel setStringValue:[NSString stringWithFormat:@"%d - %d", topValue, bottomValue]];
-	
-	[topSlider setIntValue:topValue];
-	[bottomSlider setIntValue:bottomValue];
-	[view calculateHistogram:pluginData];
-	
-	success = NO;
-	[self preview:self];
-	if ([pluginData window])
-		[NSApp beginSheet:panel modalForWindow:[pluginData window] modalDelegate:NULL didEndSelector:NULL contextInfo:NULL];
-	else
-		[NSApp runModalForWindow:panel];
-	// Nothing to go here
+    [top setIntValue:0];
+    [bottom setIntValue:255];
+    [histo calculateHistogram:pluginData];
+
+    return panel;
 }
 
-- (IBAction)apply:(id)sender
+- (void)componentChanged:(id)slider
 {
-	if (refresh) [self adjust];
-	[pluginData apply];
-	
-	[panel setAlphaValue:1.0];
-	
-	[NSApp stopModal];
-	if ([pluginData window]) [NSApp endSheet:panel];
-	[panel orderOut:self];
-	success = YES;
+    [pluginData settingsChanged];
+    [histo setNeedsDisplay:TRUE];
 }
 
-- (void)reapply
-{
-	[self adjust];
-	[pluginData apply];
-}
-
-- (BOOL)canReapply
-{
-	return success;
-}
-
-- (IBAction)preview:(id)sender
-{
-	if (refresh) [self adjust];
-	[pluginData preview];
-	refresh = NO;
-}
-
-- (IBAction)cancel:(id)sender
-{
-	[pluginData cancel];
-	
-	[panel setAlphaValue:1.0];
-	
-	[NSApp stopModal];
-	[NSApp endSheet:panel];
-	[panel orderOut:self];
-	success = NO;
-}
-
-- (IBAction)update:(id)sender
-{
-	topValue = [topSlider intValue];
-	bottomValue = [bottomSlider intValue];
-	
-	if (topValue < bottomValue)
-		[rangeLabel setStringValue:[NSString stringWithFormat:@"%d - %d", topValue, bottomValue]];
-	else
-		[rangeLabel setStringValue:[NSString stringWithFormat:@"%d - %d", bottomValue, topValue]];
-	
-	[panel setAlphaValue:1.0];
-	refresh = YES;
-	
-	[view setNeedsDisplay:YES];
-	if ([[NSApp currentEvent] type] == NSLeftMouseUp) {
-		[self preview:self];
-		if ([pluginData window]) [panel setAlphaValue:0.4];
-	}
-}
-
-- (void)adjust
+- (void)execute
 {
 	IntRect selection;
-	int i, j, k, t1, t2, spp, width, channel, mid;
+	int i, j, k, spp, width, channel, mid;
 	unsigned char *data, *overlay, *replace;
-	
+
+    int topValue = [top intValue];
+    int bottomValue = [bottom intValue];
+
 	[pluginData setOverlayOpacity:255];
 	[pluginData setOverlayBehaviour:kReplacingBehaviour];
 	
@@ -179,12 +123,12 @@
 
 - (int)topValue
 {
-	return topValue;
+	return [top intValue];
 }
 
 - (int)bottomValue
 {
-	return bottomValue;
+	return [bottom intValue];
 }
 
 + (BOOL)validatePlugin:(PluginData*)pluginData

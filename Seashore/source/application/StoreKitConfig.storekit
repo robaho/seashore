@@ -1,0 +1,34 @@
+{
+  "identifier" : "3093263E",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "5.99",
+      "familyShareable" : false,
+      "internalID" : "F67D766C",
+      "localizations" : [
+        {
+          "description" : "Support the Seashore project.",
+          "displayName" : "Support Seashore",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "seashore_support",
+      "referenceName" : "seashore_support",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_failTransactionsEnabled" : false,
+    "_storeKitError" : 0
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 1,
+    "minor" : 2
+  }
+}

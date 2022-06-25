@@ -1,4 +1,4 @@
-#import "Globals.h"
+#import "Seashore.h"
 #import "AbstractScaleTool.h"
 #import "LassoTool.h"
 
@@ -16,40 +16,7 @@
 @interface PolygonLassoTool : LassoTool {
 	// The beginning point of the polygonal lasso tool.
 	// Represented by the white dot in the view.
-	NSPoint startPoint;
+	IntPoint startPoint;
 }
-
-/*!
-	@method		fineMouseDownAt:withEvent:
-	@discussion	Handles mouse down events.
-	@param		where
-				Where in the document the mouse down event occurred (in terms of
-				the document's pixels).
-	@param		event
-				The mouse down event.
-*/
-- (void)fineMouseDownAt:(NSPoint)where withEvent:(NSEvent *)event;
-
-/*!
-	@method		fineMouseDraggedTo:withEvent:
-	@discussion	Handles mouse dragging events.
-	@param		where
-				Where in the document the mouse down event occurred (in terms of
-				the document's pixels).
-	@param		event
-				The mouse dragged event.
-*/
-- (void)fineMouseDraggedTo:(NSPoint)where withEvent:(NSEvent *)event;
-
-/*!
-	@method		fineMouseUpAt:withEvent:
-	@discussion	Handles mouse up events.
-	@param		where
-				Where in the document the mouse up event occurred (in terms of
-				the document's pixels).
-	@param		event
-				The mouse up event.
-*/
-- (void)fineMouseUpAt:(NSPoint)where withEvent:(NSEvent *)event;
 
 @end

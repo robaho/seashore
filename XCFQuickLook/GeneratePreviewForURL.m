@@ -3,8 +3,8 @@
 #include <QuickLook/QuickLook.h>
 #include <Cocoa/Cocoa.h>
 
-#include "XCFContent.h"
-#include "SeaWhiteboard.h"
+#include <SeaMinimal/XCFContent.h>
+#include <SeaMinimal/SeaRenderer.h>
 
 /* -----------------------------------------------------------------------------
    Generate a preview for file
@@ -16,21 +16,17 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 {
     // Create and read the document file
 	XCFContent *contents = [[XCFContent alloc] initWithDocument:NULL contentsOfFile: [(__bridge NSURL *)url path]];
-	SeaWhiteboard *whiteboard = [[SeaWhiteboard alloc] initWithContent:contents];
-	[whiteboard update];
-    
-    NSImage* rimage = [whiteboard printableImage];
-    NSRect imageRect = NSMakeRect(0, 0, rimage.size.width, rimage.size.height);
-    CGImageRef image = [rimage CGImageForProposedRect:&imageRect context:NULL hints:nil];
-    
-//    QLPreviewRequestSetDataRepresentation(preview, (CFDataRef)tiff, kUTTypeTIFF, NULL);
+	SeaRenderer *renderer = [[SeaRenderer alloc] init];
+
+    CGImageRef image = [renderer render:contents];
     
     CGSize size = CGSizeMake(CGImageGetWidth(image), CGImageGetHeight(image));
     CGContextRef ctxt = QLPreviewRequestCreateContext(preview, size, YES, nil);
     CGContextDrawImage(ctxt, CGRectMake(0, 0, size.width, size.height), image);
     QLPreviewRequestFlushContext(preview, ctxt);
+    CGImageRelease(image);
     CGContextRelease(ctxt);
-	
+
     return noErr;
 }
 

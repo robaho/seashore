@@ -1,4 +1,4 @@
-#import "Globals.h"
+#import "Seashore.h"
 #import "AbstractPaintOptions.h"
 
 /*!
@@ -38,14 +38,6 @@
 - (void)awakeFromNib;
 
 /*!
-	@method		update:
-	@discussion	Updates the options panel.
-	@param		sender
-				The object responsible for the change.
-*/
-- (IBAction)update:(id)sender;
-
-/*!
 	@method		fade
 	@discussion	Returns whether the brush should fade with use.
 	@result		Returns YES if the brush should fade with use, NO otherwise.
@@ -60,25 +52,19 @@
 - (int)fadeValue;
 
 /*!
-	@method		fade
-	@discussion	Returns whether the brush is pressure sensitive.
-	@result		Returns YES if the brush is pressure sensitive, NO otherwise.
-*/
-- (BOOL)pressureSensitive;
-
-/*!
 	@method		pressureValue
 	@discussion	Returns the pressure value that should be used for the brush.
 	@param		event
 				The event encapsulating the current pressure.
 	@result		Returns an integer from 0 to 255 indicating the pressure value
-				that should be used for the brush.
+				that should be used for the brush. If pressure sensitive is disabled
+                255 is returned.
 */
 - (int)pressureValue:(NSEvent *)event;
 
 /*!
 	@method		scale
-	@discussion	Returns whether the brush should be scaled with pressure.
+	@discussion	Returns whether the brush should be scaled with based on dpi.
 	@result		Returns YES if the brush should scaled, NO otherwise.
 */
 - (BOOL)scale;
@@ -114,5 +100,7 @@
 				Needs to be the popup menu.
 */
 - (IBAction)modifierPopupChanged:(id)sender;
+
+- (int)opacity;
 
 @end

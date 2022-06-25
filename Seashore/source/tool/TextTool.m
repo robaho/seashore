@@ -12,10 +12,7 @@
 #import "TextureUtility.h"
 #import "SeaTexture.h"
 #import "Bucket.h"
-#import "Bitmap.h"
 #import "OptionsUtility.h"
-
-extern id gNewFont;
 
 @implementation TextTool
 
@@ -26,313 +23,251 @@ extern id gNewFont;
 
 - (id)init
 {
-	if(![super init])
-		return NULL;
-	// Set up the font manager
-	fontManager = [NSFontManager sharedFontManager];
-	running = NO;
-	return self;
+    if(![super init])
+        return NULL;
+
+    textRect.size.width = textRect.size.height = 0;
+    return self;
 }
 
-- (void)mouseUpAt:(IntPoint)iwhere withEvent:(NSEvent *)theEvent
+- (void)textRectChanged:(IntRect)dirty
 {
-	// Display the preview text box
-	where = iwhere;
-	running = YES;
-	previewRect = IntMakeRect(0, 0, 0, 0);
-	[textbox setUsesFontPanel:NO];
-    [textbox setTextColor:[NSColor controlTextColor]];
-	[panel setAlphaValue:0.75];
-	[movePanel setAlphaValue:0.75];
-	[self preview:NULL];
-	[NSApp beginSheet:panel modalForWindow:[document window] modalDelegate:NULL didEndSelector:NULL contextInfo:NULL];
+    [[document helpers] selectionChanged:dirty];
 }
 
-typedef struct {
-    IntRect rect;
-    unsigned char *data;
-} result;
-
-- (result)drawOverlay:(BOOL)preview
+- (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event
 {
-	int i, j, k, width, height, spp = [[document contents] spp];
-	NSFont *font;
-	IntSize fontSize;
-	NSDictionary *attributes;
-	unsigned char *bitmapData, *initData, *overlay, *data, *replace;
-	unsigned char basePixel[4];
-	NSColor *color;
-	NSString *text;
-	IntPoint pos, off;
-    SeaLayer *layer;
-    id activeTexture = [[document textureUtility] activeTexture];
-    NSBitmapImageRep *initRep;
-	NSMutableParagraphStyle *paraStyle;
-	int slantWidth;
-	int outline = [options outline];
-    
-    result r;
-	
-	// Set up the colour
-	if ([options useTextures])
-		color = [activeTexture textureAsNSColor:(spp == 4)];
-	else
-		color = [[document contents] foreground];
-	[[document whiteboard] setOverlayBehaviour:kReplacingBehaviour];
-	[[document whiteboard] setOverlayOpacity:255];
-	
-	// Get the font
-	font = (gNewFont) ? gNewFont : [fontManager selectedFont];
-    if (font == NULL) {
-        r.rect = IntMakeRect(0, 0, 0, 0);
-        r.data = NULL;
-        return r;
+    int modifier = [(TextOptions*)options modifier];
+
+    if (modifier == kControlModifier) {
+        [self clearTextRect];
     }
-    
-	paraStyle = [[NSMutableParagraphStyle alloc] init];
-	[paraStyle setAlignment:[options alignment]];
-	if (outline)
-		attributes = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, color, NSForegroundColorAttributeName, paraStyle, NSParagraphStyleAttributeName, [NSNumber numberWithInt:outline], NSStrokeWidthAttributeName, NULL];
-	else
-		attributes = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, color, NSForegroundColorAttributeName, paraStyle, NSParagraphStyleAttributeName, NULL];
-	text = [[textbox textStorage] string];
-	fontSize = NSSizeMakeIntSize([text sizeWithAttributes:attributes]);
-	fontSize.width += [@"x" sizeWithAttributes:attributes].width;
-	slantWidth = ceil(MAX(sin([font italicAngle]) * [font pointSize], 0.0));
-	if (outline) slantWidth += (outline + 1) / 2;
-	fontSize.width += slantWidth * 2;
-	overlay = [[document whiteboard] overlay];
-	replace = [[document whiteboard] replace];
-	layer = [[document contents] activeLayer];
-	data = [layer data];
-	width = [layer width];
-	height = [layer height];
-	
-	// Determine the position
-	switch([options alignment]){
-		case NSRightTextAlignment:
-			pos.x = where.x - fontSize.width;
-			break;
-		case NSCenterTextAlignment:
-			pos.x = where.x - (int)round(fontSize.width / 2);
-			break;
-		default:
-			pos.x = where.x;
-			break;
-	}
-	pos.y = where.y - [font ascender];
-	off.x = [layer xoff];
-	off.y = [layer yoff];
-    
-    initData = malloc(fontSize.width * fontSize.height * spp);
-    CHECK_MALLOC(initData);
-    
-    if(!preview && [options shouldAddTextAsNewLayer]) {
-        memset(initData,0,fontSize.width * fontSize.height * spp);
+
+    if(textRect.size.width > 0 && textRect.size.height > 0){
+        [self mouseDownAt: where
+                  forRect: textRect
+             withMaskRect: IntZeroRect
+                  andMask: NULL];
+    }
+
+    if(![self isMovingOrScaling]){
+        SeaLayer *activeLayer;
+
+        // Make where appropriate
+        activeLayer = [[document contents] activeLayer];
+        where.x += [activeLayer xoff];
+        where.y += [activeLayer yoff];
+
+        // Check if location is in existing rect
+        startPoint = where;
+
+        // Start the cropping rectangle
+        oneToOne = (modifier == kShiftModifier);
+
+        textRect.origin.x = startPoint.x;
+        textRect.origin.y = startPoint.y;
+        textRect.size.width = 0;
+        textRect.size.height = 0;
+
+        intermediate = YES;
+        [[document helpers] selectionChanged];
+    }
+}
+
+- (void)mouseDraggedTo:(IntPoint)where withEvent:(NSEvent *)event
+{
+    IntRect draggedRect = [self mouseDraggedTo: where
+                                       forRect: textRect
+                                       andMask: NULL];
+
+    if(![self isMovingOrScaling]){
+
+        SeaLayer *activeLayer;
+
+        IntRect old = textRect;
+
+        // Make where appropriate
+        activeLayer = [[document contents] activeLayer];
+        where.x += [activeLayer xoff];
+        where.y += [activeLayer yoff];
+
+        if (startPoint.x < where.x) {
+            textRect.origin.x = startPoint.x;
+            textRect.size.width = where.x - startPoint.x;
+        }
+        else {
+            textRect.origin.x = where.x;
+            textRect.size.width = startPoint.x - where.x;
+        }
+
+        if (startPoint.y < where.y) {
+            textRect.origin.y = startPoint.y;
+            textRect.size.height = where.y - startPoint.y;
+        }
+        else {
+            textRect.origin.y = where.y;
+            textRect.size.height = startPoint.y - where.y;
+        }
+
+        [self textRectChanged:IntSumRects(old,textRect)];
     } else {
-        // copy background for proper anti-aliasing
-        for (j = 0; j < fontSize.height; j++) {
-            for (i = 0; i < fontSize.width; i++) {
-                int dy = pos.y + j;
-                int dx = pos.x + i;
-                if (dy>=0 && dy < height && dx>=0 && dx < width) {
-                    for (k = 0; k < spp; k++)
-                        initData[(j * fontSize.width + i) * spp + k] = data[((dy) * width + dx) * spp + k];
-                }
-                else {
-                    for (k = 0; k < spp; k++)
-                        initData[(j * fontSize.width + i) * spp + k] = 0;
-                }
+        if(translating){
+            int xoff = where.x-moveOrigin.x;
+            int yoff = where.y-moveOrigin.y;
+
+            [self setTextRect:IntMakeRect(textRect.origin.x +xoff,textRect.origin.y + yoff,textRect.size.width,textRect.size.height)];
+            moveOrigin = where;
+        } else {
+            if(draggedRect.size.width < 0){
+                draggedRect.origin.x += draggedRect.size.width;
+                draggedRect.size.width *= -1;
             }
+
+            if(draggedRect.size.height < 0){
+                draggedRect.origin.y += draggedRect.size.height;
+                draggedRect.size.height *= -1;
+            }
+            [self setTextRect:draggedRect];
         }
     }
-    
-	// Draw the text
-	initRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&initData pixelsWide:fontSize.width pixelsHigh:fontSize.height bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace bytesPerRow:fontSize.width * spp bitsPerPixel:8 * spp];
-    
-    [NSGraphicsContext saveGraphicsState];
-    NSGraphicsContext *ctx = [NSGraphicsContext graphicsContextWithBitmapImageRep:initRep];
-    ctx.shouldAntialias=TRUE;
-    [NSGraphicsContext setCurrentContext:ctx];
-    
-    unpremultiplyBitmap(spp,initData,initData,fontSize.width*fontSize.height);
 
-    [text drawInRect:NSMakeRect(slantWidth, 0.0, fontSize.width - slantWidth, fontSize.height) withAttributes:attributes];
-    
-    [NSGraphicsContext restoreGraphicsState];
-    
-    if(!preview && [options shouldAddTextAsNewLayer]){
-        r.rect = IntMakeRect(pos.x,pos.y,fontSize.width,fontSize.height);
-        r.data = initData;
-        return r;
-    }
-    
-    bitmapData = initData;
-
-	// Go through all pixels and change them
-	basePixel[spp - 1] = 0xFF;
-	for (j = 0; j < fontSize.height; j++) {
-		for (i = 0; i < fontSize.width; i++) {
-			if (pos.x + i >= 0 && pos.y + j >= 0 && pos.x + i < width && pos.y + j < height) {
-				for (k = 0; k < spp; k++)
-					overlay[((pos.y + j) * width + pos.x + i) * spp + k] = bitmapData[(j * fontSize.width + i) * spp + k];
-				
-                replace[(pos.y + j) * width + pos.x + i] = 255;
-			}
-		}
-	}
-	free(initData);
-    
-    r.rect = IntConstrainRect(IntMakeRect(pos.x, pos.y, fontSize.width, fontSize.height),IntMakeRect(0,0,width,height));
-    r.data = NULL;
-    return r;
 }
 
-- (IBAction)apply:(id)sender
-{	
-	// End the panel
-	if (sender != NULL) {
-		[NSApp stopModal];
-		[NSApp endSheet:panel];
-		[panel orderOut:self];
-	}
-	running = NO;
+- (IBAction)mergeWithLayer:(id)sender {
+    CGContextRef ctx = [[document whiteboard] overlayCtx];
+    CGContextSaveGState(ctx);
+    SeaLayer *layer = [[document contents] activeLayer];
+    CGContextTranslateCTM(ctx,-[layer xoff],-[layer yoff]);
+    [self drawText:ctx];
+    CGContextRestoreGState(ctx);
+
+    [[document whiteboard] setOverlayOpacity:255];
+    [[document whiteboard] setOverlayBehaviour:kNormalBehaviour];
+    [[document helpers] overlayChanged:[layer translateView:textRect]];
+    [[document helpers] applyOverlay];
+
+    [options reset];
+    [self clearTextRect];
+}
+
+- (IBAction)addAsNewLayer:(id)sender {
+    IntRect r = [self textRect];
+    int spp = [[document contents] spp];
+    unsigned char *data = calloc(r.size.width*r.size.height,spp);
+    CGContextRef ctx = CGBitmapContextCreate(data, r.size.width, r.size.height, 8, r.size.width*spp, COLOR_SPACE, kCGImageAlphaPremultipliedLast);
+    CGContextTranslateCTM(ctx, 0, r.size.height);
+    CGContextScaleCTM(ctx, 1, -1);
+    CGContextTranslateCTM(ctx, -r.origin.x, -r.origin.y);
+    [self drawText:ctx];
+
+    SeaLayer *layer = [[SeaLayer alloc] initWithDocument:document rect:r data:data spp:[[document contents] spp]];
+    free(data);
+
+    NSString *text = [options text];
+
+    NSMutableString *name = [[NSMutableString alloc] initWithString:text];
+    for(int i=0;i<[name length];i++) {
+        if([name characterAtIndex:i]<=32){
+            [name replaceCharactersInRange:NSMakeRange(i,1) withString:@"."];
+        }
+    }
+    [layer setName:name];
+    [[document contents] addLayerObject:layer];
     
-    [[document whiteboard] clearOverlay];
-    if ([[[textbox textStorage] string] length] <= 0) {
+    [options reset];
+    [self clearTextRect];
+}
+
+- (void)mouseUpAt:(IntPoint)where withEvent:(NSEvent *)event
+{
+    [self mouseDraggedTo:where withEvent:event];
+
+    scalingDir = kNoDir;
+    translating = NO;
+    intermediate = NO;
+
+    [options activate:document];
+
+    [[document helpers] selectionChanged];
+}
+
+- (void)changeFont:(id)sender
+{
+    [options changeFont:sender];
+}
+
+- (IntRect)textRect
+{
+    return textRect;
+}
+
+- (void)clearTextRect
+{
+    textRect.size.width = textRect.size.height = 0;
+    [[document helpers] selectionChanged];
+}
+
+- (void)setTextRect:(IntRect)newTextRect
+{
+    IntRect old = textRect;
+    textRect = newTextRect;
+    [self textRectChanged:IntSumRects(old,textRect)];
+}
+
+- (void)drawText:(CGContextRef)ctx
+{
+    NSString *text = [options text];
+
+    if(IntRectIsEmpty(textRect))
+        return;
+
+    NSRect r = IntRectMakeNSRect(textRect);
+
+    id activeTexture = [[document textureUtility] activeTexture];
+
+    int outline = [options outline];
+    float lineSpacing = [options lineSpacing];
+    int spp = [[document contents] spp];
+
+    NSColor *color;
+    if ([options useTextures])
+        color = [activeTexture textureAsNSColor:(spp == 4)];
+    else
+        color = [[document contents] foreground];
+
+    id fontManager = [NSFontManager sharedFontManager];
+
+    NSFont *font = [fontManager selectedFont];
+    if (font == NULL) {
         return;
     }
-    
-    result r = [self drawOverlay:NO];
-    
-    if(r.data!=NULL){
-        NSString *text = [[textbox textStorage] string];
-        SeaLayer *activeLayer = [[document contents] activeLayer];
-        r.rect = IntOffsetRect(r.rect,[activeLayer xoff],[activeLayer yoff]);
-         
-        SeaLayer *layer = [[SeaLayer alloc] initWithDocument:document rect:r.rect data:r.data spp:[[document contents] spp]];
-        free(r.data);
-        
-        NSMutableString *name = [[NSMutableString alloc] initWithString:text];
-        for(int i=0;i<[name length];i++) {
-            if([name characterAtIndex:i]<=32){
-                [name replaceCharactersInRange:NSMakeRange(i,1) withString:@"."];
-            }
-        }
-        [layer setName:name];
-        [[document contents] addLayerObject:layer];
-    } else {
-        if(r.rect.size.height<=0 || r.rect.size.width<=0)
-            return;
-        // Apply the changes into the current layer
-        [[document helpers] applyOverlay];
-    }
-}
 
-- (IBAction)cancel:(id)sender
-{
-	// End the panel
-	[[document whiteboard] clearOverlay];
-	if (previewRect.size.width != 0) {
-		[[document helpers] overlayChanged:previewRect];
-	}
-	running = NO;
-	[NSApp stopModal];
-	[NSApp endSheet:panel];
-	[panel orderOut:self];
-}
+    float size = [font pointSize];
 
-- (IBAction)preview:(id)sender
-{
-	// Apply the changes
-	if (running) {
-        IntRect oldRect = previewRect;
-		[[document whiteboard] clearOverlay];
-		if ([[[textbox textStorage] string] length] > 0) {
-            result r = [self drawOverlay:YES];
-            previewRect = r.rect;
-		}
-        IntRect dirty = previewRect;
-        if(oldRect.size.height>0 || oldRect.size.width>0)
-            dirty = IntSumRects(dirty,oldRect);
-        [[document helpers] overlayChanged:dirty];
-	}
-}
+    font = [NSFont fontWithDescriptor:[font fontDescriptor] size:size];
 
-- (IBAction)showFonts:(id)sender
-{
-	[fontManager orderFrontFontPanel:self];
-}
+    NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
 
-- (void)textDidChange:(NSNotification *)notification
-{
-	[self preview:notification];
-}
+    NSMutableParagraphStyle *paraStyle = [[NSMutableParagraphStyle alloc] init];
+    [paraStyle setAlignment:[options alignment]];
+    [paraStyle setLineHeightMultiple:lineSpacing];
 
-- (IBAction)move:(id)sender
-{
-	[NSApp stopModal];
-	[NSApp endSheet:panel];
-	[panel orderOut:self];
-	[NSApp beginSheet:movePanel modalForWindow:[document window] modalDelegate:NULL didEndSelector:NULL contextInfo:NULL];
-}
+    [attrs setValue:paraStyle forKey:NSParagraphStyleAttributeName];
+    [attrs setValue:font forKey:NSFontAttributeName];
+    [attrs setValue:color forKey:NSForegroundColorAttributeName];
 
-- (IBAction)doneMove:(id)sender
-{
-	[NSApp stopModal];
-	[NSApp endSheet:movePanel];
-	[movePanel orderOut:self];
-	[self apply:NULL];
-}
+    if(outline)
+        [attrs setValue:[NSNumber numberWithInt:outline] forKey:NSStrokeWidthAttributeName];
 
-- (IBAction)cancelMove:(id)sender
-{
-	[NSApp stopModal];
-	[NSApp endSheet:movePanel];
-	[movePanel orderOut:self];
-	[NSApp beginSheet:panel modalForWindow:[document window] modalDelegate:NULL didEndSelector:NULL contextInfo:NULL];
-}
-
-- (void)setNudge:(IntPoint)nudge
-{
-	where.x += nudge.x;
-	where.y += nudge.y;
-	[self preview:NULL];
-}
-
-- (void)centerHorizontally
-{
-	IntSize fontSize;
-	NSDictionary *attributes;
-	NSString *text;
-	int width;
-	id layer;
-	
-	layer = [[document contents] activeLayer];
-	attributes = [NSDictionary dictionaryWithObjectsAndKeys:[fontManager selectedFont], NSFontAttributeName, NULL];
-	text = [[textbox textStorage] string];
-	fontSize = NSSizeMakeIntSize([text sizeWithAttributes:attributes]);
-	width = [(SeaLayer *)layer width];
-	where.x = width / 2 - fontSize.width / 2;
-	[self preview:NULL];
-}
-
-- (void)centerVertically
-{
-	IntSize fontSize;
-	NSDictionary *attributes;
-	NSString *text;
-	int height;
-	id layer, font;
-	
-	layer = [[document contents] activeLayer];
-	font = [fontManager selectedFont];
-	attributes = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, NULL];
-	text = [[textbox textStorage] string];
-	fontSize = NSSizeMakeIntSize([text sizeWithAttributes:attributes]);
-	height = [(SeaLayer *)layer height];
-	where.y = height / 2 + [font ascender] - fontSize.height / 2;
-	[self preview:NULL];
+    NSGraphicsContext *old = [NSGraphicsContext currentContext];
+    NSGraphicsContext *gctx = [NSGraphicsContext graphicsContextWithCGContext:ctx flipped:TRUE];
+    [NSGraphicsContext setCurrentContext:gctx];
+    NSRectClip(r);
+    NSAffineTransform *tf = [NSAffineTransform transform];
+    [tf translateXBy:0 yBy:([font xHeight] * lineSpacing)];
+    [tf concat];
+    [text drawInRect:r withAttributes:attrs];
+    [NSGraphicsContext setCurrentContext:old];
 }
 
 - (AbstractOptions*)getOptions
@@ -344,5 +279,12 @@ typedef struct {
     options = (TextOptions*)newoptions;
 }
 
+- (void)updateCursor:(IntPoint)p cursors:(SeaCursors *)cursors
+{
+    if(!IntRectIsEmpty(textRect)){
+        return [cursors handleRectCursors:textRect point:p cursor:[NSCursor IBeamCursor]];
+    }
+    [[NSCursor IBeamCursor] set];
+}
 
 @end

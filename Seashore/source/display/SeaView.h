@@ -1,5 +1,8 @@
-#import "Globals.h"
+#import "Seashore.h"
 #import "SeaCursors.h"
+#import "SeaBackground.h"
+#import "SeaExtrasView.h"
+#import "SeaWhiteboard.h"
 
 /*!
 	@enum		k...HandleType
@@ -25,7 +28,8 @@ enum {
 	kGradientStartType,
 	kGradientEndType,
 	kPolygonalLassoType,
-	kPositionType
+	kPositionType,
+    kTextHandleType
 };
 
 /*!
@@ -46,70 +50,31 @@ enum {
 	// The cursors manager for this view
 	SeaCursors* cursorsManager;
 	
-	// The current zoom of the view
-	float zoom;
-
 	// Is this a line draw? (sent to mouseDragged methods)
 	BOOL lineDraw;
 	
-	// Is scrolling mode active?
-	BOOL scrollingMode;
-	
-	// Is the mouse down during scrolling?
-	BOOL scrollingMouseDown;
-	
 	// Is scaling mode active
 	int scalingMode;
-	
-	// The scroll timer
-	NSTimer* scrollTimer;
-	
+
 	// The magnify timer
 	NSTimer* magnifyTimer;
-		
+
 	// Is the tablet eraser active?
 	// 0 = No; 1 = Yes, activated through sub-events, 2 = Yes, activated through native events.
 	int tabletEraser;
-	
-	// Last scroll point
-	NSPoint lastScrollPoint;
-	
+
 	// The change in the cursor position
 	IntPoint delta;
 	IntPoint initialPoint;
-	
-	// The units used for the ruler
-	int rulerUnits;
-	
-	// The horizontal ruler
-	NSRulerView *horizontalRuler;
-	
-	// The vertical ruler
-	NSRulerView *verticalRuler;
-	
-	// The vertical ruler marker
-	NSRulerMarker *vMarker;
-	
-	// The horizontal ruler marker
-	NSRulerMarker *hMarker;
-	
-	// The vertical stationary ruler marker
-	NSRulerMarker *vStatMarker;
-	
-	// The horizontal stationary ruler marker
-	NSRulerMarker *hStatMarker;
-	
+
 	// The mouse down location
 	NSPoint mouseDownLoc;
 	
 	// The last active layer point
-	IntPoint lastActiveLayerPoint;
+	IntPoint lastLocalPoint;
 
 	// Was the key up last time?
 	BOOL keyWasUp;
-
-	// The time of the last ruler update
-	NSDate *lastRulerUpdate;
 
 	// Memorize the previous tool for a temporary eyedrop selection
 	int eyedropToolMemory;
@@ -119,6 +84,13 @@ enum {
 
 	// The amount we've magnified it the time
 	float magnifyFactor;
+
+    NSImage *checkerboard;
+    NSImage *checkerboard_dark;
+
+    SeaBackground *background;
+    SeaWhiteboard *whiteboard;
+    SeaExtrasView *extrasView;
 }
 
 /*!
@@ -130,27 +102,7 @@ enum {
 */
 - (id)initWithDocument:(id)doc;
 
-/*!
-	@method		changeSpecialFont:
-	@discussion	Responds to a font change by fowarding the message to the
-				text tool.
-	@param		sender
-				Ignored.
-*/
-- (IBAction)changeSpecialFont:(id)sender;
-
-/*!
-	@method		needsCursorsReset
-	@discussion Informs the view that the cursors will need to reset
-*/
-- (void)needsCursorsReset;
-
-/*!
-	@method		resetCursorRects
-	@discussion	Sets the current cursor for the view (this is an overridden
-				method).
-*/
-- (void)resetCursorRects;
+- (IBAction)changeFont:(id)sender;
 
 /*!
 	@method		canZoomIn
@@ -181,6 +133,13 @@ enum {
                 Ignored.
 */
 - (IBAction)zoomToFit:(id)sender;
+
+/*!
+ @method        zoomToFitRect:
+ @discussion    Sets the zoom to fill the content with the rect
+ Ignored.
+ */
+- (IBAction)zoomToFitRect:(IntRect)rect;
 
 /*!
 	@method		zoomIn:
@@ -231,78 +190,6 @@ enum {
 - (float)zoom;
 
 /*!
-	@method		drawRect:
-	@discussion	Draws the contents of the view within the given rectangle.
-	@param		rect
-				The rectangle containing the contents to be drawn.
-*/
-- (void)drawRect:(NSRect)rect;
-
-/*!
- @method		drawSelectBoundaries
- @discussion	Draws the selection boundaries both of currerent selection mask (with the proper shading) and of the marching ants for selections that are in the process of being created.
-*/
-- (void)drawSelectBoundaries;
-
-/*!
- @method		drawDragHandles:type:
- @discussion	Draws the proper type of resize drag handles onto the given rectangle. 
- @param			rect
-				The rectangle of that the handles are drawn for. A handle will be placed at each of the four corners and at the midpoints of the sides of this rectangle.
- @param			type
-				An element of HandleType enum that describes the appearance of the handles.
-*/
-- (void)drawDragHandles:(NSRect) rect type: (int)type;
-
-/*!
- @method		drawHandles:type:
- @discussion	Draws the proper type of resize of a drag handle onto the given point. 
- @param			origin
-				The center point of where the handle should be drawn.
- @param			type
-				An element of HandleType enum that describes the appearance of the handle.
- @param			index
-				If the handles are part of a rect, the order of the handle.
-				If the handle is not part of a rect use -1
-*/
-- (void)drawHandle:(NSPoint) origin  type: (int)type index:(int)index;
-
-/*!
- @method		drawCropBoundaries
- @discussion	Draws the boundaries for the crop rectangle.
-*/
-- (void)drawCropBoundaries;
-
-/*!
- @method		drawBoundaries
- @discussion	Draws either the crop or selection boundaries.
-*/
-- (void)drawBoundaries;
-
-/*!
- @method		drawExtras
- @discussion	Draws additional components besides the selection and crop rects and handles into the view.
-*/
-- (void)drawExtras;
-
-/*!
-	@method		checkMouseTracking
-	@discussion	Checks to see whether mouse tracking is needed and enables or
-				disables it as a result.
-*/
-- (void)checkMouseTracking;
-
-/*!
-	@method		updateRulerMarkings:andStationary:
-	@discussion	Updates the ruler markings including the stationary ones.
-	@param		mouseLocation
-				The mouse location.
-	@param		statLocation
-				The mouse location corresponding to the stationary markers.
-*/
-- (void)updateRulerMarkings:(NSPoint)mouseLocation andStationary:(NSPoint)statLocation;
-
-/*!
 	@method		mouseMoved:
 	@discussion	Handles mouse movements inside the view by sending a mouseMoved
 				message to the SeaHelpers.
@@ -323,12 +210,8 @@ enum {
 	@method		readjust
 	@discussion	Updates the size of the view to accomodate a change in the
 				document size.
-	@param		scaling
-				YES if the readjustment is being done due to scaling, NO
-				otherwise. (The impact of this value is minor it simply affects
-				the clipped view's position after the readjustment).
 */
-- (void)readjust:(BOOL)scaling;
+- (void)readjust;
 
 /*!
 	@method		tabletProximity:
@@ -430,20 +313,6 @@ enum {
 - (void)keyUp:(NSEvent *)theEvent;
 
 /*!
-	@method		autoScroll:
-	@discussion	Scrolls the document when the user has dragged the pointer outside the view
-	@param		theTimer
-				The timer that called the scroll event
-*/
-- (void)autoScroll:(NSTimer *)theTimer;
-
-/*!
-	@method		clearScrollingMode
-	@discussion	Clears scrolling mode.
-*/
-- (void)clearScrollingMode;
-
-/*!
 	@method		clearMagnifySum:
 	@discussion	Needed because we don't have discreet magnification, so we need 
 				to tally up events (in this case in intervals of 0.1 seconds) and then
@@ -542,7 +411,7 @@ enum {
     @param      invalidRect
                 the rect to be refreshed in documen coordinates
  */
--(void)setNeedsDisplayInDocumentRect:(IntRect)invalidRect;
+-(void)setNeedsDisplayInDocumentRect:(IntRect) invalidRect : (int)scaledArea;
 
 /*!
 	@method		draggingEntered
@@ -562,18 +431,6 @@ enum {
 	@result		Returns YES if the operation was successful, NO otherwise.
 */
 - (BOOL)performDragOperation:(id)sender;
-
-/*!
-	@method		updateRulersVisiblity
-	@discussion	Updates whether the rulers are visible.
-*/
-- (void)updateRulersVisiblity;
-
-/*!
-	@method		updateRulers
-	@discussion	Updates the rulers to match the current unit settings.
-*/
-- (void)updateRulers;
 
 /*!
 	@method		isFlipped
@@ -619,4 +476,5 @@ enum {
 */
 - (BOOL)validateMenuItem:(id)menuItem;
 
+- (SeaExtrasView*)extrasView;
 @end

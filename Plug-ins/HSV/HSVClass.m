@@ -1,9 +1,5 @@
 #import "HSVClass.h"
 
-#define gOurBundle [NSBundle bundleForClass:[self class]]
-
-#define gUserDefaults [NSUserDefaults standardUserDefaults]
-
 @implementation HSVClass
 
 static inline void RGBtoHSV(int *ir, int *ig, int *ib)
@@ -129,12 +125,18 @@ static inline void HSVtoRGB(int *ih, int *is, int *iv)
 - (id)initWithManager:(PluginData *)data
 {
 	pluginData = data;
-	[NSBundle loadNibNamed:@"HSV" owner:self];
-	
+
+    panel = [VerticalView view];
+    hue = [SeaSlider sliderWithTitle:@"Hue" Min:-1 Max:1 Listener:self];
+    saturation = [SeaSlider sliderWithTitle:@"Saturation" Min:-1 Max:1 Listener:self];
+    value = [SeaSlider sliderWithTitle:@"Value" Min:-1 Max:1 Listener:self];
+
+    [panel addSubviews:hue,saturation,value,nil];
+
 	return self;
 }
 
-- (int)type
+- (int)points
 {
 	return 0;
 }
@@ -154,99 +156,35 @@ static inline void HSVtoRGB(int *ih, int *is, int *iv)
 	return @"Seashore Approved (Bobo)";
 }
 
-- (void)run
+- (NSView*)initialize
 {
-	refresh = NO;
-	
-	hue = saturation = value = 0.0;
-	
-	[hueLabel setStringValue:[NSString stringWithFormat:@"%.2f", hue]];
-	[saturationLabel setStringValue:[NSString stringWithFormat:@"%.2f", saturation]];
-	[valueLabel setStringValue:[NSString stringWithFormat:@"%.2f", value]];
-	
-	[hueSlider setFloatValue:hue];
-	[saturationSlider setFloatValue:saturation];
-	[valueSlider setFloatValue:value];
-	
-	success = NO;
-	[self preview:self];
-	if ([pluginData window])
-		[NSApp beginSheet:panel modalForWindow:[pluginData window] modalDelegate:NULL didEndSelector:NULL contextInfo:NULL];
-	else
-		[NSApp runModalForWindow:panel];
-	// Nothing to go here
+    [hue setFloatValue:UserFloatDefault(@"HSV.hue",0.0)];
+    [saturation setFloatValue:UserFloatDefault(@"HSV.saturation",0.0)];
+    [value setFloatValue:UserFloatDefault(@"HSV.value",0.0)];
+
+    return panel;
 }
 
 - (IBAction)apply:(id)sender
 {
-	if (refresh) [self adjust];
-	[pluginData apply];
-	
-	[panel setAlphaValue:1.0];
-	
-	[NSApp stopModal];
-	if ([pluginData window]) [NSApp endSheet:panel];
-	[panel orderOut:self];
-	success = YES;
+    [gUserDefaults setFloat:[hue floatValue] forKey:@"HSV.hue"];
+    [gUserDefaults setFloat:[saturation floatValue] forKey:@"HSV.saturation"];
+    [gUserDefaults setFloat:[value floatValue] forKey:@"HSV.intensity"];
 }
 
-- (void)reapply
+- (IBAction)componentChanged:(id)sender
 {
-	[self adjust];
-	[pluginData apply];
-}
-
-- (BOOL)canReapply
-{
-	return success;
-}
-
-- (IBAction)preview:(id)sender
-{
-	if (refresh) [self adjust];
-	[pluginData preview];
-	refresh = NO;
-}
-
-- (IBAction)cancel:(id)sender
-{
-	[pluginData cancel];
-	
-	[panel setAlphaValue:1.0];
-	
-	[NSApp stopModal];
-	[NSApp endSheet:panel];
-	[panel orderOut:self];
-	success = NO;
-}
-
-- (IBAction)update:(id)sender
-{
-	hue = [hueSlider floatValue];
-	saturation = [saturationSlider floatValue];
-	value = [valueSlider floatValue];
-	
-	[hueLabel setStringValue:[NSString stringWithFormat:@"%.2f", hue]];
-	[saturationLabel setStringValue:[NSString stringWithFormat:@"%.2f", saturation]];
-	[valueLabel setStringValue:[NSString stringWithFormat:@"%.2f", value]];
-	
-	[panel setAlphaValue:1.0];
-	refresh = YES;
-	if ([[NSApp currentEvent] type] == NSLeftMouseUp) {
-		[self preview:self];
-		if ([pluginData window]) [panel setAlphaValue:0.4];
-	}
+    [pluginData settingsChanged];
 }
 
 static inline unsigned char CLAMP(int x) { return (x < 0) ? 0 : ((x > 255) ? 255 : x); }
 static inline unsigned char WRAPAROUND(int x) { return (x < 0) ? (255 + ((x + 1) % 255)) : ((x > 255) ? (x % 255) : x); }
 
-- (void)adjust
+- (void)execute
 {
 	IntRect selection;
-	int spp, i, j, k, width, channel, pos;
+	int spp, i, j, width, channel, pos;
 	unsigned char *data, *overlay, *replace;
-	double power;
 	int r, g, b;
 	
 	[pluginData setOverlayOpacity:255];
@@ -258,7 +196,11 @@ static inline unsigned char WRAPAROUND(int x) { return (x < 0) ? (255 + ((x + 1)
 	data = [pluginData data];
 	overlay = [pluginData overlay];
 	replace = [pluginData replace];
-	
+
+    float h = [hue floatValue];
+    float s = [saturation floatValue];
+    float v = [value floatValue];
+
 	for (j = selection.origin.y; j < selection.origin.y + selection.size.height; j++) {
 		for (i = selection.origin.x; i < selection.origin.x + selection.size.width; i++) {
 		
@@ -268,9 +210,9 @@ static inline unsigned char WRAPAROUND(int x) { return (x < 0) ? (255 + ((x + 1)
 			b = data[pos + 2];
 			overlay[pos + 3] = data[pos + 3];
 			RGBtoHSV(&r, &g, &b);
-			r = WRAPAROUND(r + (int)(hue * 255.0));
-			g = CLAMP(g + (int)(saturation * 255.0));
-			b = CLAMP(b + (int)(value * 255.0));
+			r = WRAPAROUND(r + (int)(h * 255.0));
+			g = CLAMP(g + (int)(s * 255.0));
+			b = CLAMP(b + (int)(v * 255.0));
 			HSVtoRGB(&r, &g, &b);
 			overlay[pos] = (unsigned char)r;
 			overlay[pos + 1] = (unsigned char)g;

@@ -1,4 +1,4 @@
-#import "Globals.h"
+#import "Seashore.h"
 
 
 @protocol SeaTerminate
@@ -31,14 +31,14 @@
 	// An outlet to the help manager of the application
 	IBOutlet id seaHelp;
 
-	// An outlet to the warning manager of the application
-	IBOutlet id seaWarning;
-	
 	// The window containing the GNU General Public License
 	IBOutlet id licenseWindow;
 	
     IBOutlet id seaColorProfiles;
-    
+
+    IBOutlet id seaSupport;
+
+    IBOutlet id seaWhatsNew;
     // An array of objects wishing to recieve the terminate message
 	NSArray<SeaTerminate> *terminationObjects;
 
@@ -88,11 +88,10 @@
 + (id)seaHelp;
 
 /*!
-	@method		seaWarning
-	@discussion	A class method that returns the object of the same name.
-	@result		Returns the instance of SeaWarning.
-*/
-+ (id)seaWarning;
+ @method        seaSupport
+ @result        Returns the instance of SeaSupport.
+ */
++ (id)seaSupport;
 
 /*!
 	@method		revert:
@@ -118,6 +117,15 @@
 				Ignored.
 */
 - (IBAction)showLicense:(id)sender;
+
+/*!
+ @method        showWhatsNew
+ @discussion    Shows the What's New & Tips  for Seashore.
+ @param        sender
+ Ignored.
+ */
+
+- (IBAction)showWhatsNew:(id)sender;
 
 /*!
 	@method		newDocumentFromPasteboard:

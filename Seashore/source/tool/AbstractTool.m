@@ -6,6 +6,8 @@
 #import "AbstractOptions.h"
 #import "SeaDocument.h"
 #import "SeaContent.h"
+#import "SeaSelection.h"
+#import "SeaLayer.h";
 
 @implementation AbstractTool
 
@@ -50,27 +52,35 @@
 {
 }
 
-- (void)fineMouseDownAt:(NSPoint)where withEvent:(NSEvent *)event;
-{
-}
-
-- (void)fineMouseDraggedTo:(NSPoint)where withEvent:(NSEvent *)event;
-{
-}
-
-- (void)fineMouseUpAt:(NSPoint)where withEvent:(NSEvent *)event;
-{
-}
-
-- (BOOL)isFineTool
-{
-	return NO;
-}
-
 - (BOOL) intermediate
 {
 	return intermediate;
 }
 
+- (void) switchingTools:(BOOL)active
+{
+}
+
+- (void)endLineDrawing
+{
+}
+
+- (void)updateCursor:(IntPoint)p cursors:(SeaCursors*)cursors
+{
+    if(!IntPointInRect(p, [[[document contents] activeLayer] globalRect])) {
+        [[cursors noopCursor] set];
+        return;
+    }
+    if(![[document selection] inSelection:p]){
+        [[cursors noopCursor] set];
+        return;
+    }
+    [[self toolCursor:cursors] set];
+}
+
+- (NSCursor*)toolCursor:(SeaCursors*)cursors
+{
+    return [cursors crosspointCursor];
+}
 
 @end

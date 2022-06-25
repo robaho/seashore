@@ -1,4 +1,4 @@
-#import "Globals.h"
+#import "Seashore.h"
 
 /*!
 	@class		StatusUtility
@@ -10,9 +10,11 @@
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli	
 */
 
+@class SeaDocument;
+
 @interface StatusUtility : NSObject {
 	// The document that owns the utility
-	__weak IBOutlet id document;
+	__weak IBOutlet SeaDocument *document;
 	
 	// The pop-up men that reflect the currently active channel
 	IBOutlet id channelSelectionPopup;
@@ -70,12 +72,12 @@
 - (void)updateZoom;
 
 /*!
-	@method		changeChannel:
-	@discussion	Called when the user wants to change the channels.
-	@param		sender
-				Must be the button sending the event.
-*/
-- (IBAction)changeChannel:(id)sender;
+ @method        channelClicked:
+ @discussion    Called when the user has clicked the channels button.
+ @param        sender
+ Must be the menu item sending the event.
+ */
+- (IBAction)channelClicked:(id)sender;
 
 /*!
 	@method		channelChanged:

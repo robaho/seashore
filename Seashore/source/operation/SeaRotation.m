@@ -10,20 +10,14 @@
 #import "SeaLayerUndo.h"
 #import "SeaRotation.h"
 
+@implementation RotationUndoRecord
+@end
+
 @implementation SeaRotation
 
 - (id)init
 {
-	undoMax = kNumberOfRotationRecordsPerMalloc;
-	undoRecords = malloc(undoMax * sizeof(RotationUndoRecord));
-	undoCount = 0;
-	
 	return self;
-}
-
-- (void)dealloc
-{
-	free(undoRecords);
 }
 
 - (void)run
@@ -33,10 +27,7 @@
 
 	// Fill out the selection label
 	layer = [contents layer:[contents activeLayerIndex]];
-	if ([layer floating])
-		[selectionLabel setStringValue:LOCALSTR(@"floating", @"Floating Selection")];
-	else
-		[selectionLabel setStringValue:[NSString stringWithFormat:@"%@", [layer name]]];
+    [selectionLabel setStringValue:[NSString stringWithFormat:@"%@", [layer name]]];
 	
 	// Set the initial values
 	[rotateValue setStringValue:@"0"];
@@ -48,8 +39,7 @@
 - (IBAction)apply:(id)sender
 {
 	id contents = [document contents];
-	id layer = NULL;
-	
+
 	// End the sheet
     [sheet makeFirstResponder:sender];
 	[NSApp endSheet:sheet];
@@ -57,8 +47,7 @@
 
 	// Rotate the image
 	if ([rotateValue floatValue] != 0) {
-		layer = [contents layer:[contents activeLayerIndex]];
-		[self rotate:[rotateValue floatValue] withTrim:[layer floating]];
+		[self rotate:[rotateValue floatValue] withTrim:FALSE];
 	}
 }
 
@@ -86,79 +75,65 @@ static inline float mod_float(float value, float divisor)
 {
 	id contents = [document contents];
 	id activeLayer = [contents activeLayer];
-	RotationUndoRecord undoRecord;
-	
-	// Only rotate
-	if (degrees > 0) degrees = 360 - mod_float(degrees, 360);
-	else degrees = mod_float(degrees, 360);
+
+    RotationUndoRecord* undoRecord = [[RotationUndoRecord alloc] init];
+
+    if(degrees>0)
+        degrees = mod_float(degrees, 360);
+    else
+        degrees = 360 - mod_float(degrees,360);
 	if (degrees == 0.0)
 		return;
 
 	// Record the undo details
-	undoRecord.index =  [contents activeLayerIndex];
-	undoRecord.rotation = degrees;
-	undoRecord.undoIndex = [[activeLayer seaLayerUndo] takeSnapshot:IntMakeRect(0, 0, [(SeaLayer *)activeLayer width], [(SeaLayer *)activeLayer height]) automatic:NO];
-	undoRecord.rect = IntMakeRect([activeLayer xoff], [activeLayer yoff], [(SeaLayer *)activeLayer width], [(SeaLayer *)activeLayer height]);
-	undoRecord.isRotated = YES;
-	undoRecord.withTrim = trim;
-	[[[document undoManager] prepareWithInvocationTarget:self] undoRotation:undoCount];
+	undoRecord->index =  [contents activeLayerIndex];
+	undoRecord->rotation = degrees;
+	undoRecord->snapshot = [[activeLayer seaLayerUndo] takeSnapshot:IntMakeRect(0, 0, [(SeaLayer *)activeLayer width], [(SeaLayer *)activeLayer height]) automatic:NO];
+	undoRecord->rect = IntMakeRect([activeLayer xoff], [activeLayer yoff], [(SeaLayer *)activeLayer width], [(SeaLayer *)activeLayer height]);
+	undoRecord->isRotated = YES;
+	undoRecord->withTrim = trim;
+	[[[document undoManager] prepareWithInvocationTarget:self] undoRotation:undoRecord];
 	[activeLayer setRotation:degrees interpolation:NSImageInterpolationHigh withTrim:trim];
 	[[document selection] clearSelection];
 	if (!trim && ![activeLayer hasAlpha]) {
-		undoRecord.disableAlpha = YES;
+		undoRecord->disableAlpha = YES;
 		[activeLayer toggleAlpha];
 	}
 	else {
-		undoRecord.disableAlpha = NO;
+		undoRecord->disableAlpha = NO;
 	}
 	[[document helpers] layerBoundariesChanged:kActiveLayer];
-
-	// Allow the undo
-	if (undoCount + 1 > undoMax) {
-		undoMax += kNumberOfRotationRecordsPerMalloc;
-		undoRecords = realloc(undoRecords, undoMax * sizeof(RotationUndoRecord));
-	}
-	undoRecords[undoCount] = undoRecord;
-	undoCount++;
 }
 
-- (void)undoRotation:(int)undoIndex
+- (void)undoRotation:(RotationUndoRecord*)undoRecord
 {
 	id contents = [document contents];
-	RotationUndoRecord undoRecord;
-	id layer;
+	SeaLayer *layer;
 	
 	// Prepare for redo
-	[[[document undoManager] prepareWithInvocationTarget:self] undoRotation:undoIndex];
-	
-	// Get the undo record
-	undoRecord = undoRecords[undoIndex];
+	[[[document undoManager] prepareWithInvocationTarget:self] undoRotation:undoRecord];
 	
 	// Behave differently depending on whether things are already rotated
-	if (undoRecord.isRotated) {
-	
+	if (undoRecord->isRotated) {
 		// If already rotated...
-		layer = [contents layer:undoRecord.index];
-		[layer setOffsets:IntMakePoint(undoRecord.rect.origin.x, undoRecord.rect.origin.y)];
-		[layer setMarginLeft:0 top:0 right:undoRecord.rect.size.width - [(SeaLayer *)layer width] bottom:undoRecord.rect.size.height - [(SeaLayer *)layer height]];
-		[[layer seaLayerUndo] restoreSnapshot:undoRecord.undoIndex automatic:NO];
-		if (undoRecord.withTrim) [[document selection] selectOpaque];
+		layer = [contents layer:undoRecord->index];
+		[layer setOffsets:IntMakePoint(undoRecord->rect.origin.x, undoRecord->rect.origin.y)];
+		[layer setMarginLeft:0 top:0 right:undoRecord->rect.size.width - [layer width] bottom:undoRecord->rect.size.height - [layer height]];
+		[[layer seaLayerUndo] restoreSnapshot:undoRecord->snapshot automatic:NO];
+		if (undoRecord->withTrim) [[document selection] selectOpaque];
 		else [[document selection] clearSelection];
-		if (undoRecord.disableAlpha) [layer toggleAlpha];
+		if (undoRecord->disableAlpha) [layer toggleAlpha];
 		[[document helpers] layerBoundariesChanged:kActiveLayer];
-		undoRecords[undoIndex].isRotated = NO;
-		
+        undoRecord->isRotated=NO;
 	}
 	else {
-	
 		// If not rotated...
-		layer = [contents layer:undoRecord.index];
-		[layer setRotation:undoRecord.rotation interpolation:NSImageInterpolationHigh withTrim:undoRecord.withTrim];
-		if (undoRecord.withTrim) [[document selection] selectOpaque];
+		layer = [contents layer:undoRecord->index];
+		[layer setRotation:undoRecord->rotation interpolation:NSImageInterpolationHigh withTrim:undoRecord->withTrim];
+		if (undoRecord->withTrim) [[document selection] selectOpaque];
 		else [[document selection] clearSelection];
 		[[document helpers] layerBoundariesChanged:kActiveLayer];
-		undoRecords[undoIndex].isRotated = YES;
-		
+		undoRecord->isRotated = YES;
 	}
 }
 

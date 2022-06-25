@@ -11,7 +11,7 @@
 	<key>groupName</key>
 	<string>Distort</string>
 	<key>instruction</key>
-	<string>Click three times: to locate the centre of the lens, then to specify its radius and finally to specify its width.</string>
+	<string>Click twice: to locate the centre of the lens, then to specify its radius.</string>
 	<key>license</key>
 	<string>Public Domain</string>
 	<key>name</key>

@@ -1,5 +1,5 @@
-#import "Globals.h"
-#import "AbstractPaintOptions.h"
+#import <SeaLibrary/Globals.h>
+#import "BrushOptions.h"
 
 /*!
 	@class		SmudgeOptions
@@ -10,7 +10,7 @@
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
 
-@interface SmudgeOptions : AbstractPaintOptions {
+@interface SmudgeOptions : BrushOptions {
 
 	// A slider indicating the opacity of the bucket
 	IBOutlet id rateSlider;

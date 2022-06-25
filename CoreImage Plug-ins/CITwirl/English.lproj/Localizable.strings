@@ -11,7 +11,7 @@
 	<key>groupName</key>
 	<string>Distort</string>
 	<key>instruction</key>
-	<string>Click twice: first to locate the centre of the twirl and then to specify the radius of its impact.</string>
+	<string>Click twice: first to locate the centre of the twirl and then to specify the radius and angle of its impact.</string>
 	<key>license</key>
 	<string>Public Domain</string>
 	<key>name</key>

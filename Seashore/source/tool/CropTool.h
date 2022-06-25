@@ -1,4 +1,4 @@
-#import "Globals.h"
+#import "Seashore.h"
 #import "CropOptions.h"
 #import "AbstractScaleTool.h"
 
@@ -80,14 +80,6 @@
 				cropping rectangle.
 */
 - (void)adjustCrop:(IntPoint)offset;
-
-/*!
-	@method		setCropRect:
-	@discussion	Sets the cropping rectangle.
-	@param		newCropRect
-				An IntRect representing the new rectangle.
-*/
-- (void)setCropRect:(IntRect)newCropRect;
 
 
 @end

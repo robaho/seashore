@@ -8,7 +8,7 @@
 				Copyright (c) 2005 Daniel Jalkut
 */
 
-#import "Globals.h"
+#import "Seashore.h"
 
 /*!
 	@function	bucketFill
@@ -104,3 +104,5 @@ void textureFill(int spp, IntRect rect, unsigned char *data, int width, int heig
 void cloneFill(int spp, IntRect rect, unsigned char *data, unsigned char *replace, int width, int height, unsigned char *source, int sourceWidth, int sourceHeight, IntPoint spt);
 
 BOOL shouldFill(unsigned char *overlay, unsigned char *data, IntPoint seeds[], int numSeeds, IntPoint point, int width, int spp, int tolerance, int channel);
+
+void smudgeFill(int spp, int channel, IntRect rect, unsigned char *layerData, unsigned char *data, int width, int height, unsigned char *accum, unsigned char *mask, int brushWidth,int brushHeight, int rate);

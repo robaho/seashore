@@ -1,6 +1,6 @@
-#import "Globals.h"
+#import "Seashore.h"
 #import "TextOptions.h"
-#import "AbstractTool.h"
+#import "AbstractScaleTool.h"
 
 /*!
 	@class		TextTool
@@ -11,32 +11,22 @@
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
 
-@interface TextTool : AbstractTool {
+@interface TextTool : AbstractScaleTool {
 
-	// The preview panel
-	IBOutlet id panel;
-	
-	// The move panel
-	IBOutlet id movePanel;
-	
-	// The preview text box
-	IBOutlet id textbox;
-	
-	// The font manager associated with the text tool
-	id fontManager;
+    // The point where the selection begun
+    IntPoint startPoint;
 
-	// The point where the mouse was released
-	IntPoint where;
-	
-	// The rect containing the preview
-	IntRect previewRect;
-	
-	// Is the tool running?
-	BOOL running;
-    
+    // The rectangle used for cropping
+    IntRect textRect;
+
+    // Are we using the one-to-one ratio?
+    BOOL oneToOne;
+
     TextOptions *options;
 	
 }
+
+- (IntRect)textRect;
 
 /*!
 	@method		mouseUpAt:withEvent:
@@ -49,83 +39,12 @@
 */
 - (void)mouseUpAt:(IntPoint)iwhere withEvent:(NSEvent *)event;
 
-/*!
-	@method		apply:
-	@discussion	Called to close the text specification dialog and apply the
-				changes.
-	@param		sender
-				Ignored.
-*/
-- (IBAction)apply:(id)sender;
+- (IBAction)addAsNewLayer:(id)sender;
+- (IBAction)mergeWithLayer:(id)sender;
 
 /*!
-	@method		cancel:
-	@discussion	Called to close the text specification dialog and not apply the
-				changes.
-	@param		sender
-				Ignored.
-*/
-- (IBAction)cancel:(id)sender;
-
-/*!
-	@method		preview:
-	@discussion	Called to preview the text.
-	@param		sender
-				Ignored.
-*/
-- (IBAction)preview:(id)sender;
-
-/*!
-	@method		showFonts:
-	@discussion	Shows the fonts panel to select the font to be used for the
-				text.
-	@param		sender
-				Ignored.
-*/
-- (IBAction)showFonts:(id)sender;
-
-/*!
-	@method		move:
-	@discussion	Shows the move panel to allow moving.
-	@param		sender
-				Ignored.
-*/
-- (IBAction)move:(id)sender;
-
-/*!
-	@method		doneMove:
-	@discussion	Ends the move panel and applies the text.
-	@param		sender
-				Ignored.
-*/
-- (IBAction)doneMove:(id)sender;
-
-/*!
-	@method		cancelMove:
-	@discussion	Ends the move panel and returns to the text specification panel.
-	@param		sender
-				Ignored.
-*/
-- (IBAction)cancelMove:(id)sender;
-
-/*!
-	@method		setNudge:
-	@discussion	Nudges the text in the given direction.
-	@param		nudge
-				An IntPoint specifying the amount to nudge by in each direction.
-*/
-- (void)setNudge:(IntPoint)nudge;
-
-/*!
-	@method		centerHorizontally
-	@discussion	Centres the text horizontally.
-*/
-- (void)centerHorizontally;
-
-/*!
-	@method		centerVertically
-	@discussion	Centres the text vertically.
-*/
-- (void)centerVertically;
-
+ @method        drawText
+ @discussion    draw the text into the provided  graphics context. The drawing uses 'document' coordinates.
+ */
+- (void)drawText:(CGContextRef)ctx;
 @end

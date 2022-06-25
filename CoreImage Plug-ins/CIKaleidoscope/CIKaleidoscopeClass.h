@@ -1,23 +1,5 @@
-/*!
-	@header		CIKaleidoscopeClass
-	@abstract	Applies a kaleidoscope effect to the selection.
-	@discussion	N/A
-				<br><br>
-				<b>License:</b> Public Domain 2007<br>
-				<b>Copyright:</b> N/A
-*/
+#import <Plugins/CoreImagePlugin.h>
 
-#import <Cocoa/Cocoa.h>
-#import <QuartzCore/QuartzCore.h>
-#import <CoreGraphics/CoreGraphics.h>
-#import <Plugins/PluginClass.h>
-
-@interface CIKaleidoscopeClass : NSObject <PluginClass> {
-
-	// The plug-in's manager
-	PluginData *pluginData;
-
-	// YES if the application succeeded
-	BOOL success;
+@interface CIKaleidoscopeClass : CoreImagePlugin {
 }
 @end

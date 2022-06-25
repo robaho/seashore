@@ -9,36 +9,14 @@
 
 #import <Cocoa/Cocoa.h>
 #import <Plugins/PluginClass.h>
+#import <SeaComponents/SeaComponents.h>
 
 @interface ThresholdClass : NSObject <PluginClass> {
-
-	// The plug-in's manager
 	PluginData *pluginData;
 
-	// The threshold range
-	IBOutlet id rangeLabel;
-	
-	// The top threshold slider
-	IBOutlet id topSlider;
-	
-	// The bottom threshold slider
-	IBOutlet id bottomSlider;
-
-	// The panel for the plug-in
-	IBOutlet id panel;
-
-	// The view associated with this panel
-	IBOutlet id view;
-
-	// The various threshold values
-	int topValue, bottomValue;
-
-	// YES if the effect must be refreshed
-	BOOL refresh;
-
-	// YES if the application succeeded
-	BOOL success;
-
+    ThresholdView *histo;
+    NSView *panel;
+    SeaSlider *top,*bottom;
 }
 
 /*!

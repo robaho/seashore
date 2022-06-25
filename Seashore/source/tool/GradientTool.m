@@ -23,7 +23,6 @@
 	startPoint = where;
 	intermediate = YES;
 	startNSPoint = [[document docView] convertPoint:[event locationInWindow] fromView:NULL];
-
 }
 
 - (void)mouseUpAt:(IntPoint)where withEvent:(NSEvent *)event
@@ -92,23 +91,35 @@
 	if ([[document selection] active])
 		rect = [[document selection] localRect];
 	else
-		rect = IntMakeRect(0, 0, [(SeaLayer *)[contents activeLayer] width], [(SeaLayer *)[contents activeLayer] height]);
+		rect = IntMakeRect(0, 0, [[contents activeLayer] width], [[contents activeLayer] height]);
 	
-	// Draw the gradient
-	GCFillGradient([[document whiteboard] overlay], [(SeaLayer *)[contents activeLayer] width], [(SeaLayer *)[contents activeLayer] height], rect, [contents spp], info, NULL);
-	
-	// Apply the changes
-	[(SeaHelpers *)[document helpers] applyOverlay];
+	GCFillGradient([[document whiteboard] overlay], [[contents activeLayer] width], [[contents activeLayer] height], rect, [contents spp], info, NULL);
+
+    [[document helpers] overlayChanged:rect];
+	[[document helpers] applyOverlay];
 	
 	intermediate = NO;
 }
 
 - (void)mouseDraggedTo:(IntPoint)where withEvent:(NSEvent *)event
 {
+    CGRect old = CGRectStandardize(CGRectMake(startPoint.x, startPoint.y,  tempNSPoint.x - startPoint.x, tempNSPoint.y - startPoint.y));
+
 	tempNSPoint = [[document docView] convertPoint:[event locationInWindow] fromView:NULL];
-	[[document docView] setNeedsDisplay: YES];
+
+    CGRect rect = CGRectStandardize(CGRectMake(startPoint.x, startPoint.y,  where.x - startPoint.x, where.y - startPoint.y));
+
+    [[document docView] setNeedsDisplayInDocumentRect:NSRectMakeIntRect(CGRectUnion(old,rect)):8];
 }
 
+- (void)endLineDrawing
+{
+    if(!intermediate)
+        return;
+
+    [[document helpers] applyOverlay];
+    intermediate=NO;
+}
 
 - (NSPoint)start
 {

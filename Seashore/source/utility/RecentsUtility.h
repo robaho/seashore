@@ -17,10 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
 {
     // The document that owns the utility
     __weak IBOutlet id document;
-    
-    // The actual view that is the recents bar
-    IBOutlet id view;
-    
+
+    __weak IBOutlet NSCollectionView *recentsView;
+
     NSMutableArray *memories;
 }
 

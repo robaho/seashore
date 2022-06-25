@@ -1,4 +1,4 @@
-#import "Globals.h"
+#import "Seashore.h"
 #import "AbstractOptions.h"
 
 /*		
@@ -16,6 +16,8 @@
 	
 	// Whether or not we ignore the move action
 	BOOL ignoresMove;
+
+    BOOL oneToOne;
 }
 
 /*!
@@ -51,5 +53,9 @@
 	@result		YES if we should not register move drags
 */
 - (BOOL)ignoresMove;
+
+- (void)setOneToOne:(BOOL)b;
+
+- (BOOL)isOneToOne;
 
 @end

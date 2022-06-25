@@ -1,4 +1,4 @@
-#import "Globals.h"
+#import "Seashore.h"
 
 /*!
 	@class		SeaWindowContent
@@ -13,42 +13,41 @@
 
 enum
 {
-	kOptionsBar,
-	kSidebar,
+	kOptionsPanel,
+	kLayersPanel,
 	kPointInformation,
 	kStatusBar,
-	kWarningsBar,
     kRecentsBar
 };
 
 
 @class SeaDocument;
-@class SeaOptionsView;
-@class LayerControlView;
-@class BannerView;
 
 @interface SeaWindowContent : NSView {
 	__weak IBOutlet SeaDocument *document;
 
-	__weak IBOutlet SeaOptionsView* optionsBar;
-	__weak IBOutlet NSView *nonOptionsBar;
+	IBOutlet NSView* optionsBar;
+	IBOutlet NSView *nonOptionsBar;
 	
-	__weak IBOutlet NSView* sidebar;
-	__weak IBOutlet NSScrollView* layers;
-	__weak IBOutlet NSView* pointInformation;
-	__weak IBOutlet LayerControlView* sidebarStatusbar;
-	
-	__weak IBOutlet NSView *nonSidebar;
-	__weak IBOutlet BannerView *warningsBar;
-	__weak IBOutlet NSView *mainDocumentView;
-	__weak IBOutlet LayerControlView *statusBar;
-    __weak IBOutlet NSView *recentsBar;
-	
+	IBOutlet NSView* sidebar;
+	IBOutlet NSView* layers;
+	IBOutlet NSView* pointInformation;
+
+	IBOutlet NSView *nonSidebar;
+	IBOutlet NSView *contentView;
+	IBOutlet NSView *statusBar;
+    IBOutlet NSView *recentsBar;
+    IBOutlet NSView *rightSideBar;
+
+    IBOutlet NSView *banner;
+    IBOutlet NSView *goldStar;
+
 	// Dictionary for all properties
 	NSDictionary *dict;
 }
 
 - (BOOL)visibilityForRegion:(int)region;
 - (void)setVisibility:(BOOL)visibility forRegion:(int)region;
-- (float)sizeForRegion:(int)region;
+- (void)hideBanner;
+- (IBAction)showSupportSeashore:(id)sender;
 @end

@@ -1,4 +1,4 @@
-#import "Globals.h"
+#import "Seashore.h"
 #import "SeaDocument.h"
 #import "SeaController.h"
 
@@ -32,12 +32,6 @@ enum {
 
 	// An array of all Seahore's plug-ins
 	NSArray<PluginClass*> *plugins;
-
-	// The plug-ins used by the effect tool
-	NSArray *pointPlugins;
-
-	// The names of the plug-ins used by the effect tool
-	NSArray *pointPluginsNames;
 
 	// The submenu to add plug-ins to
 	IBOutlet id effectMenu;
@@ -102,19 +96,7 @@ enum {
 */
 - (BOOL)hasLastEffect;
 
-/*!
-	@method		pointPluginsNames
-	@discussion	Returns the names of the point plugins.
-	@result		Returns an NSArray.
-*/
-- (NSArray *)pointPluginsNames;
-
-/*!
-	@method		pointPlugins
-	@discussion	Returns the point plugins.
-	@result		Returns an NSArray.
-*/
-- (NSArray *)pointPlugins;
+- (NSMenu*)menu;
 
 /*!
 	@method		validateMenuItem:

@@ -11,7 +11,7 @@
 	return self;
 }
 
-- (int)type
+- (int)points
 {
 	return 0;
 }
@@ -31,7 +31,7 @@
 	return @"Seashore Approved (Bobo)";
 }
 
-- (void)run
+- (void)execute
 {
 	IntRect selection;
     
@@ -64,18 +64,6 @@
             replace[rindex]=255;
         }
     }
-    
-	[pluginData apply];
-}
-
-- (void)reapply
-{
-	[self run];
-}
-
-- (BOOL)canReapply
-{
-	return YES;
 }
 
 + (BOOL)validatePlugin:(PluginData*)pluginData

@@ -18,7 +18,7 @@
 	for (i = 0; i < layerCount; i++) {
 		[[[document contents] layer:i] flipHorizontally];
 	}
-	[[document helpers] boundariesAndContentChanged:NO];
+	[[document helpers] boundariesAndContentChanged];
 }
 
 - (void)flipDocVertically
@@ -31,7 +31,7 @@
 	for (i = 0; i < layerCount; i++) {
 		[[[document contents] layer:i] flipVertically];
 	}
-	[[document helpers] boundariesAndContentChanged:NO];
+	[[document helpers] boundariesAndContentChanged];
 }
 
 - (void)rotateDocLeft
@@ -47,7 +47,7 @@
 	width = [(SeaContent *)[document contents] width];
 	height = [(SeaContent *)[document contents] height];
 	[[document contents] setWidth:height height:width];
-	[[document helpers] boundariesAndContentChanged:NO];
+	[[document helpers] boundariesAndContentChanged];
 }
 
 - (void)rotateDocRight
@@ -63,7 +63,7 @@
 	width = [(SeaContent *)[document contents] width];
 	height = [(SeaContent *)[document contents] height];
 	[[document contents] setWidth:height height:width];
-	[[document helpers] boundariesAndContentChanged:NO];
+	[[document helpers] boundariesAndContentChanged];
 }
 
 @end

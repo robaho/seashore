@@ -1,4 +1,4 @@
-#import "Globals.h"
+#import "Seashore.h"
 
 /*!
 	@class		PluginData
@@ -115,13 +115,6 @@
 				colour.
 */
 - (NSColor *)backColor;
-
-/*!
-	@method		window
-	@discussion	Returns the window to use for the plug-in's panel.
-	@result		Returns the window to use for the plug-in's panel.
-*/
-- (id)window;
 
 /*!
 	@method		setOverlayBehaviour:

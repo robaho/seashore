@@ -1,4 +1,4 @@
-#import "Globals.h"
+#import "Seashore.h"
 #import "SeaContent.h"
 
 /*!

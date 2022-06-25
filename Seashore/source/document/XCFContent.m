@@ -3,8 +3,8 @@
 
 #ifndef OTHER_PLUGIN
 #import "SeaController.h"
-#import "SeaWarning.h"
 #import "SeaDocumentController.h"
+#import "SeaDocument.h"
 #endif
 
 @implementation XCFContent
@@ -204,20 +204,9 @@ hard_error:
 				// Remember the parasites
 				parasites_start = ftell(file);
 				while (ftell(file) - parasites_start < propSize && !ferror(file)) {
-				
-					// Expand list of parasites
-					if (parasites_count == 0) {
-						parasites_count++;
-						parasites = malloc(sizeof(ParasiteData));
-					}
-					else {
-						parasites_count++;
-						parasites = realloc(parasites, sizeof(ParasiteData) * parasites_count);
-					}
-                    CHECK_MALLOC(parasites);
-                    
-					pos = parasites_count - 1;
-                    
+
+                    Parasite parasite;
+
 					// Remember name
 					fread(tempIntString, sizeof(int), 1, file);
 					fix_endian_read(tempIntString, 1);
@@ -230,23 +219,24 @@ hard_error:
 								i++;
 							}
 						} while (nameString[i - 1] != 0 && !ferror(file));
-                        parasites[pos].name = nameString;
+                        parasite.name = nameString;
 					}
 					else {
-                        parasites[pos].name = strdup("unnamed");
+                        parasite.name = strdup("unnamed");
 					}
 					
 					// Remember flags and data size
 					fread(tempIntString, sizeof(int), 2, file);
 					fix_endian_read(tempIntString, 2);
-					parasites[pos].flags = tempIntString[0];
-					parasites[pos].size = tempIntString[1];
+					parasite.flags = tempIntString[0];
+					parasite.size = tempIntString[1];
 					
 					// Remember data
-					if (parasites[pos].size > 0) {
-						parasites[pos].data = malloc(parasites[pos].size);
-						fread(parasites[pos].data, sizeof(char), parasites[pos].size, file);
+					if (parasite.size > 0) {
+						parasite.data = malloc(parasite.size);
+						fread(parasite.data, sizeof(char), parasite.size, file);
 					}
+                    [parasites addParasite:parasite];
 					
 				}
 				
@@ -282,10 +272,10 @@ hard_error:
 	SharedXCFInfo info;
 	long layerOffsets, offset;
 	FILE *file;
-	id layer;
+	SeaLayer *layer;
 	int i;
 	BOOL maskToAlpha = NO;
-	ParasiteData *exifParasite;
+	Parasite *exifParasite;
 	NSString *errorString;
 	NSData *exifContainer;
     
@@ -338,6 +328,8 @@ hard_error:
     }
     
     info.version = version;
+
+    bool unsupported_modes=FALSE;
     
 	do {
 		fseek(file, layerOffsets + i * offsetSize, SEEK_SET);
@@ -364,7 +356,7 @@ hard_error:
 	fseek(file, layerOffsets + i * offsetSize, SEEK_SET);
     if ([self readOffset:file] != 0) {
 #ifndef OTHER_PLUGIN
-		[[SeaController seaWarning] addMessage:LOCALSTR(@"channels message", @"This XCF file contains channels which are not currently supported by Seashore. These channels will be lost upon saving.") forDocument: doc level:kHighImportance];
+		[[document warnings] addMessage:LOCALSTR(@"channels message", @"This XCF file contains channels which are not currently supported by Seashore. These channels will be lost upon saving.")  level:kHighImportance];
 #endif
 	}
 	
@@ -387,17 +379,17 @@ hard_error:
 	// Inform user if we've composited the mask to the alpha channel
 	if (maskToAlpha) {
 #ifndef OTHER_PLUGIN
-		[[SeaController seaWarning] addMessage:LOCALSTR(@"mask-to-alpha message", @"Some of the masks in this image have been composited to their layer's alpha channel. These masks will be lost upon saving.") forDocument: doc level:kHighImportance];
+		[[document warnings] addMessage:LOCALSTR(@"mask-to-alpha message", @"Some of the masks in this image have been composited to their layer's alpha channel. These masks will be lost upon saving.")  level:kHighImportance];
 #endif
 	}
 	
 	// Store EXIF data
-	exifParasite = [self parasiteWithName:"exif-plist"];
+	exifParasite = [parasites parasiteWithName:"exif-plist"];
 	if (exifParasite) {
 		exifContainer = [NSData dataWithBytesNoCopy:exifParasite->data length:exifParasite->size freeWhenDone:NO];
 		exifData = [NSPropertyListSerialization propertyListFromData:exifContainer mutabilityOption:NSPropertyListImmutable format:NULL errorDescription:&errorString];
 	}
-	[self deleteParasiteWithName:"exif-plist"];
+	[parasites deleteParasiteWithName:"exif-plist"];
 	
 	return self;
 }

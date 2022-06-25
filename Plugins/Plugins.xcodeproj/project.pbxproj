@@ -7,31 +7,59 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2B1F684A21D6F47F00D6F371 /* PluginData.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B1F684621D6F47F00D6F371 /* PluginData.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2B1F684B21D6F47F00D6F371 /* PluginClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B1F684721D6F47F00D6F371 /* PluginClass.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2B1F684C21D6F47F00D6F371 /* Rects.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B1F684821D6F47F00D6F371 /* Rects.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2B1F684D21D6F47F00D6F371 /* SeaPlugins.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B1F684921D6F47F00D6F371 /* SeaPlugins.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2B1F685021D6F49E00D6F371 /* Rects.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1F684F21D6F49E00D6F371 /* Rects.m */; };
 		2B1F6E8D21D9550D00D6F371 /* PluginClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1F6E8C21D9550D00D6F371 /* PluginClass.m */; };
+		2B670BC727DCFD64003BA6AE /* CoreImagePlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B670BC527DCFD64003BA6AE /* CoreImagePlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2B670BC827DCFD64003BA6AE /* CoreImagePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B670BC627DCFD64003BA6AE /* CoreImagePlugin.m */; };
+		2B670BD027DD00DE003BA6AE /* PluginData.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B670BCE27DD00DD003BA6AE /* PluginData.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2B670BD127DD00DE003BA6AE /* PluginClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B670BCF27DD00DE003BA6AE /* PluginClass.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2BB5E0272813634E00EC3014 /* SeaComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BB5E0242813634E00EC3014 /* SeaComponents.framework */; };
+		2BB5E0292813634E00EC3014 /* SeaLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BB5E0252813634E00EC3014 /* SeaLibrary.framework */; };
+		2BB5E04B2813684100EC3014 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BB5E04A2813684100EC3014 /* CoreGraphics.framework */; };
+		2BB5E04D2813685900EC3014 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BB5E04C2813685900EC3014 /* CoreImage.framework */; };
+		2BB5E04F2813686400EC3014 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BB5E04E2813686400EC3014 /* Cocoa.framework */; };
+		2BB5E0512813686B00EC3014 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BB5E0502813686B00EC3014 /* Accelerate.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2B1F683421D6F43800D6F371 /* Plugins.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Plugins.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2B1F684621D6F47F00D6F371 /* PluginData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PluginData.h; sourceTree = "<group>"; };
-		2B1F684721D6F47F00D6F371 /* PluginClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PluginClass.h; sourceTree = "<group>"; };
-		2B1F684821D6F47F00D6F371 /* Rects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rects.h; sourceTree = "<group>"; };
-		2B1F684921D6F47F00D6F371 /* SeaPlugins.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeaPlugins.h; sourceTree = "<group>"; };
-		2B1F684F21D6F49E00D6F371 /* Rects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Rects.m; sourceTree = "<group>"; };
 		2B1F6E8C21D9550D00D6F371 /* PluginClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PluginClass.m; sourceTree = "<group>"; };
+		2B670BC527DCFD64003BA6AE /* CoreImagePlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreImagePlugin.h; sourceTree = "<group>"; };
+		2B670BC627DCFD64003BA6AE /* CoreImagePlugin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoreImagePlugin.m; sourceTree = "<group>"; };
+		2B670BCD27DD00DD003BA6AE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2B670BCE27DD00DD003BA6AE /* PluginData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PluginData.h; sourceTree = "<group>"; };
+		2B670BCF27DD00DE003BA6AE /* PluginClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PluginClass.h; sourceTree = "<group>"; };
+		2BB5E0242813634E00EC3014 /* SeaComponents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SeaComponents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BB5E0252813634E00EC3014 /* SeaLibrary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SeaLibrary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BB5E0262813634E00EC3014 /* SeaMinimal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SeaMinimal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BB5E04A2813684100EC3014 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		2BB5E04C2813685900EC3014 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		2BB5E04E2813686400EC3014 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		2BB5E0502813686B00EC3014 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2B399C7E279DF50D000D0C58 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2BB5E04B2813684100EC3014 /* CoreGraphics.framework in Frameworks */,
+				2BB5E0512813686B00EC3014 /* Accelerate.framework in Frameworks */,
+				2BB5E0292813634E00EC3014 /* SeaLibrary.framework in Frameworks */,
+				2BB5E04F2813686400EC3014 /* Cocoa.framework in Frameworks */,
+				2BB5E04D2813685900EC3014 /* CoreImage.framework in Frameworks */,
+				2BB5E0272813634E00EC3014 /* SeaComponents.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		2B1F682A21D6F43800D6F371 = {
 			isa = PBXGroup;
 			children = (
 				2B1F684E21D6F48E00D6F371 /* Source */,
-				2B1F684521D6F44300D6F371 /* Public Headers */,
 				2B1F683521D6F43800D6F371 /* Products */,
+				2B399C7F279DF513000D0C58 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -43,24 +71,31 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		2B1F684521D6F44300D6F371 /* Public Headers */ = {
-			isa = PBXGroup;
-			children = (
-				2B1F684721D6F47F00D6F371 /* PluginClass.h */,
-				2B1F684621D6F47F00D6F371 /* PluginData.h */,
-				2B1F684821D6F47F00D6F371 /* Rects.h */,
-				2B1F684921D6F47F00D6F371 /* SeaPlugins.h */,
-			);
-			name = "Public Headers";
-			sourceTree = "<group>";
-		};
 		2B1F684E21D6F48E00D6F371 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				2B1F684F21D6F49E00D6F371 /* Rects.m */,
+				2B670BCD27DD00DD003BA6AE /* Info.plist */,
+				2B670BCF27DD00DE003BA6AE /* PluginClass.h */,
+				2B670BCE27DD00DD003BA6AE /* PluginData.h */,
 				2B1F6E8C21D9550D00D6F371 /* PluginClass.m */,
+				2B670BC527DCFD64003BA6AE /* CoreImagePlugin.h */,
+				2B670BC627DCFD64003BA6AE /* CoreImagePlugin.m */,
 			);
 			name = Source;
+			sourceTree = "<group>";
+		};
+		2B399C7F279DF513000D0C58 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2BB5E0502813686B00EC3014 /* Accelerate.framework */,
+				2BB5E04E2813686400EC3014 /* Cocoa.framework */,
+				2BB5E04C2813685900EC3014 /* CoreImage.framework */,
+				2BB5E04A2813684100EC3014 /* CoreGraphics.framework */,
+				2BB5E0242813634E00EC3014 /* SeaComponents.framework */,
+				2BB5E0252813634E00EC3014 /* SeaLibrary.framework */,
+				2BB5E0262813634E00EC3014 /* SeaMinimal.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -70,10 +105,9 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2B1F684B21D6F47F00D6F371 /* PluginClass.h in Headers */,
-				2B1F684A21D6F47F00D6F371 /* PluginData.h in Headers */,
-				2B1F684C21D6F47F00D6F371 /* Rects.h in Headers */,
-				2B1F684D21D6F47F00D6F371 /* SeaPlugins.h in Headers */,
+				2B670BC727DCFD64003BA6AE /* CoreImagePlugin.h in Headers */,
+				2B670BD127DD00DE003BA6AE /* PluginClass.h in Headers */,
+				2B670BD027DD00DE003BA6AE /* PluginData.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,6 +120,7 @@
 			buildPhases = (
 				2B1F682F21D6F43800D6F371 /* Headers */,
 				2B1F683021D6F43800D6F371 /* Sources */,
+				2B399C7E279DF50D000D0C58 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -132,8 +167,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2B1F685021D6F49E00D6F371 /* Rects.m in Sources */,
 				2B1F6E8D21D9550D00D6F371 /* PluginClass.m in Sources */,
+				2B670BC827DCFD64003BA6AE /* CoreImagePlugin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,93 +178,18 @@
 		2B1F683A21D6F43800D6F371 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
 			};
 			name = Debug;
 		};
 		2B1F683B21D6F43800D6F371 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
 			};
 			name = Release;
 		};
@@ -242,7 +202,7 @@
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.plugins;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -258,7 +218,7 @@
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.plugins;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;

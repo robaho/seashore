@@ -1,4 +1,4 @@
-#import "Globals.h"
+#import "Seashore.h"
 
 /*!
 	@enum		k...Modifier
@@ -64,7 +64,7 @@ enum {
 	@method		update
 	@discussion	Updates the options panel.
 */
-- (void)update;
+- (IBAction)update:(id)sender;
 
 /*!
 	@method		forceAlt

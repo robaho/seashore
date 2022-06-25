@@ -1,19 +1,15 @@
-//
-//  ZoomTool.h
-//  Seashore
-//
-//  Created by robert engels on 1/24/19.
-//
-
 #import "AbstractTool.h"
 #import "ZoomOptions.h"
+#import "AbstractSelectTool.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ZoomTool : AbstractTool
+@interface ZoomTool : AbstractSelectTool
 {
     ZoomOptions *options;
 }
+
+- (IntRect)selectionRect;
 
 @end
 

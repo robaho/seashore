@@ -1,4 +1,4 @@
-#import "Globals.h"
+#import "Seashore.h"
 #import "SeaPrintOptionsController.h"
 #import "SeaDocument.h"
 

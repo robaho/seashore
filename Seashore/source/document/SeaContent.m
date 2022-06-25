@@ -5,13 +5,11 @@
 #import "SeaPrefs.h"
 #import "SeaView.h"
 #import "SeaHelpers.h"
-#import "PegasusUtility.h"
+#import "LayersUtility.h"
 #import "SeaLayerUndo.h"
 #import "SeaSelection.h"
 #import "SeaWhiteboard.h"
 #import "CenteringClipView.h"
-#import "Bitmap.h"
-#import "SeaWarning.h"
 #import "XCFContent.h"
 #import "CocoaContent.h"
 #import "XBMContent.h"
@@ -24,11 +22,11 @@
 #import "CloneTool.h"
 #import "PositionTool.h"
 #import "SeaTools.h"
-#import "SeaCompositor.h"
 #import "StatusUtility.h"
 #import "SeaDocumentController.h"
+#import "SeaOperations.h"
+#import "SeaAlignment.h"
 
-extern IntPoint gScreenResolution;
 static NSString*    FloatAnchorToolbarItemIdentifier = @"Float/Anchor Toolbar Item Identifier";
 static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Selection Toolbar Item Identifier";
 
@@ -40,15 +38,10 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     xres = yres = 72;
     height = width = type = 0;
     lostprops = NULL; lostprops_len = 0;
-    parasites = NULL; parasites_count = 0;
+    parasites = [[ParasiteData alloc] init];
     exifData = NULL;
     layers = NULL; activeLayerIndex = 0;
-    layersToUndo = [NSMutableArray array];
-    layersToRedo = [NSMutableArray array];
-    orderings = [NSMutableArray array];
-    deletedLayers = [[NSArray alloc] init];
     selectedChannel = kAllChannels; trueView = NO;
-    keeper = allocKeeper();
     document = doc;
     
     return self;
@@ -66,30 +59,19 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     
     // Get the data from the pasteboard
     imageRepDataType = [pboard availableTypeFromArray:[NSArray arrayWithObject:NSTIFFPboardType]];
-    if (imageRepDataType == NULL) {
-        imageRepDataType = [pboard availableTypeFromArray:[NSArray arrayWithObject:NSPICTPboardType]];
-        imageRepData = [pboard dataForType:imageRepDataType];
-        image = [[NSImage alloc] initWithData:imageRepData];
-        imageRep = [[NSBitmapImageRep alloc] initWithData:[image TIFFRepresentation]];
-    }
-    else {
+    if (imageRepDataType != NULL) {
         imageRepData = [pboard dataForType:imageRepDataType];
         imageRep = [[NSBitmapImageRep alloc] initWithData:imageRepData];
     }
     
     // Fill out as many of the properties as possible
-    height = [imageRep pixelsHigh];
-    width = [imageRep pixelsWide];
+    height = (int)[imageRep pixelsHigh];
+    width = (int)[imageRep pixelsWide];
     xres = yres = 72;
     lostprops = NULL; lostprops_len = 0;
-    parasites = NULL; parasites_count = 0;
+    parasites = [[ParasiteData alloc] init];
     exifData = NULL;
-    layersToUndo = [NSMutableArray array];
-    layersToRedo = [NSMutableArray array];
-    orderings = [NSMutableArray array];
-    deletedLayers = [[NSArray alloc] init];
     selectedChannel = kAllChannels; trueView = NO;
-    keeper = allocKeeper();
     document = doc;
     
     // Determine the color space of the pasteboard image and the type
@@ -124,7 +106,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
         NSLog(@"Unable to add layer.");
         return NULL;
     }
-    
+
     layers = [[NSArray alloc] initWithObjects:new_layer, NULL];
     activeLayerIndex = 0;
     
@@ -148,35 +130,8 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     return self;
 }
 
-- (id)initWithDocument:(id)doc data:(unsigned char *)ddata type:(int)dtype width:(int)dwidth height:(int)dheight res:(int)dres
-{
-    // Call the core initializer
-    if (![self initWithDocument:doc])
-        return NULL;
-    
-    // Set the data members to appropriate values
-    xres = yres = dres;
-    type = dtype;
-    height = dheight; width = dwidth;
-    
-    // Add in a single layer
-    layers = [[NSArray alloc] initWithObjects:[[SeaLayer alloc] initWithDocument:doc rect:IntMakeRect(0, 0, dwidth, dheight) data:ddata spp:(dtype == XCF_RGB_IMAGE) ? 4 : 2], NULL];
-    
-    return self;
-}
-
 - (void)dealloc
 {
-    int i;
-    
-    freeKeeper(&keeper);
-    if (parasites) {
-        for (i = 0; i < parasites_count; i++) {
-            free(parasites[i].name);
-            free(parasites[i].data);
-        }
-        free(parasites);
-    }
     if (lostprops) free(lostprops);
 }
 
@@ -232,26 +187,6 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     return yres;
 }
 
-- (float)xscale
-{
-    float xscale = [[document docView] zoom];
-    
-    if (gScreenResolution.x != 0 && xres != gScreenResolution.x)
-        xscale /= ((float)xres / (float)gScreenResolution.x);
-    
-    return xscale;
-}
-
-- (float)yscale
-{
-    float yscale = [[document docView] zoom];
-    
-    if (gScreenResolution.y != 0 && yres != gScreenResolution.y)
-        yscale /= ((float)yres / (float)gScreenResolution.y);
-    
-    return yscale;
-}
-
 - (void)setResolution:(IntResolution)newRes
 {
     xres = newRes.x;
@@ -266,6 +201,10 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
 - (int)width
 {
     return width;
+}
+
+- (IntRect)rect{
+    return IntMakeRect(0,0,width,height);
 }
 
 - (void)setWidth:(int)newWidth height:(int)newHeight
@@ -294,72 +233,6 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     return lostprops_len;
 }
 
-- (ParasiteData *)parasites
-{
-    return parasites;
-}
-
-- (int)parasites_count
-{
-    return parasites_count;
-}
-
-- (ParasiteData *)parasiteWithName:(char *)name
-{
-    int i;
-    
-    for (i = 0; i < parasites_count; i++) {
-        if (strcmp(name,parasites[i].name)==0)
-            return &(parasites[i]);
-    }
-    
-    return NULL;
-}
-
-- (void)deleteParasiteWithName:(char *)name
-{
-    int i, x;
-    
-    // Find the parasite to delete
-    x = -1;
-    for (i = 0; i < parasites_count && x == -1; i++) {
-        if (strcmp(name,parasites[i].name)==0)
-            x = i;
-    }
-    
-    if (x != -1) {
-        
-        // Destroy it
-        free(parasites[x].name);
-        free(parasites[x].data);
-    
-        // Update the parasites list
-        parasites_count--;
-        if (parasites_count > 0) {
-            for (i = x; i < parasites_count; i++) {
-                parasites[i] = parasites[i + 1];
-            }
-            parasites = realloc(parasites, sizeof(ParasiteData) * parasites_count);
-        }
-        else {
-            free(parasites);
-            parasites = NULL;
-        }
-    
-    }
-}
-
-- (void)addParasite:(ParasiteData)parasite
-{
-    // Delete existing parasite with the same name (if any)
-    [self deleteParasiteWithName:parasite.name];
-    
-    // Add parasite
-    parasites_count++;
-    if (parasites_count == 1) parasites = malloc(sizeof(ParasiteData) * parasites_count);
-    else parasites = realloc(parasites, sizeof(ParasiteData) * parasites_count);
-    parasites[parasites_count - 1] = parasite;
-}
 
 - (BOOL)trueView
 {
@@ -430,7 +303,11 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
 
 - (void)setActiveLayerIndex:(int)value
 {
+    if(activeLayerIndex==value)
+        return;
+    [[document helpers] activeLayerWillChange];
     activeLayerIndex = value;
+    [[document helpers] activeLayerChanged:kLayerSwitched];
 }
 
 - (void)layerBelow
@@ -443,7 +320,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     }else {
         newIndex = activeLayerIndex + 1;
     }
-    [self setActiveLayerIndex: newIndex];
+    activeLayerIndex = newIndex;
     [[document helpers] activeLayerChanged:kLayerSwitched];
 }
 
@@ -457,7 +334,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     }else {
         newIndex = activeLayerIndex - 1;
     }
-    [self setActiveLayerIndex: newIndex];
+    activeLayerIndex = newIndex;
     [[document helpers] activeLayerChanged:kLayerSwitched];
 }
 
@@ -523,7 +400,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
 
     // Inform the user of failure
     if (!success){
-        [[SeaController seaWarning] addMessage:LOCALSTR(@"import failure message", @"The selected file was not able to be successfully imported into this document.") forDocument:document level:kHighImportance];
+        [[document warnings] addMessage:LOCALSTR(@"import failure message", @"The file was not able to be imported.") level:kHighImportance];
     }
         
     return success;
@@ -558,18 +435,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     if (index == kActiveLayer)
         index = activeLayerIndex;
 
-    SeaLayer *layerToAdd;
-    
-    if([[layers objectAtIndex:index] floating]) {
-        SeaLayer *layer = [layers objectAtIndex:index];
-        layerToAdd = [[SeaLayer alloc] initWithDocument:document rect:[layer localRect] data:[layer data] spp:[self spp]];
-
-        // Delete the floating layer
-        [self deleteLayer:index];
-        [[document selection] clearSelection];
-    } else {
-        layerToAdd = [[SeaLayer alloc] initWithDocument:document width:width height:height opaque:NO spp:[self spp]];
-    }
+    SeaLayer *layerToAdd = [[SeaLayer alloc] initWithDocument:document width:width height:height opaque:NO spp:[self spp]];
 
     // Inform the helpers we will change the layer
     [[document helpers] activeLayerWillChange];
@@ -594,175 +460,58 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
 
 - (void)addLayerObject:(id)layer
 {
-    NSArray *tempArray = [NSArray array];
-    int i, index;
-    
-    // Inform the helpers we will change the layer
-    [[document helpers] activeLayerWillChange];
-    
-    // Find index
-    index = activeLayerIndex;
-    
-    // Create a new array with all the existing layers and the one being added
-    for (i = 0; i < [layers count] + 1; i++) {
-        if (i == index)
-            tempArray = [tempArray arrayByAddingObject:layer];
-        else
-            tempArray = [tempArray arrayByAddingObject:(i > index) ? [layers objectAtIndex:i - 1] : [layers objectAtIndex:i]];
-    }
-    
-    // Now substitute in our new array
-    layers = tempArray;
-    
-    // Inform document of layer change
-    [[document helpers] activeLayerChanged:kLayerAdded];
-    
-    // Make action undoable
-    [(SeaContent *)[[document undoManager] prepareWithInvocationTarget:self] deleteLayer:index];
+    [self addLayerObject:layer atIndex:activeLayerIndex];
 }
 
-- (void)addLayerFromPasteboard:(id)pboard
+- (void)addLayerObject:(id)layer atIndex:(int)index
 {
     NSArray *tempArray = [NSArray array];
-    NSString *imageRepDataType;
-    NSData *imageRepData;
-    NSBitmapImageRep *imageRep;
-    NSImage *image;
-    IntRect rect;
-    id layer;
-    unsigned char *data;
-    int i, spp = [[document contents] spp], dspp;
-    NSPoint centerPoint;
-    
-    // Get the data from the pasteboard
-    imageRepDataType = [pboard availableTypeFromArray:[NSArray arrayWithObject:NSTIFFPboardType]];
-    if (imageRepDataType == NULL) {
-        imageRepDataType = [pboard availableTypeFromArray:[NSArray arrayWithObject:NSPICTPboardType]];
-        imageRepData = [pboard dataForType:imageRepDataType];
-        image = [[NSImage alloc] initWithData:imageRepData];
-        imageRep = [[NSBitmapImageRep alloc] initWithData:[image TIFFRepresentation]];
-    }
-    else {
-        imageRepData = [pboard dataForType:imageRepDataType];
-        imageRep = [[NSBitmapImageRep alloc] initWithData:imageRepData];
-    }
-    
-    if(imageRep == NULL) {
-        NSLog(@"Unable to load image from pasteboard.");
-        return;
-    }
-    
-    // Work out the correct center point
-    if (height > 64 && width > 64 && [imageRep pixelsHigh] > height - 12 && [imageRep pixelsWide] > width - 12) { 
-        rect = IntMakeRect(width / 2 - [imageRep pixelsWide] / 2, height / 2 - [imageRep pixelsHigh] / 2, [imageRep pixelsWide], [imageRep pixelsHigh]);
-    }
-    else {
-        centerPoint = [(CenteringClipView *)[[document docView] superview] centerPoint];
-        centerPoint.x /= [[document docView] zoom];
-        centerPoint.y /= [[document docView] zoom];
-        rect = IntMakeRect(centerPoint.x - [imageRep pixelsWide] / 2, centerPoint.y - [imageRep pixelsHigh] / 2, [imageRep pixelsWide], [imageRep pixelsHigh]);
-    }
-    
-    dspp = spp;
-    
-    if (spp == 4 && selectedChannel == kAlphaChannel) {
-        dspp = 2;
-    }
-    
-    data = convertImageRep(imageRep,dspp);
-    if (!data) {
-        NSLog(@"Required conversion not supported.");
-        return;
-    }
-    
-    // Inform the helpers we will change the layer
-    [[document helpers] activeLayerWillChange];
-    
-    // Create a new array with all the existing layers and the one being added
-    layer = [[SeaLayer alloc] initWithDocument:document rect:rect data:data spp:spp];
-    if(layer==NULL){
-        NSLog(@"Unable to load create layer.");
-        [[document helpers] activeLayerChanged:kLayerSwitched];
-        return;
-    }
-    for (i = 0; i < [layers count] + 1; i++) {
-        if (i == activeLayerIndex)
-            tempArray = [tempArray arrayByAddingObject:layer];
-        else
-            tempArray = [tempArray arrayByAddingObject:(i > activeLayerIndex) ? [layers objectAtIndex:i - 1] : [layers objectAtIndex:i]];
-    }
-    
-    // Now substitute in our new array
-    layers = tempArray;
-    
-    // Inform document of layer change
-    [[document helpers] activeLayerChanged:kLayerAdded];
-    
-    // Make action undoable
-    [(SeaContent *)[[document undoManager] prepareWithInvocationTarget:self] deleteLayer:activeLayerIndex];    
-}
-
-- (void)copyLayer:(id)layer
-{
-    NSArray *tempArray = [NSArray array];
-    int i, index;
-    
-    // Inform the helpers we will change the layer
-    [[document helpers] activeLayerWillChange];
-    
-    // Create a new array with all the existing layers and the one being added
-    index = activeLayerIndex;
-    for (i = 0; i < [layers count] + 1; i++) {
-        if (i == index)
-            tempArray = [tempArray arrayByAddingObject:[[SeaLayer alloc] initWithDocument:document layer:layer]];
-        else
-            tempArray = [tempArray arrayByAddingObject:(i > index) ? [layers objectAtIndex:i - 1] : [layers objectAtIndex:i]];
-    }
-    
-    layers = tempArray;
-    
-    // Inform document of layer change
-    [[document helpers] activeLayerChanged:kLayerAdded];
-    
-    // Make action undoable
-    [(SeaContent *)[[document undoManager] prepareWithInvocationTarget:self] deleteLayer:index];
-}
-
-- (void)duplicateLayer:(int)index
-{
-    NSArray *tempArray = [NSArray array];
-    IntRect rect;
     int i;
     
     // Inform the helpers we will change the layer
     [[document helpers] activeLayerWillChange];
     
-    // Correct index
-    if (index == kActiveLayer) index = activeLayerIndex;
-    
+    // Find index
     // Create a new array with all the existing layers and the one being added
     for (i = 0; i < [layers count] + 1; i++) {
         if (i == index)
-            tempArray = [tempArray arrayByAddingObject:[[SeaLayer alloc] initWithDocument:document layer:[layers objectAtIndex:index]]];
+            tempArray = [tempArray arrayByAddingObject:layer];
         else
             tempArray = [tempArray arrayByAddingObject:(i > index) ? [layers objectAtIndex:i - 1] : [layers objectAtIndex:i]];
     }
     
+    // Now substitute in our new array
     layers = tempArray;
+
+    activeLayerIndex = index;
     
     // Inform document of layer change
-    rect = IntMakeRect([[layers objectAtIndex:index] xoff], [[layers objectAtIndex:index] yoff], [(SeaLayer *)[layers objectAtIndex:index] width], [(SeaLayer *)[layers objectAtIndex:index] height]);
     [[document helpers] activeLayerChanged:kLayerAdded];
     
     // Make action undoable
     [(SeaContent *)[[document undoManager] prepareWithInvocationTarget:self] deleteLayer:index];
 }
 
+- (void)copyLayer:(id)layer
+{
+    SeaLayer *newLayer = [[SeaLayer alloc] initWithDocument:document layer:layer];
+
+    [self addLayerObject:newLayer];
+}
+
+- (void)duplicateLayer:(int)index
+{
+    // Correct index
+    if (index == kActiveLayer) index = activeLayerIndex;
+
+    SeaLayer *newLayer = [[SeaLayer alloc] initWithDocument:document layer:[layers objectAtIndex:index]];
+    [self addLayerObject:newLayer];
+}
+
 - (void)deleteLayer:(int)index
 {
-    id layer;
+    SeaLayer *layer;
     NSArray *tempArray = [NSArray array];
-    IntRect rect;
     int i;
     
     // Correct index
@@ -781,31 +530,20 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     
     layers = tempArray;
     
-    // Add the layer to the lost layers (compressed)
-    deletedLayers = [deletedLayers arrayByAddingObject:layer];
-    
     // Change the layer
     if (activeLayerIndex >= [layers count]) activeLayerIndex = [layers count] - 1;
     
-    // Update Seashore with the changes
-    rect = IntMakeRect([layer xoff], [layer yoff], [(SeaLayer *)layer width], [(SeaLayer *)layer height]);
     [[document helpers] activeLayerChanged:kLayerDeleted];
     
-    // Unset the clone tool
-    [[[document tools] getTool:kCloneTool] unset];
-    
     // Make action undoable
-    [[[document undoManager] prepareWithInvocationTarget:self] restoreLayer:index fromLostIndex:[deletedLayers count] - 1];
+    [[[document undoManager] prepareWithInvocationTarget:self] restoreLayer:layer atIndex:index];
 }
 
-- (void)restoreLayer:(int)index fromLostIndex:(int)lostIndex
+- (void)restoreLayer:(SeaLayer*)layer atIndex:(int)index
 {
-    SeaLayer *layer = [deletedLayers objectAtIndex:lostIndex];
     NSArray *tempArray;
-    IntRect rect;
     int i;
     
-    // Inform the helpers we will change the layer
     [[document helpers] activeLayerWillChange];
     
     // Create a new array with all the existing layers including the one being restored
@@ -821,37 +559,14 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     
     layers = tempArray;
 
-    // Create a new array of lost layers with the removed layer replaced with "BLANK"
-    tempArray = [NSArray array];
-    for (i = 0; i < [deletedLayers count]; i++) {
-        if (i == lostIndex)
-            tempArray = [tempArray arrayByAddingObject:[[NSString alloc] initWithString:@"BLANK"]];
-        else
-            tempArray = [tempArray arrayByAddingObject:[deletedLayers objectAtIndex:i]];
-    }
-    
-    deletedLayers = tempArray;
-    
-    // Update Seashore with the changes
     activeLayerIndex = index;
         
-    // Update Seashore with the changes
-    rect = IntMakeRect([layer xoff], [layer yoff], [layer width], [layer height]);
     [[document helpers] activeLayerChanged:kLayerAdded];
-    
-    // Make action undoable
     [(SeaContent *)[[document undoManager] prepareWithInvocationTarget:self] deleteLayer:index];
-    
-    // Update toolbox
-    if ([layer floating]){
-        [[document toolboxUtility] floatTool];
-        [[document toolboxUtility] update:YES];
-    }
 }
 
-- (void)makeSelectionFloat:(BOOL)duplicate
+- (void)layerFromSelection:(BOOL)duplicate
 {
-    NSArray *tempArray = [NSArray array];
     BOOL containsNothing;
     unsigned char *data;
     IntRect rect;
@@ -859,12 +574,14 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     int i, spp = [[document contents] spp];
     
     // Check the state is valid
-    if (![[document selection] active] || [[document selection] floating])
+    if (![[document selection] active])
         return;
-    
+
+    [[document helpers] endLineDrawing];
+
     // Save the existing selection
     rect = [[document selection] globalRect];
-    data = [[document selection] selectionData:NO];
+    data = [[document selection] selectionData];
     
     // Check that the selection contains something
     containsNothing = YES;
@@ -881,59 +598,32 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     // Remove the old selection if we're not duplicating
     if(!duplicate)
         [[document selection] deleteSelection];
-    
-    // Inform the helpers we will change the layer
-    [[document helpers] activeLayerWillChange];
-    
-    // Create a new array with all the existing layers and the one being added
-    layer = [[SeaLayer alloc] initFloatingWithDocument:document rect:rect data:data];
+
+    layer = [[SeaLayer alloc] initWithDocument:document rect:rect data:data spp:spp];
     [layer trimLayer];
-    for (i = 0; i < [layers count] + 1; i++) {
-        if (i == activeLayerIndex)
-            tempArray = [tempArray arrayByAddingObject:layer];
-        else
-            tempArray = [tempArray arrayByAddingObject:(i > activeLayerIndex) ? [layers objectAtIndex:i - 1] : [layers objectAtIndex:i]];
-    }
+
+    [self addLayerObject:layer];
     
-    layers = tempArray;
-        
-    // Wrap selection to the opaque
-    [[document selection] selectOpaque];
-    
-    // Inform document of layer change
-    [[document helpers] activeLayerChanged:kLayerAdded];
-    
-    // Inform the tools of the floating
-    [[document toolboxUtility] floatTool];
-    
-    // Make action undoable
-    [(SeaContent *)[[document undoManager] prepareWithInvocationTarget:self] deleteLayer:activeLayerIndex];
+    [[document toolboxUtility] positionTool];
 }
 
 -(IBAction)duplicate:(id)sender
 {
-    [self makeSelectionFloat:YES];    
+    [self layerFromSelection:YES];
 }
 
--(void)toggleFloatingSelection
+-(void)floatSelection
 {    
-    if ([[document selection] floating]) {
-        [self anchorLayer];
-    }
-    else {
-        [self makeSelectionFloat:NO];
-    }
+    [self layerFromSelection:NO];
 }
 
-- (void)makePasteboardFloat
+- (void)layerFromPasteboard:(NSPasteboard*)pboard atIndex:(int)index
 {
-    NSArray *tempArray = [NSArray array];
     NSString *imageRepDataType;
     NSData *imageRepData;
     NSBitmapImageRep *imageRep;
     NSImage *image;
     IntRect rect;
-    id pboard = [NSPasteboard generalPasteboard];
     id layer;
     unsigned char *data;
     int i, spp = [[document contents] spp],dspp;
@@ -941,24 +631,26 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     IntPoint sel_point;
     IntSize sel_size;
     
-    // Check the state is valid
-    if ([[document selection] floating])
-        return;
-    
     // Ensure that the document is valid
-    if(![[NSPasteboard generalPasteboard] availableTypeFromArray:[NSArray arrayWithObjects:NSTIFFPboardType, NSPICTPboardType, NSURLPboardType, NULL]]){
+    if(![pboard availableTypeFromArray:[NSArray arrayWithObjects:NSTIFFPboardType, NSURLPboardType, NULL]]){
         NSBeep();
         return;
     }
     
-    NSPasteboardType ptype = [pboard availableTypeFromArray:[NSArray arrayWithObjects:NSURLPboardType,NSTIFFPboardType,NSPICTPboardType,nil]];
+    [[document helpers] endLineDrawing];
+
+    NSPasteboardType ptype = [pboard availableTypeFromArray:[NSArray arrayWithObjects:NSURLPboardType,NSTIFFPboardType,nil]];
     if([ptype isEqualToString:NSURLPboardType]){
         NSURL *url = [NSURL URLFromPasteboard:pboard];
         if([url isFileURL]) {
             NSString *path = [url path];
-            NSString *extension = [path pathExtension];
             image = [[NSImage alloc] initByReferencingFile:path];
             imageRep = [[NSBitmapImageRep alloc] initWithData:[image TIFFRepresentation]];
+            if(imageRep==NULL) {
+                // maybe another image type, like SVG or Seashore, so try and import the file
+                [self importLayerFromFile:path];
+                return;
+            }
         } else {
             // we'll try the image types below
         }
@@ -967,16 +659,15 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     if(imageRep==NULL){
         // Get the data from the pasteboard
         imageRepDataType = [pboard availableTypeFromArray:[NSArray arrayWithObject:NSTIFFPboardType]];
-        if (imageRepDataType == NULL) {
-            imageRepDataType = [pboard availableTypeFromArray:[NSArray arrayWithObject:NSPICTPboardType]];
-            imageRepData = [pboard dataForType:imageRepDataType];
-            image = [[NSImage alloc] initWithData:imageRepData];
-            imageRep = [[NSBitmapImageRep alloc] initWithData:[image TIFFRepresentation]];
-        }
-        else {
+        if (imageRepDataType != NULL) {
             imageRepData = [pboard dataForType:imageRepDataType];
             imageRep = [[NSBitmapImageRep alloc] initWithData:imageRepData];
         }
+    }
+
+    if(imageRep==NULL){
+        NSBeep();
+        return;
     }
     
     // Work out the correct center point
@@ -990,145 +681,25 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     }
     else {
         centerPoint = [(CenteringClipView *)[[document docView] superview] centerPoint];
-        centerPoint.x /= [[document docView] zoom];
-        centerPoint.y /= [[document docView] zoom];
         rect = IntMakeRect(centerPoint.x - sel_size.width / 2, centerPoint.y - sel_size.height / 2, sel_size.width, sel_size.height);
     }
     
-    dspp = spp;
-    if (spp == 4 && selectedChannel == kAlphaChannel) {
-        dspp = 2;
-    }
-
-    data = convertImageRep(imageRep,dspp);
+    data = convertImageRep(imageRep,spp);
     if (!data) {
         NSLog(@"Required conversion not supported.");
         return;
     }
     
-    // Handle the special case where a GGGA graphic is wanted
-    if (spp == 4 && dspp == 2) {
-        unsigned char *tdata = malloc(make_128(rect.size.width * rect.size.height * 4));
-        for (i = 0; i < rect.size.width * rect.size.height; i++) {
-            tdata[i * 4] = data[i * 2];
-            tdata[i * 4 + 1] = data[i * 2];
-            tdata[i * 4 + 2] = data[i * 2];
-            tdata[i * 4 + 3] = data[i * 2 + 1];
-        }
-        free(data);
-        data = tdata;
-    }
+    layer = [[SeaLayer alloc] initWithDocument:document rect:rect data:data spp:spp];
 
-    // Inform the helpers we will change the layer
-    [[document helpers] activeLayerWillChange];
-    
-    // Create a new array with all the existing layers and the one being added
-    layer = [[SeaLayer alloc] initFloatingWithDocument:document rect:rect data:data];
     [layer trimLayer];
-    for (i = 0; i < [layers count] + 1; i++) {
-        if (i == activeLayerIndex)
-            tempArray = [tempArray arrayByAddingObject:layer];
-        else
-            tempArray = [tempArray arrayByAddingObject:(i > activeLayerIndex) ? [layers objectAtIndex:i - 1] : [layers objectAtIndex:i]];
-    }
-    
-    layers = tempArray;
-    
-    // Wrap selection to the opaque
-    [[document selection] selectOpaque];
-    
-    // Inform document of layer change
-    [[document helpers] activeLayerChanged:kLayerAdded];
-    
-    // Inform the tools of the floating
-    [[document toolboxUtility] floatTool];
-    
-    // Make action undoable
-    [(SeaContent *)[[document undoManager] prepareWithInvocationTarget:self] deleteLayer:activeLayerIndex];
-}
+    [self addLayerObject:layer atIndex:index];
 
-- (void)anchorLayer
-{
-    unsigned char *data, *overlay;
-    IntRect dataRect, layerRect;
-    int i, j, destXPos, destYPos, spp = [self spp];
-    
-    int floatingLayerIndex = -1;
-    int topNonFloatingIndex = -1;
-    
-    SeaLayer *layer;
-    
-    // Don't do anything if there's no selection
-    if (![[document selection] floating])
-        return;
-    
-    SeaLayer *floating = [[document contents] activeLayer];
-    if(!floating) {
-        NSLog(@"There were no floating layers!");
-        return;
-    }
-    
-    for(i = 0; i < [layers count]; i++){
-        if([layers objectAtIndex:i] == floating){
-            floatingLayerIndex = i;
-            break;
-        }
-    }
-    
-    if(floatingLayerIndex == -1){
-        NSLog(@"Could not find floating layer!");
-        return;
-    }
-    
-    for(i=floatingLayerIndex; i<[layers count];i++) {
-        if(![[layers objectAtIndex:i] floating]){
-            topNonFloatingIndex = i;
-            break;
-        }
-    }
-             
-    if(topNonFloatingIndex == -1){
-        NSLog(@"Could not find top non-floating layer!");
-        return;
-    }
-    // anchor to top non-floating layer below
-    
-    layer = floating;
-                                  
-    dataRect = IntMakeRect([layer xoff], [layer yoff], [layer width], [layer height]);;
-    data = malloc(make_128(dataRect.size.width * dataRect.size.height * spp));
-    memcpy(data, [layer data], dataRect.size.width * dataRect.size.height * spp);
-    
-    // Delete the floating layer
-    [self deleteLayer:floatingLayerIndex];
-    
-    // Work out the new layer rectangle
-    layer = [layers objectAtIndex:topNonFloatingIndex-1]; // need to subtract 1 because we deleted a layer
-    
-    [[document helpers] activeLayerWillChange];
-    [self setActiveLayerIndex:topNonFloatingIndex-1];
-    [[document helpers] activeLayerChanged:kLayerSwitched];
+    // Position the new layer correctly
+    [[(SeaOperations *)[document operations] seaAlignment] centerLayerHorizontally:NULL];
+    [[(SeaOperations *)[document operations] seaAlignment] centerLayerVertically:NULL];
 
-    layerRect = IntMakeRect([layer xoff], [layer yoff], [(SeaLayer *)layer width], [(SeaLayer *)layer height]);
-    
-    // Copy the selection to the overlay
-    overlay = [[document whiteboard] overlay];
-    [[document whiteboard] setOverlayOpacity:255];
-    for (j = 0; j < dataRect.size.height; j++) {
-        for (i = 0; i < dataRect.size.width; i++) {
-            destXPos = dataRect.origin.x - layerRect.origin.x + i;
-            destYPos = dataRect.origin.y - layerRect.origin.y + j;
-            if (destXPos >= 0 && destXPos < layerRect.size.width && destYPos >= 0 && destYPos < layerRect.size.height) {
-                memcpy(&(overlay[(destYPos * layerRect.size.width + destXPos) * spp]), &(data[(j * dataRect.size.width + i) * spp]), spp);
-            }
-        }
-    }
-    free(data);
-    
-    // Clear the selection
-    [[document selection] clearSelection];
-    // Apply the overlay (only works on active layer)
-    [(SeaHelpers *)[document helpers] applyOverlay];
+    [[document toolboxUtility] positionTool];
 }
 
 - (BOOL)canRaise:(int)index
@@ -1200,78 +771,32 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
 
 - (void)raiseLayer:(int)index
 {
-    NSArray *tempArray;
-    int i;
-    
     // Correct index
     if (index == kActiveLayer) index = activeLayerIndex;
     
     // Do nothing if we can't do anything
     if (![self canRaise:index])
         return;
-    
-    // Allocate space for a new array
-    tempArray = [NSArray array];
-    
-    // Go through and add all existing objects to the new array
-    for (i = 0; i < [layers count]; i++) {
-        if (i == index - 1) {
-            tempArray = [tempArray arrayByAddingObject:[layers objectAtIndex:i + 1]];
-            tempArray = [tempArray arrayByAddingObject:[layers objectAtIndex:i]];
-            i++;
-        }
-        else
-            tempArray = [tempArray arrayByAddingObject:[layers objectAtIndex:i]];
-    }
-    
-    layers = tempArray;
-    
-    // Update Seashore with the changes
-    activeLayerIndex = index - 1;
-    [[document helpers] layerLevelChanged:activeLayerIndex];
-    
-    // Make action undoable
-    [[[document undoManager] prepareWithInvocationTarget:self] lowerLayer:index - 1];
+
+    [self moveLayerOfIndex:index toIndex:index-1];
 }
 
 - (void)lowerLayer:(int)index
 {
-    NSArray *tempArray;
-    int i;
-    
     // Correct index
     if (index == kActiveLayer) index = activeLayerIndex;
     
     // Do nothing if we can't do anything
     if (![self canLower:index])
         return;
-    
-    // Allocate space for a new array
-    tempArray = [NSArray array];
-    
-    // Go through and add all existing objects to the new array
-    for (i = 0; i < [layers count]; i++) {
-        if (i == index) {
-            tempArray = [tempArray arrayByAddingObject:[layers objectAtIndex:i + 1]];
-            tempArray = [tempArray arrayByAddingObject:[layers objectAtIndex:i]];
-            i++;
-        }
-        else
-            tempArray = [tempArray arrayByAddingObject:[layers objectAtIndex:i]];
-    }
-    
-    layers = tempArray;
-    
-    // Update Seashore with the changes
-    activeLayerIndex = index + 1;
-    [[document helpers] layerLevelChanged:activeLayerIndex];
-    
-    // Make action undoable
-    [[[document undoManager] prepareWithInvocationTarget:self] raiseLayer:index + 1];
+
+    [self moveLayerOfIndex:index toIndex:index+2];
 }
 
 - (void)clearAllLinks
 {
+    [[document helpers] endLineDrawing];
+
     int i;
     
     // Go through all layers and toggle them back so they are unlinked
@@ -1283,6 +808,8 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
 
 - (void)setLinked:(BOOL)isLinked forLayer:(int)index
 {
+    [[document helpers] endLineDrawing];
+    
     id layer;
     
     // Correct index
@@ -1291,7 +818,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     
     // Apply the changes
     [layer setLinked:isLinked];
-    [[document pegasusUtility] update:kPegasusUpdateLayerView];
+    [[document layersUtility] update:kLayersUpdateCurrent];
     
     // Make action undoable
     [[[document undoManager] prepareWithInvocationTarget:self] setLinked:!isLinked forLayer:index];
@@ -1308,7 +835,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     // Apply the changes
     [layer setVisible:isVisible];
     [[document helpers] layerAttributesChanged:index hold:YES];
-    [[document pegasusUtility] update:kPegasusUpdateLayerView];
+    [[document layersUtility] update:kLayersUpdateCurrent];
     
     // Make action undoable
     [[[document undoManager] prepareWithInvocationTarget:self] setVisible:!isVisible forLayer:index];
@@ -1316,34 +843,28 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
 
 - (void)copyMerged
 {
+    [[document helpers] endLineDrawing];
+
     id pboard = [NSPasteboard generalPasteboard];
     int spp = [[document contents] spp], i , j, k, t1;
     NSBitmapImageRep *imageRep;
-    IntRect globalRect;
-    unsigned char *data = [(SeaWhiteboard *)[document whiteboard] data];
+
+    IntRect maskRect = [[document selection] maskRect];
+    IntRect globalRect = IntConstrainRect(IntMakeRect(0,0,width,height),maskRect);
+
+    unsigned char *data = [[document whiteboard] data];
     unsigned char *ndata = NULL;
     unsigned char *mask;
 
     // Check selection
     if ([[document selection] active]) {
-        mask = [(SeaSelection*)[(SeaDocument*)document selection] mask];
-        globalRect = IntConstrainRect(IntMakeRect(0,0,width,height),[[document selection] globalRect]);
+        mask = [[document selection] mask];
         ndata = malloc(make_128(globalRect.size.width * globalRect.size.height * spp));
-        if (mask) {
-            for (j = globalRect.origin.y; j < globalRect.origin.y + globalRect.size.height; j++) {
-                for (i = globalRect.origin.x; i < globalRect.origin.x + globalRect.size.width; i++) {
-                    for (k = 0; k < spp; k++) {
-                        ndata[((j - globalRect.origin.y) * globalRect.size.width + (i - globalRect.origin.x)) * spp + k] =  int_mult(data[(j * width + i) * spp + k], mask[(j - globalRect.origin.y) * globalRect.size.width + (i - globalRect.origin.x)], t1);
-                    }
-                }
-            }
-        }
-        else {
-            for (j = globalRect.origin.y; j < globalRect.origin.y + globalRect.size.height; j++) {
-                for (i = globalRect.origin.x; i < globalRect.origin.x + globalRect.size.width; i++) {
-                    for (k = 0; k < spp; k++) {
-                        ndata[((j - globalRect.origin.y) * globalRect.size.width + (i - globalRect.origin.x)) * spp + k] =  data[(j * width + i) * spp + k];
-                    }
+        for (j = globalRect.origin.y; j < globalRect.origin.y + globalRect.size.height; j++) {
+            for (i = globalRect.origin.x; i < globalRect.origin.x + globalRect.size.width; i++) {
+                unsigned char maskVal = mask[(j-maskRect.origin.y)*maskRect.size.width + i-maskRect.origin.x];
+                for (k = 0; k < spp; k++) {
+                    ndata[((j - globalRect.origin.y) * globalRect.size.width + (i - globalRect.origin.x)) * spp + k] =  int_mult(data[(j * width + i) * spp + k], maskVal, t1);
                 }
             }
         }
@@ -1359,7 +880,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     [pboard declareTypes:[NSArray arrayWithObject:NSTIFFPboardType] owner:NULL];
     
     // Add it to the pasteboard
-    imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&ndata pixelsWide:globalRect.size.width pixelsHigh:globalRect.size.height bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO colorSpaceName:(spp == 4) ? NSDeviceRGBColorSpace : NSDeviceWhiteColorSpace bytesPerRow:globalRect.size.width * spp bitsPerPixel:8 * spp];
+    imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&ndata pixelsWide:globalRect.size.width pixelsHigh:globalRect.size.height bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace bytesPerRow:globalRect.size.width * spp bitsPerPixel:8 * spp];
     [pboard setData:[imageRep TIFFRepresentation] forType:NSTIFFPboardType]; 
     
     // Clean out the remains
@@ -1370,13 +891,12 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
 
 - (BOOL)canFlatten
 {
-    // Yes, if there are one or more layers
     if ([layers count] != 1)
         return YES;
+
+    SeaLayer *layer = [self layer:0];
     
-    // Yes, if single layer is out of place
-    if ([[layers objectAtIndex:0] xoff] != 0 || [[layers objectAtIndex:0] yoff] != 0
-            || [(SeaLayer *)[layers objectAtIndex:0] width] != width || [(SeaLayer *)[layers objectAtIndex:0] height] != height)
+    if ([layer xoff] != 0 || [layer yoff] != 0 || [layer width] != width || [layer height] != height)
         return YES;
     
     return NO;
@@ -1384,11 +904,15 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
 
 - (void)flatten
 {
-    [self merge:layers useRepresentation: YES withName: LOCALSTR(@"flattened", @"Flattened Layer")];
+    [[document helpers] endLineDrawing];
+
+    [self merge:layers withName: LOCALSTR(@"flattened", @"Flattened Layer")];
 }
 
 - (void)mergeLinked
 {
+    [[document helpers] endLineDrawing];
+
     SeaLayer *layer;
     NSMutableArray *linkedLayers = [NSMutableArray array];
     // Go through noting each linked layer
@@ -1397,267 +921,189 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
         if ([layer linked])
             [linkedLayers addObject: layer];
     }
-    // Preform the merge
-    [self merge:linkedLayers useRepresentation: NO withName: LOCALSTR(@"flattened", @"Flattened Layer")];
+    [self merge:linkedLayers withName: LOCALSTR(@"flattened", @"Flattened Layer")];
 }
+
+// merge layer down based on selected channel
+- (void)mergeChannelDown
+{
+    SeaLayer *top = [layers objectAtIndex:activeLayerIndex];
+    SeaLayer *bottom = [layers objectAtIndex:activeLayerIndex+1];
+
+    IntRect topRect = [top globalRect],bottomRect = [bottom globalRect];
+
+    IntRect rect = IntConstrainRect(topRect,bottomRect);
+
+    int spp = [self spp];
+
+    [[document helpers] documentWillFlatten];
+
+    NSArray *copy = [layers copy];
+    [[[document undoManager] prepareWithInvocationTarget:self] undoMergeWith:copy];
+
+    int size = [bottom width]*[bottom height]*spp;
+    unsigned char *data = malloc(size);
+    memcpy(data,[bottom data],size);
+
+    SeaLayer *new_layer = [[SeaLayer alloc] initWithDocument:document rect:[bottom globalRect] data:data spp:spp];
+    [new_layer setName:[[NSString alloc] initWithString:[bottom name]]];
+
+    NSMutableArray *tempArray = [NSMutableArray array];
+
+    for(SeaLayer* layer in layers) {
+        if(layer==top){
+            // only need to replace bottom layer
+        } else if (layer==bottom) {
+            [tempArray addObject:new_layer];
+        } else {
+            [tempArray addObject:layer];
+        }
+    }
+
+    for(int y=0;y<rect.size.height;y++){
+        int tOffset = ((rect.origin.y - topRect.origin.y + y) * [top width] + rect.origin.x-topRect.origin.x) * spp;
+        int bOffset = ((rect.origin.y - bottomRect.origin.y + y) * [bottom width] + rect.origin.x-bottomRect.origin.x) * spp;
+
+        unsigned char *td = [top data]+tOffset;
+        unsigned char *bd = [new_layer data]+bOffset;
+
+        for(int x=0;x<rect.size.width;x++) {
+            if(selectedChannel==kAlphaChannel) {
+                bd[spp-1] = td[spp-1];
+            } else if(selectedChannel==kPrimaryChannels){
+                memcpy(bd,td,spp-1);
+            }
+            td+=spp;
+            bd+=spp;
+        }
+    }
+
+    activeLayerIndex = [tempArray indexOfObject:new_layer];
+    layers = tempArray;
+    selectedChannel = kAllChannels;
+
+    [[document helpers] documentFlattened];
+}
+
 
 - (void)mergeDown
 {
-    // Make sure there is a layer to merge into
-    if([self canLower:activeLayerIndex]){
-        NSArray *twoLayers = [NSArray arrayWithObject:[layers  objectAtIndex:activeLayerIndex]];
-        // Add the layer we're going into
-        twoLayers = [twoLayers arrayByAddingObject:[layers  objectAtIndex:activeLayerIndex + 1]];
-        [self merge: twoLayers useRepresentation: NO withName: [[layers  objectAtIndex:activeLayerIndex + 1] name]];
+    if(![self canLower:activeLayerIndex])
+        return;
+
+    [[document helpers] endLineDrawing];
+
+    NSArray *layersToMerge = [NSArray arrayWithObjects:
+                              [layers objectAtIndex:activeLayerIndex],
+                              [layers objectAtIndex:activeLayerIndex+1],
+                              nil];
+
+    if(selectedChannel == kAllChannels) {
+        [self merge:layersToMerge withName: [[layers objectAtIndex:activeLayerIndex + 1] name]];
+    } else {
+        [self mergeChannelDown];
     }
 }
 
-- (void)merge:(NSArray *)mergingLayers useRepresentation: (BOOL)useRepresenation withName:(NSString *)newName
+- (void)merge:(NSArray *)mergingLayers withName:(NSString *)newName
 {
-    CompositorOptions options;
-    unsigned char *data;
-    SeaLayer *layer, *lostLayer, *tempLayer = [SeaLayer alloc];
-    int spp = [self spp];
-    BOOL indexFound = NO;
-    NSMutableArray *tempArray = [NSMutableArray array];
-    IntRect rect = IntMakeRect(0,0,0,0);
-    // The ordering dictionary is needed because layers which are linked are not
-    // nessisarily contiguous -- thus just keeping a stack in the undo history
-    // would not totally restore their state
-    NSMutableDictionary *ordering = [NSMutableDictionary dictionaryWithCapacity:[layers count]];
-    
     // Do nothing if we can't do anything
     if (![self canFlatten])
         return;
-    
+
     // Inform the helpers we will flatten the document
     [[document helpers] documentWillFlatten];
-    
+
+    NSArray *copy = [layers copy];
+
     // Make action undoable
-    [[[document undoManager] prepareWithInvocationTarget:self] undoMergeWith:[layers count] andOrdering: ordering];
-    [orderings addObject:ordering];
+    [[[document undoManager] prepareWithInvocationTarget:self] undoMergeWith:copy];
+
     // Create the replacement flat layer
-    
-    // Use representation is used when we want to use the pre-made image
-    // representation of the image. Basicially, just when flattening the whole
-    // file.
-    if(useRepresenation){
-        rect.size.width = width;
-        rect.size.height = height;
-        data = malloc(make_128(rect.size.width * rect.size.height * spp));
-        memcpy(data, [[document whiteboard] data], rect.size.width * rect.size.height * spp);
-        NSEnumerator *e = [layers objectEnumerator];
-        while(layer = [e nextObject]){
-            [ordering setValue: [NSNumber numberWithInt:[layers indexOfObject: layer]] forKey: [NSString stringWithFormat: @"%d" ,[layer uniqueLayerID]]];
-        }
-        [tempArray addObject:tempLayer];
-    }else{
-        NSEnumerator *e = [layers objectEnumerator];
-        // Here we find out the dimensions of the new layer, plus keep track of
-        // which layers are not going to be merged (tempArray).
-        while(layer = [e nextObject]) {
-            [ordering setValue: [NSNumber numberWithInt:[layers indexOfObject: layer]] forKey: [NSString stringWithFormat: @"%d" ,[layer uniqueLayerID]]];
-            if([mergingLayers indexOfObject:layer] != NSNotFound){
-                IntRect thisRect = IntMakeRect([layer xoff], [layer yoff], [layer width], [layer height]);
-                rect = IntSumRects(rect, thisRect);
-                if(!indexFound)
-                    [tempArray addObject:tempLayer];
-            }else{
-                [tempArray addObject:layer];
-            }
-        }
-        data = malloc(make_128(rect.size.width * rect.size.height * spp));
-        memset(data, 0, rect.size.width * rect.size.height * spp);
-        // Set the composting options
-        options.forceNormal = 0;
-        options.rect = rect;
-        options.destRect = rect;
-        options.insertOverlay = NO;
-        options.useSelection = NO;
-        options.overlayOpacity = 255;
-        options.overlayBehaviour = kNormalBehaviour;
-        options.spp = spp;
 
-        // Composite the linked layers
-        NSEnumerator *f = [mergingLayers reverseObjectEnumerator];
-        while(layer = [f nextObject])
-            [[[document whiteboard] compositor] compositeLayer:layer withOptions:options andData: data];
-    }
-    unpremultiplyBitmap(spp, data, data, rect.size.width * rect.size.height);
-    layer = [[SeaLayer alloc] initWithDocument:document rect:rect data:data spp:spp];
-    [layer setName:[[NSString alloc] initWithString:newName]];
-
-    // Get rid of all the other layers
-    NSEnumerator *g = [mergingLayers objectEnumerator];
-    while(lostLayer = [g nextObject])
-        [layersToUndo addObject: lostLayer];
-    
-    // Revise layers
-    activeLayerIndex = [tempArray indexOfObject:tempLayer];
-    [tempArray replaceObjectAtIndex:activeLayerIndex withObject:layer];
-    [tempArray removeObject:tempLayer];
-    layers = tempArray;
-    selectedChannel = 0;
-    
-    // Unset the clone tool
-    [[[document tools] getTool:kCloneTool] unset];
-    
-    // Inform the helpers we have flattened the document
-    [[document helpers] documentFlattened];
-}
-
-- (void)undoMergeWith:(int)oldNoLayers andOrdering: (NSMutableDictionary *)ordering
-{
-    NSMutableArray *oldLayers = [NSMutableArray arrayWithCapacity:oldNoLayers];
-    NSMutableDictionary *newOrdering = [NSMutableDictionary dictionaryWithCapacity:[layers count]];
-    int i;
-    SeaLayer *layer;
-    
-    // Inform the helpers we will unflatten the document
-    [[document helpers] documentWillFlatten];
-
-    // Get the current orderings for the undo history
-    NSEnumerator *e = [layers objectEnumerator];
-    while(layer = [e nextObject])
-        [newOrdering setValue: [NSNumber numberWithInt:[layers indexOfObject: layer]] forKey: [NSString stringWithFormat: @"%d" ,[layer uniqueLayerID]]];
-    
-    // Make action undoable
-    [[[document undoManager] prepareWithInvocationTarget:self] redoMergeWith:[layers count] andOrdering: newOrdering];
-
-    // This is just to make the dimensions of the array correct
-    while([oldLayers count] < oldNoLayers)
-        [oldLayers addObject: [layers lastObject]];
-
-    // Store the previous layers to their correct location in the array
-    for(i = 0; i < oldNoLayers - [layers count] + 1; i++){
-        SeaLayer *oldLayer = [layersToUndo lastObject];
-        [layersToUndo removeLastObject];
-        int replInd = [[ordering objectForKey:[NSString stringWithFormat:@"%d", [oldLayer uniqueLayerID]]] intValue];        
-        [oldLayers replaceObjectAtIndex:replInd withObject:oldLayer];
-    }
-    
-    for(i = 0; i < [layers count]; i++){
-        SeaLayer *oldLayer = [layers objectAtIndex:i];
-        NSNumber *oldIndex = [ordering objectForKey:[NSString stringWithFormat:@"%d", [oldLayer uniqueLayerID]]];
-        // We also will need to store the merged layer for redo
-        if(oldIndex != nil)
-            [oldLayers replaceObjectAtIndex: [oldIndex intValue] withObject:oldLayer];
-        else
-            [layersToRedo addObject:oldLayer];
-    }
-    
-    layers = oldLayers;
-    
-    // Unset the clone tool
-    [[[document tools] getTool:kCloneTool] unset];
-    
-    // Inform the helpers we have unflattened the document
-    [[document helpers] documentFlattened];
-    
-    [orderings removeObject: ordering];
-    [orderings addObject:newOrdering];
-}
-
-- (unsigned char *)bitmapUnderneath:(IntRect)rect
-{
-    CompositorOptions options;
     unsigned char *data;
-    SeaLayer *layer;
-    int i, spp = [self spp];
-    
-    // Create the replacement flat layer
+    SeaLayer *layer, *tempLayer = [SeaLayer alloc];
+    int spp = [self spp];
+
+    IntRect rect = IntMakeRect(0,0,0,0);
+    NSMutableArray *tempArray = [NSMutableArray array];
+
+    bool found=false;
+    for(SeaLayer* layer in layers) {
+        if([mergingLayers indexOfObject:layer] != NSNotFound){
+            IntRect thisRect = [layer globalRect];
+            rect = IntRectIsEmpty(rect) ? thisRect : IntSumRects(rect, thisRect);
+            if(!found){
+                [tempArray addObject:tempLayer];
+                found=true;
+            }
+        } else {
+            [tempArray addObject:layer];
+        }
+    }
+
+
     data = malloc(make_128(rect.size.width * rect.size.height * spp));
     memset(data, 0, rect.size.width * rect.size.height * spp);
 
-    // Set the composting options
-    options.forceNormal = 0;
-    options.rect = rect;
-    options.destRect = rect;
-    options.insertOverlay = NO;
-    options.useSelection = NO;
-    options.overlayOpacity = 255;
-    options.overlayBehaviour = kNormalBehaviour;
-    options.spp = spp;
+    CGContextRef ctx = CGBitmapContextCreate(data,rect.size.width,rect.size.height,8,rect.size.width*spp,COLOR_SPACE, kCGImageAlphaPremultipliedLast);
+    CGContextTranslateCTM(ctx,0,rect.size.height);
+    CGContextScaleCTM(ctx,1,-1);
+    CGContextTranslateCTM(ctx, -rect.origin.x,-rect.origin.y);
 
-    // Composite the layers underneath
-    for (i = [layers count] - 1; i >= activeLayerIndex; i--) {
-        layer = [layers objectAtIndex:i];
-        if ([layer visible]) {
-            [[[document whiteboard] compositor] compositeLayer:layer withOptions:options andData:data];
-        }
+    // composite the layers
+    NSEnumerator *f = [mergingLayers reverseObjectEnumerator];
+    while(layer = [f nextObject]) {
+        [layer drawLayer:ctx];
     }
-    
-    return data;
+
+    CGContextRelease(ctx);
+
+    layer = [[SeaLayer alloc] initWithDocument:document rect:rect data:data spp:spp];
+    [layer setName:[[NSString alloc] initWithString:newName]];
+
+    // Revise layers
+    activeLayerIndex = [tempArray indexOfObject:tempLayer];
+    [tempArray replaceObjectAtIndex:activeLayerIndex withObject:layer];
+    layers = tempArray;
+    selectedChannel = kAllChannels;
+
+    [[document helpers] documentFlattened];
 }
 
-- (void)redoMergeWith:(int)oldNoLayers andOrdering:(NSMutableDictionary *)ordering
+- (void)undoMergeWith:(NSArray*)oldLayers
 {
-    NSMutableArray *newLayers = [NSMutableArray arrayWithCapacity:oldNoLayers];
-    NSMutableDictionary *oldOrdering = [NSMutableDictionary dictionaryWithCapacity:[layers count]];
-    int i;
-    SeaLayer *layer;
-    
-    // Inform the helpers we will flatten the document
+    NSArray *copy = [layers copy];
+
+    [[[document undoManager] prepareWithInvocationTarget:self] undoMergeWith:copy];
+
+    // Inform the helpers we will unflatten the document
     [[document helpers] documentWillFlatten];
-    
-    // Store the orderings
-    NSEnumerator *e = [layers objectEnumerator];
-    while(layer = [e nextObject])
-        [oldOrdering setValue: [NSNumber numberWithInt:[layers indexOfObject: layer]] forKey: [NSString stringWithFormat: @"%d" ,[layer uniqueLayerID]]];
 
-    // Make action undoable
-    [[[document undoManager] prepareWithInvocationTarget:self] undoMergeWith:[layers count] andOrdering:oldOrdering];
+    layers = oldLayers;
 
-    // Populate the array
-    while([newLayers count] < oldNoLayers)
-        [newLayers addObject: [layers lastObject]];
-    
-    SeaLayer *newLayer = [layersToRedo lastObject];
-    [layersToRedo removeLastObject];
-    [newLayers replaceObjectAtIndex:[[ordering objectForKey:[NSString stringWithFormat:@"%d", [newLayer uniqueLayerID]]] intValue] withObject:newLayer];
-
-    // Go through and insert the layers at the appropriate places
-    for(i = 0; i < [layers count]; i++){
-        SeaLayer *newLayer = [layers objectAtIndex:i];
-        NSNumber *newIndex = [ordering objectForKey:[NSString stringWithFormat:@"%d", [newLayer uniqueLayerID]]];
-        if(newIndex != nil)
-            [newLayers replaceObjectAtIndex: [newIndex intValue] withObject:newLayer];
-        else
-            [layersToUndo addObject:newLayer];
-    }
-    
-    layers = newLayers;
-
-    // Unset the clone tool
-    [[[document tools] getTool:kCloneTool] unset];
-    
-    // Inform the helpers we have flattened the document
+    // Inform the helpers we have unflattened the document
     [[document helpers] documentFlattened];
-
-    [orderings removeObject:ordering];
-    [orderings addObject:oldOrdering];
 }
 
 - (void)convertToType:(int)newType
 {
-    IndiciesRecord record;
-    id layer;
+    NSMutableArray<LayerSnapshot*> *snapshots = [NSMutableArray array];
+
+    SeaLayer *layer;
     int i;
     
     // Do nothing if there is nothing to do
     if (newType == type)
         return;
     
-    // Make action undoable
-    record.length = [layers count];
-    record.indicies = malloc([layers count] * sizeof(int));
     for (i = 0; i < [layers count]; i++) {
-        layer = [layers objectAtIndex:i]; 
-        record.indicies[i] = [[layer seaLayerUndo] takeSnapshot:IntMakeRect(0, 0, [(SeaLayer *)layer width], [(SeaLayer *)layer height]) automatic:NO];
+        layer = [layers objectAtIndex:i];
+        LayerSnapshot *snapshot = [[layer seaLayerUndo] takeSnapshot:IntMakeRect(0, 0, [layer width], [layer height]) automatic:NO];
+        [snapshots addObject:snapshot];
     }
-    addToKeeper(&keeper, record);
-    
-    [[[document undoManager] prepareWithInvocationTarget:self] revertToType:type withRecord:record];
+
+    [[[document undoManager] prepareWithInvocationTarget:self] revertToType:type withRecord:snapshots];
     
     // Go through and convert all layers to the new given type
     for (i = 0; i < [layers count]; i++)
@@ -1670,7 +1116,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     [[document helpers] typeChanged]; 
 }
 
-- (void)revertToType:(int)newType withRecord:(IndiciesRecord)record
+- (void)revertToType:(int)newType withRecord:(NSMutableArray<LayerSnapshot*>*)snapshots
 {
     int i;
     
@@ -1686,10 +1132,14 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     
     // Restore the layers
     for (i = 0; i < [layers count]; i++)
-        [[[layers objectAtIndex:i] seaLayerUndo] restoreSnapshot:record.indicies[i] automatic:NO];
+        [[[layers objectAtIndex:i] seaLayerUndo] restoreSnapshot:[snapshots objectAtIndex:i] automatic:NO];
     
     // Update everything
     [[document helpers] typeChanged]; 
+}
+
+- (ParasiteData*)parasites{
+    return parasites;
 }
 
 @end

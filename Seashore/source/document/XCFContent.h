@@ -1,4 +1,4 @@
-#import "Globals.h"
+#import "Seashore.h"
 #import "SeaContent.h"
 
 /*!
@@ -36,8 +36,8 @@ typedef struct
 	int compression;
 	int type;
 	BOOL active;
-	BOOL floating;
 	BOOL maskToAlpha;
+    BOOL unsupported_mode;
 } SharedXCFInfo;
 
 /*!

@@ -1,4 +1,4 @@
-#import "Globals.h"
+#import "SeaShore.h"
 
 /*!
 	@class		AbstractExporter

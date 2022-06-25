@@ -19,49 +19,60 @@
 	return kPolygonLassoTool;
 }
 
-- (void)fineMouseDownAt:(NSPoint)where withEvent:(NSEvent *)event
+- (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event
 {
-    SeaLayer *layer = [[document contents] activeLayer];
-    where.x -= [layer xoff];
-    where.y -= [layer yoff];
+    if(!intermediate)
+        [super downHandler:where withEvent:event];
 
-	[super mouseDownAt:IntMakePoint(where.x, where.y) withEvent:event];
-	
 	if(![super isMovingOrScaling]){
-		int modifier;
-		
-		// Get mode
-		modifier = [(AbstractOptions*)options modifier];
-
-		float anchorRadius = 4.0 / [[document docView] zoom];
-		
-		// Behave differently depending on condtions
 		if (!intermediate){
             [self initializePoints:where];
             startPoint = where;
-		}
-		else if ([[NSApp currentEvent] clickCount] == 1 && intermediate && !(abs(startPoint.x - where.x) < anchorRadius && abs(startPoint.y - where.y) < anchorRadius)) {
-            [self addPoint:where];
-		}
-		else if (intermediate) {
-             [self createOverlayFromPoints];
+
+            if ([options selectionMode] == kDefaultMode || [options selectionMode] == kForceNewMode){
+                [[document selection] clearSelection];
+            }
 		}
 	}
 }
 
-- (void)fineMouseDraggedTo:(NSPoint)where withEvent:(NSEvent *)event
+- (void)mouseDraggedTo:(IntPoint)where withEvent:(NSEvent *)event
 {
-	id layer = [[document contents] activeLayer];
-	[super mouseDraggedTo:IntMakePoint(where.x - [layer xoff], where.y - [layer yoff]) withEvent:event];
+    [super dragHandler:where withEvent:event];
 }
 
-- (void)fineMouseUpAt:(NSPoint)where withEvent:(NSEvent *)event
+- (void)mouseUpAt:(IntPoint)where withEvent:(NSEvent *)event
 {
-	id layer = [[document contents] activeLayer];
-	[super mouseUpAt:IntMakePoint(where.x - [layer xoff], where.y - [layer yoff]) withEvent:event];
+    float anchorRadius = 4.0 / [[document docView] zoom];
 
-	translating = NO;
-	scalingDir = kNoDir;
+    if (intermediate) {
+        if(!(abs(startPoint.x - where.x) < anchorRadius && abs(startPoint.y - where.y) < anchorRadius)) {
+            [self addPoint:where];
+        } else {
+            [self createMaskFromPoints];
+
+            // Also, we universally float the selection if alt is down
+            if([[self getOptions] modifier] == kAltModifier) {
+                [[document contents] layerFromSelection:NO];
+            }
+        }
+    } else {
+        [super upHandler:where withEvent:event];
+
+        translating = NO;
+        scalingDir = kNoDir;
+    }
+}
+
+- (void)updateCursor:(IntPoint)p cursors:(SeaCursors*)cursors
+{
+    if(pos>0) {
+        if(IntPointInRect(p,[cursors handleRect:points[0]])) {
+            [[cursors closeCursor] set];
+            return;
+        }
+    }
+    [super updateCursor:p cursors:cursors];
 }
 
 @end

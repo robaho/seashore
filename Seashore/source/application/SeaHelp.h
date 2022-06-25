@@ -1,4 +1,4 @@
-#import "Globals.h"
+#import <SeaLibrary/Globals.h>
 
 /*!
 	@class		SeaHelp

@@ -9,8 +9,12 @@
 #import "SeaWhiteboard.h"
 #import "SeaView.h"
 #import "SeaTools.h"
-#import "Bitmap.h"
 #import "SeaHelpers.h"
+
+
+@protocol PixelProvider
+- (NSColor *)getPixelX:(int)x Y:(int)y;
+@end
 
 @implementation EyedropTool
 
@@ -19,7 +23,6 @@
     return kEyedropTool;
 }
 
-
 - (void)mouseUpAt:(IntPoint)where withEvent:(NSEvent *)event
 {
     ToolboxUtility *toolboxUtility = [document toolboxUtility];
@@ -27,9 +30,9 @@
     
     if (color != NULL) {
         if ([(EyedropOptions*)options modifier] == kAltModifier)
-            [toolboxUtility setBackground:[self getColor]];
+            [toolboxUtility setBackground:color];
         else {
-            [toolboxUtility setForeground:[self getColor]];
+            [toolboxUtility setForeground:color];
             [[document textureUtility] setActiveTexture:NULL];
         }
         [toolboxUtility update:NO];
@@ -41,67 +44,70 @@
     return [(EyedropOptions*)options sampleSize];
 }
 
-- (NSColor *)getColor
+static inline NSColor * averagedPixelValue(id<PixelProvider> pp,int radius, IntPoint where)
 {
-    id layer = [[document contents] activeLayer];
-    unsigned char *data;
-    int spp = [[document contents] spp];
-    int lwidth, lheight, width, height;
-    IntPoint newPos, pos;
-    unsigned char t[4];
-    int radius = [(EyedropOptions*)options sampleSize] - 1;
-    int channel = [[document contents] selectedChannel];
-    
-    lwidth = [(SeaLayer *)layer width];
-    lheight = [(SeaLayer *)layer height];
-    width = [(SeaContent *)[document contents] width];
-    height = [(SeaContent *)[document contents] height];
-    
-    pos = [[document docView] getMousePosition:NO];
-    if ([(EyedropOptions*)options mergedSample]) {
-        data = [(SeaWhiteboard *)[document whiteboard] data];
-        newPos = pos;
-        if (newPos.x < 0 || newPos.x >= width || newPos.y < 0 || newPos.y >= height)
-            return NULL;
-        if (spp == 2) {
-            t[0] = averagedComponentValue(2, data, width, height, 0, radius, newPos);
-            t[1] = averagedComponentValue(2, data, width, height, 1, radius, newPos);
-            unpremultiplyBitmap(2, t, t, 1);
-            return [NSColor colorWithDeviceWhite:(float)t[0] / 255.0 alpha:(float)t[1] / 255.0];
-        }
-        else {
-            t[0] = averagedComponentValue(4, data, width, height, 0, radius, newPos);
-            t[1] = averagedComponentValue(4, data, width, height, 1, radius, newPos);
-            t[2] = averagedComponentValue(4, data, width, height, 2, radius, newPos);
-            t[3] = averagedComponentValue(4, data, width, height, 3, radius, newPos);
-            unpremultiplyBitmap(4, t, t, 1);
-            return [NSColor colorWithDeviceRed:(float)t[0] / 255.0 green:(float)t[1] / 255.0 blue:(float)t[2] / 255.0 alpha:(float)t[3] / 255.0];
+    float colors[] = {0,0,0,0};
+
+    int count = 0;
+
+    for (int j = where.y - radius; j <= where.y + radius; j++) {
+        for (int i = where.x - radius; i <= where.x + radius; i++) {
+            NSColor *c = [pp getPixelX:i Y:j];
+            if(c==NULL)
+                continue;
+            colors[0] += [c redComponent];
+            colors[1] += [c greenComponent];
+            colors[2] += [c blueComponent];
+            colors[3] += [c alphaComponent];
+            count++;
         }
     }
-    else {
-        data = [(SeaLayer *)layer data];
-        newPos.x = pos.x - [layer xoff];
-        newPos.y = pos.y - [layer yoff];
-        if (newPos.x < 0 || newPos.x >= lwidth || newPos.y < 0 || newPos.y >= lheight)
+
+    if(count==0)
+        return NULL;
+
+    colors[0] = colors[0]/count;
+    colors[1] = colors[1]/count;
+    colors[2] = colors[2]/count;
+    colors[3] = colors[3]/count;
+
+    return [NSColor colorWithRed:colors[0] green:colors[1] blue:colors[2] alpha:colors[3]];
+}
+
+- (NSColor *)getSample:(id<PixelProvider>)pp
+{
+    IntPoint pos = [[document docView] getMousePosition:NO];
+    int spp = [[document contents] spp];
+    int radius = [options sampleSize] - 1;
+
+    float t[4];
+    if (spp == 2) {
+        NSColor *avg = averagedPixelValue(pp,radius,pos);
+        if(avg==NULL)
             return NULL;
-        if (spp == 2) {
-            if (channel != kAlphaChannel) t[0] = averagedComponentValue(2, data, lwidth, lheight, 0, radius, newPos);
-            if (channel == kPrimaryChannels) t[1] = 255;
-            else t[1] = averagedComponentValue(2, data, lwidth, lheight, 1, radius, newPos);
-            if (channel == kAlphaChannel) { t[0] = t[1]; t[1] = 255; }
-            return [NSColor colorWithDeviceWhite:(float)t[0] / 255.0 alpha:(float)t[1] / 255.0];
-        }
-        else {
-            if (channel != kAlphaChannel) {
-                t[0] = averagedComponentValue(4, data, lwidth, lheight, 0, radius, newPos);
-                t[1] = averagedComponentValue(4, data, lwidth, lheight, 1, radius, newPos);
-                t[2] = averagedComponentValue(4, data, lwidth, lheight, 2, radius, newPos);
-            }
-            if (channel == kPrimaryChannels) t[3] = 255;
-            else t[3] = averagedComponentValue(4, data, lwidth, lheight, 3, radius, newPos);
-            if (channel == kAlphaChannel) { t[0] = t[1] = t[2] = t[3]; t[3] = 255; }
-            return [NSColor colorWithDeviceRed:(float)t[0] / 255.0 green:(float)t[1] / 255.0 blue:(float)t[2] / 255.0 alpha:(float)t[3] / 255.0];
-        }
+        t[0] = [avg redComponent];
+        t[1] = [avg alphaComponent];
+        return [NSColor colorWithDeviceWhite:(float)t[0] alpha:(float)t[1]];
+    }
+    else {
+        NSColor *avg = averagedPixelValue(pp,radius,pos);
+        if(avg==NULL)
+            return NULL;
+        t[0] = [avg redComponent];
+        t[1] = [avg greenComponent];
+        t[2] = [avg blueComponent];
+        t[3] = [avg alphaComponent];
+        return [NSColor colorWithDeviceRed:(float)t[0] green:(float)t[1] blue:(float)t[2] alpha:(float)t[3]];
+    }
+}
+
+- (NSColor *)getColor
+{
+    if ([options mergedSample]) {
+        return [self getSample:[document whiteboard]];
+    }
+    else {
+        return [self getSample:[[document contents] activeLayer]];
     }
 }
 
@@ -112,6 +118,26 @@
 - (void)setOptions:(AbstractOptions*)newoptions
 {
     options = (EyedropOptions*)newoptions;
+}
+
+- (void)updateCursor:(IntPoint)p cursors:(SeaCursors *)cursors
+{
+    IntRect r;
+    if([options mergedSample]) {
+        r = [[document contents] rect];
+    } else {
+        r = [[[document contents] activeLayer] globalRect];
+    }
+    if(!IntPointInRect(p, r)) {
+        [[cursors noopCursor] set];
+        return;
+    }
+    return [[self toolCursor:cursors] set];
+}
+
+- (NSCursor*)toolCursor:(SeaCursors *)cursors
+{
+    return [cursors eyedropCursor];
 }
 
 

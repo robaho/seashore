@@ -33,6 +33,11 @@
 	return [opacitySlider intValue] * 2.55;
 }
 
+- (BOOL)brushIsErasing
+{
+    return TRUE;
+}
+
 - (BOOL)mimicBrush
 {
 	return [mimicBrushCheckbox state];

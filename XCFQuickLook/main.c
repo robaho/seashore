@@ -24,6 +24,9 @@
 // Don't modify this line
 #define PLUGIN_ID "3D2CAAA6-E5C4-4A59-A6C0-3A13B2F30FB8"
 
+extern CGColorSpaceRef rgbCS;
+extern CGColorSpaceRef grayCS;
+
 //
 // Below is the generic glue code for all plug-ins.
 //
@@ -81,7 +84,6 @@ static QLGeneratorInterfaceStruct myInterfaceFtbl = {
     NULL
 };
 
-
 // -----------------------------------------------------------------------------
 //	AllocQuickLookGeneratorPluginType
 // -----------------------------------------------------------------------------
@@ -92,6 +94,9 @@ static QLGeneratorInterfaceStruct myInterfaceFtbl = {
 QuickLookGeneratorPluginType *AllocQuickLookGeneratorPluginType(CFUUIDRef inFactoryID)
 {
     QuickLookGeneratorPluginType *theNewInstance;
+
+    rgbCS = CGColorSpaceCreateDeviceRGB();
+    grayCS = CGColorSpaceCreateDeviceGray();
 
     theNewInstance = (QuickLookGeneratorPluginType *)malloc(sizeof(QuickLookGeneratorPluginType));
     memset(theNewInstance,0,sizeof(QuickLookGeneratorPluginType));

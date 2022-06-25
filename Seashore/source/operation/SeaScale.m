@@ -8,28 +8,23 @@
 #import "SeaHelpers.h"
 #import "SeaSelection.h"
 #import "Units.h"
-#import "Bitmap.h"
+
+@implementation ScaleUndoRecord
+- (ScaleUndoRecord*)init
+{
+    self = [super init];
+    records = [NSMutableArray array];
+    return self;
+}
+@end
+@implementation ScaleSnapshotUndoRecord
+@end
 
 @implementation SeaScale
 
 - (id)init
 {
-	undoMax = kNumberOfScaleRecordsPerMalloc;
-	undoRecords = malloc(undoMax * sizeof(ScaleUndoRecord));
-	undoCount = 0;
-	
 	return self;
-}
-
-- (void)dealloc
-{
-	int i;
-	
-	for (i = 0; i < undoCount; i++) {
-		free(undoRecords[i].indicies);
-		free(undoRecords[i].rects);
-	}
-	free(undoRecords);
 }
 
 - (void)run:(BOOL)global
@@ -53,10 +48,7 @@
 	}
 	else {
 		layer = [contents layer:workingIndex];
-		if ([layer floating])
-			[selectionLabel setStringValue:LOCALSTR(@"floating", @"Floating Selection")];
-		else
-			[selectionLabel setStringValue:[NSString stringWithFormat:@"%@", [layer name]]];
+        [selectionLabel setStringValue:[NSString stringWithFormat:@"%@", [layer name]]];
 	}
 	
 	// Set paper name
@@ -151,8 +143,10 @@
 
 - (void)scaleToWidth:(int)width height:(int)height xorg:(int)xorg yorg:(int)yorg moving:(BOOL)isMoving interpolation:(int)interpolation index:(int)index undoRecord:(ScaleUndoRecord *)undoRecord
 {
-	id contents = [document contents], curLayer;
-	int whichLayer, count, oldWidth, oldHeight;
+    SeaContent *contents = [document contents];
+    SeaLayer *curLayer;
+
+	int whichLayer, oldWidth, oldHeight;
 	int layerCount = [contents layerCount];
 	float xScale, yScale;
 	int x, y;
@@ -188,25 +182,12 @@
 	// Change the document's size if required
 	if (index == kAllLayers)
 		[[document contents] setWidth:width height:height];
-	
-	// Create room for the snapshot indicies
-	if (undoRecord) {
-		if (index == kAllLayers) {
-			undoRecord->indicies = malloc(layerCount * sizeof(int));
-			undoRecord->rects = malloc(layerCount * sizeof(IntRect));
-		}
-		else {
-			undoRecord->indicies = malloc(sizeof(int));
-			undoRecord->rects = malloc(sizeof(IntRect));		
-		}
-	}
-	
+
 	// Determine the scaling rate
 	xScale = ((float)width / (float)oldWidth);
 	yScale = ((float)height / (float)oldHeight);
 	[[document selection] scaleSelectionHorizontally:xScale vertically:yScale interpolation:interpolation];
-	count = 0;
-	
+
 	// Go through each layer
 	for (whichLayer = 0; whichLayer < layerCount; whichLayer++) {
 	
@@ -218,16 +199,14 @@
 			
 			// Take a manual snapshot (recording the snapshot index)
 			if (undoRecord) {
-				undoRecord->indicies[count] = [[curLayer seaLayerUndo] takeSnapshot:IntMakeRect(0, 0, [(SeaLayer *)curLayer width], [(SeaLayer *)curLayer height]) automatic:NO];
-				undoRecord->rects[count].origin.x = [curLayer xoff];
-				undoRecord->rects[count].origin.y = [curLayer yoff];
-				undoRecord->rects[count].size.width = [(SeaLayer *)curLayer width];
-				undoRecord->rects[count].size.height = [(SeaLayer *)curLayer height];
-				count++;
+                ScaleSnapshotUndoRecord *r = [[ScaleSnapshotUndoRecord alloc] init];
+				r->snapshot = [[curLayer seaLayerUndo] takeSnapshot:IntMakeRect(0, 0, [curLayer width], [curLayer height]) automatic:NO];
+                r->rect = [curLayer globalRect];
+                [undoRecord->records addObject:r];
 			}
 						
 			// Change the layer's size
-			[curLayer setWidth:[(SeaLayer *)curLayer width] * xScale height:[(SeaLayer *)curLayer height] * yScale interpolation:interpolation];
+			[curLayer setWidth:[curLayer width] * xScale height:[curLayer height] * yScale interpolation:interpolation];
 			if (index == kAllLayers){
 				[curLayer setOffsets:IntMakePoint([curLayer xoff] * xScale, [curLayer yoff] * yScale)];
 			}else if(isMoving) {
@@ -240,7 +219,6 @@
 		}
 	}
 	
-	// Adjust for floating selections
 	if (index != kAllLayers) {
 		curLayer = [[document contents] layer:index];
 	}
@@ -249,137 +227,119 @@
 
 - (void)scaleToWidth:(int)width height:(int)height interpolation:(int)interpolation index:(int)index
 {
-	ScaleUndoRecord undoRecord;
+    ScaleUndoRecord *undoRecord = [[ScaleUndoRecord alloc] init];
 	
 	// Do the scale
-	[self scaleToWidth:width height:height xorg: 0 yorg: 0 moving: NO interpolation:interpolation index:index undoRecord:&undoRecord];
+	[self scaleToWidth:width height:height xorg: 0 yorg: 0 moving: NO interpolation:interpolation index:index undoRecord:undoRecord];
 
-	// Allow the undo
-	if (undoCount + 1 > undoMax) {
-		undoMax += kNumberOfScaleRecordsPerMalloc;
-		undoRecords = realloc(undoRecords, undoMax * sizeof(ScaleUndoRecord));
-	}
-	undoRecords[undoCount] = undoRecord;
-	[[[document undoManager] prepareWithInvocationTarget:self] undoScale:undoCount];
-	undoCount++;
-	
+	[[[document undoManager] prepareWithInvocationTarget:self] undoScale:undoRecord];
+
 	// Clear selection
 	[[document selection] clearSelection];
 	
 	// Do appropriate updating
 	if (index == kAllLayers)
-		[[document helpers] boundariesAndContentChanged:YES];
+		[[document helpers] boundariesAndContentChanged];
 	else
 		[[document helpers] layerBoundariesChanged:index];
 }
 
 - (void)scaleToWidth:(int)width height:(int)height xorg:(int)xorg yorg:(int)yorg interpolation:(int)interpolation index:(int)index
 {
-	ScaleUndoRecord undoRecord;
+    ScaleUndoRecord *undoRecord = [[ScaleUndoRecord alloc] init];
 	
 	// Do the scale
-	[self scaleToWidth:width height:height xorg: xorg yorg: yorg moving: YES interpolation:interpolation index:index undoRecord:&undoRecord];
+	[self scaleToWidth:width height:height xorg: xorg yorg: yorg moving: YES interpolation:interpolation index:index undoRecord:undoRecord];
 	
-	// Allow the undo
-	if (undoCount + 1 > undoMax) {
-		undoMax += kNumberOfScaleRecordsPerMalloc;
-		undoRecords = realloc(undoRecords, undoMax * sizeof(ScaleUndoRecord));
-	}
-	undoRecords[undoCount] = undoRecord;
-	[[[document undoManager] prepareWithInvocationTarget:self] undoScale:undoCount];
-	undoCount++;
-	
+	[[[document undoManager] prepareWithInvocationTarget:self] undoScale:undoRecord];
+
 	// Clear selection
 	[[document selection] clearSelection];
 	
 	// Do appropriate updating
 	if (index == kAllLayers){
-		[[document helpers] boundariesAndContentChanged:YES];
+		[[document helpers] boundariesAndContentChanged];
 	}else{
 		[[document helpers] layerBoundariesChanged:index];
 	}
 }
 
-- (void)undoScale:(int)undoIndex
+- (void)undoScale:(ScaleUndoRecord*)undoRecord
 {
-	id contents = [document contents], curLayer;
+    SeaContent *contents = [document contents];
+    SeaLayer *curLayer;
+
 	int whichLayer;
 	int layerCount = [contents layerCount];
-	ScaleUndoRecord undoRecord;
 	int changeX, changeY;
 	
-	// Get the undo record
-	undoRecord = undoRecords[undoIndex];
-
 	// We have different responses depending on whether the image is scaled or not
-	if (undoRecord.isScaled) {
+	if (undoRecord->isScaled) {
 		
-		if (undoRecord.index == kAllLayers) {
+		if (undoRecord->index == kAllLayers) {
 			
 			// Change the document's size
-			[[document contents] setWidth:undoRecord.unscaledWidth height:undoRecord.unscaledHeight];
+			[[document contents] setWidth:undoRecord->unscaledWidth height:undoRecord->unscaledHeight];
 			
 			// Go through each layer
 			for (whichLayer = 0; whichLayer < layerCount; whichLayer++) {
 			
 				// Determine the current layer
 				curLayer = [[document contents] layer:whichLayer];
+
+                ScaleSnapshotUndoRecord *r = undoRecord->records[whichLayer];
 				
 				// Change the layer's size
-				changeX = undoRecord.rects[whichLayer].size.width - [(SeaLayer *)curLayer width];
-				changeY = undoRecord.rects[whichLayer].size.height - [(SeaLayer *)curLayer height];
+				changeX = r->rect.size.width - [curLayer width];
+				changeY = r->rect.size.height - [curLayer height];
 				[curLayer setMarginLeft:0 top:0 right:changeX bottom:changeY];
-				[curLayer setOffsets:undoRecord.rects[whichLayer].origin];
-				[[curLayer seaLayerUndo] restoreSnapshot:undoRecord.indicies[whichLayer] automatic:NO];
+				[curLayer setOffsets:r->rect.origin];
+				[[curLayer seaLayerUndo] restoreSnapshot:r->snapshot automatic:NO];
 
 			}
-			
 			// Now the image is no longer scaled
-			undoRecord.isScaled = NO;
+			undoRecord->isScaled = NO;
 			
 		}
 		else {
 		
 			// Determine the current layer
-			curLayer = [[document contents] layer:undoRecord.index];
+			curLayer = [[document contents] layer:undoRecord->index];
+
+            ScaleSnapshotUndoRecord *r = undoRecord->records[0];
 			
 			// Change the layer's size
-			changeX = undoRecord.rects[0].size.width - [(SeaLayer *)curLayer width];
-			changeY = undoRecord.rects[0].size.height - [(SeaLayer *)curLayer height];
+			changeX = r->rect.size.width - [curLayer width];
+			changeY = r->rect.size.height - [curLayer height];
 			[curLayer setMarginLeft:0 top:0 right:changeX bottom:changeY];
-			[curLayer setOffsets:undoRecord.rects[0].origin];
-			[[curLayer seaLayerUndo] restoreSnapshot:undoRecord.indicies[0] automatic:NO];
+			[curLayer setOffsets:r->rect.origin];
+			[[curLayer seaLayerUndo] restoreSnapshot:r->snapshot automatic:NO];
 			
 			// Now the image is no longer scaled
-			undoRecord.isScaled = NO;
-		
-		}
+			undoRecord->isScaled = NO;
+        }
 	
 	}
 	else {
 		
 		// Otherwise just reverse the process with the information we stored on the original scaling
-		[self scaleToWidth:undoRecord.scaledWidth height:undoRecord.scaledHeight xorg: undoRecord.scaledXOrg yorg: undoRecord.scaledYOrg moving: undoRecord.isMoving interpolation:undoRecord.interpolation index:undoRecord.index undoRecord:NULL];
-		undoRecord.isScaled = YES;
+		[self scaleToWidth:undoRecord->scaledWidth height:undoRecord->scaledHeight xorg: undoRecord->scaledXOrg yorg: undoRecord->scaledYOrg moving: undoRecord->isMoving interpolation:undoRecord->interpolation index:undoRecord->index undoRecord:NULL];
+		undoRecord->isScaled = YES;
 	
 	}
-	
-	// Put the updated undo record back and allow the undo
-	undoRecords[undoIndex] = undoRecord;
-	[[[document undoManager] prepareWithInvocationTarget:self] undoScale:undoIndex];
+	[[[document undoManager] prepareWithInvocationTarget:self] undoScale:undoRecord];
 	
 	// Clear selection
 	[[document selection] clearSelection];
 	
 	// Do appropriate updating
-	if (undoRecord.index == kAllLayers)
-		[[document helpers] boundariesAndContentChanged:YES];
+	if (undoRecord->index == kAllLayers)
+		[[document helpers] boundariesAndContentChanged];
 	else
-		[[document helpers] layerBoundariesChanged:undoRecord.index];
+		[[document helpers] layerBoundariesChanged:undoRecord->index];
 	
-	// Adjust for floating selections
-	if (undoRecord.index != kAllLayers) {
-		curLayer = [[document contents] layer:undoRecord.index];
+	if (undoRecord->index != kAllLayers) {
+		curLayer = [[document contents] layer:undoRecord->index];
 	}
 }
 
@@ -510,7 +470,7 @@
 	switch ([[presetsMenu selectedItem] tag]) {
 		case 0:
 			pboard = [NSPasteboard generalPasteboard];
-			availableType = [pboard availableTypeFromArray:[NSArray arrayWithObjects:NSTIFFPboardType, NSPICTPboardType, NULL]];
+			availableType = [pboard availableTypeFromArray:[NSArray arrayWithObjects:NSTIFFPboardType, NULL]];
 			if (availableType) {
 				image = [[NSImage alloc] initWithData:[pboard dataForType:availableType]];
 				size = NSSizeMakeIntSize([image size]);

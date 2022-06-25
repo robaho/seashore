@@ -8,8 +8,6 @@
 	<string>Seashore is unable to open the given SVG file because the SVG Importer is not installed. The installer for this importer can be found on Seashore&apos;s website.</string>
 	<key>all group</key>
 	<string>All</string>
-	<key>anchor layer</key>
-	<string>Anchor Layer</string>
 	<key>background</key>
 	<string>Background</string>
 	<key>gif trans</key>
@@ -72,8 +70,6 @@
 	<string>Flattened Layer</string>
 	<key>float selection</key>
 	<string>Float Selection</string>
-	<key>floating</key>
-	<string>Floating Selection</string>
 	<key>foreground</key>
 	<string>Foreground</string>
 	<key>general</key>
@@ -178,8 +174,6 @@
 	<string>Spacing: %d%%</string>
 	<key>strange res message</key>
 	<string>This image has an unusual resolution. As such, it may look different to what is expected at 100% zoom. To fix this use &quot;Image &gt; Resolution...&quot; and set to 72 x 72 dpi.</string>
-	<key>tablet bug message</key>
-	<string>There is a bug in Mac OS 10.4 that causes some tablets to incorrectly register their first touch at full strength. A workaround is provided in the &quot;Preferences&quot; dialog however the best solution is to upgrade to Mac OS 10.4.6 or later.</string>
 	<key>tolerance</key>
 	<string>Tolerance: %d</string>
 	<key>transparent</key>

@@ -12,6 +12,19 @@
 - (void)awakeFromNib
 {
 	[mergedCheckbox setState:[gUserDefaults boolForKey:@"clone merged"]];
+
+    int value;
+    if ([gUserDefaults objectForKey:@"clone opacity"] == NULL) {
+        value = 100;
+    }
+    else {
+        value = [gUserDefaults integerForKey:@"clone opacity"];
+        if (value < [opacitySlider minValue] || value > [opacitySlider maxValue])
+            value = 100;
+    }
+    [opacitySlider setIntValue:value];
+    [opacityLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"opacity", @"Opacity: %d%%"), value]];
+
 }
 
 - (BOOL)mergedSample
@@ -19,14 +32,23 @@
 	return [mergedCheckbox state];
 }
 
+- (IBAction)opacityChanged:(id)sender {
+    [opacityLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"opacity", @"Opacity: %d%%"), [opacitySlider intValue]]];
+}
+
+- (int)opacity
+{
+    return [opacitySlider intValue] * 2.55;
+}
+
 - (IBAction)mergedChanged:(id)sender
 {
 	id cloneTool = [[document tools] getTool:kCloneTool];
 
-	[cloneTool unset];
+	[cloneTool endLineDrawing];
 }
 
-- (void)update
+- (IBAction)update:(id)sender
 {
 	id cloneTool = [[document tools] getTool:kCloneTool];
 	IntPoint sourcePoint;
@@ -46,6 +68,7 @@
 - (void)shutdown
 {
 	[gUserDefaults setObject:[self mergedSample] ? @"YES" : @"NO" forKey:@"clone merged"];
+    [gUserDefaults setInteger:[opacitySlider intValue] forKey:@"clone opacity"];
 }
 
 @end

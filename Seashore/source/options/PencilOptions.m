@@ -20,6 +20,15 @@
 			value = 1;
 	}
 	[sizeSlider setIntValue:value];
+
+    if ([gUserDefaults objectForKey:@"pencil circular tip"] == NULL) {
+        [circularTip setState:NSOnState];
+    }
+    else {
+        bool value = [gUserDefaults boolForKey:@"pencil circular tip"];
+        [circularTip setState:(value ? NSOnState : NSOffState)];
+    }
+
 	isErasing = NO;
 }
 
@@ -28,51 +37,21 @@
 	return [sizeSlider intValue];
 }
 
+- (bool) circularTip
+{
+    return [circularTip state] == NSOnState;
+}
+
 - (void)setPencilSize:(int)pencilSize
 {
     [sizeSlider setIntValue:pencilSize];
-}
-
-- (BOOL)pencilIsErasing
-{
-	return isErasing;
-}
-
-- (void)updateModifiers:(unsigned int)modifiers
-{
-	[super updateModifiers:modifiers];
-	int modifier = [super modifier];
-	
-	switch (modifier) {
-		case kAltModifier:
-			isErasing = YES;
-			break;
-		default:
-			isErasing = NO;
-			break;
-	}
-}
-
-- (IBAction)modifierPopupChanged:(id)sender
-{
-	switch ([[sender selectedItem] tag]) {
-		case kAltModifier:
-			isErasing = YES;
-			break;
-		default:
-			isErasing = NO;
-			break;
-	}
-	NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
-	int i;
-	for (i = 0; i < [documents count]; i++) {
-		[[(SeaDocument *)[documents objectAtIndex:i] docView] setNeedsDisplay:YES];
-	}
+    [self update:sizeSlider];
 }
 
 - (void)shutdown
 {
 	[gUserDefaults setInteger:[sizeSlider intValue] forKey:@"pencil size"];
+    [gUserDefaults setBool:[self circularTip] forKey:@"pencil circular tip"];
 }
 
 @end

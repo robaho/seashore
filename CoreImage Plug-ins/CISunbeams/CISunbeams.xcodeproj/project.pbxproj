@@ -7,27 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2B80E9A5243566A30046979F /* CISunbeams.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B80E9A3243566A20046979F /* CISunbeams.xib */; };
 		2B8BD46921ECEA7500FD9AC5 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B8BD46621ECEA7500FD9AC5 /* Cocoa.framework */; };
-		2B8BD46A21ECEA7500FD9AC5 /* Plugins.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B8BD46721ECEA7500FD9AC5 /* Plugins.framework */; };
 		2B8BD46B21ECEA7500FD9AC5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B8BD46821ECEA7500FD9AC5 /* QuartzCore.framework */; };
+		2BB5DFE028135BDD00EC3014 /* Plugins.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BB5DFDF28135BDD00EC3014 /* Plugins.framework */; };
 		A831E1410789471D0009080F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A831E13F0789471D0009080F /* Localizable.strings */; };
 		A8E1C2FC0C37DFC300A7F07A /* CISunbeamsClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E1C2FB0C37DFC300A7F07A /* CISunbeamsClass.m */; };
-		A8E1C6880C380AC300A7F07A /* SunbeamsColorWell.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E1C6870C380AC300A7F07A /* SunbeamsColorWell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2B80E9A4243566A20046979F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CISunbeams.xib; sourceTree = "<group>"; };
 		2B8BD46621ECEA7500FD9AC5 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		2B8BD46721ECEA7500FD9AC5 /* Plugins.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Plugins.framework; path = ../../Build/Products/Debug/Plugins.framework; sourceTree = "<group>"; };
 		2B8BD46821ECEA7500FD9AC5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		2BB5DFDF28135BDD00EC3014 /* Plugins.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Plugins.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BEC3E522810E48D00705A54 /* Plugins.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Plugins.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B6048680CD000E48DA /* Sunbeams+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Sunbeams+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A831E1400789471D0009080F /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A8E1C2FA0C37DFC300A7F07A /* CISunbeamsClass.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CISunbeamsClass.h; sourceTree = "<group>"; };
 		A8E1C2FB0C37DFC300A7F07A /* CISunbeamsClass.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = CISunbeamsClass.m; sourceTree = "<group>"; };
-		A8E1C6860C380AC200A7F07A /* SunbeamsColorWell.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SunbeamsColorWell.h; sourceTree = "<group>"; };
-		A8E1C6870C380AC300A7F07A /* SunbeamsColorWell.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = SunbeamsColorWell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,7 +33,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2B8BD46921ECEA7500FD9AC5 /* Cocoa.framework in Frameworks */,
-				2B8BD46A21ECEA7500FD9AC5 /* Plugins.framework in Frameworks */,
+				2BB5DFE028135BDD00EC3014 /* Plugins.framework in Frameworks */,
 				2B8BD46B21ECEA7500FD9AC5 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -58,7 +55,6 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				2B80E9A3243566A20046979F /* CISunbeams.xib */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				A831E13F0789471D0009080F /* Localizable.strings */,
 			);
@@ -70,8 +66,6 @@
 			children = (
 				A8E1C2FA0C37DFC300A7F07A /* CISunbeamsClass.h */,
 				A8E1C2FB0C37DFC300A7F07A /* CISunbeamsClass.m */,
-				A8E1C6860C380AC200A7F07A /* SunbeamsColorWell.h */,
-				A8E1C6870C380AC300A7F07A /* SunbeamsColorWell.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -87,6 +81,8 @@
 		2B1F6C6721D7E11B00D6F371 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2BB5DFDF28135BDD00EC3014 /* Plugins.framework */,
+				2BEC3E522810E48D00705A54 /* Plugins.framework */,
 				2B8BD46621ECEA7500FD9AC5 /* Cocoa.framework */,
 				2B8BD46821ECEA7500FD9AC5 /* QuartzCore.framework */,
 				2B8BD46721ECEA7500FD9AC5 /* Plugins.framework */,
@@ -146,7 +142,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A831E1410789471D0009080F /* Localizable.strings in Resources */,
-				2B80E9A5243566A30046979F /* CISunbeams.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -158,21 +153,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				A8E1C2FC0C37DFC300A7F07A /* CISunbeamsClass.m in Sources */,
-				A8E1C6880C380AC300A7F07A /* SunbeamsColorWell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		2B80E9A3243566A20046979F /* CISunbeams.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2B80E9A4243566A20046979F /* en */,
-			);
-			name = CISunbeams.xib;
-			sourceTree = "<group>";
-		};
 		A831E13F0789471D0009080F /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -223,13 +209,9 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				COPY_PHASE_STRIP = NO;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_AUTO_VECTORIZATION = YES;
-				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_VERSION_i386 = 4.0;
 				GCC_VERSION_ppc = 4.0;
@@ -282,8 +264,6 @@
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_AUTO_VECTORIZATION = YES;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_VERSION_i386 = 4.0;
 				GCC_VERSION_ppc = 4.0;

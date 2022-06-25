@@ -1,4 +1,4 @@
-#import "Globals.h"
+#import "Seashore.h"
 #import "BucketOptions.h"
 #import "AbstractTool.h"
 
@@ -64,11 +64,8 @@
 				YES if the tolerance settings should be use, NO if the tolerance
 				settings should be ignored the bucket should fill all of the
 				selected area or document. 
-	@param		delay
-				YES if the application of the filled overlay should be postponed
-				until the caller calls applyOverlay, NO otherwise.
 */
-- (void)fillAtPoint:(IntPoint)point useTolerance:(BOOL)useTolerance delay:(BOOL)delay;
+- (void)fillAtPoint:(IntPoint)point useTolerance:(BOOL)useTolerance;
 
 /*!
 	@method		startPoint

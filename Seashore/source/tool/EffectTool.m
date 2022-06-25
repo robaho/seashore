@@ -7,6 +7,9 @@
 #import "SeaLayer.h"
 #import "SeaTools.h"
 #import "EffectOptions.h"
+#import "SeaDocument.h"
+#import "SeaSelection.h"
+#import "SeaHelpers.h"
 
 @implementation EffectTool
 
@@ -23,31 +26,88 @@
 	return self;
 }
 
+- (BOOL)hasLastEffect
+{
+    return lastPlugin!=NULL && currentPlugin==NULL;
+}
+
+- (IntRect)selection
+{
+    if ([[document selection] active])
+        return [[document selection] localRect];
+    else
+        return IntMakeRect(0, 0, [[[document contents] activeLayer] width], [[[document contents] activeLayer] height]);
+}
+
+- (void)execute
+{
+    NSLog(@"executing plugin");
+    if(count==[currentPlugin points]) {
+        [currentPlugin execute];
+        [[document helpers] overlayChanged:[self selection]];
+    }
+}
+
+- (void)clearEffect
+{
+    currentPlugin = NULL;
+    [[document whiteboard] clearOverlay];
+    [options installPlugin:NULL View:NULL];
+}
+
+- (IBAction)apply:(id)sender
+{
+    if(!currentPlugin || count < [currentPlugin points])
+        return;
+    lastPlugin = currentPlugin;
+    [[document helpers] overlayChanged:[self selection]];
+    [[document helpers] applyOverlay];
+
+    [self clearEffect];
+}
+
+- (IBAction)reapply:(id)sender
+{
+    if(![self hasLastEffect])
+        return;
+
+    [lastPlugin execute];
+    [[document helpers] overlayChanged:[self selection]];
+    [[document helpers] applyOverlay];
+}
+
+- (void)clearPointDisplay
+{
+    int xoff = [[[document contents] activeLayer] xoff];
+    int yoff = [[[document contents] activeLayer] yoff];
+
+    for(int i=0;i<count;i++){
+        IntPoint where = points[i];
+        [[document docView] setNeedsDisplayInDocumentRect:IntEmptyRect(IntOffsetPoint(where,xoff,yoff)):26];
+    }
+}
+
 - (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event
 {
     if(!currentPlugin) {
         return;
     }
     
-	float xScale, yScale;
-	IntPoint layerOff;
-	
-	if (count < kMaxEffectToolPoints) {
+	if (count < [currentPlugin points]) {
+        lastPointTime = getCurrentMillis();
 		points[count] = where;
 		count++;
-		layerOff.x = [[[document contents] activeLayer] xoff];
-		layerOff.y = [[[document contents] activeLayer] yoff];
-		xScale = [[document contents] xscale];
-		yScale = [[document contents] yscale];
-		[[document docView] setNeedsDisplayInRect:NSMakeRect((where.x + layerOff.x) * xScale - 4, (where.y + layerOff.y) * yScale - 4, 8, 8)];
+        int xoff = [[[document contents] activeLayer] xoff];
+        int yoff = [[[document contents] activeLayer] yoff];
+        [[document docView] setNeedsDisplayInDocumentRect:IntEmptyRect(IntOffsetPoint(where,xoff,yoff)):26];
+
+        [options updateClickCount:self];
+        
+        if (count == [currentPlugin points]) {
+            [self performSelector:@selector(execute) withObject:NULL afterDelay:0];
+            [self performSelector:@selector(clearPointDisplay) withObject:NULL afterDelay:.5];
+        }
 	}
-	
-	if (count == [currentPlugin points]) {
-		[currentPlugin run];
-		count = 0;
-	}
-	
-	[options updateClickCount:self];
 }
 
 - (void)selectEffect:(PluginClass*)plugin
@@ -59,13 +119,32 @@
     }
     currentPlugin = [[plugin class] alloc];
     currentPlugin = [currentPlugin initWithManager:data];
-    [self reset];
+
+    if([currentPlugin respondsToSelector:@selector(initialize)]) {
+        pluginView = [currentPlugin initialize];
+    } else {
+        pluginView = NULL;
+    }
+    [options installPlugin:currentPlugin View:pluginView];
+
+    count = 0;
+
+    [self settingsChanged];
+}
+
+- (IBAction)reset:(id)sender
+{
+    if([currentPlugin points] && count>0) {
+        count = 0;
+        [options updateClickCount:self];
+        [[document whiteboard] clearOverlay];
+    } else {
+        [self clearEffect];
+    }
 }
 
 - (void)reset
 {
-	count = 0;
-	[options updateClickCount:self];
 }
 
 - (IntPoint)point:(int)index
@@ -78,7 +157,7 @@
 	return count;
 }
 
-- (IntRect) selectionRect
+- (IntRect)selectionRect
 {
 	NSLog(@"Effect tool invalidly getting asked its selection rect");
 	return IntMakeRect(0, 0, 0, 0);
@@ -95,6 +174,30 @@
 - (PluginClass*)plugin
 {
     return currentPlugin;
+}
+- (void)settingsChanged
+{
+    if(currentPlugin && count == [currentPlugin points]) {
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(execute) object:nil];
+        [self performSelector:@selector(execute) withObject:NULL afterDelay:.100 inModes:[NSArray arrayWithObject:NSRunLoopCommonModes]];
+    }
+}
+
+- (void)switchingTools:(BOOL)active
+{
+    if(!active)
+        [[document whiteboard] clearOverlay];
+    else {
+        [self settingsChanged];
+    }
+}
+
+- (BOOL)shouldDrawPoints
+{
+    if(!currentPlugin)
+        return FALSE;
+
+    return count<[currentPlugin points] || getCurrentMillis()-lastPointTime < 500;
 }
 
 

@@ -1,0 +1,313 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2B43BF7D27DD1DEC0094F84E /* XCFLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B43BF7427DD1DEC0094F84E /* XCFLayer.m */; };
+		2B43BF7E27DD1DEC0094F84E /* XCFContent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B43BF7527DD1DEC0094F84E /* XCFContent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2B43BF7F27DD1DEC0094F84E /* ParasiteData.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B43BF7627DD1DEC0094F84E /* ParasiteData.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2B43BF8127DD1DEC0094F84E /* XCFLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B43BF7827DD1DEC0094F84E /* XCFLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2B43BF8327DD1DEC0094F84E /* XCFContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B43BF7A27DD1DEC0094F84E /* XCFContent.m */; };
+		2B43BF8427DD1DEC0094F84E /* ParasiteData.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B43BF7B27DD1DEC0094F84E /* ParasiteData.m */; };
+		2B43BF8527DD1DEC0094F84E /* Seashore.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B43BF7C27DD1DEC0094F84E /* Seashore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2B6B80D127DD357800A2B3E5 /* SeaRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B6B80C927DD357800A2B3E5 /* SeaRenderer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2B6B80D227DD357800A2B3E5 /* SeaLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B6B80CA27DD357800A2B3E5 /* SeaLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2B6B80D327DD357800A2B3E5 /* SeaDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B6B80CB27DD357800A2B3E5 /* SeaDocument.m */; };
+		2B6B80D427DD357800A2B3E5 /* SeaRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B6B80CC27DD357800A2B3E5 /* SeaRenderer.m */; };
+		2B6B80D527DD357800A2B3E5 /* SeaContent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B6B80CD27DD357800A2B3E5 /* SeaContent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2B6B80D627DD357800A2B3E5 /* SeaDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B6B80CE27DD357800A2B3E5 /* SeaDocument.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2B6B80D727DD357800A2B3E5 /* SeaLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B6B80CF27DD357800A2B3E5 /* SeaLayer.m */; };
+		2B6B80D827DD357800A2B3E5 /* SeaContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B6B80D027DD357800A2B3E5 /* SeaContent.m */; };
+		2BB5E0302813641200EC3014 /* SeaComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BB5E02E2813641200EC3014 /* SeaComponents.framework */; };
+		2BB5E0322813641200EC3014 /* SeaLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BB5E02F2813641200EC3014 /* SeaLibrary.framework */; };
+		2BB5E0472813681400EC3014 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BB5E0462813681400EC3014 /* CoreGraphics.framework */; };
+		2BB5E0492813682D00EC3014 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BB5E0482813682D00EC3014 /* Cocoa.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		2B43BF5827DD1D670094F84E /* SeaMinimal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SeaMinimal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B43BF7427DD1DEC0094F84E /* XCFLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XCFLayer.m; path = ../Seashore/source/document/XCFLayer.m; sourceTree = "<group>"; };
+		2B43BF7527DD1DEC0094F84E /* XCFContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XCFContent.h; path = ../Seashore/source/document/XCFContent.h; sourceTree = "<group>"; };
+		2B43BF7627DD1DEC0094F84E /* ParasiteData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParasiteData.h; path = ../Seashore/source/extra/ParasiteData.h; sourceTree = "<group>"; };
+		2B43BF7827DD1DEC0094F84E /* XCFLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XCFLayer.h; path = ../Seashore/source/document/XCFLayer.h; sourceTree = "<group>"; };
+		2B43BF7A27DD1DEC0094F84E /* XCFContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XCFContent.m; path = ../Seashore/source/document/XCFContent.m; sourceTree = "<group>"; };
+		2B43BF7B27DD1DEC0094F84E /* ParasiteData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ParasiteData.m; path = ../Seashore/source/extra/ParasiteData.m; sourceTree = "<group>"; };
+		2B43BF7C27DD1DEC0094F84E /* Seashore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Seashore.h; path = ../Seashore/source/main/Seashore.h; sourceTree = "<group>"; };
+		2B6B80C927DD357800A2B3E5 /* SeaRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeaRenderer.h; sourceTree = "<group>"; };
+		2B6B80CA27DD357800A2B3E5 /* SeaLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeaLayer.h; sourceTree = "<group>"; };
+		2B6B80CB27DD357800A2B3E5 /* SeaDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeaDocument.m; sourceTree = "<group>"; };
+		2B6B80CC27DD357800A2B3E5 /* SeaRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeaRenderer.m; sourceTree = "<group>"; };
+		2B6B80CD27DD357800A2B3E5 /* SeaContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeaContent.h; sourceTree = "<group>"; };
+		2B6B80CE27DD357800A2B3E5 /* SeaDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeaDocument.h; sourceTree = "<group>"; };
+		2B6B80CF27DD357800A2B3E5 /* SeaLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeaLayer.m; sourceTree = "<group>"; };
+		2B6B80D027DD357800A2B3E5 /* SeaContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeaContent.m; sourceTree = "<group>"; };
+		2BB5E02E2813641200EC3014 /* SeaComponents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SeaComponents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BB5E02F2813641200EC3014 /* SeaLibrary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SeaLibrary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BB5E0462813681400EC3014 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		2BB5E0482813682D00EC3014 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2B43BF5527DD1D670094F84E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2BB5E0492813682D00EC3014 /* Cocoa.framework in Frameworks */,
+				2BB5E0472813681400EC3014 /* CoreGraphics.framework in Frameworks */,
+				2BB5E0322813641200EC3014 /* SeaLibrary.framework in Frameworks */,
+				2BB5E0302813641200EC3014 /* SeaComponents.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2B43BF4E27DD1D670094F84E = {
+			isa = PBXGroup;
+			children = (
+				2B6B80C827DD356500A2B3E5 /* Source */,
+				2B43BF7327DD1DDE0094F84E /* CopiedFromSeashore */,
+				2B43BF5927DD1D670094F84E /* Products */,
+				2B43BF8627DD1E1A0094F84E /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		2B43BF5927DD1D670094F84E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2B43BF5827DD1D670094F84E /* SeaMinimal.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2B43BF7327DD1DDE0094F84E /* CopiedFromSeashore */ = {
+			isa = PBXGroup;
+			children = (
+				2B43BF7C27DD1DEC0094F84E /* Seashore.h */,
+				2B43BF7527DD1DEC0094F84E /* XCFContent.h */,
+				2B43BF7A27DD1DEC0094F84E /* XCFContent.m */,
+				2B43BF7827DD1DEC0094F84E /* XCFLayer.h */,
+				2B43BF7427DD1DEC0094F84E /* XCFLayer.m */,
+				2B43BF7627DD1DEC0094F84E /* ParasiteData.h */,
+				2B43BF7B27DD1DEC0094F84E /* ParasiteData.m */,
+			);
+			name = CopiedFromSeashore;
+			sourceTree = "<group>";
+		};
+		2B43BF8627DD1E1A0094F84E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2BB5E0482813682D00EC3014 /* Cocoa.framework */,
+				2BB5E0462813681400EC3014 /* CoreGraphics.framework */,
+				2BB5E02E2813641200EC3014 /* SeaComponents.framework */,
+				2BB5E02F2813641200EC3014 /* SeaLibrary.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2B6B80C827DD356500A2B3E5 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				2B6B80CD27DD357800A2B3E5 /* SeaContent.h */,
+				2B6B80D027DD357800A2B3E5 /* SeaContent.m */,
+				2B6B80CE27DD357800A2B3E5 /* SeaDocument.h */,
+				2B6B80CB27DD357800A2B3E5 /* SeaDocument.m */,
+				2B6B80CA27DD357800A2B3E5 /* SeaLayer.h */,
+				2B6B80CF27DD357800A2B3E5 /* SeaLayer.m */,
+				2B6B80C927DD357800A2B3E5 /* SeaRenderer.h */,
+				2B6B80CC27DD357800A2B3E5 /* SeaRenderer.m */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		2B43BF5327DD1D670094F84E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2B43BF7E27DD1DEC0094F84E /* XCFContent.h in Headers */,
+				2B43BF8527DD1DEC0094F84E /* Seashore.h in Headers */,
+				2B6B80D227DD357800A2B3E5 /* SeaLayer.h in Headers */,
+				2B6B80D127DD357800A2B3E5 /* SeaRenderer.h in Headers */,
+				2B6B80D627DD357800A2B3E5 /* SeaDocument.h in Headers */,
+				2B6B80D527DD357800A2B3E5 /* SeaContent.h in Headers */,
+				2B43BF8127DD1DEC0094F84E /* XCFLayer.h in Headers */,
+				2B43BF7F27DD1DEC0094F84E /* ParasiteData.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		2B43BF5727DD1D670094F84E /* SeaMinimal */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2B43BF5F27DD1D670094F84E /* Build configuration list for PBXNativeTarget "SeaMinimal" */;
+			buildPhases = (
+				2B43BF5327DD1D670094F84E /* Headers */,
+				2B43BF5427DD1D670094F84E /* Sources */,
+				2B43BF5527DD1D670094F84E /* Frameworks */,
+				2B43BF5627DD1D670094F84E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SeaMinimal;
+			productName = SeaMinimal;
+			productReference = 2B43BF5827DD1D670094F84E /* SeaMinimal.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2B43BF4F27DD1D670094F84E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1320;
+				TargetAttributes = {
+					2B43BF5727DD1D670094F84E = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
+				};
+			};
+			buildConfigurationList = 2B43BF5227DD1D670094F84E /* Build configuration list for PBXProject "SeaMinimal" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2B43BF4E27DD1D670094F84E;
+			productRefGroup = 2B43BF5927DD1D670094F84E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2B43BF5727DD1D670094F84E /* SeaMinimal */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2B43BF5627DD1D670094F84E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2B43BF5427DD1D670094F84E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2B43BF8327DD1DEC0094F84E /* XCFContent.m in Sources */,
+				2B6B80D327DD357800A2B3E5 /* SeaDocument.m in Sources */,
+				2B6B80D727DD357800A2B3E5 /* SeaLayer.m in Sources */,
+				2B6B80D827DD357800A2B3E5 /* SeaContent.m in Sources */,
+				2B43BF7D27DD1DEC0094F84E /* XCFLayer.m in Sources */,
+				2B6B80D427DD357800A2B3E5 /* SeaRenderer.m in Sources */,
+				2B43BF8427DD1DEC0094F84E /* ParasiteData.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		2B43BF5D27DD1D670094F84E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					OTHER_PLUGIN,
+					"DEBUG=1",
+				);
+			};
+			name = Debug;
+		};
+		2B43BF5E27DD1D670094F84E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				GCC_PREPROCESSOR_DEFINITIONS = OTHER_PLUGIN;
+			};
+			name = Release;
+		};
+		2B43BF6027DD1D670094F84E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.seaminimal;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Debug;
+		};
+		2B43BF6127DD1D670094F84E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.seaminimal;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2B43BF5227DD1D670094F84E /* Build configuration list for PBXProject "SeaMinimal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2B43BF5D27DD1D670094F84E /* Debug */,
+				2B43BF5E27DD1D670094F84E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2B43BF5F27DD1D670094F84E /* Build configuration list for PBXNativeTarget "SeaMinimal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2B43BF6027DD1D670094F84E /* Debug */,
+				2B43BF6127DD1D670094F84E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2B43BF4F27DD1D670094F84E /* Project object */;
+}

@@ -1,4 +1,4 @@
-#import "Rects.h"
+#import <SeaLibrary/Rects.h>
 
 /*!
 	@enum		Overlay behaviours
@@ -54,6 +54,13 @@ enum {
 	@result		Returns a IntRect indicating the active selection.
 */
 - (IntRect)selection;
+
+/*!
+ @method        bitmap
+ @discussion    Returns the bitmap data of the layer. Caller must release.
+ @result        Returns a bitmap of the layer.
+ */
+- (CGImageRef)bitmap;
 
 /*!
 	@method		data
@@ -188,5 +195,10 @@ enum {
 	@discussion	Cancel the plug-in changes.
 */
 - (void)cancel;
+
+/*!
+        @discussion callback to let tool know the plugin settings changed
+ */
+- (void)settingsChanged;
 
 @end

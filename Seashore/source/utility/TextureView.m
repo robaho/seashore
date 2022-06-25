@@ -66,16 +66,22 @@
                 
                 // Draw the thumbnail
                 thumbnail = [[textures objectAtIndex:elemNo] thumbnail];
-                [thumbnail compositeToPoint:NSMakePoint(i * kTexturePreviewSize + kTexturePreviewSize / 2 - [thumbnail size].width / 2, j * kTexturePreviewSize + kTexturePreviewSize / 2 + [thumbnail size].height / 2) operation:NSCompositeSourceOver];
-                
+
+                int w = [thumbnail size].width;
+                int h = [thumbnail size].height;
+
+                NSRect rect0 = NSMakeRect(elemRect.origin.x + (kTexturePreviewSize-w)/2,elemRect.origin.y+(kTexturePreviewSize-h)/2,w,h);
+
+                [thumbnail drawInRect:rect0];
+
                 if (elemNo == activeTextureIndex) {
-                    [NSBezierPath setDefaultLineWidth:4];
+                    [NSBezierPath setDefaultLineWidth:2];
                     [[NSColor selectedControlColor] set];
                 } else {
-                    [NSBezierPath setDefaultLineWidth:1];
+                    [NSBezierPath setDefaultLineWidth:2];
                     [[NSColor gridColor] set];
                 }
-                [[NSBezierPath bezierPathWithRect:NSInsetRect(elemRect,1,1)] stroke];
+                [[NSBezierPath bezierPathWithRect:NSInsetRect(elemRect,2,2)] stroke];
 			}
 		}
 	}

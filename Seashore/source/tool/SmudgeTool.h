@@ -1,6 +1,8 @@
-#import "Globals.h"
+#import "Seashore.h"
 #import "SmudgeOptions.h"
-#import "AbstractTool.h"
+#import "AbstractBrushTool.h"
+#import "DebugView.h"
+#import <Accelerate/Accelerate.h>
 
 /*!
 	@class		SmudgeTool
@@ -12,22 +14,10 @@
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
 
-@interface SmudgeTool : AbstractTool {
-	
-	// The accumulated data
-	unsigned char *accumData;
-	
-	// The last point we've been and the last point a brush was plotted (there is a difference)
-	NSPoint lastPoint, lastPlotPoint;
-	
-	// The distance travelled by the brush so far
-	double distance;
-	
-	// The last where recorded
-	IntPoint lastWhere;
-    
+@interface SmudgeTool : AbstractBrushTool {
     SmudgeOptions *options;
-	
+    unsigned char *accumData;
+    int rate;
 }
 
 /*!
@@ -72,29 +62,4 @@
 				The mouse up event.
 */
 - (void)mouseUpAt:(IntPoint)where withEvent:(NSEvent *)event;
-
-/*!
-	@method		startStroke:
-	@discussion	Starts a stroke at a specified point.
-	@param		where
-				Where in the document to start the stroke at.
-*/
-- (void)startStroke:(IntPoint)where;
-
-/*!
-	@method		intermediateStroke:
-	@discussion	Specifies an intermediate point in the stroke.
-	@param		Where in the document to place the intermediate
-				stroke.
-*/
-- (void)intermediateStroke:(IntPoint)where;
-
-/*!
-	@method		endStroke:
-	@discussion	Ends a stroke at a specified point.
-	@param		where
-				Where in the document to end the stroke at.
-*/
-- (void)endStroke:(IntPoint)where;
-
 @end

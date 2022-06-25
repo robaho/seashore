@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -312,34 +312,6 @@ CA
                             <menuItem isSeparatorItem="YES" id="3587">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Select All" tag="270" keyEquivalent="a" id="172">
-                                <connections>
-                                    <action selector="selectAll:" target="-1" id="179"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Select Alpha" tag="273" keyEquivalent="A" id="1849">
-                                <connections>
-                                    <action selector="selectOpaque:" target="-1" id="1850"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Select Inverse" tag="272" keyEquivalent="`" id="1354">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="selectInverse:" target="-1" id="1403"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Select None" tag="271" id="1355">
-                                <string key="keyEquivalent" base64-UTF8="YES">
-Gw
-</string>
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="selectNone:" target="-1" id="1402"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="174">
-                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                            </menuItem>
                             <menuItem title="Spelling" id="184">
                                 <menu key="submenu" title="Spelling" id="185">
                                     <items>
@@ -378,7 +350,7 @@ Gw
                                     <action selector="setResolution:" target="501" id="565"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Image Boundaries..." tag="321" keyEquivalent="c" id="572">
+                            <menuItem title="Image Size..." tag="321" keyEquivalent="c" id="572">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                 <connections>
                                     <action selector="setMargins:" target="501" id="573"/>
@@ -524,11 +496,6 @@ Gw
                                     <action selector="setLayerRotation:" target="501" id="1951"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Layer Boundaries..." tag="330" id="1268">
-                                <connections>
-                                    <action selector="setLayerMargins:" target="501" id="1287"/>
-                                </connections>
-                            </menuItem>
                             <menuItem title="Trim Boundaries" id="3710">
                                 <menu key="submenu" title="Trim Boundaries" id="3711">
                                     <items>
@@ -543,7 +510,7 @@ Gw
                                                 <action selector="condenseToSelection:" target="501" id="7253"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Expand to Document" tag="360" keyEquivalent="T" id="3713">
+                                        <menuItem title="Expand/Condense to Document" tag="360" keyEquivalent="T" id="3713">
                                             <connections>
                                                 <action selector="expandLayer:" target="501" id="3714"/>
                                             </connections>
@@ -552,6 +519,21 @@ Gw
                                 </menu>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="1674">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Flip Layer Horizontally" id="RBh-wV-9wb">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="flipLayerHorizontally:" target="501" id="GpG-89-Uii"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Flip Layer Vertically" id="Hen-Wl-6ig">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="flipLayerVertically:" target="501" id="fNY-SL-bl3"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="kNQ-12-v1t">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
                             <menuItem title="New Layer" tag="217" keyEquivalent="N" id="3622">
@@ -700,9 +682,9 @@ CA
                 <menuItem title="Selection" id="1405">
                     <menu key="submenu" title="Selection" id="1406">
                         <items>
-                            <menuItem title="Float Selection" tag="300" keyEquivalent="f" id="1445">
+                            <menuItem title="New Layer from Selection" tag="300" keyEquivalent="f" id="1445">
                                 <connections>
-                                    <action selector="toggleFloatingSelection:" target="501" id="1446"/>
+                                    <action selector="layerFromSelection:" target="501" id="1446"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="1611">
@@ -710,17 +692,48 @@ CA
                             </menuItem>
                             <menuItem title="Flip Horizontally" tag="310" id="1612">
                                 <connections>
-                                    <action selector="flipHorizontally:" target="501" id="1614"/>
+                                    <action selector="flipSelectionHorizontally:" target="501" id="tuy-TL-nnr"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Flip Vertically" tag="311" id="1613">
                                 <connections>
-                                    <action selector="flipVertically:" target="501" id="1615"/>
+                                    <action selector="flipSelectionVertically:" target="501" id="1615"/>
                                 </connections>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" id="1725">
+                            <menuItem isSeparatorItem="YES" id="7zx-sz-TdA">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
+                            <menuItem title="Select All" tag="270" keyEquivalent="a" id="172">
+                                <connections>
+                                    <action selector="selectAll:" target="-1" id="179"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Select Alpha" tag="273" keyEquivalent="A" id="1849">
+                                <connections>
+                                    <action selector="selectOpaque:" target="-1" id="1850"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Select Inverse" tag="272" keyEquivalent="`" id="1354">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="selectInverse:" target="-1" id="1403"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Select None" tag="271" id="1355">
+                                <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="selectNone:" target="-1" id="1402"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Effects" id="0Oq-Th-kje">
+                    <menu key="submenu" title="Effects" id="Kp5-iG-Uat">
+                        <items>
                             <menuItem isSeparatorItem="YES" id="3625">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
@@ -904,7 +917,22 @@ CA
                                     <action selector="showLicense:" target="448" id="1835"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="What's New &amp; Tips" id="IRl-OG-VP9">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showWhatsNew:" target="hsc-ZL-MEY" id="dsv-wy-kig"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="3844">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Support Seashore" id="eD3-9W-fqU">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showSupportSeashore:" target="501" id="qNs-YK-XdT"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="kOI-0I-hMT">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
                             <menuItem title="Report a Problem" id="a28-E2-Fae">
@@ -917,7 +945,7 @@ CA
                     </menu>
                 </menuItem>
             </items>
-            <point key="canvasLocation" x="-208" y="73"/>
+            <point key="canvasLocation" x="-229" y="-19"/>
         </menu>
         <window title="Seashore License" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="license window" animationBehavior="default" id="204" userLabel="License Win">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
@@ -933,10 +961,10 @@ CA
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <clipView key="contentView" drawsBackground="NO" id="Ux2-4C-9if">
                             <rect key="frame" x="1" y="1" width="423" height="288"/>
-                            <autoresizingMask key="autoresizingMask"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView editable="NO" importsGraphics="NO" verticallyResizable="YES" baseWritingDirection="leftToRight" usesFontPanel="YES" usesRuler="YES" spellingCorrection="YES" smartInsertDelete="YES" id="4078">
-                                    <rect key="frame" x="0.0" y="-936" width="423" height="5850"/>
+                                    <rect key="frame" x="0.0" y="-3978" width="423" height="5850"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1484,6 +1512,7 @@ This General Public License does not permit incorporating your program into prop
                     </textField>
                 </subviews>
             </view>
+            <point key="canvasLocation" x="100" y="-1022"/>
         </window>
         <customObject id="235" userLabel="SeaHelp" customClass="SeaHelp">
             <connections>
@@ -1499,7 +1528,8 @@ This General Public License does not permit incorporating your program into prop
                 <outlet property="seaPlugins" destination="1723" id="1724"/>
                 <outlet property="seaPrefs" destination="507" id="509"/>
                 <outlet property="seaProxy" destination="501" id="3526"/>
-                <outlet property="seaWarning" destination="1244" id="1245"/>
+                <outlet property="seaSupport" destination="xRv-CN-jgT" id="XUZ-va-i9T"/>
+                <outlet property="seaWhatsNew" destination="hsc-ZL-MEY" id="8V1-2F-VEi"/>
             </connections>
         </customObject>
         <customObject id="2281" userLabel="SeaDocumentController" customClass="SeaDocumentController">
@@ -1526,26 +1556,25 @@ This General Public License does not permit incorporating your program into prop
                 <outlet property="colorPrefsView" destination="3676" id="3702"/>
                 <outlet property="controller" destination="448" id="1246"/>
                 <outlet property="docUnitsMenu" destination="3828" id="6842"/>
-                <outlet property="effectsPanelCheckbox" destination="2717" id="2770"/>
-                <outlet property="fewerWarningsCheckbox" destination="2718" id="2769"/>
                 <outlet property="generalPrefsView" destination="2708" id="2765"/>
                 <outlet property="guideColorMenu" destination="5933" id="5946"/>
                 <outlet property="heightUnits" destination="2999" id="3014"/>
                 <outlet property="heightValue" destination="2982" id="3013"/>
-                <outlet property="ignoreFirstTouchCheckbox" destination="2720" id="2774"/>
+                <outlet property="layerBoundaryLinesCheckbox" destination="Xur-8c-OQC" id="uU4-MZ-QQN"/>
                 <outlet property="layerBoundsMatrix" destination="7287" id="7291"/>
+                <outlet property="marchingAntsCheckbox" destination="PmD-Bk-cC3" id="zU0-QS-kFg"/>
                 <outlet property="modeMenu" destination="2990" id="3015"/>
                 <outlet property="newPrefsView" destination="2726" id="2766"/>
                 <outlet property="newUnitsMenu" destination="3000" id="6756"/>
                 <outlet property="openUntitledCheckbox" destination="2712" id="2767"/>
                 <outlet property="panel" destination="1329" id="1350"/>
                 <outlet property="preciseCursorCheckbox" destination="2713" id="2773"/>
-                <outlet property="resolutionHandlingMenu" destination="3788" id="3794"/>
                 <outlet property="resolutionMenu" destination="2984" id="3018"/>
-                <outlet property="selectionColorMenu" destination="3690" id="3708"/>
+                <outlet property="selectionColorMenu" destination="Ija-59-LNZ" id="Pe9-h1-RhH"/>
                 <outlet property="smartInterpolationCheckbox" destination="2714" id="2772"/>
                 <outlet property="transparencyColorWell" destination="ur0-Fq-68q" id="05v-2I-eXQ"/>
                 <outlet property="transparentBackgroundCheckbox" destination="2994" id="3019"/>
+                <outlet property="undoLevelsInput" destination="On6-a0-Qn1" id="qAB-Gy-ueD"/>
                 <outlet property="widthValue" destination="2983" id="3016"/>
                 <outlet property="windowBackWell" destination="3759" id="3761"/>
                 <outlet property="zoomToFitAtOpenCheckbox" destination="l9U-wX-bq8" id="fhw-10-Ccv"/>
@@ -1592,43 +1621,7 @@ This General Public License does not permit incorporating your program into prop
                     </imageView>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="-253.5" y="41"/>
-        </window>
-        <customObject id="1244" userLabel="SeaWarning" customClass="SeaWarning"/>
-        <window title="Warnings" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="warning window" animationBehavior="default" id="1249" userLabel="Warning Win" customClass="SeaUtilityPanel">
-            <windowStyleMask key="styleMask" titled="YES" utility="YES" nonactivatingPanel="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" topStrut="YES"/>
-            <rect key="contentRect" x="604" y="953" width="355" height="113"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
-            <view key="contentView" id="1248">
-                <rect key="frame" x="0.0" y="0.0" width="355" height="113"/>
-                <autoresizingMask key="autoresizingMask"/>
-                <subviews>
-                    <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1251">
-                        <rect key="frame" x="16" y="47" width="64" height="56"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="warning" id="7304"/>
-                    </imageView>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1252">
-                        <rect key="frame" x="92" y="32" width="243" height="66"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" id="7305">
-                            <font key="font" metaFont="menu" size="10"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <button toolTip="Dismiss warning" fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1253">
-                        <rect key="frame" x="319" y="20" width="16" height="16"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="next" imagePosition="only" alignment="left" id="7306">
-                            <behavior key="behavior" lightByContents="YES"/>
-                            <font key="font" metaFont="menu" size="10"/>
-                        </buttonCell>
-                    </button>
-                </subviews>
-            </view>
-            <point key="canvasLocation" x="722" y="133"/>
+            <point key="canvasLocation" x="-372" y="150"/>
         </window>
         <window title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="1329" userLabel="Preferences Win" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
@@ -1647,12 +1640,26 @@ This General Public License does not permit incorporating your program into prop
         <customObject id="1723" userLabel="SeaPlugins" customClass="SeaPlugins">
             <connections>
                 <outlet property="controller" destination="448" id="3563"/>
-                <outlet property="effectMenu" destination="1406" id="3675"/>
+                <outlet property="effectMenu" destination="Kp5-iG-Uat" id="hbr-U0-xf9"/>
+            </connections>
+        </customObject>
+        <customObject id="xRv-CN-jgT" userLabel="SeaSupport" customClass="SeaSupport">
+            <connections>
+                <outlet property="maybeLater" destination="ahm-BY-YOn" id="pzu-I0-Sox"/>
+                <outlet property="supportSeashore" destination="b2Q-W6-2Bh" id="NVx-Zi-mSf"/>
+                <outlet property="textView" destination="1Fq-i5-FcY" id="4vm-O8-SkR"/>
+                <outlet property="window" destination="o3j-6x-erT" id="mcN-xk-oUn"/>
             </connections>
         </customObject>
         <customObject id="c2e-tx-zg5" userLabel="SeaColorProfiles" customClass="SeaColorProfiles">
             <connections>
                 <outlet property="proofMenu" destination="1532" id="eSx-RV-beN"/>
+            </connections>
+        </customObject>
+        <customObject id="hsc-ZL-MEY" userLabel="SeaWhatsNew" customClass="SeaWhatsNew">
+            <connections>
+                <outlet property="textView" destination="exf-5y-A32" id="3Uq-zX-ONW"/>
+                <outlet property="window" destination="Nfx-DE-IiJ" id="Tkr-RY-giC"/>
             </connections>
         </customObject>
         <numberFormatter formatterBehavior="10_0" positiveFormat="0" negativeFormat="-0" localizesFormat="NO" hasThousandSeparators="NO" thousandSeparator="," id="1788" userLabel="Integer Formatter">
@@ -1748,62 +1755,12 @@ DQ
             <rect key="frame" x="0.0" y="0.0" width="431" height="359"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
-                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3788">
-                    <rect key="frame" x="139" y="294" width="266" height="22"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <popUpButtonCell key="cell" type="push" title="Assume screen is 72 dpi (recommended)" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="3792" id="7324">
-                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="message" size="11"/>
-                        <menu key="menu" title="OtherViews" id="3789">
-                            <items>
-                                <menuItem title="Ignore image resolution" id="3791"/>
-                                <menuItem title="Assume screen is 72 dpi (recommended)" state="on" tag="1" id="3792"/>
-                                <menuItem title="Use true screen resolution" tag="2" id="3790"/>
-                            </items>
-                        </menu>
-                    </popUpButtonCell>
-                </popUpButton>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2952">
-                    <rect key="frame" x="144" y="20" width="200" height="28"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="* Needed for some tablet users running  Mac OS 10.4.0 to 10.4.5" id="7323">
-                        <font key="font" metaFont="menu" size="10"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="2723">
-                    <rect key="frame" x="10" y="190" width="407" height="5"/>
+                    <rect key="frame" x="10" y="276" width="407" height="5"/>
                     <autoresizingMask key="autoresizingMask"/>
                 </box>
-                <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="2721">
-                    <rect key="frame" x="10" y="287" width="407" height="5"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                </box>
-                <button fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2718">
-                    <rect key="frame" x="139" y="167" width="265" height="18"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <buttonCell key="cell" type="check" title="Reduce warning messages" bezelStyle="regularSquare" imagePosition="leading" alignment="left" controlSize="small" inset="2" id="7320">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="message" size="11"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="setFewerWarnings:" target="507" id="2807"/>
-                    </connections>
-                </button>
-                <button fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2717">
-                    <rect key="frame" x="139" y="321" width="265" height="18"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <buttonCell key="cell" type="check" title="Configure effects in a dialog" bezelStyle="regularSquare" imagePosition="leading" alignment="left" controlSize="small" inset="2" id="7319">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="message" size="11"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="setEffectsPanel:" target="507" id="2806"/>
-                    </connections>
-                </button>
                 <button fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2716">
-                    <rect key="frame" x="139" y="247" width="265" height="18"/>
+                    <rect key="frame" x="139" y="304" width="265" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Faster drawing (mouse coalescing)" bezelStyle="regularSquare" imagePosition="leading" alignment="left" controlSize="small" inset="2" id="7318">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1814,7 +1771,7 @@ DQ
                     </connections>
                 </button>
                 <button fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2714">
-                    <rect key="frame" x="139" y="265" width="265" height="18"/>
+                    <rect key="frame" x="139" y="322" width="265" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Use image smoothing" bezelStyle="regularSquare" imagePosition="leading" alignment="left" controlSize="small" inset="2" id="7317">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1825,7 +1782,7 @@ DQ
                     </connections>
                 </button>
                 <button fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2713">
-                    <rect key="frame" x="139" y="229" width="265" height="18"/>
+                    <rect key="frame" x="139" y="286" width="265" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Always use cross-hair cursor" bezelStyle="regularSquare" imagePosition="leading" alignment="left" controlSize="small" inset="2" id="7316">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1836,7 +1793,7 @@ DQ
                     </connections>
                 </button>
                 <button fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2712">
-                    <rect key="frame" x="139" y="149" width="265" height="18"/>
+                    <rect key="frame" x="139" y="253" width="265" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Create a new document at start-up" bezelStyle="regularSquare" imagePosition="leading" alignment="left" controlSize="small" inset="2" id="7315">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1847,7 +1804,7 @@ DQ
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2711">
-                    <rect key="frame" x="15" y="267" width="114" height="14"/>
+                    <rect key="frame" x="15" y="324" width="114" height="14"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Draw Settings" id="7314">
                         <font key="font" metaFont="smallSystemBold"/>
@@ -1855,17 +1812,8 @@ DQ
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2710">
-                    <rect key="frame" x="17" y="323" width="114" height="14"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Window Settings" id="7313">
-                        <font key="font" metaFont="smallSystemBold"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2709">
-                    <rect key="frame" x="15" y="170" width="114" height="14"/>
+                    <rect key="frame" x="15" y="256" width="114" height="14"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Program Settings" id="7312">
                         <font key="font" metaFont="smallSystemBold"/>
@@ -1873,19 +1821,8 @@ DQ
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2720">
-                    <rect key="frame" x="139" y="211" width="265" height="18"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <buttonCell key="cell" type="check" title="Ignore first pressure-sensitive touch *" bezelStyle="regularSquare" imagePosition="leading" alignment="left" controlSize="small" inset="2" id="7321">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="message" size="11"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="setIgnoreFirstTouch:" target="507" id="2809"/>
-                    </connections>
-                </button>
                 <button fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l9U-wX-bq8">
-                    <rect key="frame" x="139" y="131" width="265" height="18"/>
+                    <rect key="frame" x="139" y="235" width="265" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Zoom to fit documents at open" bezelStyle="regularSquare" imagePosition="leading" alignment="left" controlSize="small" inset="2" id="XZS-OH-hSM">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1895,8 +1832,41 @@ DQ
                         <action selector="setZoomToFitAtOpen:" target="507" id="4D3-Cw-mc8"/>
                     </connections>
                 </button>
+                <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="On6-a0-Qn1">
+                    <rect key="frame" x="321" y="202" width="96" height="19"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="0" drawsBackground="YES" id="uQg-CD-LDH">
+                        <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="rDb-np-8bK"/>
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <action selector="undoLevelsChanged:" target="507" id="r2f-Uu-xJ4"/>
+                    </connections>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j4Q-q1-bNR">
+                    <rect key="frame" x="138" y="198" width="177" height="28"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" id="Vxy-5H-5sb">
+                        <font key="font" metaFont="smallSystem"/>
+                        <string key="title">Maximum undo levels.
+0 = no limit.</string>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZCx-Vj-5ii">
+                    <rect key="frame" x="150" y="158" width="202" height="30"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" title="* Unlimited undo levels can use excessive memory when working with large images." id="yHB-Fu-ekg">
+                        <font key="font" metaFont="miniSystem"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
-            <point key="canvasLocation" x="34" y="726"/>
+            <point key="canvasLocation" x="33.5" y="725.5"/>
         </customView>
         <customView id="2726" userLabel="New Prefs">
             <rect key="frame" x="0.0" y="0.0" width="432" height="359"/>
@@ -2279,14 +2249,14 @@ DQ
             <connections>
                 <outlet property="initialFirstResponder" destination="2906" id="2917"/>
             </connections>
-            <point key="canvasLocation" x="683" y="-155"/>
+            <point key="canvasLocation" x="684" y="-12"/>
         </window>
         <customView id="3676" userLabel="Color Prefs">
             <rect key="frame" x="0.0" y="0.0" width="431" height="359"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <matrix verticalHuggingPriority="750" fixedFrame="YES" allowsEmptySelection="NO" autosizesCells="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7287">
-                    <rect key="frame" x="142" y="212" width="171" height="40"/>
+                    <rect key="frame" x="142" y="186" width="171" height="40"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     <size key="cellSize" width="171" height="19"/>
@@ -2312,7 +2282,7 @@ DQ
                     </connections>
                 </matrix>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7286">
-                    <rect key="frame" x="17" y="236" width="114" height="14"/>
+                    <rect key="frame" x="18" y="210" width="114" height="14"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Layer Bounds" id="7352">
                         <font key="font" metaFont="smallSystemBold"/>
@@ -2320,137 +2290,15 @@ DQ
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="7284">
-                    <rect key="frame" x="12" y="256" width="407" height="5"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                </box>
-                <button verticalHuggingPriority="750" fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3784">
-                    <rect key="frame" x="309" y="135" width="92" height="28"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <buttonCell key="cell" type="push" title="Default" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" inset="2" id="7349">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="message" size="11"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="defaultWindowBack:" target="507" id="3785"/>
-                    </connections>
-                </button>
-                <colorWell fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3759">
-                    <rect key="frame" x="144" y="140" width="52" height="24"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <color key="color" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
-                    <connections>
-                        <action selector="windowBackChanged:" target="507" id="F1q-xI-PRk"/>
-                    </connections>
-                </colorWell>
-                <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="5934">
-                    <rect key="frame" x="12" y="169" width="407" height="5"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                </box>
-                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5933">
-                    <rect key="frame" x="141" y="176" width="130" height="22"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <popUpButtonCell key="cell" type="push" title="Yellow" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="292" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="5941" id="7351">
-                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="message" size="11"/>
-                        <menu key="menu" title="OtherViews" id="5939">
-                            <items>
-                                <menuItem title="Cyan" tag="290" id="5942">
-                                    <connections>
-                                        <action selector="guideColorChanged:" target="507" id="5947"/>
-                                    </connections>
-                                </menuItem>
-                                <menuItem title="Magenta" tag="291" id="5940">
-                                    <connections>
-                                        <action selector="guideColorChanged:" target="507" id="5948"/>
-                                    </connections>
-                                </menuItem>
-                                <menuItem title="Yellow" state="on" tag="292" id="5941">
-                                    <connections>
-                                        <action selector="guideColorChanged:" target="507" id="5949"/>
-                                    </connections>
-                                </menuItem>
-                                <menuItem title="Black" tag="293" id="5943">
-                                    <connections>
-                                        <action selector="guideColorChanged:" target="507" id="5950"/>
-                                    </connections>
-                                </menuItem>
-                            </items>
-                        </menu>
-                    </popUpButtonCell>
-                </popUpButton>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5932">
-                    <rect key="frame" x="17" y="178" width="114" height="17"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Guide Color " id="7350">
-                        <font key="font" metaFont="smallSystemBold"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3717">
-                    <rect key="frame" x="276" y="270" width="10" height="14"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="*" id="7348">
-                        <font key="font" metaFont="menu" size="10"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3701">
-                    <rect key="frame" x="144" y="20" width="200" height="28"/>
+                    <rect key="frame" x="111" y="20" width="229" height="39"/>
                     <autoresizingMask key="autoresizingMask"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="* You can rotate this color at any time using &quot;View &gt; Rotate Selection Mask&quot;" id="7347">
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="* You can rotate this color at any time using &quot;View &gt; Colors &gt; Rotate Selection Shading&quot;" id="7347">
                         <font key="font" metaFont="menu" size="10"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="3698">
-                    <rect key="frame" x="12" y="203" width="407" height="5"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                </box>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3697">
-                    <rect key="frame" x="17" y="144" width="114" height="14"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Window Frame" id="7346">
-                        <font key="font" metaFont="smallSystemBold"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3690">
-                    <rect key="frame" x="141" y="263" width="130" height="22"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <popUpButtonCell key="cell" type="push" title="Black" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="283" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="3695" id="7344">
-                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="message" size="11"/>
-                        <menu key="menu" title="OtherViews" id="3691">
-                            <items>
-                                <menuItem title="Cyan" tag="280" id="3694">
-                                    <connections>
-                                        <action selector="selectionColorChanged:" target="507" id="3703"/>
-                                    </connections>
-                                </menuItem>
-                                <menuItem title="Magenta" tag="281" id="3692">
-                                    <connections>
-                                        <action selector="selectionColorChanged:" target="507" id="3704"/>
-                                    </connections>
-                                </menuItem>
-                                <menuItem title="Yellow" tag="282" id="3693">
-                                    <connections>
-                                        <action selector="selectionColorChanged:" target="507" id="3705"/>
-                                    </connections>
-                                </menuItem>
-                                <menuItem title="Black" state="on" tag="283" id="3695">
-                                    <connections>
-                                        <action selector="selectionColorChanged:" target="507" id="3706"/>
-                                    </connections>
-                                </menuItem>
-                            </items>
-                        </menu>
-                    </popUpButtonCell>
-                </popUpButton>
                 <matrix verticalHuggingPriority="750" fixedFrame="YES" allowsEmptySelection="NO" autosizesCells="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3687">
                     <rect key="frame" x="142" y="299" width="171" height="40"/>
                     <autoresizingMask key="autoresizingMask"/>
@@ -2481,17 +2329,8 @@ DQ
                     <rect key="frame" x="12" y="290" width="407" height="5"/>
                     <autoresizingMask key="autoresizingMask"/>
                 </box>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3678">
-                    <rect key="frame" x="17" y="268" width="114" height="14"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Selection Shading " id="7343">
-                        <font key="font" metaFont="smallSystemBold"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3677">
-                    <rect key="frame" x="17" y="323" width="114" height="14"/>
+                    <rect key="frame" x="18" y="323" width="114" height="14"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Transparency" id="7342">
                         <font key="font" metaFont="smallSystemBold"/>
@@ -2507,14 +2346,253 @@ DQ
                         <action selector="transparencyColorChanged:" target="507" id="7Wf-K5-PTq"/>
                     </connections>
                 </colorWell>
+                <button verticalHuggingPriority="750" fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3784">
+                    <rect key="frame" x="308" y="83" width="92" height="28"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <buttonCell key="cell" type="push" title="Default" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" inset="2" id="7349">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="message" size="11"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="defaultWindowBack:" target="507" id="3785"/>
+                    </connections>
+                </button>
+                <colorWell fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3759">
+                    <rect key="frame" x="142" y="88" width="52" height="24"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <color key="color" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="windowBackChanged:" target="507" id="F1q-xI-PRk"/>
+                    </connections>
+                </colorWell>
+                <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="5934">
+                    <rect key="frame" x="12" y="117" width="407" height="5"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                </box>
+                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5933" userLabel="Guide Color">
+                    <rect key="frame" x="138" y="124" width="130" height="22"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" id="7351">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="message" size="11"/>
+                        <menu key="menu" title="OtherViews" id="5939" customClass="ColorsMenu"/>
+                    </popUpButtonCell>
+                    <connections>
+                        <action selector="guideColorChanged:" target="507" id="KnF-2j-IsS"/>
+                    </connections>
+                </popUpButton>
+                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ija-59-LNZ" userLabel="Selection Shading">
+                    <rect key="frame" x="138" y="262" width="130" height="22"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" id="Ren-84-CMn">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="message" size="11"/>
+                        <menu key="menu" title="OtherViews" id="Ob8-PH-Z1O" customClass="ColorsMenu"/>
+                    </popUpButtonCell>
+                    <connections>
+                        <action selector="selectionColorChanged:" target="507" id="Dw1-lP-ZXl"/>
+                    </connections>
+                </popUpButton>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5932">
+                    <rect key="frame" x="18" y="126" width="114" height="17"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Guide Color " id="7350">
+                        <font key="font" metaFont="smallSystemBold"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Ze-HU-vvF">
+                    <rect key="frame" x="18" y="267" width="114" height="17"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Selection Shading" id="r45-B1-7E9">
+                        <font key="font" metaFont="smallSystemBold"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="3698">
+                    <rect key="frame" x="12" y="151" width="407" height="5"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                </box>
+                <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="qSa-wR-3ir">
+                    <rect key="frame" x="12" y="231" width="407" height="5"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                </box>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3697">
+                    <rect key="frame" x="18" y="92" width="114" height="14"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Window Frame" id="7346">
+                        <font key="font" metaFont="smallSystemBold"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UYJ-z3-jiQ">
+                    <rect key="frame" x="141" y="241" width="97" height="16"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <buttonCell key="cell" type="check" title="Marching Ants" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="PmD-Bk-cC3">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="smallSystem"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="selectionColorChanged:" target="507" id="jas-MD-Bis"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xur-8c-OQC">
+                    <rect key="frame" x="141" y="167" width="103" height="16"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <buttonCell key="cell" type="check" title="Boundary Lines" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="CCn-n4-MLN">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="smallSystem"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="selectionColorChanged:" target="507" id="MDJ-UW-6lB"/>
+                    </connections>
+                </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ley-pS-GSU">
+                    <rect key="frame" x="270" y="268" width="11" height="16"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="*" id="dgW-sX-lYJ">
+                        <font key="font" usesAppearanceFont="YES"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
             <point key="canvasLocation" x="234.5" y="-549.5"/>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="X1R-xm-eP3"/>
+        <menuItem isSeparatorItem="YES" id="omZ-1G-bdx">
+            <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+        </menuItem>
+        <window title="Support Seashore" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="seashore support" animationBehavior="default" id="o3j-6x-erT">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
+            <rect key="contentRect" x="283" y="305" width="613" height="414"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
+            <view key="contentView" id="GoR-b6-wYh">
+                <rect key="frame" x="0.0" y="0.0" width="613" height="414"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <scrollView fixedFrame="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ygu-XH-LHk">
+                        <rect key="frame" x="20" y="74" width="573" height="320"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <clipView key="contentView" drawsBackground="NO" id="n9a-vh-KLe">
+                            <rect key="frame" x="0.0" y="0.0" width="573" height="320"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <textView editable="NO" importsGraphics="NO" verticallyResizable="YES" spellingCorrection="YES" smartInsertDelete="YES" id="1Fq-i5-FcY">
+                                    <rect key="frame" x="0.0" y="0.0" width="573" height="320"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <size key="minSize" width="573" height="320"/>
+                                    <size key="maxSize" width="573" height="10000000"/>
+                                    <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                </textView>
+                            </subviews>
+                        </clipView>
+                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="l7P-yK-z81">
+                            <rect key="frame" x="-100" y="-100" width="225" height="15"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="9nE-FY-T1d">
+                            <rect key="frame" x="-100" y="-100" width="15" height="320"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                    </scrollView>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b2Q-W6-2Bh">
+                        <rect key="frame" x="387" y="27" width="213" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Support Seashore $5.99 USD" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ttE-El-49F">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="supportSeashore:" target="xRv-CN-jgT" id="KqU-5Z-sTf"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6NQ-42-ZHo">
+                        <rect key="frame" x="218" y="32" width="148" height="23"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="roundTextured" title="Restore Purchases" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bFf-kR-4C9">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="restore:" target="xRv-CN-jgT" id="ZNJ-c3-kh2"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ahm-BY-YOn">
+                        <rect key="frame" x="19" y="27" width="176" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Nah, Maybe Later" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ciz-e9-C36">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="hideBanner:" target="xRv-CN-jgT" id="GDq-07-41F"/>
+                        </connections>
+                    </button>
+                </subviews>
+            </view>
+            <point key="canvasLocation" x="752.5" y="-1026"/>
+        </window>
+        <window title="What's New &amp; Tips" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="seashore support" animationBehavior="default" id="Nfx-DE-IiJ" userLabel="What's New &amp; Tips">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
+            <rect key="contentRect" x="283" y="305" width="547" height="414"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
+            <view key="contentView" id="588-6h-1hN">
+                <rect key="frame" x="0.0" y="0.0" width="547" height="414"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <scrollView fixedFrame="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eyU-00-Lsr">
+                        <rect key="frame" x="20" y="60" width="507" height="334"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <clipView key="contentView" drawsBackground="NO" id="NdB-Rp-OMD">
+                            <rect key="frame" x="0.0" y="0.0" width="492" height="334"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <textView editable="NO" importsGraphics="NO" verticallyResizable="YES" spellingCorrection="YES" smartInsertDelete="YES" id="exf-5y-A32">
+                                    <rect key="frame" x="0.0" y="0.0" width="492" height="334"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <size key="minSize" width="492" height="334"/>
+                                    <size key="maxSize" width="536" height="10000000"/>
+                                    <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                </textView>
+                            </subviews>
+                        </clipView>
+                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="N1p-kG-6Jd">
+                            <rect key="frame" x="-100" y="-100" width="225" height="15"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                        <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="mdJ-kS-4N4">
+                            <rect key="frame" x="492" y="0.0" width="15" height="334"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                    </scrollView>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YhU-Tq-dco">
+                        <rect key="frame" x="481" y="13" width="53" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="x40-e0-Wz1">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="performClose:" target="Nfx-DE-IiJ" id="ZMI-oT-8sG"/>
+                        </connections>
+                    </button>
+                </subviews>
+            </view>
+            <point key="canvasLocation" x="720" y="-515"/>
+        </window>
     </objects>
     <resources>
         <image name="help-bigTemplate" width="72" height="72"/>
-        <image name="next" width="16" height="16"/>
-        <image name="warning" width="64" height="56"/>
     </resources>
 </document>

@@ -1,5 +1,4 @@
-#import "Globals.h"
-#import "SeaDocument.h"
+#import <SeaLibrary/Globals.h>
 
 /*!
 	@class		SeaLayer
@@ -11,6 +10,8 @@
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
 
+@class SeaDocument;
+
 @interface SeaLayer : NSObject {
 	
 	// The document that contains this layer
@@ -20,7 +21,10 @@
 	id seaLayerUndo;
 	
 	// The layer's height, width and mode
-	int height, width, mode;
+    int height, width;
+
+    // Core Graphics blending mode
+    int mode;
 	
 	// The layer's name
 	NSString *name;
@@ -44,21 +48,17 @@
 	// Is the layer linked?
 	BOOL linked;
 	
-	// Is the layer floating?
-	BOOL floating;
-	
 	// The lost properties of the document
 	char *lostprops;
 	int lostprops_len;
 	
 	// A reference to the image data representing this layer
 	unsigned char *data;
-	
-	// A NSImage representing a thumbnail of the layer
-	NSImage *thumbnail;
-	unsigned char *thumbData;
-	int thumbWidth, thumbHeight;
-	
+
+    CGImageRef pre_bitmap;
+
+    NSImage *image;
+
 	// Remembers whether or not the layer has an alpha channel
 	BOOL hasAlpha;
 	
@@ -132,21 +132,6 @@
 - (id)initWithDocument:(id)doc layer:(SeaLayer*)layer;
 
 /*!
-	@method		initFloatingWithDocument:rect:data:
-	@discussion	Initializes an instance of this class with the given values and
-				the floating variable set.
-	@param		doc
-				The document with which to initialize the instance.
-	@param		lrect
-				The rectangle with which to initialize the instance. This
-				determines the width, height and offsets of the layer.
-	@param		ldata
-				The data with which to initialize the instance. This should be
-				of the format prescibed by the document.
-*/
-- (id)initFloatingWithDocument:(id)doc rect:(IntRect)lrect data:(unsigned char *)ldata;
-
-/*!
 	@method		dealloc
 	@discussion	Frees memory occupied by an instance of this class.
 */
@@ -193,11 +178,30 @@
 - (int)yoff;
 
 /*!
-	@method		localRect
-	@discussion	For finding out where it is, simply a combination of the above values.
-	@result		An Integer Rectangle
+ @method        active
+ @result        Returns true if this is the active layer
+ */
+- (BOOL) active;
+
+- (IntPoint)origin;
+- (IntSize)size;
+
+/*!
+ @discusson Translates rect in view coords to layer coords.
+ */
+- (IntRect)translateView:(IntRect)viewRect;
+
+/*!
+	@method		globalRect
+	@result		The layer rect in document coordinate space.
 */
-- (IntRect)localRect;
+- (IntRect)globalRect;
+
+/*!
+ @method        contentRect
+ @result        The local rectangle bounding the opaque portion of thee layer
+ */
+- (Margins)contentMargins;
 
 /*!
 	@method		setOffsets:
@@ -291,6 +295,15 @@
 				255.
 */
 - (int)opacity;
+
+/*!
+ @method        opacity_float
+ @discussion    Returns the opacity of the layer
+ @result        Reutrns an float from 0 to 1 indicating the opacity of the
+ layer. The layer's contents are fully opaque if the opacity is
+ 1.
+ */
+- (float)opacity_float;
 
 /*!
 	@method		setOpacity:
@@ -412,16 +425,6 @@
 - (int)index;
 
 /*!
-	@method		floating
-	@discussion	Returns whether or not the layer is a floating layer.
-	@result		Returns YES if the layer is a floating layer, NO otherwise. This
-				implementation of the method always returns NO.
-*/
-- (BOOL)floating;
-
-// EXTRA METHODS
-
-/*!
 	@method		seaLayerUndo
 	@discussion	Returns the undo manager of the layer.
 	@result		Returns an instance of SeaLayerUndo.
@@ -440,10 +443,12 @@
 - (NSImage *)thumbnail;
 
 /*!
-    @method image
-    @result returns an autorelease NSBitmapImageRep of the current layer
+ @method bitmap
+ @result returns the bitmap for the layer
  */
- - (NSBitmapImageRep *)bitmap;
+ - (CGImageRef)bitmap;
+
+- (NSImage *)image;
 
 /*!
 	@method		updateThumbnail
@@ -504,5 +509,12 @@
 				The type to which the layer's bitmap is being converted.
 */
 - (void)convertFromType:(int)srcType to:(int)destType;
+
+- (void)drawLayer:(CGContextRef)context;
+- (void)drawChannelLayer:(CGContextRef)context withImage:(unsigned char *)data;
+
+- (NSColor*) getPixelX:(int)x Y:(int)y;
+
+- (void)scaleX:(float)x scaleY:(float)y rotate:(float)rotation;
 
 @end

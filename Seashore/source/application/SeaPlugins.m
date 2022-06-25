@@ -22,31 +22,6 @@ NSInteger plugin_sort(PluginClass *obj1,PluginClass *obj2, void *context)
     return result;
 }
 
-BOOL checkRun(NSString *path, NSString *file)
-{
-    NSDictionary *infoDict;
-    BOOL canRun;
-    id value;
-    
-    // Get dictionary
-    canRun = YES;
-    infoDict = [NSDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"%@/%@/Contents/Info.plist", path, file]];
-    
-    // Check special
-    value = [infoDict objectForKey:@"SpecialPlugin"];
-    if (value != NULL) {
-        if ([value isEqualToString:@"YES"] || [value isEqualToString:@"yes"] || [value isEqualToString:@"1"]) {
-            canRun = NO;
-        }
-    }
-    
-    if(!canRun){
-        NSLog(@"Unable to load/run plugin %@ %@",path,file);
-    }
-    
-    return canRun;
-}
-
 - (id)init
 {
     NSString *pluginsPath;
@@ -66,63 +41,19 @@ BOOL checkRun(NSString *path, NSString *file)
 
 - (void)loadPlugins:(NSString*)pluginsPath
 {
-    NSArray *pre_files;
-    NSMutableArray *files;
-    NSBundle *bundle;
-    id plugin;
-    int i, j, found_id;
-    BOOL found, can_run;
-    NSRange range, next_range;
-    NSString *files_name, *pre_files_name;
-    
     NSLog(@"Loading plugins from %@",pluginsPath);
     NSError *error;
 
-    pre_files = [gFileManager contentsOfDirectoryAtPath:pluginsPath error:&error];
+    NSArray *files = [gFileManager contentsOfDirectoryAtPath:pluginsPath error:&error];
     if(error!=nil && error.code!=260){
         NSLog(@"unable to read directory %@",error);
     }
-    files = [NSMutableArray arrayWithCapacity:[pre_files count]];
-    for (i = 0; i < [pre_files count]; i++) {
-        pre_files_name = [pre_files objectAtIndex:i];
-        if ([pre_files_name hasSuffix:@".bundle"] && ![pre_files_name hasSuffix:@"+.bundle"]) {
-            NSLog(@"checking plugin %@",pre_files_name);
-            can_run = checkRun(pluginsPath, pre_files_name);
-            if (can_run) [files addObject:pre_files_name];
-        }
-    }
-    
-    // Add plus plug-ins
-    for (i = 0; i < [pre_files count]; i++) {
-        pre_files_name = [pre_files objectAtIndex:i];
-        if ([pre_files_name hasSuffix:@"+.bundle"]) {
-            NSLog(@"checking plugin %@",pre_files_name);
-            found = NO;
-            range.location = 0;
-            range.length = [pre_files_name length] - (sizeof("+.bundle") - 1);
-            found_id = -1;
-            for (j = 0; j < [files count] && !found; j++) {
-                files_name = [files objectAtIndex:j];
-                next_range.location = 0;
-                next_range.length = [files_name length] - (sizeof(".bundle") - 1);
-                if ([[files_name substringWithRange:next_range] isEqualToString:[pre_files_name substringWithRange:range]]) {
-                    found = YES;
-                    found_id = j;
-                }
-            }
-            can_run = checkRun(pluginsPath, pre_files_name);
-            if (can_run) {
-                if (found) [files replaceObjectAtIndex:found_id withObject:pre_files_name];
-                else [files addObject:pre_files_name];
-            }
-        }
-    }
-    
+
     // Check added plug-ins
-    for (i = 0; i < [files count]; i++) {
-        bundle = [NSBundle bundleWithPath:[NSString stringWithFormat:@"%@/%@", pluginsPath, [files objectAtIndex:i]]];
+    for (NSString *filename in files) {
+        NSBundle *bundle = [NSBundle bundleWithPath:[NSString stringWithFormat:@"%@/%@", pluginsPath, filename]];
         if (bundle && [bundle principalClass]) {
-            plugin = [[bundle principalClass] alloc];
+            id plugin = [[bundle principalClass] alloc];
             if (plugin) {
                 plugins = [plugins arrayByAddingObject:plugin];
             } else {
@@ -141,59 +72,51 @@ BOOL checkRun(NSString *path, NSString *file)
     NSMenu *submenu;
     PluginClass *plugin;
     int i;
-    
-    // Set up
-    pointPlugins = [NSArray array];
-    pointPluginsNames = [NSArray array];
-        
+
+    NSMenu *menu = effectMenu;
+
     // Configure all plug-ins
     for (i = 0; i < [plugins count] && i < 7500; i++) {
         plugin = [plugins objectAtIndex:i];
         
-        // If the plug-in is a basic plug-in add it to the effects menu
-        if ([plugin type] == kBasicPlugin) {
-            
             // Add or find group submenu
-            submenuItem = [effectMenu itemWithTitle:[plugin groupName]];
-            if (submenuItem == NULL) {
-                submenuItem = [[NSMenuItem alloc] initWithTitle:[plugin groupName] action:NULL keyEquivalent:@""];
-                [effectMenu insertItem:submenuItem atIndex:[effectMenu numberOfItems] - 2];
-                submenu = [[NSMenu alloc] initWithTitle:[submenuItem title]];
-                [submenuItem setSubmenu:submenu];
-            }
-            else {
-                submenu = [submenuItem submenu];
-            }
-            
-            // Add plug-in to group
-            menuItem = [submenu itemWithTitle:[plugin name]];
-            if (menuItem == NULL) {
-                menuItem = [[NSMenuItem alloc] initWithTitle:[plugin name] action:@selector(run:) keyEquivalent:@""];
-                [menuItem setTarget:self];
-                [submenu addItem:menuItem];
-                [menuItem setTag:i + 10000];
-            }
-            
+        submenuItem = [menu itemWithTitle:[plugin groupName]];
+        if (submenuItem == NULL) {
+            submenuItem = [[NSMenuItem alloc] initWithTitle:[plugin groupName] action:NULL keyEquivalent:@""];
+            [menu insertItem:submenuItem atIndex:[menu numberOfItems] - 2];
+            submenu = [[NSMenu alloc] initWithTitle:[submenuItem title]];
+            [submenuItem setSubmenu:submenu];
         }
-        else if ([plugin type] == kPointPlugin) {
-            pointPluginsNames = [pointPluginsNames arrayByAddingObject:[NSString stringWithFormat:@"%@ / %@", [plugin groupName], [plugin name]]];
-            pointPlugins = [pointPlugins arrayByAddingObject:plugin];
+        else {
+            submenu = [submenuItem submenu];
+        }
+
+        // Add plug-in to group
+        menuItem = [submenu itemWithTitle:[plugin name]];
+        if (menuItem == NULL) {
+            menuItem = [[NSMenuItem alloc] initWithTitle:[plugin name] action:@selector(run:) keyEquivalent:@""];
+            [menuItem setTarget:self];
+            [submenu addItem:menuItem];
+            [menuItem setTag:i + 10000];
         }
     }
     
-    // Finish off
-    
     // Correct effect tool
-    [[gCurrentDocument toolboxUtility] setEffectEnabled:([pointPluginsNames count] != 0)];
+    [[gCurrentDocument toolboxUtility] setEffectEnabled:([plugins count] != 0)];
 
     // Register to recieve the terminate message when Seashore quits
     [controller registerForTermination:self];
 }
 
+- (NSMenu*)menu
+{
+    return effectMenu;
+}
+
 - (void)terminate
 {
     EffectOptions *options = (EffectOptions*)[[gCurrentDocument optionsUtility] getOptions:kEffectTool];
-    [gUserDefaults setInteger:[options selectedRow] forKey:@"effectIndex"];
+    [gUserDefaults setObject:[[options currentPlugin] className] forKey:@"effectClass"];
 }
 
 - (id)data
@@ -212,38 +135,24 @@ BOOL checkRun(NSString *path, NSString *file)
         plugin = [[base class] alloc];
     }
     
-    plugin = [plugin initWithManager:[self data]];
     if (plugin) {
-        [plugin run];
+        [[gCurrentDocument toolboxUtility] changeToolTo:kEffectTool];
+        EffectTool *tool = [[gCurrentDocument tools] getTool:kEffectTool];
+        [tool selectEffect:plugin];
         gCurrentDocument.lastPlugin = plugin;
     }
 }
 
 - (IBAction)reapplyEffect:(id)sender
 {
-    if([self hasLastEffect]) {
-        [gCurrentDocument.lastPlugin reapply];
-    }
-}
-
-- (void)cancelReapply
-{
-    gCurrentDocument.lastPlugin = nil;
+    EffectTool *tool = [[gCurrentDocument tools] getTool:kEffectTool];
+    [tool reapply:sender];
 }
 
 - (BOOL)hasLastEffect
 {
-    return gCurrentDocument.lastPlugin && [gCurrentDocument.lastPlugin canReapply];
-}
-
-- (NSArray *)pointPluginsNames
-{
-    return pointPluginsNames;
-}
-
-- (NSArray *)pointPlugins
-{
-    return pointPlugins;
+    EffectTool *tool = [[gCurrentDocument tools] getTool:kEffectTool];
+    return [tool hasLastEffect];
 }
 
 - (BOOL)validateMenuItem:(id)menuItem
@@ -252,10 +161,6 @@ BOOL checkRun(NSString *path, NSString *file)
     
     // Never when there is no document
     if (document == NULL)
-        return NO;
-    
-    // Never when the document is locked
-    if ([document locked])
         return NO;
     
     // Never if we are told not to

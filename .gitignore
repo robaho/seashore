@@ -21,6 +21,7 @@ Index/
 *.perspectivev3
 !default.perspectivev3
 xcuserdata/
+xcsharedata/
 
 ## Other
 *.moved-aside

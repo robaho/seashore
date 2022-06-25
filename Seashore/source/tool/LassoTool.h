@@ -1,4 +1,4 @@
-#import "Globals.h"
+#import "Seashore.h"
 #import "LassoOptions.h"
 #import "AbstractSelectTool.h"
 
@@ -43,56 +43,14 @@ typedef struct {
 }
 
 /*!
-	@method		fineMouseDownAt:withEvent:
-	@discussion	Handles mouse down events.
-	@param		where
-				Where in the document the mouse down event occurred (in terms of
-				the document's pixels).
-	@param		event
-				The mouse down event.
-*/
-- (void)fineMouseDownAt:(NSPoint)where withEvent:(NSEvent *)event;
-
-/*!
-	@method		fineMouseDraggedTo:withEvent:
-	@discussion	Handles mouse dragging events.
-	@param		where
-				Where in the document the mouse down event occurred (in terms of
-				the document's pixels).
-	@param		event
-				The mouse dragged event.
-*/
-- (void)fineMouseDraggedTo:(NSPoint)where withEvent:(NSEvent *)event;
-
-/*!
-	@method		fineMouseUpAt:withEvent:
-	@discussion	Handles mouse up events.
-	@param		where
-				Where in the document the mouse up event occurred (in terms of
-				the document's pixels).
-	@param		event
-				The mouse up event.
-*/
-- (void)fineMouseUpAt:(NSPoint)where withEvent:(NSEvent *)event;
-
-/*!
-	@method		isFineTool
-	@discussion	Returns whether the tool needs an NSPoint input as opposed to an IntPoint
-				input (i.e. whether fineMouse... or mouse... should be called).
-	@result		Returns YES if the tool needs an NSPoint input as opposed to an IntPoint
-				input, NO otherwise. The implementation in this class always returns YES.
-*/
-- (BOOL)isFineTool;
-
-/*!
 	@method		currentPoints
 	@discussion	Returns the current points used by the tool for other classes to use.
 	@result		A LassoPoints struct
 */
 - (LassoPoints) currentPoints;
 
-- (void) initializePoints:(NSPoint)where;
-- (void) addPoint:(NSPoint)where;
-- (void) createOverlayFromPoints;
+- (void) initializePoints:(IntPoint)where;
+- (void) addPoint:(IntPoint)where;
+- (void) createMaskFromPoints;
 
 @end

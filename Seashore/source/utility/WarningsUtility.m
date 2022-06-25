@@ -1,76 +1,91 @@
 #import "WarningsUtility.h"
 #import "SeaWindowContent.h"
-#import "BannerView.h"
-#import "SeaWarning.h"
 #import "SeaContent.h"
 #import "SeaController.h"
 #import "SeaDocument.h"
+
+@interface NoticesItem : NSCollectionViewItem
+@end
 
 @implementation WarningsUtility
 
 - (id)init
 {
 	self = [super init];
-	if(self ){
-		mostRecentImportance = -1;
-	}
-	return self;	
+    notices = [NSMutableArray array];
+	return self;
 }
 
-- (void)setWarning:(NSString *)message ofImportance:(int)importance
+- (void)tableClicked
 {
-	[view setBannerText:message defaultButtonText:@"OK" alternateButtonText:NULL andImportance:importance];
-	mostRecentImportance = importance;
-	[windowContent setVisibility:YES forRegion:kWarningsBar];
+    int row = [noticesView clickedRow];
+    int col = [noticesView clickedColumn];
+    if(col==1){
+        [noticesView beginUpdates];
+        [noticesView removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:row] withAnimation:NSTableViewAnimationEffectFade];
+        [noticesView endUpdates];
+        [notices removeObjectAtIndex:row];
+    }
+    if([notices count]==0){
+        [alertButton setHidden:TRUE];
+        [win close];
+    }
 }
 
+- (IBAction)showNotices:(id)sender {
+    [noticesView setDelegate:self];
+    [noticesView setDataSource:self];
+    [noticesView reloadData];
+    [noticesView setAction:@selector(tableClicked)];
 
-- (void)showFloatBanner
-{
-    [view setBannerText:@"Drag the floating layer to position it, then click Anchor to merge it into the layer below." defaultButtonText:@"Anchor" alternateButtonText:@"New Layer" andImportance:kUIImportance];
-	mostRecentImportance = kUIImportance;
-	[windowContent setVisibility:YES forRegion:kWarningsBar];
+    // center popup in document window
+    NSRect winFrame = [[alertButton window] frame];
+
+    float x = winFrame.size.width/2 - [win frame].size.width/2 + winFrame.origin.x;
+    float y = winFrame.size.height/2 - [win frame].size.height/2 + winFrame.origin.y;
+
+    [win setDelegate:self];
+    [win setFrameOrigin:NSMakePoint(x,y)];
+    [win makeKeyAndOrderFront:self];
+    [win setHidesOnDeactivate:TRUE];
 }
 
-- (void)hideFloatBanner
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
-	mostRecentImportance = -1;
-	[windowContent setVisibility:NO forRegion:kWarningsBar];	
+    return [notices count];
 }
 
-- (void)keyTriggered
+- (nullable id)tableView:(NSTableView *)tableView objectValueForTableColumn:(nullable NSTableColumn *)tableColumn row:(NSInteger)row
 {
-	if(mostRecentImportance != -1){
-		[self defaultAction: self];
-	}
+    if([[tableColumn identifier] isEqual:@"notice"]) {
+        return [notices objectAtIndex:row];
+    }
+    if([[tableColumn identifier] isEqual:@"closebox"]) {
+        return [NSImage imageNamed:NSImageNameStopProgressFreestandingTemplate];
+    }
+    return nil;
 }
 
-- (IBAction)defaultAction:(id)sender
+- (CGFloat)tableView:(NSTableView *)tableView
+         heightOfRow:(NSInteger)row
 {
-	if(mostRecentImportance == kUIImportance){
-		mostRecentImportance = -1;
-		[windowContent setVisibility:NO forRegion:kWarningsBar];
-		[[document contents] toggleFloatingSelection];
-	}else{
-		mostRecentImportance = -1;
-		[windowContent setVisibility:NO forRegion:kWarningsBar];
-		[[SeaController seaWarning] triggerQueue: document];
-	}
+    NSTableColumn *col = [tableView tableColumns][0];
+    NSCell *cell = col.dataCell;
+    [cell setStringValue:[notices objectAtIndex:row]];
+    float height = [cell cellSizeForBounds:NSMakeRect(0,0,col.width,1000)].height;
+    NSLog(@"width %f height %f",col.width,height);
+    return height;
 }
 
-
-- (IBAction)alternateAction:(id)sender
+- (void)addMessage:(NSString *)message level:(int)importance
 {
-	if(mostRecentImportance == kUIImportance){
-		mostRecentImportance = -1;
-		[windowContent setVisibility:NO forRegion:kWarningsBar];	
-		[[document contents] addLayer:kActiveLayer];
-	}
+    [alertButton setHidden:FALSE];
+    [notices addObject:message];
 }
 
-- (int)activeWarningImportance
+- (void)windowDidResignKey:(NSNotification *)notification;
 {
-	return mostRecentImportance;
+    [[notification object] close];
 }
 
 @end

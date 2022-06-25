@@ -12,26 +12,28 @@
 
 - (void)standardFlip:(int)type
 {
+    SeaSelection *selection = [document selection];
+    if (![selection active])
+        return;
+
 	unsigned char *overlay, *data, *replace, *edata = NULL;
 	int i, j, k, width, height, spp;
 	int src, dest;
 	IntRect rect;
 	BOOL complex;
-	
-	// Fill out variables
+
+    SeaLayer *layer = [[document contents] activeLayer];
+
 	overlay = [[document whiteboard] overlay];
-	data = [(SeaLayer *)[[document contents] activeLayer] data];
+	data = [layer data];
 	replace = [[document whiteboard] replace];
-	width = [(SeaLayer *)[[document contents] activeLayer] width];
-	height = [(SeaLayer *)[[document contents] activeLayer] height];
+	width = [layer width];
+	height = [layer height];
 	spp = [[document contents] spp];
     
-    SeaSelection *selection = [document selection];
-	if ([selection active])
-		rect = [selection localRect];
-	else
-		rect = IntMakeRect(0, 0, width, height);
-	complex = [selection active] && [selection mask];
+	rect = [selection localRect];
+
+	complex = [selection mask]!=NULL;
 	
 	// Erase selection if it is complex
 	if (complex) {
@@ -85,18 +87,51 @@
 	// Free used memory
 	if (complex) free(edata);
 	
-	// Flip the selection
+	// Flip the selection mask
 	[selection flipSelection:type];
 	
-	// Apply the changes
 	[[document whiteboard] setOverlayOpacity:255];
 	[[document whiteboard] setOverlayBehaviour:kReplacingBehaviour];
-	[(SeaHelpers *)[document helpers] applyOverlay];	
+    [[document whiteboard] overlayModified:rect];
+	[[document helpers] applyOverlay];
 }
 
-- (void)run:(int)type
+- (void)flipSelectionHorizontally
 {
-    [self standardFlip:type];
+    [[document helpers] endLineDrawing];
+    [self standardFlip:kHorizontalFlip];
 }
+
+- (void)flipSelectionVertically
+{
+    [[document helpers] endLineDrawing];
+    [self standardFlip:kVerticalFlip];
+}
+
+
+- (void)flipLayerHorizontally
+{
+    [[document helpers] endLineDrawing];
+
+    [[[document undoManager] prepareWithInvocationTarget:self] flipLayerHorizontally];
+
+    SeaLayer *layer = [[document contents] activeLayer];
+    [layer flipHorizontally];
+
+    [[document helpers] boundariesAndContentChanged];
+}
+
+- (void)flipLayerVertically
+{
+    [[document helpers] endLineDrawing];
+
+    [[[document undoManager] prepareWithInvocationTarget:self] flipLayerVertically];
+
+    SeaLayer *layer = [[document contents] activeLayer];
+    [layer flipVertically];
+
+    [[document helpers] boundariesAndContentChanged];
+}
+
 
 @end

@@ -1,4 +1,4 @@
-#import "Globals.h"
+#import "Seashore.h"
 #import "AbstractExporter.h"
 
 /*!
@@ -44,13 +44,8 @@
 	
 	// The radio buttons specifying the target
 	IBOutlet id targetRadios;
-	
-	// The sample data we are previewing
-	unsigned char *sampleData;
-	
-	// The NSImageBitmapRep used by the uncompressed preview
-	id realImageRep;
 
+    NSBitmapImageRep *realImageRep;
 }
 
 /*!

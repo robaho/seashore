@@ -1,4 +1,5 @@
-#import "Globals.h"
+#import "Seashore.h"
+#import <SeaComponents/BorderView.h>
 
 /*!
 	@class		OptionsUtility
@@ -11,7 +12,7 @@
 
 @interface OptionsUtility : NSObject {
 	// The options view
-    IBOutlet id view;
+    __weak BorderView *view;
 		
 	// The last options view set 
 	id lastView;
@@ -63,18 +64,6 @@
 	@discussion	Configures the utility's interface.
 */
 - (void)awakeFromNib;
-
-/*!
-	@method		activate
-	@discussion	Activates this utility with its document.
-*/
-- (void)activate;
-
-/*!
-	@method		deactivate
-	@discussion	Deactivates this utility.
-*/
-- (void)deactivate;
 
 /*!
 	@method		shutdown

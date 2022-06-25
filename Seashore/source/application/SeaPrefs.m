@@ -2,26 +2,17 @@
 #import "SeaDocument.h"
 #import "SeaController.h"
 #import "InfoUtility.h"
-#import "SeaWarning.h"
 #import "SeaView.h"
 #import "Units.h"
 #import "ImageToolbarItem.h"
 #import "SeaHelpers.h"
 #import <IOKit/graphics/IOGraphicsLib.h>
 
-enum {
-	kIgnoreResolution,
-	kUse72dpiResolution,
-	kUseScreenResolution
-};
-
-IntPoint gScreenResolution;
-
 static NSString*	PrefsToolbarIdentifier 	= @"Preferences Toolbar Instance Identifier";
 
 static NSString*	GeneralPrefsIdentifier 	= @"General Preferences Item Identifier";
 static NSString*	NewPrefsIdentifier 	= @"New Preferences Item Identifier";
-static NSString*    ColorPrefsIdentifier = @"Color Preferences Item Identifier";
+static NSString*  ColorPrefsIdentifier = @"Color Preferences Item Identifier";
 
 static int GetIntFromDictionaryForKey(CFDictionaryRef desc, CFStringRef key)
 {
@@ -33,6 +24,31 @@ static int GetIntFromDictionaryForKey(CFDictionaryRef desc, CFStringRef key)
     CFNumberGetValue(value, kCFNumberIntType, &num);
     
 	return num;
+}
+
+static NSColor* colorEnumToColor(int colorEnum,float alpha){
+    NSColor *result;
+    switch (colorEnum) {
+        case kCyanColor:
+            result = [NSColor colorWithDeviceCyan:1.0 magenta:0.0 yellow:0.0 black:0.0 alpha:alpha];
+            break;
+        case kMagentaColor:
+            result = [NSColor colorWithDeviceCyan:0.0 magenta:1.0 yellow:0.0 black:0.0 alpha:alpha];
+            break;
+        case kYellowColor:
+            result = [NSColor colorWithDeviceCyan:0.0 magenta:0.0 yellow:1.0 black:0.0 alpha:alpha];
+            break;
+        case kGrayColor:
+            result = [NSColor colorWithDeviceRed:.5 green:.5 blue:.5 alpha:alpha];
+            break;
+        case kWhiteColor:
+            result = [NSColor colorWithDeviceRed:1 green:1 blue:1 alpha:alpha];
+            break;
+        default:
+            result = [NSColor colorWithCalibratedWhite:0.0 alpha:alpha];
+            break;
+    }
+    return result;
 }
 
 CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
@@ -85,49 +101,12 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	else
 		rulers = NO;
 	
-	// Determine if this is our first run from preferences
-	if ([gUserDefaults objectForKey:@"version"] == NULL)  {
-		firstRun = YES;
-		[gUserDefaults setObject:@"0.1.9" forKey:@"version"];
-	}
-	else {
-		if ([[gUserDefaults stringForKey:@"version"] isEqualToString:@"0.1.9"]) {
-			firstRun = NO;
-		}
-		else {
-			firstRun = YES;
-			[gUserDefaults setObject:@"0.1.9" forKey:@"version"];
-		}
-	}
-	
-	// Get run count
-	if (firstRun) {
-		runCount = 1;
-	}
-	else {
-		if ([gUserDefaults objectForKey:@"runCount"])
-			runCount =  [gUserDefaults integerForKey:@"runCount"] + 1;
-		else
-			runCount = 1;
-	}
 
 	// Get the use of the checkerboard pattern
 	if ([gUserDefaults objectForKey:@"useCheckerboard"])
 		useCheckerboard = [gUserDefaults boolForKey:@"useCheckerboard"];
 	else
 		useCheckerboard = YES;
-	
-	// Get the fewerWarnings
-	if ([gUserDefaults objectForKey:@"fewerWarnings"])
-		fewerWarnings = [gUserDefaults boolForKey:@"fewerWarnings"];
-	else
-		fewerWarnings = NO;
-		
-	//  Get the effectsPanel
-	if ([gUserDefaults objectForKey:@"effectsPanel"])
-		effectsPanel = [gUserDefaults boolForKey:@"effectsPanel"];
-	else
-		effectsPanel = NO;
 	
 	//  Get the smartInterpolation
 	if ([gUserDefaults objectForKey:@"smartInterpolation"])
@@ -153,7 +132,17 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 		selectionColor = [gUserDefaults integerForKey:@"selectionColor"];
 	if (selectionColor < 0 || selectionColor >= kMaxColor)
 		selectionColor = kBlackColor;
-	
+
+    if ([gUserDefaults objectForKey:@"marchingAnts"])
+        marchingAnts = [gUserDefaults boolForKey:@"marchingAnts"];
+    else
+        marchingAnts = NO;
+
+    if ([gUserDefaults objectForKey:@"layerBoundaryLines"])
+        layerBoundaryLines = [gUserDefaults boolForKey:@"layerBoundaryLines"];
+    else
+        layerBoundaryLines = NO;
+
 	// If the layer bounds are white (the alternative is the selection color)
 	whiteLayerBounds = YES;
 	if ([gUserDefaults objectForKey:@"whiteLayerBounds"])
@@ -222,22 +211,11 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	if ([gUserDefaults objectForKey:@"mode"])
 		mode = [gUserDefaults integerForKey:@"mode"];
 
-	// Mode used for the new document
-	resolutionHandling = kUse72dpiResolution;
-	if ([gUserDefaults objectForKey:@"resolutionHandling"])
-		resolutionHandling = [gUserDefaults integerForKey:@"resolutionHandling"];
-
 	if ([gUserDefaults objectForKey:@"transparentBackground"])
 		transparentBackground = [gUserDefaults boolForKey:@"transparentBackground"];
 	else
 		transparentBackground = NO;
 
-	//  Get the ignoreFirstTouch
-	if ([gUserDefaults objectForKey:@"ignoreFirstTouch"])
-		ignoreFirstTouch = [gUserDefaults boolForKey:@"ignoreFirstTouch"];
-	else
-		ignoreFirstTouch = NO;
-		
 	// Get the mouseCoalescing
 	if ([gUserDefaults objectForKey:@"newMouseCoalescing"])
 		mouseCoalescing = [gUserDefaults boolForKey:@"newMouseCoalescing"];
@@ -250,6 +228,12 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	else
 		preciseCursor = NO;
 
+    // Get the preciseCursor
+    if ([gUserDefaults objectForKey:@"undoLevels"])
+        undoLevels = [gUserDefaults integerForKey:@"undoLevels"];
+    else
+        undoLevels = 0;
+
 	// Get the main screen resolution
 	if (GetMainDisplayDPI(&xdpi, &ydpi)) {
 		xdpi = ydpi = 72.0;
@@ -257,10 +241,6 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	}
 	mainScreenResolution.x = (int)roundf(xdpi);
 	mainScreenResolution.y = (int)roundf(ydpi);
-#ifdef DEBUG
-	// NSLog(@"Screen resolution (dpi): %d x %d", mainScreenResolution.x, mainScreenResolution.y);
-#endif
-	gScreenResolution = [self screenResolution];
 
 	return self;
 }
@@ -312,12 +292,9 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	[gUserDefaults setObject:(guides ? @"YES" : @"NO") forKey:@"guides"];
 	[gUserDefaults setObject:(layerBounds ? @"YES" : @"NO") forKey:@"boundaries"];
 	[gUserDefaults setObject:(rulers ? @"YES" : @"NO") forKey:@"rulers"];
-	[gUserDefaults setObject:(fewerWarnings ? @"YES" : @"NO") forKey:@"fewerWarnings"];
-	[gUserDefaults setObject:(effectsPanel ? @"YES" : @"NO") forKey:@"effectsPanel"];
 	[gUserDefaults setObject:(smartInterpolation ? @"YES" : @"NO") forKey:@"smartInterpolation"];
 	[gUserDefaults setObject:(openUntitled ? @"YES" : @"NO") forKey:@"openUntitled"];
     [gUserDefaults setObject:(zoomToFitAtOpen ? @"YES" : @"NO") forKey:@"zoomToFit"];
-	[gUserDefaults setObject:(ignoreFirstTouch ? @"YES" : @"NO") forKey:@"ignoreFirstTouch"];
 	[gUserDefaults setObject:(mouseCoalescing ? @"YES" : @"NO") forKey:@"newMouseCoalescing"];
 	[gUserDefaults setObject:(preciseCursor ? @"YES" : @"NO") forKey:@"preciseCursor"];
 	[gUserDefaults setObject:(transparentBackground ? @"YES" : @"NO") forKey:@"transparentBackground"];
@@ -325,6 +302,8 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	[gUserDefaults setObject:[NSArchiver archivedDataWithRootObject:windowBackColor] forKey:@"windowBackColor"];
     [gUserDefaults setObject:[NSArchiver archivedDataWithRootObject:transparencyColor] forKey:@"transparency color data"];
 	[gUserDefaults setInteger:selectionColor forKey:@"selectionColor"];
+    [gUserDefaults setBool:marchingAnts forKey:@"marchingAnts"];
+    [gUserDefaults setBool:layerBoundaryLines forKey:@"layerBoundaryLines"];
 	[gUserDefaults setObject:(whiteLayerBounds ? @"YES" : @"NO") forKey:@"whiteLayerBounds"];
 	[gUserDefaults setInteger:guideColor forKey:@"guideColor"];
 	[gUserDefaults setInteger:width forKey:@"width"];
@@ -332,8 +311,7 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	[gUserDefaults setInteger:resolution forKey:@"resolution"];
 	[gUserDefaults setInteger:newUnits forKey:@"units"];
 	[gUserDefaults setInteger:mode forKey:@"mode"];
-	[gUserDefaults setInteger:resolutionHandling forKey:@"resolutionHandling"];
-	[gUserDefaults setInteger:runCount forKey:@"runCount"];
+    [gUserDefaults setInteger:undoLevels forKey:@"undoLevels"];
 	[gUserDefaults setObject:[font fontName] forKey:@"fontName"];
 	[gUserDefaults setFloat:[font pointSize] forKey:@"fontSize"];
 }
@@ -386,23 +364,22 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	[heightUnits setStringValue:UnitsString(newUnits)];
 	[resolutionMenu selectItemAtIndex:[resolutionMenu indexOfItemWithTag:resolution]];
 	[modeMenu selectItemAtIndex: mode];
-	[checkerboardMatrix	selectCellAtRow: useCheckerboard column: 0];
+	[checkerboardMatrix selectCellAtRow: useCheckerboard column: 0];
 	[layerBoundsMatrix selectCellAtRow: whiteLayerBounds column: 0];
 	[windowBackWell setColor:windowBackColor];
     [transparencyColorWell setColor:transparencyColor];
 	[transparentBackgroundCheckbox setState:transparentBackground];
-	[fewerWarningsCheckbox setState:fewerWarnings];
-	[effectsPanelCheckbox setState:effectsPanel];
 	[smartInterpolationCheckbox setState:smartInterpolation];
 	[openUntitledCheckbox setState:openUntitled];
     [zoomToFitAtOpenCheckbox setState:zoomToFitAtOpen];
-	[ignoreFirstTouchCheckbox setState:ignoreFirstTouch];
 	[coalescingCheckbox setState:mouseCoalescing];
 	[preciseCursorCheckbox setState:preciseCursor];
-	[selectionColorMenu selectItemAtIndex:[selectionColorMenu indexOfItemWithTag:selectionColor + 280]];
-	[guideColorMenu selectItemAtIndex:[guideColorMenu indexOfItemWithTag:guideColor + 290]];
-	[resolutionHandlingMenu selectItemAtIndex:[resolutionHandlingMenu indexOfItemWithTag:resolutionHandling]];
-	
+	[selectionColorMenu selectItemAtIndex:selectionColor];
+    [marchingAntsCheckbox setState:marchingAnts];
+    [layerBoundaryLinesCheckbox setState:layerBoundaryLines];
+	[guideColorMenu selectItemAtIndex:guideColor];
+    [undoLevelsInput setIntValue:undoLevels];
+
 	// Display the preferences dialog
 	[panel center];
 	[panel makeKeyAndOrderFront: self];
@@ -453,7 +430,7 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 {
 	SeaDocument *document = gCurrentDocument;
 	[document changeMeasuringStyle:[sender tag] % 10];
-	[[document docView] updateRulers];
+	[[document scrollView] updateRulers];
 	[[document infoUtility] update];
 	[[document statusUtility] update];
 }
@@ -478,18 +455,6 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	[self apply: self];
 }
 
--(IBAction)setFewerWarnings:(id)sender
-{
-	fewerWarnings = [fewerWarningsCheckbox state];
-	[self apply: self];
-}
-	
--(IBAction)setEffectsPanel:(id)sender
-{
-	effectsPanel = [effectsPanelCheckbox state];
-	[self apply: self];
-}
-
 -(IBAction)setSmartInterpolation:(id)sender
 {
 	smartInterpolation = [smartInterpolationCheckbox state];
@@ -508,12 +473,6 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
     [self apply: self];
 }
 
--(IBAction)setIgnoreFirstTouch:(id)sender
-{
-	ignoreFirstTouch = [ignoreFirstTouchCheckbox state];
-	[self apply: self];
-}
-
 -(IBAction)setMouseCoalescing:(id)sender
 {
 	mouseCoalescing = [coalescingCheckbox state];
@@ -524,18 +483,6 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 {
 	preciseCursor = [preciseCursorCheckbox state];
 	[self apply: self];
-}
-
--(IBAction)setResolutionHandling:(id)sender
-{
-	NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
-	int i;
-
-	resolutionHandling = [[resolutionHandlingMenu selectedItem] tag];
-	gScreenResolution = [self screenResolution];
-	for (i = 0; i < [documents count]; i++) {
-		[[[documents objectAtIndex:i] helpers] resolutionChanged];
-	}
 }
 
 - (IBAction)apply:(id)sender
@@ -562,6 +509,11 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	return layerBounds;
 }
 
+- (int)undoLevels
+{
+    return undoLevels;
+}
+
 - (BOOL)guides
 {
 	return guides;
@@ -572,21 +524,6 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	return rulers;
 }
 
-- (BOOL)firstRun
-{
-	return firstRun;
-}
-
-- (int)warningLevel
-{
-	return (fewerWarnings) ? kModerateImportance : kVeryLowImportance;
-}
-
-- (BOOL)effectsPanel
-{
-	return effectsPanel;
-}
-
 - (BOOL)smartInterpolation
 {
 	return smartInterpolation;
@@ -595,45 +532,40 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 - (IBAction)toggleBoundaries:(id)sender
 {
 	NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
-	int i;
-	
+
 	layerBounds = !layerBounds;
-	for (i = 0; i < [documents count]; i++) {
-		[[[documents objectAtIndex:i] docView] setNeedsDisplay:YES];
+    for (SeaDocument *doc in documents) {
+		[[doc docView] setNeedsDisplay:YES];
 	}
 }
 
 - (IBAction)toggleGuides:(id)sender
 {
 	NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
-	int i;
-	
+
 	guides = !guides;
-	for (i = 0; i < [documents count]; i++) {
-		[[[documents objectAtIndex:i] docView] setNeedsDisplay:YES];
+    for (SeaDocument *doc in documents) {
+		[[doc docView] setNeedsDisplay:YES];
 	}
 }
 		
 - (IBAction)toggleRulers:(id)sender
 {
 	NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
-	int i;
-	
+
 	rulers = !rulers;
-	for (i = 0; i < [documents count]; i++) {
-		[[[documents objectAtIndex:i] docView] updateRulersVisiblity];
+    for (SeaDocument *doc in documents) {
+		[[doc scrollView] updateRulersVisibility];
 	}
-	[[gCurrentDocument docView] checkMouseTracking];
 }
 
 - (IBAction)checkerboardChanged:(id)sender
 {
 	NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
-	int i;
 
 	useCheckerboard = [sender selectedRow];
-	for (i = 0; i < [documents count]; i++) {
-		[[[documents objectAtIndex:i] docView] setNeedsDisplay:YES];
+    for (SeaDocument *doc in documents) {
+		[[doc docView] setNeedsDisplay:YES];
 	}
 }
 
@@ -645,7 +577,6 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 - (IBAction)defaultWindowBack:(id)sender
 {
 	NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
-	int i;
 
     NSString *osxMode = [[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"];
     if(osxMode && [osxMode isEqualToString:@"@Dark"]){
@@ -655,35 +586,41 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
     }
 
 	[windowBackWell setColor:windowBackColor];
-	for (i = 0; i < [documents count]; i++) {
-		[[documents objectAtIndex:i] updateWindowColor];
-		[[[[documents objectAtIndex:i] docView] superview] setNeedsDisplay:YES];
+    for (SeaDocument *doc in documents) {
+		[doc updateWindowColor];
+		[[[doc docView] superview] setNeedsDisplay:YES];
 	}
 }
 
 - (IBAction)windowBackChanged:(id)sender
 {
 	NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
-	int i;
 
     windowBackColor = [windowBackWell color];
-	for (i = 0; i < [documents count]; i++) {
-		[[documents objectAtIndex:i] updateWindowColor];
-		[[[[documents objectAtIndex:i] docView] superview] setNeedsDisplay:YES];
+    for (SeaDocument *doc in documents) {
+		[doc updateWindowColor];
+		[[[doc docView] superview] setNeedsDisplay:YES];
 	}
 }
 
 - (IBAction)transparencyColorChanged:(id)sender
 {
     NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
-    int i;
 
     transparencyColor = [transparencyColorWell color];
-    for (i = 0; i < [documents count]; i++) {
-        [[[documents objectAtIndex:i] docView] setNeedsDisplay:YES];
+    for (SeaDocument *doc in documents) {
+        [[doc docView] setNeedsDisplay:YES];
     }
 }
 
+- (IBAction)undoLevelsChanged:(id)sender {
+    undoLevels = [undoLevelsInput intValue];
+
+    NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
+    for (SeaDocument *doc in documents) {
+        [[doc undoManager] setLevelsOfUndo:undoLevels];
+    }
+}
 
 - (NSColor *)windowBack
 {
@@ -697,26 +634,20 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 
 - (NSColor *)selectionColor:(float)alpha
 {	
-	NSColor *result;
-	//float alpha = light ? 0.20 : 0.40;
-	
-	switch (selectionColor) {
-		case kCyanColor:
-			result = [NSColor colorWithDeviceCyan:1.0 magenta:0.0 yellow:0.0 black:0.0 alpha:alpha];
-		break;
-		case kMagentaColor:
-			result = [NSColor colorWithDeviceCyan:0.0 magenta:1.0 yellow:0.0 black:0.0 alpha:alpha];
-		break;
-		case kYellowColor:
-			result = [NSColor colorWithDeviceCyan:0.0 magenta:0.0 yellow:1.0 black:0.0 alpha:alpha];
-		break;
-		default:
-			result = [NSColor colorWithCalibratedWhite:0.0 alpha:alpha];
-		break;
-	}
+    NSColor *result = colorEnumToColor(selectionColor,alpha);
 	result = [result colorUsingColorSpace:MyRGBCS];
 	
 	return result;
+}
+
+-(BOOL)marchingAnts
+{
+    return marchingAnts;
+}
+
+-(BOOL)layerBoundaryLines
+{
+    return layerBoundaryLines;
 }
 
 - (int)selectionColorIndex
@@ -727,11 +658,12 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 - (IBAction)selectionColorChanged:(id)sender
 {
 	NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
-	int i;
-	
-	selectionColor = [sender tag] - 280;
-	for (i = 0; i < [documents count]; i++) {
-		[[[documents objectAtIndex:i] docView] setNeedsDisplay:YES];
+
+    marchingAnts = [marchingAntsCheckbox state];
+    layerBoundaryLines = [layerBoundaryLinesCheckbox state];
+	selectionColor = [selectionColorMenu indexOfSelectedItem];
+    for (SeaDocument *doc in documents) {
+		[[doc docView] setNeedsDisplay:YES];
 	}
 }
 
@@ -743,33 +675,16 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 - (IBAction)layerBoundsColorChanged:(id)sender
 {
 	NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
-	int i;
 
 	whiteLayerBounds = [sender selectedRow];
-	for (i = 0; i < [documents count]; i++) {
-		[[[documents objectAtIndex:i] docView] setNeedsDisplay:YES];
+    for (SeaDocument *doc in documents) {
+		[[doc docView] setNeedsDisplay:YES];
 	}
 }
 
 - (NSColor *)guideColor:(float)alpha
 {	
-	NSColor *result;
-	//float alpha = light ? 0.20 : 0.40;
-	
-	switch (guideColor) {
-		case kCyanColor:
-			result = [NSColor colorWithDeviceCyan:1.0 magenta:0.0 yellow:0.0 black:0.0 alpha:alpha];
-			break;
-		case kMagentaColor:
-			result = [NSColor colorWithDeviceCyan:0.0 magenta:1.0 yellow:0.0 black:0.0 alpha:alpha];
-			break;
-		case kYellowColor:
-			result = [NSColor colorWithDeviceCyan:0.0 magenta:0.0 yellow:1.0 black:0.0 alpha:alpha];
-			break;
-		default:
-			result = [NSColor colorWithCalibratedWhite:0.0 alpha:alpha];
-			break;
-	}
+    NSColor *result = colorEnumToColor(guideColor,alpha);
 	result = [result colorUsingColorSpace:MyRGBCS];
 	
 	return result;
@@ -783,31 +698,24 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 - (IBAction)guideColorChanged:(id)sender
 {
 	NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
-	int i;
-	
-	guideColor = [sender tag] - 290;
-	for (i = 0; i < [documents count]; i++) {
-		[[[documents objectAtIndex:i] docView] setNeedsDisplay:YES];
+
+	guideColor = [guideColorMenu indexOfSelectedItem];
+    for (SeaDocument *doc in documents) {
+		[[doc docView] setNeedsDisplay:YES];
 	}
 }
 
 - (IBAction)rotateSelectionColor:(id)sender
 {
 	NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
-	int i;
-	
+
 	selectionColor = (selectionColor + 1) % kMaxColor;
-	for (i = 0; i < [documents count]; i++) {
-		[[[documents objectAtIndex:i] docView] setNeedsDisplay:YES];
+    for (SeaDocument *doc in documents) {
+		[[doc docView] setNeedsDisplay:YES];
 	}
 	
 	// Set the selection colour correctly
-	[selectionColorMenu selectItemAtIndex:[selectionColorMenu indexOfItemWithTag:selectionColor + 280]];
-}
-
-- (BOOL)ignoreFirstTouch
-{
-	return ignoreFirstTouch;
+	[selectionColorMenu selectItemAtIndex:selectionColor];
 }
 
 - (BOOL)mouseCoalescing
@@ -818,11 +726,6 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 - (BOOL)preciseCursor
 {
 	return preciseCursor;
-}
-
-- (BOOL)delayOverlay
-{
-	return NO;
 }
 
 - (IntSize)size
@@ -865,29 +768,12 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 
 - (IntPoint)screenResolution
 {
-	switch (resolutionHandling) {
-		case kIgnoreResolution:
-			return IntMakePoint(0, 0);
-		break;
-		case kUse72dpiResolution:
-			return IntMakePoint(72, 72);
-		break;
-		case kUseScreenResolution:
-			return mainScreenResolution;
-		break;
-	}
-
-	return IntMakePoint(72, 72);
+    return mainScreenResolution;
 }
 
 - (BOOL)transparentBackground
 {
 	return transparentBackground;
-}
-
-- (int)runCount
-{
-	return runCount;
 }
 
 - (BOOL)openUntitled

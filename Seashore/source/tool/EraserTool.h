@@ -1,71 +1,10 @@
-#import "Globals.h"
+#import "Seashore.h"
 #import "EraserOptions.h"
-#import "AbstractTool.h"
+#import "AbstractBrushTool.h"
 
-/*!
-	@struct		ETPointRecord
-	@discussion	Specifies a point to be drawn.
-	@param		point
-				The point to be drawn.
-	@param		pressure
-				The presure of the point to be drawn
-	@param		special
-				0 = normal, 2 = terminate
-*/
-typedef struct {
-	IntPoint point;
-	unsigned char pressure;
-	unsigned char special;
-} ETPointRecord;
-
-/*!
-	@defined	kMaxPoints
-	@discussion	Specifies the maximum number of points.
-*/
-#define kMaxETPoints 16384
-
-/*!
-	@class		BrushTool
-	@abstract	The paintbrush's role in Seashore is much the same as that in the GIMP. 
-	@discussion	Shift key - Draws straight lines.<br>Control key - Draws lines
-				at 45 degree intervals.
-				<br><br>
-				<b>License:</b> GNU General Public License<br>
-				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
-*/
-
-@interface EraserTool : AbstractTool
+@interface EraserTool : AbstractBrushTool
 {
-
-	// The last point we've been and the last point a brush was plotted (there is a difference)
-	NSPoint lastPoint, lastPlotPoint;
-	
-	// The set of pixels upon which to base the brush plot
-	unsigned char basePixel[4];
-	
-	// The distance travelled by the brush so far
-	double distance;
-	
-	// The current position in the list we have drawing
-	int drawingPos;
-	
-	// The current position in the list
-	int pos;
-	
-	// The list of points
-	ETPointRecord *points;
-	
-	// Have we finished drawing?
-	BOOL drawingDone;
-	
-	// Has the first touch been done?
-	BOOL firstTouchDone;
-
-	// The last where recorded
-	IntPoint lastWhere;
-    
     EraserOptions *options;
-	
 }
 
 /*!
@@ -98,14 +37,6 @@ typedef struct {
 - (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event;
 
 /*!
-	@method		drawThread:
-	@discussion	Handles drawing.
-	@param		object
-				Ignored.
-*/
-- (void)drawThread:(id)object;
-
-/*!
 	@method		mouseDraggedTo:withEvent:
 	@discussion	Handles mouse dragging events.
 	@param		where
@@ -119,12 +50,6 @@ typedef struct {
 - (void)mouseDraggedTo:(IntPoint)where withEvent:(NSEvent *)event;
 
 /*!
-	@method		endLineDrawing
-	@discussion	Ends line drawing.
-*/
-- (void)endLineDrawing;
-
-/*!
 	@method		mouseUpAt:withEvent:
 	@discussion	Handles mouse up events.
 	@param		where
@@ -136,29 +61,4 @@ typedef struct {
 				The mouse up event.
 */
 - (void)mouseUpAt:(IntPoint)where withEvent:(NSEvent *)event;
-
-/*!
-	@method		startStroke:
-	@discussion	Starts a stroke at a specified point.
-	@param		where
-				Where in the document to start the stroke at.
-*/
-- (void)startStroke:(IntPoint)where;
-
-/*!
-	@method		intermediateStroke:
-	@discussion	Specifies an intermediate point in the stroke.
-	@param		Where in the document to place the intermediate
-				stroke.
-*/
-- (void)intermediateStroke:(IntPoint)where;
-
-/*!
-	@method		endStroke:
-	@discussion	Ends a stroke at a specified point.
-	@param		where
-				Where in the document to end the stroke at.
-*/
-- (void)endStroke:(IntPoint)where;
-
 @end

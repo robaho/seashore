@@ -1,4 +1,4 @@
-#import "Globals.h"
+#import "Seashore.h"
 
 /*!
 	@class		SeaTexture
@@ -41,19 +41,6 @@
 	@discussion	Frees memory occupied by an instance of this class.
 */
 - (void)dealloc;
-
-/*!
-	@method		activate
-	@discussion	Activates the texture.
-*/
-- (void)activate;
-
-/*!
-	@method		deactivate
-	@discussion	Deactivates the texture.
-*/
-
-- (void)deactivate;
 
 /*!
 	@method		thumbnail

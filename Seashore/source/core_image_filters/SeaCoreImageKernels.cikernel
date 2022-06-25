@@ -1,0 +1,27 @@
+
+kernel vec4 alphaToGray(sampler src) {
+//	vec4 t = unpremultiply(sample(src, samplerCoord(src)));
+	vec4 t = sample(src, samplerCoord(src));
+	t.r = t.a;
+	t.g = t.a;
+	t.b = t.a;
+	t.a = 1.0;
+    return t;
+}
+
+/*
+kernel vec4 alphaToGray(__sample s) {
+	vec4 t = unpremultiply(s);
+	t.r = t.a;
+	t.g = t.a;
+	t.b = t.a;
+	t.a = 1.0;
+	return t;
+}
+*/
+
+/*
+kernel vec4 alphaToGray(__sample s) {
+    return s.rgba;
+}
+*/

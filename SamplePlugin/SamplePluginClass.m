@@ -10,10 +10,6 @@
 
 @implementation SamplePluginClass
 
-- (BOOL)canReapply {
-    return YES;
-}
-
 - (NSString *)groupName {
     return @"Sample";
 }
@@ -26,17 +22,13 @@
     return @"Sample Plugin";
 }
 
-- (void)reapply {
-    [self run];
-}
-
-- (void)run {
+- (void)execute {
     NSAlert *alert = [[NSAlert alloc] init];
     alert.messageText = @"You are running the sample plugin!";
     [alert runModal];
 }
 
-- (int)type {
+- (int)points {
     return 0;
 }
 

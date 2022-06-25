@@ -81,16 +81,6 @@
 	[gUserDefaults setInteger:activeGroupIndex forKey:@"active brush group"];
 }
 
-- (void)activate:(id)sender
-{
-	document = sender;
-}
-
-- (void)deactivate
-{
-	document = NULL;
-}
-
 - (void)update
 {
 	activeGroupIndex = [[brushGroupPopUp selectedItem] tag];
@@ -211,8 +201,6 @@
     
     // Update utility
     [self setActiveBrushIndex:-1];
-    [[view documentView] update];
-    [view setNeedsDisplay:YES];
 }
 
 - (IBAction)changeSpacing:(id)sender
@@ -227,7 +215,8 @@
 
 - (int)spacing
 {
-	return ([spacingSlider intValue] / 5 * 5 == 0) ? 1 : [spacingSlider intValue] / 5 * 5;
+    int val = [spacingSlider intValue] / 5 * 5;
+    return val == 0 ? 1 : val;
 }
 
 - (void)setSpacing:(int)spacing
@@ -253,30 +242,22 @@
 
 - (void)setActiveGroupIndex:(int)index
 {
-    if(activeBrushIndex!=-1){
-        SeaBrush *oldBrush = [[groups objectAtIndex:activeGroupIndex] objectAtIndex:activeBrushIndex];
-        [oldBrush deactivate];
-        activeBrushIndex=-1;
-    }
+    activeBrushIndex=-1;
     activeGroupIndex = index;
     [brushGroupPopUp selectItemAtIndex:[brushGroupPopUp indexOfItemWithTag:activeGroupIndex]];
 }
 
 - (void)setActiveBrushIndex:(int)index
 {
-    if(activeBrushIndex!=-1){
-        SeaBrush *oldBrush = [[groups objectAtIndex:activeGroupIndex] objectAtIndex:activeBrushIndex];
-        [oldBrush deactivate];
-    }
-    
     activeBrushIndex = index;
     
     if(index!=-1) {
         SeaBrush *newBrush = [[groups objectAtIndex:activeGroupIndex] objectAtIndex:index];
         [brushNameLabel setStringValue:[newBrush name]];
         [self setSpacing:[newBrush spacing]];
-        [newBrush activate];
     }
+    [view setNeedsDisplay:YES];
+    [[view documentView] update];
 }
 
 - (void)setActiveBrush:(SeaBrush *)brush

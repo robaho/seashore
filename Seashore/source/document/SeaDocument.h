@@ -1,4 +1,4 @@
-#import "Globals.h"
+#import "Seashore.h"
 #import "SeaContent.h"
 #import "SeaWhiteboard.h"
 #import "TextureUtility.h"
@@ -7,10 +7,12 @@
 #import "OptionsUtility.h"
 #import "InfoUtility.h"
 #import "RecentsUtility.h"
-#import "PegasusUtility.h"
+#import "LayersUtility.h"
 #import "StatusUtility.h"
 #import "WarningsUtility.h"
 #import "SeaView.h"
+#import "AbstractTool.h"
+#import "SeaScrollView.h"
 
 /*!
 	@class		SeaDocument
@@ -28,7 +30,7 @@
 
 	// The contents of the document (a subclass of SeaContent)
 	SeaContent *contents;
-	
+
 	// The whiteboard that represents this document
 	SeaWhiteboard *whiteboard;
 	
@@ -51,8 +53,11 @@
 	IBOutlet id pluginData;
 	
 	// An outlet to the view associated with this document
-	IBOutlet id view;
-	
+    IBOutlet id contentView;
+
+    SeaView *seaView;
+    SeaScrollView *scrollView;
+
 	// An outlet to the window associated with this document
 	IBOutlet id docWindow;
 	
@@ -84,14 +89,8 @@
 	// The unique ID for layer
 	int uniqueLayerID;
 	
-	// The unique ID for floating layer
-	int uniqueFloatingLayerID;
-	
 	// The document's measure style
 	int measureStyle;
-	
-	// Is the document locked?
-	BOOL locked;
 	
     NSString *selectedType;
     
@@ -101,7 +100,7 @@
 @property (strong) IBOutlet RecentsUtility *recentsUtility;
 @property (strong) IBOutlet TextureUtility *textureUtility;
 @property (strong) IBOutlet BrushUtility *brushUtility;
-@property (strong) IBOutlet PegasusUtility *pegasusUtility;
+@property (strong) IBOutlet LayersUtility *layersUtility;
 @property (strong) IBOutlet ToolboxUtility *toolboxUtility;
 @property (strong) IBOutlet OptionsUtility *optionsUtility;
 @property (strong) IBOutlet InfoUtility *infoUtility;
@@ -189,7 +188,13 @@
  @method        currentTool
  @result        Returns the instance of the current tool
  */
-- (id)currentTool;
+- (AbstractTool*)currentTool;
+
+/*!
+ @method        currentToolId
+ @result        Returns the ithe current tool identifier
+ */
+- (int)currentToolId;
 
 /*!
 	@method		helpers
@@ -317,22 +322,6 @@
 
 /*!
 	@method		windowDidBecomeMain:
-	@discussion	Called when a sheet is shown.
-	@param		notification
-				Ignored.
-*/
-- (void)windowWillBeginSheet:(NSNotification *)notification;
-
-/*!
-	@method		windowDidEndSheet:
-	@discussion	Called after a sheet is closed.
-	@param		notification
-				Ignored.
-*/
-- (void)windowDidEndSheet:(NSNotification *)notification;
-
-/*!
-	@method		windowDidBecomeMain:
 	@discussion	Called when the document is activated.
 	@param		notification
 				Ignored.
@@ -388,18 +377,6 @@
 - (int)uniqueLayerID;
 
 /*!
-	@method		uniqueFloatingLayerID
-	@discussion	Returns a unique ID for a given floating layer and then
-				increments the uniqueFloatingLayerID instance variable so the
-				next floating layer will recieve a unique ID. To ensure
-				sequential numbering this method should only be called once by
-				the intializer of SeaFloatingLayer and its result stored.
-	@result		Returns an integer representing a new layer may assign to
-				itself.
-*/
-- (int)uniqueFloatingLayerID;
-
-/*!
 	@method		windowNibName
 	@discussion	Returns the name of the NIB file associated with this document's
 				window for use by NSDocumentController.
@@ -443,39 +420,6 @@
 - (int)measureStyle;
 
 /*!
-	@method		locked
-	@discussion	Returns whether or not the document is locked. The document can
-				be locked as a consequence of a call to lock or as a consequence
-				of a sheet being open in the documents window.
-	@result		Returns YES if the document is locked, NO otherwise.
-*/
-- (BOOL)locked;
-
-/*!
-	@method		lock
-	@discussion	Locks the document (regardless of how many calls were previously
-				made to unlock). When the document is locked the user is
-				prevented from making certain changes to the document (i.e.
-				undoing things, removing layers, etc.). Locking is an internal
-				temporary state and as such should be used when drawing or
-				changing the margins of the document not to prevent users from
-				changing a read-only file.
-*/
-- (void)lock;
-
-/*!
-	@method		unlock
-	@discussion	Unlocks the document (regardless of how many calls were
-				previously made to lock). When the document is locked the user
-				is prevented from making certain changes to the document (i.e.
-				undoing things, removing layers, etc.). Locking is an internal
-				temporary state and as such should be used when drawing or
-				changing the margins of the document not to prevent users from
-				changing a read-only file.
-*/
-- (void)unlock;
-
-/*!
 	@method		validateMenuItem:
 	@discussion	Determines whether a given menu item should be enabled or
 				disabled.
@@ -490,7 +434,7 @@
 	@result		Returns the document main view as a scroll view
 */
 
-- (NSScrollView *)scrollView;
+- (SeaScrollView *)scrollView;
 
 /*!
 	@method		dataSource

@@ -1,0 +1,313 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2B0550C4280C626300A7FFFC /* SeaSplitView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B0550C2280C626300A7FFFC /* SeaSplitView.h */; };
+		2B0550C5280C626300A7FFFC /* SeaSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B0550C3280C626300A7FFFC /* SeaSplitView.m */; };
+		2B670B5027D52796003BA6AE /* SeaComponents.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B670B4F27D52796003BA6AE /* SeaComponents.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2B670B7B27D52BE8003BA6AE /* BorderView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B670B7527D52BE8003BA6AE /* BorderView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2B670B7D27D52BE8003BA6AE /* SeaSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B670B7727D52BE8003BA6AE /* SeaSlider.m */; };
+		2B670B7E27D52BE8003BA6AE /* BorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B670B7827D52BE8003BA6AE /* BorderView.m */; };
+		2B670B7F27D52BE8003BA6AE /* SeaSlider.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B670B7927D52BE8003BA6AE /* SeaSlider.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2B670B8027D52BE8003BA6AE /* VerticalView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B670B7A27D52BE8003BA6AE /* VerticalView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2B670B8327D536D3003BA6AE /* VerticalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B670B8227D536D3003BA6AE /* VerticalView.m */; };
+		2B670B8627D546D1003BA6AE /* Label.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B670B8427D546D1003BA6AE /* Label.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2B670B8727D546D1003BA6AE /* Label.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B670B8527D546D1003BA6AE /* Label.m */; };
+		2B670B9127D5DD8C003BA6AE /* SizeableView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B670B8F27D5DD8C003BA6AE /* SizeableView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2B670B9227D5DD8C003BA6AE /* SizeableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B670B9027D5DD8C003BA6AE /* SizeableView.m */; };
+		2B670B9527D83E85003BA6AE /* SeaBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B670B9327D83E85003BA6AE /* SeaBox.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2B670B9627D83E85003BA6AE /* SeaBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B670B9427D83E85003BA6AE /* SeaBox.m */; };
+		2B670B9927D96FE2003BA6AE /* SeaColorWell.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B670B9727D96FE2003BA6AE /* SeaColorWell.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2B670B9A27D96FE2003BA6AE /* SeaColorWell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B670B9827D96FE2003BA6AE /* SeaColorWell.m */; };
+		2B670BC127DC21DC003BA6AE /* SeaFileChooser.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B670BBF27DC21DC003BA6AE /* SeaFileChooser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2B670BC227DC21DC003BA6AE /* SeaFileChooser.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B670BC027DC21DC003BA6AE /* SeaFileChooser.m */; };
+		2B670BC427DC5C8A003BA6AE /* Listener.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B670BC327DC5797003BA6AE /* Listener.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2BB5E045281367EF00EC3014 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BB5E044281367EF00EC3014 /* Cocoa.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		2B0550C2280C626300A7FFFC /* SeaSplitView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaSplitView.h; sourceTree = "<group>"; };
+		2B0550C3280C626300A7FFFC /* SeaSplitView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeaSplitView.m; sourceTree = "<group>"; };
+		2B670B4C27D52796003BA6AE /* SeaComponents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SeaComponents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B670B4F27D52796003BA6AE /* SeaComponents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaComponents.h; sourceTree = "<group>"; };
+		2B670B7527D52BE8003BA6AE /* BorderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BorderView.h; sourceTree = "<group>"; };
+		2B670B7727D52BE8003BA6AE /* SeaSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeaSlider.m; sourceTree = "<group>"; };
+		2B670B7827D52BE8003BA6AE /* BorderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BorderView.m; sourceTree = "<group>"; };
+		2B670B7927D52BE8003BA6AE /* SeaSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeaSlider.h; sourceTree = "<group>"; };
+		2B670B7A27D52BE8003BA6AE /* VerticalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerticalView.h; sourceTree = "<group>"; };
+		2B670B8227D536D3003BA6AE /* VerticalView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerticalView.m; sourceTree = "<group>"; };
+		2B670B8427D546D1003BA6AE /* Label.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Label.h; sourceTree = "<group>"; };
+		2B670B8527D546D1003BA6AE /* Label.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Label.m; sourceTree = "<group>"; };
+		2B670B8F27D5DD8C003BA6AE /* SizeableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SizeableView.h; sourceTree = "<group>"; };
+		2B670B9027D5DD8C003BA6AE /* SizeableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SizeableView.m; sourceTree = "<group>"; };
+		2B670B9327D83E85003BA6AE /* SeaBox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaBox.h; sourceTree = "<group>"; };
+		2B670B9427D83E85003BA6AE /* SeaBox.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeaBox.m; sourceTree = "<group>"; };
+		2B670B9727D96FE2003BA6AE /* SeaColorWell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaColorWell.h; sourceTree = "<group>"; };
+		2B670B9827D96FE2003BA6AE /* SeaColorWell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeaColorWell.m; sourceTree = "<group>"; };
+		2B670BBF27DC21DC003BA6AE /* SeaFileChooser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaFileChooser.h; sourceTree = "<group>"; };
+		2B670BC027DC21DC003BA6AE /* SeaFileChooser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeaFileChooser.m; sourceTree = "<group>"; };
+		2B670BC327DC5797003BA6AE /* Listener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Listener.h; sourceTree = "<group>"; };
+		2BB5E044281367EF00EC3014 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2B670B4927D52796003BA6AE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2BB5E045281367EF00EC3014 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2B670B4227D52796003BA6AE = {
+			isa = PBXGroup;
+			children = (
+				2B670B8127D52C2E003BA6AE /* Source */,
+				2B670B4D27D52796003BA6AE /* Products */,
+				2BB5E043281367EF00EC3014 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		2B670B4D27D52796003BA6AE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2B670B4C27D52796003BA6AE /* SeaComponents.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2B670B8127D52C2E003BA6AE /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				2B670B7527D52BE8003BA6AE /* BorderView.h */,
+				2B670B7827D52BE8003BA6AE /* BorderView.m */,
+				2B670B7927D52BE8003BA6AE /* SeaSlider.h */,
+				2B670B7727D52BE8003BA6AE /* SeaSlider.m */,
+				2B670B7A27D52BE8003BA6AE /* VerticalView.h */,
+				2B670B8227D536D3003BA6AE /* VerticalView.m */,
+				2B670B4F27D52796003BA6AE /* SeaComponents.h */,
+				2B670B8427D546D1003BA6AE /* Label.h */,
+				2B670B8527D546D1003BA6AE /* Label.m */,
+				2B670B8F27D5DD8C003BA6AE /* SizeableView.h */,
+				2B670B9027D5DD8C003BA6AE /* SizeableView.m */,
+				2B670B9327D83E85003BA6AE /* SeaBox.h */,
+				2B670B9427D83E85003BA6AE /* SeaBox.m */,
+				2B670B9727D96FE2003BA6AE /* SeaColorWell.h */,
+				2B670B9827D96FE2003BA6AE /* SeaColorWell.m */,
+				2B670BBF27DC21DC003BA6AE /* SeaFileChooser.h */,
+				2B670BC027DC21DC003BA6AE /* SeaFileChooser.m */,
+				2B670BC327DC5797003BA6AE /* Listener.h */,
+				2B0550C2280C626300A7FFFC /* SeaSplitView.h */,
+				2B0550C3280C626300A7FFFC /* SeaSplitView.m */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		2BB5E043281367EF00EC3014 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2BB5E044281367EF00EC3014 /* Cocoa.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		2B670B4727D52796003BA6AE /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2B0550C4280C626300A7FFFC /* SeaSplitView.h in Headers */,
+				2B670B5027D52796003BA6AE /* SeaComponents.h in Headers */,
+				2B670B7B27D52BE8003BA6AE /* BorderView.h in Headers */,
+				2B670B7F27D52BE8003BA6AE /* SeaSlider.h in Headers */,
+				2B670B9127D5DD8C003BA6AE /* SizeableView.h in Headers */,
+				2B670B9927D96FE2003BA6AE /* SeaColorWell.h in Headers */,
+				2B670B9527D83E85003BA6AE /* SeaBox.h in Headers */,
+				2B670B8627D546D1003BA6AE /* Label.h in Headers */,
+				2B670BC127DC21DC003BA6AE /* SeaFileChooser.h in Headers */,
+				2B670B8027D52BE8003BA6AE /* VerticalView.h in Headers */,
+				2B670BC427DC5C8A003BA6AE /* Listener.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		2B670B4B27D52796003BA6AE /* SeaComponents */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2B670B5327D52796003BA6AE /* Build configuration list for PBXNativeTarget "SeaComponents" */;
+			buildPhases = (
+				2B670B4727D52796003BA6AE /* Headers */,
+				2B670B4827D52796003BA6AE /* Sources */,
+				2B670B4927D52796003BA6AE /* Frameworks */,
+				2B670B4A27D52796003BA6AE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SeaComponents;
+			productName = SeaComponents;
+			productReference = 2B670B4C27D52796003BA6AE /* SeaComponents.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2B670B4327D52796003BA6AE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1320;
+				TargetAttributes = {
+					2B670B4B27D52796003BA6AE = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
+				};
+			};
+			buildConfigurationList = 2B670B4627D52796003BA6AE /* Build configuration list for PBXProject "SeaComponents" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2B670B4227D52796003BA6AE;
+			productRefGroup = 2B670B4D27D52796003BA6AE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2B670B4B27D52796003BA6AE /* SeaComponents */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2B670B4A27D52796003BA6AE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2B670B4827D52796003BA6AE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2B670B8327D536D3003BA6AE /* VerticalView.m in Sources */,
+				2B670B7E27D52BE8003BA6AE /* BorderView.m in Sources */,
+				2B670B9A27D96FE2003BA6AE /* SeaColorWell.m in Sources */,
+				2B0550C5280C626300A7FFFC /* SeaSplitView.m in Sources */,
+				2B670B9227D5DD8C003BA6AE /* SizeableView.m in Sources */,
+				2B670B8727D546D1003BA6AE /* Label.m in Sources */,
+				2B670B7D27D52BE8003BA6AE /* SeaSlider.m in Sources */,
+				2B670B9627D83E85003BA6AE /* SeaBox.m in Sources */,
+				2B670BC227DC21DC003BA6AE /* SeaFileChooser.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		2B670B5127D52796003BA6AE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+			};
+			name = Debug;
+		};
+		2B670B5227D52796003BA6AE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_NS_ASSERTIONS = NO;
+			};
+			name = Release;
+		};
+		2B670B5427D52796003BA6AE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.seacomponents;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Debug;
+		};
+		2B670B5527D52796003BA6AE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.seacomponents;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2B670B4627D52796003BA6AE /* Build configuration list for PBXProject "SeaComponents" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2B670B5127D52796003BA6AE /* Debug */,
+				2B670B5227D52796003BA6AE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2B670B5327D52796003BA6AE /* Build configuration list for PBXNativeTarget "SeaComponents" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2B670B5427D52796003BA6AE /* Debug */,
+				2B670B5527D52796003BA6AE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2B670B4327D52796003BA6AE /* Project object */;
+}

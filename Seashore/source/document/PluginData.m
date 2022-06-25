@@ -22,22 +22,27 @@
 
 - (unsigned char *)data
 {
-	return [(SeaLayer *)[[document contents] activeLayer] data];
+	return [[[document contents] activeLayer] data];
+}
+
+- (CGImageRef)bitmap
+{
+    return [[[document contents] activeLayer] bitmap];
 }
 
 - (unsigned char *)whiteboardData
 {
-	return [(SeaWhiteboard *)[document whiteboard] data];
+	return [[document whiteboard] data];
 }
 
 - (unsigned char *)replace
 {
-	return [(SeaWhiteboard *)[document whiteboard] replace];
+	return [[document whiteboard] replace];
 }
 
 - (unsigned char *)overlay
 {
-	return [(SeaWhiteboard *)[document whiteboard] overlay];
+	return [[document whiteboard] overlay];
 }
 
 - (int)spp
@@ -52,17 +57,17 @@
 
 - (int)width
 {
-	return [(SeaLayer *)[[document contents] activeLayer] width];
+	return [[[document contents] activeLayer] width];
 }
 
 - (int)height
 {
-	return [(SeaLayer *)[[document contents] activeLayer] height];
+	return [[[document contents] activeLayer] height];
 }
 
 - (BOOL)hasAlpha
 {
-	return [(SeaLayer *)[[document contents] activeLayer] hasAlpha];
+	return [[[document contents] activeLayer] hasAlpha];
 }
 
 - (IntPoint)point:(int)index;
@@ -80,14 +85,6 @@
     return [[document contents] background];
 }
 
-- (id)window
-{
-	if ([[SeaController seaPrefs] effectsPanel])
-		return NULL;
-	else
-		return [document window];
-}
-
 - (void)setOverlayBehaviour:(int)value
 {
 	[[document whiteboard] setOverlayBehaviour:value];
@@ -98,20 +95,26 @@
 	[[document whiteboard] setOverlayOpacity:value];
 }
 
+- (void)settingsChanged
+{
+    EffectTool *tool = [[document tools] getTool:kEffectTool];
+    [tool settingsChanged];
+}
+
 - (void)apply
 {
-	[(SeaHelpers *)[document helpers] applyOverlay];
+    [[document helpers] overlayChanged:[self selection]];
+	[[document helpers] applyOverlay];
 }
 
 - (void)preview
 {
-	[(SeaHelpers *)[document helpers] overlayChanged:[self selection]];
+	[[document helpers] overlayChanged:[self selection]];
 }
 
 - (void)cancel
 {
-	[(SeaWhiteboard *)[document whiteboard] clearOverlay];
-	[(SeaHelpers *)[document helpers] overlayChanged:[self selection]];
+	[[document whiteboard] clearOverlay];
 }
 
 @end

@@ -1,4 +1,4 @@
-#import "Globals.h"
+#import "Seashore.h"
 #import "AbstractExporter.h"
 
 /*!
@@ -10,22 +10,15 @@
 				<b>License:</b> GNU General Public License<br>
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
+@class SeaDocument;
 
 @interface XCFExporter : AbstractExporter {
-	
-	// The version of this document
-	int version;
-	
 	// The document that is being exported
-	id document;
+	SeaDocument *document;
 	
 	// These hold 64 bytes of temporary information for us 
 	int tempIntString[16];
 	char tempString[64];
-	
-	// Used for saving a floating layer
-	int floatingFiller;
-	
 }
 
 @end
