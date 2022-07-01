@@ -8,7 +8,7 @@
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 // latest XCode 12.4 only supports OSX 10.9+ so you need to change the target, or install older SDKs
-MACOSX_DEPLOYMENT_TARGET = 10.7
+MACOSX_DEPLOYMENT_TARGET = 10.9
 GCC_GENERATE_DEBUGGING_SYMBOLS = YES
 //GCC_DEBUGGING_SYMBOLS=full,
 DEBUG_INFORMATION_FORMAT=dwarf-with-dsym
