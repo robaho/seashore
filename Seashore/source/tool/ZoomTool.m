@@ -65,7 +65,11 @@
     SeaLayer *layer = [[document contents] activeLayer];
     SeaView *view = [document docView];
 
-    if(IntRectIsEmpty([super postScaledRect])) {
+    IntRect r = [super postScaledRect];
+
+    float scale = [[document docView] zoom];
+
+    if(r.size.width<8/scale || r.size.height<8/scale) {
         NSPoint p = IntPointMakeNSPoint(IntOffsetPoint(where,[layer xoff],[layer yoff]));
         if ([options modifier] == kAltModifier) {
             if([view canZoomOut])
