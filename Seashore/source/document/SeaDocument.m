@@ -335,7 +335,7 @@
         return YES;
     }
     @catch(NSException *exception) {
-        NSLog(@"unable to open file %@",exception);
+        NSLog(@"unable to open file %@ %@",exception,[exception callStackSymbols]);
         [NSAlert alertWithMessageText:@"Error Opening File" defaultButton:NULL alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"%@",[exception reason]];
         return NO;
     }
