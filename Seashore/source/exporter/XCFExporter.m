@@ -258,8 +258,8 @@ static inline void fix_endian_write(int *input, int size)
 
 - (BOOL)writeLayerPixels:(int)index file:(FILE *)file
 {
-	id layer = [[document contents] layer:index];
-	int width = [(SeaLayer *)layer width], height = [(SeaLayer *)layer height], spp = [[document contents] spp];
+	SeaLayer *layer = [[document contents] layer:index];
+	int width = [layer width], height = [layer height], spp = [[document contents] spp];
 	int tilesPerRow = (width % XCF_TILE_WIDTH) ? (width / XCF_TILE_WIDTH + 1) : (width / XCF_TILE_WIDTH);
 	int tilesPerColumn = (height % XCF_TILE_HEIGHT) ? (height / XCF_TILE_HEIGHT + 1) : (height / XCF_TILE_HEIGHT);
 	int offsetPos, oldPos, whichTile, i, j, k, tileWidth, tileHeight, tileSize, srcLoc, destLoc, compressedLength;
@@ -284,7 +284,7 @@ static inline void fix_endian_write(int *input, int size)
 	tileData = malloc(XCF_TILE_HEIGHT * XCF_TILE_WIDTH * spp);
 	compressedTileData = malloc(XCF_TILE_HEIGHT * XCF_TILE_WIDTH * spp * 1.3 + 1);
 
-    totalData = malloc(width*height*spp);
+    totalData = [layer data];
 
 	// Write in our default tile height and width
 	tempIntString[0] = width;
@@ -342,8 +342,7 @@ static inline void fix_endian_write(int *input, int size)
 	// Free memory we've assigned to ourselves
 	free(tileData);
 	free(compressedTileData);
-    free(totalData);
-	
+
 	// Check for any problems
 	if (ferror(file))
 		return NO;
@@ -354,8 +353,6 @@ static inline void fix_endian_write(int *input, int size)
 
 - (BOOL)writeLayer:(int)index file:(FILE *)file
 {	
-	int storedOffset;
-	
 	// Write the header
 	if ([self writeLayerHeader:index file:file] == NO) {
 		return NO;
