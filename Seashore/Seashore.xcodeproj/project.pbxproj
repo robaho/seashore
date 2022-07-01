@@ -36,19 +36,24 @@
 		2B2D8CA421F7C822004527F2 /* grabberTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2D8CA321F7C822004527F2 /* grabberTemplate.png */; };
 		2B2D8CC721F996A5004527F2 /* Alpha2Gray.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B2D8CC521F995BB004527F2 /* Alpha2Gray.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2B2D8CCA21F9A870004527F2 /* ZoomTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B2D8CC921F9A870004527F2 /* ZoomTool.m */; };
+		2B2DEC21286F2F5B0017BBA8 /* PocketSVG.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B5CF1DA2802A931009FD2D0 /* PocketSVG.framework */; };
+		2B2DEC22286F2F5B0017BBA8 /* PocketSVG.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2B5CF1DA2802A931009FD2D0 /* PocketSVG.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B2DEC35286F35F40017BBA8 /* SeaComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2DEC32286F35F40017BBA8 /* SeaComponents.framework */; };
+		2B2DEC36286F35F40017BBA8 /* SeaComponents.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2DEC32286F35F40017BBA8 /* SeaComponents.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B2DEC37286F35F40017BBA8 /* SeaLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2DEC33286F35F40017BBA8 /* SeaLibrary.framework */; };
+		2B2DEC38286F35F50017BBA8 /* SeaLibrary.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2DEC33286F35F40017BBA8 /* SeaLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B2DEC3C286F35FE0017BBA8 /* Plugins.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2DEC3B286F35FE0017BBA8 /* Plugins.framework */; };
+		2B2DEC3D286F35FE0017BBA8 /* Plugins.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2DEC3B286F35FE0017BBA8 /* Plugins.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B2DEC3F286F36040017BBA8 /* GIMPCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2DEC3E286F36040017BBA8 /* GIMPCore.framework */; };
+		2B2DEC40286F36040017BBA8 /* GIMPCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2DEC3E286F36040017BBA8 /* GIMPCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2B399C23279DE147000D0C58 /* SeaWhiteboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B399C21279DE147000D0C58 /* SeaWhiteboard.m */; };
 		2B399C31279DE15D000D0C58 /* CocoaContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B399C27279DE15C000D0C58 /* CocoaContent.m */; };
 		2B399C32279DE15D000D0C58 /* SVGContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B399C28279DE15C000D0C58 /* SVGContent.m */; };
 		2B399C33279DE15D000D0C58 /* XBMContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B399C29279DE15C000D0C58 /* XBMContent.m */; };
 		2B399C34279DE15D000D0C58 /* SeaContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B399C2B279DE15C000D0C58 /* SeaContent.m */; };
 		2B399C35279DE15D000D0C58 /* SeaDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B399C2E279DE15C000D0C58 /* SeaDocument.m */; };
-		2B5CF1DB2802A931009FD2D0 /* PocketSVG.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B5CF1DA2802A931009FD2D0 /* PocketSVG.framework */; };
-		2B5CF1DC2802A931009FD2D0 /* PocketSVG.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2B5CF1DA2802A931009FD2D0 /* PocketSVG.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2B670B6E27D52837003BA6AE /* SeaComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B670B6D27D52837003BA6AE /* SeaComponents.framework */; };
-		2B670B6F27D52837003BA6AE /* SeaComponents.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2B670B6D27D52837003BA6AE /* SeaComponents.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2B6ECD23279E5A3100ABA072 /* XCFLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B6ECD22279E5A3100ABA072 /* XCFLayer.m */; };
 		2B6ECD29279E5AB600ABA072 /* XCFContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B6ECD27279E5AB600ABA072 /* XCFContent.m */; };
-		2B70A88B22061F4300E51F69 /* Plugins.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2BD5906D21E3BCF0002D150B /* Plugins.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2B7C12DF27F9362100A2D658 /* NSAffineTransform_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B7C12DE27F9362100A2D658 /* NSAffineTransform_Extensions.m */; };
 		2B7C12E127FCFCE800A2D658 /* linkTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B7C12E027FCFCE800A2D658 /* linkTemplate.png */; };
 		2B7C12E427FD014C00A2D658 /* LayerInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B7C12E327FD014C00A2D658 /* LayerInfoCell.m */; };
@@ -128,14 +133,9 @@
 		2BD5922721E3DBCE002D150B /* HSV.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD5922621E3DBCE002D150B /* HSV.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BD5925221E3E894002D150B /* XCFQuickLook.qlgenerator in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD5924D21E3E7CF002D150B /* XCFQuickLook.qlgenerator */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BD5925621E3E910002D150B /* XCFSpotlight.mdimporter in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD5924F21E3E7CF002D150B /* XCFSpotlight.mdimporter */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD5926121E43795002D150B /* Plugins.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BD5906D21E3BCF0002D150B /* Plugins.framework */; };
-		2BD5926821E53B74002D150B /* GIMPCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BD5906F21E3BCF5002D150B /* GIMPCore.framework */; };
-		2BD5926921E53B74002D150B /* GIMPCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2BD5906F21E3BCF5002D150B /* GIMPCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BDD5E5C2208A05D00F9BC74 /* RecentsUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BDD5E5B2208A05D00F9BC74 /* RecentsUtility.m */; };
 		2BDD5E5F2208AE3200F9BC74 /* RecentsItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BDD5E5E2208AE3200F9BC74 /* RecentsItem.m */; };
 		2BDD5E63220F33A300F9BC74 /* pencilLargeTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BDD5E62220F33A300F9BC74 /* pencilLargeTemplate.png */; };
-		2BE472E927DD0667003048CC /* SeaLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE472E827DD0667003048CC /* SeaLibrary.framework */; };
-		2BE472EA27DD0667003048CC /* SeaLibrary.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE472E827DD0667003048CC /* SeaLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BE76CD221EE937400B6C65F /* Seashore.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 2BE76CD121EE937400B6C65F /* Seashore.xcconfig */; };
 		2BEA688227B7408F00BC1453 /* SeaScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BEA688127B7408F00BC1453 /* SeaScrollView.m */; };
 		2BEC1D6627A2DC54008F5612 /* SeaBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BEC1D6527A2DC54008F5612 /* SeaBackground.m */; };
@@ -410,11 +410,11 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				2B70A88B22061F4300E51F69 /* Plugins.framework in Embed Frameworks */,
-				2BD5926921E53B74002D150B /* GIMPCore.framework in Embed Frameworks */,
-				2B5CF1DC2802A931009FD2D0 /* PocketSVG.framework in Embed Frameworks */,
-				2B670B6F27D52837003BA6AE /* SeaComponents.framework in Embed Frameworks */,
-				2BE472EA27DD0667003048CC /* SeaLibrary.framework in Embed Frameworks */,
+				2B2DEC40286F36040017BBA8 /* GIMPCore.framework in Embed Frameworks */,
+				2B2DEC3D286F35FE0017BBA8 /* Plugins.framework in Embed Frameworks */,
+				2B2DEC38286F35F50017BBA8 /* SeaLibrary.framework in Embed Frameworks */,
+				2B2DEC36286F35F40017BBA8 /* SeaComponents.framework in Embed Frameworks */,
+				2B2DEC22286F2F5B0017BBA8 /* PocketSVG.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -527,7 +527,6 @@
 		2B0DF77727FFEF0F002E8B7D /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/Accelerate.framework; sourceTree = DEVELOPER_DIR; };
 		2B0DF77927FFEF15002E8B7D /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/CoreImage.framework; sourceTree = DEVELOPER_DIR; };
 		2B0DF77B28020B95002E8B7D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
-		2B0DF77D28028D7F002E8B7D /* PocketSVG.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PocketSVG.framework; path = ../../PocketSVG/DerivedData/PocketSVG/Build/Products/Debug/PocketSVG.framework; sourceTree = "<group>"; };
 		2B1F70E921DD471000D6F371 /* SeaColorProfiles.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaColorProfiles.h; sourceTree = "<group>"; };
 		2B1F70EA21DD472B00D6F371 /* SeaColorProfiles.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeaColorProfiles.m; sourceTree = "<group>"; };
 		2B205EB4278390C100563706 /* checkerboard-dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkerboard-dark.png"; sourceTree = "<group>"; };
@@ -539,6 +538,11 @@
 		2B2D8CC521F995BB004527F2 /* Alpha2Gray.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = Alpha2Gray.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B2D8CC821F9A870004527F2 /* ZoomTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZoomTool.h; sourceTree = "<group>"; };
 		2B2D8CC921F9A870004527F2 /* ZoomTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZoomTool.m; sourceTree = "<group>"; };
+		2B2DEC32286F35F40017BBA8 /* SeaComponents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SeaComponents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B2DEC33286F35F40017BBA8 /* SeaLibrary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SeaLibrary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B2DEC34286F35F40017BBA8 /* SeaMinimal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SeaMinimal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B2DEC3B286F35FE0017BBA8 /* Plugins.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Plugins.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B2DEC3E286F36040017BBA8 /* GIMPCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GIMPCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B399C1E279DE146000D0C58 /* SeaWhiteboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeaWhiteboard.h; sourceTree = "<group>"; };
 		2B399C21279DE147000D0C58 /* SeaWhiteboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeaWhiteboard.m; sourceTree = "<group>"; };
 		2B399C24279DE15C000D0C58 /* SeaDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeaDocument.h; sourceTree = "<group>"; };
@@ -552,79 +556,7 @@
 		2B399C2D279DE15C000D0C58 /* SVGContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVGContent.h; sourceTree = "<group>"; };
 		2B399C2E279DE15C000D0C58 /* SeaDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeaDocument.m; sourceTree = "<group>"; };
 		2B399CA5279E0558000D0C58 /* SeaLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeaLayer.h; sourceTree = "<group>"; };
-		2B5CE2FE2802A8BE009FD2D0 /* scm.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = scm.plist; sourceTree = "<group>"; };
-		2B5CE2FF2802A8BE009FD2D0 /* OpenQuickly-ReferencedFrameworks.index-v1 */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "OpenQuickly-ReferencedFrameworks.index-v1"; sourceTree = "<group>"; };
-		2B5CE3012802A8BE009FD2D0 /* project.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = project.plist; sourceTree = "<group>"; };
-		2B5CE3022802A8BE009FD2D0 /* metadata.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = metadata.plist; sourceTree = "<group>"; };
-		2B5CE3052802A8BE009FD2D0 /* LogStoreManifest.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = LogStoreManifest.plist; sourceTree = "<group>"; };
-		2B5CE3072802A8BE009FD2D0 /* LogStoreManifest.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = LogStoreManifest.plist; sourceTree = "<group>"; };
-		2B5CE3092802A8BE009FD2D0 /* LogStoreManifest.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = LogStoreManifest.plist; sourceTree = "<group>"; };
-		2B5CE30B2802A8BE009FD2D0 /* D6E1224E-66AB-44FB-9963-18030D1D7D90.xcactivitylog */ = {isa = PBXFileReference; lastKnownFileType = file; path = "D6E1224E-66AB-44FB-9963-18030D1D7D90.xcactivitylog"; sourceTree = "<group>"; };
-		2B5CE30C2802A8BE009FD2D0 /* LogStoreManifest.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = LogStoreManifest.plist; sourceTree = "<group>"; };
-		2B5CE30D2802A8BE009FD2D0 /* 04487A2F-E11F-4D56-B4E6-3CDF73D94526.xcactivitylog */ = {isa = PBXFileReference; lastKnownFileType = file; path = "04487A2F-E11F-4D56-B4E6-3CDF73D94526.xcactivitylog"; sourceTree = "<group>"; };
-		2B5CE30E2802A8BE009FD2D0 /* 1FEBFD5A-5C47-4AFD-8EB4-9A05468F60DD.xcactivitylog */ = {isa = PBXFileReference; lastKnownFileType = file; path = "1FEBFD5A-5C47-4AFD-8EB4-9A05468F60DD.xcactivitylog"; sourceTree = "<group>"; };
-		2B5CE3102802A8BE009FD2D0 /* LogStoreManifest.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = LogStoreManifest.plist; sourceTree = "<group>"; };
-		2B5CE3122802A8BE009FD2D0 /* 16618E57-9398-483C-90CA-FFD2158AEF55.xcactivitylog */ = {isa = PBXFileReference; lastKnownFileType = file; path = "16618E57-9398-483C-90CA-FFD2158AEF55.xcactivitylog"; sourceTree = "<group>"; };
-		2B5CE3132802A8BE009FD2D0 /* LogStoreManifest.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = LogStoreManifest.plist; sourceTree = "<group>"; };
-		2B5CE3152802A8BE009FD2D0 /* LogStoreManifest.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = LogStoreManifest.plist; sourceTree = "<group>"; };
-		2B5CE3172802A8BE009FD2D0 /* LogStoreManifest.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = LogStoreManifest.plist; sourceTree = "<group>"; };
-		2B5CE3192802A8BE009FD2D0 /* TextFragmentIndex-v8.idx */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = "TextFragmentIndex-v8.idx"; sourceTree = "<group>"; };
-		2B5CF1962802A8D1009FD2D0 /* BuildDescriptionCacheIndex-4c2466b7ede7838f1a07d1ea4f84cd64 */ = {isa = PBXFileReference; lastKnownFileType = text; path = "BuildDescriptionCacheIndex-4c2466b7ede7838f1a07d1ea4f84cd64"; sourceTree = "<group>"; };
-		2B5CF1972802A8D1009FD2D0 /* 12c72a6b2b4634dac539d8936ea16c40-targetGraph.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "12c72a6b2b4634dac539d8936ea16c40-targetGraph.txt"; sourceTree = "<group>"; };
-		2B5CF1982802A8D1009FD2D0 /* 30af73785ea9272ed823e38342901fe7-targetGraph.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "30af73785ea9272ed823e38342901fe7-targetGraph.txt"; sourceTree = "<group>"; };
-		2B5CF1992802A8D1009FD2D0 /* 30af73785ea9272ed823e38342901fe7-buildRequest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "30af73785ea9272ed823e38342901fe7-buildRequest.json"; sourceTree = "<group>"; };
-		2B5CF19A2802A8D1009FD2D0 /* 30af73785ea9272ed823e38342901fe7-manifest.xcbuild */ = {isa = PBXFileReference; lastKnownFileType = text; path = "30af73785ea9272ed823e38342901fe7-manifest.xcbuild"; sourceTree = "<group>"; };
-		2B5CF19B2802A8D1009FD2D0 /* 12c72a6b2b4634dac539d8936ea16c40-manifest.xcbuild */ = {isa = PBXFileReference; lastKnownFileType = text; path = "12c72a6b2b4634dac539d8936ea16c40-manifest.xcbuild"; sourceTree = "<group>"; };
-		2B5CF19C2802A8D1009FD2D0 /* build.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = build.db; sourceTree = "<group>"; };
-		2B5CF19D2802A8D1009FD2D0 /* 12c72a6b2b4634dac539d8936ea16c40-buildRequest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "12c72a6b2b4634dac539d8936ea16c40-buildRequest.json"; sourceTree = "<group>"; };
-		2B5CF19E2802A8D1009FD2D0 /* 12c72a6b2b4634dac539d8936ea16c40-desc.xcbuild */ = {isa = PBXFileReference; lastKnownFileType = file; path = "12c72a6b2b4634dac539d8936ea16c40-desc.xcbuild"; sourceTree = "<group>"; };
-		2B5CF19F2802A8D1009FD2D0 /* 30af73785ea9272ed823e38342901fe7-desc.xcbuild */ = {isa = PBXFileReference; lastKnownFileType = file; path = "30af73785ea9272ed823e38342901fe7-desc.xcbuild"; sourceTree = "<group>"; };
-		2B5CF1A22802A8D1009FD2D0 /* TARGET@v11_hash=e46dd1f029ae9672e356419ddceb7ea3-json */ = {isa = PBXFileReference; lastKnownFileType = text; path = "TARGET@v11_hash=e46dd1f029ae9672e356419ddceb7ea3-json"; sourceTree = "<group>"; };
-		2B5CF1A32802A8D1009FD2D0 /* TARGET@v11_hash=0e92e95b2252d56eee56ac6a414b9876-json */ = {isa = PBXFileReference; lastKnownFileType = text; path = "TARGET@v11_hash=0e92e95b2252d56eee56ac6a414b9876-json"; sourceTree = "<group>"; };
-		2B5CF1A42802A8D1009FD2D0 /* TARGET@v11_hash=9436712d01f98f13c5f004d4125ddff0-json */ = {isa = PBXFileReference; lastKnownFileType = text; path = "TARGET@v11_hash=9436712d01f98f13c5f004d4125ddff0-json"; sourceTree = "<group>"; };
-		2B5CF1A62802A8D1009FD2D0 /* WORKSPACE@v11_hash=33a4d618341d1ac4522c948ee6b613d5_subobjects=10bb52f31b6421cb2f2f969595407228-json */ = {isa = PBXFileReference; lastKnownFileType = text; path = "WORKSPACE@v11_hash=33a4d618341d1ac4522c948ee6b613d5_subobjects=10bb52f31b6421cb2f2f969595407228-json"; sourceTree = "<group>"; };
-		2B5CF1A82802A8D1009FD2D0 /* PROJECT@v11_mod=1649568953.6677067_hash=1fb5d6b70fe96406694fddf782ecde4d-json */ = {isa = PBXFileReference; lastKnownFileType = text; path = "PROJECT@v11_mod=1649568953.6677067_hash=1fb5d6b70fe96406694fddf782ecde4d-json"; sourceTree = "<group>"; };
-		2B5CF1AE2802A8D1009FD2D0 /* SVGLayer.dia */ = {isa = PBXFileReference; lastKnownFileType = file; path = SVGLayer.dia; sourceTree = "<group>"; };
-		2B5CF1AF2802A8D1009FD2D0 /* SVGLayer.d */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.dtrace; path = SVGLayer.d; sourceTree = "<group>"; };
-		2B5CF1B02802A8D1009FD2D0 /* SVGImageView.d */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.dtrace; path = SVGImageView.d; sourceTree = "<group>"; };
-		2B5CF1B12802A8D1009FD2D0 /* SVGEngine.dia */ = {isa = PBXFileReference; lastKnownFileType = file; path = SVGEngine.dia; sourceTree = "<group>"; };
-		2B5CF1B22802A8D1009FD2D0 /* PocketSVG_dependency_info.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = PocketSVG_dependency_info.dat; sourceTree = "<group>"; };
-		2B5CF1B32802A8D1009FD2D0 /* SVGBezierPath.d */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.dtrace; path = SVGBezierPath.d; sourceTree = "<group>"; };
-		2B5CF1B42802A8D1009FD2D0 /* SVGBezierPath.dia */ = {isa = PBXFileReference; lastKnownFileType = file; path = SVGBezierPath.dia; sourceTree = "<group>"; };
-		2B5CF1B52802A8D1009FD2D0 /* SVGEngine.d */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.dtrace; path = SVGEngine.d; sourceTree = "<group>"; };
-		2B5CF1B62802A8D1009FD2D0 /* SVGLayer.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = SVGLayer.o; sourceTree = "<group>"; };
-		2B5CF1B72802A8D1009FD2D0 /* SVGImageView.dia */ = {isa = PBXFileReference; lastKnownFileType = file; path = SVGImageView.dia; sourceTree = "<group>"; };
-		2B5CF1B82802A8D1009FD2D0 /* SVGBezierPath.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = SVGBezierPath.o; sourceTree = "<group>"; };
-		2B5CF1B92802A8D1009FD2D0 /* SVGImageView.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = SVGImageView.o; sourceTree = "<group>"; };
-		2B5CF1BB2802A8D1009FD2D0 /* PocketSVG */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = PocketSVG; sourceTree = "<group>"; };
-		2B5CF1BC2802A8D1009FD2D0 /* PocketSVG.LinkFileList */ = {isa = PBXFileReference; lastKnownFileType = text; path = PocketSVG.LinkFileList; sourceTree = "<group>"; };
-		2B5CF1BD2802A8D1009FD2D0 /* SVGEngine.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = SVGEngine.o; sourceTree = "<group>"; };
-		2B5CF1BF2802A8D1009FD2D0 /* SVGLayer.dia */ = {isa = PBXFileReference; lastKnownFileType = file; path = SVGLayer.dia; sourceTree = "<group>"; };
-		2B5CF1C02802A8D1009FD2D0 /* SVGLayer.d */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.dtrace; path = SVGLayer.d; sourceTree = "<group>"; };
-		2B5CF1C12802A8D1009FD2D0 /* SVGImageView.d */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.dtrace; path = SVGImageView.d; sourceTree = "<group>"; };
-		2B5CF1C22802A8D1009FD2D0 /* SVGEngine.dia */ = {isa = PBXFileReference; lastKnownFileType = file; path = SVGEngine.dia; sourceTree = "<group>"; };
-		2B5CF1C32802A8D1009FD2D0 /* PocketSVG_dependency_info.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = PocketSVG_dependency_info.dat; sourceTree = "<group>"; };
-		2B5CF1C42802A8D1009FD2D0 /* SVGBezierPath.d */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.dtrace; path = SVGBezierPath.d; sourceTree = "<group>"; };
-		2B5CF1C52802A8D1009FD2D0 /* SVGBezierPath.dia */ = {isa = PBXFileReference; lastKnownFileType = file; path = SVGBezierPath.dia; sourceTree = "<group>"; };
-		2B5CF1C62802A8D1009FD2D0 /* SVGEngine.d */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.dtrace; path = SVGEngine.d; sourceTree = "<group>"; };
-		2B5CF1C72802A8D1009FD2D0 /* SVGLayer.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = SVGLayer.o; sourceTree = "<group>"; };
-		2B5CF1C82802A8D1009FD2D0 /* SVGImageView.dia */ = {isa = PBXFileReference; lastKnownFileType = file; path = SVGImageView.dia; sourceTree = "<group>"; };
-		2B5CF1C92802A8D1009FD2D0 /* SVGBezierPath.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = SVGBezierPath.o; sourceTree = "<group>"; };
-		2B5CF1CA2802A8D1009FD2D0 /* SVGImageView.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = SVGImageView.o; sourceTree = "<group>"; };
-		2B5CF1CC2802A8D1009FD2D0 /* PocketSVG */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = PocketSVG; sourceTree = "<group>"; };
-		2B5CF1CD2802A8D1009FD2D0 /* PocketSVG.LinkFileList */ = {isa = PBXFileReference; lastKnownFileType = text; path = PocketSVG.LinkFileList; sourceTree = "<group>"; };
-		2B5CF1CE2802A8D1009FD2D0 /* SVGEngine.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = SVGEngine.o; sourceTree = "<group>"; };
-		2B5CF1CF2802A8D1009FD2D0 /* PocketSVG-generated-files.hmap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PocketSVG-generated-files.hmap"; sourceTree = "<group>"; };
-		2B5CF1D02802A8D1009FD2D0 /* PocketSVG-own-target-headers.hmap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PocketSVG-own-target-headers.hmap"; sourceTree = "<group>"; };
-		2B5CF1D12802A8D1009FD2D0 /* PocketSVG-project-headers.hmap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PocketSVG-project-headers.hmap"; sourceTree = "<group>"; };
-		2B5CF1D22802A8D1009FD2D0 /* all-product-headers.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = "all-product-headers.yaml"; sourceTree = "<group>"; };
-		2B5CF1D32802A8D1009FD2D0 /* PocketSVG-all-target-headers.hmap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PocketSVG-all-target-headers.hmap"; sourceTree = "<group>"; };
-		2B5CF1D42802A8D1009FD2D0 /* PocketSVG-all-non-framework-target-headers.hmap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PocketSVG-all-non-framework-target-headers.hmap"; sourceTree = "<group>"; };
-		2B5CF1D52802A8D1009FD2D0 /* PocketSVG.hmap */ = {isa = PBXFileReference; lastKnownFileType = file; path = PocketSVG.hmap; sourceTree = "<group>"; };
-		2B5CF1D82802A8D1009FD2D0 /* PocketSVG.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PocketSVG.framework; sourceTree = "<group>"; };
-		2B5CF1D92802A8D1009FD2D0 /* info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = info.plist; sourceTree = "<group>"; };
 		2B5CF1DA2802A931009FD2D0 /* PocketSVG.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PocketSVG.framework; path = ../PocketSVG/PocketSVG.framework; sourceTree = "<group>"; };
-		2B670B6D27D52837003BA6AE /* SeaComponents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SeaComponents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B6ECD21279E5A3000ABA072 /* XCFLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCFLayer.h; sourceTree = "<group>"; };
 		2B6ECD22279E5A3100ABA072 /* XCFLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCFLayer.m; sourceTree = "<group>"; };
 		2B6ECD27279E5AB600ABA072 /* XCFContent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCFContent.m; sourceTree = "<group>"; };
@@ -655,8 +587,6 @@
 		2BCD7A16286294E2007EB89B /* SeaWhatsNew.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaWhatsNew.h; sourceTree = "<group>"; };
 		2BCD7A17286294E2007EB89B /* SeaWhatsNew.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeaWhatsNew.m; sourceTree = "<group>"; };
 		2BCD7A1A2862982D007EB89B /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = "English.lproj/What's New and Tips.rtf"; sourceTree = "<group>"; };
-		2BD5906D21E3BCF0002D150B /* Plugins.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Plugins.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD5906F21E3BCF5002D150B /* GIMPCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GIMPCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BD591A821E3DBCA002D150B /* AutoEnhance+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "AutoEnhance+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BD591AA21E3DBCA002D150B /* AffineTile+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "AffineTile+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BD591AC21E3DBCA002D150B /* Bloom+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Bloom+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -723,7 +653,6 @@
 		2BDD5E5D2208AE3200F9BC74 /* RecentsItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecentsItem.h; sourceTree = "<group>"; };
 		2BDD5E5E2208AE3200F9BC74 /* RecentsItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecentsItem.m; sourceTree = "<group>"; };
 		2BDD5E62220F33A300F9BC74 /* pencilLargeTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pencilLargeTemplate.png; sourceTree = "<group>"; };
-		2BE472E827DD0667003048CC /* SeaLibrary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SeaLibrary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BE472EB27DD06B9003048CC /* Seashore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Seashore.h; sourceTree = "<group>"; };
 		2BE76CD121EE937400B6C65F /* Seashore.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Seashore.xcconfig; path = ../Seashore.xcconfig; sourceTree = "<group>"; };
 		2BEA688027B7408F00BC1453 /* SeaScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaScrollView.h; sourceTree = "<group>"; };
@@ -1092,19 +1021,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				2BFC6C2B2778DEE400F707D9 /* XCTest.framework in Frameworks */,
+				2B2DEC3C286F35FE0017BBA8 /* Plugins.framework in Frameworks */,
 				2BF19EE328613FED00C35FBE /* Security.framework in Frameworks */,
+				2B2DEC3F286F36040017BBA8 /* GIMPCore.framework in Frameworks */,
+				2B2DEC21286F2F5B0017BBA8 /* PocketSVG.framework in Frameworks */,
 				2BF19EDE2860FBFE00C35FBE /* StoreKit.framework in Frameworks */,
 				2B0DF77C28020B95002E8B7D /* QuartzCore.framework in Frameworks */,
-				2BD5926821E53B74002D150B /* GIMPCore.framework in Frameworks */,
 				A84E106408E7A4FB0084BCB7 /* IOKit.framework in Frameworks */,
 				2B0DF77827FFEF0F002E8B7D /* Accelerate.framework in Frameworks */,
+				2B2DEC37286F35F40017BBA8 /* SeaLibrary.framework in Frameworks */,
 				A8BF652708E6FEAB006E9BFC /* Carbon.framework in Frameworks */,
-				2BE472E927DD0667003048CC /* SeaLibrary.framework in Frameworks */,
-				2B670B6E27D52837003BA6AE /* SeaComponents.framework in Frameworks */,
 				A8EDF14C078959C80022BB31 /* Cocoa.framework in Frameworks */,
 				2B0DF77627FFEF08002E8B7D /* CoreGraphics.framework in Frameworks */,
-				2B5CF1DB2802A931009FD2D0 /* PocketSVG.framework in Frameworks */,
-				2BD5926121E43795002D150B /* Plugins.framework in Frameworks */,
+				2B2DEC35286F35F40017BBA8 /* SeaComponents.framework in Frameworks */,
 				2B0DF77A27FFEF15002E8B7D /* CoreImage.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1242,327 +1171,23 @@
 		2A37F4C3FDCFA73011CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2B2DEC3E286F36040017BBA8 /* GIMPCore.framework */,
+				2B2DEC3B286F35FE0017BBA8 /* Plugins.framework */,
+				2B2DEC32286F35F40017BBA8 /* SeaComponents.framework */,
+				2B2DEC33286F35F40017BBA8 /* SeaLibrary.framework */,
+				2B2DEC34286F35F40017BBA8 /* SeaMinimal.framework */,
 				2BF19EE228613FED00C35FBE /* Security.framework */,
 				2BF19EDD2860FBFE00C35FBE /* StoreKit.framework */,
 				2B5CF1DA2802A931009FD2D0 /* PocketSVG.framework */,
-				2B5CE2FD2802A8BE009FD2D0 /* PocketSVG */,
-				2B0DF77D28028D7F002E8B7D /* PocketSVG.framework */,
 				2B0DF77B28020B95002E8B7D /* QuartzCore.framework */,
 				2B0DF77927FFEF15002E8B7D /* CoreImage.framework */,
 				2B0DF77727FFEF0F002E8B7D /* Accelerate.framework */,
 				2B0DF77527FFEF08002E8B7D /* CoreGraphics.framework */,
-				2BE472E827DD0667003048CC /* SeaLibrary.framework */,
-				2B670B6D27D52837003BA6AE /* SeaComponents.framework */,
 				2BFC6C2A2778DEE400F707D9 /* XCTest.framework */,
 				1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */,
 				1058C7A8FEA54F5311CA2CBB /* Other Frameworks */,
-				2BD5906D21E3BCF0002D150B /* Plugins.framework */,
-				2BD5906F21E3BCF5002D150B /* GIMPCore.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		2B5CE2FD2802A8BE009FD2D0 /* PocketSVG */ = {
-			isa = PBXGroup;
-			children = (
-				2B5CE2FE2802A8BE009FD2D0 /* scm.plist */,
-				2B5CE2FF2802A8BE009FD2D0 /* OpenQuickly-ReferencedFrameworks.index-v1 */,
-				2B5CE3002802A8BE009FD2D0 /* SymbolCache */,
-				2B5CE3032802A8BE009FD2D0 /* Logs */,
-				2B5CE3182802A8BE009FD2D0 /* TextIndex */,
-				2B5CF1932802A8D1009FD2D0 /* Build */,
-				2B5CF1D92802A8D1009FD2D0 /* info.plist */,
-			);
-			name = PocketSVG;
-			path = ../PocketSVG;
-			sourceTree = "<group>";
-		};
-		2B5CE3002802A8BE009FD2D0 /* SymbolCache */ = {
-			isa = PBXGroup;
-			children = (
-				2B5CE3012802A8BE009FD2D0 /* project.plist */,
-				2B5CE3022802A8BE009FD2D0 /* metadata.plist */,
-			);
-			path = SymbolCache;
-			sourceTree = "<group>";
-		};
-		2B5CE3032802A8BE009FD2D0 /* Logs */ = {
-			isa = PBXGroup;
-			children = (
-				2B5CE3042802A8BE009FD2D0 /* Update Signing */,
-				2B5CE3062802A8BE009FD2D0 /* Install */,
-				2B5CE3082802A8BE009FD2D0 /* Test */,
-				2B5CE30A2802A8BE009FD2D0 /* Build */,
-				2B5CE30F2802A8BE009FD2D0 /* Run */,
-				2B5CE3112802A8BE009FD2D0 /* Issues */,
-				2B5CE3142802A8BE009FD2D0 /* Package */,
-				2B5CE3162802A8BE009FD2D0 /* Localization */,
-			);
-			path = Logs;
-			sourceTree = "<group>";
-		};
-		2B5CE3042802A8BE009FD2D0 /* Update Signing */ = {
-			isa = PBXGroup;
-			children = (
-				2B5CE3052802A8BE009FD2D0 /* LogStoreManifest.plist */,
-			);
-			path = "Update Signing";
-			sourceTree = "<group>";
-		};
-		2B5CE3062802A8BE009FD2D0 /* Install */ = {
-			isa = PBXGroup;
-			children = (
-				2B5CE3072802A8BE009FD2D0 /* LogStoreManifest.plist */,
-			);
-			path = Install;
-			sourceTree = "<group>";
-		};
-		2B5CE3082802A8BE009FD2D0 /* Test */ = {
-			isa = PBXGroup;
-			children = (
-				2B5CE3092802A8BE009FD2D0 /* LogStoreManifest.plist */,
-			);
-			path = Test;
-			sourceTree = "<group>";
-		};
-		2B5CE30A2802A8BE009FD2D0 /* Build */ = {
-			isa = PBXGroup;
-			children = (
-				2B5CE30B2802A8BE009FD2D0 /* D6E1224E-66AB-44FB-9963-18030D1D7D90.xcactivitylog */,
-				2B5CE30C2802A8BE009FD2D0 /* LogStoreManifest.plist */,
-				2B5CE30D2802A8BE009FD2D0 /* 04487A2F-E11F-4D56-B4E6-3CDF73D94526.xcactivitylog */,
-				2B5CE30E2802A8BE009FD2D0 /* 1FEBFD5A-5C47-4AFD-8EB4-9A05468F60DD.xcactivitylog */,
-			);
-			path = Build;
-			sourceTree = "<group>";
-		};
-		2B5CE30F2802A8BE009FD2D0 /* Run */ = {
-			isa = PBXGroup;
-			children = (
-				2B5CE3102802A8BE009FD2D0 /* LogStoreManifest.plist */,
-			);
-			path = Run;
-			sourceTree = "<group>";
-		};
-		2B5CE3112802A8BE009FD2D0 /* Issues */ = {
-			isa = PBXGroup;
-			children = (
-				2B5CE3122802A8BE009FD2D0 /* 16618E57-9398-483C-90CA-FFD2158AEF55.xcactivitylog */,
-				2B5CE3132802A8BE009FD2D0 /* LogStoreManifest.plist */,
-			);
-			path = Issues;
-			sourceTree = "<group>";
-		};
-		2B5CE3142802A8BE009FD2D0 /* Package */ = {
-			isa = PBXGroup;
-			children = (
-				2B5CE3152802A8BE009FD2D0 /* LogStoreManifest.plist */,
-			);
-			path = Package;
-			sourceTree = "<group>";
-		};
-		2B5CE3162802A8BE009FD2D0 /* Localization */ = {
-			isa = PBXGroup;
-			children = (
-				2B5CE3172802A8BE009FD2D0 /* LogStoreManifest.plist */,
-			);
-			path = Localization;
-			sourceTree = "<group>";
-		};
-		2B5CE3182802A8BE009FD2D0 /* TextIndex */ = {
-			isa = PBXGroup;
-			children = (
-				2B5CE3192802A8BE009FD2D0 /* TextFragmentIndex-v8.idx */,
-			);
-			path = TextIndex;
-			sourceTree = "<group>";
-		};
-		2B5CF1932802A8D1009FD2D0 /* Build */ = {
-			isa = PBXGroup;
-			children = (
-				2B5CF1942802A8D1009FD2D0 /* Intermediates.noindex */,
-				2B5CF1D62802A8D1009FD2D0 /* Products */,
-			);
-			path = Build;
-			sourceTree = "<group>";
-		};
-		2B5CF1942802A8D1009FD2D0 /* Intermediates.noindex */ = {
-			isa = PBXGroup;
-			children = (
-				2B5CF1952802A8D1009FD2D0 /* XCBuildData */,
-				2B5CF1A92802A8D1009FD2D0 /* PocketSVG.build */,
-			);
-			path = Intermediates.noindex;
-			sourceTree = "<group>";
-		};
-		2B5CF1952802A8D1009FD2D0 /* XCBuildData */ = {
-			isa = PBXGroup;
-			children = (
-				2B5CF1962802A8D1009FD2D0 /* BuildDescriptionCacheIndex-4c2466b7ede7838f1a07d1ea4f84cd64 */,
-				2B5CF1972802A8D1009FD2D0 /* 12c72a6b2b4634dac539d8936ea16c40-targetGraph.txt */,
-				2B5CF1982802A8D1009FD2D0 /* 30af73785ea9272ed823e38342901fe7-targetGraph.txt */,
-				2B5CF1992802A8D1009FD2D0 /* 30af73785ea9272ed823e38342901fe7-buildRequest.json */,
-				2B5CF19A2802A8D1009FD2D0 /* 30af73785ea9272ed823e38342901fe7-manifest.xcbuild */,
-				2B5CF19B2802A8D1009FD2D0 /* 12c72a6b2b4634dac539d8936ea16c40-manifest.xcbuild */,
-				2B5CF19C2802A8D1009FD2D0 /* build.db */,
-				2B5CF19D2802A8D1009FD2D0 /* 12c72a6b2b4634dac539d8936ea16c40-buildRequest.json */,
-				2B5CF19E2802A8D1009FD2D0 /* 12c72a6b2b4634dac539d8936ea16c40-desc.xcbuild */,
-				2B5CF19F2802A8D1009FD2D0 /* 30af73785ea9272ed823e38342901fe7-desc.xcbuild */,
-				2B5CF1A02802A8D1009FD2D0 /* PIFCache */,
-			);
-			path = XCBuildData;
-			sourceTree = "<group>";
-		};
-		2B5CF1A02802A8D1009FD2D0 /* PIFCache */ = {
-			isa = PBXGroup;
-			children = (
-				2B5CF1A12802A8D1009FD2D0 /* target */,
-				2B5CF1A52802A8D1009FD2D0 /* workspace */,
-				2B5CF1A72802A8D1009FD2D0 /* project */,
-			);
-			path = PIFCache;
-			sourceTree = "<group>";
-		};
-		2B5CF1A12802A8D1009FD2D0 /* target */ = {
-			isa = PBXGroup;
-			children = (
-				2B5CF1A22802A8D1009FD2D0 /* TARGET@v11_hash=e46dd1f029ae9672e356419ddceb7ea3-json */,
-				2B5CF1A32802A8D1009FD2D0 /* TARGET@v11_hash=0e92e95b2252d56eee56ac6a414b9876-json */,
-				2B5CF1A42802A8D1009FD2D0 /* TARGET@v11_hash=9436712d01f98f13c5f004d4125ddff0-json */,
-			);
-			path = target;
-			sourceTree = "<group>";
-		};
-		2B5CF1A52802A8D1009FD2D0 /* workspace */ = {
-			isa = PBXGroup;
-			children = (
-				2B5CF1A62802A8D1009FD2D0 /* WORKSPACE@v11_hash=33a4d618341d1ac4522c948ee6b613d5_subobjects=10bb52f31b6421cb2f2f969595407228-json */,
-			);
-			path = workspace;
-			sourceTree = "<group>";
-		};
-		2B5CF1A72802A8D1009FD2D0 /* project */ = {
-			isa = PBXGroup;
-			children = (
-				2B5CF1A82802A8D1009FD2D0 /* PROJECT@v11_mod=1649568953.6677067_hash=1fb5d6b70fe96406694fddf782ecde4d-json */,
-			);
-			path = project;
-			sourceTree = "<group>";
-		};
-		2B5CF1A92802A8D1009FD2D0 /* PocketSVG.build */ = {
-			isa = PBXGroup;
-			children = (
-				2B5CF1AA2802A8D1009FD2D0 /* Debug */,
-			);
-			path = PocketSVG.build;
-			sourceTree = "<group>";
-		};
-		2B5CF1AA2802A8D1009FD2D0 /* Debug */ = {
-			isa = PBXGroup;
-			children = (
-				2B5CF1AB2802A8D1009FD2D0 /* PocketSVG (Mac).build */,
-			);
-			path = Debug;
-			sourceTree = "<group>";
-		};
-		2B5CF1AB2802A8D1009FD2D0 /* PocketSVG (Mac).build */ = {
-			isa = PBXGroup;
-			children = (
-				2B5CF1AC2802A8D1009FD2D0 /* Objects-normal */,
-				2B5CF1CF2802A8D1009FD2D0 /* PocketSVG-generated-files.hmap */,
-				2B5CF1D02802A8D1009FD2D0 /* PocketSVG-own-target-headers.hmap */,
-				2B5CF1D12802A8D1009FD2D0 /* PocketSVG-project-headers.hmap */,
-				2B5CF1D22802A8D1009FD2D0 /* all-product-headers.yaml */,
-				2B5CF1D32802A8D1009FD2D0 /* PocketSVG-all-target-headers.hmap */,
-				2B5CF1D42802A8D1009FD2D0 /* PocketSVG-all-non-framework-target-headers.hmap */,
-				2B5CF1D52802A8D1009FD2D0 /* PocketSVG.hmap */,
-			);
-			path = "PocketSVG (Mac).build";
-			sourceTree = "<group>";
-		};
-		2B5CF1AC2802A8D1009FD2D0 /* Objects-normal */ = {
-			isa = PBXGroup;
-			children = (
-				2B5CF1AD2802A8D1009FD2D0 /* arm64 */,
-				2B5CF1BE2802A8D1009FD2D0 /* x86_64 */,
-			);
-			path = "Objects-normal";
-			sourceTree = "<group>";
-		};
-		2B5CF1AD2802A8D1009FD2D0 /* arm64 */ = {
-			isa = PBXGroup;
-			children = (
-				2B5CF1AE2802A8D1009FD2D0 /* SVGLayer.dia */,
-				2B5CF1AF2802A8D1009FD2D0 /* SVGLayer.d */,
-				2B5CF1B02802A8D1009FD2D0 /* SVGImageView.d */,
-				2B5CF1B12802A8D1009FD2D0 /* SVGEngine.dia */,
-				2B5CF1B22802A8D1009FD2D0 /* PocketSVG_dependency_info.dat */,
-				2B5CF1B32802A8D1009FD2D0 /* SVGBezierPath.d */,
-				2B5CF1B42802A8D1009FD2D0 /* SVGBezierPath.dia */,
-				2B5CF1B52802A8D1009FD2D0 /* SVGEngine.d */,
-				2B5CF1B62802A8D1009FD2D0 /* SVGLayer.o */,
-				2B5CF1B72802A8D1009FD2D0 /* SVGImageView.dia */,
-				2B5CF1B82802A8D1009FD2D0 /* SVGBezierPath.o */,
-				2B5CF1B92802A8D1009FD2D0 /* SVGImageView.o */,
-				2B5CF1BA2802A8D1009FD2D0 /* Binary */,
-				2B5CF1BC2802A8D1009FD2D0 /* PocketSVG.LinkFileList */,
-				2B5CF1BD2802A8D1009FD2D0 /* SVGEngine.o */,
-			);
-			path = arm64;
-			sourceTree = "<group>";
-		};
-		2B5CF1BA2802A8D1009FD2D0 /* Binary */ = {
-			isa = PBXGroup;
-			children = (
-				2B5CF1BB2802A8D1009FD2D0 /* PocketSVG */,
-			);
-			path = Binary;
-			sourceTree = "<group>";
-		};
-		2B5CF1BE2802A8D1009FD2D0 /* x86_64 */ = {
-			isa = PBXGroup;
-			children = (
-				2B5CF1BF2802A8D1009FD2D0 /* SVGLayer.dia */,
-				2B5CF1C02802A8D1009FD2D0 /* SVGLayer.d */,
-				2B5CF1C12802A8D1009FD2D0 /* SVGImageView.d */,
-				2B5CF1C22802A8D1009FD2D0 /* SVGEngine.dia */,
-				2B5CF1C32802A8D1009FD2D0 /* PocketSVG_dependency_info.dat */,
-				2B5CF1C42802A8D1009FD2D0 /* SVGBezierPath.d */,
-				2B5CF1C52802A8D1009FD2D0 /* SVGBezierPath.dia */,
-				2B5CF1C62802A8D1009FD2D0 /* SVGEngine.d */,
-				2B5CF1C72802A8D1009FD2D0 /* SVGLayer.o */,
-				2B5CF1C82802A8D1009FD2D0 /* SVGImageView.dia */,
-				2B5CF1C92802A8D1009FD2D0 /* SVGBezierPath.o */,
-				2B5CF1CA2802A8D1009FD2D0 /* SVGImageView.o */,
-				2B5CF1CB2802A8D1009FD2D0 /* Binary */,
-				2B5CF1CD2802A8D1009FD2D0 /* PocketSVG.LinkFileList */,
-				2B5CF1CE2802A8D1009FD2D0 /* SVGEngine.o */,
-			);
-			path = x86_64;
-			sourceTree = "<group>";
-		};
-		2B5CF1CB2802A8D1009FD2D0 /* Binary */ = {
-			isa = PBXGroup;
-			children = (
-				2B5CF1CC2802A8D1009FD2D0 /* PocketSVG */,
-			);
-			path = Binary;
-			sourceTree = "<group>";
-		};
-		2B5CF1D62802A8D1009FD2D0 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				2B5CF1D72802A8D1009FD2D0 /* Debug */,
-			);
-			path = Products;
-			sourceTree = "<group>";
-		};
-		2B5CF1D72802A8D1009FD2D0 /* Debug */ = {
-			isa = PBXGroup;
-			children = (
-				2B5CF1D82802A8D1009FD2D0 /* PocketSVG.framework */,
-			);
-			path = Debug;
 			sourceTree = "<group>";
 		};
 		2BD5923B21E3DBEF002D150B /* EmbeddedBinaries */ = {
@@ -2733,7 +2358,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2022062501;
+				CURRENT_PROJECT_VERSION = 2022070101;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
@@ -2750,7 +2375,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				MARKETING_VERSION = 3.0;
+				MARKETING_VERSION = 3.01;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore;
@@ -2822,7 +2447,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2022062501;
+				CURRENT_PROJECT_VERSION = 2022070101;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
@@ -2840,7 +2465,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				MARKETING_VERSION = 3.0;
+				MARKETING_VERSION = 3.01;
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore;
 				PRODUCT_NAME = Seashore;
