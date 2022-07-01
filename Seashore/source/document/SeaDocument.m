@@ -275,63 +275,71 @@
 - (BOOL)readFromFile:(NSString *)path ofType:(NSString *)type
 {	
 	BOOL readOnly = NO;
+
+    @try {
+
+        // Determine which document we have and act appropriately
+        if ([XCFContent typeIsEditable: type]) {
+
+            // Load a GIMP or XCF document
+            contents = [[XCFContent alloc] initWithDocument:self contentsOfFile:path];
+            if (contents == NULL) {
+                return NO;
+            }
+
+        } else if ([CocoaContent typeIsEditable: type forDoc: self]) {
+
+            // Load a PNG, TIFF, JPEG document
+            // Or a GIF or JP2 document
+            contents = [[CocoaContent alloc] initWithDocument:self contentsOfFile:path];
+            if (contents == NULL) {
+                return NO;
+            }
+
+        } else if ([CocoaContent typeIsViewable: type forDoc: self]) {
+
+            // Load a PDF, PCT, BMP document
+            contents = [[CocoaContent alloc] initWithDocument:self contentsOfFile:path];
+            if (contents == NULL) {
+                return NO;
+            }
+            readOnly = YES;
+
+        } else if ([XBMContent typeIsEditable: type]) {
+
+            // Load a X bitmap document
+            contents = [[XBMContent alloc] initWithDocument:self contentsOfFile:path];
+            if (contents == NULL) {
+                return NO;
+            }
+            readOnly = YES;
+
+        } else if ([SVGContent typeIsViewable: type]) {
+
+            // Load a SVG document
+            contents = [[SVGContent alloc] initWithDocument:self contentsOfFile:path];
+            if (contents == NULL) {
+                return NO;
+            }
+            readOnly = YES;
+
+        } else {
+            // Handle an unknown document type
+            NSLog(@"Unknown type passed to readFromFile:<%@>ofType:<%@>", path, type);
+            return NO;
+        }
+
+        if (readOnly) {
+            [warnings addMessage:LOCALSTR(@"read only message", @"This file is in a read-only format, so you must Save As/Export any changes.")  level:kLowImportance];
+        }
+        return YES;
+    }
+    @catch(NSException *exception) {
+        NSLog(@"unable to open file %@",exception);
+        [NSAlert alertWithMessageText:@"Error Opening File" defaultButton:NULL alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"%@",[exception reason]];
+        return NO;
+    }
 	
-	// Determine which document we have and act appropriately
-	if ([XCFContent typeIsEditable: type]) {
-		
-		// Load a GIMP or XCF document
-		contents = [[XCFContent alloc] initWithDocument:self contentsOfFile:path];
-		if (contents == NULL) {
-			return NO;
-		}
-		
-	} else if ([CocoaContent typeIsEditable: type forDoc: self]) {
-		
-		// Load a PNG, TIFF, JPEG document
-		// Or a GIF or JP2 document
-		contents = [[CocoaContent alloc] initWithDocument:self contentsOfFile:path];
-		if (contents == NULL) {
-			return NO;
-		}
-		
-	} else if ([CocoaContent typeIsViewable: type forDoc: self]) {
-	
-		// Load a PDF, PCT, BMP document
-		contents = [[CocoaContent alloc] initWithDocument:self contentsOfFile:path];
-		if (contents == NULL) {
-			return NO;
-		}
-		readOnly = YES;
-			
-	} else if ([XBMContent typeIsEditable: type]) {
-	
-		// Load a X bitmap document
-		contents = [[XBMContent alloc] initWithDocument:self contentsOfFile:path];
-		if (contents == NULL) {
-			return NO;
-		}
-		readOnly = YES;
-		
-	} else if ([SVGContent typeIsViewable: type]) {
-	
-		// Load a SVG document
-		contents = [[SVGContent alloc] initWithDocument:self contentsOfFile:path];
-		if (contents == NULL) {
-			return NO;
-		}
-		readOnly = YES;
-		
-	} else {
-		// Handle an unknown document type
-		NSLog(@"Unknown type passed to readFromFile:<%@>ofType:<%@>", path, type);
-		return NO;
-	}
-	
-	if (readOnly) {
-		[warnings addMessage:LOCALSTR(@"read only message", @"This file is in a read-only format, so you must Save As/Export any changes.")  level:kLowImportance];
-	}
-	
-	return YES;
 }
 
 - (NSString*)fileTypeFromLastRunSavePanel
