@@ -72,23 +72,8 @@
 
 - (NSPoint)centerPoint
 {
-	NSRect docRect = [[self documentView] frame];
-	NSRect clipRect = [self frame];
-	NSPoint point;
-
-	// Work out the x co-ordinate that is at the center of the NSScrollView
-	if (docRect.size.width > clipRect.size.width)
-		point.x = roundf(clipRect.size.width / 2.0 + clipRect.origin.x);
-	else
-		point.x = roundf(docRect.size.width / 2.0);
-
-	// Work out the y co-ordinate that is at the center of the NSScrollView
-	if (docRect.size.height > clipRect.size.height)
-		point.y = roundf(clipRect.size.height / 2.0 + clipRect.origin.y);
-	else
-		point.y = roundf(docRect.size.height / 2.0);
-
-	return point;
+	NSRect r = [self bounds];
+    return NSMakePoint(r.origin.x+r.size.width/2,r.origin.y+r.size.height/2);
 }
 
 - (NSRect)constrainBoundsRect:(NSRect)r {

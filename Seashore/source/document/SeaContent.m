@@ -695,10 +695,6 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     [layer trimLayer];
     [self addLayerObject:layer atIndex:index];
 
-    // Position the new layer correctly
-    [[(SeaOperations *)[document operations] seaAlignment] centerLayerHorizontally:NULL];
-    [[(SeaOperations *)[document operations] seaAlignment] centerLayerVertically:NULL];
-
     [[document toolboxUtility] positionTool];
 }
 

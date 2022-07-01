@@ -180,7 +180,6 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
 - (void)zoomTo:(int)power
 {
     NSPoint point = [(CenteringClipView *)[self superview] centerPoint];
-    NSLog(@"power %d",power);
 
     if([self zoom] > pow(2, power)){
         while([self zoom] > pow(2, power)){
