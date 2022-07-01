@@ -72,6 +72,10 @@
 	[[gCurrentDocument contents] importLayer];
 }
 
+- (IBAction)copyLayer:(id)sender {
+    [[gCurrentDocument contents] copyLayer];
+}
+
 - (IBAction)copyMerged:(id)sender
 {
 	[[gCurrentDocument contents] copyMerged];

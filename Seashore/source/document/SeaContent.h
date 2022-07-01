@@ -541,6 +541,12 @@
 - (void)copyMerged;
 
 /*!
+ @method        copyLayer
+ @discussion    Places the layer bitmap onto the clipboard
+ */
+- (void)copyLayer;
+
+/*!
 	@method		canFlatten
 	@discussion	Returns whether or not the document can be flattened, documents
 				for which flattening would have no effect cannot be flattened.

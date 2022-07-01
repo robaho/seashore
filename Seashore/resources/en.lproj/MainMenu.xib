@@ -173,6 +173,12 @@
                                     <action selector="copyMerged:" target="501" id="4378"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Copy Layer" tag="265" keyEquivalent="c" id="wa5-pi-Crh">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="copyLayer:" target="501" id="ftq-A4-4H2"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Paste" tag="262" keyEquivalent="v" id="171">
                                 <connections>
                                     <action selector="paste:" target="-1" id="176"/>
@@ -961,10 +967,10 @@ Gw
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <clipView key="contentView" drawsBackground="NO" id="Ux2-4C-9if">
                             <rect key="frame" x="1" y="1" width="423" height="288"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <textView editable="NO" importsGraphics="NO" verticallyResizable="YES" baseWritingDirection="leftToRight" usesFontPanel="YES" usesRuler="YES" spellingCorrection="YES" smartInsertDelete="YES" id="4078">
-                                    <rect key="frame" x="0.0" y="-3978" width="423" height="5850"/>
+                                    <rect key="frame" x="0.0" y="-4095" width="423" height="5850"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -2479,7 +2485,7 @@ DQ
                         <autoresizingMask key="autoresizingMask"/>
                         <clipView key="contentView" drawsBackground="NO" id="n9a-vh-KLe">
                             <rect key="frame" x="0.0" y="0.0" width="573" height="320"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <textView editable="NO" importsGraphics="NO" verticallyResizable="YES" spellingCorrection="YES" smartInsertDelete="YES" id="1Fq-i5-FcY">
                                     <rect key="frame" x="0.0" y="0.0" width="573" height="320"/>
@@ -2551,7 +2557,7 @@ DQ
                         <autoresizingMask key="autoresizingMask"/>
                         <clipView key="contentView" drawsBackground="NO" id="NdB-Rp-OMD">
                             <rect key="frame" x="0.0" y="0.0" width="492" height="334"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <textView editable="NO" importsGraphics="NO" verticallyResizable="YES" spellingCorrection="YES" smartInsertDelete="YES" id="exf-5y-A32">
                                     <rect key="frame" x="0.0" y="0.0" width="492" height="334"/>

@@ -885,6 +885,29 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     }
 }
 
+// copies the layer to the clipboard
+- (void)copyLayer
+{
+    [[document helpers] endLineDrawing];
+
+    SeaLayer *layer = [self activeLayer];
+
+    id pboard = [NSPasteboard generalPasteboard];
+    int spp = [[document contents] spp];
+
+    NSBitmapImageRep *imageRep;
+    unsigned char *data = [layer data];
+    int width = [layer width];
+    int height = [layer height];
+
+    // Declare the data being added to the pasteboard
+    [pboard declareTypes:[NSArray arrayWithObject:NSTIFFPboardType] owner:NULL];
+
+    // Add it to the pasteboard
+    imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
+    [pboard setData:[imageRep TIFFRepresentation] forType:NSTIFFPboardType];
+}
+
 - (BOOL)canFlatten
 {
     if ([layers count] != 1)

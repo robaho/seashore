@@ -33,6 +33,7 @@
 // To methods in SeaContent....
 - (IBAction)importLayer:(id)sender;
 - (IBAction)copyMerged:(id)sender;
+- (IBAction)copyLayer:(id)sender;
 - (IBAction)flatten:(id)sender;
 - (IBAction)mergeLinked:(id)sender;
 - (IBAction)mergeDown:(id)sender;
