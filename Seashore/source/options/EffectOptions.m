@@ -18,8 +18,6 @@
     EffectTool* tool = (EffectTool*)[[document tools] getTool:kEffectTool];
     if(!currentPlugin) {
         [effectsLabel setStringValue:@"No effect selected."];
-//        [effectTableInstruction setHidden:TRUE];
-//        [clickCountLabel setHidden:TRUE];
         [instructionsArea setHidden:TRUE];
         if([tool hasLastEffect]){
             [reapplyButton setHidden:FALSE];
@@ -36,8 +34,11 @@
         [effectsLabel setStringValue:[currentPlugin name]];
         [effectTableInstruction setStringValue:[currentPlugin instruction]];
         if([currentPlugin points]>0) {
+            [clickCountLabel setHidden:FALSE];
             [clickCountLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"click count", @"Clicks remaining: %d"),
                                              [[tool plugin] points] - [tool clickCount]]];
+        } else {
+            [clickCountLabel setHidden:TRUE];
         }
         [applyButton setEnabled:[currentPlugin points]==[tool clickCount]];
     }
@@ -50,12 +51,12 @@
     [NSMenu popUpContextMenu:menu withEvent:[[NSApplication sharedApplication] currentEvent] forView:(NSButton *)sender];
 }
 
-- (void)installPlugin:(PluginClass*)plugin View:(NSView *)view
+- (void)installPlugin:(PluginClass*)plugin View:(NSView *)pluginView
 {
     [pluginViewContainer setSubviews:[NSArray array]];
 
-    if(view) {
-        [pluginViewContainer addSubview:view];
+    if(pluginView) {
+        [pluginViewContainer addSubview:pluginView];
     }
     [pluginViewContainer setNeedsLayout:TRUE];
 
@@ -64,11 +65,8 @@
     [self updateClickCount:self];
 
     [instructionsArea setNeedsLayout:TRUE];
-
-    NSView *parent = [pluginViewContainer superview];
     [view setNeedsLayout:TRUE];
-    [parent setNeedsLayout:TRUE];
-    [parent setNeedsDisplay:TRUE];
+    [view setNeedsDisplay:TRUE];
 }
 
 -(PluginClass*)currentPlugin

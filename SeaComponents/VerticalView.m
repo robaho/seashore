@@ -14,7 +14,7 @@ static const int GAP = 5;
 - (VerticalView*)initWithFrame:(NSRect)frameRect
 {
     self = [super initWithFrame:frameRect];
-//    self.autoresizesSubviews = FALSE;
+    self.autoresizesSubviews = FALSE;
     self.translatesAutoresizingMaskIntoConstraints = FALSE;
     return self;
 }
@@ -27,10 +27,8 @@ static const int GAP = 5;
 
 - (void)layout
 {
-//    NSLog(@"verticalview layout");
-
     [super layout];
-
+    
     NSRect bounds = self.frame;
 
     float y = bounds.size.height;
@@ -43,7 +41,7 @@ static const int GAP = 5;
             int old = tf.preferredMaxLayoutWidth;
             if(old!=bounds.size.width) {
                 tf.preferredMaxLayoutWidth = bounds.size.width;
-                self.needsLayout=TRUE;
+                [tf invalidateIntrinsicContentSize];
             }
         }
         NSSize size = v.intrinsicContentSize;
@@ -54,7 +52,7 @@ static const int GAP = 5;
             height = size.height;
         }
         y-=height;
-        v.frame = NSMakeRect(0,y,bounds.size.width,height);
+        [v setFrame:NSMakeRect(0,y,bounds.size.width,height)];
         y-=GAP; // add some space between components
     }
 }
@@ -67,6 +65,7 @@ static const int GAP = 5;
             if(v.class==NSTextField.class){
                 NSTextField *tf = (NSTextField*)v;
                 tf.preferredMaxLayoutWidth = self.frame.size.width;
+                [tf invalidateIntrinsicContentSize];
             }
             NSSize size = v.intrinsicContentSize;
             if(size.width!=NSViewNoInstrinsicMetric){

@@ -268,6 +268,11 @@ static Property PropertyMeta[] = {
         va_end(vaList);
     }
 
+    // if we have no properties, make the view nil to simplify hierarchy 
+    if([[self->panel subviews] count]==0){
+        self->panel=nil;
+    }
+
     return self;
 }
 

@@ -2549,26 +2549,15 @@ Gw
             </connections>
         </customObject>
         <customView id="1885" userLabel="Effects Options" customClass="BorderView">
-            <rect key="frame" x="0.0" y="0.0" width="352" height="313"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <rect key="frame" x="0.0" y="0.0" width="425" height="324"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GSF-LX-H0s">
-                    <rect key="frame" x="0.0" y="0.0" width="352" height="33"/>
+                <customView id="GSF-LX-H0s">
+                    <rect key="frame" x="0.0" y="0.0" width="425" height="33"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lUy-zu-6Fi">
-                            <rect key="frame" x="266" y="0.0" width="69" height="32"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                            <buttonCell key="cell" type="push" title="Apply" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="qha-zp-EZQ">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                            <connections>
-                                <action selector="apply:" target="998" id="INZ-33-esX"/>
-                            </connections>
-                        </button>
-                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nAF-Vr-mCO">
-                            <rect key="frame" x="15.5" y="0.0" width="69" height="32"/>
+                        <button verticalHuggingPriority="750" id="nAF-Vr-mCO">
+                            <rect key="frame" x="-4" y="-1" width="69" height="32"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <buttonCell key="cell" type="push" title="Reset" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="nZx-Tc-5gd">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -2578,9 +2567,9 @@ Gw
                                 <action selector="reset:" target="998" id="9Z5-gB-cGd"/>
                             </connections>
                         </button>
-                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LhQ-aK-Gsa">
-                            <rect key="frame" x="91" y="0.0" width="171" height="32"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <button verticalHuggingPriority="750" id="LhQ-aK-Gsa">
+                            <rect key="frame" x="133" y="-1" width="159" height="32"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <buttonCell key="cell" type="push" title="Re-Apply Last Effect" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="eO5-Go-EqO">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -2589,35 +2578,46 @@ Gw
                                 <action selector="reapply:" target="998" id="JRP-ff-z94"/>
                             </connections>
                         </button>
+                        <button verticalHuggingPriority="750" id="lUy-zu-6Fi">
+                            <rect key="frame" x="361" y="-1" width="69" height="32"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                            <buttonCell key="cell" type="push" title="Apply" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="qha-zp-EZQ">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="apply:" target="998" id="INZ-33-esX"/>
+                            </connections>
+                        </button>
                     </subviews>
                 </customView>
-                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ree-kN-0Ut" customClass="BorderView">
-                    <rect key="frame" x="0.0" y="32" width="352" height="200"/>
+                <customView id="Ree-kN-0Ut" customClass="BorderView">
+                    <rect key="frame" x="0.0" y="32" width="425" height="194"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 </customView>
-                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="z13-kj-Rh8" customClass="VerticalView">
-                    <rect key="frame" x="0.0" y="210" width="352" height="103"/>
+                <customView id="z13-kj-Rh8" customClass="VerticalView">
+                    <rect key="frame" x="0.0" y="221" width="425" height="103"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <subviews>
-                        <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hp0-j6-NVS">
-                            <rect key="frame" x="0.0" y="78" width="351" height="25"/>
+                        <customView id="hp0-j6-NVS">
+                            <rect key="frame" x="0.0" y="78" width="423" height="25"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                             <subviews>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="swd-sT-l53">
-                                    <rect key="frame" x="-2" y="7" width="301" height="11"/>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="swd-sT-l53">
+                                    <rect key="frame" x="-2" y="6" width="366" height="14"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                    <textFieldCell key="cell" controlSize="mini" lineBreakMode="clipping" title="No Effect" id="cbI-e7-6FC">
-                                        <font key="font" metaFont="miniSystem"/>
+                                    <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="No Effect" id="cbI-e7-6FC">
+                                        <font key="font" metaFont="smallSystem"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <button verticalHuggingPriority="750" fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="11971">
-                                    <rect key="frame" x="303" y="4" width="50" height="16"/>
+                                <button verticalHuggingPriority="750" imageHugsTitle="YES" id="11971">
+                                    <rect key="frame" x="364" y="-2" width="65" height="27"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                    <buttonCell key="cell" type="push" title="Effects" bezelStyle="rounded" alignment="center" controlSize="mini" borderStyle="border" inset="2" id="16852">
+                                    <buttonCell key="cell" type="push" title="Effects" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" inset="2" id="16852">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                        <font key="font" metaFont="label" size="9"/>
+                                        <font key="font" metaFont="smallSystem"/>
                                     </buttonCell>
                                     <connections>
                                         <action selector="showEffects:" target="1879" id="12026"/>
@@ -2625,21 +2625,21 @@ Gw
                                 </button>
                             </subviews>
                         </customView>
-                        <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SW1-4w-ln2" customClass="VerticalView">
-                            <rect key="frame" x="-20" y="5" width="370" height="78"/>
+                        <customView id="SW1-4w-ln2" customClass="VerticalView">
+                            <rect key="frame" x="0.0" y="5" width="423" height="78"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                             <subviews>
-                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2190">
-                                    <rect key="frame" x="18" y="61" width="287" height="11"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
+                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="2190">
+                                    <rect key="frame" x="-2" y="61" width="427" height="11"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                     <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="left" title="Clicks remaining: 0" id="16850">
                                         <font key="font" metaFont="label" size="9"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2191">
-                                    <rect key="frame" x="18" y="0.0" width="354" height="53"/>
+                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="2191">
+                                    <rect key="frame" x="-2" y="0.0" width="427" height="53"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                     <textFieldCell key="cell" controlSize="mini" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="left" title="No instructions available." id="16851">
                                         <font key="font" metaFont="label" size="9"/>
@@ -2652,7 +2652,7 @@ Gw
                     </subviews>
                 </customView>
             </subviews>
-            <point key="canvasLocation" x="-564" y="70"/>
+            <point key="canvasLocation" x="-527.5" y="75"/>
         </customView>
         <customView id="1887" userLabel="Bucket Options">
             <rect key="frame" x="0.0" y="0.0" width="192" height="218"/>

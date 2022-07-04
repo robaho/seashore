@@ -68,13 +68,15 @@
         NSView *v = self.subviews[0];
 
         if(bottom_height==-1) {
-            bottom_height = [v intrinsicContentSize].height;
-            if(bottom_height==NSViewNoInstrinsicMetric)
-                bottom_height = v.frame.size.height;
+            bottom_height = v.frame.size.height;
         }
 
-        float height = MAX(MIN(bottom_height,bounds.size.height),0);
-//        float height = v.frame.size.height;
+        float h = [v intrinsicContentSize].height;
+        if(h==NSViewNoInstrinsicMetric) {
+            h = bottom_height;
+        }
+
+        float height = MAX(MIN(h,bounds.size.height),0);
 
         v.frame = NSMakeRect( bounds.origin.x,
                                             bounds.origin.y,
@@ -88,12 +90,14 @@
         NSView *v = self.subviews[2];
 
         if(top_height==-1) {
-            top_height = [v intrinsicContentSize].height;
-            if(top_height==NSViewNoInstrinsicMetric)
-                top_height = v.frame.size.height;
+            top_height = v.frame.size.height;
         }
 
-        float height = MAX(MIN(top_height,bounds.size.height),0);
+        float h = [v intrinsicContentSize].height;
+        if(h==NSViewNoInstrinsicMetric) {
+            h = top_height;
+        }
+        float height = MAX(MIN(h,bounds.size.height),0);
 
         v.frame = NSMakeRect( bounds.origin.x,
                                             bounds.origin.y+bounds.size.height-height-1,

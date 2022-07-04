@@ -125,10 +125,8 @@
     } else {
         pluginView = NULL;
     }
-    [options installPlugin:currentPlugin View:pluginView];
-
     count = 0;
-
+    [options installPlugin:currentPlugin View:pluginView];
     [self settingsChanged];
 }
 
