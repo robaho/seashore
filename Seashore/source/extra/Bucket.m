@@ -282,13 +282,13 @@ void smudgeFill0(int spp, int channel, IntRect rect, unsigned char *layerData, u
     for (int j=startY;j<lastY;j++) {
 
         int y = rect.origin.y+j;
-        if(y<0 || y>height)
+        if(y<0 || y >= height)
             continue;
 
         for(int i=startX;i<lastX;i++){
 
             int x = rect.origin.x + i;
-            if(x <0 || x>width)
+            if(x <0 || x >= width)
                 continue;
 
             int offset = j*brushWidth+i;
