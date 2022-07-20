@@ -356,7 +356,7 @@ CA
                                     <action selector="setResolution:" target="501" id="565"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Image Size..." tag="321" keyEquivalent="c" id="572">
+                            <menuItem title="Size &amp; Position..." tag="321" keyEquivalent="c" id="572">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                 <connections>
                                     <action selector="setMargins:" target="501" id="573"/>
@@ -782,7 +782,7 @@ Gw
                                     <action selector="toggleInformation:" target="501" id="6437"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Show Options Bar" tag="191" keyEquivalent="R" id="3639">
+                            <menuItem title="Show Options Panel" tag="191" keyEquivalent="R" id="3639">
                                 <connections>
                                     <action selector="toggleOptions:" target="501" id="6546"/>
                                 </connections>
@@ -792,7 +792,7 @@ Gw
                                     <action selector="toggleStatusBar:" target="501" id="7265"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Show Recents Bar" tag="195" keyEquivalent="/" id="rvb-IM-45o">
+                            <menuItem title="Show Recents/Historgram" tag="195" keyEquivalent="/" id="rvb-IM-45o">
                                 <connections>
                                     <action selector="toggleRecentsBar:" target="501" id="ed1-xI-0BC"/>
                                 </connections>
@@ -970,7 +970,7 @@ Gw
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <textView editable="NO" importsGraphics="NO" verticallyResizable="YES" baseWritingDirection="leftToRight" usesFontPanel="YES" usesRuler="YES" spellingCorrection="YES" smartInsertDelete="YES" id="4078">
-                                    <rect key="frame" x="0.0" y="-4095" width="423" height="5850"/>
+                                    <rect key="frame" x="0.0" y="-4329" width="423" height="5850"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

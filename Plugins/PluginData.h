@@ -56,6 +56,12 @@ enum {
 - (IntRect)selection;
 
 /*!
+ @method        inSelection
+ @result        Returnstrue if the point is in the selection or no selection is active
+ */
+- (bool)inSelection:(IntPoint)local;
+
+/*!
  @method        bitmap
  @discussion    Returns the bitmap data of the layer. Caller must release.
  @result        Returns a bitmap of the layer.
@@ -197,7 +203,7 @@ enum {
 - (void)cancel;
 
 /*!
-        @discussion callback to let tool know the plugin settings changed
+    @discussion callback to let tool know the plugin settings changed
  */
 - (void)settingsChanged;
 

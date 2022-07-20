@@ -21,11 +21,12 @@
 
 - (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event
 {
-    if(!intermediate)
-        [super downHandler:where withEvent:event];
+    int first_down = !intermediate;
+
+    [super downHandler:where withEvent:event];
 
 	if(![super isMovingOrScaling]){
-		if (!intermediate){
+		if (first_down){
             [self initializePoints:where];
             startPoint = where;
 
@@ -45,7 +46,7 @@
 {
     float anchorRadius = 4.0 / [[document docView] zoom];
 
-    if (intermediate) {
+    if (intermediate && ![super isMovingOrScaling]) {
         if(!(abs(startPoint.x - where.x) < anchorRadius && abs(startPoint.y - where.y) < anchorRadius)) {
             [self addPoint:where];
         } else {
@@ -58,9 +59,6 @@
         }
     } else {
         [super upHandler:where withEvent:event];
-
-        translating = NO;
-        scalingDir = kNoDir;
     }
 }
 

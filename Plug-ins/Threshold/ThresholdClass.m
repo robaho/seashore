@@ -1,6 +1,4 @@
-#import "ThresholdView.h"
 #import "ThresholdClass.h"
-
 #import <SeaComponents/SeaComponents.h>
 
 #define gOurBundle [NSBundle bundleForClass:[self class]]
@@ -15,7 +13,9 @@
 
     panel = [VerticalView view];
 
-    histo = [[ThresholdView alloc] initWithClass:self];
+    histo = [[HistogramView alloc] init];
+    [histo enableBounds];
+    
     top = [SeaSlider sliderWithTitle:@"Lower" Min:0 Max:255 Listener:self];
     bottom = [SeaSlider sliderWithTitle:@"Upper" Min:0 Max:255 Listener:self];
 
@@ -50,7 +50,7 @@
 {
     [top setIntValue:0];
     [bottom setIntValue:255];
-    [histo calculateHistogram:pluginData];
+    [self calculateHistogram:pluginData];
 
     return panel;
 }
@@ -58,7 +58,41 @@
 - (void)componentChanged:(id)slider
 {
     [pluginData settingsChanged];
-    [histo setNeedsDisplay:TRUE];
+    [histo setLowerBound:[bottom intValue]];
+    [histo setUpperBound:[top intValue]];
+}
+
+- (void)calculateHistogram:(PluginData *)pluginData
+{
+    unsigned char *data;
+    int spp, width, height, channel;
+    int i, j, mid;
+
+    data = [pluginData data];
+    spp = [pluginData spp];
+    width = [pluginData width];
+    height = [pluginData height];
+    channel = [pluginData channel];
+
+    int *histogram = calloc(256,sizeof(int));
+
+    if (channel == kAllChannels || channel == kPrimaryChannels) {
+        for (i = 0; i < width * height; i++) {
+            mid = 0;
+            for (j = 0; j < spp - 1; j++)
+                mid += data[i * spp + j];
+            mid /= (spp - 1);
+            histogram[mid]++;
+        }
+    }
+    else if (channel == kAlphaChannel) {
+        for (i = 0; i < width * height; i++) {
+            mid = data[(i + 1) * spp - 1];
+            histogram[mid]++;
+        }
+    }
+
+    [histo updateHistogram:0 histogram:histogram];
 }
 
 - (void)execute
@@ -119,16 +153,6 @@
 			
 		}
 	}
-}
-
-- (int)topValue
-{
-	return [top intValue];
-}
-
-- (int)bottomValue
-{
-	return [bottom intValue];
 }
 
 + (BOOL)validatePlugin:(PluginData*)pluginData

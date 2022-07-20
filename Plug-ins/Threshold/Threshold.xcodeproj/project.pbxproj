@@ -13,7 +13,6 @@
 		2B8BD4C521ECEC8300FD9AC5 /* Plugins.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B8BD4C221ECEC8300FD9AC5 /* Plugins.framework */; };
 		A831E1410789471D0009080F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A831E13F0789471D0009080F /* Localizable.strings */; };
 		A88C6D45081CF74B006F33E8 /* ThresholdClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A88C6D43081CF74B006F33E8 /* ThresholdClass.m */; };
-		A88C6D4E081CFB17006F33E8 /* ThresholdView.m in Sources */ = {isa = PBXBuildFile; fileRef = A88C6D4C081CFB17006F33E8 /* ThresholdView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,8 +25,6 @@
 		A831E1400789471D0009080F /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A88C6D43081CF74B006F33E8 /* ThresholdClass.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ThresholdClass.m; sourceTree = "<group>"; };
 		A88C6D44081CF74B006F33E8 /* ThresholdClass.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ThresholdClass.h; sourceTree = "<group>"; };
-		A88C6D4C081CFB17006F33E8 /* ThresholdView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ThresholdView.m; sourceTree = "<group>"; };
-		A88C6D4D081CFB17006F33E8 /* ThresholdView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ThresholdView.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,8 +65,6 @@
 		08FB77AFFE84173DC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				A88C6D4D081CFB17006F33E8 /* ThresholdView.h */,
-				A88C6D4C081CFB17006F33E8 /* ThresholdView.m */,
 				A88C6D44081CF74B006F33E8 /* ThresholdClass.h */,
 				A88C6D43081CF74B006F33E8 /* ThresholdClass.m */,
 			);
@@ -158,7 +153,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A88C6D45081CF74B006F33E8 /* ThresholdClass.m in Sources */,
-				A88C6D4E081CFB17006F33E8 /* ThresholdView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

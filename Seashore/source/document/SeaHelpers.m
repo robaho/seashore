@@ -19,12 +19,14 @@
 {
 	[[document docView] setNeedsDisplay:YES]; 
 	[[document infoUtility] update];
+    [[document histogram] update];
 }
 
 - (void)selectionChanged:(IntRect)documentRect
 {
     [[document docView] setNeedsDisplayInDocumentRect:documentRect:16];
     [[document infoUtility] update];
+    [[document histogram] update];
 }
 
 - (void)endLineDrawing
@@ -77,7 +79,7 @@
 	[[document layersUtility] update:kLayersUpdateCurrent];
 	[[document statusUtility] update];
     [[document toolboxUtility] update:FALSE];
-	[[document docView] setNeedsDisplay:YES]; 
+	[[document docView] setNeedsDisplay:YES];
 
 }
 

@@ -210,6 +210,11 @@
 	return selection;
 }
 
+- (SeaHistogram *)histogram
+{
+    return histogram;
+}
+
 - (id)operations
 {
 	return operations;

@@ -20,6 +20,13 @@
 		return IntMakeRect(0, 0, [(SeaLayer *)[[document contents] activeLayer] width], [(SeaLayer *)[[document contents] activeLayer] height]);
 }
 
+- (bool)inSelection:(IntPoint)point
+{
+    SeaLayer *layer = [[document contents] activeLayer];
+
+    return [[(SeaDocument*)document selection] inSelection:IntOffsetPoint(point,[layer xoff],[layer yoff])];
+}
+
 - (unsigned char *)data
 {
 	return [[[document contents] activeLayer] data];
@@ -72,7 +79,7 @@
 
 - (IntPoint)point:(int)index;
 {
-	return [[[document tools] getTool:kEffectTool] point:index];
+	return [(EffectTool*)[[document tools] getTool:kEffectTool] point:index];
 }
 
 - (NSColor *)foreColor

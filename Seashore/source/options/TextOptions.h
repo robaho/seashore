@@ -28,12 +28,15 @@
 	// A label specifying the font
 	IBOutlet id fontLabel;
 
+    IBOutlet id selectionAsBounds;
+
     IBOutlet NSTextFieldRedirect *textArea;
 	
     __weak IBOutlet NSTextField *lineSpacingLabel;
 
     __weak IBOutlet NSSlider *lineSpacing;
 
+    __weak IBOutlet NSSliderCell *verticalMargin;
     // The font manager associated with the text tool
 	NSFontManager *fontManager;
 	
@@ -87,7 +90,9 @@
 */
 - (BOOL)useTextures;
 
--(float)lineSpacing;
+- (float)lineSpacing;
+
+- (float)verticalMargin;
 
 /*!
 	@method		shutdown
@@ -97,6 +102,8 @@
 
 - (NSString*)text;
 
--(void)reset;
+- (void)reset;
+
+- (bool)useSelectionAsBounds;
 
 @end

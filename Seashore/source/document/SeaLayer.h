@@ -52,8 +52,7 @@
 	char *lostprops;
 	int lostprops_len;
 	
-	// A reference to the image data representing this layer
-	unsigned char *data;
+	NSData *nsdata;
 
     CGImageRef pre_bitmap;
 
@@ -354,6 +353,8 @@
 */
 - (unsigned char *)data;
 
+- (NSData*)layerData;
+
 /*!
 	@method		hasAlpha
 	@discussion	Returns whether or not the layer's alpha channel should be
@@ -446,7 +447,7 @@
  @method bitmap
  @result returns the bitmap for the layer
  */
- - (CGImageRef)bitmap;
+- (CGImageRef)bitmap;
 
 - (NSImage *)image;
 

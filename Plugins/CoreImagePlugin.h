@@ -76,6 +76,7 @@ typedef enum {
 
 -(void)setFilterProperty:(CIProperty)property property:(NSString*)filterProperty;
 -(CIFilter*)createFilter;
+-(CIFilter*)getFilterInstance:(NSString*)name;
 -(void)applyFilter:(CIFilter*)filter;
 
 @end

@@ -48,6 +48,16 @@
 	[cloneTool endLineDrawing];
 }
 
+- (BOOL)useTextures
+{
+    return FALSE;
+}
+
+- (BOOL)brushIsErasing
+{
+    return FALSE;
+}
+
 - (IBAction)update:(id)sender
 {
 	id cloneTool = [[document tools] getTool:kCloneTool];

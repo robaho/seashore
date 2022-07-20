@@ -14,6 +14,7 @@
 #import "ToolboxUtility.h"
 #import "SeaPrefs.h"
 #import "AlphaToGrayFilter.h"
+#import "SeaWindowContent.h"
 
 #import <objc/runtime.h>
 
@@ -22,14 +23,7 @@ dispatch_group_t group;
 
 #define TILE_SIZE 64
 
-#ifdef DEBUG
-#define SINGLE_THREADED true
-#else
 #define SINGLE_THREADED false
-#endif
-
-#define SINGLE_THREADED false
-
 
 /**
  *  Gets a list of all methods on a class (or metaclass)
@@ -110,7 +104,6 @@ void DumpObjcMethods(Class clz) {
     if (data) free(data);
     if (overlay) free(overlay);
     if (replace) free(replace);
-    if (temp) free(temp);
 
     CGContextRelease(overlayCtx);
     CGContextRelease(dataCtx);
@@ -127,13 +120,19 @@ void DumpObjcMethods(Class clz) {
 }
 
 - (void)overlayModified:(IntRect)layerRect {
+    SeaLayer *layer = [[document contents] activeLayer];
+
     if (IntRectIsEmpty(overlayModifiedRect)) {
         overlayModifiedRect = layerRect;
     } else {
         overlayModifiedRect = IntSumRects(overlayModifiedRect, layerRect);
     }
+    if (IntRectIsEmpty(tempOverlayModifiedRect)) {
+        tempOverlayModifiedRect = layerRect;
+    } else {
+        tempOverlayModifiedRect = IntSumRects(tempOverlayModifiedRect, layerRect);
+    }
 
-    SeaLayer *layer = [[document contents] activeLayer];
     layerRect.origin.x += [layer xoff];
     layerRect.origin.y += [layer yoff];
     [self setNeedsDisplayInRect:IntRectMakeNSRect(layerRect)];
@@ -253,7 +252,7 @@ void DumpObjcMethods(Class clz) {
     dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
 }
 
-- (void)drawLayerWithOverlay:(CGContextRef) ctx layer:(SeaLayer*)layer rect:(NSRect)viewDirtyRect
+- (void)drawLayerWithOverlay:(CGContextRef) ctx layer:(SeaLayer*)layer
 {
     int lw = [layer width];
     int lh = [layer height];
@@ -261,16 +260,17 @@ void DumpObjcMethods(Class clz) {
     int xoff = [layer xoff];
     int yoff = [layer yoff];
 
-    IntRect view = NSRectMakeIntRect(viewDirtyRect);
-    view = IntConstrainRect(view,[layer globalRect]);
+    unsigned char *data = [temp bytes];
 
-    IntRect local = [layer translateView:view];
-
-    [self mergeOverlay:temp rect:local];
+    if(!IntRectIsEmpty(tempOverlayModifiedRect)) {
+        tempOverlayModifiedRect = IntConstrainRect(tempOverlayModifiedRect,IntMakeRect(0,0,lw,lh));
+        [self mergeOverlay:data rect:tempOverlayModifiedRect];
+        tempOverlayModifiedRect = IntZeroRect;
+    }
 
     CGContextSaveGState(ctx);
 
-    CGDataProviderRef dp = CGDataProviderCreateWithData(NULL,temp,lw*lh*spp,NULL);
+    CGDataProviderRef dp = CGDataProviderCreateWithData(NULL,data,lw*lh*spp,NULL);
     CGImageRef img = CGImageCreate(lw,lh,8,8*spp,lw*spp,COLOR_SPACE,kCGImageAlphaLast,dp,nil,false,0);
     CGDataProviderRelease(dp);
 
@@ -288,7 +288,6 @@ void DumpObjcMethods(Class clz) {
     return !IntRectIsEmpty(overlayModifiedRect);
 }
 
-
 - (void)drawRect:(NSRect)viewDirtyRect
 {
     viewDirtyRect = NSIntegralRect(viewDirtyRect);
@@ -296,6 +295,7 @@ void DumpObjcMethods(Class clz) {
     CGContextRef nsCtx = [[NSGraphicsContext currentContext] graphicsPort];
     CGContextClipToRect(nsCtx, viewDirtyRect);
     [self drawInContext:nsCtx dirty:viewDirtyRect];
+    [[document histogram] performSelectorOnMainThread:@selector(update) withObject:nil waitUntilDone:NO];
 }
 
 - (void)drawInContext:(CGContextRef)nsCtx dirty:(NSRect)viewDirtyRect
@@ -315,8 +315,12 @@ void DumpObjcMethods(Class clz) {
     for (int i = layerCount-1; i>=0; i--) {
         SeaLayer *layer = [[document contents] layer:i];
         if ([layer visible]) {
-            if (layer == activeLayer && [self overlayModified]) {
-                [self drawLayerWithOverlay:dataCtx layer:layer rect:viewDirtyRect];
+            if (layer == activeLayer) {
+                if([self overlayModified]) {
+                    [self drawLayerWithOverlay:dataCtx layer:layer];
+                } else {
+                    [layer drawLayer:dataCtx];
+                }
             } else {
                 [layer drawLayer:dataCtx];
             }
@@ -360,7 +364,7 @@ void DumpObjcMethods(Class clz) {
         CGImageRelease(img);
     } else {
         if([self overlayModified]) {
-            [activeLayer drawChannelLayer:nsCtx withImage:temp];
+            [activeLayer drawChannelLayer:nsCtx withImage:[temp bytes]];
         }
         else {
             [activeLayer drawChannelLayer:nsCtx withImage:nil];
@@ -403,11 +407,11 @@ void DumpObjcMethods(Class clz) {
 finished:
 
   memset(overlay, 0, lw * lh * spp);
-  memset(temp, 0, lw * lh * spp);
+//  memset([temp bytes], 0, lw * lh * spp);
   memset(replace, 0, lw * lh);
 
   IntRect temp = overlayModifiedRect;
-  overlayModifiedRect = IntZeroRect;
+  overlayModifiedRect = tempOverlayModifiedRect = IntZeroRect;
 
   overlayOpacity = 0;
   overlayBehaviour = kNormalBehaviour;
@@ -425,11 +429,10 @@ finished:
   int height = [layer height];
 
   memset(overlay, 0, width * height * spp);
-  memset(temp, 0, width * height * spp);
   memset(replace, 0, width * height);
 
   IntRect temp = overlayModifiedRect;
-  overlayModifiedRect = IntZeroRect;
+  overlayModifiedRect = tempOverlayModifiedRect = IntZeroRect;
   overlayOpacity = 0;
   overlayBehaviour = kNormalBehaviour;
 
@@ -474,8 +477,6 @@ finished:
     CGContextScaleCTM(dataCtx, 1, -1);
 
   [self readjustLayer];
-
-  // Update ourselves
   [self update];
 }
 
@@ -502,12 +503,8 @@ finished:
     CHECK_MALLOC(replace);
     memset(replace, 0, lw*lh);
 
-    if (temp) free(temp);
-    temp = malloc(make_128(lw*lh*spp));
-
-    CHECK_MALLOC(temp);
-    memset(temp, 0, lw * lh *spp);
-    tempCtx = CGBitmapContextCreateWithData(temp, lw, lh, 8, lw*spp, COLOR_SPACE, kCGImageAlphaPremultipliedLast, NULL, NULL);
+    temp = [NSData dataWithBytes:[layer data] length:lw*lh*spp];
+    tempCtx = CGBitmapContextCreateWithData([temp bytes], lw, lh, 8, lw*spp, COLOR_SPACE, kCGImageAlphaPremultipliedLast, NULL, NULL);
     CGContextTranslateCTM(tempCtx, 0, lh);
     CGContextScaleCTM(tempCtx, 1, -1);
 
@@ -586,6 +583,13 @@ finished:
 
 - (unsigned char *)data {
     return data;
+}
+
+- (NSData*)layerData
+{
+    if(![self overlayModified])
+        return [[[document contents] activeLayer] layerData];
+    return temp;
 }
 
 - (CGContextRef)overlayCtx

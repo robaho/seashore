@@ -80,7 +80,6 @@
 
 - (void)updateMaskImage
 {
-    NSLog(@"updating mask image");
     CGImageRelease(maskImage);
     CGPathRelease(maskPath);
 
@@ -109,14 +108,13 @@
     return maskImage;
 }
 
-- (void)updateMaskFromPath:(NSBezierPath*)path selectionRect:(IntRect)selectionRect mode:(int)mode {
-    SeaLayer *layer = [[document contents] activeLayer];
+- (void)updateMaskFromPath:(NSBezierPath*)path mode:(int)mode {
     unsigned char *newMask, oldMaskPoint, newMaskPoint;
     IntRect newRect, oldRect;
     int tempMaskPoint, tempMaskProduct;
     int i, j;
 
-    IntRect selRectGlobal = IntOffsetRect(selectionRect,[layer xoff],[layer yoff]);
+    IntRect globalRect = NSRectMakeIntRect([path bounds]);
 
     if(!mask)
         mode = kDefaultMode;
@@ -124,10 +122,10 @@
     // Get the rectangles
     if(mode){
         oldRect = maskRect;
-        newRect = selRectGlobal;
+        newRect = globalRect;
         maskRect = IntSumRects(maskRect, newRect);
     } else {
-        newRect = maskRect = selRectGlobal;
+        newRect = maskRect = globalRect;
     }
     
     active = NO;
@@ -150,7 +148,7 @@
         [transform translateXBy:0 yBy:mheight];
         [transform scaleXBy:1 yBy:-1];
         
-        [transform translateXBy:(selRectGlobal.origin.x-maskRect.origin.x) yBy:(selRectGlobal.origin.y-maskRect.origin.y)];
+        [transform translateXBy:(-maskRect.origin.x) yBy:(-maskRect.origin.y)];
         [transform concat];
 
         [[NSColor whiteColor] setFill];
@@ -237,26 +235,23 @@
 
 - (void)selectEllipse:(IntRect)selectionRect mode:(int)mode
 {
-    NSBezierPath *path = [NSBezierPath bezierPathWithOvalInRect:NSMakeRect(0,0,selectionRect.size.width, selectionRect.size.height)];
-    [self updateMaskFromPath:path selectionRect:selectionRect mode:mode];
+    NSBezierPath *path = [NSBezierPath bezierPathWithOvalInRect:NSMakeRect(selectionRect.origin.x,selectionRect.origin.y,selectionRect.size.width, selectionRect.size.height)];
+    [self updateMaskFromPath:path mode:mode];
 }
 
 - (void)selectRoundedRect:(IntRect)selectionRect radius:(int)radius mode:(int)mode
 {
-    NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:NSMakeRect(0,0,selectionRect.size.width, selectionRect.size.height) xRadius:radius yRadius:radius];
-    [self updateMaskFromPath:path selectionRect:selectionRect mode:mode];
+    NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:NSMakeRect(selectionRect.origin.x,selectionRect.origin.y,selectionRect.size.width, selectionRect.size.height) xRadius:radius yRadius:radius];
+    [self updateMaskFromPath:path mode:mode];
 }
 
 - (void)selectPath:(NSBezierPath*)path mode:(int)mode
 {
     IntRect rect = NSRectMakeIntRect([path bounds]);
-    NSAffineTransform *at = [NSAffineTransform transform];
-    [at translateXBy:-rect.origin.x yBy:-rect.origin.y];
-    [path transformUsingAffineTransform:at];
-    [self updateMaskFromPath:path selectionRect:rect mode:mode];
+    [self updateMaskFromPath:path mode:mode];
 }
 
-- (void)selectOverlay:(IntRect)selectionRect mode:(int)mode
+- (void)selectOverlay:(IntRect)localRect mode:(int)mode
 {
 	SeaLayer *layer = [[document contents] activeLayer];
 	int width = [layer width];
@@ -266,7 +261,7 @@
 	unsigned char *overlay, *newMask, oldMaskPoint, newMaskPoint;
 	int tempMask, tempMaskProduct;
 
-    IntRect newRect = IntOffsetRect(selectionRect,[layer xoff],[layer yoff]);
+    IntRect newRect = IntOffsetRect(localRect,[layer xoff],[layer yoff]);
     IntRect overlayRect = [layer globalRect];
     IntRect oldRect;
 
@@ -373,6 +368,8 @@
 
 - (void)selectOpaque
 {
+    [[document helpers] endLineDrawing];
+
 	SeaLayer *layer = [[document contents] activeLayer];
 	unsigned char *data = [layer data];
 	int spp = [[document contents] spp], i;
@@ -409,11 +406,14 @@
 {
     active = NO;
     if (mask) { free(mask); mask = NULL; }
+    maskRect = IntZeroRect;
     [[document helpers] selectionChanged];
 }
 
 - (void)invertSelection
 {
+    [[document helpers] endLineDrawing];
+
     int width = [(SeaContent*)[document contents] width];
     int height = [(SeaContent*)[document contents] height];
 
@@ -481,6 +481,8 @@
 
 - (void)flipSelection:(int)type
 {
+    [[document helpers] endLineDrawing];
+
 	unsigned char tmp;
 	int i, j, src, dest;
 

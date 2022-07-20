@@ -513,5 +513,10 @@
     return [cursors handleRectCursors:bounds point:p cursor:[cursors noopCursor]];
 }
 
+- (void)aspectChanged
+{
+    // nothing to do
+}
+
 
 @end

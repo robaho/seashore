@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
     int valueType;
     id<Listener> listener;
     int format;
+    bool compact;
 }
 
 - (void)setIntValue:(int)value;
@@ -26,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (float)floatValue;
 
 + (SeaSlider*)sliderWithTitle:(NSString*)title Min:(double)min Max:(double) max Listener:(id<Listener>)listener;
++ (SeaSlider*)compactSliderWithTitle:(NSString*)title Min:(double)min Max:(double) max Listener:(id<Listener>)listener;
 
 @end
 

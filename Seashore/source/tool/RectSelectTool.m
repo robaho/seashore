@@ -15,11 +15,9 @@
 	return kRectSelectTool;
 }
 
-// this is a local rect
 - (IntRect)selectionRect
 {
-    SeaLayer *layer = [[document contents] activeLayer];
-    return IntOffsetRect([super postScaledRect],-[layer xoff],-[layer yoff]);
+    return [super postScaledRect];
 }
 
 - (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event
@@ -27,16 +25,12 @@
     [options setOneToOne:([options modifier] == kShiftModifier)];
 
 	[super downHandler:where withEvent:event];
-	
-	// Do the following rect select specific behvior
-	if (![super isMovingOrScaling]) {
-        // Clear the active selection and start the selection
+    if(![super isMovingOrScaling]) {
         if ([options selectionMode] == kDefaultMode || [options selectionMode] == kForceNewMode){
             [[document selection] clearSelection];
+            [[document helpers] selectionChanged];
         }
-        intermediate = YES;
-		[[document helpers] selectionChanged];
-	}
+    }
 }
 
 - (void)mouseDraggedTo:(IntPoint)where withEvent:(NSEvent *)event
@@ -61,14 +55,9 @@
     }
 
 	[super upHandler:where withEvent:event];
-	
-	scalingDir = kNoDir;
-	translating = NO;
 }
 
 - (void)createMask {
-    intermediate = NO;
-
     if([options radius]){
         [[document selection] selectRoundedRect:[self selectionRect] radius:[options radius] mode:[options selectionMode]];
     }else{

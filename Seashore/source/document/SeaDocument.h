@@ -13,6 +13,7 @@
 #import "SeaView.h"
 #import "AbstractTool.h"
 #import "SeaScrollView.h"
+#import "SeaHistogram.h"
 
 /*!
 	@class		SeaDocument
@@ -54,6 +55,8 @@
 	
 	// An outlet to the view associated with this document
     IBOutlet id contentView;
+
+    IBOutlet id histogram;
 
     SeaView *seaView;
     SeaScrollView *scrollView;
@@ -169,6 +172,8 @@
 	@result		Returns an instance of SeaSelection.
 */
 - (SeaSelection*)selection;
+
+- (SeaHistogram*)histogram;
 
 /*!
 	@method		operations

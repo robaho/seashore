@@ -270,11 +270,13 @@ static inline void fix_endian_readl(long *input, int size)
 	else
 		destSPP = 2;
 	
+    int totalLen = width*height*destSPP;
+
 	// Allocate memory for loading
 	tileData = malloc(XCF_TILE_HEIGHT * XCF_TILE_WIDTH * srcSPP);
-	totalData = malloc(make_128(width * height * destSPP));
+	totalData = malloc(make_128(totalLen));
 	// do_128_clean(totalData, make_128(width * height * spp));
-	
+
 	do {
 	
 		// Read the offset of the next tile
@@ -338,16 +340,25 @@ static inline void fix_endian_readl(long *input, int size)
 					switch (info->type) {
 						case XCF_GRAY_IMAGE:
 						case XCF_RGB_IMAGE:
-							for (k = 0; k < srcSPP; k++)
+                            if(destLoc+srcSPP-1>=totalLen)
+                                [NSException raise:NSInternalInconsistencyException format:@"File appears to be corrupt, or unsupported. Contact support."];
+                            for (k = 0; k < srcSPP; k++) {
 								totalData[destLoc + k] = tileData[srcLoc + k];
-							if (srcSPP + 1 == destSPP)
+                            }
+                            if (srcSPP + 1 == destSPP) {
+                                if(destLoc+srcSPP>=totalLen)
+                                    [NSException raise:NSInternalInconsistencyException format:@"File appears to be corrupt, or unsupported. Contact support."];
 								totalData[destLoc + srcSPP] = 255;
+                            }
 						break;
 						case XCF_INDEXED_IMAGE:
 							curColor = (int)tileData[srcLoc];
-							if (curColor < info->cmap_len - 1) {
-								for (k = 0; k < 3; k++)
+                            if(destLoc+3>=totalLen)
+                                [NSException raise:NSInternalInconsistencyException format:@"File appears to be corrupt, or unsupported. Contact support."];
+							if (curColor < info->cmap_len) {
+                                for (k = 0; k < 3; k++) {
 									totalData[destLoc + k] = cmap[curColor * 3 + k];
+                                }
 								totalData[destLoc + 3] = 255;
 							}
 							else {
@@ -513,12 +524,14 @@ static inline int alphaReplaceMerge(int dstOpacity,int srcOpacity)
 	// NSLog(@"Mask Present At: %d", maskOffset);
 	
 	// Read in the image data
-	data = [self readPixels:file sharedInfo:info];
+	unsigned char *data = [self readPixels:file sharedInfo:info];
 	
 	// If we've had a problem fail
 	if (data == NULL)
 		return NO;
-	
+
+    nsdata = [NSData dataWithBytesNoCopy:data length:width*height*spp];
+
 	// Read in the mask (and overwrite the alpha channel)
 	if (maskOffset != 0) {
 		info->maskToAlpha = YES;

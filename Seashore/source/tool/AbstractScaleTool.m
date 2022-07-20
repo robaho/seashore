@@ -39,12 +39,13 @@
 {
 	translating = NO;
 	scalingDir = kNoDir;
+    intermediate = YES;
 	
     SeaLayer *layer = [[document contents] activeLayer];
     IntPoint globalPoint = IntOffsetPoint(localPoint, [layer xoff], [layer yoff]);
 
 	if([[self scaleOptions] ignoresMove]){
-        preScaledRect = IntMakeRect(globalPoint.x,globalPoint.y,0,0);
+        postScaledRect = preScaledRect = IntMakeRect(globalPoint.x,globalPoint.y,0,0);
 		return;
 	}
 	
@@ -56,6 +57,7 @@
     IntRect localRect = IntOffsetRect(globalRect,-[layer xoff],-[layer yoff]);
 
 	if(scalingDir > kNoDir){
+        // scaling the selection
         preScaledRect = globalRect;
 
         if(mask){
@@ -66,10 +68,12 @@
 			preScaledMask = NULL;
 		}
 	} else if (IntPointInRect(localPoint, localRect) ){
-		// 2. Moving Selection
+		// moving the selection
+        preScaledRect = globalRect;
 		translating = YES;
 		moveOrigin = localPoint;
     } else {
+        // starting new selection
         preScaledRect = IntMakeRect(globalPoint.x,globalPoint.y,0,0);
         
         NSSize ratio = [[self scaleOptions] ratio];
@@ -111,7 +115,7 @@
     NSPoint globalPoint = IntPointMakeNSPoint(IntOffsetPoint(localPoint, [layer xoff], [layer yoff]));
 
 	if(scalingDir > kNoDir){
-
+        // scaling selection
 		float newHeight = preScaledRect.size.height;
 		float newWidth  = preScaledRect.size.width;
 		float newX = preScaledRect.origin.x;
@@ -180,8 +184,12 @@
 
 		return IntMakeRect((int)newX, (int)newY, (int)newWidth, (int)newHeight);
 	} else if (translating) {
-        return IntMakeRect(0,0,0,0);
+        // moving selection
+        return IntMakeRect(postScaledRect.origin.x+localPoint.x-moveOrigin.x,
+                           postScaledRect.origin.y+localPoint.y-moveOrigin.y,
+                           postScaledRect.size.width,postScaledRect.size.height);
     } else {
+        // dragging initial selection
         if (aspectType == kNoAspectType || aspectType == kRatioAspectType) {
 
             IntPoint startPoint = preScaledRect.origin;
@@ -217,18 +225,57 @@
                 }
             }
         }
-
     }
-	return IntMakeRect(0,0,0,0);
+    return postScaledRect;
 }
 
-- (void)mouseUpAt:(IntPoint)localPoin forRect:(IntRect)globalRect andMask:(unsigned char *)mask
+- (void)mouseUpAt:(IntPoint)localPoint forRect:(IntRect)globalRect andMask:(unsigned char *)mask
 {
-	if(scalingDir > kNoDir){
-		if(preScaledMask)
-			free(preScaledMask);
-	}
+    if(scalingDir > kNoDir){
+        if(preScaledMask) {
+            free(preScaledMask);
+            preScaledMask=NULL;
+        }
+    }
+    scalingDir = kNoDir;
+    translating = NO;
+    intermediate = NO;
 }
+
+
+- (void)aspectChanged
+{
+    AbstractScaleOptions* options = [self scaleOptions];
+    int aspectType = [options aspectType];
+    NSSize ratio = [options ratio];
+    SeaContent *contents = [document contents];
+    int xres = [contents xres];
+    int yres = [contents yres];
+
+    IntRect old = postScaledRect;
+    bool wasEmpty = IntRectIsEmpty(old);
+    switch (aspectType) {
+        case kExactPixelAspectType:
+            postScaledRect.size.width = ratio.width;
+            postScaledRect.size.height = ratio.height;
+            break;
+        case kExactInchAspectType:
+            postScaledRect.size.width = ratio.width * xres;
+            postScaledRect.size.height = ratio.height * yres;
+            break;
+        case kExactMillimeterAspectType:
+            postScaledRect.size.width = ratio.width * xres * 0.03937;
+            postScaledRect.size.height = ratio.height * yres * 0.03937;
+            break;
+        default:
+            return; // nothing to do
+    }
+    if(wasEmpty) { // center initial crop rect
+        postScaledRect.origin.x = ([contents width]-postScaledRect.size.width)/2;
+        postScaledRect.origin.y = ([contents height]-postScaledRect.size.height)/2;
+    }
+}
+
 
 - (IntRect) preScaledRect
 {

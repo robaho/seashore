@@ -84,9 +84,6 @@
     }
 
 	[super upHandler:where withEvent:event];
-
-	translating = NO;
-	scalingDir = kNoDir;
 }
 
 - (void)createMaskFromPoints
@@ -114,6 +111,12 @@
             [path lineToPoint:NSMakePoint(points[tpos].x,points[tpos].y)];
         }
     }
+
+    SeaLayer *layer = [[document contents] activeLayer];
+
+    NSAffineTransform *tx = [NSAffineTransform transform];
+    [tx translateXBy:[layer xoff] yBy:[layer yoff]];
+    [path transformUsingAffineTransform:tx];
 
     [[document selection] selectPath:path mode:[options selectionMode]];
 

@@ -26,24 +26,26 @@
 
 -(void)drawRect:(NSRect)dirtyRect
 {
-    NSRect rect =NSMakeRect(0,4,kImageSize,kImageSize);
-    
-    [memory drawAt:rect];
+    [NSBezierPath setDefaultLineWidth:1];
 
-    [[NSColor gridColor] set];
-    [NSBezierPath fillRect:NSMakeRect(0,kPreviewHeight-1,kPreviewWidth,1)];
-    
+    NSRect rect =NSMakeRect(0,0,kImageSize,kImageSize);
+
     if(selected) {
         [[NSColor selectedControlColor] set];
-        [NSBezierPath strokeRect:NSMakeRect(1,1,kPreviewWidth-3,kPreviewHeight-3)];
+        [NSBezierPath strokeRect:[self bounds]];
+    } else {
+        [[[NSColor gridColor] colorWithAlphaComponent:.4] set];
+        [NSBezierPath strokeRect:[self bounds]];
     }
-    
+
+    [NSBezierPath setDefaultLineWidth:1];
+    [memory drawAt:rect];
+
     NSAffineTransform *at = [NSAffineTransform transform];
     [at translateXBy:kImageSize-4 yBy:kPreviewHeight/2+4];
     [at concat];
     
     [self drawColorRect];
-    
 }
 -(BOOL)isFlipped
 {

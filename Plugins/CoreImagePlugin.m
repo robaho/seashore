@@ -37,7 +37,7 @@ static Property PropertyMeta[] = {
     {kCI_Strength,@"Strength",@"strength",@"inputStrength",kPT_Float,0,5,.5},
     {kCI_Overlap,@"Overlap",@"overlap",@"inputOverlap",kPT_Float,0,5,.75},
     {kCI_NoiseLevel,@"Noise Level",@"noiselevel",@"inputNoiseLevel",kPT_Float,0,1,.02},
-    {kCI_Levels,@"Levels",@"levels",@"inputLevels",kPT_Integer,1,255,6},
+    {kCI_Levels,@"Levels",@"levels",@"inputLevels",kPT_Integer,1,16,6},
     {kCI_Concentration,@"Concentration",@"concentration",@"inputConcentration",kPT_Float,0,2,.1},
     {kCI_Opacity,@"Opacity",@"opacity",@"inputOpacity",kPT_Float,-10,10,0},
     {kCI_Rotations,@"Rotations",@"rotations",@"inputAngle",kPT_Float,-1000,1000,0},
@@ -307,13 +307,19 @@ static Property PropertyMeta[] = {
     [self applyFilter:filter];
 }
 
--(CIFilter*)createFilter
+- (CIFilter*)getFilterInstance:(NSString *)name
 {
-    CIFilter *filter = [CIFilter filterWithName:filterName];
+    CIFilter *filter = [CIFilter filterWithName:name];
     if (filter == NULL) {
-        @throw [NSException exceptionWithName:@"CoreImageFilterNotFoundException" reason:[NSString stringWithFormat:@"The Core Image filter named \"%@\" was not found.", filterName] userInfo:NULL];
+        @throw [NSException exceptionWithName:@"CoreImageFilterNotFoundException" reason:[NSString stringWithFormat:@"The Core Image filter named \"%@\" was not found.", name] userInfo:NULL];
     }
     [filter setDefaults];
+    return filter;
+}
+
+-(CIFilter*)createFilter
+{
+    CIFilter *filter = [self getFilterInstance:filterName];
 
     for(PropertyEntry* p in properties){
         NSString *filterProperty = p.filterProperty;

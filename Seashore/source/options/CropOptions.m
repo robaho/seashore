@@ -71,8 +71,6 @@
     [(CropTool*)[document currentTool] clearCrop];
 }
 
-
-
 - (void)shutdown
 {
 	[aspectRatio shutdown];

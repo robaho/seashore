@@ -50,6 +50,22 @@
     CGImageRelease(brushImage);
 }
 
+- (NSColor*)brushColor
+{
+    BrushOptions *options = [self getBrushOptions];
+    
+    // Determine base pixels and hence brush colour
+    if ([options brushIsErasing]) {
+        return [[document contents] background];
+    }
+    else if ([options useTextures]) {
+        return [NSColor colorWithRed:0 green:0 blue:0 alpha:[[document textureUtility] opacity_float]];
+    }
+    else {
+        return [[document contents] foreground];
+    }
+}
+
 - (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event
 {
     SeaBrush *curBrush = [[document brushUtility] activeBrush];
@@ -60,16 +76,7 @@
 
     int pressure = [options pressureValue:event];
 
-    // Determine base pixels and hence brush colour
-    if ([options brushIsErasing]) {
-        color = [[document contents] background];
-    }
-    else if ([options useTextures]) {
-        color = [NSColor colorWithRed:0 green:0 blue:0 alpha:[[document textureUtility] opacity_float]];
-    }
-    else {
-        color = [[document contents] foreground];
-    }
+    color = [self brushColor];
 
     CGImageRelease(brushImage);
     brushImage=NULL;

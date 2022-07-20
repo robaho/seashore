@@ -1,5 +1,7 @@
 #import "AbstractScaleOptions.h"
+#import "AbstractScaleTool.h"
 #import "AspectRatio.h"
+#import "SeaDocument.h"
 
 @implementation AbstractScaleOptions
 
@@ -13,7 +15,6 @@
 	return self;
 }
 
-
 - (void)updateModifiers:(unsigned int)modifiers
 {
 	[super updateModifiers:modifiers];
@@ -23,7 +24,7 @@
 	} else {
 		aspectType = kNoAspectType;
 	}
-
+    [self aspectChanged:self];
 }
 
 - (NSSize)ratio
@@ -57,6 +58,11 @@
 - (BOOL)isOneToOne
 {
     return oneToOne;
+}
+
+- (void)aspectChanged:(id)sender
+{
+    [(AbstractScaleTool*)[document currentTool] aspectChanged];
 }
 
 @end

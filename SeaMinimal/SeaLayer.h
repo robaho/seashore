@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
     bool visible;
     bool hasAlpha;
 
-    unsigned char *data;
+    NSData *nsdata;
 
     char *lostprops;
     int lostprops_len;

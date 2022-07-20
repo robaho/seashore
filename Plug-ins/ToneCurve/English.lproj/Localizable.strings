@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>author</key>
+	<string>Robert Engels</string>
+	<key>copyright</key>
+	<string>Copyright (c) 2022 Robert Engels</string>
+	<key>description</key>
+	<string>Color tone curve adjustments with histogram.</string>
+	<key>groupName</key>
+	<string>Color Adjust</string>
+	<key>license</key>
+	<string>GNU General Public License</string>
+	<key>name</key>
+	<string>Tone Curve</string>
+</dict>
+</plist>

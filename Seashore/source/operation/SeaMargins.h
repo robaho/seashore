@@ -42,17 +42,16 @@ enum {
     IBOutlet id widthValue;
     IBOutlet id heightValue;
 	
-	// The text labels displaying the units
-    IBOutlet id widthLabel;
     IBOutlet id heightLabel;
-
     IBOutlet id widthPopdown;
+
+    __weak IBOutlet NSTextField *leftLabel;
+    __weak IBOutlet NSTextField *topLabel;
+    __weak IBOutlet NSTextField *leftValue;
+    __weak IBOutlet NSTextField *topValue;
 
     // The units for the panel
 	int units;
-	
-	// Sheet shown
-	bool sheetShown;
 }
 
 /*!

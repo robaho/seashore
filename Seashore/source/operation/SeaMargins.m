@@ -30,8 +30,6 @@
 
 - (id)init
 {
-	sheetShown = FALSE;
-	
 	return self;
 }
 
@@ -52,9 +50,14 @@
 	
 	[heightLabel setStringValue:UnitsString(units)];
 	[widthPopdown selectItemAtIndex:units];
+    [leftLabel setStringValue:UnitsString(units)];
+    [topLabel setStringValue:UnitsString(units)];
 
     [widthValue setStringValue:StringFromPixels([[document contents] width], units, xres)];
     [heightValue setStringValue:StringFromPixels([[document contents] height],units, yres)];
+
+    [leftValue setStringValue:StringFromPixels(0, units, xres)];
+    [topValue setStringValue:StringFromPixels(0, units, yres)];
 
 	[NSApp beginSheet:sheet modalForWindow:[document window] modalDelegate:NULL didEndSelector:NULL contextInfo:NULL];
 }
@@ -76,6 +79,9 @@
 	int width = PixelsFromFloat([widthValue floatValue], units, xres);
     int height = PixelsFromFloat([heightValue floatValue], units, yres);
 
+    int left = PixelsFromFloat([leftValue floatValue], units, xres);
+    int top = PixelsFromFloat([topValue floatValue], units, yres);
+
     if(width > kMaxImageSize || height > kMaxImageSize) {
         NSBeep();
         return;
@@ -95,7 +101,7 @@
         int diffy = (height-oldHeight)/2;
         [self setMarginLeft:diffx top:diffy right:diffx bottom:diffy index:kAllLayers];
     } else {
-        [self setMarginLeft:0 top:0 right:(width-oldWidth) bottom:(height-oldHeight) index:kAllLayers];
+        [self setMarginLeft:left top:top right:(width-oldWidth)-left bottom:(height-oldHeight)-top index:kAllLayers];
     }
 }
 
@@ -260,18 +266,39 @@
 
 - (IBAction)marginsChanged:(id)sender
 {
+    int oldWidth = [[document contents] width];
+    int oldHeight = [[document contents] height];
+
     bool relative = [contentRelative state];
 
     [widthValue setEnabled:!relative];
     [heightValue setEnabled:!relative];
     [adjustLayerBoundaries setEnabled:!relative];
 
+    bool offsets_enabled = !relative && ![adjustLayerBoundaries state];
+
+    [leftValue setEnabled:offsets_enabled];
+    [topValue setEnabled:offsets_enabled];
+
+    float xres = [[document contents] xres];
+    float yres = [[document contents] yres];
+
+    int width = PixelsFromFloat([widthValue floatValue], units, xres);
+    int height = PixelsFromFloat([heightValue floatValue], units, yres);
+
     if(relative) {
         IntRect r = [self contentRect];
-        float xres = [[document contents] xres];
-        float yres = [[document contents] yres];
         [widthValue setStringValue:StringFromPixels(r.size.width, units, xres)];
         [heightValue setStringValue:StringFromPixels(r.size.height, units, yres)];
+        [leftValue setStringValue:StringFromPixels(-r.origin.x, units, xres)];
+        [topValue setStringValue:StringFromPixels(-r.origin.y, units, yres)];
+    } else if([adjustLayerBoundaries state]) {
+        int diffx = (width-oldWidth)/2;
+        int diffy = (height-oldHeight)/2;
+        [leftValue setStringValue:StringFromPixels(diffx, units, xres)];
+        [topValue setStringValue:StringFromPixels(diffy, units, yres)];
+    } else {
+        // use entered values
     }
 }
 
@@ -284,13 +311,19 @@
     // Determine the new width and height
     int width = PixelsFromFloat([widthValue floatValue], units, xres);
     int height = PixelsFromFloat([heightValue floatValue], units, yres);
+    int left = PixelsFromFloat([leftValue floatValue], units, xres);
+    int top = PixelsFromFloat([topValue floatValue], units, yres);
 
 	units = [sender indexOfSelectedItem];
 
 	[heightLabel setStringValue :UnitsString(units)];
+    [leftLabel setStringValue :UnitsString(units)];
+    [topLabel setStringValue :UnitsString(units)];
 
     [widthValue setStringValue:StringFromPixels(width, units, xres)];
     [heightValue setStringValue:StringFromPixels(height, units, yres)];
+    [leftValue setStringValue:StringFromPixels(left, units, xres)];
+    [topValue setStringValue:StringFromPixels(top, units, yres)];
 }
 
 @end

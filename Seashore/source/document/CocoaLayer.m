@@ -28,7 +28,7 @@
 	// Determine samples per pixel
 	spp = lspp;
 
-    data = convertImageRep(imageRep,spp);
+    unsigned char *data = convertImageRep(imageRep,spp);
     if(!data){
         return NULL;
     }
@@ -38,6 +38,8 @@
         if (data[(i + 1) * spp - 1] != 255)
             hasAlpha = YES;
     }
+
+    nsdata = [NSData dataWithBytesNoCopy:data length:width*height*spp];
     
 	return self;
 }

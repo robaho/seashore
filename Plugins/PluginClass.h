@@ -87,10 +87,10 @@ void applyFilter(PluginData *pluginData,CIFilter *filter);
 void applyFilterAsOverlay(PluginData *pluginData,CIFilter *filter);
 
 /*!
- @discussion apply a core image filter to the current plugin data - modifies the overlay and replace entries. Do not set the image on the filter.
+ @discussion apply a core image filter to the current plugin data - modifies the overlay and replace entries. Do not set the image on the filter. Must end list
+ with NULL filter.
  */
-void applyFilters(PluginData *pluginData,CIFilter *filterA,CIFilter *filterB);
-
+void applyFilters(PluginData *pluginData,CIFilter *filterA,...);
 
 /*!
  @discussion apply a core image filter with a constant background to the current plugin data - modifies the overlay and replace entries. Do not set the image on the filter.

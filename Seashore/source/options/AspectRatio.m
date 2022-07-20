@@ -2,6 +2,7 @@
 #import "SeaDocument.h"
 #import "SeaContent.h"
 #import "Units.h"
+#import "AbstractScaleOptions.h"
 
 #define customItemIndex 2
 
@@ -127,6 +128,7 @@
 	[NSApp endSheet:panel];
 	[panel orderOut:self];
 	[ratioPopup selectItemAtIndex:customItemIndex];
+    [(AbstractScaleOptions*)master aspectChanged:sender];
 }
 
 - (IBAction)changeCustomAspectType:(id)sender
@@ -231,9 +233,9 @@
 - (void)shutdown
 {
 	[gUserDefaults setInteger:[ratioPopup indexOfSelectedItem] forKey:[NSString stringWithFormat:@"%@ ratio index", prefString]];
-	[gUserDefaults setFloat:ratioX forKey:[NSString stringWithFormat:@"%@ ratio index", prefString]];
-	[gUserDefaults setFloat:ratioY forKey:[NSString stringWithFormat:@"%@ ratio index", prefString]];
-	[gUserDefaults setInteger:aspectType forKey:[NSString stringWithFormat:@"%@ ratio index", prefString]];
+	[gUserDefaults setFloat:ratioX forKey:[NSString stringWithFormat:@"%@ ratio horiz", prefString]];
+	[gUserDefaults setFloat:ratioY forKey:[NSString stringWithFormat:@"%@ ratio vert", prefString]];
+	[gUserDefaults setInteger:aspectType forKey:[NSString stringWithFormat:@"%@ ratio type", prefString]];
 }
 
 @end

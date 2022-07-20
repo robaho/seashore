@@ -4,12 +4,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ZoomTool : AbstractSelectTool
+@interface ZoomTool : AbstractScaleTool
 {
     ZoomOptions *options;
 }
 
-- (IntRect)selectionRect;
+- (IntRect)zoomRect;
 
 @end
 

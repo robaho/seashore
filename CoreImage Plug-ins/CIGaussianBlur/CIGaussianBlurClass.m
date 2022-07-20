@@ -27,7 +27,7 @@
     [filter setDefaults];
     [filter setValue:[NSNumber numberWithInt:[self intValue:kCI_Radius]] forKey:@"inputRadius"];
 
-    applyFilters(pluginData,clamp,filter);
+    applyFilters(pluginData,clamp,filter,nil);
 }
 
 @end

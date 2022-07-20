@@ -47,4 +47,6 @@
  @discussion    draw the text into the provided  graphics context. The drawing uses 'document' coordinates.
  */
 - (void)drawText:(CGContextRef)ctx;
+
+- (bool)canResize;
 @end

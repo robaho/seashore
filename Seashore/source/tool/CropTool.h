@@ -12,18 +12,10 @@
 */
 
 @interface CropTool : AbstractScaleTool {
-
-	// The point where the selection begun
-	IntPoint startPoint;
-		
 	// The rectangle used for cropping
 	IntRect cropRect;
-	
-	// Are we using the one-to-one ratio?
-	BOOL oneToOne;
-    
-    CropOptions *options;
 
+    CropOptions *options;
 }
 
 /*!
@@ -81,5 +73,6 @@
 */
 - (void)adjustCrop:(IntPoint)offset;
 
+- (void)aspectChanged;
 
 @end

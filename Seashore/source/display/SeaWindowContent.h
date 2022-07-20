@@ -17,7 +17,7 @@ enum
 	kLayersPanel,
 	kPointInformation,
 	kStatusBar,
-    kRecentsBar
+    kRecentsHistogram
 };
 
 
@@ -26,12 +26,12 @@ enum
 @interface SeaWindowContent : NSView {
 	__weak IBOutlet SeaDocument *document;
 
-	IBOutlet NSView* optionsBar;
+	IBOutlet NSView *optionsBar;
 	IBOutlet NSView *nonOptionsBar;
 	
-	IBOutlet NSView* sidebar;
-	IBOutlet NSView* layers;
-	IBOutlet NSView* pointInformation;
+	IBOutlet NSView *sidebar;
+	IBOutlet NSView *layers;
+	IBOutlet NSView *pointInformation;
 
 	IBOutlet NSView *nonSidebar;
 	IBOutlet NSView *contentView;

@@ -92,7 +92,8 @@
 	
 	[[document whiteboard] setOverlayOpacity:255];
 	[[document whiteboard] setOverlayBehaviour:kReplacingBehaviour];
-    [[document whiteboard] overlayModified:rect];
+    
+    [[document helpers] overlayChanged:rect];
 	[[document helpers] applyOverlay];
 }
 

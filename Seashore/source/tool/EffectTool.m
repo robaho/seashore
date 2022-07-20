@@ -41,7 +41,6 @@
 
 - (void)execute
 {
-    NSLog(@"executing plugin");
     if(count==[currentPlugin points]) {
         [currentPlugin execute];
         [[document helpers] overlayChanged:[self selection]];
@@ -118,7 +117,14 @@
         return;
     }
     currentPlugin = [[plugin class] alloc];
-    currentPlugin = [currentPlugin initWithManager:data];
+    @try {
+        currentPlugin = [currentPlugin initWithManager:data];
+    } @catch (NSException *exception) {
+        currentPlugin = nil;
+        NSLog(@"unable to open plugin %@ %@",exception,[exception callStackSymbols]);
+        [NSAlert alertWithMessageText:@"Error Initializing Plugin" defaultButton:NULL alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"%@",[exception reason]];
+        return;
+    }
 
     if([currentPlugin respondsToSelector:@selector(initialize)]) {
         pluginView = [currentPlugin initialize];

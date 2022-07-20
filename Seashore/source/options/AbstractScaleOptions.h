@@ -58,4 +58,5 @@
 
 - (BOOL)isOneToOne;
 
+- (void)aspectChanged:(id)sender;
 @end

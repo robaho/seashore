@@ -138,14 +138,22 @@ void applyFilterAsOverlay(PluginData *pluginData,CIFilter *filter) {
     convertImageRepWithData(imageRep,overlay,width,height,spp);
 }
 
+void applyFilters(PluginData *pluginData,CIFilter* filter,...) {
+    va_list args;
+    va_start(args, filter);
 
-void applyFilters(PluginData *pluginData,CIFilter *filterA,CIFilter *filterB) {
     CIImage *inputImage = createCIImage(pluginData);
-    
-    [filterA setValue:inputImage forKey:@"inputImage"];
-    CIImage *outputImage = [filterA valueForKey: @"outputImage"];
-    [filterB setValue:outputImage forKey:@"inputImage"];
-    outputImage = [filterB valueForKey: @"outputImage"];
+
+    [filter setValue:inputImage forKey:@"inputImage"];
+    CIImage *outputImage = [filter valueForKey: @"outputImage"];
+
+    CIFilter* next;
+    while (next = va_arg(args, id))
+    {
+        [next setValue:outputImage forKey:@"inputImage"];
+        outputImage = [next valueForKey: @"outputImage"];
+    }
+    va_end(args);
 
     renderCIImage(pluginData,outputImage);
 }

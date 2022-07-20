@@ -21,11 +21,9 @@
 	[super downHandler:where withEvent:event];
 	
 	if(![super isMovingOrScaling]){
-
 		startPoint = where;
 		startNSPoint = [[document docView] convertPoint:[event locationInWindow] fromView:NULL];
 		currentNSPoint = [[document docView] convertPoint:[event locationInWindow] fromView:NULL];
-		intermediate = YES;
 	}
 }
 
@@ -41,6 +39,9 @@
 
 - (void)mouseUpAt:(IntPoint)where withEvent:(NSEvent *)event
 {
+    int old = intermediate;
+    bool wasMovingOrScaling = [super isMovingOrScaling];
+
 	[super upHandler:where withEvent:event];
 
     SeaLayer *layer = [[document contents] activeLayer];
@@ -51,7 +52,7 @@
     
     IntRect rect;
     
-    if(!intermediate)
+    if(!old || wasMovingOrScaling)
         goto done;
     
     if (!IntPointInRect(where,IntMakeRect(0,0,width,height)))
@@ -119,18 +120,13 @@
     // Then select it
     [[document selection] selectOverlay:rect mode: mode];
 
-
-    [super upHandler:where withEvent:event];
-
     // Also, we universally float the selection if alt is down
     if([[self getOptions] modifier] == kAltModifier) {
         [[document contents] layerFromSelection:NO];
     }
 
 done:
-    intermediate = NO;
-	translating = NO;
-	scalingDir = kNoDir;
+    return;
 }
 
 - (NSPoint)start

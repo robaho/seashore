@@ -34,6 +34,27 @@
 //    NSLog(@"borderView layout");
     [super layout];
 
+    if(_middle && _middle.superview!=self)
+        _middle = nil;
+    if(_top && _top.superview!=self)
+        _top = nil;
+    if(_bottom && _bottom.superview!=self)
+        _bottom = nil;
+
+    if(_middle==nil && _top==nil && _bottom==nil){
+        int views = [[self subviews] count];
+        if(views==1) {
+            _middle = [self subviews][0];
+        } else if(views==2) {
+            _bottom = [self subviews][0];
+            _middle = [self subviews][1];
+        } else if(views==3) {
+            _bottom = [self subviews][0];
+            _middle = [self subviews][1];
+            _top = [self subviews][2];
+        }
+    }
+
     NSRect bounds = self.bounds;
 
     bounds.origin.x += _borderMargin;
@@ -44,28 +65,8 @@
     if(bounds.size.height<=0 || bounds.size.width<=0)
         return;
 
-    int visibleCount = 0;
-    NSView *visibleView;
-    for(NSView *v in self.subviews) {
-        if(!v.hidden){
-            visibleView=v;
-            visibleCount++;
-        }
-    }
-
-    if(visibleCount==1){ // only a single view so fill
-        visibleView.frame = NSMakeRect( bounds.origin.x,
-                                            bounds.origin.y,
-                                            bounds.size.width,
-                                            bounds.size.height);
-        visibleView.needsLayout = TRUE;
-        visibleView.needsDisplay = TRUE;
-        return;
-    }
-
-    // do the bottom
-    if(self.subviews.count >=1 && !self.subviews[0].isHidden) {
-        NSView *v = self.subviews[0];
+    if(_bottom!=nil && !_bottom.hidden) {
+        NSView *v = _bottom;
 
         if(bottom_height==-1) {
             bottom_height = v.frame.size.height;
@@ -79,15 +80,15 @@
         float height = MAX(MIN(h,bounds.size.height),0);
 
         v.frame = NSMakeRect( bounds.origin.x,
-                                            bounds.origin.y,
-                                            bounds.size.width,
-                                            height);
+                             bounds.origin.y,
+                             bounds.size.width,
+                             height);
         bounds.size.height -= height;
         bounds.origin.y+=height;
     }
-    // do the top
-    if(self.subviews.count >=3 && !self.subviews[2].isHidden) {
-        NSView *v = self.subviews[2];
+
+    if(_top!=nil && !_top.hidden) {
+        NSView *v = _top;
 
         if(top_height==-1) {
             top_height = v.frame.size.height;
@@ -105,8 +106,8 @@
                                             height);
         bounds.size.height -= height;
     }
-    if(self.subviews.count >=2 && !self.subviews[1].isHidden) {
-        self.subviews[1].frame = NSMakeRect( bounds.origin.x,
+    if(_middle!=nil && !_middle.hidden){
+        _middle.frame = NSMakeRect( bounds.origin.x,
                                             bounds.origin.y,
                                             bounds.size.width,
                                             bounds.size.height);

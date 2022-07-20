@@ -19,8 +19,11 @@
 	
 	// Set the samples per pixel correctly
 	spp = 2; width = info->width; height = info->height;
-	data = malloc(make_128(width * height * spp));
+	unsigned char *data = malloc(make_128(width * height * spp));
 	memset(data, 0xFF, width * height * spp);
+
+    nsdata = [NSData dataWithBytesNoCopy:data length:width*height*spp];
+
 	if (width % 2 == 1) oddWidth = YES;
 	
 	do {

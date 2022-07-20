@@ -454,8 +454,9 @@ static Edge* vEdge(Run* run,int x)
 
 + (CGPathRef)getPaths:(unsigned char *)image width:(int)width height:(int)height
 {
-
+#ifdef DEBUG
     NSLog(@"rect bounds %@",NSStringFromIntRect(IntMakeRect(0,0,width,height)));
+#endif
 
     float scale=1;
 
@@ -489,8 +490,9 @@ static Edge* vEdge(Run* run,int x)
         CGContextRelease(dst);
 
         image = scaledImage;
-
+#ifdef DEBUG
         NSLog(@"marching ants scale time %ld",getCurrentMillis()-start);
+#endif
     }
 
     long start = getCurrentMillis();
@@ -498,11 +500,14 @@ static Edge* vEdge(Run* run,int x)
     ConnectedComponents *cc = [ConnectedComponents getCirculations:image width:w height:h];
 
     CGPathRef path = [cc paths];
-
+#ifdef DEBUG
     NSLog(@"marching ants path time %ld",getCurrentMillis()-start);
+#endif
 
     CGRect bounds =CGPathGetBoundingBox(path);
-    NSLog(@"path bounds0 = %@",NSStringFromRect(bounds));
+#ifdef DEBUG
+    NSLog(@"path bounds = %@",NSStringFromRect(bounds));
+#endif
 
     if(scaledImage) {
         CGAffineTransform tx = CGAffineTransformIdentity;
@@ -512,8 +517,9 @@ static Edge* vEdge(Run* run,int x)
         path = copy;
         
         free(scaledImage);
-
-        NSLog(@"path bounds = %@",NSStringFromRect(CGPathGetBoundingBox(path)));
+#ifdef DEBUG
+        NSLog(@"scaled path bounds = %@",NSStringFromRect(CGPathGetBoundingBox(path)));
+#endif
     }
     return path;
 }

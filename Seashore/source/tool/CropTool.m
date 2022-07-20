@@ -37,60 +37,13 @@
         [self clearCrop];
     }
     
-	if(cropRect.size.width > 0 && cropRect.size.height > 0){
-		[self mouseDownAt: where
-				  forRect: cropRect
-             withMaskRect: IntZeroRect
-				  andMask: NULL];
-	}
-	
-	if(![self isMovingOrScaling]){
-		int aspectType = [options aspectType];
-		NSSize ratio;
-		double xres, yres;
-        
-		SeaLayer *activeLayer;
-		
-		// Make where appropriate
-		activeLayer = [[document contents] activeLayer];
-		where.x += [activeLayer xoff];
-		where.y += [activeLayer yoff];
-		
-		// Check if location is in existing rect
-		startPoint = where;
-		
-		// Start the cropping rectangle
-		oneToOne = (modifier == kShiftModifier);
-		if (aspectType == kNoAspectType || aspectType == kRatioAspectType || oneToOne) {
-			cropRect.origin.x = startPoint.x;
-			cropRect.origin.y = startPoint.y;
-			cropRect.size.width = 0;
-			cropRect.size.height = 0;
-		}
-		else {
-			ratio = [options ratio];
-			cropRect.origin.x = startPoint.x;
-			cropRect.origin.y = startPoint.y;
-			xres = [[document contents] xres];
-			yres = [[document contents] yres];
-			switch (aspectType) {
-				case kExactPixelAspectType:
-					cropRect.size.width = ratio.width;
-					cropRect.size.height = ratio.height;
-				break;
-				case kExactInchAspectType:
-					cropRect.size.width = ratio.width * xres;
-					cropRect.size.height = ratio.height * yres;
-				break;
-				case kExactMillimeterAspectType:
-					cropRect.size.width = ratio.width * xres * 0.03937;
-					cropRect.size.height = ratio.height * yres * 0.03937;
-				break;
-			}
-		}
-        intermediate = YES;
-        [[document helpers] selectionChanged];
-    }
+    [self mouseDownAt: where
+              forRect: cropRect
+         withMaskRect: IntZeroRect
+              andMask: NULL];
+
+    cropRect = [super postScaledRect];
+    [[document helpers] selectionChanged];
 }
 
 - (void)mouseDraggedTo:(IntPoint)where withEvent:(NSEvent *)event
@@ -98,103 +51,23 @@
 	IntRect draggedRect = [self mouseDraggedTo: where
 									   forRect: cropRect
 									   andMask: NULL];
-    
-	if(![self isMovingOrScaling]){
-	
-		int aspectType = [options aspectType];
-		NSSize ratio;
-		SeaLayer *activeLayer;
-        
-        IntRect old = cropRect;
-		
-		// Make where appropriate
-		activeLayer = [[document contents] activeLayer];
-		where.x += [activeLayer xoff];
-		where.y += [activeLayer yoff];
-		
-		if (aspectType == kNoAspectType || aspectType == kRatioAspectType || oneToOne) {
 
-			// Determine the width of the cropping rectangle
-			if (startPoint.x < where.x) {
-				cropRect.origin.x = startPoint.x;
-				cropRect.size.width = where.x - startPoint.x;
-			}
-			else {
-				cropRect.origin.x = where.x;
-				cropRect.size.width = startPoint.x - where.x;
-			}
-			
-			// Determine the height of the cropping rectangle
-			if (oneToOne) {
-				if (startPoint.y < where.y) {
-					cropRect.size.height = cropRect.size.width;
-					cropRect.origin.y = startPoint.y;
-				}
-				else {
-					cropRect.size.height = cropRect.size.width;
-					cropRect.origin.y = startPoint.y - cropRect.size.height;
-				}
-			}
-			else if (aspectType == kRatioAspectType) {
-				ratio = [options ratio];
-				if (startPoint.y < where.y) {
-					cropRect.size.height = cropRect.size.width * ratio.height;
-					cropRect.origin.y = startPoint.y;
-				}
-				else {
-					cropRect.size.height = cropRect.size.width * ratio.height;
-					cropRect.origin.y = startPoint.y - cropRect.size.height;
-				}
-			}
-			else {
-				if (startPoint.y < where.y) {
-					cropRect.origin.y = startPoint.y;
-					cropRect.size.height = where.y - startPoint.y;
-				}
-				else {
-					cropRect.origin.y = where.y;
-					cropRect.size.height = startPoint.y - where.y;
-				}
-			}
-			
-		}
-		else {
-            cropRect.origin.x = where.x;
-            cropRect.origin.y = where.y;
-        }
-        [self cropRectChanged:IntSumRects(old,cropRect)];
-	} else {
-        if(translating){
-            int xoff = where.x-moveOrigin.x;
-            int yoff = where.y-moveOrigin.y;
-
-            [self setCropRect:IntMakeRect(cropRect.origin.x +xoff,cropRect.origin.y + yoff,cropRect.size.width,cropRect.size.height)];
-            moveOrigin = where;
-        } else {
-            if(draggedRect.size.width < 0){
-                draggedRect.origin.x += draggedRect.size.width;
-                draggedRect.size.width *= -1;
-            }
-
-            if(draggedRect.size.height < 0){
-                draggedRect.origin.y += draggedRect.size.height;
-                draggedRect.size.height *= -1;
-            }
-            [self setCropRect:draggedRect];
-        }
-	}
-
+    [self setCropRect:draggedRect];
 }
 
 - (void)mouseUpAt:(IntPoint)where withEvent:(NSEvent *)event
 {
-	[self mouseDraggedTo:where withEvent:event];
-	
-	scalingDir = kNoDir;
-	translating = NO;
-    intermediate = NO;
-    
+    [self mouseDraggedTo:where withEvent:event];
+    [self mouseUpAt:where forRect:IntZeroRect andMask:NULL];
     [[document helpers] selectionChanged];
+}
+
+- (void)aspectChanged
+{
+    IntRect old = cropRect;
+    [super aspectChanged];
+    cropRect = [super postScaledRect];
+    [self cropRectChanged:IntSumRects(old,cropRect)];
 }
 
 - (IntRect)cropRect

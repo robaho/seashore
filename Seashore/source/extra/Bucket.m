@@ -4,6 +4,8 @@
 
 #define kStackSizeIncrement 8192
 
+#define TILE_SIZE 32
+
 extern dispatch_queue_t queue;
 extern dispatch_group_t group;
 
@@ -198,24 +200,46 @@ IntRect bucketFill(int spp, IntRect rect, unsigned char *overlay, unsigned char 
 	return result;
 }
 
-void textureFill(int spp, IntRect rect, unsigned char *data, int width, int height, unsigned char *texture, int textureWidth, int textureHeight)
+void textureFill0(int spp, IntRect rect, unsigned char *data, int width, int height, unsigned char *texture, int textureWidth, int textureHeight)
 {
 	for (int j = rect.origin.y; j < rect.size.height + rect.origin.y; j++) {
+        if(j<0 || j >=height)
+            continue;
         int offset = ((j * width)+rect.origin.x)*spp;
         unsigned char *pos = data + offset;
-		for (int i = rect.origin.x; i < rect.origin.x+rect.size.width; i++) {
-			if (*(pos+spp-1) != 0x00) {
-				for (int k = 0; k < spp - 1; k++) {
-					*(pos+k) = texture[((j % textureHeight) * textureWidth + (i % textureWidth)) * (spp - 1) + k];
-				}
-                premultiplyBitmap(spp,pos,pos,1);
+		for (int i = rect.origin.x; i < rect.origin.x+rect.size.width; i++,pos+=spp) {
+            if(i<0 || i >=width)
+                continue;
+            unsigned char opacity = *(pos+spp-1);
+			if (opacity != 0x00) {
+                int src_offset = ((j % textureHeight) * textureWidth + (i % textureWidth)) * (spp - 1);
+                premultiply_pm(spp,texture+src_offset,pos,opacity);
 			}
-            pos+=spp;
 		}
 	}
 }
 
-void cloneFill0(int spp, IntRect rect, unsigned char *dest, unsigned char *replace, int width, int height, unsigned char *source, int sourceWidth, int sourceHeight, IntPoint spt)
+void textureFill(int spp, IntRect rect, unsigned char *dest, int width, int height, unsigned char *texture, int textureWidth, int textureHeight)
+{
+    if(rect.size.width<TILE_SIZE && rect.size.height<TILE_SIZE){
+        return textureFill0(spp,rect,dest,width,height,texture,textureWidth,textureHeight);
+    }
+
+    int cols = rect.size.width / TILE_SIZE + 1;
+    int rows = rect.size.height / TILE_SIZE + 1;
+
+    for(int i=0;i<rows;i++) {
+        int startY = i * TILE_SIZE;
+        for(int j=0;j<cols;j++) {
+            int startX = j * TILE_SIZE;
+            IntRect rect0 = IntMakeRect(startX+rect.origin.x,startY+rect.origin.y,MIN(TILE_SIZE,rect.size.width-startX),MIN(TILE_SIZE,rect.size.height-startY));
+            dispatch_group_async(group,queue,^{textureFill0(spp,rect0,dest,width,height,texture,textureWidth,textureHeight);});
+        }
+    }
+    dispatch_group_wait(group,DISPATCH_TIME_FOREVER);
+}
+
+void cloneFill0(int spp, IntRect rect, unsigned char *dest, unsigned char *replace,int width, int height, unsigned char *source, int sourceWidth, int sourceHeight, IntPoint spt)
 {
     if(rect.size.width<=0 || rect.size.height<=0)
         return;
@@ -234,28 +258,31 @@ void cloneFill0(int spp, IntRect rect, unsigned char *dest, unsigned char *repla
 			int sai = ai + spt.x;
 			int saj = aj + spt.y;
 
+            if(saj < 0 || saj >= sourceHeight || sai < 0 || sai >=sourceWidth)
+                continue;
+
             int offset = (y * width)+x;
 
             unsigned char *dpos = dest + offset*spp;
             unsigned char opacity = *(dpos+spp-1);
 
             int src_offset = (saj * sourceWidth + sai) * spp;
-            bool outside = saj < 0 || saj >= sourceHeight || sai < 0 || sai >=sourceWidth;
 
-            if (opacity != 0x00 && !outside) {
+            if (opacity != 0x00) {
                 premultiply_pm(spp,source+src_offset,dpos,opacity);
                 replace[offset]=0xFF;
-            } else {
-                replace[offset]=0x00;
+
             }
 		}
 	}
 }
 
-#define TILE_SIZE 32
-
-void cloneFill(int spp, IntRect rect, unsigned char *dest, unsigned char *replace, int width, int height, unsigned char *source, int sourceWidth, int sourceHeight, IntPoint spt)
+void cloneFill(int spp, IntRect rect, unsigned char *dest, unsigned char *replace,int width, int height, unsigned char *source, int sourceWidth, int sourceHeight, IntPoint spt)
 {
+    if(rect.size.width<TILE_SIZE && rect.size.height<TILE_SIZE){
+        return cloneFill0(spp,rect,dest,replace,width,height,source,sourceWidth,sourceHeight,spt);
+    }
+
     int cols = rect.size.width / TILE_SIZE + 1;
     int rows = rect.size.height / TILE_SIZE + 1;
 
@@ -316,6 +343,10 @@ void smudgeFill0(int spp, int channel, IntRect rect, unsigned char *layerData, u
 
 void smudgeFill(int spp, int channel, IntRect r, unsigned char *layerData, unsigned char *data, int width, int height, unsigned char *accum, unsigned char *mask, int brushWidth, int brushHeight, int rate)
 {
+    if(brushWidth<TILE_SIZE && brushHeight<TILE_SIZE){
+        return smudgeFill0(spp,channel,r,layerData,data,width,height,accum,mask,brushWidth,brushHeight,rate, 0,0);
+    }
+
     int cols = brushWidth / TILE_SIZE + 1;
     int rows = brushHeight / TILE_SIZE + 1;
 

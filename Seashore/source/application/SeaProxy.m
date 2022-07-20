@@ -410,9 +410,9 @@
 		break;
 		case 191:
 			if([[[document window] contentView] visibilityForRegion: kOptionsPanel])
-				[menuItem setTitle:@"Hide Options Bar"];
+				[menuItem setTitle:@"Hide Options Panel"];
 			else
-				[menuItem setTitle:@"Show Options Bar"];
+				[menuItem setTitle:@"Show Options Panel"];
 			return YES;			
 		break;
 		case 194:
@@ -423,10 +423,10 @@
 			return YES;			
 		break;
         case 195:
-            if([[[document window] contentView] visibilityForRegion:kRecentsBar])
-                [menuItem setTitle:@"Hide Recents Bar"];
+            if([[[document window] contentView] visibilityForRegion:kRecentsHistogram])
+                [menuItem setTitle:@"Hide Recents/Histogram"];
             else
-                [menuItem setTitle:@"Show Recents Bar"];
+                [menuItem setTitle:@"Show Recents/Histogram"];
             return YES;
             break;
 		case 210:

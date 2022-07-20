@@ -17,3 +17,7 @@ FOUNDATION_EXPORT const unsigned char SeaComponentsVersionString[];
 #import <SeaComponents/SeaBox.h>
 #import <SeaComponents/SeaColorWell.h>
 #import <SeaComponents/SeaFileChooser.h>
+#import <SeaComponents/SeaSeperator.h>
+#import <SeaComponents/HistogramView.h>
+#import <SeaComponents/CurveView.h>
+#import <SeaComponents/CurveWithHistogram.h>

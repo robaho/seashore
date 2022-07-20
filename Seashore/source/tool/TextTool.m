@@ -13,6 +13,7 @@
 #import "SeaTexture.h"
 #import "Bucket.h"
 #import "OptionsUtility.h"
+#import "SeaSelection.h"
 
 @implementation TextTool
 
@@ -51,92 +52,41 @@
 
 - (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event
 {
-    if(textRect.size.width > 0 && textRect.size.height > 0){
-        [self mouseDownAt: where
-                  forRect: textRect
-             withMaskRect: IntZeroRect
-                  andMask: NULL];
-    }
+    if([options useSelectionAsBounds])
+        return;
 
-    if(![self isMovingOrScaling]){
-        SeaLayer *activeLayer;
+    [self mouseDownAt: where
+              forRect: textRect
+         withMaskRect: IntZeroRect
+              andMask: NULL];
 
-        // Make where appropriate
-        activeLayer = [[document contents] activeLayer];
-        where.x += [activeLayer xoff];
-        where.y += [activeLayer yoff];
-
-        // Check if location is in existing rect
-        startPoint = where;
-
-        textRect.origin.x = startPoint.x;
-        textRect.origin.y = startPoint.y;
-        textRect.size.width = 0;
-        textRect.size.height = 0;
-
-        intermediate = YES;
-        [[document helpers] selectionChanged];
-    }
+    textRect = [super postScaledRect];
+    [[document helpers] selectionChanged];
 }
 
 - (void)mouseDraggedTo:(IntPoint)where withEvent:(NSEvent *)event
 {
+    if([options useSelectionAsBounds])
+        return;
     IntRect draggedRect = [self mouseDraggedTo: where
                                        forRect: textRect
                                        andMask: NULL];
 
-    if(![self isMovingOrScaling]){
-
-        SeaLayer *activeLayer;
-
-        IntRect old = textRect;
-
-        // Make where appropriate
-        activeLayer = [[document contents] activeLayer];
-        where.x += [activeLayer xoff];
-        where.y += [activeLayer yoff];
-
-        if (startPoint.x < where.x) {
-            textRect.origin.x = startPoint.x;
-            textRect.size.width = where.x - startPoint.x;
-        }
-        else {
-            textRect.origin.x = where.x;
-            textRect.size.width = startPoint.x - where.x;
-        }
-
-        if (startPoint.y < where.y) {
-            textRect.origin.y = startPoint.y;
-            textRect.size.height = where.y - startPoint.y;
-        }
-        else {
-            textRect.origin.y = where.y;
-            textRect.size.height = startPoint.y - where.y;
-        }
-
-        [self textRectChanged:IntSumRects(old,textRect)];
-    } else {
-        if(translating){
-            int xoff = where.x-moveOrigin.x;
-            int yoff = where.y-moveOrigin.y;
-
-            [self setTextRect:IntMakeRect(textRect.origin.x +xoff,textRect.origin.y + yoff,textRect.size.width,textRect.size.height)];
-            moveOrigin = where;
-        } else {
-            if(draggedRect.size.width < 0){
-                draggedRect.origin.x += draggedRect.size.width;
-                draggedRect.size.width *= -1;
-            }
-
-            if(draggedRect.size.height < 0){
-                draggedRect.origin.y += draggedRect.size.height;
-                draggedRect.size.height *= -1;
-            }
-            [self setTextRect:draggedRect];
-        }
-    }
-
+    IntRect old = textRect;
+    textRect = draggedRect;
+    [self textRectChanged:IntSumRects(old,textRect)];
 }
+
+- (void)mouseUpAt:(IntPoint)where withEvent:(NSEvent *)event
+{
+    if([options useSelectionAsBounds])
+        return;
+    [self mouseDraggedTo:where withEvent:event];
+    [self mouseUpAt:where forRect:IntZeroRect andMask:NULL];
+    [options activate:document];
+    [[document helpers] selectionChanged];
+}
+
 
 - (IBAction)mergeWithLayer:(id)sender {
     CGContextRef ctx = [[document whiteboard] overlayCtx];
@@ -183,19 +133,6 @@
     [options reset];
 }
 
-- (void)mouseUpAt:(IntPoint)where withEvent:(NSEvent *)event
-{
-    [self mouseDraggedTo:where withEvent:event];
-
-    scalingDir = kNoDir;
-    translating = NO;
-    intermediate = NO;
-
-    [options activate:document];
-
-    [[document helpers] selectionChanged];
-}
-
 - (void)changeFont:(id)sender
 {
     [options changeFont:sender];
@@ -203,6 +140,8 @@
 
 - (IntRect)textRect
 {
+    if([options useSelectionAsBounds])
+        return [[document selection] maskRect];
     return textRect;
 }
 
@@ -216,11 +155,22 @@
 - (void)drawText:(CGContextRef)ctx
 {
     NSString *text = [options text];
+    IntRect tr = [self textRect];
 
-    if(IntRectIsEmpty(textRect))
+    if(IntRectIsEmpty(tr))
         return;
 
-    NSRect r = IntRectMakeNSRect(textRect);
+    NSRect r = IntRectMakeNSRect(tr);
+
+    CGMutablePathRef path=CGPathCreateMutable();
+    if([options useSelectionAsBounds]){
+        CGPathRef maskPath = [[document selection] maskPath];
+        CGAffineTransform tx = CGAffineTransformScale(CGAffineTransformIdentity, 1, -1);
+        tx = CGAffineTransformTranslate(tx,0,-CGPathGetBoundingBox(maskPath).size.height);
+        CGPathAddPath(path,&tx,maskPath);
+    } else {
+        CGPathAddRect(path, NULL,CGRectMake(0,0,r.size.width,r.size.height));
+    }
 
     id activeTexture = [[document textureUtility] activeTexture];
 
@@ -252,6 +202,8 @@
     NSMutableParagraphStyle *paraStyle = [[NSMutableParagraphStyle alloc] init];
     [paraStyle setAlignment:[options alignment]];
     [paraStyle setLineHeightMultiple:lineSpacing];
+    [paraStyle setLineBreakMode:NSLineBreakByWordWrapping];
+//    [paraStyle setParagraphSpacingBefore:[options margins]];
 
     [attrs setValue:paraStyle forKey:NSParagraphStyleAttributeName];
     [attrs setValue:font forKey:NSFontAttributeName];
@@ -260,15 +212,42 @@
     if(outline)
         [attrs setValue:[NSNumber numberWithInt:outline] forKey:NSStrokeWidthAttributeName];
 
-    NSGraphicsContext *old = [NSGraphicsContext currentContext];
-    NSGraphicsContext *gctx = [NSGraphicsContext graphicsContextWithCGContext:ctx flipped:TRUE];
-    [NSGraphicsContext setCurrentContext:gctx];
-    NSRectClip(r);
-    NSAffineTransform *tf = [NSAffineTransform transform];
-    [tf translateXBy:0 yBy:([font xHeight] * lineSpacing)];
-    [tf concat];
-    [text drawInRect:r withAttributes:attrs];
-    [NSGraphicsContext setCurrentContext:old];
+    CGContextSaveGState(ctx);
+
+    NSMutableDictionary *attrs2 = [NSMutableDictionary dictionary];
+    NSMutableParagraphStyle *paraStyle2 = [[NSMutableParagraphStyle alloc] init];
+    [paraStyle2 setLineSpacing:0];
+    [paraStyle2 setParagraphSpacing:0];
+    [paraStyle2 setMinimumLineHeight:[options verticalMargin]];
+    [attrs2 setValue:paraStyle2 forKey:NSParagraphStyleAttributeName];
+
+    CGContextTranslateCTM(ctx,0,r.size.height);
+    CGContextScaleCTM(ctx,1,-1);
+    CGContextTranslateCTM(ctx,r.origin.x,-r.origin.y);
+
+    NSString *withPara = [NSString stringWithFormat:@"\n%@",text];
+
+    NSMutableAttributedString *s = [[NSMutableAttributedString alloc] initWithString:withPara attributes:attrs];
+
+    [s setAttributes:attrs2 range:NSMakeRange(0,1)];
+
+    CFAttributedStringRef asf = (__bridge_retained CFAttributedStringRef)s;
+    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString(asf);
+    CFRelease(asf);
+
+    NSMutableDictionary *frame_attrs = [NSMutableDictionary dictionary];
+//    [frame_attrs setValue:@([options margins]) forKey:kCTFramePathWidthAttributeName];
+
+    CTFrameRef frame = CTFramesetterCreateFrame(framesetter,CFRangeMake(0, 0),path,(__bridge CFDictionaryRef)frame_attrs);
+
+    CTFrameDraw(frame, ctx);
+
+    CFRelease(frame);
+    CFRelease(path);
+    CFRelease(framesetter);
+
+    CGContextRestoreGState(ctx);
+
 }
 
 - (AbstractOptions*)getOptions
@@ -282,10 +261,15 @@
 
 - (void)updateCursor:(IntPoint)p cursors:(SeaCursors *)cursors
 {
-    if(!IntRectIsEmpty(textRect)){
+    if(![options useSelectionAsBounds] && !IntRectIsEmpty(textRect)){
         return [cursors handleRectCursors:textRect point:p cursor:[NSCursor IBeamCursor]];
     }
     [[NSCursor IBeamCursor] set];
+}
+
+- (bool)canResize
+{
+    return ![options useSelectionAsBounds];
 }
 
 @end

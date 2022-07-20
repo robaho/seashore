@@ -45,6 +45,12 @@
 	return NO;
 }
 
+- (NSColor*)brushColor
+{
+    // always use black since we fill
+    return [NSColor blackColor];
+}
+
 - (void)plotBrush:(SeaBrush*)brush at:(NSPoint)where pressure:(int)pressure
 {
     [super plotBrush:brush at:where pressure:pressure];
@@ -95,6 +101,7 @@
 - (void)setOverlayOptions:(BrushOptions*)options
 {
     [[document whiteboard] setOverlayOpacity:[options opacity]];
+    // need to use replace, since drawing may be outside source bounds
     [[document whiteboard] setOverlayBehaviour:kMaskingBehavior];
 }
 

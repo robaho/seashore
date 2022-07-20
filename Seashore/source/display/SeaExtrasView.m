@@ -120,34 +120,32 @@ static CGFloat line_dash_0[2] = {3,3};
 
 - (void)drawCropBoundaries
 {
-    NSRect tempRect;
+    AbstractScaleTool* curTool = (AbstractScaleTool*)[document currentTool];
 
-    NSBezierPath *tempPath;
-    AbstractTool* curTool = [document currentTool];
-
-    BOOL intermediate =  [(AbstractScaleTool *)curTool intermediate];
+    BOOL intermediate =  [curTool intermediate];
 
     IntRect cropRect = [(CropTool*)[document currentTool] cropRect];
 
     if(IntRectIsEmpty(cropRect))
         return;
 
-    IntRect tempCropRect = cropRect;
-    tempRect = IntRectMakeNSRect(tempCropRect);
+    NSRect tempRect = IntRectMakeNSRect(cropRect);
 
-    tempPath = [NSBezierPath bezierPathWithRect:tempRect];
+    NSBezierPath *tempPath = [NSBezierPath bezierPathWithRect:tempRect];
     [self strokePath:tempPath];
 
-    if(!intermediate) {
+    if(!intermediate || [curTool isMovingOrScaling]) {
         [self drawDragHandles: tempRect type: kCropHandleType];
     }
-
 }
 
 -(void)strokePath:(NSBezierPath*)path
 {
+    [self strokePath:path withColor:[[SeaController seaPrefs] selectionColor:1.0]];
+}
 
-    NSColor *selcolor = [[SeaController seaPrefs] selectionColor:1.0];
+-(void)strokePath:(NSBezierPath*)path withColor:(NSColor*)selcolor
+{
     NSColor *color = [NSColor blackColor];
     if(isBlack(selcolor)) {
         color = [NSColor whiteColor];
@@ -155,7 +153,7 @@ static CGFloat line_dash_0[2] = {3,3};
 
     [color set];
     [path stroke];
-    [[[SeaController seaPrefs] selectionColor:1.0] set];
+    [selcolor set];
     [path setLineDash: line_dash count: 2 phase: 0.0];
     [path stroke];
 }
@@ -186,11 +184,11 @@ static CGFloat line_dash_0[2] = {3,3};
 {
     NSRect tempRect;
     NSBezierPath *tempPath;
-    AbstractTool* curTool = [document currentTool];
+    TextTool* curTool = (TextTool*)[document currentTool];
 
-    BOOL intermediate =  [(AbstractScaleTool *)curTool intermediate];
+    BOOL intermediate = [curTool intermediate];
 
-    IntRect textRect = [(TextTool*)[document currentTool] textRect];
+    IntRect textRect = [curTool textRect];
 
     if(IntRectIsEmpty(textRect))
         return;
@@ -198,14 +196,22 @@ static CGFloat line_dash_0[2] = {3,3};
     IntRect tempTextRect = textRect;
     tempRect = IntRectMakeNSRect(tempTextRect);
 
-    tempPath = [NSBezierPath bezierPathWithRect:tempRect];
-    [self strokePath:tempPath];
+    CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
+    CGContextSaveGState(ctx);
 
-    if(!intermediate) {
+    tempPath = [NSBezierPath bezierPathWithRect:tempRect];
+    if(![curTool canResize]) {
+        NSRect selectRect = IntRectMakeNSRect([[document selection] maskRect]);
+        [self drawSelectMarchingAnts:selectRect context:ctx withColor:[NSColor greenColor]];
+    } else
+        [self strokePath:tempPath];
+
+    if([curTool canResize] && (!intermediate || [curTool isMovingOrScaling])) {
         [self drawDragHandles: tempRect type: kTextHandleType];
     }
-}
 
+    CGContextRestoreGState(ctx);
+}
 
 - (void)drawSelectMaskTimer
 {
@@ -213,6 +219,8 @@ static CGFloat line_dash_0[2] = {3,3};
         return;
 
     if([[SeaController seaPrefs] marchingAnts] && [[document selection] active]){
+        selectionPhase++;
+
         float scale = 1 / [[document scrollView] magnification];
         NSRect selectRect = IntRectMakeNSRect([[document selection] maskRect]);
         [self setNeedsDisplayInRect:NSGrowRect(selectRect,2*scale)];
@@ -223,10 +231,8 @@ static bool isBlack(NSColor *c){
     return [c redComponent]==0 && [c greenComponent]==0 && [c blueComponent]==0;
 }
 
-- (void)drawSelectMarchingAnts:(NSRect)selectRect context:(CGContextRef)ctx
+- (void)drawSelectMarchingAnts:(NSRect)selectRect context:(CGContextRef)ctx withColor:(NSColor*)selcolor
 {
-    selectionPhase++;
-
     CGContextSetBlendMode(ctx,kCGBlendModeCopy);
     CGContextSetInterpolationQuality(ctx,kCGInterpolationNone);
     CGContextSetShouldAntialias(ctx,false);
@@ -239,7 +245,6 @@ static bool isBlack(NSColor *c){
     CGContextTranslateCTM(ctx,selectRect.origin.x,selectRect.origin.y);
     CGContextSetLineWidth(ctx,2*scale);
 
-    NSColor *selcolor = [[SeaController seaPrefs] selectionColor:1.0];
     NSColor *color = [NSColor blackColor];
     if(isBlack(selcolor)) {
         color = [NSColor whiteColor];
@@ -253,9 +258,6 @@ static bool isBlack(NSColor *c){
     CGContextSetLineDash(ctx,phase ? 0 : line_dash[0],line_dash,2);
     CGContextAddPath(ctx,path);
     CGContextStrokePath(ctx);
-
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(drawSelectMaskTimer) object:nil];
-    [self performSelector:@selector(drawSelectMaskTimer) withObject:nil afterDelay:.5];
 }
 
 - (void)drawSelectUsingDimming:(NSRect)selectRect context:(CGContextRef)ctx
@@ -278,7 +280,9 @@ static bool isBlack(NSColor *c){
     CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
     CGContextSaveGState(ctx);
     if([[SeaController seaPrefs] marchingAnts]) {
-        [self drawSelectMarchingAnts:selectRect context:ctx];
+        [self drawSelectMarchingAnts:selectRect context:ctx withColor:[[SeaController seaPrefs] selectionColor:1.0]];
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(drawSelectMaskTimer) object:nil];
+        [self performSelector:@selector(drawSelectMaskTimer) withObject:nil afterDelay:.5];
     } else {
         [self drawSelectUsingDimming:selectRect context:ctx];
     }
@@ -374,9 +378,8 @@ static bool isBlack(NSColor *c){
     }
 
     if(curToolIndex == kZoomTool && [(AbstractScaleTool *)curTool intermediate]) {
-        tempSelectRect = [(ZoomTool*)curTool selectionRect];
+        tempSelectRect = [(ZoomTool*)curTool zoomRect];
         tempRect = IntRectMakeNSRect(tempSelectRect);
-        tempRect.origin.x += xoff; tempRect.origin.y += yoff;
         tempRect = NSIntegralRectWithOptions(tempRect,NSAlignAllEdgesInward);
         tempPath = [NSBezierPath  bezierPathWithRect:tempRect];
         [self strokePath:tempPath];
@@ -384,7 +387,6 @@ static bool isBlack(NSColor *c){
         // The ellipse tool is currently being dragged, so draw its marching ants
         tempSelectRect = [(EllipseSelectTool *)curTool selectionRect];
         tempRect = IntRectMakeNSRect(tempSelectRect);
-        tempRect.origin.x += xoff; tempRect.origin.y += yoff;
         tempRect = NSIntegralRectWithOptions(tempRect,NSAlignAllEdgesInward);
         tempPath = [NSBezierPath bezierPathWithOvalInRect:tempRect];
 
@@ -395,7 +397,6 @@ static bool isBlack(NSColor *c){
         // The rectangle tool is being dragged, so draw its marching ants
         tempSelectRect = [(RectSelectTool *)curTool selectionRect];
         tempRect = IntRectMakeNSRect(tempSelectRect);
-        tempRect.origin.x += xoff; tempRect.origin.y += yoff;
         tempRect = NSIntegralRectWithOptions(tempRect,NSAlignAllEdgesInward);
 
         // The corners have a rounding

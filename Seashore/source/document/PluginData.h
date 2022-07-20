@@ -24,6 +24,8 @@
 */
 - (IntRect)selection;
 
+- (bool)inSelection:(IntPoint)point;
+
 /*!
 	@method		data
 	@discussion	Returns the bitmap data of the layer.

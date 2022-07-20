@@ -1,6 +1,7 @@
 #import "SeaWindowContent.h"
 #import "SeaController.h"
 #import "SeaSupport.h"
+#import "SeaHistogram.h"
 
 @implementation SeaWindowContent
 
@@ -11,11 +12,11 @@
              [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:YES], @"visibility", sidebar, @"view", nil], [NSNumber numberWithInt:kLayersPanel],
              [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:YES], @"visibility", pointInformation, @"view", nil], [NSNumber numberWithInt:kPointInformation],
              [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:YES], @"visibility", statusBar, @"view", nil], [NSNumber numberWithInt:kStatusBar],
-             [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:YES], @"visibility", recentsBar, @"view", nil], [NSNumber numberWithInt:kRecentsBar],
+             [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:YES], @"visibility", recentsBar, @"view", nil], [NSNumber numberWithInt:kRecentsHistogram],
              nil];
     
     int i;
-    for(i = kOptionsPanel; i <= kRecentsBar; i++){
+    for(i = kOptionsPanel; i <= kRecentsHistogram; i++){
         NSString *key = [NSString stringWithFormat:@"region%dvisibility", i];
         if([gUserDefaults objectForKey: key] && ![gUserDefaults boolForKey:key]){
             // We need to hide it
@@ -79,8 +80,7 @@
     if(parent==NULL)
         return;
 
-    [banner removeFromSuperview];
-
+    [banner setHidden:TRUE];
     [goldStar setHidden:![[SeaController seaSupport] isSupportPurchased]];
 
     [parent layout];

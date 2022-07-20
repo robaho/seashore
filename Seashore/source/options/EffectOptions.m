@@ -32,7 +32,13 @@
         [resetButton setHidden:FALSE];
         [instructionsArea setHidden:FALSE];
         [effectsLabel setStringValue:[currentPlugin name]];
-        [effectTableInstruction setStringValue:[currentPlugin instruction]];
+        if([currentPlugin respondsToSelector:@selector(instruction)]) {
+            [effectTableInstruction setHidden:FALSE];
+            [effectTableInstruction setStringValue:[currentPlugin instruction]];
+        } else {
+            [effectTableInstruction setHidden:TRUE];
+        }
+
         if([currentPlugin points]>0) {
             [clickCountLabel setHidden:FALSE];
             [clickCountLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"click count", @"Clicks remaining: %d"),

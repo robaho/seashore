@@ -22,7 +22,7 @@
 	// Set the data members to reasonable values
 	height = width = mode = 0;
 	opacity = 255; xoff = yoff = 0;
-	spp = 4; visible = YES; data = NULL; hasAlpha = YES;
+	spp = 4; visible = YES; nsdata = [NSData data]; hasAlpha = YES;
 	lostprops = NULL; lostprops_len = 0;
 	document = doc;
 	seaLayerUndo = [[SeaLayerUndo alloc] initWithDocument:doc forLayer:self];
@@ -50,14 +50,18 @@
 	
 	// Get the appropriate samples per pixel
 	spp = lspp;
+
+    int len = width*height*spp;
 	
 	// Create a representation in memory of the blank canvas
-	data = malloc(make_128(width * height * spp));
+	unsigned char *data = malloc(len);
 
 	if (opaque)
-		memset(data, 255, width * height * spp);
+		memset(data, 255, len);
 	else
-		memset(data, 0, width * height * spp);
+		memset(data, 0, len);
+
+    nsdata = [NSData dataWithBytesNoCopy:data length:len];
 	
 	// Remember the alpha situation
 	hasAlpha = !opaque;
@@ -74,14 +78,14 @@
 	// Derive the width and height from the imageRep
 	xoff = lrect.origin.x; yoff = lrect.origin.y;
 	width = lrect.size.width; height = lrect.size.height;
-    data = ldata;
+    // Get the appropriate samples per pixel
+    spp = lspp;
+
+    nsdata = [NSData dataWithBytesNoCopy:ldata length:width*height*spp];
 
     if(width<=0 || height<=0)
         return NULL;
-	
-	// Get the appropriate samples per pixel
-	spp = lspp;
-	
+
 	// We should always have an alpha layer unless you turn it off
 	hasAlpha = YES;
 	
@@ -100,13 +104,11 @@
     
     if(width<=0 || height<=0)
         return NULL;
-    
-    
+
 	mode = [layer mode];
 	spp = [[[layer document] contents] spp];
-	data = malloc(make_128(width * height * spp));
 
-	data = memcpy(data, [layer data], width * height * spp);
+    nsdata = [NSData dataWithData:[layer layerData]];
 	xoff = [layer xoff];
 	yoff = [layer yoff];
 	visible = [layer visible];
@@ -124,8 +126,6 @@
 
 - (void)dealloc
 {	
-    if (data) free(data);
-
     CGImageRelease(pre_bitmap);
 }
 
@@ -201,6 +201,8 @@
     // Start out with invalid content borders
     left = right = top = bottom = -1;
 
+    unsigned char *data = [nsdata bytes];
+
     // Determine left content margin
     for (i = 0; i < width && left == -1; i++) {
         for (j = 0; j < height && left == -1; j++) {
@@ -257,7 +259,9 @@
 {
 	unsigned char temp[4];
 	int i, j;
-	
+
+    unsigned char *data = [nsdata bytes];
+
 	for (j = 0; j < height; j++) {
 		for (i = 0; i < width / 2; i++) {
 			memcpy(temp, &(data[(j * width + i) * spp]), spp);
@@ -273,6 +277,8 @@
 	unsigned char temp[4];
 	int i, j;
 	
+    unsigned char *data = [nsdata bytes];
+
 	for (j = 0; j < height / 2; j++) {
 		for (i = 0; i < width; i++) {
 			memcpy(temp, &(data[(j * width + i) * spp]), spp);
@@ -330,9 +336,9 @@
 
 - (void)scaleX:(float)xscale scaleY:(float)yscale rotate:(float)rotation
 {
-    CGContextRef bm = CGBitmapContextCreate(data,width,height,8,width*spp,COLOR_SPACE,kCGImageAlphaPremultipliedLast);
+    [self image];
 
-    CGImageRef image = CGBitmapContextCreateImage(bm);
+    CGImageRef image = pre_bitmap;
 
     NSAffineTransform *tx = [NSAffineTransform transform];
 
@@ -356,14 +362,9 @@
 
     CGContextDrawImage(ctx,CGRectMake(0,0,width,height),image);
 
-    CGImageRelease(image);
-    CGContextRelease(bm);
-
     CGContextRelease(ctx);
 
-    free(data);
-
-    data = new_data;
+    nsdata = [NSData dataWithBytesNoCopy:new_data length:w*h*spp];
     width=w;
     height=h;
 }
@@ -428,7 +429,12 @@
 
 - (unsigned char *)data
 {
-	return data;
+	return [nsdata bytes];
+}
+
+- (NSData *)layerData
+{
+    return nsdata;
 }
 
 - (BOOL)hasAlpha
@@ -455,7 +461,9 @@
 - (BOOL)canToggleAlpha
 {
 	int i;
-	
+
+    unsigned char *data = [nsdata bytes];
+
 	if (hasAlpha) {
 		for (i = 0; i < width * height; i++) {
 			if (data[(i + 1) * spp - 1] != 255)
@@ -521,12 +529,14 @@
 	else
 		pmImageData = malloc(width * height * (spp - 1));
 		
+    unsigned char *data = [nsdata bytes];
+
 	// If there is an alpha channel...
 	if (hasAlpha) {
-		// images are pre multiplied
+        premultiplyBitmap(spp, pmImageData, data, width*height*spp);
 	}
 	else {
-	
+
 		// Strip the alpha channel
 		for (i = 0; i < width * height; i++) {
 			for (j = 0; j < spp - 1; j++) {
@@ -561,10 +571,12 @@
     if(newWidth<0 || newHeight<0){
         return;
     }
-    
-	newImageData = malloc(make_128(newWidth * newHeight * spp));
-	// do_128_clean(newImageData, make_128(newWidth * newHeight * spp));
-	
+
+    int len = newWidth * newHeight * spp;
+	newImageData = malloc(make_128(len));
+
+    unsigned char *data = [nsdata bytes];
+
 	// Fill the new bitmap with the appropriate values
 	for (j = 0; j < newHeight; j++) {
 		for (i = 0; i < newWidth; i++) {
@@ -584,9 +596,7 @@
 		}
 	}
 	
-	// Replace the old bitmap with the new bitmap
-	free(data);
-	data = newImageData;
+    nsdata = [NSData dataWithBytesNoCopy:newImageData length:len];
 	width = newWidth; height = newHeight;
 	xoff -= left; yoff -= top; 
 	
@@ -595,7 +605,8 @@
 
 - (void)setWidth:(int)newWidth height:(int)newHeight interpolation:(int)interpolation
 {
-    unsigned char *buffer = malloc(newWidth*newHeight*spp);
+    int len = newWidth*newHeight*spp;
+    unsigned char *buffer = malloc(len);
     
     CHECK_MALLOC(buffer);
     
@@ -608,20 +619,18 @@
 
     CGContextDrawImage(ctx, CGRectMake(0,0,newWidth,newHeight),bitmap);
 
-    free(data);
-    
-    data = buffer;
+    nsdata = [NSData dataWithBytesNoCopy:buffer length:len];
 
     width = newWidth; height = newHeight;
 
-    unpremultiplyBitmap(spp, data, data, width*height);
+    unpremultiplyBitmap(spp, buffer, buffer, width*height);
 
     image = NULL;
 }
 
 - (CGImageRef)bitmap
 {
-    CGDataProviderRef dp = CGDataProviderCreateWithData(NULL,data,width*height*spp,NULL);
+    CGDataProviderRef dp = CGDataProviderCreateWithData(NULL,[nsdata bytes],width*height*spp,NULL);
     CGImageRef image = CGImageCreate(width,height,8,8*spp,width*spp,COLOR_SPACE,kCGImageAlphaLast,dp,nil,false,0);
     CGDataProviderRelease(dp);
     return image;
@@ -651,8 +660,6 @@
     
     image = NULL;
 
-    unsigned char *newdata;
-    
     CGImageRef bitmap = [self bitmap];
     NSBitmapImageRep *imageRep = [[NSBitmapImageRep alloc] initWithCGImage:bitmap];
     CGImageRelease(bitmap);
@@ -663,11 +670,9 @@
         spp=4;
     }
     
-    newdata = convertImageRep(imageRep,spp);
+    unsigned char *newdata = convertImageRep(imageRep,spp);
 
-    free(data);
-
-    data = newdata;
+    nsdata = [NSData dataWithBytesNoCopy:newdata length:width*height*spp];
 }
 
 - (void)drawLayer:(CGContextRef)context
@@ -703,7 +708,7 @@
 {
     int channel = [[document contents] selectedChannel];
 
-    CGDataProviderRef dp = CGDataProviderCreateWithData(NULL,data0!=nil?data0:data,width*height*spp,NULL);
+    CGDataProviderRef dp = CGDataProviderCreateWithData(NULL,data0!=nil?data0:[nsdata bytes],width*height*spp,NULL);
     CGImageRef image = CGImageCreate(width,height,8,8*spp,width*spp,COLOR_SPACE,channel==kAlphaChannelView ? kCGImageAlphaLast : kCGImageAlphaNoneSkipLast,dp,nil,false,0);
     CGDataProviderRelease(dp);
 
@@ -750,7 +755,7 @@
     if(x<0 || x>=width || y<0 || y>=height)
         return NULL;
 
-    unsigned char *pixelData = data + (width*y+x) * spp;
+    unsigned char *pixelData = [nsdata bytes] + (width*y+x) * spp;
 
     if(spp==2){
         return [NSColor colorWithRed:pixelData[0]/255.0 green:pixelData[0]/255.0 blue:pixelData[0]/255.0 alpha:pixelData[1]/255.0];

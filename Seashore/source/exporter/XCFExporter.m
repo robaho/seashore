@@ -192,7 +192,7 @@ static inline void fix_endian_write(int *input, int size)
 
 - (BOOL)writeLayerProperties:(int)index file:(FILE *)file
 {
-	id layer = [[document contents] layer:index];
+	SeaLayer *layer = [[document contents] layer:index];
 	
 	// Write if the layer is the acitve layer
 	if ([[document contents] activeLayerIndex] == index) {

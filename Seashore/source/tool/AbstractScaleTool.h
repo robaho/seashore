@@ -125,6 +125,8 @@ enum {
 */
 - (IntRect) postScaledRect;
 
+- (void)aspectChanged;
+
 @end
 
 extern int getHandle(IntPoint point,IntRect rect,float scale);

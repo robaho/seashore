@@ -16,6 +16,8 @@
 #import "Units.h"
 #import "SeaWindowContent.h"
 #import "PositionTool.h"
+#import "TextTool.h"
+#import "ZoomTool.h"
 
 @implementation InfoUtility
 
@@ -90,12 +92,32 @@
 
     int curToolIndex = [[document currentTool] toolId];
 
+    point = [[document docView] getMousePosition:YES];
+
     // Get the selection
     if (curToolIndex == kCropTool) {
-        size = [(CropTool*)[document currentTool] cropRect].size;
+        IntRect bounds = [(CropTool*)[document currentTool] cropRect];
+        size = bounds.size;
+        if(!IntRectIsEmpty(bounds))
+            point = bounds.origin;
     }
     else if (curToolIndex == kPositionTool) {
-        size = [(PositionTool*)[document currentTool] bounds].size;
+        IntRect bounds = [(PositionTool*)[document currentTool] bounds];
+        size = bounds.size;
+        if(!IntRectIsEmpty(bounds))
+            point = bounds.origin;
+    }
+    else if (curToolIndex == kTextTool) {
+        IntRect bounds = [(TextTool*)[document currentTool] textRect];
+        size = bounds.size;
+        if(!IntRectIsEmpty(bounds))
+            point = bounds.origin;
+    }
+    else if (curToolIndex == kZoomTool) {
+        IntRect bounds = [(ZoomTool*)[document currentTool] zoomRect];
+        size = bounds.size;
+        if(!IntRectIsEmpty(bounds))
+            point = bounds.origin;
     }
     else if ([[document selection] active]) {
         size = [[document selection] localRect].size;
@@ -104,7 +126,6 @@
         size.height = size.width = 0;
     }
 
-    point = [[document docView] getMousePosition:YES];
     delta = [[document docView] delta];
     units = [document measureStyle];
 
@@ -155,7 +176,7 @@
         return;
 
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(doUpdate) object:NULL];
-    [self performSelector:@selector(doUpdate) withObject:NULL afterDelay:0.005];
+    [self performSelector:@selector(doUpdate) withObject:NULL afterDelay:0.025];
 	
 }
 

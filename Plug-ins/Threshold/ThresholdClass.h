@@ -14,7 +14,7 @@
 @interface ThresholdClass : NSObject <PluginClass> {
 	PluginData *pluginData;
 
-    ThresholdView *histo;
+    HistogramView *histo;
     NSView *panel;
     SeaSlider *top,*bottom;
 }

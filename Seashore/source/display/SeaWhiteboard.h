@@ -71,7 +71,7 @@ enum {
 	unsigned char *replace;
 
     // The temporary ares for compositing the overlay into the layer
-    unsigned char *temp;
+    NSData *temp;
 	
 	// The behaviour of the overlay
 	int overlayBehaviour;
@@ -81,6 +81,7 @@ enum {
     float overlayOpacity_float;
 
     IntRect overlayModifiedRect;
+    IntRect tempOverlayModifiedRect;
     IntRect whiteboardModifiedRect;
 
 	// The whiteboard's samples per pixel
@@ -237,6 +238,8 @@ enum {
 	@result		Returns a pointer to the bitmap data for the whiteboard.
 */
 - (unsigned char *)data;
+
+- (NSData*)layerData;
 
 - (void)drawRect:(NSRect)rect;
 

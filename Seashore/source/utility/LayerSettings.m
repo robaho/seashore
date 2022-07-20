@@ -129,14 +129,11 @@
 		index = [[document contents] activeLayerIndex];
 	layer = [[document contents] layer:index];
 	
-	// Allow the undo/redo
 	oldOffsets = IntMakePoint([layer xoff], [layer yoff]);
 	[[[document undoManager] prepareWithInvocationTarget:self] setOffsetsLeft:oldOffsets.x top:oldOffsets.y index:index];
 	
-	// Change the offsets
 	[layer setOffsets:IntMakePoint(left, top)];
 	
-	// Update as required
 	[[document helpers] layerOffsetsChanged:index from:oldOffsets];
 }
 
@@ -149,13 +146,10 @@
 		index = [[document contents] activeLayerIndex];
 	layer = [[document contents] layer:index];
 	
-	// Allow the undo/redo
 	[[[document undoManager] prepareWithInvocationTarget:self] setName:[layer name] index:index];
 	
-	// Change the name
 	[layer setName:newName];
 	
-	// Update the view
 	[[document helpers] layerTitleChanged];
 }
 

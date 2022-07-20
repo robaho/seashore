@@ -2,6 +2,9 @@
 
 @implementation SeaSlider
 
+// Use a fixed value width to ensure alignment.
+#define VALUE_WIDTH 50
+
 - (instancetype)initWithFrame:(NSRect)frameRect
 {
     self = [super initWithFrame:frameRect];
@@ -28,15 +31,23 @@
 - (void)layout
 {
     NSRect bounds = self.bounds;
-    float half = bounds.size.height / 2;
-    [slider setFrame:NSMakeRect(0,0,bounds.size.width-50,half)];
-    [value  setFrame:NSMakeRect(bounds.size.width-50,0,50,half)];
-    [title  setFrame:NSMakeRect(0,half,bounds.size.width,half)];
+    if(compact) {
+        int w = bounds.size.width - VALUE_WIDTH;
+        int h = bounds.size.height;
+        [title  setFrame:NSMakeRect(0,0,w*.50,h)];
+        [slider setFrame:NSMakeRect(w*.50,0,w*.50,h)];
+        [value setFrame:NSMakeRect(w,0,VALUE_WIDTH,h)];
+    } else {
+        float half = bounds.size.height / 2;
+        [slider setFrame:NSMakeRect(0,0,bounds.size.width-VALUE_WIDTH,half)];
+        [value  setFrame:NSMakeRect(bounds.size.width-VALUE_WIDTH,0,50,half)];
+        [title  setFrame:NSMakeRect(0,half,bounds.size.width,half)];
+    }
 }
 
 - (NSSize)intrinsicContentSize
 {
-    return NSMakeSize(100,40);
+    return NSMakeSize(100,compact ? 20:40);
 }
 
 - (void)setIntValue:(int)value
@@ -57,7 +68,7 @@
         value = ([slider minValue]+[slider maxValue])/2;
     if([slider maxValue]==1) {
         format = 1;
-        [slider setFloatValue:value*100.0];
+        [slider setFloatValue:value];
     } else {
         [slider setFloatValue:value];
         format = 2;
@@ -90,7 +101,7 @@
 - (void)sliderChanged:(id)sender
 {
     [self updateValue];
-    [listener componentChanged:sender];
+    [listener componentChanged:self];
 }
 
 + (SeaSlider*)sliderWithTitle:(NSString*)title Min:(double)min Max:(double) max Listener:(id<Listener>)listener
@@ -102,6 +113,20 @@
     slider->listener = listener;
     return slider;
 }
+
++ (SeaSlider*)compactSliderWithTitle:(NSString*)title Min:(double)min Max:(double) max Listener:(id<Listener>)listener
+{
+    SeaSlider *slider = [[SeaSlider  alloc] init];
+    slider->compact = TRUE;
+    [slider->title setStringValue:title];
+    [slider->title setControlSize:NSMiniControlSize];
+    [slider->title setFont:[NSFont labelFontOfSize:[NSFont systemFontSizeForControlSize:NSMiniControlSize]]];
+    [slider->slider setMinValue:min];
+    [slider->slider setMaxValue:max];
+    slider->listener = listener;
+    return slider;
+}
+
 
 
 @end

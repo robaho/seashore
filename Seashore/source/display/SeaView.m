@@ -149,7 +149,8 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
 
 - (IBAction)zoomNormal:(id)sender
 {
-    [[document scrollView] setMagnification:1.0];
+    float dpi = MAX([[document contents] xres], [[document contents] yres]);
+    [[document scrollView] setMagnification:72.0/dpi];
     [self setNeedsDisplay:YES];
     [[document helpers] zoomChanged];
 }
@@ -820,7 +821,7 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
 
 - (IBAction)selectAll:(id)sender
 {
-    [[document selection] selectRect:IntMakeRect(0, 0, [(SeaLayer *)[[document contents] activeLayer] width], [(SeaLayer *)[[document contents] activeLayer] height]) mode:kDefaultMode];
+    [[document selection] selectRect:[[[document contents] activeLayer] globalRect] mode:kDefaultMode];
 }
 
 - (IBAction)selectNone:(id)sender

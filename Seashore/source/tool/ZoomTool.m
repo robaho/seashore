@@ -29,11 +29,12 @@
     options = (ZoomOptions*)newoptions;
 }
 
-// this is a local rect
-- (IntRect)selectionRect
+- (IntRect)zoomRect
 {
-    SeaLayer *layer = [[document contents] activeLayer];
-    return IntOffsetRect([super postScaledRect],-[layer xoff],-[layer yoff]);
+    if(!intermediate)
+        return IntZeroRect;
+
+    return [super postScaledRect];
 }
 
 - (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event
@@ -42,17 +43,13 @@
               forRect: IntZeroRect
          withMaskRect: IntZeroRect
               andMask: NULL];
-
-//    [super downHandler:where withEvent:event];
 }
 
 - (void)mouseDraggedTo:(IntPoint)where withEvent:(NSEvent *)event
 {
-    intermediate = YES;
-
     IntRect old = [self postScaledRect];
 
-    [super dragHandler:where withEvent:event];
+    [super mouseDraggedTo:where forRect:old andMask:NULL];
 
     if (intermediate) {
         [[document helpers] selectionChanged:IntSumRects(old,[self postScaledRect])];
@@ -66,6 +63,8 @@
     SeaView *view = [document docView];
 
     IntRect r = [super postScaledRect];
+
+    [super mouseUpAt:where forRect:r andMask:NULL];
 
     float scale = [[document docView] zoom];
 
@@ -86,8 +85,6 @@
     } else {
         [view zoomToFitRect:[super postScaledRect]];
     }
-
-    intermediate = FALSE;
 }
 
 - (void)updateCursor:(IntPoint)p cursors:(SeaCursors *)cursors

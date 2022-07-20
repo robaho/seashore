@@ -57,6 +57,7 @@
 		2B1F682A21D6F43800D6F371 = {
 			isa = PBXGroup;
 			children = (
+				2B670BCD27DD00DD003BA6AE /* Info.plist */,
 				2B1F684E21D6F48E00D6F371 /* Source */,
 				2B1F683521D6F43800D6F371 /* Products */,
 				2B399C7F279DF513000D0C58 /* Frameworks */,
@@ -74,7 +75,6 @@
 		2B1F684E21D6F48E00D6F371 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				2B670BCD27DD00DD003BA6AE /* Info.plist */,
 				2B670BCF27DD00DE003BA6AE /* PluginClass.h */,
 				2B670BCE27DD00DD003BA6AE /* PluginData.h */,
 				2B1F6E8C21D9550D00D6F371 /* PluginClass.m */,
@@ -196,15 +196,17 @@
 		2B1F683D21D6F43800D6F371 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = Info.plist;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.plugins;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				MARKETING_VERSION = 3.4;
+				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.Plugins;
+				PRODUCT_NAME = Plugins;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -212,15 +214,13 @@
 		2B1F683E21D6F43800D6F371 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = Info.plist;
+				CURRENT_PROJECT_VERSION = 1;
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.plugins;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				MARKETING_VERSION = 3.4;
+				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.Plugins;
+				PRODUCT_NAME = Plugins;
 				SKIP_INSTALL = YES;
 			};
 			name = Release;

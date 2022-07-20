@@ -8,6 +8,7 @@
 #import "TextTool.h"
 #import "SeaDocument.h"
 #import "SeaHelpers.h"
+#import "SeaSelection.h"
 
 @implementation TextOptions
 
@@ -149,6 +150,15 @@
         [mergeWithLayerButton setToolTip:tip];
     }
 
+    if(![[document selection] active]) {
+        [selectionAsBounds setState:NSOffState];
+        [selectionAsBounds setEnabled:NO];
+    } else {
+        [selectionAsBounds setEnabled:YES];
+    }
+
+    [verticalMargin setMaxValue:([tool textRect].size.height)];
+
     [[document helpers] selectionChanged];
 }
 
@@ -169,6 +179,11 @@
     return [lineSpacing floatValue];
 }
 
+-(float)verticalMargin
+{
+    return [verticalMargin floatValue];
+}
+
 -(void)reset
 {
     [textArea setStringValue:@""];
@@ -181,6 +196,11 @@
 	[gUserDefaults setInteger:[outlineSlider intValue] forKey:@"text outline slider"];
 	[gUserDefaults setObject:[[fontManager selectedFont] displayName] forKey:@"text font"];
 	[gUserDefaults setInteger:(int)[[fontManager selectedFont] pointSize] forKey:@"text size"];
+}
+
+- (bool)useSelectionAsBounds
+{
+    return [selectionAsBounds state];
 }
 
 @end

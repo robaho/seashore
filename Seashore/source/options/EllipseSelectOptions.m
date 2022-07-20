@@ -3,4 +3,9 @@
 
 @implementation EllipseSelectOptions
 
+- (void)awakeFromNib
+{
+    [aspectRatio awakeWithMaster:self andString:@"ellipse"];
+}
+
 @end
