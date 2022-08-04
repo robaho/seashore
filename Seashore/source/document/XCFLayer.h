@@ -1,6 +1,7 @@
 #import "Seashore.h"
 #import "SeaLayer.h"
 #import "XCFContent.h"
+#import "ParasiteData.h"
 
 /*!
 	@class		XCFLayer
@@ -13,6 +14,8 @@
 
 @interface XCFLayer : SeaLayer {
     int version;
+
+    ParasiteData *parasites;
 }
 
 /*!
@@ -31,6 +34,7 @@
 				information).
 	@result		Returns instance upon success (or NULL otherwise).
 */
-- (id)initWithFile:(FILE *)file offset:(long)offset document:(id)doc sharedInfo:(SharedXCFInfo *)info;
+- (SeaLayer*)initWithFile:(FILE *)file offset:(long)offset document:(id)doc sharedInfo:(SharedXCFInfo *)info;
+- (ParasiteData*)parasites;
 
 @end

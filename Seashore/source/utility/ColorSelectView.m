@@ -207,15 +207,19 @@
 
 - (void)changeForegroundColor:(id)sender
 {
-	[[document toolboxUtility] setForeground:[sender color]];
-	[textureUtility setActiveTextureIndex:-1];
-	[self setNeedsDisplay:YES];
+    if ([[gColorPanel title] isEqualToString:LOCALSTR(@"foreground", @"Foreground")]) {
+        [[document toolboxUtility] setForeground:[sender color]];
+        [textureUtility setActiveTextureIndex:-1];
+        [self setNeedsDisplay:YES];
+    }
 }
 
 - (void)changeBackgroundColor:(id)sender
 {
-	[[document toolboxUtility] setBackground:[sender color]];
-	[self setNeedsDisplay:YES];
+    if ([[gColorPanel title] isEqualToString:LOCALSTR(@"background", @"Background")]) {
+        [[document toolboxUtility] setBackground:[sender color]];
+        [self setNeedsDisplay:YES];
+    }
 }
 
 - (void)update

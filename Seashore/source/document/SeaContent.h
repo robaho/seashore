@@ -618,4 +618,7 @@
 
 - (ParasiteData*)parasites;
 
+/*! convert latyer types, specifically text, upon load */
+- (void)fixupLayers;
+
 @end

@@ -44,9 +44,6 @@
     rotation = 0.0; tempRotation = 0.0;
     x = 0; y = 0; tempX = 0; tempY = 0;
 
-    undoRecords = [NSMutableArray array];
-    undoCount = 0;
-
 	return self;
 }
 
@@ -60,6 +57,7 @@
     function = -1;
 
     IntRect r = [self bounds:layer];
+    
     r.origin.x -= [layer xoff];
     r.origin.y -= [layer yoff];
 
@@ -242,12 +240,22 @@
 
 - (IntRect)bounds:(SeaLayer*)layer
 {
-    int lw = [layer width];
-    int lh = [layer height];
+    IntRect r = [layer globalRect];
 
-    NSRect r = NSMakeRect(0,0, lw, lh);
-    NSBezierPath *tempPath = [NSBezierPath bezierPathWithRect:r];
-    NSAffineTransform *tx = [self transform:layer];
+    int lw = r.size.width;
+    int lh = r.size.height;
+    int xoff = r.origin.x;
+    int yoff = r.origin.y;
+
+    NSRect r0 = NSMakeRect(0,0, lw, lh);
+    NSBezierPath *tempPath = [NSBezierPath bezierPathWithRect:r0];
+    NSAffineTransform *tx = [NSAffineTransform transform];
+    [tx translateXBy:-(lw/2) yBy:-(lh/2)];
+    [tx appendTransform:[self transform]];
+    [tempPath transformUsingAffineTransform:tx];
+    tx = [NSAffineTransform transform];
+    [tx translateXBy:(lw/2) yBy:(lh/2)];
+    [tx translateXBy:xoff yBy:yoff];
     [tempPath transformUsingAffineTransform:tx];
 
     return NSRectMakeIntRect([tempPath bounds]);
@@ -356,7 +364,7 @@
             [self applyTransform:activeLayer];
         }
     }
-    
+
     [[document helpers] layerBoundariesChanged:kActiveLayer];
 
     scaleX = scaleY = 1;
@@ -395,18 +403,14 @@
     undoRecord->x = x;
     undoRecord->y = y;
 
-    [[[document undoManager] prepareWithInvocationTarget:self] undoApplyTransform:undoCount];
+    [[[document undoManager] prepareWithInvocationTarget:self] undoApplyTransform:undoRecord];
 
     [layer scaleX:scaleX scaleY:scaleY rotate:rotation];
     [layer setOffsets:IntMakePoint(bounds.origin.x,bounds.origin.y)];
-
-    undoRecords[undoCount] = undoRecord;
-    undoCount++;
 }
 
 - (void)undoTranslateOnly:(IntPoint)origin forLayer:(int)index
 {
-    NSLog(@"undo simple translate");
     IntPoint oldOffsets;
     id layer = [[document contents] layer:index];
 
@@ -417,18 +421,31 @@
     [self updateButtons];
 }
 
-- (void)undoApplyTransform:(int)undoIndex
+- (void)undoApplyTransform:(TransformUndoRecord*)undoRecord
 {
     SeaContent *contents = [document contents];
     SeaLayer *layer;
-    TransformUndoRecord *undoRecord;
 
-    // Prepare for redo
-    [[[document undoManager] prepareWithInvocationTarget:self] undoApplyTransform:undoIndex];
-
-    undoRecord = undoRecords[undoIndex];
-
+    TransformUndoRecord *redoRecord = [[TransformUndoRecord alloc] init];
     layer = [contents layer:undoRecord->index];
+
+    int w = [layer width];
+    int h = [layer height];
+
+    int xoff = [layer xoff];
+    int yoff = [layer yoff];
+
+    redoRecord->index = undoRecord->index;
+    redoRecord->snapshot = [[layer seaLayerUndo] takeSnapshot:IntMakeRect(0, 0, w, h) automatic:NO];
+    redoRecord->rect = IntMakeRect(xoff, yoff, w, h);
+    redoRecord->scaleX = scaleX;
+    redoRecord->scaleY = scaleY;
+    redoRecord->rotation = rotation;
+    redoRecord->x = x;
+    redoRecord->y = y;
+
+    [[[document undoManager] prepareWithInvocationTarget:self] undoApplyTransform:redoRecord];
+
     [layer setOffsets:IntMakePoint(undoRecord->rect.origin.x, undoRecord->rect.origin.y)];
     [layer setMarginLeft:0 top:0 right:undoRecord->rect.size.width - [layer width] bottom:undoRecord->rect.size.height - [layer height]];
     [[layer seaLayerUndo] restoreSnapshot:undoRecord->snapshot automatic:NO];
@@ -441,20 +458,12 @@
     [[document helpers] layerBoundariesChanged:undoRecord->index];
 }
 
-- (NSAffineTransform*)transform:(SeaLayer*)layer
+- (NSAffineTransform*)transform
 {
-    int width = [layer width];
-    int height = [layer height];
-
-    SeaLayer *active = [[document contents] activeLayer];
-
     NSAffineTransform *tx = [NSAffineTransform transform];
-    [tx translateXBy:width/2 + [layer xoff] + x + tempX yBy:height/2 + [layer yoff] + y + tempY];
-    if(layer==active || [options scaleAndRotateLinked]) {
-        [tx rotateByRadians:(rotation + tempRotation)];
-        [tx scaleXBy:(scaleX * tempScaleX) yBy:(scaleY * tempScaleY)];
-    }
-    [tx translateXBy:-(width/2) yBy:-(height/2)];
+    [tx translateXBy:x+tempX yBy:y+tempY];
+    [tx rotateByRadians:(rotation + tempRotation)];
+    [tx scaleXBy:(scaleX * tempScaleX) yBy:(scaleY * tempScaleY)];
     return tx;
 }
 

@@ -56,7 +56,7 @@
 
     CGImageRef pre_bitmap;
 
-    NSImage *image;
+    NSImage *image,*thumbnail;
 
 	// Remembers whether or not the layer has an alpha channel
 	BOOL hasAlpha;
@@ -186,21 +186,24 @@
 - (IntSize)size;
 
 /*!
- @discusson Translates rect in view coords to layer coords.
- */
-- (IntRect)translateView:(IntRect)viewRect;
-
-/*!
 	@method		globalRect
 	@result		The layer rect in document coordinate space.
 */
 - (IntRect)globalRect;
 
 /*!
+ @method        localRect
+ @result        The layer rect in layer coordinate space.
+ */
+- (IntRect)localRect;
+
+/*!
  @method        contentRect
  @result        The local rectangle bounding the opaque portion of thee layer
  */
 - (Margins)contentMargins;
+
+- (IntSize)bounds:(NSAffineTransform*)tx;
 
 /*!
 	@method		setOffsets:
@@ -449,7 +452,14 @@
  */
 - (CGImageRef)bitmap;
 
+- (CGImageRef)copyBitmap:(IntRect)rect;
+
+- (void)applyTransform:(NSAffineTransform*)tx;
+
 - (NSImage *)image;
+
+- (bool)isRasterized;
+- (void)markRasterized;
 
 /*!
 	@method		updateThumbnail
@@ -487,19 +497,6 @@
 - (void)setMarginLeft:(int)left top:(int)top right:(int)right bottom:(int)bottom;
 
 /*!
-	@method		setWidth:height:interpolation:
-	@discussion	Scales the contents of the layer to match the specified height
-				and width. Interpolation (allowing for smoother scaling) is used
-				as specified but no adjustment is made to the layer's offsets.
-	@param		width
-				The revised width of the document or layer.
-	@param		height
-				The revised height of the document or layer.
-	@param		interpolation
-*/
-- (void)setWidth:(int)newWidth height:(int)newHeight interpolation:(int)interpolation;
-
-/*!
 	@method		convertFromType:to:
 	@discussion	Converts the bitmap data of the layer from a specified type to
 				another. This is useful in RGB to grayscale conversions, etc.
@@ -512,6 +509,8 @@
 - (void)convertFromType:(int)srcType to:(int)destType;
 
 - (void)drawLayer:(CGContextRef)context;
+- (void)drawContent:(CGContextRef)context;
+
 - (void)drawChannelLayer:(CGContextRef)context withImage:(unsigned char *)data;
 
 - (NSColor*) getPixelX:(int)x Y:(int)y;

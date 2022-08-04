@@ -165,6 +165,10 @@
         [[self docView] zoomToFit:self];
     }
 
+    [helpers activeLayerWillChange];
+    [contents setActiveLayerIndex:0];
+    [helpers activeLayerChanged:kLayerSwitched];
+
     [docWindow setIsVisible:TRUE];
 
     [[self undoManager] setLevelsOfUndo:[[SeaController seaPrefs] undoLevels]];
@@ -291,7 +295,7 @@
             if (contents == NULL) {
                 return NO;
             }
-
+            [contents fixupLayers];
         } else if ([CocoaContent typeIsEditable: type forDoc: self]) {
 
             // Load a PNG, TIFF, JPEG document
@@ -533,6 +537,11 @@
 {
     [[self helpers] endLineDrawing];
 	[[self undoManager] redo];
+}
+
+- (void)commitEditingWithDelegate:(id)delegate didCommitSelector:(SEL)didCommitSelector contextInfo:(void *)contextInfo
+{
+    //
 }
 
 - (void)changeMeasuringStyle:(int)aStyle

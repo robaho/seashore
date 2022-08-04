@@ -34,14 +34,11 @@
     __weak IBOutlet NSButton *scaleToFitButton;
 
     PositionOptions *options;
-
-    NSMutableArray *undoRecords;
-    int undoCount;
 }
 
 - (void)adjustOffset:(IntPoint)offset;
 
-- (NSAffineTransform*)transform:(SeaLayer*)layer;
+- (NSAffineTransform*)transform;
 
 - (IntRect)bounds;
 - (IntRect)bounds:(SeaLayer*)layer;

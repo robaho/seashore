@@ -42,9 +42,9 @@
     int spp = [[document contents] spp];
     int size = [options pencilSize];
 
-    IntRect rect = IntMakeRect(where.x-size/2,where.y-size/2,size,size);
+    CGRect cgRect = CGRectMake(where.x-size/2,where.y-size/2,size,size);
 
-    CGRect cgRect = IntRectMakeNSRect(rect);
+    IntRect rect = NSRectMakeIntRect(NSIntegralRect(cgRect));
 
     CGContextRef overlayCtx = [[document whiteboard] overlayCtx];
 

@@ -6,6 +6,7 @@
 #import "AbstractOptions.h"
 #import "SeaContent.h"
 #import "AbstractSelectOptions.h"
+#import "SeaLayer.h"
 
 @implementation AbstractSelectTool
 
@@ -28,8 +29,10 @@
                                  interpolation: NSImageInterpolationHigh
                                      usingMask: [self preScaledMask]];
     }else if (translating && scalingDir == kNoDir){
-        [[document selection] moveSelection:localPoint fromOrigin:moveOrigin];
-        moveOrigin = localPoint;
+        SeaLayer *layer = [[document contents] activeLayer];
+        IntPoint globalPoint = IntOffsetPoint(localPoint,[layer xoff],[layer yoff]);
+        [[document selection] moveSelection:globalPoint fromOrigin:moveOrigin];
+        moveOrigin = globalPoint;
     }
 }
 

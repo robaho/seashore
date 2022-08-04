@@ -16,84 +16,44 @@
     if (![selection active])
         return;
 
-	unsigned char *overlay, *data, *replace, *edata = NULL;
-	int i, j, k, width, height, spp;
-	int src, dest;
-	IntRect rect;
-	BOOL complex;
+    IntRect r = [[document selection] localRect];
 
     SeaLayer *layer = [[document contents] activeLayer];
 
-	overlay = [[document whiteboard] overlay];
-	data = [layer data];
-	replace = [[document whiteboard] replace];
-	width = [layer width];
-	height = [layer height];
-	spp = [[document contents] spp];
-    
-	rect = [selection localRect];
+    CGImageRef cutImage = [layer copyBitmap:r];
 
-	complex = [selection mask]!=NULL;
-	
-	// Erase selection if it is complex
-	if (complex) {
-		edata = malloc(rect.size.width * rect.size.height * spp);
-		for (i = 0; i < rect.size.width; i++) {
-			for (j = 0; j < rect.size.height; j++) {
-				memcpy(&(edata[(j * rect.size.width + i) * spp]), &(data[((j + rect.origin.y) * width +  (i + rect.origin.x)) * spp]), spp);
-			}
-		}
-		[selection deleteSelection];
-	}
-	
-	// Do the correct flip
-	if (type == kHorizontalFlip) {
-		for (i = 0; i < rect.size.width; i++) {
-			for (j = 0; j < rect.size.height; j++) {
-				replace[(j + rect.origin.y) * width + (i + rect.origin.x)] = 255;
-				if (complex)
-					src = (j * rect.size.width + (rect.size.width - i - 1)) * spp;
-				else
-					src = ((j + rect.origin.y) * width + ((rect.size.width - i - 1) + rect.origin.x)) * spp;
-				dest =((j + rect.origin.y) * width + (i + rect.origin.x)) * spp;
-				for (k = 0; k < spp; k++) {
-					if (complex)
-						overlay[dest + k] = edata[src + k];
-					else
-						overlay[dest + k] = data[src + k];
-				}
-			}
-		}
-	}
-	else {
-		for (i = 0; i < rect.size.width; i++) {
-			for (j = 0; j < rect.size.height; j++) {
-				replace[(j + rect.origin.y) * width + (i + rect.origin.x)] = 255;
-				if (complex)
-					src = ((rect.size.height - j - 1) * rect.size.width + i) * spp;
-				else
-					src = (((rect.size.height - j - 1) + rect.origin.y) * width + (i + rect.origin.x)) * spp;
-				dest =((j + rect.origin.y) * width + (i + rect.origin.x)) * spp;
-				for (k = 0; k < spp; k++) {
-					if (complex)
-						overlay[dest + k] = edata[src + k];
-					else
-						overlay[dest + k] = data[src + k];
-				}
-			}
-		}
-	}
-	
-	// Free used memory
-	if (complex) free(edata);
-	
-	// Flip the selection mask
-	[selection flipSelection:type];
-	
+    [selection deleteSelection];
+
+    [selection flipSelection:type];
+
+    CGContextRef ctx = [[document whiteboard] overlayCtx];
+    CGContextSaveGState(ctx);
+
+    CGContextTranslateCTM(ctx,0,r.origin.y+r.size.height);
+    CGContextScaleCTM(ctx,1,-1);
+    CGContextTranslateCTM(ctx,r.origin.x,0);
+
+    if(type==kHorizontalFlip) {
+        CGContextTranslateCTM(ctx, r.size.width, 0);
+        CGContextScaleCTM(ctx, -1, 1);
+    } else if(type==kVerticalFlip) {
+        CGContextTranslateCTM(ctx, 0, r.size.height);
+        CGContextScaleCTM(ctx, 1, -1);
+    }
+
+    CGContextDrawImage(ctx, NSMakeRect(0,0,r.size.width,r.size.height), cutImage);
+
+    CGImageRelease(cutImage);
+
+    CGContextRestoreGState(ctx);
+
+    unsigned char *replace = [[document whiteboard] replace];
+    memset(replace,0xFF,[layer width]*[layer height]);
+
 	[[document whiteboard] setOverlayOpacity:255];
 	[[document whiteboard] setOverlayBehaviour:kReplacingBehaviour];
     
-    [[document helpers] overlayChanged:rect];
+    [[document helpers] overlayChanged:r];
 	[[document helpers] applyOverlay];
 }
 

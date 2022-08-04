@@ -87,4 +87,73 @@
     }
 }
 
+NSString* parseEscaped(NSString* s){
+    NSMutableString *ms = [NSMutableString string];
+    int len = [s length];
+    unichar buffer[len+1];
+    [s getCharacters:buffer range:NSMakeRange(0,len)];
+
+    bool escape = false;
+
+    for(int i=0;i<len;i++) {
+        switch(buffer[i]) {
+            case '\\':
+                escape=TRUE;
+                continue;
+            default:
+                if(!escape) {
+                    [ms appendString:[NSString stringWithCharacters:(buffer+i) length:1]];
+                } else {
+                    escape=false;
+                    switch(buffer[i]) {
+                        case '\\':
+                            [ms appendString:@"\\"]; break;
+                        case '"':
+                            [ms appendString:@"\""]; break;
+                        case 'n':
+                            [ms appendString:@"\n"]; break;
+                        default:
+                            [ms appendString:[NSString stringWithCharacters:(buffer+i) length:1]];
+                    }
+                }
+        }
+    }
+    return ms;
+}
+
++ (NSDictionary*)parseParasite:(Parasite*)p
+{
+    NSString *s = [NSString stringWithCString:p->data encoding:NSUTF8StringEncoding];
+    return [ParasiteData parseString:s];
+}
+
++ (NSDictionary*)parseString:(NSString*)s
+{
+    NSRegularExpression *exp = [NSRegularExpression regularExpressionWithPattern:@"^[(]([^\\s]*) (.*)[)]$" options:NSRegularExpressionAnchorsMatchLines|NSRegularExpressionUseUnixLineSeparators error:nil];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+
+    NSArray *matches = [exp matchesInString:s options:0 range:NSMakeRange(0,[s length])];
+    for (NSTextCheckingResult *match in matches) {
+        NSString *key = [s substringWithRange:[match rangeAtIndex:1]];
+        NSString *value = [s substringWithRange:[match rangeAtIndex:2]];
+        if([value hasPrefix:@"\""]) {
+            // remove quotes
+            value = [value substringWithRange:NSMakeRange(1,[value length]-2)];
+            value = parseEscaped(value);
+        }
+        dict[key]=value;
+//        NSLog(@"%@|%@ %@ %@", key,value,NSStringFromRange([match rangeAtIndex:1]),NSStringFromRange([match rangeAtIndex:2]));
+    }
+    return dict;
+}
+
++ (void)parseFloats:(NSString*)s floats:(float[_Nonnull])floats
+{
+    NSArray<NSString*> *strings = [s componentsSeparatedByString:@" "];
+    for(int i=0;i<[strings count];i++) {
+        floats[i] = [strings[i] floatValue];
+    }
+}
+
+
 @end

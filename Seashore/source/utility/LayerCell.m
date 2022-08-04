@@ -1,4 +1,6 @@
 #import "LayerCell.h"
+#import "SeaLayer.h"
+#import "SeaTextLayer.h"
 
 @implementation LayerCell
 
@@ -27,6 +29,11 @@
 - (NSImage *)image
 {
     return image;
+}
+
+- (void)setTextLayer:(BOOL)isTextLayer
+{
+    textLayer = isTextLayer;
 }
 
 - (NSRect)imageRectForBounds:(NSRect)cellFrame
@@ -82,18 +89,10 @@
 		[shadow set];
 		
 		NSRect imageFrame;
-        NSDivideRect(cellFrame, &imageFrame, &cellFrame, 8 + 48, NSMinXEdge);
-        if ([self drawsBackground]) {
-            [[self backgroundColor] set];
-            NSRectFill(imageFrame);
-        }
-        imageFrame.origin.x += 3;
-        imageFrame.size.width -= 6;
-        imageFrame.size.height -= 6;
-        imageFrame.origin.y += 3;
+        NSRect textFrame;
+        NSDivideRect(cellFrame, &imageFrame, &textFrame, 48, NSMinXEdge);
 
         NSSize imageSize = [image size];
-
         float image_proportion = imageSize.width / imageSize.height;
 
         if(image_proportion>1) {
@@ -107,23 +106,25 @@
             imageFrame.size.width = new_width;
         }
 
-        [[NSImage imageNamed:@"checkerboard"] drawInRect:imageFrame fromRect:NSZeroRect operation:NSCompositeSourceOver fraction: 1.0];
-        
         [NSGraphicsContext restoreGraphicsState];
         
-        [image drawInRect:imageFrame fromRect:NSZeroRect operation:NSCompositeSourceOver fraction: 1.0 respectFlipped:TRUE hints:NULL];
-        
-		cellFrame.size.height = 18;
-		cellFrame.origin.y += 10;
-		NSDictionary *attrs;
+        [image drawInRect:imageFrame fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:TRUE hints:NULL];
+
+        textFrame = NSGrowRect(textFrame,-4);
+
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        [paragraphStyle setLineBreakMode:NSLineBreakByWordWrapping];
+
+        NSMutableDictionary *attrs = [NSMutableDictionary dictionaryWithObjectsAndKeys:paragraphStyle,NSParagraphStyleAttributeName,nil];
 		if(selected){
-			attrs = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont boldSystemFontOfSize:12] , NSFontAttributeName, [NSColor selectedControlTextColor], NSForegroundColorAttributeName, nil];
-			[[self stringValue] drawInRect:cellFrame withAttributes:attrs];
+			[attrs addEntriesFromDictionary:[NSDictionary dictionaryWithObjectsAndKeys:[NSFont boldSystemFontOfSize:12] , NSFontAttributeName, [NSColor selectedControlTextColor], NSForegroundColorAttributeName, nil]];
+			[[self stringValue] drawInRect:textFrame withAttributes:attrs];
 		}else{
-			attrs = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont systemFontOfSize:12] , NSFontAttributeName, [NSColor controlTextColor], NSForegroundColorAttributeName, nil];
-			[[self stringValue] drawInRect:cellFrame withAttributes:attrs];
+			[attrs addEntriesFromDictionary:[NSDictionary dictionaryWithObjectsAndKeys:[NSFont systemFontOfSize:12] , NSFontAttributeName, [NSColor controlTextColor], NSForegroundColorAttributeName, nil]];
 		}
-		
+
+        [[self stringValue] drawInRect:textFrame withAttributes:attrs];
+
 	}else{
 		[super drawWithFrame:cellFrame inView:controlView];
 	}

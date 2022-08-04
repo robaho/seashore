@@ -170,9 +170,6 @@ static NSString*  SelectionEditIdentifier = @"Selection Edit Identifier";
 - (void)setForeground:(NSColor *)color
 {
     foreground = color;
-    if(tool == kTextTool){
-        [[document docView] setNeedsDisplay:TRUE];
-    }
 }
 
 - (void)setBackground:(NSColor *)color

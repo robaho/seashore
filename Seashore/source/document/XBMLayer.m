@@ -11,23 +11,23 @@
 	unsigned char value;
 	char string[9], temp;
 	int i, pos = 0;
-	BOOL oddWidth = NO;
-	
+
 	// Initialize superclass first
 	if (![super initWithDocument:doc])
 		return NULL;
 	
 	// Set the samples per pixel correctly
 	spp = 2; width = info->width; height = info->height;
+
+    if(!width || !height)
+        return NULL;
+
 	unsigned char *data = malloc(make_128(width * height * spp));
 	memset(data, 0xFF, width * height * spp);
 
     nsdata = [NSData dataWithBytesNoCopy:data length:width*height*spp];
 
-	if (width % 2 == 1) oddWidth = YES;
-	
 	do {
-		
 		// Throw away everything till we get to the good stuff
 		do {
 			temp = fgetc(file);

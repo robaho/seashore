@@ -26,6 +26,9 @@
 #import "SeaDocumentController.h"
 #import "SeaOperations.h"
 #import "SeaAlignment.h"
+#import "XCFLayer.h"
+#import "XCFTextLayerSupport.h"
+#import "SeaTextLayer.h"
 
 static NSString*    FloatAnchorToolbarItemIdentifier = @"Float/Anchor Toolbar Item Identifier";
 static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Selection Toolbar Item Identifier";
@@ -465,23 +468,12 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
 
 - (void)addLayerObject:(id)layer atIndex:(int)index
 {
-    NSArray *tempArray = [NSArray array];
-    int i;
-    
-    // Inform the helpers we will change the layer
     [[document helpers] activeLayerWillChange];
-    
-    // Find index
-    // Create a new array with all the existing layers and the one being added
-    for (i = 0; i < [layers count] + 1; i++) {
-        if (i == index)
-            tempArray = [tempArray arrayByAddingObject:layer];
-        else
-            tempArray = [tempArray arrayByAddingObject:(i > index) ? [layers objectAtIndex:i - 1] : [layers objectAtIndex:i]];
-    }
-    
-    // Now substitute in our new array
-    layers = tempArray;
+
+    NSMutableArray *temp = [NSMutableArray arrayWithArray:layers];
+    [temp insertObject:layer atIndex:index];
+
+    layers = [NSArray arrayWithArray:temp];
 
     activeLayerIndex = index;
     
@@ -504,7 +496,11 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     // Correct index
     if (index == kActiveLayer) index = activeLayerIndex;
 
-    SeaLayer *newLayer = [[SeaLayer alloc] initWithDocument:document layer:[layers objectAtIndex:index]];
+    SeaLayer *layer = [layers objectAtIndex:index];
+
+    Class clazz = [layer class];
+
+    SeaLayer *newLayer = [[clazz alloc] initWithDocument:document layer:[layers objectAtIndex:index]];
     [self addLayerObject:newLayer];
 }
 
@@ -893,19 +889,9 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     SeaLayer *layer = [self activeLayer];
 
     id pboard = [NSPasteboard generalPasteboard];
-    int spp = [[document contents] spp];
 
-    NSBitmapImageRep *imageRep;
-    unsigned char *data = [layer data];
-    int width = [layer width];
-    int height = [layer height];
-
-    // Declare the data being added to the pasteboard
     [pboard declareTypes:[NSArray arrayWithObject:NSTIFFPboardType] owner:NULL];
-
-    // Add it to the pasteboard
-    imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace bytesPerRow:width * spp bitsPerPixel:8 * spp];
-    [pboard setData:[imageRep TIFFRepresentation] forType:NSTIFFPboardType];
+    [pboard setData:[layer TIFFRepresentation] forType:NSTIFFPboardType];
 }
 
 - (BOOL)canFlatten
@@ -1159,6 +1145,28 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
 
 - (ParasiteData*)parasites{
     return parasites;
+}
+
+- (void)fixupLayers
+{
+    NSMutableArray *layers0 = [NSMutableArray array];
+
+    for(int i=0;i<[layers count];i++) {
+        SeaLayer *layer = layers[i];
+        if(![layer isKindOfClass:XCFLayer.class]) {
+            [layers0 addObject:layer];
+            continue;
+        }
+        XCFLayer *xcf = (XCFLayer*)layer;
+        TextProperties* props = [XCFTextLayerSupport properties:xcf];
+        if(!props) {
+            [layers0 addObject:xcf];
+            continue;
+        }
+        SeaTextLayer *textLayer = [[SeaTextLayer alloc] initWithDocument:document layer:(SeaLayer*)layer properties:props];
+        [layers0 addObject:textLayer];
+    }
+    layers = [NSArray arrayWithArray:layers0];
 }
 
 @end

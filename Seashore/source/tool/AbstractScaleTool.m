@@ -71,7 +71,7 @@
 		// moving the selection
         preScaledRect = globalRect;
 		translating = YES;
-		moveOrigin = localPoint;
+		moveOrigin = globalPoint;
     } else {
         // starting new selection
         preScaledRect = IntMakeRect(globalPoint.x,globalPoint.y,0,0);
@@ -185,8 +185,8 @@
 		return IntMakeRect((int)newX, (int)newY, (int)newWidth, (int)newHeight);
 	} else if (translating) {
         // moving selection
-        return IntMakeRect(postScaledRect.origin.x+localPoint.x-moveOrigin.x,
-                           postScaledRect.origin.y+localPoint.y-moveOrigin.y,
+        return IntMakeRect(postScaledRect.origin.x+globalPoint.x-moveOrigin.x,
+                           postScaledRect.origin.y+globalPoint.y-moveOrigin.y,
                            postScaledRect.size.width,postScaledRect.size.height);
     } else {
         // dragging initial selection

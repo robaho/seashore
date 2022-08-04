@@ -355,7 +355,7 @@
 // To the ColorView
 - (IBAction)activateForegroundColor:(id)sender
 {
-	[(ColorSelectView *)[[gCurrentDocument toolboxUtility] colorView] activateForegroundColor: sender];
+	[[[gCurrentDocument toolboxUtility] colorView] activateForegroundColor: sender];
 }
 
 - (IBAction)activateBackgroundColor:(id)sender

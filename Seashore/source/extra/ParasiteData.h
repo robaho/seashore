@@ -84,6 +84,10 @@ typedef struct {
  */
 - (void)addParasite:(Parasite)parasite;
 
++ (NSDictionary*)parseParasite:(Parasite*)parasite;
++ (NSDictionary*)parseString:(NSString*)s;
++ (void)parseFloats:(NSString*)s floats:(float[_Nonnull])floats;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -130,9 +130,15 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
 {
     [[[document optionsUtility] getOptions:kTextTool] changeFont:sender];
 }
+
 - (IBAction)changeSpecialFont:(id)sender
 {
     [[[document optionsUtility] getOptions:kTextTool] changeFont:sender];
+}
+
+- (IBAction)changeColor:(id)sender
+{
+    [[[document optionsUtility] getOptions:kTextTool] changeColor:sender];
 }
 
 - (BOOL)canZoomIn

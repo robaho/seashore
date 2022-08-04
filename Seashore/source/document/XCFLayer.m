@@ -169,6 +169,49 @@ static inline void fix_endian_readl(long *input, int size)
 				fseek(file, propSize, SEEK_CUR);
 				
 			break;
+            case PROP_PARASITES:
+            {
+
+                // Remember the parasites
+                long parasites_start = ftell(file);
+                while (ftell(file) - parasites_start < propSize && !ferror(file)) {
+
+                    Parasite parasite;
+
+                    // Remember name
+                    fread(tempIntString, sizeof(int), 1, file);
+                    fix_endian_read(tempIntString, 1);
+                    if (tempIntString[0] > 0) {
+                        char *nameString = malloc(tempIntString[0]);
+                        int i = 0;
+                        do {
+                            if (i < tempIntString[0]) {
+                                nameString[i] = fgetc(file);
+                                i++;
+                            }
+                        } while (nameString[i - 1] != 0 && !ferror(file));
+                        parasite.name = nameString;
+                    }
+                    else {
+                        parasite.name = strdup("unnamed");
+                    }
+
+                    // Remember flags and data size
+                    fread(tempIntString, sizeof(int), 2, file);
+                    fix_endian_read(tempIntString, 2);
+                    parasite.flags = tempIntString[0];
+                    parasite.size = tempIntString[1];
+
+                    // Remember data
+                    if (parasite.size > 0) {
+                        parasite.data = malloc(parasite.size);
+                        fread(parasite.data, sizeof(char), parasite.size, file);
+                    }
+                    [parasites addParasite:parasite];
+
+                }
+            }
+                break;
 			default:
 
 				// Skip these properties but record them for saving
@@ -547,14 +590,16 @@ static inline int alphaReplaceMerge(int dstOpacity,int srcOpacity)
 	return YES;
 }
 
-- (id)initWithFile:(FILE *)file offset:(long)offset document:(id)doc sharedInfo:(SharedXCFInfo *)info
+- (SeaLayer*)initWithFile:(FILE *)file offset:(long)offset document:(id)doc sharedInfo:(SharedXCFInfo *)info
 {
 	// int i;
 	
 	// Initialize superclass first
 	if (![super initWithDocument:doc])
 		return NULL;
-    
+
+    parasites = [[ParasiteData alloc] init];
+
     @try {
     
         version = info->version;
@@ -605,6 +650,11 @@ static inline int alphaReplaceMerge(int dstOpacity,int srcOpacity)
         [[NSAlert alertWithError:error] runModal];
         return NULL;
     }
+}
+
+- (ParasiteData*)parasites
+{
+    return parasites;
 }
 
 @end

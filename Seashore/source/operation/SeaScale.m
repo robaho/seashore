@@ -206,7 +206,7 @@
 			}
 						
 			// Change the layer's size
-			[curLayer setWidth:[curLayer width] * xScale height:[curLayer height] * yScale interpolation:interpolation];
+			[curLayer scaleX:xScale scaleY:yScale rotate:0];
 			if (index == kAllLayers){
 				[curLayer setOffsets:IntMakePoint([curLayer xoff] * xScale, [curLayer yoff] * yScale)];
 			}else if(isMoving) {

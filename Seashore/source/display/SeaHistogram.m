@@ -46,6 +46,8 @@ extern dispatch_queue_t queue;
     dispatch_async(queue, ^{
 
         unsigned char *data = [data_ref bytes];
+        if(!data) // text layers do not have histograms
+            return;
 
         int *histogram = calloc(256*3,sizeof(int)); // allocate enough for all planes
 

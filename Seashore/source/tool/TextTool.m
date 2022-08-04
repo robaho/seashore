@@ -1,5 +1,6 @@
 #import "TextTool.h"
 #import "SeaLayer.h"
+#import "SeaTextLayer.h"
 #import "SeaWhiteboard.h"
 #import "SeaDocument.h"
 #import "SeaContent.h"
@@ -14,6 +15,7 @@
 #import "Bucket.h"
 #import "OptionsUtility.h"
 #import "SeaSelection.h"
+#import "NSBezierPath_Extensions.h"
 
 @implementation TextTool
 
@@ -27,227 +29,181 @@
     if(![super init])
         return NULL;
 
-    textRect.size.width = textRect.size.height = 0;
     return self;
 }
 
-- (void)textRectChanged:(IntRect)dirty
+- (void)endLineDrawing
 {
-    [[document helpers] selectionChanged:dirty];
+    SeaTextLayer *layer = [self textLayer];
+    if(!layer)
+        return;
+
+    [layer applyTransform:[NSAffineTransform transform]];
 }
 
 - (void)switchingTools:(BOOL)active
 {
     if(active) {
-        SeaContent *contents = [document contents];
-
-        if(textRect.size.width==0 || textRect.size.height==0){
-            textRect.size.width = [contents width]/3;
-            textRect.size.height = [contents height]/3;
-            textRect.origin.x = textRect.size.width;
-            textRect.origin.y = textRect.size.height;
+        SeaLayer *layer = [[document contents] activeLayer];
+        if([layer isKindOfClass:SeaTextLayer.class]){
+            SeaTextLayer *textLayer = (SeaTextLayer*)layer;
+            [options setProperties:[textLayer properties]];
+        } else {
+            [options setProperties:[[TextProperties alloc] init]];
+        }
+    } else {
+        hasUndo=FALSE;
+        SeaTextLayer *layer = [self textLayer];
+        if(layer) {
+            // ensure bitmap is up to date for other tools
+            [layer applyTransform:[NSAffineTransform transform]];
         }
     }
 }
 
+- (void)setBounds:(IntRect)bounds
+{
+    [[self textLayer] setBounds:bounds];
+    [[document helpers] layerBoundariesChanged:[[self textLayer] index]];
+}
+
+- (NSBezierPath*)textPath
+{
+    SeaTextLayer *layer = [self textLayer];
+    if(!layer)
+        return NULL;
+    return layer.properties.textPath;
+}
+
+- (SeaTextLayer*)textLayer
+{
+    SeaLayer *layer = [[document contents] activeLayer];
+    if([layer isKindOfClass:SeaTextLayer.class])
+        return (SeaTextLayer*)layer;
+    return NULL;
+}
+
+- (IntRect)bounds
+{
+    SeaTextLayer *layer = [self textLayer];
+    if(!layer || [layer isRasterized])
+        return IntZeroRect;
+    return [layer globalRect];
+}
+
+- (void)undoTextLayerBounds:(SeaTextLayer*)layer bounds:(IntRect)r
+{
+    if(!layer)
+        return;
+
+    [[[document undoManager] prepareWithInvocationTarget:self] undoTextLayerBounds:[self textLayer] bounds:[self bounds]];
+
+    [layer setBounds:r];
+    [[document helpers] layerBoundariesChanged:[layer index]];
+}
+
+- (void)undoTextProperties:(SeaTextLayer*)layer properties:(TextProperties*)props
+{
+    if(!layer)
+        return;
+
+    TextProperties* current = [layer properties];
+
+    [[[document undoManager] prepareWithInvocationTarget:self] undoTextProperties:layer properties:current];
+
+    layer.properties = props;
+    [options setProperties:props];
+
+    hasUndo = FALSE;
+    
+    [[document helpers] selectionChanged];
+}
+
 - (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event
 {
-    if([options useSelectionAsBounds])
-        return;
+    SeaTextLayer *textLayer = [self textLayer];
+
+    if(textLayer && IntPointInRect(where,[textLayer localRect])) {
+        //editing text layer
+        edittingLayer=TRUE;
+        [options setProperties:textLayer.properties];
+    }
+
+    IntRect textRect = [self bounds];
 
     [self mouseDownAt: where
               forRect: textRect
          withMaskRect: IntZeroRect
               andMask: NULL];
 
-    textRect = [super postScaledRect];
+    if(![super isMovingOrScaling]){
+        SeaLayer *layer = [[document contents] activeLayer];
+        IntPoint p = IntOffsetPoint(where,[layer xoff],[layer yoff]);
+        edittingLayer=FALSE;
+        SeaTextLayer *textLayer = [[SeaTextLayer alloc] initWithDocument:document];
+        [textLayer setOffsets:p];
+        [[document contents] addLayerObject:textLayer atIndex:[[document contents] activeLayerIndex]];
+        [options setProperties:[textLayer properties]];
+    }
+
     [[document helpers] selectionChanged];
 }
 
 - (void)mouseDraggedTo:(IntPoint)where withEvent:(NSEvent *)event
 {
-    if([options useSelectionAsBounds])
-        return;
     IntRect draggedRect = [self mouseDraggedTo: where
-                                       forRect: textRect
+                                       forRect: [self bounds]
                                        andMask: NULL];
 
-    IntRect old = textRect;
-    textRect = draggedRect;
-    [self textRectChanged:IntSumRects(old,textRect)];
+    [self setBounds:draggedRect];
 }
 
 - (void)mouseUpAt:(IntPoint)where withEvent:(NSEvent *)event
 {
-    if([options useSelectionAsBounds])
-        return;
-    [self mouseDraggedTo:where withEvent:event];
     [self mouseUpAt:where forRect:IntZeroRect andMask:NULL];
+
+    SeaTextLayer *layer = [self textLayer];
+    IntRect textRect = [self bounds];
+
+    if(!edittingLayer) {
+        SeaContent *contents = [document contents];
+        if(layer && (textRect.size.width<8 && textRect.size.height<8)){
+            textRect.size.width = MIN([contents width]/3,[contents width]-textRect.origin.x);
+            textRect.size.height = MIN([contents height]/3,[contents height]-textRect.origin.y);
+            [self setBounds:textRect];
+        }
+        [self textLayer].properties = [options properties];
+    } else {
+        [[[document undoManager] prepareWithInvocationTarget:self] undoTextLayerBounds:layer bounds:textRect];
+    }
     [options activate:document];
     [[document helpers] selectionChanged];
 }
 
-
-- (IBAction)mergeWithLayer:(id)sender {
-    CGContextRef ctx = [[document whiteboard] overlayCtx];
-    CGContextSaveGState(ctx);
-    SeaLayer *layer = [[document contents] activeLayer];
-    CGContextTranslateCTM(ctx,-[layer xoff],-[layer yoff]);
-    [self drawText:ctx];
-    CGContextRestoreGState(ctx);
-
-    [[document whiteboard] setOverlayOpacity:255];
-    [[document whiteboard] setOverlayBehaviour:kNormalBehaviour];
-    [[document helpers] overlayChanged:[layer translateView:textRect]];
-    [[document helpers] applyOverlay];
-
-    [options reset];
-}
-
-- (IBAction)addAsNewLayer:(id)sender {
-    IntRect r = [self textRect];
-    int spp = [[document contents] spp];
-    unsigned char *data = calloc(r.size.width*r.size.height,spp);
-    CGContextRef ctx = CGBitmapContextCreate(data, r.size.width, r.size.height, 8, r.size.width*spp, COLOR_SPACE, kCGImageAlphaPremultipliedLast);
-    CGContextTranslateCTM(ctx, 0, r.size.height);
-    CGContextScaleCTM(ctx, 1, -1);
-    CGContextTranslateCTM(ctx, -r.origin.x, -r.origin.y);
-    [self drawText:ctx];
-
-    unpremultiplyBitmap(spp, data, data, r.size.width*r.size.height);
-
-    SeaLayer *layer = [[SeaLayer alloc] initWithDocument:document rect:r data:data spp:[[document contents] spp]];
-    [layer trimLayer];
-
-    NSString *text = [options text];
-
-    NSMutableString *name = [[NSMutableString alloc] initWithString:text];
-    for(int i=0;i<[name length];i++) {
-        if([name characterAtIndex:i]<=32){
-            [name replaceCharactersInRange:NSMakeRange(i,1) withString:@"."];
+- (IBAction)setTextBoundsFromSelection:(id)sender {
+    SeaTextLayer *textLayer = [self textLayer];
+    if([self textLayer]==NULL) {
+        if(![[document selection] active]) {
+            return;
         }
+        textLayer = [[SeaTextLayer alloc] initWithDocument:document];
+        [[document contents] addLayerObject:textLayer atIndex:[[document contents] activeLayerIndex]];
+        [options setProperties:[textLayer properties]];
     }
-    [layer setName:name];
-    [[document contents] addLayerObject:layer];
-    
-    [options reset];
+    if([[document selection] active]) {
+        CGPathRef path = [[document selection] maskPath];
+        textLayer.properties.textPath = [NSBezierPath bezierPathWithCGPath:path];
+        [self setBounds:[[document selection] maskRect]];
+    } else {
+        textLayer.properties.textPath = NULL;
+    }
+    [options setProperties:[textLayer properties]];
+    [[document helpers] selectionChanged];
 }
 
 - (void)changeFont:(id)sender
 {
     [options changeFont:sender];
-}
-
-- (IntRect)textRect
-{
-    if([options useSelectionAsBounds])
-        return [[document selection] maskRect];
-    return textRect;
-}
-
-- (void)setTextRect:(IntRect)newTextRect
-{
-    IntRect old = textRect;
-    textRect = newTextRect;
-    [self textRectChanged:IntSumRects(old,textRect)];
-}
-
-- (void)drawText:(CGContextRef)ctx
-{
-    NSString *text = [options text];
-    IntRect tr = [self textRect];
-
-    if(IntRectIsEmpty(tr))
-        return;
-
-    NSRect r = IntRectMakeNSRect(tr);
-
-    CGMutablePathRef path=CGPathCreateMutable();
-    if([options useSelectionAsBounds]){
-        CGPathRef maskPath = [[document selection] maskPath];
-        CGAffineTransform tx = CGAffineTransformScale(CGAffineTransformIdentity, 1, -1);
-        tx = CGAffineTransformTranslate(tx,0,-CGPathGetBoundingBox(maskPath).size.height);
-        CGPathAddPath(path,&tx,maskPath);
-    } else {
-        CGPathAddRect(path, NULL,CGRectMake(0,0,r.size.width,r.size.height));
-    }
-
-    id activeTexture = [[document textureUtility] activeTexture];
-
-    int outline = [options outline];
-    float lineSpacing = [options lineSpacing];
-    int spp = [[document contents] spp];
-
-    NSColor *color;
-    if ([options useTextures])
-        color = [activeTexture textureAsNSColor:(spp == 4)];
-    else
-        color = [[document contents] foreground];
-
-    id fontManager = [NSFontManager sharedFontManager];
-
-    NSFont *font = [fontManager selectedFont];
-    if (font == NULL) {
-        return;
-    }
-
-    float size = [font pointSize];
-
-    size = size * [[document contents] yres] / 72.0;
-
-    font = [NSFont fontWithDescriptor:[font fontDescriptor] size:size];
-
-    NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
-
-    NSMutableParagraphStyle *paraStyle = [[NSMutableParagraphStyle alloc] init];
-    [paraStyle setAlignment:[options alignment]];
-    [paraStyle setLineHeightMultiple:lineSpacing];
-    [paraStyle setLineBreakMode:NSLineBreakByWordWrapping];
-//    [paraStyle setParagraphSpacingBefore:[options margins]];
-
-    [attrs setValue:paraStyle forKey:NSParagraphStyleAttributeName];
-    [attrs setValue:font forKey:NSFontAttributeName];
-    [attrs setValue:color forKey:NSForegroundColorAttributeName];
-
-    if(outline)
-        [attrs setValue:[NSNumber numberWithInt:outline] forKey:NSStrokeWidthAttributeName];
-
-    CGContextSaveGState(ctx);
-
-    NSMutableDictionary *attrs2 = [NSMutableDictionary dictionary];
-    NSMutableParagraphStyle *paraStyle2 = [[NSMutableParagraphStyle alloc] init];
-    [paraStyle2 setLineSpacing:0];
-    [paraStyle2 setParagraphSpacing:0];
-    [paraStyle2 setMinimumLineHeight:[options verticalMargin]];
-    [attrs2 setValue:paraStyle2 forKey:NSParagraphStyleAttributeName];
-
-    CGContextTranslateCTM(ctx,0,r.size.height);
-    CGContextScaleCTM(ctx,1,-1);
-    CGContextTranslateCTM(ctx,r.origin.x,-r.origin.y);
-
-    NSString *withPara = [NSString stringWithFormat:@"\n%@",text];
-
-    NSMutableAttributedString *s = [[NSMutableAttributedString alloc] initWithString:withPara attributes:attrs];
-
-    [s setAttributes:attrs2 range:NSMakeRange(0,1)];
-
-    CFAttributedStringRef asf = (__bridge_retained CFAttributedStringRef)s;
-    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString(asf);
-    CFRelease(asf);
-
-    NSMutableDictionary *frame_attrs = [NSMutableDictionary dictionary];
-//    [frame_attrs setValue:@([options margins]) forKey:kCTFramePathWidthAttributeName];
-
-    CTFrameRef frame = CTFramesetterCreateFrame(framesetter,CFRangeMake(0, 0),path,(__bridge CFDictionaryRef)frame_attrs);
-
-    CTFrameDraw(frame, ctx);
-
-    CFRelease(frame);
-    CFRelease(path);
-    CFRelease(framesetter);
-
-    CGContextRestoreGState(ctx);
-
 }
 
 - (AbstractOptions*)getOptions
@@ -261,15 +217,30 @@
 
 - (void)updateCursor:(IntPoint)p cursors:(SeaCursors *)cursors
 {
-    if(![options useSelectionAsBounds] && !IntRectIsEmpty(textRect)){
-        return [cursors handleRectCursors:textRect point:p cursor:[NSCursor IBeamCursor]];
-    }
+//    if(![options useSelectionAsBounds] && !IntRectIsEmpty([self bounds])){
+//        return [cursors handleRectCursors:[self bounds] point:p cursor:[NSCursor IBeamCursor]];
+//    }
     [[NSCursor IBeamCursor] set];
 }
 
-- (bool)canResize
+- (void)updateLayer
 {
-    return ![options useSelectionAsBounds];
+    SeaTextLayer *layer = [self textLayer];
+    if(!layer)
+        return;
+
+    TextProperties *props = [options properties];
+
+    NSString *oldText = layer.properties.text;
+    if(!hasUndo && ![[layer properties] isEqualToProperties:props]) {
+        hasUndo = TRUE;
+        [[[document undoManager] prepareWithInvocationTarget:self] undoTextProperties:layer properties:[layer properties]];
+    }
+    layer.properties = props;
+
+    if(![layer.properties.text isEqualToString:oldText]){
+        [[document helpers] layerTitleChanged];
+    }
 }
 
 @end

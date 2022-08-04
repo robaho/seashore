@@ -35,6 +35,14 @@
 	return self;
 }
 
+- (void)dealloc
+{
+    if(mergedData) {
+        free(mergedData);
+        CGImageRelease(srcImg);
+    }
+}
+
 - (BOOL)acceptsLineDraws
 {
 	return NO;
@@ -53,44 +61,40 @@
 
 - (void)plotBrush:(SeaBrush*)brush at:(NSPoint)where pressure:(int)pressure
 {
-    [super plotBrush:brush at:where pressure:pressure];
-
     int brushWidth = [brush width];
     int brushHeight = [brush height];
 
-    IntRect rect = IntMakeRect(where.x-brushWidth/2,where.y-brushHeight/2,brushWidth,brushHeight);
-
-    unsigned char *sourceData;
-    int sourceWidth;
-    int sourceHeight;
-
-    if (sourceMerged) {
-        sourceData = mergedData;
-        sourceWidth = [[document contents] width];
-        sourceHeight = [[document contents] height];
-    }
-    else {
-        sourceData = [sourceLayer data];
-        sourceWidth = [sourceLayer width];
-        sourceHeight = [sourceLayer height];
-    }
-
-    int spp = [[document contents] spp];
-
-    IntPoint spt;
-
-    spt.x = sourcePoint.x + (rect.origin.x - startPoint.x);
-    spt.y = sourcePoint.y + (rect.origin.y - startPoint.y);
-
-    if(sourceMerged) {
-        spt = IntOffsetPoint(spt,layerOff.x,layerOff.y);
-    }
-
     SeaLayer *layer = [[document contents] activeLayer];
 
-    cloneFill(spp, rect, [[document whiteboard] overlay], [[document whiteboard] replace], [layer width], [layer height], sourceData, sourceWidth, sourceHeight, spt);
+    CGRect rect = NSMakeRect(where.x-brushWidth/2,where.y-brushHeight/2,brushWidth,brushHeight);
+    CGRect global = CGRectOffset(rect,[layer xoff],[layer yoff]);
 
-    [[document helpers] overlayChanged:rect];
+    CGContextRef overlayCtx = [[document whiteboard] overlayCtx];
+
+    CGContextSaveGState(overlayCtx);
+
+    // everything is done in global coordinates for clone since it is easier
+    CGContextTranslateCTM(overlayCtx, -[layer xoff],-[layer yoff]);
+
+    CGRect srcRect0 = CGRectOffset(srcRect,startPoint.x-sourcePoint.x,startPoint.y-sourcePoint.y);
+
+    CGContextClipToRect(overlayCtx,srcRect0);
+    CGContextClipToRect(overlayCtx,global);
+
+    CGContextTranslateCTM(overlayCtx, [layer xoff],[layer yoff]);
+
+    [super plotBrush:brush at:where pressure:pressure];
+
+    CGContextTranslateCTM(overlayCtx, -[layer xoff],-[layer yoff]);
+
+    CGContextSetBlendMode(overlayCtx, kCGBlendModeSourceIn);
+
+    CGContextTranslateCTM(overlayCtx,srcRect0.origin.x,srcRect0.origin.y+srcRect0.size.height);
+    CGContextScaleCTM(overlayCtx,1,-1);
+
+    CGContextDrawImage(overlayCtx, CGRectMake(0,0,srcRect0.size.width,srcRect0.size.height), srcImg);
+
+    CGContextRestoreGState(overlayCtx);
 }
 
 - (BOOL)sourceSet
@@ -102,7 +106,7 @@
 {
     [[document whiteboard] setOverlayOpacity:[options opacity]];
     // need to use replace, since drawing may be outside source bounds
-    [[document whiteboard] setOverlayBehaviour:kMaskingBehavior];
+//    [[document whiteboard] setOverlayBehaviour:kMaskingBehavior];
 }
 
 - (float)fadeLevel
@@ -115,12 +119,12 @@
 	IntPoint outPoint;
 	
 	if (local) {
-		outPoint.x = sourcePoint.x;
-		outPoint.y = sourcePoint.y;
+		outPoint.x = sourcePoint.x - srcRect.origin.x;
+        outPoint.y = sourcePoint.y - srcRect.origin.y;
 	}
 	else {
-		outPoint.x = sourcePoint.x + layerOff.x;
-		outPoint.y = sourcePoint.y + layerOff.y;
+        outPoint.x = sourcePoint.x;
+        outPoint.y = sourcePoint.y;
 	}
 	
 	return outPoint;
@@ -128,10 +132,7 @@
 
 - (NSString *)sourceName
 {
-	if (sourceMerged == NO)
-		return [sourceLayer name];
-	else
-		return NULL;
+    return srcName;
 }
 
 - (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event
@@ -142,38 +143,49 @@
     SeaLayer *layer = [[document contents] activeLayer];
 	
 	if (modifier == kAltModifier) {
+        sourcePoint = IntOffsetPoint(where,[layer xoff],[layer yoff]);
+
 		if (fadeLevel > 0) {
 			fadeLevel = 0;
-            [[document docView] setNeedsDisplayInDocumentRect:IntEmptyRect(IntOffsetPoint(sourcePoint,layerOff.x,layerOff.y)):26];
+            [[document docView] setNeedsDisplayInDocumentRect:IntEmptyRect(sourcePoint):26];
 		}
 
-		sourceMerged = [options mergedSample];
-        layerOff.x = [layer xoff];
-        layerOff.y = [layer yoff];
-        sourcePoint = where;
-        sourceSet = NO;
-        sourceLayer = [[document contents] activeLayer];
+        if (mergedData) {
+            CGImageRelease(srcImg);
+            free(mergedData);
+            mergedData = NULL;
+        }
+
+        if([options mergedSample]) {
+            int w = [[document contents] width];
+            int h = [[document contents] height];
+            mergedData = malloc(make_128(w * h * spp));
+            memcpy(mergedData, [[document whiteboard] data], w * h * spp);
+            CGDataProviderRef dp = CGDataProviderCreateWithData(NULL, mergedData, w*h*spp, NULL);
+            srcImg = CGImageCreate(w, h, 8, 8*spp, w*spp, COLOR_SPACE, (CGBitmapInfo)kCGImageAlphaPremultipliedLast,dp,NULL,FALSE,0);
+            srcRect = NSMakeRect(0,0,w,h);
+            CGDataProviderRelease(dp);
+            srcName = NULL;
+        } else {
+            int w = [layer width];
+            int h = [layer height];
+            mergedData = malloc(make_128(w * h * spp));
+            memcpy(mergedData, [layer data], w * h * spp);
+            CGDataProviderRef dp = CGDataProviderCreateWithData(NULL, mergedData, w*h*spp, NULL);
+            srcImg = CGImageCreate(w, h, 8, 8*spp, w*spp, COLOR_SPACE, (CGBitmapInfo)kCGImageAlphaLast,dp,NULL,FALSE,0);
+            CGDataProviderRelease(dp);
+            srcRect = IntRectMakeNSRect([layer globalRect]);
+            srcName = [layer name];
+        }
+        sourceSet = YES;
         fadeLevel = 100;
 
-        [[document docView] setNeedsDisplayInDocumentRect:IntEmptyRect(IntOffsetPoint(sourcePoint,layerOff.x,layerOff.y)):26];
+        [[document docView] setNeedsDisplayInDocumentRect:IntEmptyRect(sourcePoint):26];
 	}
 	else if (sourceSet) {
-		
-		// Find the source
-		if (sourceMerged) {
-			int sourceWidth = [[document contents] width];
-			int sourceHeight = [[document contents] height];
-			if (mergedData) {
-				free(mergedData);
-				mergedData = NULL;
-			}
-			mergedData = malloc(make_128(sourceWidth * sourceHeight * spp));
-			memcpy(mergedData, [[document whiteboard] data], sourceWidth * sourceHeight * spp);
-		}
-
-        startPoint = where;
-
+        startPoint = IntOffsetPoint(where,[layer xoff],[layer yoff]);
         [super mouseDownAt:where withEvent:event];
+        fadeLevel=0;
     }
 }
 
@@ -189,7 +201,7 @@
 	if (fadeLevel > 0) {
 		fadeLevel -= 20;
 		fadingTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(fade:) userInfo:NULL repeats:NO];
-        [[document docView] setNeedsDisplayInDocumentRect:IntEmptyRect(IntOffsetPoint(sourcePoint,layerOff.x,layerOff.y)):26];
+        [[document docView] setNeedsDisplayInDocumentRect:IntEmptyRect(sourcePoint):26];
 	}
 }
 
@@ -198,26 +210,23 @@
 	if (fadeLevel) {
 		// Start the source setting
 		fadingTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(fade:) userInfo:NULL repeats:NO];
-		sourceSet = YES;
-        [[document docView] setNeedsDisplayInDocumentRect:IntEmptyRect(IntOffsetPoint(sourcePoint,layerOff.x,layerOff.y)):26];
+        [[document docView] setNeedsDisplayInDocumentRect:IntEmptyRect(sourcePoint):26];
         [options update:self];
-	
-	}
-	else if (sourceSet) {
-        [super endLineDrawing];
-	}
-	
-	// Free merged data
-	if (mergedData) {
-		free(mergedData);
-		mergedData = NULL;
-	}
+    } else {
+        [super mouseUpAt:where withEvent:event];
+    }
 }
 
 - (void)endLineDrawing
 {
-	sourceSet = NO;
     [options update:self];
+
+    if(!intermediate)
+        return;
+
+    [[document helpers] applyOverlay];
+    intermediate=NO;
+
 }
 
 - (AbstractOptions*)getOptions

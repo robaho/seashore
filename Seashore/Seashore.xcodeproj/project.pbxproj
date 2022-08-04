@@ -69,6 +69,11 @@
 		2B80E9D1243567FB0046979F /* CocoaContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B80E9CB243567FB0046979F /* CocoaContent.xib */; };
 		2B80E9D2243567FB0046979F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B80E9CD243567FB0046979F /* MainMenu.xib */; };
 		2B80E9D42435689B0046979F /* PrintPanelAccessory.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B80E9D32435689B0046979F /* PrintPanelAccessory.xib */; };
+		2B8840202894B6C500E5EF28 /* textLayerTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B88401F2894B6C500E5EF28 /* textLayerTemplate.png */; };
+		2B8840232895C30300E5EF28 /* XCFTextLayerSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8840222895C30300E5EF28 /* XCFTextLayerSupport.m */; };
+		2B891224289A9F8B00838898 /* NSBezierPath_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B891223289A9F8B00838898 /* NSBezierPath_Extensions.m */; };
+		2B891225289B3AEB00838898 /* NSBezierPath_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B891223289A9F8B00838898 /* NSBezierPath_Extensions.m */; };
+		2B891228289B3C4400838898 /* SeaLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2DEC33286F35F40017BBA8 /* SeaLibrary.framework */; };
 		2B8BD34721EA565C00FD9AC5 /* SeaPrintOptionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8BD34521EA565C00FD9AC5 /* SeaPrintOptionsController.m */; };
 		2B8BD59121ED16AB00FD9AC5 /* BrushExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8BD59021ED16AB00FD9AC5 /* BrushExporter.m */; };
 		2BB338C423C1119600647008 /* toFitTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BB338C323C1119600647008 /* toFitTemplate.png */; };
@@ -168,6 +173,7 @@
 		2BF873852860E532002C30C7 /* SeaSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF873842860E532002C30C7 /* SeaSupport.m */; };
 		2BFB124127951CD80063A750 /* SeaCoreImageKernels.cikernel in Resources */ = {isa = PBXBuildFile; fileRef = 2BFB123E27951CD80063A750 /* SeaCoreImageKernels.cikernel */; };
 		2BFB124227951CD80063A750 /* AlphaToGrayFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BFB124027951CD80063A750 /* AlphaToGrayFilter.m */; };
+		2BFBE94E288C57F100FAAE21 /* SeaTextLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BFBE94D288C57F100FAAE21 /* SeaTextLayer.m */; };
 		2BFC6C262778CD5800F707D9 /* DebugView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BFC6C252778CD5800F707D9 /* DebugView.m */; };
 		2BFC6C2B2778DEE400F707D9 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BFC6C2A2778DEE400F707D9 /* XCTest.framework */; platformFilter = maccatalyst; };
 		2BFC6C352778E06B00F707D9 /* SeashoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BFC6C342778E06B00F707D9 /* SeashoreTests.m */; };
@@ -587,6 +593,11 @@
 		2B80E9CC243567FB0046979F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CocoaContent.xib; sourceTree = "<group>"; };
 		2B80E9CE243567FB0046979F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		2B80E9D32435689B0046979F /* PrintPanelAccessory.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PrintPanelAccessory.xib; path = en.lproj/PrintPanelAccessory.xib; sourceTree = "<group>"; };
+		2B88401F2894B6C500E5EF28 /* textLayerTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = textLayerTemplate.png; sourceTree = "<group>"; };
+		2B8840212895C30300E5EF28 /* XCFTextLayerSupport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCFTextLayerSupport.h; sourceTree = "<group>"; };
+		2B8840222895C30300E5EF28 /* XCFTextLayerSupport.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCFTextLayerSupport.m; sourceTree = "<group>"; };
+		2B891222289A9F8B00838898 /* NSBezierPath_Extensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSBezierPath_Extensions.h; sourceTree = "<group>"; };
+		2B891223289A9F8B00838898 /* NSBezierPath_Extensions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSBezierPath_Extensions.m; sourceTree = "<group>"; };
 		2B8BD34421EA565C00FD9AC5 /* SeaPrintOptionsController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaPrintOptionsController.h; sourceTree = "<group>"; };
 		2B8BD34521EA565C00FD9AC5 /* SeaPrintOptionsController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeaPrintOptionsController.m; sourceTree = "<group>"; };
 		2B8BD58F21ED169B00FD9AC5 /* BrushExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrushExporter.h; sourceTree = "<group>"; };
@@ -699,6 +710,8 @@
 		2BFB123E27951CD80063A750 /* SeaCoreImageKernels.cikernel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SeaCoreImageKernels.cikernel; sourceTree = "<group>"; };
 		2BFB123F27951CD80063A750 /* AlphaToGrayFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlphaToGrayFilter.h; sourceTree = "<group>"; };
 		2BFB124027951CD80063A750 /* AlphaToGrayFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlphaToGrayFilter.m; sourceTree = "<group>"; };
+		2BFBE94C288C57F100FAAE21 /* SeaTextLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaTextLayer.h; sourceTree = "<group>"; };
+		2BFBE94D288C57F100FAAE21 /* SeaTextLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeaTextLayer.m; sourceTree = "<group>"; };
 		2BFC6C242778CD5800F707D9 /* DebugView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DebugView.h; sourceTree = "<group>"; };
 		2BFC6C252778CD5800F707D9 /* DebugView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DebugView.m; sourceTree = "<group>"; };
 		2BFC6C2A2778DEE400F707D9 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/MacOSX.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -1022,6 +1035,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B891228289B3C4400838898 /* SeaLibrary.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1465,6 +1479,8 @@
 				DCA8928D0FD4AAA3002BEC8A /* NSOutlineView_Extensions.m */,
 				2B7C12DD27F9362100A2D658 /* NSAffineTransform_Extensions.h */,
 				2B7C12DE27F9362100A2D658 /* NSAffineTransform_Extensions.m */,
+				2B891222289A9F8B00838898 /* NSBezierPath_Extensions.h */,
+				2B891223289A9F8B00838898 /* NSBezierPath_Extensions.m */,
 			);
 			name = "Cocoa Extensions";
 			sourceTree = "<group>";
@@ -1646,12 +1662,16 @@
 		F57AD82D03FF802E0185BAF6 /* SeaLayer Subclasses */ = {
 			isa = PBXGroup;
 			children = (
+				2BFBE94C288C57F100FAAE21 /* SeaTextLayer.h */,
+				2BFBE94D288C57F100FAAE21 /* SeaTextLayer.m */,
 				F56B095803D92759014143BA /* CocoaLayer.h */,
 				F56B095903D92759014143BA /* CocoaLayer.m */,
 				A829BDFA053976DD00A80207 /* XBMLayer.h */,
 				A829BDFB053976DD00A80207 /* XBMLayer.m */,
 				2B6ECD21279E5A3000ABA072 /* XCFLayer.h */,
 				2B6ECD22279E5A3100ABA072 /* XCFLayer.m */,
+				2B8840212895C30300E5EF28 /* XCFTextLayerSupport.h */,
+				2B8840222895C30300E5EF28 /* XCFTextLayerSupport.m */,
 			);
 			name = "SeaLayer Subclasses";
 			sourceTree = "<group>";
@@ -1818,6 +1838,7 @@
 		F5FE2C7003C43530013856BA /* layers */ = {
 			isa = PBXGroup;
 			children = (
+				2B88401F2894B6C500E5EF28 /* textLayerTemplate.png */,
 				2B7C12E027FCFCE800A2D658 /* linkTemplate.png */,
 				2BB338C323C1119600647008 /* toFitTemplate.png */,
 				2B2D8CA321F7C822004527F2 /* grabberTemplate.png */,
@@ -2006,6 +2027,7 @@
 				DCCC461A0FB32277006A7E69 /* crosspoint-subtract-cursor.png in Resources */,
 				DCCC461B0FB32277006A7E69 /* crosspoint-close-cursor.png in Resources */,
 				DCCC461C0FB32277006A7E69 /* crosspoint-add-cursor.png in Resources */,
+				2B8840202894B6C500E5EF28 /* textLayerTemplate.png in Resources */,
 				DCCC461D0FB32277006A7E69 /* resize-ne-sw-cursor.png in Resources */,
 				DCCC461E0FB32277006A7E69 /* resize-nw-se-cursor.png in Resources */,
 				2BCD7A1B2862982D007EB89B /* What's New and Tips.rtf in Resources */,
@@ -2067,6 +2089,7 @@
 			files = (
 				2BFC6C352778E06B00F707D9 /* SeashoreTests.m in Sources */,
 				2BFC6C3D2778E69000F707D9 /* StandardMerge.m in Sources */,
+				2B891225289B3AEB00838898 /* NSBezierPath_Extensions.m in Sources */,
 				2BFC6C3E2778E6AB00F707D9 /* ColorConversion.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2137,9 +2160,11 @@
 				A8EDF131078959C80022BB31 /* AbstractTool.m in Sources */,
 				A8EDF132078959C80022BB31 /* BrushTool.m in Sources */,
 				2B6ECD29279E5AB600ABA072 /* XCFContent.m in Sources */,
+				2BFBE94E288C57F100FAAE21 /* SeaTextLayer.m in Sources */,
 				A8EDF133078959C80022BB31 /* PencilTool.m in Sources */,
 				2B1F70EB21DD472B00D6F371 /* SeaColorProfiles.m in Sources */,
 				A8EDF134078959C80022BB31 /* SeaHelpers.m in Sources */,
+				2B891224289A9F8B00838898 /* NSBezierPath_Extensions.m in Sources */,
 				A8EDF137078959C80022BB31 /* XBMLayer.m in Sources */,
 				A8EDF13A078959C80022BB31 /* AbstractExporter.m in Sources */,
 				A8EDF13B078959C80022BB31 /* NSPreciseImageView.m in Sources */,
@@ -2182,6 +2207,7 @@
 				2B2D8CCA21F9A870004527F2 /* ZoomTool.m in Sources */,
 				A881AC7109EFC6E400B176A8 /* CloneOptions.m in Sources */,
 				A881AC8D09EFC97700B176A8 /* CloneTool.m in Sources */,
+				2B8840232895C30300E5EF28 /* XCFTextLayerSupport.m in Sources */,
 				A8D7CC5B0A20A74300FFC6A4 /* SeaDocumentController.m in Sources */,
 				A8F0FFD10A35E06300259FD6 /* GIFExporter.m in Sources */,
 				DC74747A0A43AAA400CB1C1D /* EllipseSelectOptions.m in Sources */,
@@ -2371,7 +2397,7 @@
 				CODE_SIGN_ENTITLEMENTS = Seashore.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2022071901;
+				CURRENT_PROJECT_VERSION = 2022080401;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2384,7 +2410,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				MARKETING_VERSION = 3.4;
+				MARKETING_VERSION = 3.5;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore;
 				PRODUCT_NAME = Seashore;
@@ -2452,7 +2478,7 @@
 				CODE_SIGN_ENTITLEMENTS = Seashore.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2022071901;
+				CURRENT_PROJECT_VERSION = 2022080401;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2465,7 +2491,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				MARKETING_VERSION = 3.4;
+				MARKETING_VERSION = 3.5;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore;
 				PRODUCT_NAME = Seashore;
 				PROVISIONING_PROFILE_SPECIFIER = "";

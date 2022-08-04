@@ -199,3 +199,20 @@ NSImage *getTinted(NSImage *src,NSColor *tint){
     return copy;
 }
 
+CGImageRef CGImageDeepCopy(CGImageRef image) {
+    int width = CGImageGetWidth(image);
+    int height = CGImageGetWidth(height);
+    CGContextRef ctx = CGBitmapContextCreate(nil, width, height, CGImageGetBitsPerPixel(image), CGImageGetBytesPerRow(image), CGImageGetColorSpace(image), CGImageGetBitmapInfo(image));
+    CGContextDrawImage(ctx, CGRectMake(0,0,width,height),image);
+    CGImageRef copy = CGBitmapContextCreateImage(ctx);
+    CGContextRelease(ctx);
+    return copy;
+}
+
+float MaxScale(CGAffineTransform t) {
+    float xscale = sqrt(t.a * t.a + t.c * t.c);
+    float yscale = sqrt(t.b * t.b + t.d * t.d);
+    return MAX(xscale,yscale);
+}
+
+

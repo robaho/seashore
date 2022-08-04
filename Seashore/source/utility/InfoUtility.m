@@ -108,7 +108,7 @@
             point = bounds.origin;
     }
     else if (curToolIndex == kTextTool) {
-        IntRect bounds = [(TextTool*)[document currentTool] textRect];
+        IntRect bounds = [(TextTool*)[document currentTool] bounds];
         size = bounds.size;
         if(!IntRectIsEmpty(bounds))
             point = bounds.origin;

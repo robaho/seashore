@@ -14,6 +14,7 @@
 	// We need to know if the cell is selected because
 	// we do some drawing.
 	BOOL selected;
+    BOOL textLayer;
 }
 
 /*!
@@ -55,5 +56,7 @@
 				A BOOL.
 */
 - (void) setSelected:(BOOL)isSelected;
+
+- (void) setTextLayer:(BOOL)isTextLayer;
 
 @end

@@ -49,16 +49,18 @@
 
 	// Allow the undo (if required)
 	if (automatic) [[[document undoManager] prepareWithInvocationTarget:self] restoreSnapshot:snapshot automatic:YES];
-	
-    temp_ptr = (unsigned char*)malloc(sectionSize);
-    snapshot->data = temp_ptr;
-    snapshot->rect = rect;
 
-    CHECK_MALLOC(temp_ptr);
-	for (i = 0; i < rect.size.height; i++) {
-		memcpy(temp_ptr, data + ((rect.origin.y + i) * width + rect.origin.x) * spp, rect.size.width * spp);
-		temp_ptr += rect.size.width * spp;
-	}
+    if(data!=NULL) {
+        temp_ptr = (unsigned char*)malloc(sectionSize);
+        snapshot->data = temp_ptr;
+        snapshot->rect = rect;
+
+        CHECK_MALLOC(temp_ptr);
+        for (i = 0; i < rect.size.height; i++) {
+            memcpy(temp_ptr, data + ((rect.origin.y + i) * width + rect.origin.x) * spp, rect.size.width * spp);
+            temp_ptr += rect.size.width * spp;
+        }
+    }
 
     if(LOG_PERFORMANCE)
         NSLog(@"snapshot finished %ld",getCurrentMillis()-start);
@@ -87,28 +89,28 @@
     int datasize =rect.size.width * rect.size.height * spp;
     
     if (automatic) {
-        o_temp_ptr = odata = malloc(datasize);
+        if(data!=NULL) {
+            o_temp_ptr = odata = malloc(datasize);
+            for (i = 0; i < rect.size.height; i++) {
+                memcpy(o_temp_ptr, data + ((rect.origin.y + i) * width + rect.origin.x) * spp, rect.size.width * spp);
+                o_temp_ptr += rect.size.width * spp;
+            }
+        }
+	}
+
+    if(data!=NULL) {
+        // Replace the image data with that of the record
+        for (i = 0; i < rect.size.height; i++) {
+            memcpy(data + ((rect.origin.y + i) * width + rect.origin.x) * spp, temp_ptr, rect.size.width * spp);
+            temp_ptr += rect.size.width * spp;
+        }
     }
-    
-	// Save the current image data
-	if (automatic) {
-		for (i = 0; i < rect.size.height; i++) {
-			memcpy(o_temp_ptr, data + ((rect.origin.y + i) * width + rect.origin.x) * spp, rect.size.width * spp);
-			o_temp_ptr += rect.size.width * spp;
-		}
-	}
-	
-	// Replace the image data with that of the record
-	for (i = 0; i < rect.size.height; i++) {
-		memcpy(data + ((rect.origin.y + i) * width + rect.origin.x) * spp, temp_ptr, rect.size.width * spp);
-		temp_ptr += rect.size.width * spp;
-	}
 		
 	// Call for an update
 	if (automatic) [[document helpers] layerSnapshotRestored:lindex rect:rect];
 
 	// Move saved image data into the record
-	if (automatic) {
+	if (automatic && odata!=NULL) {
 		memcpy(snapshot->data, odata, datasize);
 		free(odata);
 	}

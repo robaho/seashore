@@ -10,9 +10,6 @@
 */
 
 @interface NSTextFieldRedirect : NSTextField {
-
 }
-
-- (void)changeFont:(id)sender;
 
 @end

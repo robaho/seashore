@@ -19,8 +19,7 @@
 
 - (id)initWithDocument:(id)doc
 {	
-	// Set the data members to reasonable values
-	height = width = mode = 0;
+    int height = width = mode = 0; // must have a min size or memory allocates don't work
 	opacity = 255; xoff = yoff = 0;
 	spp = 4; visible = YES; nsdata = [NSData data]; hasAlpha = YES;
 	lostprops = NULL; lostprops_len = 0;
@@ -164,9 +163,9 @@
 	return IntMakeRect(xoff, yoff, width, height);
 }
 
-- (IntRect)translateView:(IntRect)viewRect
+- (IntRect)localRect
 {
-    return IntMakeRect(viewRect.origin.x-xoff,viewRect.origin.y-yoff,viewRect.size.width,viewRect.size.height);
+    return IntMakeRect(0,0, width, height);
 }
 
 - (IntPoint)origin
@@ -200,6 +199,10 @@
 
     // Start out with invalid content borders
     left = right = top = bottom = -1;
+
+    if(![nsdata length]) {
+        return (Margins){0,0,0,0};
+    }
 
     unsigned char *data = [nsdata bytes];
 
@@ -257,35 +260,18 @@
 
 - (void)flipHorizontally
 {
-	unsigned char temp[4];
-	int i, j;
+    NSAffineTransform *tx = [NSAffineTransform transform];
+    [tx scaleXBy:-1 yBy:1];
 
-    unsigned char *data = [nsdata bytes];
-
-	for (j = 0; j < height; j++) {
-		for (i = 0; i < width / 2; i++) {
-			memcpy(temp, &(data[(j * width + i) * spp]), spp);
-			memcpy(&(data[(j * width + i) * spp]), &(data[(j * width + (width - i - 1)) * spp]), spp);
-			memcpy(&(data[(j * width + (width - i - 1)) * spp]), temp, spp);
-		}
-	}
-
+    [self applyTransform:tx];
 }
 
 - (void)flipVertically
 {
-	unsigned char temp[4];
-	int i, j;
-	
-    unsigned char *data = [nsdata bytes];
+    NSAffineTransform *tx = [NSAffineTransform transform];
+    [tx scaleXBy:1 yBy:-1];
 
-	for (j = 0; j < height / 2; j++) {
-		for (i = 0; i < width; i++) {
-			memcpy(temp, &(data[(j * width + i) * spp]), spp);
-			memcpy(&(data[(j * width + i) * spp]), &(data[((height - j - 1) * width + i) * spp]), spp);
-			memcpy(&(data[((height - j - 1) * width + i) * spp]), temp, spp);
-		}
-	}
+    [self applyTransform:tx];
 }
 
 - (void)rotateLeft
@@ -325,46 +311,48 @@
     if (trim) [self trimLayer];
 }
 
-- (IntRect)bounds:(NSAffineTransform*)tx
+- (IntSize)bounds:(NSAffineTransform*)tx
 {
     NSRect r = NSMakeRect(0,0, width, height);
     NSBezierPath *tempPath = [NSBezierPath bezierPathWithRect:r];
     [tempPath transformUsingAffineTransform:tx];
 
-    return NSRectMakeIntRect([tempPath bounds]);
+    return NSRectMakeIntRect([tempPath bounds]).size;
 }
 
 - (void)scaleX:(float)xscale scaleY:(float)yscale rotate:(float)rotation
 {
-    [self image];
-
-    CGImageRef image = pre_bitmap;
-
     NSAffineTransform *tx = [NSAffineTransform transform];
-
-    [tx translateXBy:width/2 yBy:height/2];
     [tx rotateByRadians:-rotation];
     [tx scaleXBy:xscale yBy:yscale];
-    [tx translateXBy:-(width/2) yBy:-(height/2)];
 
-    IntRect bounds = [self bounds:tx];
+    [self applyTransform:tx];
+}
 
-    int w = bounds.size.width;
-    int h = bounds.size.height;
+- (void)applyTransform:(NSAffineTransform*)tx
+{
+    IntSize bounds = [self bounds:tx];
+
+    int w = bounds.width;
+    int h = bounds.height;
+
+    if(w==0 || h==0) {
+        nsdata = [NSData data];
+        goto done;
+    }
 
     unsigned char *new_data = calloc(w*h*spp,1);
     CGContextRef ctx = CGBitmapContextCreate(new_data,w,h,8,w*spp, COLOR_SPACE, kCGImageAlphaPremultipliedLast);
-
-    CGContextTranslateCTM(ctx,w/2,h/2);
-    CGContextRotateCTM(ctx,-rotation);
-    CGContextScaleCTM(ctx,xscale,yscale);
+    CGContextTranslateCTM(ctx,(w/2),(h/2));
+    CGContextConcatCTM(ctx,[tx cgtransform]);
     CGContextTranslateCTM(ctx,-(width/2),-(height/2));
-
-    CGContextDrawImage(ctx,CGRectMake(0,0,width,height),image);
-
+    [self drawContent:ctx];
     CGContextRelease(ctx);
 
+    unpremultiplyBitmap(spp, new_data, new_data, w*h);
     nsdata = [NSData dataWithBytesNoCopy:new_data length:w*h*spp];
+
+done:
     width=w;
     height=h;
 }
@@ -412,6 +400,14 @@
 - (void)setMode:(int)value
 {
 	mode = value;
+}
+
+- (bool)isRasterized
+{
+    return true;
+}
+- (void)markRasterized
+{
 }
 
 - (NSString *)name
@@ -462,6 +458,9 @@
 {
 	int i;
 
+    if(![nsdata length])
+        return false;
+
     unsigned char *data = [nsdata bytes];
 
 	if (hasAlpha) {
@@ -508,55 +507,33 @@
 
 - (NSImage *)thumbnail
 {
-    return [self image];
+    if(thumbnail==NULL){
+        [self image];
+        thumbnail = [NSImage imageWithSize:[image size] flipped:FALSE drawingHandler:^BOOL(NSRect dstRect) {
+            float max_scale = MaxScale(CGContextGetCTM([[NSGraphicsContext currentContext] graphicsPort]));
+            [[NSGraphicsContext currentContext] setShouldAntialias:TRUE];
+            [self->image drawInRect:dstRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+            CGFloat dashes[] = {2/max_scale,4/max_scale};
+            NSBezierPath *path = [NSBezierPath bezierPathWithRect:dstRect];
+            [[NSColor controlTextColor] set];
+            [path setLineDash:dashes count:2 phase:0];
+            [path setLineWidth:2/max_scale];
+            [path stroke];
+            return TRUE;
+        }];
+    }
+    return thumbnail;
 }
 
 - (void)updateThumbnail
 {
     image = NULL;
+    thumbnail = NULL;
 }
 
 - (NSData *)TIFFRepresentation
 {
-	NSBitmapImageRep *imageRep;
-	NSData *imageTIFFData;
-	unsigned char *pmImageData;
-	int i, j, tspp;
-	
-	// Allocate room for the premultiplied image data
-	if (hasAlpha)
-		pmImageData = malloc(width * height * spp);
-	else
-		pmImageData = malloc(width * height * (spp - 1));
-		
-    unsigned char *data = [nsdata bytes];
-
-	// If there is an alpha channel...
-	if (hasAlpha) {
-        premultiplyBitmap(spp, pmImageData, data, width*height*spp);
-	}
-	else {
-
-		// Strip the alpha channel
-		for (i = 0; i < width * height; i++) {
-			for (j = 0; j < spp - 1; j++) {
-				pmImageData[i * (spp - 1) + j] = data[i * spp + j];
-			}
-		}
-		
-	}
-	
-	// Then create the representation
-	tspp = (hasAlpha ? spp : spp - 1);
-	imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&pmImageData pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:tspp hasAlpha:hasAlpha isPlanar:NO colorSpaceName:(spp == 4) ? NSDeviceRGBColorSpace : NSDeviceWhiteColorSpace bytesPerRow:width * tspp bitsPerPixel:8 * tspp];
-	
-	// Work out the image data
-	imageTIFFData = [imageRep TIFFRepresentationUsingCompression:NSTIFFCompressionLZW factor:255];
-	
-	// Release the representation and the image data
-	free(pmImageData);
-	
-	return imageTIFFData;
+    return [[self image] TIFFRepresentation];
 }
 
 - (void)setMarginLeft:(int)left top:(int)top right:(int)right bottom:(int)bottom
@@ -568,8 +545,9 @@
 	newWidth = width + left + right;
 	newHeight = height + top + bottom;
     
-    if(newWidth<0 || newHeight<0){
-        return;
+    if(newWidth<=0 || newHeight<=0){
+        nsdata = [NSData data];
+        goto done;
     }
 
     int len = newWidth * newHeight * spp;
@@ -597,42 +575,50 @@
 	}
 	
     nsdata = [NSData dataWithBytesNoCopy:newImageData length:len];
+
+done:
 	width = newWidth; height = newHeight;
 	xoff -= left; yoff -= top; 
 	
     image = NULL;
 }
 
-- (void)setWidth:(int)newWidth height:(int)newHeight interpolation:(int)interpolation
-{
-    int len = newWidth*newHeight*spp;
-    unsigned char *buffer = malloc(len);
-    
-    CHECK_MALLOC(buffer);
-    
-    memset(buffer,0,newWidth*newHeight*spp);
-
-    CGContextRef ctx = CGBitmapContextCreate(buffer, newWidth, newHeight, 8, newWidth*spp, COLOR_SPACE, kCGImageAlphaPremultipliedLast);
-    CGContextSetInterpolationQuality(ctx, interpolation);
-
-    CGImageRef bitmap = [self bitmap];
-
-    CGContextDrawImage(ctx, CGRectMake(0,0,newWidth,newHeight),bitmap);
-
-    nsdata = [NSData dataWithBytesNoCopy:buffer length:len];
-
-    width = newWidth; height = newHeight;
-
-    unpremultiplyBitmap(spp, buffer, buffer, width*height);
-
-    image = NULL;
-}
-
 - (CGImageRef)bitmap
 {
+    if(![nsdata length])
+        return NULL;
+
     CGDataProviderRef dp = CGDataProviderCreateWithData(NULL,[nsdata bytes],width*height*spp,NULL);
     CGImageRef image = CGImageCreate(width,height,8,8*spp,width*spp,COLOR_SPACE,kCGImageAlphaLast,dp,nil,false,0);
     CGDataProviderRelease(dp);
+    return image;
+}
+
+- (CGImageRef)copyBitmap:(IntRect)rect
+{
+    rect = IntConstrainRect([self localRect],rect);
+
+    int w = rect.size.width;
+    int h = rect.size.height;
+
+    if(w==0 || h==0 || ![nsdata length])
+        return NULL;
+
+    int len = rect.size.width*rect.size.height*spp;
+    unsigned char *p = malloc(len);
+    CFDataRef copydata = CFDataCreateWithBytesNoCopy(NULL,p,len,NULL);
+
+    unsigned char *data = [nsdata bytes];
+
+    CGDataProviderRef dp = CGDataProviderCreateWithCFData(copydata);
+    CGImageRef image = CGImageCreate(w,h,8,8*spp,w*spp,COLOR_SPACE,kCGImageAlphaLast,dp,nil,false,0);
+    CGDataProviderRelease(dp);
+
+    // copy data
+    for(int y=0;y<h;y++) {
+        memcpy(p+(w*y)*spp,data+((rect.origin.y+y)*width+rect.origin.x)*spp,w*spp);
+    }
+
     return image;
 }
 
@@ -677,31 +663,45 @@
 
 - (void)drawLayer:(CGContextRef)context
 {
-    CGImageRef image = [self bitmap];
-
-    CGContextSaveGState(context);
-    CGContextSetBlendMode(context, mode);
-
     SeaLayer *active = [[document contents] activeLayer];
 
     bool shouldTransform = active==self || ([active linked] && linked);
 
+    CGAffineTransform tx = CGAffineTransformIdentity;
+
     if([document currentToolId]==kPositionTool && shouldTransform) {
         PositionTool *positionTool = (PositionTool*)[document currentTool];
-        CGAffineTransform tx = [[positionTool transform:self] cgtransform];
-        CGContextConcatCTM(context, tx);
-    } else {
-        CGContextTranslateCTM(context,xoff,yoff);
+        tx = [[positionTool transform] cgtransform];
     }
+
+    [self drawLayer:context transform:tx];
+}
+
+- (void)drawLayer:(CGContextRef)context transform:(CGAffineTransform)tx
+{
+    CGContextSaveGState(context);
+    CGContextSetBlendMode(context, mode);
+
+    CGContextTranslateCTM(context,xoff,yoff);
+
+    CGContextTranslateCTM(context,(width/2),(height/2));
+    CGContextConcatCTM(context,tx);
+    CGContextTranslateCTM(context,-(width/2),-(height/2));
 
     CGContextTranslateCTM(context,0,height);
     CGContextScaleCTM(context,1,-1);
 
     CGContextSetAlpha(context,[self opacity_float]);
+
+    [self drawContent:context];
+
+    CGContextRestoreGState(context);
+}
+
+- (void)drawContent:(CGContextRef)context
+{
     [self image]; // force premultipled bitmap to be created if needed
     CGContextDrawImage(context,CGRectMake(0,0,width,height),pre_bitmap);
-    CGImageRelease(image);
-    CGContextRestoreGState(context);
 }
 
 - (void)drawChannelLayer:(CGContextRef)context withImage:(unsigned char *)data0
@@ -714,22 +714,21 @@
 
     CGContextSaveGState(context);
 
-    SeaLayer *active = [[document contents] activeLayer];
+    CGContextTranslateCTM(context,0,height);
+    CGContextScaleCTM(context,1,-1);
 
+    CGContextTranslateCTM(context,xoff,yoff);
+
+    SeaLayer *active = [[document contents] activeLayer];
     bool shouldTransform = active==self || ([active linked] && linked);
 
     if([document currentToolId]==kPositionTool && shouldTransform) {
         PositionTool *positionTool = (PositionTool*)[document currentTool];
-        CGAffineTransform tx = [[positionTool transform:self] cgtransform];
+        CGAffineTransform tx = [[positionTool transform] cgtransform];
         CGContextConcatCTM(context, tx);
-    } else {
-        CGContextTranslateCTM(context,xoff,yoff);
     }
 
     CGRect r = CGRectMake(0,0,width,height);
-
-    CGContextTranslateCTM(context,0,height);
-    CGContextScaleCTM(context,1,-1);
 
     CGContextSetAlpha(context,1.0);
 

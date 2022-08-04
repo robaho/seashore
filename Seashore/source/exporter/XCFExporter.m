@@ -6,6 +6,8 @@
 #import "SeaController.h"
 #import <SeaLibrary/SeaLibrary.h>
 #import "ParasiteData.h"
+#import "SeaTextLayer.h"
+#import "XCFTextLayerSupport.h"
 
 @implementation XCFExporter
 
@@ -108,9 +110,10 @@ static inline void fix_endian_write(int *input, int size)
 	tempIntString[1] = sizeof(float) * 2;
 	fix_endian_write(tempIntString, 2);
 	fwrite(tempIntString, sizeof(int), 2, file);
-	((float *)tempString)[0] = (float)[contents xres];
-	((float *)tempString)[1] = (float)[contents yres];
-	fwrite(tempString, sizeof(float), 2, file);
+	((float *)tempIntString)[0] = (float)[contents xres];
+	((float *)tempIntString)[1] = (float)[contents yres];
+    fix_endian_write(tempIntString, 2);
+	fwrite(tempIntString, sizeof(float), 2, file);
 	
 	// Write parasites
     count = [parasites parasites_count];
@@ -238,6 +241,48 @@ static inline void fix_endian_write(int *input, int size)
     tempIntString[2] = mode ? [mode intValue] : GIMP_LAYER_MODE_NORMAL;
 	fix_endian_write(tempIntString, 3);
 	fwrite(tempIntString, sizeof(int), 3, file);
+
+    ParasiteData* parasites = [[ParasiteData alloc] init];
+
+    if([layer isKindOfClass:SeaTextLayer.class]) {
+        SeaTextLayer *textLayer = (SeaTextLayer*)layer;
+        TextProperties *textProperties = textLayer.properties;
+        if(textProperties) {
+            [textLayer applyTransform:[NSAffineTransform transform]]; // force render to bitmap
+            [parasites addParasite:[XCFTextLayerSupport toParasite:textLayer properties:textProperties]];
+        }
+    }
+
+    // Write the layer's parasites
+    int count = [parasites parasites_count];
+    if (count > 0) {
+        int size; long offsetPos;
+        tempIntString[0] = PROP_PARASITES;
+        tempIntString[1] = 0;
+        fix_endian_write(tempIntString, 2);
+        fwrite(tempIntString, sizeof(int), 2, file);
+        offsetPos = ftell(file);
+        for (int i = 0; i < count; i++) {
+            Parasite parasite = [parasites parasites][i];
+            tempIntString[0] = (int)(strlen(parasite.name) + 1);
+            fix_endian_write(tempIntString, 1);
+            fwrite(tempIntString, sizeof(int), 1, file);
+            fwrite(parasite.name, sizeof(char), strlen(parasite.name) + 1, file);
+            tempIntString[0] = parasite.flags;
+            tempIntString[1] = parasite.size;
+            fix_endian_write(tempIntString, 2);
+            fwrite(tempIntString, sizeof(int), 2, file);
+            if (parasite.size > 0) {
+                fwrite(parasite.data, sizeof(char), parasite.size, file);
+            }
+        }
+        size = (int)(ftell(file) - offsetPos);
+        fseek(file, -size - sizeof(int), SEEK_CUR);
+        tempIntString[0] = size;
+        fix_endian_write(tempIntString, 1);
+        fwrite(tempIntString, sizeof(int), 1, file);
+        fseek(file, size, SEEK_CUR);
+    }
 
 	// Write the layer's lost properties
 	if ([layer lostprops])

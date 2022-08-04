@@ -279,7 +279,7 @@ void cloneFill0(int spp, IntRect rect, unsigned char *dest, unsigned char *repla
 
 void cloneFill(int spp, IntRect rect, unsigned char *dest, unsigned char *replace,int width, int height, unsigned char *source, int sourceWidth, int sourceHeight, IntPoint spt)
 {
-    if(rect.size.width<TILE_SIZE && rect.size.height<TILE_SIZE){
+    if(true || (rect.size.width<TILE_SIZE && rect.size.height<TILE_SIZE)){
         return cloneFill0(spp,rect,dest,replace,width,height,source,sourceWidth,sourceHeight,spt);
     }
 

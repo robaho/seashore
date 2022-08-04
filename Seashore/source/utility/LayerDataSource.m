@@ -153,11 +153,12 @@
 - (void)outlineView:(NSOutlineView *)olv willDisplayCell:(NSCell *)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {
     if ([[tableColumn identifier] isEqualToString:LAYER_THUMB_NAME_COL]) {
+        SeaLayer *layer = (SeaLayer*)item;
 		// Make sure the image and text cell has an image. 
 		// We know that the cell at this column is our image and text cell, so grab it
 		LayerCell *layerCell = (LayerCell *)cell;
 		// Set the image here since the value returned from outlineView:objectValueForTableColumn:... didn't specify the image part...
-		[layerCell setImage:[(SeaLayer *)item thumbnail]];
+		[layerCell setImage:[layer thumbnail]];
 		if([[self selectedNodes] count] > 0 && [[self selectedNodes] objectAtIndex:0] == item){
 			[layerCell setSelected: YES];
 		}else{

@@ -21,6 +21,9 @@
 }
 - (void)drawLayer:(CGContextRef)context
 {
+    if(![nsdata length])
+        return;
+    
     CGContextRef bm = CGBitmapContextCreate([nsdata bytes],width,height,8,width*spp,COLOR_SPACE,kCGImageAlphaPremultipliedLast);
     CGImageRef image = CGBitmapContextCreateImage(bm);
 

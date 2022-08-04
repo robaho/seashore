@@ -20,6 +20,8 @@
 #import "TextTool.h"
 #import "SeaSelection.h"
 #import "ZoomTool.h"
+#import "SeaLayer.h"
+#import "SeaTextLayer.h"
 
 @implementation SeaExtrasView
 
@@ -102,6 +104,7 @@ static CGFloat line_dash_0[2] = {3,3};
     int curToolIndex = [[document toolboxUtility] tool];
 
     if (curToolIndex == kCropTool) {
+        [self drawLayerBoundaries];
         [self drawCropBoundaries];
     }
     else if (curToolIndex == kPositionTool) {
@@ -109,7 +112,6 @@ static CGFloat line_dash_0[2] = {3,3};
         [self drawPositionBoundaries];
     }
     else if (curToolIndex == kTextTool) {
-        [self drawLayerBoundaries];
         [self drawTextBoundaries];
     }
     else {
@@ -165,49 +167,58 @@ static CGFloat line_dash_0[2] = {3,3};
     if(layer==NULL)
         return;
 
-    int lwidth = [layer width];
-    int lheight = [layer height];
-
     PositionTool *positionTool = (PositionTool*)[document currentTool];
 
-    NSRect r = NSMakeRect(0,0, lwidth, lheight);
+    NSRect r = IntRectMakeNSRect([layer globalRect]);
 
-    NSBezierPath *tempPath = [NSBezierPath bezierPathWithRect:r];
-    NSAffineTransform *tx = [positionTool transform:layer];
+    int w = r.size.width;
+    int h = r.size.height;
+
+    NSBezierPath *tempPath = [NSBezierPath bezierPathWithRect:NSMakeRect(0,0,w,h)];
+    NSAffineTransform *tx = [NSAffineTransform transform];
+    [tx translateXBy:-(w/2) yBy:-(h/2)];
     [tempPath transformUsingAffineTransform:tx];
-    [self strokePath:tempPath];
+    [tempPath transformUsingAffineTransform:[positionTool transform]];
+    tx = [NSAffineTransform transform];
+    [tx translateXBy:(w/2) yBy:(h/2)];
+    [tx translateXBy:r.origin.x yBy:r.origin.y];
+    [tempPath transformUsingAffineTransform:tx];
 
+    [self strokePath:tempPath];
     [self drawDragHandles:[tempPath bounds] type:kPositionType];
 }
 
 - (void)drawTextBoundaries
 {
-    NSRect tempRect;
-    NSBezierPath *tempPath;
-    TextTool* curTool = (TextTool*)[document currentTool];
-
-    BOOL intermediate = [curTool intermediate];
-
-    IntRect textRect = [curTool textRect];
-
-    if(IntRectIsEmpty(textRect))
+    SeaLayer *layer = [[document contents] activeLayer];
+    if([layer isRasterized] || ![layer isKindOfClass:SeaTextLayer.class])
         return;
 
-    IntRect tempTextRect = textRect;
-    tempRect = IntRectMakeNSRect(tempTextRect);
+    TextTool *textTool = (TextTool*)[document currentTool];
+    bool intermediate = [textTool intermediate];
+
+    NSRect tempRect = IntRectMakeNSRect([layer globalRect]);
 
     CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
     CGContextSaveGState(ctx);
 
-    tempPath = [NSBezierPath bezierPathWithRect:tempRect];
-    if(![curTool canResize]) {
-        NSRect selectRect = IntRectMakeNSRect([[document selection] maskRect]);
-        [self drawSelectMarchingAnts:selectRect context:ctx withColor:[NSColor greenColor]];
-    } else
-        [self strokePath:tempPath];
+    NSBezierPath *tempPath = [NSBezierPath bezierPathWithRect:tempRect];
 
-    if([curTool canResize] && (!intermediate || [curTool isMovingOrScaling])) {
-        [self drawDragHandles: tempRect type: kTextHandleType];
+    NSBezierPath *textPath = [textTool textPath];
+    if(textPath) {
+        NSBezierPath *tp = [NSBezierPath bezierPath];
+        [tp appendBezierPath:textPath];
+        NSAffineTransform *tx = [NSAffineTransform transform];
+        [tx translateXBy:tempRect.origin.x yBy:tempRect.origin.y];
+        [tx scaleXBy:tempRect.size.width/[tp bounds].size.width yBy:tempRect.size.height/[tp bounds].size.height];
+        [tp transformUsingAffineTransform:tx];
+        [tempPath appendBezierPath:tp];
+    }
+
+    [self strokePath:tempPath withColor:[NSColor greenColor]];
+
+    if(!intermediate || [textTool isMovingOrScaling]) {
+        [self drawDragHandles:tempRect type:kTextHandleType];
     }
 
     CGContextRestoreGState(ctx);
@@ -231,16 +242,15 @@ static bool isBlack(NSColor *c){
     return [c redComponent]==0 && [c greenComponent]==0 && [c blueComponent]==0;
 }
 
-- (void)drawSelectMarchingAnts:(NSRect)selectRect context:(CGContextRef)ctx withColor:(NSColor*)selcolor
+- (void)drawMarchingAnts:(NSRect)selectRect path:(CGPathRef)path context:(CGContextRef)ctx withColor:(NSColor*)selcolor
 {
+    CGContextSaveGState(ctx);
     CGContextSetBlendMode(ctx,kCGBlendModeCopy);
     CGContextSetInterpolationQuality(ctx,kCGInterpolationNone);
     CGContextSetShouldAntialias(ctx,false);
 
     int phase = selectionPhase%2;
     float scale = 1 / [[document scrollView] magnification];
-
-    CGPathRef path = [[document selection] maskPath];
 
     CGContextTranslateCTM(ctx,selectRect.origin.x,selectRect.origin.y);
     CGContextSetLineWidth(ctx,2*scale);
@@ -258,6 +268,7 @@ static bool isBlack(NSColor *c){
     CGContextSetLineDash(ctx,phase ? 0 : line_dash[0],line_dash,2);
     CGContextAddPath(ctx,path);
     CGContextStrokePath(ctx);
+    CGContextRestoreGState(ctx);
 }
 
 - (void)drawSelectUsingDimming:(NSRect)selectRect context:(CGContextRef)ctx
@@ -280,7 +291,7 @@ static bool isBlack(NSColor *c){
     CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
     CGContextSaveGState(ctx);
     if([[SeaController seaPrefs] marchingAnts]) {
-        [self drawSelectMarchingAnts:selectRect context:ctx withColor:[[SeaController seaPrefs] selectionColor:1.0]];
+        [self drawMarchingAnts:selectRect path:[[document selection] maskPath] context:ctx withColor:[[SeaController seaPrefs] selectionColor:1.0]];
         [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(drawSelectMaskTimer) object:nil];
         [self performSelector:@selector(drawSelectMaskTimer) withObject:nil afterDelay:.5];
     } else {
@@ -685,9 +696,6 @@ static bool isBlack(NSColor *c){
             [[NSBezierPath bezierPathWithOvalInRect:NSGrowRect(NSEmptyRect([tool current]),size)] fill];
 
         }
-    } else if(curToolIndex == kTextTool){
-        TextTool *tool = [[document tools] getTool: curToolIndex];
-        [tool drawText:[[NSGraphicsContext currentContext] graphicsPort]];
     }
 }
 

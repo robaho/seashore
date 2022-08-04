@@ -92,7 +92,6 @@ enum {
 	
     CGContextRef overlayCtx;
     CGContextRef dataCtx;
-    CGContextRef tempCtx;
     CGContextRef proofCtx;
 
     CIFilter *alphaToGray;

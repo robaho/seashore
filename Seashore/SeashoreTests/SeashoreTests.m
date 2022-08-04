@@ -7,6 +7,7 @@
 
 #import "StandardMerge.h"
 #import <SeaLibrary/ConnectedComponents.h>
+#import "NSBezierPath_Extensions.h"
 
 #import <XCTest/XCTest.h>
 
@@ -33,6 +34,21 @@
     CGContextFillRect(ctx,CGRectMake(4,4,w/2,h/2));
     NSBezierPath *path = [ConnectedComponents getPaths:mask width:w height:h];
     NSLog(@"path is %@",path);
+}
+
+- (void)testPathEncoding {
+    NSBezierPath *path = [NSBezierPath bezierPath];
+    [path moveToPoint:NSMakePoint(1,-1)];
+    [path lineToPoint:NSMakePoint(3,-3)];
+    [path curveToPoint:NSMakePoint(6,-6) controlPoint1:NSMakePoint(8,-8) controlPoint2:NSMakePoint(10,-10)];
+    [path closePath];
+
+    NSString *s = [path toString];
+
+    NSBezierPath *decode = [NSBezierPath fromString:s];
+
+    assert(NSEqualRects([path bounds],[decode bounds]));
+    assert(NSEqualRects([path controlPointBounds],[decode controlPointBounds]));
 }
 
 

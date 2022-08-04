@@ -107,7 +107,6 @@ void DumpObjcMethods(Class clz) {
 
     CGContextRelease(overlayCtx);
     CGContextRelease(dataCtx);
-    CGContextRelease(tempCtx);
 }
 
 - (void)setOverlayBehaviour:(int)value {
@@ -260,6 +259,9 @@ void DumpObjcMethods(Class clz) {
     int xoff = [layer xoff];
     int yoff = [layer yoff];
 
+    if(![temp length])
+        return;
+
     unsigned char *data = [temp bytes];
 
     if(!IntRectIsEmpty(tempOverlayModifiedRect)) {
@@ -385,7 +387,7 @@ void DumpObjcMethods(Class clz) {
   if(IntRectIsEmpty(r))
       return;
 
-    long start = LOG_PERFORMANCE ? getCurrentMillis() : 0;
+  long start = LOG_PERFORMANCE ? getCurrentMillis() : 0;
 
   r = IntConstrainRect(overlayModifiedRect,IntMakeRect(0,0,lw,lh));
 
@@ -403,6 +405,8 @@ void DumpObjcMethods(Class clz) {
   [[layer seaLayerUndo] takeSnapshot:r automatic:YES];
 
   [self mergeOverlay:[layer data] rect:r];
+
+  [layer markRasterized];
 
 finished:
 
@@ -488,9 +492,16 @@ finished:
 
     if (overlay) free(overlay);
 
-    overlay = malloc(make_128(lw*lh*spp));
+    int len = lw*lh*spp;
+    
+    if(len==0) {
+        lw=lh=1;
+        len=1;
+    }
+
+    overlay = malloc(make_128(len));
     CHECK_MALLOC(overlay);
-    memset(overlay, 0, lw*lh*spp);
+    memset(overlay, 0, len);
 
     CGContextRelease(overlayCtx);
     overlayCtx = CGBitmapContextCreateWithData(overlay, lw, lh, 8, lw*spp, COLOR_SPACE, kCGImageAlphaPremultipliedLast, NULL, NULL);
@@ -503,10 +514,12 @@ finished:
     CHECK_MALLOC(replace);
     memset(replace, 0, lw*lh);
 
-    temp = [NSData dataWithBytes:[layer data] length:lw*lh*spp];
-    tempCtx = CGBitmapContextCreateWithData([temp bytes], lw, lh, 8, lw*spp, COLOR_SPACE, kCGImageAlphaPremultipliedLast, NULL, NULL);
-    CGContextTranslateCTM(tempCtx, 0, lh);
-    CGContextScaleCTM(tempCtx, 1, -1);
+    unsigned char *data = [layer data];
+    if(data) {
+        temp = [NSData dataWithBytes:[layer data] length:lw*lh*spp];
+    } else {
+        temp = [NSData data];
+    }
 
     [self update];
 }

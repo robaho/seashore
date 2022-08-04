@@ -87,10 +87,15 @@
 
 - (IBAction)changeFont:(id)sender
 {
-    NSFont *oldFont = [fontManager selectedFont];
-    NSFont *font = [sender convertFont:oldFont];
+    font = [sender convertFont:[fontManager selectedFont]];
 
     [fontLabel setStringValue:[NSString stringWithFormat:@"%@ %d",[font displayName],(int)[font pointSize]]];
+    [self update:sender];
+}
+
+- (IBAction)changeColor:(id)sender
+{
+    color = [gColorPanel color];
     [self update:sender];
 }
 
@@ -107,17 +112,7 @@
 			return NSRightTextAlignment;
 		break;
 	}
-	
 	return NSLeftTextAlignment;
-}
-
-- (int)outline
-{
-	if ([outlineCheckbox state]) {
-		return [outlineSlider intValue];
-	}
-	
-	return 0;
 }
 
 - (IBAction)update:(id)sender
@@ -136,57 +131,76 @@
 
     TextTool *tool = (TextTool*)[document currentTool];
 
-    bool enable = ![[textArea stringValue] isEqualTo:@""] && !IntRectIsEmpty([tool textRect]);
+    [verticalMargin setMaxValue:([tool bounds].size.height)];
 
-    [addNewLayerButton setEnabled:enable];
-    [mergeWithLayerButton setEnabled:enable];
-
-    if(enable) {
-        [addNewLayerButton setToolTip:@""];
-        [mergeWithLayerButton setToolTip:@""];
-    } else {
-        NSString *tip = LOCALSTR(@"textToolRequires",@"Rectange & text cannot be empty");
-        [addNewLayerButton setToolTip:tip];
-        [mergeWithLayerButton setToolTip:tip];
-    }
-
-    if(![[document selection] active]) {
-        [selectionAsBounds setState:NSOffState];
-        [selectionAsBounds setEnabled:NO];
-    } else {
-        [selectionAsBounds setEnabled:YES];
-    }
-
-    [verticalMargin setMaxValue:([tool textRect].size.height)];
+    [tool updateLayer];
 
     [[document helpers] selectionChanged];
 }
 
-- (NSString*)text
+- (TextProperties*)properties
 {
-    return [textArea stringValue];
+    TextProperties* props = [[TextProperties alloc] init];
+    props.text = [textArea stringValue];
+    props.lineSpacing = [lineSpacing floatValue];
+    props.verticalMargin = [verticalMargin floatValue];
+    props.outline = [outlineCheckbox state] ? [outlineSlider intValue] : 0;
+    props.alignment = [self alignment];
+    props.font = font==NULL ? [fontManager selectedFont] : font;
+    props.color = color==NULL ? [[document contents] foreground] : color;
+    props.textPath = textPath;
+
+    return props;
 }
 
-- (IBAction)toggleTextures:(id)sender
+- (void)setProperties:(TextProperties *)props
 {
-    NSWindow *w = [document window];
-    NSPoint p = [w convertBaseToScreen:[w mouseLocationOutsideOfEventStream]];
-    [[document textureUtility] showPanelFrom: p onWindow: w];
-}
+    NSString *text = props.text;
 
--(float)lineSpacing
-{
-    return [lineSpacing floatValue];
-}
+    SeaLayer *layer = [[document contents] activeLayer];
+    if([layer isKindOfClass:SeaTextLayer.class]){
+        [textArea setEnabled:TRUE];
+        if(!text)
+            [textArea setStringValue:@""];
+        else
+            [textArea setStringValue:text];
+    } else {
+        [textArea setStringValue:@"Select text layer or Click/Drag to create a new layer."];
+        [textArea setEnabled:FALSE];
+    }
 
--(float)verticalMargin
-{
-    return [verticalMargin floatValue];
-}
+    [lineSpacing setFloatValue:props.lineSpacing];
+    [verticalMargin setFloatValue:props.verticalMargin];
+    [outlineSlider setIntValue:props.outline];
+    
+    color = props.color;
 
--(void)reset
-{
-    [textArea setStringValue:@""];
+    if(color) {
+        [colorWell setColor:color];
+    } else {
+        [colorWell setColor:[[document contents] foreground]];
+    }
+
+    font = props.font;
+
+    if(font) {
+        [fontLabel setStringValue:[NSString stringWithFormat:@"%@ %d",[font displayName],(int)[font pointSize]]];
+        [fontManager setSelectedFont:font isMultiple:FALSE];
+    }
+
+    switch (props.alignment) {
+        case NSLeftTextAlignment:
+            [alignmentControl setSelectedSegment:0];
+            break;
+        case NSCenterTextAlignment:
+            [alignmentControl setSelectedSegment:1];
+            break;
+        case  NSRightTextAlignment:
+            [alignmentControl setSelectedSegment:2];
+            break;
+    }
+
+    textPath = props.textPath;
 }
 
 - (void)shutdown
@@ -198,9 +212,9 @@
 	[gUserDefaults setInteger:(int)[[fontManager selectedFont] pointSize] forKey:@"text size"];
 }
 
-- (bool)useSelectionAsBounds
+- (BOOL)useTextures
 {
-    return [selectionAsBounds state];
+    return false;
 }
 
 @end

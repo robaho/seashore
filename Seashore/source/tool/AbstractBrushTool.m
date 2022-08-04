@@ -29,13 +29,12 @@
 
     CGRect cgRect = CGRectMake(where.x-brushWidth/2,where.y-brushHeight/2,brushWidth,brushHeight);
 
-    IntRect rect = NSRectMakeIntRect(cgRect);
+    IntRect rect = NSRectMakeIntRect(NSIntegralRect(cgRect));
 
     CGContextRef overlayCtx = [[document whiteboard] overlayCtx];
 
-    CGContextSetBlendMode(overlayCtx, kCGBlendModeNormal);
     CGContextSetAlpha(overlayCtx, pressureDisabled ? 255 : pressure/255.0);
-    CGContextDrawImage(overlayCtx,cgRect, brushImage);
+    CGContextDrawImage(overlayCtx, cgRect, brushImage);
 
     if ([options useTextures] && ![options brushIsErasing]) {
         SeaTexture *activeTexture = [[document textureUtility] activeTexture];
@@ -96,6 +95,11 @@
 
 - (void)setOverlayOptions:(BrushOptions*)options
 {
+    if([options brushIsErasing]) {
+        SeaLayer *layer = [[document contents] activeLayer];
+        if([layer hasAlpha])
+            [[document whiteboard] setOverlayBehaviour:kErasingBehaviour];
+    }
     if ([options useTextures])
         [[document whiteboard] setOverlayOpacity:[[document textureUtility] opacity]];
     else {

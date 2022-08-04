@@ -10,9 +10,6 @@
     // The initial point of the draw
     IntPoint startPoint;
 	
-	// The layer offset of the source point
-	IntPoint layerOff;
-	
 	// Has the source been set?
 	BOOL sourceSet;
 	
@@ -22,14 +19,12 @@
 	// A timer to allow the source to set
 	id fadingTimer;
 	
-	// The index of the layer from which the source is drawn
-	SeaLayer *sourceLayer;
-	
-	// YES if the merged data should be used, NO otherwise
-	BOOL sourceMerged;
-	
 	// The merged data from which the clone tool is working (only allocated between mouse clicks)
 	unsigned char *mergedData;
+
+    CGImageRef srcImg;
+    CGRect srcRect;
+    NSString *srcName;
     
     CloneOptions *options;
 }

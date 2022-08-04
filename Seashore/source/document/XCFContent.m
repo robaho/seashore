@@ -191,13 +191,12 @@ hard_error:
 				
 			break;
 			case PROP_RESOLUTION:
-				
 				// Remember the resolution
-				fread(tempString, sizeof(float), 2, file);
+				fread(tempIntString, sizeof(float), 2, file);
 				fix_endian_read((int *)tempIntString, 2);
-				xres = ((float *)tempString)[0];
-				yres = ((float *)tempString)[1];
-				
+				xres = ((float *)tempIntString)[0];
+				yres = ((float *)tempIntString)[1];
+		
 			break;
 			case PROP_PARASITES:
 			
@@ -329,8 +328,6 @@ hard_error:
     
     info.version = version;
 
-    bool unsupported_modes=FALSE;
-    
 	do {
 		fseek(file, layerOffsets + i * offsetSize, SEEK_SET);
         offset = [self readOffset:file];
