@@ -663,6 +663,11 @@ done:
 
 - (void)drawLayer:(CGContextRef)context
 {
+    [self drawLayer:context transform:[self layerTransform]];
+}
+
+- (CGAffineTransform)layerTransform
+{
     SeaLayer *active = [[document contents] activeLayer];
 
     bool shouldTransform = active==self || ([active linked] && linked);
@@ -674,14 +679,11 @@ done:
         tx = [[positionTool transform] cgtransform];
     }
 
-    [self drawLayer:context transform:tx];
+    return tx;
 }
 
-- (void)drawLayer:(CGContextRef)context transform:(CGAffineTransform)tx
+-(void)transformContext:(CGContextRef)context transform:(CGAffineTransform)tx
 {
-    CGContextSaveGState(context);
-    CGContextSetBlendMode(context, mode);
-
     CGContextTranslateCTM(context,xoff,yoff);
 
     CGContextTranslateCTM(context,(width/2),(height/2));
@@ -690,6 +692,14 @@ done:
 
     CGContextTranslateCTM(context,0,height);
     CGContextScaleCTM(context,1,-1);
+}
+
+- (void)drawLayer:(CGContextRef)context transform:(CGAffineTransform)tx
+{
+    CGContextSaveGState(context);
+    CGContextSetBlendMode(context, mode);
+
+    [self transformContext:context transform:tx];
 
     CGContextSetAlpha(context,[self opacity_float]);
 
@@ -714,19 +724,7 @@ done:
 
     CGContextSaveGState(context);
 
-    CGContextTranslateCTM(context,0,height);
-    CGContextScaleCTM(context,1,-1);
-
-    CGContextTranslateCTM(context,xoff,yoff);
-
-    SeaLayer *active = [[document contents] activeLayer];
-    bool shouldTransform = active==self || ([active linked] && linked);
-
-    if([document currentToolId]==kPositionTool && shouldTransform) {
-        PositionTool *positionTool = (PositionTool*)[document currentTool];
-        CGAffineTransform tx = [[positionTool transform] cgtransform];
-        CGContextConcatCTM(context, tx);
-    }
+    [self transformContext:context transform:[self layerTransform]];
 
     CGRect r = CGRectMake(0,0,width,height);
 
