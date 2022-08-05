@@ -36,10 +36,6 @@
 
 - (void)plotBrush:(SeaBrush*)curBrush at:(NSPoint)where pressure:(int)pressure
 {
-    SeaLayer *layer = [[document contents] activeLayer];
-    int height = [layer height];
-    int width = [layer width];
-    int spp = [[document contents] spp];
     int size = [options pencilSize];
 
     CGRect cgRect = CGRectMake(where.x-size/2,where.y-size/2,size,size);
@@ -57,9 +53,10 @@
     }
 
     if ([options useTextures] && ![options brushIsErasing]) {
-        SeaTexture *activeTexture = [[document textureUtility] activeTexture];
-        textureFill(spp, rect, [[document whiteboard] overlay], width, height, [activeTexture texture:(spp == 4)], [activeTexture width], [activeTexture height]);
+        NSImage *pattern = [[[document textureUtility] activeTexture] image];
+        textureFill(overlayCtx,pattern, cgRect);
     }
+
     [[document helpers] overlayChanged:rect];
 
 }

@@ -264,6 +264,28 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
     [[document infoUtility] update];
     [[document scrollView] updateRulerMarkings:[theEvent locationInWindow] andStationary:NSMakePoint(-256e6, -256e6)];
     [cursorsManager updateCursor:theEvent];
+    lastMouseMove = getCurrentMillis();
+}
+
+- (void)mouseEntered:(NSEvent *)event
+{
+    mouseInView=TRUE;
+    lastMouseMove = getCurrentMillis();
+}
+
+- (void)mouseExited:(NSEvent *)event
+{
+    mouseInView=FALSE;
+}
+
+- (bool)isMouseActive
+{
+    NSPoint p = [[self window] mouseLocationOutsideOfEventStream];
+    p = [self convertPoint:p fromView:nil];
+    
+    bool mouseInView = [self mouse:p inRect:[self frame]];
+
+    return mouseInView && (getCurrentMillis()-lastMouseMove < 1500);
 }
 
 - (void)scrollWheel:(NSEvent *)theEvent

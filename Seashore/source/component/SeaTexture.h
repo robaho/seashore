@@ -10,18 +10,15 @@
 */
 
 @interface SeaTexture : NSObject {
-	
-	// The texture
-	unsigned char *colorTexture;
-	unsigned char *greyTexture;
-	
+
+    NSImage *image;
+
 	// The width and height of the texture
 	int width;
 	int height;
 	
 	// The name of the texture
 	NSString *name;
-	
 }
 
 /*!
@@ -41,14 +38,6 @@
 	@discussion	Frees memory occupied by an instance of this class.
 */
 - (void)dealloc;
-
-/*!
-	@method		thumbnail
-	@discussion	Returns a thumbnail of the texture.
-	@result		Returns an NSImage that is no greater in size than 44 by 44
-				pixels.
-*/
-- (NSImage *)thumbnail;
 
 /*!
 	@method		name
@@ -71,30 +60,7 @@
 */
 - (int)height;
 
-/*!
-	@method		texture:
-	@discussion	Returns a bitmap representation of the texture. The bitmap
-				representation can be requested in colour or greyscale versions
-				and is always without an alpha channel.
-	@param		color
-				A boolean specifying whether the returned bitmap should be
-				colour or greyscale.
-	@result		Returns a reference to a 8-bit bitmap with 3 channels (RGB) if
-				color is YES or 1 channel (W) if color is NO.
-*/
-- (unsigned char *)texture:(BOOL)color;
-
-/*!
-	@method		textureAsNSColor:
-	@discussion	Returns a NSColor representation of the texture. The NSColor
-				representation can be requested in colour or greyscale versions
-				and is always without an alpha channel.
-	@param		color
-				A boolean specifying whether the returned NSColor should be
-				colour or greyscale.
-	@result		Returns a reference to either a NSColor.
-*/
-- (NSColor *)textureAsNSColor:(BOOL)color;
+- (NSImage*)image;
 
 /*!
 	@method		compare:

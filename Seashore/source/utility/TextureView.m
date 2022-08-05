@@ -65,16 +65,10 @@
 			if (elemNo < textureCount) {
                 
                 // Draw the thumbnail
-                thumbnail = [[textures objectAtIndex:elemNo] thumbnail];
+                thumbnail = [[textures objectAtIndex:elemNo] image];
 
-                int w = [thumbnail size].width;
-                int h = [thumbnail size].height;
-
-                NSRect rect0 = NSMakeRect(elemRect.origin.x + (kTexturePreviewSize-w)/2,elemRect.origin.y+(kTexturePreviewSize-h)/2,w,h);
-
-                NSRect drawRect = NSInsetRect(rect0,3,3);
-
-                [thumbnail drawInRect:drawRect];
+                [[NSColor colorWithPatternImage:thumbnail] set];
+                [[NSBezierPath bezierPathWithRect:NSInsetRect(elemRect,4,4)] fill];
 
                 if (elemNo == activeTextureIndex) {
                     [NSBezierPath setDefaultLineWidth:2];

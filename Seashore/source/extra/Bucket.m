@@ -200,104 +200,14 @@ IntRect bucketFill(int spp, IntRect rect, unsigned char *overlay, unsigned char 
 	return result;
 }
 
-void textureFill0(int spp, IntRect rect, unsigned char *data, int width, int height, unsigned char *texture, int textureWidth, int textureHeight)
+void textureFill(CGContextRef context,NSImage *image,CGRect rect)
 {
-	for (int j = rect.origin.y; j < rect.size.height + rect.origin.y; j++) {
-        if(j<0 || j >=height)
-            continue;
-        int offset = ((j * width)+rect.origin.x)*spp;
-        unsigned char *pos = data + offset;
-		for (int i = rect.origin.x; i < rect.origin.x+rect.size.width; i++,pos+=spp) {
-            if(i<0 || i >=width)
-                continue;
-            unsigned char opacity = *(pos+spp-1);
-			if (opacity != 0x00) {
-                int src_offset = ((j % textureHeight) * textureWidth + (i % textureWidth)) * (spp - 1);
-                premultiply_pm(spp,texture+src_offset,pos,opacity);
-			}
-		}
-	}
+    CGContextSaveGState(context);
+    CGContextClipToRect(context, rect);
+    CGContextSetBlendMode(context, kCGBlendModeSourceIn);
+    CGContextDrawTiledImage(context,NSMakeRect(0,0,[image size].width,[image size].height),[image CGImageForProposedRect:NULL context:NULL hints:NULL]);
+    CGContextRestoreGState(context);
 }
-
-void textureFill(int spp, IntRect rect, unsigned char *dest, int width, int height, unsigned char *texture, int textureWidth, int textureHeight)
-{
-    if(rect.size.width<TILE_SIZE && rect.size.height<TILE_SIZE){
-        return textureFill0(spp,rect,dest,width,height,texture,textureWidth,textureHeight);
-    }
-
-    int cols = rect.size.width / TILE_SIZE + 1;
-    int rows = rect.size.height / TILE_SIZE + 1;
-
-    for(int i=0;i<rows;i++) {
-        int startY = i * TILE_SIZE;
-        for(int j=0;j<cols;j++) {
-            int startX = j * TILE_SIZE;
-            IntRect rect0 = IntMakeRect(startX+rect.origin.x,startY+rect.origin.y,MIN(TILE_SIZE,rect.size.width-startX),MIN(TILE_SIZE,rect.size.height-startY));
-            dispatch_group_async(group,queue,^{textureFill0(spp,rect0,dest,width,height,texture,textureWidth,textureHeight);});
-        }
-    }
-    dispatch_group_wait(group,DISPATCH_TIME_FOREVER);
-}
-
-void cloneFill0(int spp, IntRect rect, unsigned char *dest, unsigned char *replace,int width, int height, unsigned char *source, int sourceWidth, int sourceHeight, IntPoint spt)
-{
-    if(rect.size.width<=0 || rect.size.height<=0)
-        return;
-
-	for (int j = 0; j < rect.size.height; j++) {
-        int y = j + rect.origin.y;
-		for (int i = 0; i < rect.size.width; i++) {
-            int x = i + rect.origin.x;
-
-            if(y < 0 || y >= height || x < 0 || x >= width)
-                continue;
-
-			int ai = x - rect.origin.x;
-			int aj = y - rect.origin.y;
-
-			int sai = ai + spt.x;
-			int saj = aj + spt.y;
-
-            if(saj < 0 || saj >= sourceHeight || sai < 0 || sai >=sourceWidth)
-                continue;
-
-            int offset = (y * width)+x;
-
-            unsigned char *dpos = dest + offset*spp;
-            unsigned char opacity = *(dpos+spp-1);
-
-            int src_offset = (saj * sourceWidth + sai) * spp;
-
-            if (opacity != 0x00) {
-                premultiply_pm(spp,source+src_offset,dpos,opacity);
-                replace[offset]=0xFF;
-
-            }
-		}
-	}
-}
-
-void cloneFill(int spp, IntRect rect, unsigned char *dest, unsigned char *replace,int width, int height, unsigned char *source, int sourceWidth, int sourceHeight, IntPoint spt)
-{
-    if(true || (rect.size.width<TILE_SIZE && rect.size.height<TILE_SIZE)){
-        return cloneFill0(spp,rect,dest,replace,width,height,source,sourceWidth,sourceHeight,spt);
-    }
-
-    int cols = rect.size.width / TILE_SIZE + 1;
-    int rows = rect.size.height / TILE_SIZE + 1;
-
-    for(int i=0;i<rows;i++) {
-        int startY = i * TILE_SIZE;
-        for(int j=0;j<cols;j++) {
-            int startX = j * TILE_SIZE;
-            IntRect rect0 = IntMakeRect(startX+rect.origin.x,startY+rect.origin.y,MIN(TILE_SIZE,rect.size.width-startX),MIN(TILE_SIZE,rect.size.height-startY));
-            IntPoint spt0 = IntMakePoint(spt.x+startX,spt.y+startY);
-            dispatch_group_async(group,queue,^{cloneFill0(spp,rect0,dest,replace,width,height,source,sourceWidth,sourceHeight,spt0);});
-        }
-    }
-    dispatch_group_wait(group,DISPATCH_TIME_FOREVER);
-}
-
 
 void smudgeFill0(int spp, int channel, IntRect rect, unsigned char *layerData, unsigned char *overlay, int width, int height, unsigned char *accum, unsigned char *mask, int brushWidth, int brushHeight, int rate, int startX,int startY)
 {

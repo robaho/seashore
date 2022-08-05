@@ -69,7 +69,7 @@
     [self drawColorWell:fg];
     
     if (foregroundIsTexture) {
-        [[NSColor colorWithPatternImage:[[memory texture] thumbnail]] set];
+        [[NSColor colorWithPatternImage:[[memory texture] image]] set];
         [[NSBezierPath bezierPathWithRect:fg] fill];
     }
     else {

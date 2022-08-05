@@ -104,7 +104,6 @@
 	int tolerance, width = [layer width], height = [layer height], spp = [[document contents] spp];
 	int textureWidth = [activeTexture width], textureHeight = [activeTexture height];
 	unsigned char *overlay = [[document whiteboard] overlay], *data = [layer data];
-	unsigned char *texture = [activeTexture texture:(spp == 4)];
 	unsigned char basePixel[4];
 	NSColor *color = [[document contents] foreground];
 	int k, channel;
@@ -169,10 +168,8 @@
 	else
 		rect = bucketFill(spp, IntMakeRect(0, 0, width, height), overlay, data, width, height, seeds, intervals, basePixel, tolerance, channel);
 	if ([options useTextures] && IntContainsRect(IntMakeRect(0, 0, width, height), rect)) {
-		if ([[document selection] active])
-			textureFill(spp, rect, overlay, width, height, texture, textureWidth, textureHeight);
-		else
-			textureFill(spp, rect, overlay, width, height, texture, textureWidth, textureHeight);
+        CGContextRef overlayCtx = [[document whiteboard] overlayCtx];
+        textureFill(overlayCtx,[activeTexture image],IntRectMakeNSRect(rect));
 	}
 	
     [[document helpers] overlayChanged:rect];

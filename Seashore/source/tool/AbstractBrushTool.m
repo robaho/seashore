@@ -11,13 +11,8 @@
 
 - (void)plotBrush:(SeaBrush*)brush at:(NSPoint)where pressure:(int)pressure
 {
-    SeaLayer *layer = [[document contents] activeLayer];
     float brushWidth = [brush width];
     float brushHeight = [brush height];
-
-    int lh = [layer height];
-    int lw = [layer width];
-    int spp = [[document contents] spp];
 
     BrushOptions *options = [self getBrushOptions];
 
@@ -37,8 +32,8 @@
     CGContextDrawImage(overlayCtx, cgRect, brushImage);
 
     if ([options useTextures] && ![options brushIsErasing]) {
-        SeaTexture *activeTexture = [[document textureUtility] activeTexture];
-        textureFill(spp, rect, [[document whiteboard] overlay], lw, lh, [activeTexture texture:(spp == 4)], [activeTexture width], [activeTexture height]);
+        NSImage *pattern = [[[document textureUtility] activeTexture] image];
+        textureFill(overlayCtx,pattern, cgRect);
     }
 
     [[document helpers] overlayChanged:rect];

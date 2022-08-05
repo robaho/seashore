@@ -49,60 +49,7 @@
 				pixels.
 */
 IntRect bucketFill(int spp, IntRect rect, unsigned char *overlay, unsigned char *data, int width, int height, IntPoint seeds[], int numSeeds, unsigned char *fillColor, int tolerance, int channel);
-
-/*!
-	@function	textureFill
-	@discussion	Given a bitmap, this function fills the bitmap with the given
-				texture replacing the bitmap's colour but preserving the
-				bitmap's transparency. It is often applied to the overlay.
-	@param		spp
-				The samples per pixel of the bitmap and the texture.
-	@param		rect
-				The region of the bitmap to replace with the given texture (must
-				lie entirely within bitmap).
-	@param		data
-				The block of memory containing the bitmap data.
-	@param		width
-				The width of the bitmap.
-	@param		height
-				The height of the bitmap.
-	@param		texture
-				The block of memory containing the texture bitmap data.
-	@param		textureWidth
-				The width of the texture bitmap.
-	@param		textureHeight
-				The height of the texture bitmap.
-*/
-void textureFill(int spp, IntRect rect, unsigned char *data, int width, int height, unsigned char *texture, int textureWidth, int textureHeight);
-
-/*!
-	@function	cloneFill
-	@discussion	Given a bitmap, this function fills the bitmap with the provided
-				data.
-	@param		spp
-				The samples per pixel of the bitmap and the source.
-	@param		rect
-				The region of the bitmap to replace with the given source (must
-				lie entirely within bitmap).
-	@param		data
-				The block of memory containing the bitmap data.
-	@param		replace
-				The block of memory containing the replace data.
-	@param		width
-				The width of the bitmap.
-	@param		height
-				The height of the bitmap.
-	@param		source
-				The block of memory containing the source data.
-	@param		sourceWidth
-				The width of the source data.
-	@param		sourceHeight
-				The height of the source data.
-	@param		spt
-				The point where the rectangle is taken from in the source data.
-*/
-void cloneFill(int spp, IntRect rect, unsigned char *data, unsigned char *replace, int width, int height, unsigned char *source, int sourceWidth, int sourceHeight, IntPoint spt);
-
+void textureFill(CGContextRef context,NSImage *image,CGRect rect);
 BOOL shouldFill(unsigned char *overlay, unsigned char *data, IntPoint seeds[], int numSeeds, IntPoint point, int width, int spp, int tolerance, int channel);
 
 void smudgeFill(int spp, int channel, IntRect rect, unsigned char *layerData, unsigned char *data, int width, int height, unsigned char *accum, unsigned char *mask, int brushWidth,int brushHeight, int rate);
