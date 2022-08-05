@@ -47,7 +47,6 @@ typedef struct {
 }
 
 - (void)plotBrush:(SeaBrush*)curBrush at:(NSPoint)temp pressure:(int)pressure;
-- (void)textureFill:(CGContextRef)context rect:(CGRect)rect;
 
 - (BrushOptions*)getBrushOptions;
 
