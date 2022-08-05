@@ -438,7 +438,7 @@
                                 </subviews>
                                 <connections>
                                     <outlet property="bottom" destination="2940" id="d6A-NI-MKb"/>
-                                    <outlet property="top" destination="7Qa-Co-cVm" id="BeQ-Ay-Igd"/>
+                                    <outlet property="middle" destination="7Qa-Co-cVm" id="E5c-g9-plI"/>
                                 </connections>
                             </customView>
                             <customView fixedFrame="YES" id="2730" userLabel="Right Pane" customClass="BorderView">
