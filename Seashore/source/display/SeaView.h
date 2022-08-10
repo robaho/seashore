@@ -92,7 +92,6 @@ enum {
     SeaWhiteboard *whiteboard;
     SeaExtrasView *extrasView;
 
-    bool mouseInView;
     long lastMouseMove;
 }
 
@@ -283,8 +282,6 @@ enum {
 				The event triggering this method.
 */
 - (void)mouseUp:(NSEvent *)theEvent;
-
-- (bool)isMouseActive;
 
 /*!
 	@method		delta

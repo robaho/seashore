@@ -106,6 +106,17 @@
 - (void)mouseUpAt:(IntPoint)where withEvent:(NSEvent *)event;
 
 /*!
+ @method        mouseMovedTo:withEvent:
+ @discussion    Optionally handle mouse moved events.
+ @param        where
+ Where in the document the mouse moved event occurred (in terms of
+ the document's pixels).
+ @param        event
+ The mouse moved event.
+ */
+- (void)mouseMovedTo:(IntPoint)where withEvent:(NSEvent *)event;
+
+/*!
 	 @method		intermediate
 	 @discussion	This is used to detect if there is currently a mouse drag
 	 @result		Returns a BOOL: YES if there is currently an action being made.

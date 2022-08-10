@@ -27,12 +27,6 @@ typedef struct {
     unsigned char special;
 } BTPointRecord;
 
-/*!
- @defined    kMaxBTPoints
- @discussion    Specifies the maximum number of points.
- */
-#define kMaxBTPoints 16384
-
 @interface AbstractBrushTool : AbstractTool {
     // The last point we've been and the last point a brush was plotted (there is a difference)
     NSPoint lastPoint, lastPlotPoint;

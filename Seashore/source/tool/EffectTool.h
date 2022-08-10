@@ -34,6 +34,10 @@
     
     long lastPointTime;
     
+    int draggingPointIndex;
+    IntPoint draggingPointStart;
+    IntPoint draggingPointOriginal;
+    
     PluginClass *lastPlugin;
 }
 

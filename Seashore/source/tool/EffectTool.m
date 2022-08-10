@@ -23,6 +23,7 @@
 	if(![super init])
 		return NULL;
 	count = 0;
+    draggingPointIndex = -1;
 	return self;
 }
 
@@ -86,6 +87,12 @@
     }
 }
 
+- (IntRect)handleRect:(IntPoint)p
+{
+    int width = 8 / [[document docView] zoom];
+    return IntMakeRect(p.x-width/2,p.y-width/2,width,width);
+}
+
 - (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event
 {
     if(!currentPlugin) {
@@ -96,17 +103,56 @@
         lastPointTime = getCurrentMillis();
 		points[count] = where;
 		count++;
+
         int xoff = [[[document contents] activeLayer] xoff];
         int yoff = [[[document contents] activeLayer] yoff];
+
         [[document docView] setNeedsDisplayInDocumentRect:IntEmptyRect(IntOffsetPoint(where,xoff,yoff)):26];
 
         [options updateClickCount:self];
         
         if (count == [currentPlugin points]) {
             [self performSelector:@selector(execute) withObject:NULL afterDelay:0];
-            [self performSelector:@selector(clearPointDisplay) withObject:NULL afterDelay:.5];
         }
-	}
+    } else if(count>0) {
+        // see if we are in a point and if so start dragging
+        draggingPointIndex=-1;
+        for(int i=0;i<count;i++){
+            IntRect r = [self handleRect:points[i]];
+            if(IntPointInRect(where, r)) {
+                draggingPointIndex = i;
+                draggingPointStart = where;
+                draggingPointOriginal = points[i];
+                break;
+            }
+        }
+    }
+}
+- (void)mouseDraggedTo:(IntPoint)where withEvent:(NSEvent *)event
+{
+    if(draggingPointIndex>=0){
+        [[document docView] setNeedsDisplayInDocumentRect:IntEmptyRect(points[draggingPointIndex]):26];
+        points[draggingPointIndex] = IntOffsetPoint(draggingPointOriginal, where.x-draggingPointStart.x, where.y-draggingPointStart.y);
+        [self performSelector:@selector(execute) withObject:NULL afterDelay:.1];
+        [[document docView] setNeedsDisplayInDocumentRect:IntEmptyRect(points[draggingPointIndex]):26];
+    }
+}
+- (void)mouseMovedTo:(IntPoint)where withEvent:(NSEvent *)event
+{
+    if(!currentPlugin || [currentPlugin points]==0 || count==0) {
+        return;
+    }
+
+    lastPointTime = getCurrentMillis();
+
+    int xoff = [[[document contents] activeLayer] xoff];
+    int yoff = [[[document contents] activeLayer] yoff];
+
+    for(int i=0;i<count;i++){
+        IntPoint where = points[i];
+        [[document docView] setNeedsDisplayInDocumentRect:IntEmptyRect(IntOffsetPoint(where,xoff,yoff)):26];
+    }
+    [self performSelector:@selector(clearPointDisplay) withObject:NULL afterDelay:.5];
 }
 
 - (void)selectEffect:(PluginClass*)plugin
@@ -203,6 +249,20 @@
 
     return count<[currentPlugin points] || getCurrentMillis()-lastPointTime < 500;
 }
+
+- (void)updateCursor:(IntPoint)p cursors:(SeaCursors*)cursors
+{
+    if(currentPlugin && count==[currentPlugin points]) {
+        for(int i=0;i<count;i++) {
+            if(IntPointInRect(p,[cursors handleRect:points[i]])) {
+                [[cursors handCursor] set];
+                return;
+            }
+        }
+    }
+    [super updateCursor:p cursors:cursors];
+}
+
 
 
 @end

@@ -265,27 +265,15 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
     [[document scrollView] updateRulerMarkings:[theEvent locationInWindow] andStationary:NSMakePoint(-256e6, -256e6)];
     [cursorsManager updateCursor:theEvent];
     lastMouseMove = getCurrentMillis();
-}
 
-- (void)mouseEntered:(NSEvent *)event
-{
-    mouseInView=TRUE;
-    lastMouseMove = getCurrentMillis();
-}
+    AbstractTool* tool = [document currentTool];
 
-- (void)mouseExited:(NSEvent *)event
-{
-    mouseInView=FALSE;
-}
+    if([tool respondsToSelector:@selector(mouseMovedTo:withEvent:)]) {
+        NSPoint globalPoint = [self convertPoint:[theEvent locationInWindow] fromView:NULL];
+        IntPoint localPoint = IntMakePoint(globalPoint.x-[[[document contents] activeLayer] xoff], globalPoint.y-[[[document contents] activeLayer] yoff]);
 
-- (bool)isMouseActive
-{
-    NSPoint p = [[self window] mouseLocationOutsideOfEventStream];
-    p = [self convertPoint:p fromView:nil];
-    
-    bool mouseInView = [self mouse:p inRect:[self frame]];
-
-    return mouseInView && (getCurrentMillis()-lastMouseMove < 1500);
+        [tool mouseMovedTo:localPoint withEvent:theEvent];
+    }
 }
 
 - (void)scrollWheel:(NSEvent *)theEvent
@@ -396,7 +384,6 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
 
 - (void)mouseDragged:(NSEvent *)theEvent
 {
-    id curTool;
     IntPoint localPoint;
     int deltaX, deltaY;
     double angle;
@@ -404,7 +391,7 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
 
     NSPoint globalPoint = [self convertPoint:[theEvent locationInWindow] fromView:NULL];
 
-    curTool = [document currentTool];
+    AbstractTool *curTool = [document currentTool];
     
     localPoint.x = globalPoint.x - [[[document contents] activeLayer] xoff];
     localPoint.y = globalPoint.y - [[[document contents] activeLayer] yoff];
@@ -429,7 +416,7 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
     delta.x = localPoint.x - initialPoint.x;
     delta.y = localPoint.y - initialPoint.y;
 
-    [(AbstractTool *)curTool mouseDraggedTo:localPoint withEvent:theEvent];
+    [curTool mouseDraggedTo:localPoint withEvent:theEvent];
     lastLocalPoint = localPoint;
     lineDraw = NO;
 
@@ -536,7 +523,7 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
         
             // If there is a selection active move the selection otherwise move the layer
             if (curToolIndex == kPositionTool) {
-                PositionTool *positionTool = [document currentTool];
+                PositionTool *positionTool = (PositionTool*)[document currentTool];
 
                 // Make the adjustment
                 switch (key) {
@@ -555,7 +542,7 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
                 }
             }
             else if (curToolIndex == kCropTool) {
-                CropTool *cropTool = [document currentTool];
+                CropTool *cropTool = (CropTool*)[document currentTool];
             
                 // Make the adjustment
                 switch (key) {

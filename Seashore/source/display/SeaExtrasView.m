@@ -656,7 +656,7 @@ static bool isBlack(NSColor *c){
         }
     }else if (curToolIndex == kEffectTool){
         NSImage *crossImage = [NSImage imageNamed:@"cross"];
-        if([effectTool shouldDrawPoints] && [[document docView] isMouseActive]) {
+        if([effectTool shouldDrawPoints]) {
             for (int i = 0; i < [(EffectTool*)effectTool clickCount]; i++) {
                 NSPoint outPoint = IntPointMakeNSPoint(IntOffsetPoint([effectTool point:i],xoff,yoff));
                 float size = [self scaledSize:25];
