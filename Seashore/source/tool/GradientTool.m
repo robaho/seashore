@@ -22,7 +22,6 @@
 {
 	startPoint = where;
 	intermediate = YES;
-	startNSPoint = [[document docView] convertPoint:[event locationInWindow] fromView:NULL];
 }
 
 - (void)mouseUpAt:(IntPoint)where withEvent:(NSEvent *)event
@@ -103,13 +102,13 @@
 
 - (void)mouseDraggedTo:(IntPoint)where withEvent:(NSEvent *)event
 {
-    CGRect old = CGRectStandardize(CGRectMake(startPoint.x, startPoint.y,  tempNSPoint.x - startPoint.x, tempNSPoint.y - startPoint.y));
+    IntRect old = IntMakeRect(startPoint.x, startPoint.y,  tempPoint.x - startPoint.x, tempPoint.y - startPoint.y);
 
-	tempNSPoint = [[document docView] convertPoint:[event locationInWindow] fromView:NULL];
+    tempPoint = where;
 
-    CGRect rect = CGRectStandardize(CGRectMake(startPoint.x, startPoint.y,  where.x - startPoint.x, where.y - startPoint.y));
+    IntRect dirty = IntMakeRect(startPoint.x, startPoint.y,  where.x - startPoint.x, where.y - startPoint.y);
 
-    [[document docView] setNeedsDisplayInDocumentRect:NSRectMakeIntRect(CGRectUnion(old,rect)):8];
+    [[document docView] setNeedsDisplayInLayerRect:IntSumRects(old,dirty):8];
 }
 
 - (void)endLineDrawing
@@ -121,16 +120,6 @@
     intermediate=NO;
 }
 
-- (NSPoint)start
-{
-	return startNSPoint;
-}
-
-- (NSPoint)current
-{
-	return tempNSPoint;
-}
-
 - (AbstractOptions*)getOptions
 {
     return options;
@@ -138,6 +127,15 @@
 - (void)setOptions:(AbstractOptions*)newoptions
 {
     options = (GradientOptions*)newoptions;
+}
+
+- (IntPoint)start
+{
+    return startPoint;
+}
+- (IntPoint)current
+{
+    return tempPoint;
 }
 
 

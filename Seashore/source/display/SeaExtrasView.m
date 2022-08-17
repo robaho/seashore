@@ -190,14 +190,15 @@ static CGFloat line_dash_0[2] = {3,3};
 
 - (void)drawTextBoundaries
 {
-    SeaLayer *layer = [[document contents] activeLayer];
-    if([layer isRasterized] || ![layer isKindOfClass:SeaTextLayer.class])
-        return;
-
     TextTool *textTool = (TextTool*)[document currentTool];
+
     bool intermediate = [textTool intermediate];
 
-    NSRect tempRect = IntRectMakeNSRect([layer globalRect]);
+    SeaLayer *layer = [[document contents] activeLayer];
+    if(!intermediate && ([layer isRasterized] || ![layer isTextLayer]))
+        return;
+
+    NSRect tempRect = IntRectMakeNSRect([textTool bounds]);
 
     CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
     CGContextSaveGState(ctx);
@@ -670,14 +671,17 @@ static bool isBlack(NSColor *c){
             // Draw the connecting line
             [[[SeaController seaPrefs] guideColor: 1.0] set];
 
+            NSPoint startNS = IntPointMakeNSPoint(IntOffsetPoint([tool start],xoff,yoff));
+            NSPoint currentNS = IntPointMakeNSPoint(IntOffsetPoint([tool current],xoff,yoff));
+
             NSBezierPath *tempPath = [NSBezierPath bezierPath];
-            [tempPath moveToPoint:[tool start]];
-            [tempPath lineToPoint:[tool current]];
+            [tempPath moveToPoint:startNS];
+            [tempPath lineToPoint:currentNS];
             [tempPath stroke];
 
             // The handles are the appropriate color of the gradient.
-            [self drawHandle:[tool start] type:kGradientStartType index: -1];
-            [self drawHandle:[tool current] type:kGradientEndType index: -1];
+            [self drawHandle:startNS type:kGradientStartType index: -1];
+            [self drawHandle:currentNS type:kGradientEndType index: -1];
         }
     }else if (curToolIndex == kWandTool || curToolIndex == kBucketTool){
         WandTool *tool = [[document tools] getTool: curToolIndex];
@@ -685,16 +689,18 @@ static bool isBlack(NSColor *c){
             // Draw the connecting line
             [[[SeaController seaPrefs] guideColor: 1.0] set];
 
+            NSPoint startNS = IntPointMakeNSPoint(IntOffsetPoint([tool start],xoff,yoff));
+            NSPoint currentNS = IntPointMakeNSPoint(IntOffsetPoint([tool current],xoff,yoff));
+
             NSBezierPath *tempPath = [NSBezierPath bezierPath];
-            [tempPath moveToPoint:[tool start]];
-            [tempPath lineToPoint:[tool current]];
+            [tempPath moveToPoint:startNS];
+            [tempPath lineToPoint:currentNS];
             [tempPath stroke];
 
             float size = [self scaledSize:6];
 
-            [[NSBezierPath bezierPathWithOvalInRect:NSGrowRect(NSEmptyRect([tool start]),size)] fill];
-            [[NSBezierPath bezierPathWithOvalInRect:NSGrowRect(NSEmptyRect([tool current]),size)] fill];
-
+            [[NSBezierPath bezierPathWithOvalInRect:NSGrowRect(NSEmptyRect(startNS),size)] fill];
+            [[NSBezierPath bezierPathWithOvalInRect:NSGrowRect(NSEmptyRect(currentNS),size)] fill];
         }
     }
 }

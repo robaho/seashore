@@ -174,6 +174,9 @@
 {
     if(rasterized!=isRasterized) {
         rasterized = isRasterized;
+        if(rasterized) {
+            [self setName:_properties.text];
+        }
         [[[document undoManager] prepareWithInvocationTarget:self] setIsRasterized:!isRasterized];
     }
 }
@@ -193,10 +196,15 @@
 {
     xoff = bounds.origin.x;
     yoff = bounds.origin.y;
-    width = bounds.size.width;
-    height = bounds.size.height;
+    width = MAX(bounds.size.width,1);
+    height = MAX(bounds.size.height,1);
 
     [super applyTransform:[NSAffineTransform transform]];
+}
+
+- (bool)isTextLayer
+{
+    return true;
 }
 
 @end

@@ -82,8 +82,7 @@
     int yoff = [[[document contents] activeLayer] yoff];
 
     for(int i=0;i<count;i++){
-        IntPoint where = points[i];
-        [[document docView] setNeedsDisplayInDocumentRect:IntEmptyRect(IntOffsetPoint(where,xoff,yoff)):26];
+        [[document docView] setNeedsDisplayInLayerRect:IntEmptyRect(points[i]):26];
     }
 }
 
@@ -104,10 +103,7 @@
 		points[count] = where;
 		count++;
 
-        int xoff = [[[document contents] activeLayer] xoff];
-        int yoff = [[[document contents] activeLayer] yoff];
-
-        [[document docView] setNeedsDisplayInDocumentRect:IntEmptyRect(IntOffsetPoint(where,xoff,yoff)):26];
+        [[document docView] setNeedsDisplayInLayerRect:IntEmptyRect(where):26];
 
         [options updateClickCount:self];
         
@@ -131,10 +127,10 @@
 - (void)mouseDraggedTo:(IntPoint)where withEvent:(NSEvent *)event
 {
     if(draggingPointIndex>=0){
-        [[document docView] setNeedsDisplayInDocumentRect:IntEmptyRect(points[draggingPointIndex]):26];
+        [[document docView] setNeedsDisplayInLayerRect:IntEmptyRect(points[draggingPointIndex]):26];
         points[draggingPointIndex] = IntOffsetPoint(draggingPointOriginal, where.x-draggingPointStart.x, where.y-draggingPointStart.y);
         [self performSelector:@selector(execute) withObject:NULL afterDelay:.1];
-        [[document docView] setNeedsDisplayInDocumentRect:IntEmptyRect(points[draggingPointIndex]):26];
+        [[document docView] setNeedsDisplayInLayerRect:IntEmptyRect(points[draggingPointIndex]):26];
     }
 }
 - (void)mouseMovedTo:(IntPoint)where withEvent:(NSEvent *)event
@@ -145,12 +141,8 @@
 
     lastPointTime = getCurrentMillis();
 
-    int xoff = [[[document contents] activeLayer] xoff];
-    int yoff = [[[document contents] activeLayer] yoff];
-
     for(int i=0;i<count;i++){
-        IntPoint where = points[i];
-        [[document docView] setNeedsDisplayInDocumentRect:IntEmptyRect(IntOffsetPoint(where,xoff,yoff)):26];
+        [[document docView] setNeedsDisplayInLayerRect:IntEmptyRect(points[i]):26];
     }
     [self performSelector:@selector(clearPointDisplay) withObject:NULL afterDelay:.5];
 }
@@ -252,9 +244,12 @@
 
 - (void)updateCursor:(IntPoint)p cursors:(SeaCursors*)cursors
 {
+    int xoff = [[[document contents] activeLayer] xoff];
+    int yoff = [[[document contents] activeLayer] yoff];
+
     if(currentPlugin && count==[currentPlugin points]) {
         for(int i=0;i<count;i++) {
-            if(IntPointInRect(p,[cursors handleRect:points[i]])) {
+            if(IntPointInRect(p,[cursors handleRect:IntOffsetPoint(points[i],xoff,yoff)])) {
                 [[cursors handCursor] set];
                 return;
             }

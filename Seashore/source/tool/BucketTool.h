@@ -16,18 +16,10 @@
 */
 
 @interface BucketTool : AbstractTool {
-	// The point where to start the selection
-	IntPoint startPoint;
-
 	// The update rectangle associated with the last fill 
 	IntRect rect;
+    IntPoint startPoint,currentPoint;
 
-	// The inital point of the selection
-	NSPoint startNSPoint;
-		
-	// The end point of the selection (at the moment)
-	NSPoint currentNSPoint;
-	
 	// You can preview by holding down shift, so we need to track that
 	BOOL isPreviewing;
     
@@ -70,15 +62,13 @@
 /*!
 	@method		startPoint
 	@discussion	For figuring out where to draw the center
-	@result		Returns an NSPoint
 */
-- (NSPoint)start;
+- (IntPoint)start;
 
 /*!
 	@method		currentPoint
 	@discussion	For figuring out where to draw the outside
-	@result		Returns an NSPoint
 */
-- (NSPoint)current;
+- (IntPoint)current;
 
 @end

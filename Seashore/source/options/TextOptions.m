@@ -158,7 +158,7 @@
     NSString *text = props.text;
 
     SeaLayer *layer = [[document contents] activeLayer];
-    if([layer isKindOfClass:SeaTextLayer.class]){
+    if([layer isTextLayer]){
         [textArea setEnabled:TRUE];
         if(!text)
             [textArea setStringValue:@""];

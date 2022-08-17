@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property NSString *text;
 @property NSColor *color;
 @property NSFont *font;
-@property NSBezierPath *textPath;
+@property NSBezierPath * _Nullable textPath;
 @property int outline;
 @property float lineSpacing;
 @property int alignment;

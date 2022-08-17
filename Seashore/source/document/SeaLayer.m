@@ -317,7 +317,7 @@
     NSBezierPath *tempPath = [NSBezierPath bezierPathWithRect:r];
     [tempPath transformUsingAffineTransform:tx];
 
-    return NSRectMakeIntRect([tempPath bounds]).size;
+    return NSRectMakeIntRect(NSIntegralRect([tempPath bounds])).size;
 }
 
 - (void)scaleX:(float)xscale scaleY:(float)yscale rotate:(float)rotation
@@ -342,6 +342,8 @@
     }
 
     unsigned char *new_data = calloc(w*h*spp,1);
+    CHECK_MALLOC(new_data);
+    
     CGContextRef ctx = CGBitmapContextCreate(new_data,w,h,8,w*spp, COLOR_SPACE, kCGImageAlphaPremultipliedLast);
     CGContextTranslateCTM(ctx,(w/2),(h/2));
     CGContextConcatCTM(ctx,[tx cgtransform]);
@@ -408,6 +410,11 @@ done:
 }
 - (void)markRasterized
 {
+}
+
+- (bool)isTextLayer
+{
+    return false;
 }
 
 - (NSString *)name

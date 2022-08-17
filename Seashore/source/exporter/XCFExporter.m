@@ -244,7 +244,7 @@ static inline void fix_endian_write(int *input, int size)
 
     ParasiteData* parasites = [[ParasiteData alloc] init];
 
-    if([layer isKindOfClass:SeaTextLayer.class]) {
+    if([layer isTextLayer]) {
         SeaTextLayer *textLayer = (SeaTextLayer*)layer;
         TextProperties *textProperties = textLayer.properties;
         if(textProperties) {

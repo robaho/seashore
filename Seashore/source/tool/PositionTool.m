@@ -258,7 +258,7 @@
     [tx translateXBy:xoff yBy:yoff];
     [tempPath transformUsingAffineTransform:tx];
 
-    return NSRectMakeIntRect([tempPath bounds]);
+    return NSRectMakeIntRect(NSIntegralRect([tempPath bounds]));
 }
 
 - (IBAction)scaleToFit:(id)sender {
@@ -305,7 +305,6 @@
     }
 
     bounds = [self bounds:layer];
-    NSLog(@"bounds after %@",NSStringFromIntRect(bounds));
     dirty = IntSumRects(dirty,bounds);
 
     [[document helpers] layerOffsetsChanged:dirty];

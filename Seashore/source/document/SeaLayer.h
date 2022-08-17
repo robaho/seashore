@@ -461,6 +461,8 @@
 - (bool)isRasterized;
 - (void)markRasterized;
 
+- (bool)isTextLayer;
+
 /*!
 	@method		updateThumbnail
 	@discussion	Updates the thumbnail so that it is up-to-date with the layer's

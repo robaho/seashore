@@ -145,8 +145,23 @@ inline NSRect NSConstrainRect(NSRect littleRect, NSRect bigRect)
 	return rect;
 }
 
+inline IntRect IntRectNormalize(IntRect r)
+{
+    if(r.size.width<0) {
+        r.origin.x += r.size.width;
+        r.size.width = ABS(r.size.width);
+    }
+    if(r.size.height<0) {
+        r.origin.y += r.size.height;
+        r.size.height = ABS(r.size.height);
+    }
+    return r;
+}
+
 inline IntRect IntSumRects(IntRect augendRect, IntRect addendRect)
 {
+    augendRect = IntRectNormalize(augendRect);
+    addendRect = IntRectNormalize(addendRect);
 	IntRect rect;
 	// Use the smallest origin
 	rect.origin.x = augendRect.origin.x < addendRect.origin.x ? augendRect.origin.x : addendRect.origin.x;

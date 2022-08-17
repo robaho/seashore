@@ -30,22 +30,19 @@
     pos = 0;
     points[0] = where;
     dirty = IntEmptyRect(points[0]);
-    SeaLayer *layer = [[document contents] activeLayer];
-    [[document docView] setNeedsDisplayInDocumentRect:IntOffsetRect(dirty,[layer xoff],[layer yoff]):4];
+    [[document docView] setNeedsDisplayInLayerRect:dirty:4];
     intermediate = YES;
 }
 
 - (void)addPoint:(IntPoint)where
 {
-    SeaLayer *layer = [[document contents] activeLayer];
-
     if (points[pos].x != where.x || points[pos].y != where.y) {
         // Add the point to the list
         pos++;
         points[pos] = where;
         dirty = IntSumRects(dirty,IntEmptyRect(points[pos]));
 
-        [[document docView] setNeedsDisplayInDocumentRect:IntOffsetRect(dirty,[layer xoff],[layer yoff]):4];
+        [[document docView] setNeedsDisplayInLayerRect:dirty:4];
     }
 }
 

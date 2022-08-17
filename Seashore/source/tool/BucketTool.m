@@ -34,9 +34,6 @@
 - (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event
 {
 	startPoint = where;
-	
-	startNSPoint = [[document docView] convertPoint:[event locationInWindow] fromView:NULL];
-	currentNSPoint = [[document docView] convertPoint:[event locationInWindow] fromView:NULL];
 
 	if([options modifier] == kShiftModifier){
 		isPreviewing = YES;
@@ -49,44 +46,32 @@
 {
     if(!intermediate)
         return;
-    
-    NSBezierPath *path = [NSBezierPath bezierPath];
-    [path moveToPoint:startNSPoint];
-    [path lineToPoint:currentNSPoint];
 
-	currentNSPoint = [[document docView] convertPoint:[event locationInWindow] fromView:NULL];
-    [path lineToPoint:currentNSPoint];
-    NSRect rect = [path bounds];
+    IntRect dirty = IntMakeRect(startPoint.x,startPoint.y,currentPoint.x-startPoint.x,currentPoint.y-startPoint.y);
+
+    currentPoint = where;
+    
+    IntRect rect = IntMakeRect(startPoint.x,startPoint.y,currentPoint.x-startPoint.x,currentPoint.y-startPoint.y);
 
 	BOOL optionDown = [options modifier] == kAltModifier;
 
-	SeaLayer *layer = [[document contents] activeLayer];
-	int width = [layer width], height = [layer height];
-	
 	[[document whiteboard] clearOverlay];
 
-	if (where.x < 0 || where.y < 0 || where.x >= width || where.y >= height) {
-		rect.size.width = rect.size.height = 0;
-	}else if(isPreviewing){
+	if(isPreviewing){
 		[self fillAtPoint:where useTolerance:!optionDown];
 	}
 
-    [[document docView] setNeedsDisplayInDocumentRect:NSRectMakeIntRect(rect):8];
+    [[document docView] setNeedsDisplayInLayerRect:IntSumRects(dirty, rect):8];
 }
 
 
 - (void)mouseUpAt:(IntPoint)where withEvent:(NSEvent *)event
 {
-	SeaLayer *layer = [[document contents] activeLayer];
-    int width = [layer width], height = [layer height];
-
 	BOOL optionDown = [options modifier] == kAltModifier;
 	
 	[[document whiteboard] clearOverlay];
 
-	if (where.x < 0 || where.y < 0 || where.x >= width || where.y >= height) {
-		rect.size.width = rect.size.height = 0;
-	} else if(!isPreviewing || [options modifier] != kShiftModifier){
+	if(!isPreviewing || [options modifier] != kShiftModifier){
 		[self fillAtPoint:where useTolerance:!optionDown];
         [[document helpers] applyOverlay];
 	}
@@ -102,7 +87,6 @@
     SeaLayer *layer = [[document contents] activeLayer];
     SeaTexture *activeTexture = [[document textureUtility] activeTexture];
 	int tolerance, width = [layer width], height = [layer height], spp = [[document contents] spp];
-	int textureWidth = [activeTexture width], textureHeight = [activeTexture height];
 	unsigned char *overlay = [[document whiteboard] overlay], *data = [layer data];
 	unsigned char basePixel[4];
 	NSColor *color = [[document contents] foreground];
@@ -175,14 +159,14 @@
     [[document helpers] overlayChanged:rect];
 }
 
-- (NSPoint)start
+- (IntPoint)start
 {
-	return startNSPoint;
+	return startPoint;
 }
 
--(NSPoint)current
+-(IntPoint)current
 {
-	return currentNSPoint;
+	return currentPoint;
 }
 
 - (void)endLineDrawing

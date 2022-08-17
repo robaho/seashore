@@ -411,9 +411,17 @@ enum {
     @method     setNeedsDisplayInDocumentRect
     @discussion invalid the view in document coordinates
     @param      invalidRect
-                the rect to be refreshed in documen coordinates
+                the rect to be refreshed in document coordinates
  */
 -(void)setNeedsDisplayInDocumentRect:(IntRect) invalidRect : (int)scaledArea;
+
+/*!
+ @method     setNeedsDisplayInLayerRect
+ @discussion invalid the view in layer coordinates
+ @param      invalidRect
+ the rect to be refreshed in layer coordinates
+ */
+-(void)setNeedsDisplayInLayerRect:(IntRect) invalidRect : (int)scaledArea;
 
 /*!
 	@method		draggingEntered

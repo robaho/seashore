@@ -514,12 +514,7 @@ finished:
     CHECK_MALLOC(replace);
     memset(replace, 0, lw*lh);
 
-    unsigned char *data = [layer data];
-    if(data) {
-        temp = [NSData dataWithBytes:[layer data] length:lw*lh*spp];
-    } else {
-        temp = [NSData data];
-    }
+    temp = [NSData dataWithBytes:[layer data] length:lw*lh*spp];
 
     [self update];
 }

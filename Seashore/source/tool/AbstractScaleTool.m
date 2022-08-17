@@ -115,6 +115,8 @@
     NSPoint globalPoint = IntPointMakeNSPoint(IntOffsetPoint(localPoint, [layer xoff], [layer yoff]));
 
 	if(scalingDir > kNoDir){
+//        NSLog(@"dragging scaling");
+
         // scaling selection
 		float newHeight = preScaledRect.size.height;
 		float newWidth  = preScaledRect.size.width;
@@ -184,11 +186,13 @@
 
 		return IntMakeRect((int)newX, (int)newY, (int)newWidth, (int)newHeight);
 	} else if (translating) {
+//        NSLog(@"dragging translate");
         // moving selection
         return IntMakeRect(postScaledRect.origin.x+globalPoint.x-moveOrigin.x,
                            postScaledRect.origin.y+globalPoint.y-moveOrigin.y,
                            postScaledRect.size.width,postScaledRect.size.height);
     } else {
+//        NSLog(@"dragging initial");
         // dragging initial selection
         if (aspectType == kNoAspectType || aspectType == kRatioAspectType) {
 

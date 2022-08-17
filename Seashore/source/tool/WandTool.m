@@ -21,9 +21,7 @@
 	[super downHandler:where withEvent:event];
 	
 	if(![super isMovingOrScaling]){
-		startPoint = where;
-		startNSPoint = [[document docView] convertPoint:[event locationInWindow] fromView:NULL];
-		currentNSPoint = [[document docView] convertPoint:[event locationInWindow] fromView:NULL];
+		currentPoint = startPoint = where;
 	}
 }
 
@@ -32,8 +30,13 @@
 	[super dragHandler:where withEvent:event];
 	
 	if(![super isMovingOrScaling]){
-		currentNSPoint = [[document docView] convertPoint:[event locationInWindow] fromView:NULL];
-		[[document docView] setNeedsDisplay: YES];
+        IntRect dirty = IntMakeRect(startPoint.x,startPoint.y,currentPoint.x-startPoint.x,currentPoint.y-startPoint.y);
+
+        currentPoint = where;
+
+        IntRect rect = IntMakeRect(startPoint.x,startPoint.y,currentPoint.x-startPoint.x,currentPoint.y-startPoint.y);
+
+        [[document docView] setNeedsDisplayInLayerRect:IntSumRects(dirty,rect):8];
 	}
 }
 
@@ -129,14 +132,14 @@ done:
     return;
 }
 
-- (NSPoint)start
+- (IntPoint)start
 {
-	return startNSPoint;
+	return startPoint;
 }
 
--(NSPoint)current
+-(IntPoint)current
 {
-	return currentNSPoint;
+	return currentPoint;
 }
 
 - (AbstractOptions*)getOptions

@@ -13,15 +13,8 @@
 */
 
 @interface WandTool : AbstractSelectTool {
-	// The point where to start the selection
-	IntPoint startPoint;
-	
-	// The inital point of the selection
-	NSPoint startNSPoint;
-	
-	// The end point of the selection (at the moment)
-	NSPoint currentNSPoint;
-    
+    IntPoint startPoint,currentPoint;
+
     WandOptions *options;
 }
 
@@ -40,14 +33,12 @@
 /*!
 	@method		startPoint
 	@discussion	For figuring out where to draw the center
-	@result		Returns an NSPoint
 */
-- (NSPoint)start;
+- (IntPoint)start;
 
 /*!
 	@method		currentPoint
 	@discussion	For figuring out where to draw the outside
-	@result		Returns an NSPoint
 */
-- (NSPoint)current;
+- (IntPoint)current;
 @end

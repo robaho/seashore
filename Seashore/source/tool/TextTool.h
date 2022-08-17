@@ -14,7 +14,9 @@
 @interface TextTool : AbstractScaleTool {
     TextOptions *options;
     BOOL edittingLayer;
+    BOOL addingLayer;
     BOOL hasUndo;
+    IntRect textRect; // used when creating new layer
 }
 
 - (IntRect)bounds;

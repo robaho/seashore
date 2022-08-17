@@ -137,9 +137,15 @@
 
 - (IBAction)condenseToSelection:(id)sender
 {
+    if(![[document selection] active]) {
+        NSBeep();
+        return;
+    }
+    
 	int index = [[document contents] activeLayerIndex];
 
 	SeaLayer *activeLayer = [[document contents] activeLayer];
+
 	IntRect selRect = [[document selection] globalRect];
 
 	int top = [activeLayer height] - selRect.origin.y - selRect.size.height;

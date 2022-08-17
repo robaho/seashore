@@ -45,7 +45,7 @@
 {
     if(active) {
         SeaLayer *layer = [[document contents] activeLayer];
-        if([layer isKindOfClass:SeaTextLayer.class]){
+        if([layer isTextLayer]){
             SeaTextLayer *textLayer = (SeaTextLayer*)layer;
             [options setProperties:[textLayer properties]];
         } else {
@@ -63,12 +63,18 @@
 
 - (void)setBounds:(IntRect)bounds
 {
-    [[self textLayer] setBounds:bounds];
-    [[document helpers] layerBoundariesChanged:[[self textLayer] index]];
+    IntRect dirty = textRect;
+    if(edittingLayer)
+        [[self textLayer] setBounds:bounds];
+    textRect = bounds;
+    dirty = IntSumRects(dirty,textRect);
+    [[document helpers] layerOffsetsChanged:dirty];
 }
 
 - (NSBezierPath*)textPath
 {
+    if(intermediate && !edittingLayer)
+        return NULL;
     SeaTextLayer *layer = [self textLayer];
     if(!layer)
         return NULL;
@@ -78,15 +84,18 @@
 - (SeaTextLayer*)textLayer
 {
     SeaLayer *layer = [[document contents] activeLayer];
-    if([layer isKindOfClass:SeaTextLayer.class])
+    if([layer isTextLayer])
         return (SeaTextLayer*)layer;
     return NULL;
 }
 
 - (IntRect)bounds
 {
+    if(intermediate) {
+        return textRect;
+    }
     SeaTextLayer *layer = [self textLayer];
-    if(!layer || [layer isRasterized])
+    if(!layer)
         return IntZeroRect;
     return [layer globalRect];
 }
@@ -127,23 +136,21 @@
         //editing text layer
         edittingLayer=TRUE;
         [options setProperties:textLayer.properties];
+        textRect = [textLayer globalRect];
+    } else {
+        edittingLayer=FALSE;
+        textRect = IntZeroRect;
     }
-
-    IntRect textRect = [self bounds];
 
     [self mouseDownAt: where
               forRect: textRect
          withMaskRect: IntZeroRect
               andMask: NULL];
 
-    if(![super isMovingOrScaling]){
+    if(![super isMovingOrScaling]) {
         SeaLayer *layer = [[document contents] activeLayer];
         IntPoint p = IntOffsetPoint(where,[layer xoff],[layer yoff]);
-        edittingLayer=FALSE;
-        SeaTextLayer *textLayer = [[SeaTextLayer alloc] initWithDocument:document];
-        [textLayer setOffsets:p];
-        [[document contents] addLayerObject:textLayer atIndex:[[document contents] activeLayerIndex]];
-        [options setProperties:[textLayer properties]];
+        textRect = IntEmptyRect(p);
     }
 
     [[document helpers] selectionChanged];
@@ -151,11 +158,11 @@
 
 - (void)mouseDraggedTo:(IntPoint)where withEvent:(NSEvent *)event
 {
-    IntRect draggedRect = [self mouseDraggedTo: where
-                                       forRect: [self bounds]
+    IntRect dragged = [self mouseDraggedTo: where
+                                       forRect: textRect
                                        andMask: NULL];
 
-    [self setBounds:draggedRect];
+    [self setBounds:dragged];
 }
 
 - (void)mouseUpAt:(IntPoint)where withEvent:(NSEvent *)event
@@ -163,16 +170,19 @@
     [self mouseUpAt:where forRect:IntZeroRect andMask:NULL];
 
     SeaTextLayer *layer = [self textLayer];
-    IntRect textRect = [self bounds];
 
     if(!edittingLayer) {
+        edittingLayer=TRUE;
         SeaContent *contents = [document contents];
-        if(layer && (textRect.size.width<8 && textRect.size.height<8)){
+        SeaTextLayer *textLayer = [[SeaTextLayer alloc] initWithDocument:document];
+        if(textRect.size.width<8 && textRect.size.height<8){
             textRect.size.width = MIN([contents width]/3,[contents width]-textRect.origin.x);
             textRect.size.height = MIN([contents height]/3,[contents height]-textRect.origin.y);
-            [self setBounds:textRect];
         }
-        [self textLayer].properties = [options properties];
+        [options setProperties:[textLayer properties]];
+        textLayer.properties = [options properties];
+        [textLayer setBounds:textRect];
+        [[document contents] addLayerObject:textLayer atIndex:[[document contents] activeLayerIndex]];
     } else {
         [[[document undoManager] prepareWithInvocationTarget:self] undoTextLayerBounds:layer bounds:textRect];
     }

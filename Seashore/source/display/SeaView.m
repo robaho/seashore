@@ -253,6 +253,23 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
     [extrasView setNeedsDisplayInRect:displayUpdateRect];
 }
 
+- (void)setNeedsDisplayInLayerRect:(IntRect)invalidRect : (int)scaledArea
+{
+    SeaLayer *layer = [[document contents] activeLayer];
+
+    invalidRect = IntOffsetRect(invalidRect,[layer xoff],[layer yoff]);
+
+    NSRect displayUpdateRect = IntRectMakeNSRect(invalidRect);
+
+    float size = [self scaledSize:scaledArea];
+
+    displayUpdateRect = NSGrowRect(displayUpdateRect,size);
+    displayUpdateRect = NSIntegralRectWithOptions(displayUpdateRect,NSAlignAllEdgesOutward | NSAlignRectFlipped);
+
+    [extrasView setNeedsDisplayInRect:displayUpdateRect];
+}
+
+
 - (float)scaledSize:(int)size
 {
     float magnification = [[document scrollView] magnification];

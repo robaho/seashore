@@ -15,13 +15,9 @@
 @interface GradientTool : AbstractTool
 {
 	
-	// The point where to start the gradient
 	IntPoint startPoint;
-	NSPoint startNSPoint;
-	
-	// The temporary point we've dragged to
-	NSPoint tempNSPoint;
-    
+    IntPoint tempPoint;
+
     GradientOptions *options;
 	
 }
@@ -62,18 +58,7 @@
 */
 - (void)mouseDraggedTo:(IntPoint)where withEvent:(NSEvent *)event;
 
-/*!
-	@method		start
-	@discussion	Returns the start point.
-	@result		Returns an NSPoint of the start of the tool.
-*/
-- (NSPoint)start;
-
-/*!
-	@method		current
-	@discussion	Returns the current point.
-	@result		Returns the NSPoint of where the mouse is currently dragged to.
-*/
-- (NSPoint)current;
+- (IntPoint)start;
+- (IntPoint)current;
 
 @end
