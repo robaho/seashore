@@ -19,9 +19,6 @@
 	// A timer to allow the source to set
 	id fadingTimer;
 	
-	// The merged data from which the clone tool is working (only allocated between mouse clicks)
-	unsigned char *mergedData;
-
     CGImageRef srcImg;
     CGRect srcRect;
     NSString *srcName;

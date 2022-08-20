@@ -2710,6 +2710,8 @@ Gw
         <customObject id="1872" userLabel="SmudgeOptions" customClass="SmudgeOptions">
             <connections>
                 <outlet property="document" destination="-2" id="2593"/>
+                <outlet property="pressureCheckbox" destination="vwS-4A-gxV" id="UfV-UY-pWY"/>
+                <outlet property="pressurePopup" destination="mz6-KS-gti" id="riS-3Q-ajb"/>
                 <outlet property="rateLabel" destination="2118" id="2584"/>
                 <outlet property="rateSlider" destination="2117" id="2585"/>
                 <outlet property="view" destination="1890" id="2223"/>
@@ -2992,7 +2994,7 @@ Gw
             <point key="canvasLocation" x="-69" y="-298"/>
         </customView>
         <customView id="1888" userLabel="Brush Options">
-            <rect key="frame" x="0.0" y="0.0" width="222" height="241"/>
+            <rect key="frame" x="0.0" y="0.0" width="247" height="241"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button toolTip="Scales brush with fading or drawing" fixedFrame="YES" tag="5" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2133">
@@ -3004,7 +3006,7 @@ Gw
                     </buttonCell>
                 </button>
                 <popUpButton toolTip="Applies transform to pressure readings" verticalHuggingPriority="750" fixedFrame="YES" tag="4" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2135">
-                    <rect key="frame" x="106" y="200" width="119" height="15"/>
+                    <rect key="frame" x="106" y="200" width="144" height="15"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" title="Normal" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="clipping" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2146" id="16867">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -3044,7 +3046,7 @@ Gw
                     </connections>
                 </button>
                 <slider toolTip="Length before fading" verticalHuggingPriority="750" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="2138">
-                    <rect key="frame" x="96" y="223" width="128" height="12"/>
+                    <rect key="frame" x="106" y="223" width="143" height="12"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <sliderCell key="cell" controlSize="mini" continuous="YES" alignment="left" tag="2" minValue="1" maxValue="120" doubleValue="10" tickMarkPosition="above" allowsTickMarkValuesOnly="YES" sliderType="linear" id="16870">
                         <font key="font" metaFont="label" size="9"/>
@@ -3054,7 +3056,7 @@ Gw
                     </connections>
                 </slider>
                 <popUpButton verticalHuggingPriority="750" fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2132">
-                    <rect key="frame" x="-2" y="112" width="227" height="15"/>
+                    <rect key="frame" x="-2" y="112" width="252" height="15"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" title="No modifiers active" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2153" id="16865">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -3095,7 +3097,7 @@ Gw
                     </connections>
                 </button>
             </subviews>
-            <point key="canvasLocation" x="-1489" y="-609.5"/>
+            <point key="canvasLocation" x="-1501.5" y="-609.5"/>
         </customView>
         <customView id="1889" userLabel="Position Options">
             <rect key="frame" x="0.0" y="0.0" width="193" height="301"/>
@@ -3180,11 +3182,11 @@ Gw
             <point key="canvasLocation" x="-764.5" y="-369.5"/>
         </customView>
         <customView id="1890" userLabel="Smudge Options">
-            <rect key="frame" x="0.0" y="0.0" width="169" height="105"/>
+            <rect key="frame" x="0.0" y="0.0" width="246" height="105"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <slider toolTip="Rate of smudging" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2117">
-                    <rect key="frame" x="85" y="93" width="86" height="12"/>
+                    <rect key="frame" x="118" y="93" width="130" height="12"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <sliderCell key="cell" controlSize="mini" continuous="YES" alignment="left" maxValue="100" doubleValue="100" tickMarkPosition="below" sliderType="linear" id="16877">
                         <font key="font" metaFont="label" size="9"/>
@@ -3194,7 +3196,7 @@ Gw
                     </connections>
                 </slider>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2118">
-                    <rect key="frame" x="-2" y="94" width="65" height="11"/>
+                    <rect key="frame" x="-1" y="94" width="65" height="11"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="left" title="Rate: 100%" id="16878">
                         <font key="font" metaFont="label" size="9"/>
@@ -3203,7 +3205,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="12018">
-                    <rect key="frame" x="-2" y="71" width="59" height="16"/>
+                    <rect key="frame" x="-1" y="49" width="59" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="push" title="Brushes" bezelStyle="rounded" alignment="center" controlSize="mini" borderStyle="border" inset="2" id="16879">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -3213,8 +3215,37 @@ Gw
                         <action selector="toggleBrushes:" target="1872" id="12024"/>
                     </connections>
                 </button>
+                <button toolTip="Enables tablet support" fixedFrame="YES" tag="3" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vwS-4A-gxV">
+                    <rect key="frame" x="1" y="72" width="111" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Pressure sensitive:" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="mini" tag="3" inset="2" id="02d-Ac-mWk">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="label" size="9"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="update:" target="1872" id="37S-ZU-yG4"/>
+                    </connections>
+                </button>
+                <popUpButton toolTip="Applies transform to pressure readings" verticalHuggingPriority="750" fixedFrame="YES" tag="4" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mz6-KS-gti">
+                    <rect key="frame" x="118" y="73" width="131" height="15"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <popUpButtonCell key="cell" type="push" title="Normal" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="clipping" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="ScA-Wl-lBV" id="3Tp-65-2MZ">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="label" size="9"/>
+                        <menu key="menu" title="OtherViews" id="Td2-3f-65N">
+                            <items>
+                                <menuItem title="Lighter" id="TKw-4U-sNS"/>
+                                <menuItem title="Normal" state="on" id="ScA-Wl-lBV"/>
+                                <menuItem title="Darker" id="lXz-7K-iaM"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <action selector="update:" target="1872" id="SLg-kJ-K5f"/>
+                    </connections>
+                </popUpButton>
             </subviews>
-            <point key="canvasLocation" x="-1852.5" y="-493.5"/>
+            <point key="canvasLocation" x="-2040" y="-493.5"/>
         </customView>
         <customView id="1891" userLabel="Crop Options">
             <rect key="frame" x="0.0" y="0.0" width="173" height="163"/>

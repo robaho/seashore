@@ -183,19 +183,9 @@ typedef struct {
 	return height;
 }
 
-- (unsigned char *)mask
+- (unsigned char*)mask
 {
-	return mask;
-}
-
-- (unsigned char *)pixmap
-{
-	return pixmap;
-}
-
-- (BOOL)usePixmap
-{
-	return usePixmap;
+    return mask;
 }
 
 - (NSComparisonResult)compare:(id)other
@@ -255,5 +245,19 @@ typedef struct {
 
     return bitmap;
 }
+
+- (CGImageRef)maskImg
+{
+    if(maskImg!=NULL) {
+        return maskImg;
+    }
+    CGContextRef ctx = CGBitmapContextCreate(NULL, width, height, 8, width, grayCS, kCGImageAlphaNone);
+    CGContextDrawImage(ctx, NSMakeRect(0,0,width,height),[self bitmap]);
+    maskImg = CGBitmapContextCreateImage(ctx);
+    CGContextRelease(ctx);
+
+    return maskImg;
+}
+
 
 @end

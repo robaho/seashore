@@ -49,7 +49,7 @@
             SeaTextLayer *textLayer = (SeaTextLayer*)layer;
             [options setProperties:[textLayer properties]];
         } else {
-            [options setProperties:[[TextProperties alloc] init]];
+            [options setProperties:NULL];
         }
     } else {
         hasUndo=FALSE;
@@ -130,20 +130,8 @@
 
 - (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event
 {
-    SeaTextLayer *textLayer = [self textLayer];
-
-    if(textLayer && IntPointInRect(where,[textLayer localRect])) {
-        //editing text layer
-        edittingLayer=TRUE;
-        [options setProperties:textLayer.properties];
-        textRect = [textLayer globalRect];
-    } else {
-        edittingLayer=FALSE;
-        textRect = IntZeroRect;
-    }
-
     [self mouseDownAt: where
-              forRect: textRect
+              forRect: [self bounds]
          withMaskRect: IntZeroRect
               andMask: NULL];
 
@@ -151,6 +139,12 @@
         SeaLayer *layer = [[document contents] activeLayer];
         IntPoint p = IntOffsetPoint(where,[layer xoff],[layer yoff]);
         textRect = IntEmptyRect(p);
+        edittingLayer=FALSE;
+    } else {
+        edittingLayer=TRUE;
+        SeaTextLayer *textLayer = [self textLayer];
+        [options setProperties:textLayer.properties];
+        textRect = [textLayer globalRect];
     }
 
     [[document helpers] selectionChanged];
@@ -179,8 +173,9 @@
             textRect.size.width = MIN([contents width]/3,[contents width]-textRect.origin.x);
             textRect.size.height = MIN([contents height]/3,[contents height]-textRect.origin.y);
         }
-        [options setProperties:[textLayer properties]];
         textLayer.properties = [options properties];
+        textLayer.properties.text = @"";
+        [options setProperties:textLayer.properties];
         [textLayer setBounds:textRect];
         [[document contents] addLayerObject:textLayer atIndex:[[document contents] activeLayerIndex]];
     } else {
@@ -227,9 +222,9 @@
 
 - (void)updateCursor:(IntPoint)p cursors:(SeaCursors *)cursors
 {
-//    if(![options useSelectionAsBounds] && !IntRectIsEmpty([self bounds])){
-//        return [cursors handleRectCursors:[self bounds] point:p cursor:[NSCursor IBeamCursor]];
-//    }
+    if(!IntRectIsEmpty([self bounds])){
+        return [cursors handleRectCursors:[self bounds] point:p cursor:[NSCursor IBeamCursor]];
+    }
     [[NSCursor IBeamCursor] set];
 }
 

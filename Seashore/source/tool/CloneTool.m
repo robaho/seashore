@@ -31,16 +31,12 @@
 	if(![super init])
 		return NULL;
 	sourceSet = NO;
-	mergedData = NULL;
 	return self;
 }
 
 - (void)dealloc
 {
-    if(mergedData) {
-        free(mergedData);
-        CGImageRelease(srcImg);
-    }
+    CGImageRelease(srcImg);
 }
 
 - (BOOL)acceptsLineDraws
@@ -66,7 +62,7 @@
 
     SeaLayer *layer = [[document contents] activeLayer];
 
-    CGRect rect = NSMakeRect(where.x-brushWidth/2,where.y-brushHeight/2,brushWidth,brushHeight);
+    CGRect rect = NSMakeRect(where.x-brushWidth/2.0,where.y-brushHeight/2.0,brushWidth,brushHeight);
     CGRect global = CGRectOffset(rect,[layer xoff],[layer yoff]);
 
     CGContextRef overlayCtx = [[document whiteboard] overlayCtx];
@@ -137,7 +133,6 @@
 
 - (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event
 {
-	int spp = [[document contents] spp];
 	int modifier = [options modifier];
 
     SeaLayer *layer = [[document contents] activeLayer];
@@ -150,30 +145,21 @@
             [[document docView] setNeedsDisplayInDocumentRect:IntEmptyRect(sourcePoint):26];
 		}
 
-        if (mergedData) {
-            CGImageRelease(srcImg);
-            free(mergedData);
-            mergedData = NULL;
-        }
+        CGImageRelease(srcImg);
+        srcImg=NULL;
 
         if([options mergedSample]) {
             int w = [[document contents] width];
             int h = [[document contents] height];
-            mergedData = malloc(make_128(w * h * spp));
-            memcpy(mergedData, [[document whiteboard] data], w * h * spp);
-            CGDataProviderRef dp = CGDataProviderCreateWithData(NULL, mergedData, w*h*spp, NULL);
-            srcImg = CGImageCreate(w, h, 8, 8*spp, w*spp, COLOR_SPACE, (CGBitmapInfo)kCGImageAlphaPremultipliedLast,dp,NULL,FALSE,0);
+            CGImageRef img = [[document whiteboard] bitmapCG];
+            srcImg = CGImageDeepCopy(img);
+            CGImageRelease(img);
             srcRect = NSMakeRect(0,0,w,h);
-            CGDataProviderRelease(dp);
             srcName = NULL;
         } else {
-            int w = [layer width];
-            int h = [layer height];
-            mergedData = malloc(make_128(w * h * spp));
-            memcpy(mergedData, [layer data], w * h * spp);
-            CGDataProviderRef dp = CGDataProviderCreateWithData(NULL, mergedData, w*h*spp, NULL);
-            srcImg = CGImageCreate(w, h, 8, 8*spp, w*spp, COLOR_SPACE, (CGBitmapInfo)kCGImageAlphaLast,dp,NULL,FALSE,0);
-            CGDataProviderRelease(dp);
+            CGImageRef img = [layer bitmap];
+            srcImg = CGImageDeepCopy(img);
+            CGImageRelease(img);
             srcRect = IntRectMakeNSRect([layer globalRect]);
             srcName = [layer name];
         }
@@ -226,7 +212,6 @@
 
     [[document helpers] applyOverlay];
     intermediate=NO;
-
 }
 
 - (AbstractOptions*)getOptions

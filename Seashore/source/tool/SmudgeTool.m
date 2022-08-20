@@ -33,11 +33,9 @@
     int brushHeight = [brush height];
     int spp = [[document contents] spp];
 
-    rate = MAX(0,rate-1);
-
     IntRect rect = IntMakeRect(where.x-brushWidth/2,where.y-brushHeight/2,brushWidth,brushHeight);
 
-    smudgeFill(spp,[[document contents] selectedChannel],rect,[layer data],[[document whiteboard] overlay],[layer width],[layer height],accumData,[brush mask],brushWidth,brushHeight,rate);
+    smudgeFill(spp,[[document contents] selectedChannel],rect,[layer data],[[document whiteboard] overlay],[layer width],[layer height],accumData,[brush mask],brushWidth,brushHeight,pressure);
 
     [[document helpers] overlayChanged:rect];
 }
@@ -61,9 +59,19 @@
 
 - (void)setOverlayOptions:(BrushOptions*)options
 {
-    [[document whiteboard] setOverlayOpacity:255];
+    [[document whiteboard] setOverlayOpacity:rate];
 }
 
+- (void)endLineDrawing
+{
+    [options update:self];
+
+    if(!intermediate)
+        return;
+
+    [[document helpers] applyOverlay];
+    intermediate=NO;
+}
 
 - (AbstractOptions*)getOptions
 {

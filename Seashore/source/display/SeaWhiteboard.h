@@ -250,4 +250,6 @@ enum {
 
 - (NSBitmapImageRep *)bitmap;
 
+- (CGImageRef)bitmapCG;
+
 @end

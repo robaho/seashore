@@ -22,9 +22,9 @@
         brushHeight = factor * brushHeight;
     }
 
-    CGRect cgRect = CGRectMake(where.x-brushWidth/2,where.y-brushHeight/2,brushWidth,brushHeight);
+    CGRect cgRect = CGRectMake(where.x-brushWidth/2.0,where.y-brushHeight/2.0,brushWidth,brushHeight);
 
-    IntRect rect = NSRectMakeIntRect(NSIntegralRect(cgRect));
+    IntRect rect = NSRectMakeIntRect(NSIntegralRectWithOptions(cgRect,NSAlignAllEdgesOutward|NSAlignRectFlipped));
 
     CGContextRef overlayCtx = [[document whiteboard] overlayCtx];
 

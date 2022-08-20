@@ -1,6 +1,12 @@
 #import "Seashore.h"
 #import "AbstractPaintOptions.h"
 
+enum {
+    kQuadratic,
+    kLinear,
+    kSquareRoot
+};
+
 /*!
 	@class		BrushOptions
 	@abstract	Handles the options pane for the paintbrush tool.
@@ -51,6 +57,7 @@
 */
 - (int)fadeValue;
 
+- (BOOL)isPressureSensitive;
 /*!
 	@method		pressureValue
 	@discussion	Returns the pressure value that should be used for the brush.

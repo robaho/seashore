@@ -292,7 +292,7 @@ void DumpObjcMethods(Class clz) {
 
 - (void)drawRect:(NSRect)viewDirtyRect
 {
-    viewDirtyRect = NSIntegralRect(viewDirtyRect);
+    viewDirtyRect = NSIntegralRectWithOptions(viewDirtyRect,NSAlignAllEdgesOutward|NSAlignRectFlipped);
 
     CGContextRef nsCtx = [[NSGraphicsContext currentContext] graphicsPort];
     CGContextClipToRect(nsCtx, viewDirtyRect);
@@ -560,33 +560,33 @@ finished:
   return image;
 }
 
-- (NSBitmapImageRep*) sampleImage
+- (NSBitmapImageRep*)sampleImage
 {
-    CGContextRef ctx = CGBitmapContextCreate(NULL,160,160,8,0,rgbCS,kCGImageAlphaPremultipliedLast);
-    CGContextScaleCTM(ctx,1,-1);
-    CGContextTranslateCTM(ctx,0,-160);
+    CGImageRef img = [self bitmapCG];
+    CGRect r = NSMakeRect(width/2-80,height/2-80,160,160);
+    CGImageRef sub = CGImageCreateWithImageInRect(img, r);
 
-    CGContextTranslateCTM(ctx,-(width/2),-(height/2));
-    [[self layer] renderInContext:ctx];
+    NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithCGImage:sub];
 
-    CGImageRef img = CGBitmapContextCreateImage(ctx);
-
-    NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithCGImage:img];
-
+    CGImageRelease(sub);
     CGImageRelease(img);
-    CGContextRelease(ctx);
 
     return rep;
 }
 
-- (NSBitmapImageRep*) bitmap
+- (NSBitmapImageRep*)bitmap
 {
-    CGImageRef img = CGBitmapContextCreateImage(dataCtx);
+    CGImageRef img = [self bitmapCG];
     NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithCGImage:img];
 
     CGImageRelease(img);
 
     return rep;
+}
+
+- (CGImageRef)bitmapCG
+{
+    return CGBitmapContextCreateImage(dataCtx);
 }
 
 - (unsigned char *)data {

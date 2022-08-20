@@ -157,16 +157,19 @@
 {
     NSString *text = props.text;
 
-    SeaLayer *layer = [[document contents] activeLayer];
-    if([layer isTextLayer]){
-        [textArea setEnabled:TRUE];
-        if(!text)
-            [textArea setStringValue:@""];
-        else
-            [textArea setStringValue:text];
-    } else {
-        [textArea setStringValue:@"Select text layer or Click/Drag to create a new layer."];
+    if(props==NULL) {
+        [textArea setPlaceholderString:@"Select text layer or Click/Drag to create a new layer."];
+        [textArea setStringValue:@""];
         [textArea setEnabled:FALSE];
+        return;
+    }
+
+    [textArea setPlaceholderString:@"Enter text here."];
+    [textArea setEnabled:TRUE];
+    if(!text) {
+        [textArea setStringValue:@""];
+    } else {
+        [textArea setStringValue:text];
     }
 
     [lineSpacing setFloatValue:props.lineSpacing];
@@ -201,6 +204,8 @@
     }
 
     textPath = props.textPath;
+
+    [[textArea window] makeFirstResponder:textArea];
 }
 
 - (void)shutdown

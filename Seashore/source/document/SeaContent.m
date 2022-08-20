@@ -838,47 +838,23 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     [[document helpers] endLineDrawing];
 
     id pboard = [NSPasteboard generalPasteboard];
-    int spp = [[document contents] spp], i , j, k, t1;
-    NSBitmapImageRep *imageRep;
 
-    IntRect maskRect = [[document selection] maskRect];
-    IntRect globalRect = IntConstrainRect(IntMakeRect(0,0,width,height),maskRect);
-
-    unsigned char *data = [[document whiteboard] data];
-    unsigned char *ndata = NULL;
-    unsigned char *mask;
+    CGImageRef image = [[document whiteboard] bitmapCG];
 
     // Check selection
     if ([[document selection] active]) {
-        mask = [[document selection] mask];
-        ndata = malloc(make_128(globalRect.size.width * globalRect.size.height * spp));
-        for (j = globalRect.origin.y; j < globalRect.origin.y + globalRect.size.height; j++) {
-            for (i = globalRect.origin.x; i < globalRect.origin.x + globalRect.size.width; i++) {
-                unsigned char maskVal = mask[(j-maskRect.origin.y)*maskRect.size.width + i-maskRect.origin.x];
-                for (k = 0; k < spp; k++) {
-                    ndata[((j - globalRect.origin.y) * globalRect.size.width + (i - globalRect.origin.x)) * spp + k] =  int_mult(data[(j * width + i) * spp + k], maskVal, t1);
-                }
-            }
-        }
-    }
-    else {
-        ndata = data;
-        globalRect.origin.x = globalRect.origin.y = 0;
-        globalRect.size.width = width;
-        globalRect.size.height = height;
+        CGImageRef sub = CGImageCreateWithImageInRect(image,IntRectMakeNSRect([[document selection] maskRect]));
+        CGImageRelease(image);
+        image = sub;
     }
 
     // Declare the data being added to the pasteboard
     [pboard declareTypes:[NSArray arrayWithObject:NSTIFFPboardType] owner:NULL];
     
     // Add it to the pasteboard
-    imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&ndata pixelsWide:globalRect.size.width pixelsHigh:globalRect.size.height bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace bytesPerRow:globalRect.size.width * spp bitsPerPixel:8 * spp];
-    [pboard setData:[imageRep TIFFRepresentation] forType:NSTIFFPboardType]; 
-    
-    // Clean out the remains
-    if (ndata != data) {
-        free(ndata);
-    }
+    NSBitmapImageRep *imageRep = [[NSBitmapImageRep alloc] initWithCGImage:image];
+    CGImageRelease(image);
+    [pboard setData:[imageRep TIFFRepresentation] forType:NSTIFFPboardType];
 }
 
 // copies the layer to the clipboard

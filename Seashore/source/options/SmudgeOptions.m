@@ -20,15 +20,22 @@
 	}
 	[rateSlider setIntValue:value];
 	[rateLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"rate", @"Rate: %d%%"), value]];
-	//[mergedCheckbox setState:[gUserDefaults boolForKey:@"smudge merged"]];
-}
 
-/*
-- (BOOL)mergedSample
-{
-	return [mergedCheckbox state];
+    if ([gUserDefaults objectForKey:@"brush pressure"] == NULL) {
+        [pressureCheckbox setState:NSOffState];
+        [pressurePopup selectItemAtIndex:kLinear];
+        [pressurePopup setEnabled:NO];
+    }
+    else {
+        int style = [gUserDefaults integerForKey:@"smudge pressure style"];
+        if (style < kQuadratic || style > kSquareRoot)
+            style = kLinear;
+        BOOL pressureOn = [gUserDefaults boolForKey:@"smudge pressure"];
+        [pressureCheckbox setState:pressureOn];
+        [pressurePopup selectItemAtIndex:style];
+        [pressurePopup setEnabled:pressureOn];
+    }
 }
-*/
 
 - (IBAction)rateChanged:(id)sender
 {		
@@ -43,7 +50,8 @@
 - (void)shutdown
 {
 	[gUserDefaults setInteger:[rateSlider intValue] forKey:@"smudge rate"];
-	//[gUserDefaults setInteger:[self mergedSample] forKey:@"smudge merged"];
+    [gUserDefaults setObject:[pressureCheckbox state] ? @"YES" : @"NO" forKey:@"smudge pressure"];
+    [gUserDefaults setInteger:[pressurePopup indexOfSelectedItem] forKey:@"smudge pressure style"];
 }
 
 @end

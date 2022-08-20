@@ -117,6 +117,8 @@ enum {
 
     IBOutlet id undoLevelsInput;
 
+    IBOutlet id canvasShadowCheckbox;
+
     // Stores whether or not layer boundaries are visible
 	BOOL layerBounds;
 
@@ -181,6 +183,9 @@ enum {
 
 	// Whether mouse coalescing should always be on or not
 	BOOL mouseCoalescing;
+
+    // if true show the shadow on the drawing canvas
+    BOOL showCanvasShadow;
 
 	// The toolbar
 	id toolbar;
@@ -612,6 +617,13 @@ enum {
     @result        Returns YES if the a new document should be zoomed, NO otherwise.
 */
 - (BOOL)zoomToFitAtOpen;
+
+/*!
+ @method        showCanvasShadow
+ @discussion    Returns whether to show the shadow on the drawing canvas
+ @result        Returns YES if to show the shadow, NO otherwise.
+ */
+- (BOOL)showCanvasShadow;
 
 /*!
 	@method		validateMenuItem:

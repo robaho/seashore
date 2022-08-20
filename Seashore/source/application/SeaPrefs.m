@@ -234,6 +234,14 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
     else
         undoLevels = 0;
 
+
+    // Get the preciseCursor
+    if ([gUserDefaults objectForKey:@"canvasShadow"])
+        showCanvasShadow = [gUserDefaults boolForKey:@"canvasShadow"];
+    else
+        showCanvasShadow = TRUE;
+
+
 	// Get the main screen resolution
 	if (GetMainDisplayDPI(&xdpi, &ydpi)) {
 		xdpi = ydpi = 72.0;
@@ -314,6 +322,7 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
     [gUserDefaults setInteger:undoLevels forKey:@"undoLevels"];
 	[gUserDefaults setObject:[font fontName] forKey:@"fontName"];
 	[gUserDefaults setFloat:[font pointSize] forKey:@"fontSize"];
+    [gUserDefaults setBool:showCanvasShadow forKey:@"canvasShadow"];
 }
 
 - (NSToolbarItem *) toolbar: (NSToolbar *)toolbar itemForItemIdentifier: (NSString *) itemIdent willBeInsertedIntoToolbar:(BOOL) willBeInserted
@@ -379,6 +388,8 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
     [layerBoundaryLinesCheckbox setState:layerBoundaryLines];
 	[guideColorMenu selectItemAtIndex:guideColor];
     [undoLevelsInput setIntValue:undoLevels];
+    [openUntitledCheckbox setState:openUntitled];
+    [canvasShadowCheckbox setState:showCanvasShadow];
 
 	// Display the preferences dialog
 	[panel center];
@@ -650,6 +661,11 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
     return layerBoundaryLines;
 }
 
+-(BOOL)showCanvasShadow
+{
+    return showCanvasShadow;
+}
+
 - (int)selectionColorIndex
 {
 	return selectionColor;
@@ -662,8 +678,10 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
     marchingAnts = [marchingAntsCheckbox state];
     layerBoundaryLines = [layerBoundaryLinesCheckbox state];
 	selectionColor = [selectionColorMenu indexOfSelectedItem];
+    showCanvasShadow = [canvasShadowCheckbox state];
     for (SeaDocument *doc in documents) {
 		[[doc docView] setNeedsDisplay:YES];
+        [[[[doc docView] enclosingScrollView] contentView] setNeedsDisplay:TRUE];
 	}
 }
 

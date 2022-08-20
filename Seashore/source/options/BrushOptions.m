@@ -5,12 +5,6 @@
 #import "SeaController.h"
 #import "SeaDocument.h"
 
-enum {
-	kQuadratic,
-	kLinear,
-	kSquareRoot
-};
-
 @implementation BrushOptions
 
 - (void)awakeFromNib
@@ -64,7 +58,7 @@ enum {
 {
 	[fadeSlider setEnabled:[fadeCheckbox state]];
 	[fadeCheckbox setTitle:[NSString stringWithFormat:LOCALSTR(@"fade-out", @"Fade-out: %d"), [fadeSlider intValue]]];
-	[pressurePopup setEnabled:[pressureCheckbox state]];
+	[pressurePopup setEnabled:([pressureCheckbox state]==NSOnState)];
 }
 
 - (BOOL)fade

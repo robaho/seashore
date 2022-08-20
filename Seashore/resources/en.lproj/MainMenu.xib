@@ -970,7 +970,7 @@ Gw
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <textView editable="NO" importsGraphics="NO" verticallyResizable="YES" baseWritingDirection="leftToRight" usesFontPanel="YES" usesRuler="YES" spellingCorrection="YES" smartInsertDelete="YES" id="4078">
-                                    <rect key="frame" x="0.0" y="-4563" width="423" height="5850"/>
+                                    <rect key="frame" x="0.0" y="-4680" width="423" height="5850"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1557,6 +1557,7 @@ This General Public License does not permit incorporating your program into prop
         <customObject id="501" userLabel="SeaProxy" customClass="SeaProxy"/>
         <customObject id="507" userLabel="SeaPrefs" customClass="SeaPrefs">
             <connections>
+                <outlet property="canvasShadowCheckbox" destination="Yvv-vH-UjO" id="1Db-VA-P6T"/>
                 <outlet property="checkerboardMatrix" destination="3687" id="3762"/>
                 <outlet property="coalescingCheckbox" destination="2716" id="2771"/>
                 <outlet property="colorPrefsView" destination="3676" id="3702"/>
@@ -2297,7 +2298,7 @@ DQ
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3701">
-                    <rect key="frame" x="111" y="20" width="229" height="39"/>
+                    <rect key="frame" x="111" y="11" width="229" height="39"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="* You can rotate this color at any time using &quot;View &gt; Colors &gt; Rotate Selection Shading&quot;" id="7347">
                         <font key="font" metaFont="menu" size="10"/>
@@ -2465,6 +2466,17 @@ DQ
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yvv-vH-UjO">
+                    <rect key="frame" x="141" y="65" width="104" height="16"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <buttonCell key="cell" type="check" title="Canvas Shadow" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="Kii-Sb-713">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="smallSystem"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="selectionColorChanged:" target="507" id="G0W-8P-piL"/>
+                    </connections>
+                </button>
             </subviews>
             <point key="canvasLocation" x="234.5" y="-549.5"/>
         </customView>

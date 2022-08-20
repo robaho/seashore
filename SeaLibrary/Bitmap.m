@@ -201,8 +201,8 @@ NSImage *getTinted(NSImage *src,NSColor *tint){
 
 CGImageRef CGImageDeepCopy(CGImageRef image) {
     int width = CGImageGetWidth(image);
-    int height = CGImageGetWidth(height);
-    CGContextRef ctx = CGBitmapContextCreate(nil, width, height, CGImageGetBitsPerPixel(image), CGImageGetBytesPerRow(image), CGImageGetColorSpace(image), CGImageGetBitmapInfo(image));
+    int height = CGImageGetHeight(image);
+    CGContextRef ctx = CGBitmapContextCreate(nil, width, height, CGImageGetBitsPerComponent(image), CGImageGetBytesPerRow(image), CGImageGetColorSpace(image), kCGImageAlphaPremultipliedLast);
     CGContextDrawImage(ctx, CGRectMake(0,0,width,height),image);
     CGImageRef copy = CGBitmapContextCreateImage(ctx);
     CGContextRelease(ctx);

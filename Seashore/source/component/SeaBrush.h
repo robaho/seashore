@@ -14,6 +14,7 @@
 	unsigned char *pixmap;
 
     CGImageRef bitmap;
+    CGImageRef maskImg;
 
 	// The spacing between brush strokes
 	int spacing;
@@ -44,22 +45,6 @@
 	@discussion	Frees memory occupied by an instance of this class.
 */
 - (void)dealloc;
-
-/*!
-	@method		pixelTag
-	@discussion	Returns a string indicating the size of oversize brushes.
-	@result		Returns a string indicating the size of oversize brushes or NULL
-				if such a string is not required.
-*/
-- (NSString *)pixelTag;
-
-/*!
-	@method		thumbnail
-	@discussion	Returns a thumbnail of the brush.
-	@result		Returns an NSImage that is no greater in size than 44 by 44
-				pixels.
-*/
-- (NSImage *)thumbnail;
 
 /*!
 	@method		name
@@ -93,52 +78,6 @@
 - (int)height;
 
 /*!
-	@method		mask
-	@discussion	Returns the alpha mask for a greyscale brush.
-	@result		Returns a reference to an 8-bit single-channel bitmap.
-*/
-- (unsigned char *)mask;
-
-/*!
-	@method		pixmap
-	@discussion	Returns the pixmap for a full-coloured brush.
-	@result		Returns a reference to a 8-bit RGBA bitmap.
-*/
-- (unsigned char *)pixmap;
-
-/*!
-	@method		maskForPoint:
-	@discussion	Returns an alpha mask for the specified point, the mask varies
-				according to the fractional part of the point.
-	@param		point
-				An NSPoint at which the mask is being plotted.
-	@param		pressure
-				An integer representing the pressure.
-	@result		Returns a reference to an 8-bit single-channel bitmap.
-*/
-- (unsigned char *)maskForPoint:(NSPoint)point pressure:(int)value;
-
-/*!
-	@method		pixmapForPoint:
-	@discussion	Returns the same as pixmap, is made available in case future
-				versions wish to adopt anti-aliasing.
-	@param		point
-				Ignored.
-	@result		Returns a reference to an 8-bit RGBA bitmap.
-*/
-- (unsigned char *)pixmapForPoint:(NSPoint)point;
-
-/*!
-	@method		usePixmap
-	@discussion	Returns whether the brush uses a pixmap or an alpha mask. A
-				brush either uses one or the other, calls to mask or
-				maskForPoint: are invalid if the brush uses a pixmap and
-				vice-versa.
-	@result		Returns YES if the brush uses a pixmap, NO otherwise.
-*/
-- (BOOL)usePixmap;
-
-/*!
 	@method		compare:
 	@discussion	Compares two brushes to see which should come first in the brush
 				utility (comparisons are currently based on the brush's name).
@@ -151,5 +90,13 @@
 -(void)drawBrushAt:(NSRect)rect;
 
 -(CGImageRef)bitmap;
+-(CGImageRef)maskImg;
+
+/*!
+ @method        mask
+ @discussion    Returns the alpha mask for a greyscale brush.
+ @result        Returns a reference to an 8-bit single-channel bitmap.
+ */
+- (unsigned char *)mask;
 
 @end

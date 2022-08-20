@@ -58,6 +58,10 @@
     [[(SeaPrefs *)[SeaController seaPrefs] windowBack] setFill];
     NSRectFill(dirtyRect);
 
+    if(![(SeaPrefs *)[SeaController seaPrefs] showCanvasShadow]){
+        return;
+    }
+
     float magnification = [(NSScrollView*)[self superview] magnification];
 
     NSRect docFrame = [[self documentView] frame];
