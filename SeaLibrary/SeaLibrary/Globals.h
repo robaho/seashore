@@ -7,8 +7,8 @@
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
 
-#import <SeaLibrary/Rects.h>
-#import <SeaLibrary/Constants.h>
+#import "Rects.h"
+#import "Constants.h"
 
 #ifdef __BIG_ENDIAN__
 #define MSB 0

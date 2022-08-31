@@ -76,11 +76,10 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
     
     // Set data members appropriately
     lineDraw = NO;
-    keyWasUp = YES;
     magnifyTimer = NULL;
     magnifyFactor = 1.0;
     tabletEraser = 0;
-    eyedropToolMemory = kEyedropTool;
+    toolMemory = kEyedropTool;
     scrollZoom = lastTrigger = 0.0;
     
     // Set the delta
@@ -481,6 +480,8 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
     
     // Unforce alt
     [options unforceAlt];
+
+    [cursorsManager updateCursor:theEvent];
 }
 
 - (IntPoint)delta
@@ -734,7 +735,7 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
                 case 'c':
                     [toolbox changeToolTo:kCropTool];
                 break;
-                case 'z':
+                case 'Z':
                     [toolbox changeToolTo:kZoomTool];
                 break;
                 case 'v':
@@ -747,8 +748,11 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
                     [[toolbox colorView] defaultColors: self];
                 break;
                 case '\t':
-                    eyedropToolMemory = [toolbox tool];
+                    toolMemory = [toolbox tool];
                     [toolbox changeToolTo:kEyedropTool];
+                case 'z':
+                    toolMemory = [toolbox tool];
+                    [toolbox changeToolTo:kZoomTool];
                 break;
             }
         }
@@ -772,13 +776,14 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
             case ' ':
             break;
             case '\t':
-                [[document toolboxUtility] changeToolTo:eyedropToolMemory];
+            case 'z':
+                [[document toolboxUtility] changeToolTo:toolMemory];
             break;
         }
     
     }
     
-    keyWasUp = YES;
+    [cursorsManager updateCursor:theEvent];
 }
 
 - (void)magnifyWithEvent:(NSEvent *)event

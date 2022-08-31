@@ -237,6 +237,7 @@ NSRect IntRectMakeNSRect(IntRect rect);
 NSRect NSGrowRect(NSRect rect,float size);
 NSRect NSEmptyRect(NSPoint);
 
+IntRect IntRectNormalize(IntRect r);
 IntRect IntEmptyRect(IntPoint);
 IntPoint IntOffsetPoint(IntPoint point,int xoff,int yoff);
 

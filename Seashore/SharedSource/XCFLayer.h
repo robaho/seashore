@@ -1,4 +1,4 @@
-#import "Seashore.h"
+#import "SeaLibrary/SeaLibrary.h"
 #import "SeaLayer.h"
 #import "XCFContent.h"
 #import "ParasiteData.h"

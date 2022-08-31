@@ -10,7 +10,7 @@
 #import "SeaLayer.h"
 #import "SeaWhiteboard.h"
 #import "SeaFlip.h"
-#import <SeaLibrary/ConnectedComponents.h>
+#import "ConnectedComponents.h"
 #import <Accelerate/Accelerate.h>
 #import <CoreImage/CoreImage.h>
 

@@ -73,11 +73,8 @@ enum {
 	// The last active layer point
 	IntPoint lastLocalPoint;
 
-	// Was the key up last time?
-	BOOL keyWasUp;
-
-	// Memorize the previous tool for a temporary eyedrop selection
-	int eyedropToolMemory;
+	// Memorize the previous tool for a temporary tool selection
+	int toolMemory;
 	
 	// Values to tell when to trigger scroll
 	float scrollZoom, lastTrigger;

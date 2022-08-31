@@ -1,6 +1,5 @@
 #import "ConnectedComponents.h"
-#import "Constants.h"
-#import "Globals.h"
+#import "SeaLibrary/SeaLibrary.h"
 
 #import <AppKit/AppKit.h>
 

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2B670BDB27DD0195003BA6AE"
+               BlueprintIdentifier = "2B2EFA6F28BF1AD3009B225D"
                BuildableName = "SeaLibrary.framework"
                BlueprintName = "SeaLibrary"
                ReferencedContainer = "container:SeaLibrary.xcodeproj">
@@ -50,7 +50,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2B670BDB27DD0195003BA6AE"
+            BlueprintIdentifier = "2B2EFA6F28BF1AD3009B225D"
             BuildableName = "SeaLibrary.framework"
             BlueprintName = "SeaLibrary"
             ReferencedContainer = "container:SeaLibrary.xcodeproj">

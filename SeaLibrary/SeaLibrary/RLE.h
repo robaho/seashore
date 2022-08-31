@@ -7,7 +7,7 @@
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
 
-#import <SeaLibrary/Globals.h>
+#import "Globals.h"
 
 /*!
 	@function	RLEDecompress

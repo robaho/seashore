@@ -24,7 +24,6 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		2B07251C27DD1491001A63F7 /* ParasiteData.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B07251A27DD1491001A63F7 /* ParasiteData.m */; };
 		2B0DF77627FFEF08002E8B7D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B0DF77527FFEF08002E8B7D /* CoreGraphics.framework */; };
 		2B0DF77827FFEF0F002E8B7D /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B0DF77727FFEF0F002E8B7D /* Accelerate.framework */; };
 		2B0DF77A27FFEF15002E8B7D /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B0DF77927FFEF15002E8B7D /* CoreImage.framework */; };
@@ -38,12 +37,11 @@
 		2B2D8CCA21F9A870004527F2 /* ZoomTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B2D8CC921F9A870004527F2 /* ZoomTool.m */; };
 		2B2DEC35286F35F40017BBA8 /* SeaComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2DEC32286F35F40017BBA8 /* SeaComponents.framework */; };
 		2B2DEC36286F35F40017BBA8 /* SeaComponents.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2DEC32286F35F40017BBA8 /* SeaComponents.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2B2DEC37286F35F40017BBA8 /* SeaLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2DEC33286F35F40017BBA8 /* SeaLibrary.framework */; };
-		2B2DEC38286F35F50017BBA8 /* SeaLibrary.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2DEC33286F35F40017BBA8 /* SeaLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2B2DEC3C286F35FE0017BBA8 /* Plugins.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2DEC3B286F35FE0017BBA8 /* Plugins.framework */; };
 		2B2DEC3D286F35FE0017BBA8 /* Plugins.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2DEC3B286F35FE0017BBA8 /* Plugins.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2B2DEC3F286F36040017BBA8 /* GIMPCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2DEC3E286F36040017BBA8 /* GIMPCore.framework */; };
 		2B2DEC40286F36040017BBA8 /* GIMPCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2DEC3E286F36040017BBA8 /* GIMPCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B2EFAB228BF2BD8009B225D /* SeaLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2EFA8428BF1B46009B225D /* SeaLibrary.framework */; };
 		2B399C23279DE147000D0C58 /* SeaWhiteboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B399C21279DE147000D0C58 /* SeaWhiteboard.m */; };
 		2B399C31279DE15D000D0C58 /* CocoaContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B399C27279DE15C000D0C58 /* CocoaContent.m */; };
 		2B399C32279DE15D000D0C58 /* SVGContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B399C28279DE15C000D0C58 /* SVGContent.m */; };
@@ -51,8 +49,6 @@
 		2B399C34279DE15D000D0C58 /* SeaContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B399C2B279DE15C000D0C58 /* SeaContent.m */; };
 		2B399C35279DE15D000D0C58 /* SeaDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B399C2E279DE15C000D0C58 /* SeaDocument.m */; };
 		2B3DFBB02874E19200D39148 /* SeaHistogram.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B3DFBAF2874E19200D39148 /* SeaHistogram.m */; };
-		2B6ECD23279E5A3100ABA072 /* XCFLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B6ECD22279E5A3100ABA072 /* XCFLayer.m */; };
-		2B6ECD29279E5AB600ABA072 /* XCFContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B6ECD27279E5AB600ABA072 /* XCFContent.m */; };
 		2B78488D28877C9B000B4839 /* PocketSVG.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B78486228877B88000B4839 /* PocketSVG.framework */; };
 		2B78488E28877C9B000B4839 /* PocketSVG.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2B78486228877B88000B4839 /* PocketSVG.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2B78489528877E71000B4839 /* ColorLevels.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B78489428877E69000B4839 /* ColorLevels.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -69,11 +65,14 @@
 		2B80E9D1243567FB0046979F /* CocoaContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B80E9CB243567FB0046979F /* CocoaContent.xib */; };
 		2B80E9D2243567FB0046979F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B80E9CD243567FB0046979F /* MainMenu.xib */; };
 		2B80E9D42435689B0046979F /* PrintPanelAccessory.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B80E9D32435689B0046979F /* PrintPanelAccessory.xib */; };
+		2B84485B28BEE74300C068D1 /* XCFContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B84484C28BEE74300C068D1 /* XCFContent.m */; };
+		2B84485D28BEE74300C068D1 /* XCFLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B84485528BEE74300C068D1 /* XCFLayer.m */; };
+		2B84485E28BEE74300C068D1 /* ParasiteData.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B84485628BEE74300C068D1 /* ParasiteData.m */; };
+		2B84486128BEE74300C068D1 /* ConnectedComponents.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B84485A28BEE74300C068D1 /* ConnectedComponents.m */; };
 		2B8840202894B6C500E5EF28 /* textLayerTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B88401F2894B6C500E5EF28 /* textLayerTemplate.png */; };
 		2B8840232895C30300E5EF28 /* XCFTextLayerSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8840222895C30300E5EF28 /* XCFTextLayerSupport.m */; };
 		2B891224289A9F8B00838898 /* NSBezierPath_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B891223289A9F8B00838898 /* NSBezierPath_Extensions.m */; };
 		2B891225289B3AEB00838898 /* NSBezierPath_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B891223289A9F8B00838898 /* NSBezierPath_Extensions.m */; };
-		2B891228289B3C4400838898 /* SeaLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2DEC33286F35F40017BBA8 /* SeaLibrary.framework */; };
 		2B8BD34721EA565C00FD9AC5 /* SeaPrintOptionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8BD34521EA565C00FD9AC5 /* SeaPrintOptionsController.m */; };
 		2B8BD59121ED16AB00FD9AC5 /* BrushExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8BD59021ED16AB00FD9AC5 /* BrushExporter.m */; };
 		2BB338C423C1119600647008 /* toFitTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BB338C323C1119600647008 /* toFitTemplate.png */; };
@@ -422,7 +421,6 @@
 				2B2DEC40286F36040017BBA8 /* GIMPCore.framework in Embed Frameworks */,
 				2B2DEC3D286F35FE0017BBA8 /* Plugins.framework in Embed Frameworks */,
 				2B78488E28877C9B000B4839 /* PocketSVG.framework in Embed Frameworks */,
-				2B2DEC38286F35F50017BBA8 /* SeaLibrary.framework in Embed Frameworks */,
 				2B2DEC36286F35F40017BBA8 /* SeaComponents.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -531,8 +529,6 @@
 		2A37F4B0FDCFA73011CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		2B07251A27DD1491001A63F7 /* ParasiteData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParasiteData.m; sourceTree = "<group>"; };
-		2B07251B27DD1491001A63F7 /* ParasiteData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParasiteData.h; sourceTree = "<group>"; };
 		2B08E5C021E28C4C0011037C /* Seashore.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Seashore.entitlements; sourceTree = "<group>"; };
 		2B0DF77527FFEF08002E8B7D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		2B0DF77727FFEF0F002E8B7D /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/Accelerate.framework; sourceTree = DEVELOPER_DIR; };
@@ -550,10 +546,10 @@
 		2B2D8CC821F9A870004527F2 /* ZoomTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZoomTool.h; sourceTree = "<group>"; };
 		2B2D8CC921F9A870004527F2 /* ZoomTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZoomTool.m; sourceTree = "<group>"; };
 		2B2DEC32286F35F40017BBA8 /* SeaComponents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SeaComponents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2B2DEC33286F35F40017BBA8 /* SeaLibrary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SeaLibrary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2B2DEC34286F35F40017BBA8 /* SeaMinimal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SeaMinimal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B2DEC3B286F35FE0017BBA8 /* Plugins.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Plugins.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B2DEC3E286F36040017BBA8 /* GIMPCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GIMPCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B2EFA8428BF1B46009B225D /* SeaLibrary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SeaLibrary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B2EFAAD28BF203D009B225D /* Seashore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Seashore.h; sourceTree = "<group>"; };
 		2B399C1E279DE146000D0C58 /* SeaWhiteboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeaWhiteboard.h; sourceTree = "<group>"; };
 		2B399C21279DE147000D0C58 /* SeaWhiteboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeaWhiteboard.m; sourceTree = "<group>"; };
 		2B399C24279DE15C000D0C58 /* SeaDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeaDocument.h; sourceTree = "<group>"; };
@@ -569,10 +565,6 @@
 		2B399CA5279E0558000D0C58 /* SeaLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeaLayer.h; sourceTree = "<group>"; };
 		2B3DFBAE2874E19200D39148 /* SeaHistogram.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaHistogram.h; sourceTree = "<group>"; };
 		2B3DFBAF2874E19200D39148 /* SeaHistogram.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeaHistogram.m; sourceTree = "<group>"; };
-		2B6ECD21279E5A3000ABA072 /* XCFLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCFLayer.h; sourceTree = "<group>"; };
-		2B6ECD22279E5A3100ABA072 /* XCFLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCFLayer.m; sourceTree = "<group>"; };
-		2B6ECD27279E5AB600ABA072 /* XCFContent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCFContent.m; sourceTree = "<group>"; };
-		2B6ECD28279E5AB600ABA072 /* XCFContent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCFContent.h; sourceTree = "<group>"; };
 		2B78486228877B88000B4839 /* PocketSVG.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PocketSVG.framework; path = ../PocketSVG/PocketSVG.framework; sourceTree = SOURCE_ROOT; };
 		2B78489328877E60000B4839 /* ToneCurve.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = ToneCurve.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B78489428877E69000B4839 /* ColorLevels.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = ColorLevels.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -593,6 +585,15 @@
 		2B80E9CC243567FB0046979F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CocoaContent.xib; sourceTree = "<group>"; };
 		2B80E9CE243567FB0046979F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		2B80E9D32435689B0046979F /* PrintPanelAccessory.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PrintPanelAccessory.xib; path = en.lproj/PrintPanelAccessory.xib; sourceTree = "<group>"; };
+		2B84484A28BEE74300C068D1 /* XCFLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCFLayer.h; sourceTree = "<group>"; };
+		2B84484B28BEE74300C068D1 /* ParasiteData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParasiteData.h; sourceTree = "<group>"; };
+		2B84484C28BEE74300C068D1 /* XCFContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCFContent.m; sourceTree = "<group>"; };
+		2B84485228BEE74300C068D1 /* ConnectedComponents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectedComponents.h; sourceTree = "<group>"; };
+		2B84485328BEE74300C068D1 /* XCFContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCFContent.h; sourceTree = "<group>"; };
+		2B84485528BEE74300C068D1 /* XCFLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCFLayer.m; sourceTree = "<group>"; };
+		2B84485628BEE74300C068D1 /* ParasiteData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParasiteData.m; sourceTree = "<group>"; };
+		2B84485A28BEE74300C068D1 /* ConnectedComponents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectedComponents.m; sourceTree = "<group>"; };
+		2B8448BE28BEED9700C068D1 /* libSeaLibrary.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libSeaLibrary.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B88401F2894B6C500E5EF28 /* textLayerTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = textLayerTemplate.png; sourceTree = "<group>"; };
 		2B8840212895C30300E5EF28 /* XCFTextLayerSupport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCFTextLayerSupport.h; sourceTree = "<group>"; };
 		2B8840222895C30300E5EF28 /* XCFTextLayerSupport.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCFTextLayerSupport.m; sourceTree = "<group>"; };
@@ -673,7 +674,6 @@
 		2BDD5E5D2208AE3200F9BC74 /* RecentsItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecentsItem.h; sourceTree = "<group>"; };
 		2BDD5E5E2208AE3200F9BC74 /* RecentsItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecentsItem.m; sourceTree = "<group>"; };
 		2BDD5E62220F33A300F9BC74 /* pencilLargeTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pencilLargeTemplate.png; sourceTree = "<group>"; };
-		2BE472EB27DD06B9003048CC /* Seashore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Seashore.h; sourceTree = "<group>"; };
 		2BE76CD121EE937400B6C65F /* Seashore.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Seashore.xcconfig; path = ../Seashore.xcconfig; sourceTree = "<group>"; };
 		2BEA688027B7408F00BC1453 /* SeaScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaScrollView.h; sourceTree = "<group>"; };
 		2BEA688127B7408F00BC1453 /* SeaScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeaScrollView.m; sourceTree = "<group>"; };
@@ -1035,7 +1035,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2B891228289B3C4400838898 /* SeaLibrary.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1046,13 +1045,13 @@
 				2BFC6C2B2778DEE400F707D9 /* XCTest.framework in Frameworks */,
 				2B2DEC3C286F35FE0017BBA8 /* Plugins.framework in Frameworks */,
 				2B78488D28877C9B000B4839 /* PocketSVG.framework in Frameworks */,
+				2B2EFAB228BF2BD8009B225D /* SeaLibrary.framework in Frameworks */,
 				2BF19EE328613FED00C35FBE /* Security.framework in Frameworks */,
 				2B2DEC3F286F36040017BBA8 /* GIMPCore.framework in Frameworks */,
 				2BF19EDE2860FBFE00C35FBE /* StoreKit.framework in Frameworks */,
 				2B0DF77C28020B95002E8B7D /* QuartzCore.framework in Frameworks */,
 				A84E106408E7A4FB0084BCB7 /* IOKit.framework in Frameworks */,
 				2B0DF77827FFEF0F002E8B7D /* Accelerate.framework in Frameworks */,
-				2B2DEC37286F35F40017BBA8 /* SeaLibrary.framework in Frameworks */,
 				A8BF652708E6FEAB006E9BFC /* Carbon.framework in Frameworks */,
 				A8EDF14C078959C80022BB31 /* Cocoa.framework in Frameworks */,
 				2B0DF77627FFEF08002E8B7D /* CoreGraphics.framework in Frameworks */,
@@ -1112,6 +1111,7 @@
 				F57AD82B03FF7FDB0185BAF6 /* Exporter Classes */,
 				A8BDC80404BEF77D00A80207 /* Extra Sources */,
 				2A37F4AFFDCFA73011CA2CEA /* Main Sources */,
+				2B84484928BEE74300C068D1 /* SharedSource */,
 				2A37F4B8FDCFA73011CA2CEA /* Resources */,
 				2BFB123D27951CD80063A750 /* Core Image Filters */,
 				2BFC6C332778E06B00F707D9 /* SeashoreTests */,
@@ -1161,8 +1161,8 @@
 		2A37F4AFFDCFA73011CA2CEA /* Main Sources */ = {
 			isa = PBXGroup;
 			children = (
+				2B2EFAAD28BF203D009B225D /* Seashore.h */,
 				2A37F4B0FDCFA73011CA2CEA /* main.m */,
-				2BE472EB27DD06B9003048CC /* Seashore.h */,
 			);
 			name = "Main Sources";
 			path = source/main;
@@ -1194,12 +1194,12 @@
 		2A37F4C3FDCFA73011CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2B2EFA8428BF1B46009B225D /* SeaLibrary.framework */,
+				2B8448BE28BEED9700C068D1 /* libSeaLibrary.a */,
 				2B78486228877B88000B4839 /* PocketSVG.framework */,
 				2B2DEC32286F35F40017BBA8 /* SeaComponents.framework */,
 				2B2DEC3E286F36040017BBA8 /* GIMPCore.framework */,
 				2B2DEC3B286F35FE0017BBA8 /* Plugins.framework */,
-				2B2DEC33286F35F40017BBA8 /* SeaLibrary.framework */,
-				2B2DEC34286F35F40017BBA8 /* SeaMinimal.framework */,
 				2BF19EE228613FED00C35FBE /* Security.framework */,
 				2BF19EDD2860FBFE00C35FBE /* StoreKit.framework */,
 				2B0DF77B28020B95002E8B7D /* QuartzCore.framework */,
@@ -1211,6 +1211,19 @@
 				1058C7A8FEA54F5311CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2B84484928BEE74300C068D1 /* SharedSource */ = {
+			isa = PBXGroup;
+			children = (
+				2B84484A28BEE74300C068D1 /* XCFLayer.h */,
+				2B84484B28BEE74300C068D1 /* ParasiteData.h */,
+				2B84484C28BEE74300C068D1 /* XCFContent.m */,
+				2B84485328BEE74300C068D1 /* XCFContent.h */,
+				2B84485528BEE74300C068D1 /* XCFLayer.m */,
+				2B84485628BEE74300C068D1 /* ParasiteData.m */,
+			);
+			path = SharedSource;
 			sourceTree = "<group>";
 		};
 		2BD5923B21E3DBEF002D150B /* EmbeddedBinaries */ = {
@@ -1320,6 +1333,8 @@
 		A8BDC80404BEF77D00A80207 /* Extra Sources */ = {
 			isa = PBXGroup;
 			children = (
+				2B84485228BEE74300C068D1 /* ConnectedComponents.h */,
+				2B84485A28BEE74300C068D1 /* ConnectedComponents.m */,
 				DC9C47B00FFC6BE700C44AA4 /* Cocoa Extensions */,
 				A8AC9FD204C2900600A80207 /* Bucket.h */,
 				A8AC9FD304C2900600A80207 /* Bucket.m */,
@@ -1333,8 +1348,6 @@
 				A881BF3B053C498800A80207 /* NSPreciseImageView.m */,
 				A849725B07C4BE750033BE1B /* NSExtendedTableView.h */,
 				A849725A07C4BE750033BE1B /* NSExtendedTableView.m */,
-				2B07251B27DD1491001A63F7 /* ParasiteData.h */,
-				2B07251A27DD1491001A63F7 /* ParasiteData.m */,
 				DC709EE30A61A173000B8333 /* Units.h */,
 				DC709EE50A61A35C000B8333 /* Units.m */,
 				2BFC6C242778CD5800F707D9 /* DebugView.h */,
@@ -1600,8 +1613,6 @@
 				A899739D07C42F5200B38F38 /* TextureExporter.m */,
 				2B8BD58F21ED169B00FD9AC5 /* BrushExporter.h */,
 				2B8BD59021ED16AB00FD9AC5 /* BrushExporter.m */,
-				2B6ECD28279E5AB600ABA072 /* XCFContent.h */,
-				2B6ECD27279E5AB600ABA072 /* XCFContent.m */,
 				F57AD82D03FF802E0185BAF6 /* SeaLayer Subclasses */,
 			);
 			name = "Document Classes";
@@ -1668,8 +1679,6 @@
 				F56B095903D92759014143BA /* CocoaLayer.m */,
 				A829BDFA053976DD00A80207 /* XBMLayer.h */,
 				A829BDFB053976DD00A80207 /* XBMLayer.m */,
-				2B6ECD21279E5A3000ABA072 /* XCFLayer.h */,
-				2B6ECD22279E5A3100ABA072 /* XCFLayer.m */,
 				2B8840212895C30300E5EF28 /* XCFTextLayerSupport.h */,
 				2B8840222895C30300E5EF28 /* XCFTextLayerSupport.m */,
 			);
@@ -2105,6 +2114,7 @@
 				2BFB124227951CD80063A750 /* AlphaToGrayFilter.m in Sources */,
 				A8EDF0FA078959C80022BB31 /* LayersUtility.m in Sources */,
 				A8EDF0FD078959C80022BB31 /* CenteringClipView.m in Sources */,
+				2B84485B28BEE74300C068D1 /* XCFContent.m in Sources */,
 				A8EDF0FF078959C80022BB31 /* SeaView.m in Sources */,
 				2B3DFBB02874E19200D39148 /* SeaHistogram.m in Sources */,
 				A8EDF100078959C80022BB31 /* SeaController.m in Sources */,
@@ -2159,7 +2169,6 @@
 				A8EDF12F078959C80022BB31 /* SeaOperations.m in Sources */,
 				A8EDF131078959C80022BB31 /* AbstractTool.m in Sources */,
 				A8EDF132078959C80022BB31 /* BrushTool.m in Sources */,
-				2B6ECD29279E5AB600ABA072 /* XCFContent.m in Sources */,
 				2BFBE94E288C57F100FAAE21 /* SeaTextLayer.m in Sources */,
 				A8EDF133078959C80022BB31 /* PencilTool.m in Sources */,
 				2B1F70EB21DD472B00D6F371 /* SeaColorProfiles.m in Sources */,
@@ -2179,6 +2188,7 @@
 				A8EDF143078959C80022BB31 /* GradientOptions.m in Sources */,
 				A8EDF145078959C80022BB31 /* SeaFlip.m in Sources */,
 				2B399C35279DE15D000D0C58 /* SeaDocument.m in Sources */,
+				2B84485E28BEE74300C068D1 /* ParasiteData.m in Sources */,
 				A8EDF146078959C80022BB31 /* WandTool.m in Sources */,
 				A8EDF147078959C80022BB31 /* WandOptions.m in Sources */,
 				A8EDF148078959C80022BB31 /* PNGExporter.m in Sources */,
@@ -2195,12 +2205,13 @@
 				2B8BD34721EA565C00FD9AC5 /* SeaPrintOptionsController.m in Sources */,
 				2B7E0B9427C5CAD7001B5C43 /* ColorsMenu.m in Sources */,
 				A8F22EDB07EA9871005AD30E /* SVGImporter.m in Sources */,
+				2B84485D28BEE74300C068D1 /* XCFLayer.m in Sources */,
 				2B8BD59121ED16AB00FD9AC5 /* BrushExporter.m in Sources */,
 				A8207A3807EEFEE800ED3D38 /* SeaPrintView.m in Sources */,
-				2B6ECD23279E5A3100ABA072 /* XCFLayer.m in Sources */,
 				A89827FD07EF1B4A003E05D5 /* JPEGExporter.m in Sources */,
 				A845B95107F3B5F3007A1B94 /* SeaRotation.m in Sources */,
 				A80983D70871420900F7412F /* JP2Exporter.m in Sources */,
+				2B84486128BEE74300C068D1 /* ConnectedComponents.m in Sources */,
 				A87183DB090BA6D400345EA0 /* LassoOptions.m in Sources */,
 				A87183EC090BA8C400345EA0 /* LassoTool.m in Sources */,
 				A8E30CC109A3F4BC00B67097 /* SeaDocRotation.m in Sources */,
@@ -2245,7 +2256,6 @@
 				DCD6A5A5114DA294002A4CFD /* WarningsUtility.m in Sources */,
 				DC4E4FA4134AD4D400BA6ACB /* AbstractSelectTool.m in Sources */,
 				2BF873852860E532002C30C7 /* SeaSupport.m in Sources */,
-				2B07251C27DD1491001A63F7 /* ParasiteData.m in Sources */,
 				DC4E51231350E10500BA6ACB /* AbstractScaleOptions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2397,7 +2407,7 @@
 				CODE_SIGN_ENTITLEMENTS = Seashore.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2022081901;
+				CURRENT_PROJECT_VERSION = 2022083102;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2410,11 +2420,12 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				MARKETING_VERSION = 3.7;
+				MARKETING_VERSION = 3.8;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore;
 				PRODUCT_NAME = Seashore;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				USER_HEADER_SEARCH_PATHS = "${PROJECT_DIR}/..";
 				WARNING_CFLAGS = (
 					"-Wmost",
 					"-Wno-four-char-constants",
@@ -2478,7 +2489,7 @@
 				CODE_SIGN_ENTITLEMENTS = Seashore.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2022081901;
+				CURRENT_PROJECT_VERSION = 2022083102;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2491,10 +2502,11 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				MARKETING_VERSION = 3.7;
+				MARKETING_VERSION = 3.8;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore;
 				PRODUCT_NAME = Seashore;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				USER_HEADER_SEARCH_PATHS = "${PROJECT_DIR}/..";
 				WARNING_CFLAGS = (
 					"-Wmost",
 					"-Wno-four-char-constants",

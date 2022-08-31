@@ -1,4 +1,4 @@
-#import <SeaLibrary/Rects.h>
+#import "SeaLibrary/SeaLibrary.h"
 
 /*!
 	@enum		Overlay behaviours
@@ -13,22 +13,6 @@ enum {
 	kNormalBehaviour,
 	kErasingBehaviour,
 	kReplacingBehaviour
-};
-
-/*!
-	@enum		Channel specifications
-	@constant	kAllChannels
-				Specifies all channels.
-	@constant	kPrimaryChannels
-				Specifies the primary RGB channels in a colour image or the
-				primary white channel in a greyscale image.
-	@constant	kAlphaChannel
-				Specifies the alpha channel.
-*/
-enum {
-	kAllChannels,
-	kPrimaryChannels,
-	kAlphaChannel
 };
 
 /*!

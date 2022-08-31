@@ -86,7 +86,11 @@
     IntPoint p = NSPointMakeIntPoint([view convertPoint:pw fromView:NULL]);
 
     AbstractTool *tool = [document currentTool];
-    [tool updateCursor:p cursors:self];
+    if(tool==NULL) {
+        [[NSCursor arrowCursor] set];
+    } else {
+        [tool updateCursor:p cursors:self];
+    }
     return;
 }
 

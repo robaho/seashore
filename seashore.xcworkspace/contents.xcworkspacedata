@@ -77,6 +77,12 @@
       location = "container:"
       name = "Documentation">
       <FileRef
+         location = "group:SeaMinimal/../Seashore/source/document/XCFContent.h">
+      </FileRef>
+      <FileRef
+         location = "group:Seashore/source/document/../../../XCFContent.h">
+      </FileRef>
+      <FileRef
          location = "group:README.md">
       </FileRef>
       <FileRef
@@ -87,10 +93,10 @@
       location = "container:"
       name = "Frameworks">
       <FileRef
-         location = "group:SeaMinimal/SeaMinimal.xcodeproj">
+         location = "group:SeaLibrary/SeaLibrary.xcodeproj">
       </FileRef>
       <FileRef
-         location = "group:SeaLibrary/SeaLibrary.xcodeproj">
+         location = "group:SeaMinimal/SeaMinimal.xcodeproj">
       </FileRef>
       <FileRef
          location = "group:SeaComponents/SeaComponents.xcodeproj">

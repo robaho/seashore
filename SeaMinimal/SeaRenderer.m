@@ -1,5 +1,5 @@
 #import "SeaRenderer.h"
-#import "Seashore.h"
+#import "SeaLibrary/SeaLibrary.h"
 
 @implementation SeaRenderer
 

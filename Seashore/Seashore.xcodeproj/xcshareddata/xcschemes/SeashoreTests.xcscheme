@@ -14,10 +14,10 @@
             buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2B670BDB27DD0195003BA6AE"
-               BuildableName = "SeaLibrary.framework"
+               BlueprintIdentifier = "2B7C296D28BDDB2F00C84A93"
+               BuildableName = "libSeaLibrary.a"
                BlueprintName = "SeaLibrary"
-               ReferencedContainer = "container:../SeaLibrary/SeaLibrary.xcodeproj">
+               ReferencedContainer = "container:../SeaLibrary/SharedSource.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

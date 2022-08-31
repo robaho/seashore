@@ -3,8 +3,8 @@
 #include <QuickLook/QuickLook.h>
 #include <Cocoa/Cocoa.h>
 
-#include <SeaMinimal/XCFContent.h>
-#include <SeaMinimal/SeaRenderer.h>
+#include "SeaMinimal/XCFContent.h"
+#include "SeaMinimal/SeaRenderer.h"
 
 /* -----------------------------------------------------------------------------
    Generate a preview for file

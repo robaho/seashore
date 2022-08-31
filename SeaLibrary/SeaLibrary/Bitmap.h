@@ -8,7 +8,7 @@
 */
 
 #import <CoreGraphics/CoreGraphics.h>
-#import <SeaLibrary/Globals.h>
+#import "Globals.h"
 
 /*!
 	@enum		k...ColorSpace

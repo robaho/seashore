@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2B670BDB27DD0195003BA6AE"
+               BlueprintIdentifier = "2B2EFA6F28BF1AD3009B225D"
                BuildableName = "SeaLibrary.framework"
                BlueprintName = "SeaLibrary"
                ReferencedContainer = "container:../SeaLibrary/SeaLibrary.xcodeproj">
@@ -56,7 +56,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2B43BF5727DD1D670094F84E"
+               BlueprintIdentifier = "2B2EFA9328BF1E67009B225D"
                BuildableName = "SeaMinimal.framework"
                BlueprintName = "SeaMinimal"
                ReferencedContainer = "container:../SeaMinimal/SeaMinimal.xcodeproj">

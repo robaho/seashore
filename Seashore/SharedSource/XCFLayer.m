@@ -1,6 +1,5 @@
 #import "XCFLayer.h"
-#import <SeaLibrary/RLE.h>
-#import <SeaLibrary/Bitmap.h>
+#import "SeaLibrary/SeaLibrary.h"
 
 @implementation XCFLayer
 
