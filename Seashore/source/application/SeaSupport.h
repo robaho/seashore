@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
     __unsafe_unretained IBOutlet NSTextView *textView;
     __weak IBOutlet NSButton *supportSeashore;
     NSTimer *timer;
+    int timerCount;
 }
 
 - (IBAction)restore:(id)sender;

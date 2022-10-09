@@ -37,21 +37,24 @@
     [self->window setDelegate:self];
 }
 
+- (void)timerFired
+{
+    timerCount--;
+    if(timerCount>0) {
+        NSString *title = [NSString stringWithFormat:@"Nah, Maybe Later (%d)",timerCount];
+        [self->maybeLater setTitle:title];
+    } else {
+        [self->maybeLater setTitle:@"Nah, Maybe Later"];
+        [self->maybeLater setEnabled:TRUE];
+        [timer invalidate];
+    }
+}
+
 - (void)windowDidBecomeMain:(id)window
 {
     if(!isSupported){
-        __block int count=10;
-        timer = [NSTimer scheduledTimerWithTimeInterval:1.0 repeats:YES block:^(NSTimer * _Nonnull timer) {
-            count--;
-            if(count>0) {
-                NSString *title = [NSString stringWithFormat:@"Nah, Maybe Later (%d)",count];
-                [self->maybeLater setTitle:title];
-            } else {
-                [self->maybeLater setTitle:@"Nah, Maybe Later"];
-                [self->maybeLater setEnabled:TRUE];
-                [timer invalidate];
-            }
-        }];
+        timerCount = 10;
+        timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFired) userInfo:NULL repeats:YES];
         [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
     }
 }

@@ -313,7 +313,7 @@ void DumpObjcMethods(Class clz) {
 {
     viewDirtyRect = NSIntegralRectWithOptions(viewDirtyRect,NSAlignAllEdgesOutward|NSAlignRectFlipped);
 
-    CGContextRef nsCtx = [[NSGraphicsContext currentContext] CGContext];
+    CGContextRef nsCtx = [[NSGraphicsContext currentContext] graphicsPort];
 
     float magnification = [[document scrollView] magnification];
 
