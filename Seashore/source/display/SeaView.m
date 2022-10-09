@@ -677,7 +677,7 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
                     [self delete:NULL];
                 break;
                 case kEscapeCharCode:
-                    if(curToolIndex >= kFirstSelectionTool && curToolIndex <= kLastSelectionTool && [[[document tools] currentTool] intermediate])
+                    if(curToolIndex >= kFirstSelectionTool && curToolIndex <= kLastSelectionTool && [[document currentTool] intermediate])
                         [(AbstractSelectTool*)[document currentTool] cancelSelection];
                     else
                         [[document selection] clearSelection];
