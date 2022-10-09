@@ -497,6 +497,19 @@ void grainMergeMerge(int spp, unsigned char *destPtr, int destLoc, unsigned char
     destPtr[destLoc + alphaPos] = MIN(srcPtr[srcLoc + alphaPos], destPtr[destLoc + alphaPos]);
 }
 
+void exclusionMerge(int spp, unsigned char *destPtr, int destLoc, unsigned char *srcPtr, int srcLoc)
+{
+    int t1, k;
+
+    for (k = 0; k < alphaPos; k++) {
+        t1 = 255*(.5 - 2 * (destPtr[k]/255.0-.5) * (srcPtr[k]/255.0 - .5));
+        destPtr[k] = MAX(0, MIN(255, t1));
+    }
+
+    destPtr[destLoc + alphaPos] = MIN(srcPtr[srcLoc + alphaPos], destPtr[destLoc + alphaPos]);
+}
+
+
 void selectMerge(int choice, int spp, unsigned char *destPtr, int destLoc, unsigned char *srcPtr, int srcLoc)
 {
     switch (choice) {
@@ -554,6 +567,9 @@ void selectMerge(int choice, int spp, unsigned char *destPtr, int destLoc, unsig
         case kCGBlendModeSoftLight:
             softlightMerge(spp, destPtr, destLoc, srcPtr, srcLoc);
             break;
+        case kCGBlendModeExclusion:
+            exclusionMerge(spp,destPtr,destLoc,srcPtr,srcLoc);
+            break;
 //        case XCF_GRAIN_EXTRACT_MODE:
 //            grainExtractMerge(spp, destPtr, destLoc, srcPtr, srcLoc);
 //            break;
@@ -562,7 +578,9 @@ void selectMerge(int choice, int spp, unsigned char *destPtr, int destLoc, unsig
 //            break;
         default:
             normalMerge(spp, destPtr, destLoc, srcPtr, srcLoc, 255);
-            NSLog(@"Unknown mode passed to selectMerge()");
+#ifdef DEBUG
+            NSLog(@"Unknown mode %d passed to selectMerge()",choice);
+#endif
             break;
     }
 }
