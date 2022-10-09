@@ -67,8 +67,7 @@
                 // Draw the thumbnail
                 thumbnail = [[textures objectAtIndex:elemNo] image];
 
-                [[NSColor colorWithPatternImage:thumbnail] set];
-                [[NSBezierPath bezierPathWithRect:NSInsetRect(elemRect,4,4)] fill];
+                [thumbnail drawInRect:NSInsetRect(elemRect,4,4)];
 
                 if (elemNo == activeTextureIndex) {
                     [NSBezierPath setDefaultLineWidth:2];

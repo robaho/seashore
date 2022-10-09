@@ -123,6 +123,7 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      enableAddressSanitizer = "YES"
       enableASanStackUseAfterReturn = "YES"
       disableMainThreadChecker = "YES"
       launchStyle = "0"
@@ -134,6 +135,7 @@
       migratedStopOnEveryIssue = "YES"
       debugServiceExtension = "internal"
       enableGPUValidationMode = "1"
+      showGraphicsOverview = "Yes"
       allowLocationSimulation = "YES"
       queueDebuggingEnabled = "No">
       <BuildableProductRunnable
@@ -161,11 +163,6 @@
          <EnvironmentVariable
             key = "CG_CONTEXT_SHOW_BACKTRACE"
             value = "true"
-            isEnabled = "YES">
-         </EnvironmentVariable>
-         <EnvironmentVariable
-            key = "MALLOC_PERMIT_INSANE_REQUESTS"
-            value = "1"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>

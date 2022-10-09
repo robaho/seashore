@@ -12,13 +12,7 @@
 */
 
 @interface EraserOptions : BrushOptions {
-	
-	// A slider indicating the opacity of the bucket
-	IBOutlet id opacitySlider;
-	
-	// A label displaying the opacity of the bucket
-	IBOutlet id opacityLabel;
-	
+
 	// A checkbox indicating whether to fade in the same style as the paintbrush
 	IBOutlet id mimicBrushCheckbox;
 	
@@ -31,21 +25,6 @@
 */
 - (void)awakeFromNib;
 
-/*!
-	@method		opacityChanged:
-	@discussion	Called when the opacity is changed.
-	@param		sender
-				Ignored.
-*/
-- (IBAction)opacityChanged:(id)sender;
-
-/*!
-	@method		opacity
-	@discussion	Returns the opacity to be used with the eraser tool.
-	@result		Returns an integer indicating the opacity (between 0 and 255
-				inclusive) to be used with the eraser tool.
-*/
-- (int)opacity;
 
 /*!
 	@method		mimicBrush

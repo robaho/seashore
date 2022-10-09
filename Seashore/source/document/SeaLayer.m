@@ -91,6 +91,7 @@
 	return self;
 }
 
+// make a copy of a layer
 - (id)initWithDocument:(id)doc layer:(SeaLayer*)layer
 {
 	// Call the core initializer
@@ -107,7 +108,7 @@
 	mode = [layer mode];
 	spp = [[[layer document] contents] spp];
 
-    nsdata = [NSData dataWithData:[layer layerData]];
+    nsdata = [NSData dataWithBytes:[[layer layerData] bytes] length:[[layer layerData] length]];
 	xoff = [layer xoff];
 	yoff = [layer yoff];
 	visible = [layer visible];
@@ -124,8 +125,7 @@
 }
 
 - (void)dealloc
-{	
-    CGImageRelease(pre_bitmap);
+{
 }
 
 - (id)document
@@ -161,6 +161,33 @@
 - (IntRect)globalRect
 {
 	return IntMakeRect(xoff, yoff, width, height);
+}
+
+- (IntRect)globalBounds {
+    NSAffineTransform *position_tx = [NSAffineTransform transform];
+
+    if ([self shouldTransform]) {
+        PositionTool *positionTool = (PositionTool*)[document currentTool];
+        position_tx = [positionTool transform];
+    }
+
+    NSRect r = IntRectMakeNSRect([self globalRect]);
+
+    int w = r.size.width;
+    int h = r.size.height;
+
+    NSBezierPath *tempPath = [NSBezierPath bezierPathWithRect:NSMakeRect(0,0,w,h)];
+    NSAffineTransform *tx = [NSAffineTransform transform];
+    [tx translateXBy:-(w/2) yBy:-(h/2)];
+    [tempPath transformUsingAffineTransform:tx];
+    [tempPath transformUsingAffineTransform:position_tx];
+    tx = [NSAffineTransform transform];
+    [tx translateXBy:(w/2) yBy:(h/2)];
+    [tx translateXBy:r.origin.x yBy:r.origin.y];
+    [tempPath transformUsingAffineTransform:tx];
+
+    IntRect bounds = NSRectMakeIntRect([tempPath bounds]);
+    return bounds;
 }
 
 - (IntRect)localRect
@@ -359,6 +386,12 @@ done:
     height=h;
 }
 
+- (bool)isComplexTransform
+{
+    CGAffineTransform s = [self layerTransform];
+    return (s.a!=1 || s.b!=0 || s.c!=0 || s.d!=1);
+}
+
 - (BOOL)visible
 {
 	return visible;
@@ -515,11 +548,12 @@ done:
 - (NSImage *)thumbnail
 {
     if(thumbnail==NULL){
-        [self image];
+        NSImage *tmp = [self image];
         thumbnail = [NSImage imageWithSize:[image size] flipped:FALSE drawingHandler:^BOOL(NSRect dstRect) {
             float max_scale = MaxScale(CGContextGetCTM([[NSGraphicsContext currentContext] graphicsPort]));
-            [[NSGraphicsContext currentContext] setShouldAntialias:TRUE];
-            [self->image drawInRect:dstRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+            [[NSGraphicsContext currentContext] setShouldAntialias:FALSE];
+            [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
+            [tmp drawInRect:dstRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
             CGFloat dashes[] = {2/max_scale,4/max_scale};
             NSBezierPath *path = [NSBezierPath bezierPathWithRect:dstRect];
             [[NSColor controlTextColor] set];
@@ -632,15 +666,10 @@ done:
 - (NSImage *)image
 {
     if(image==NULL){
-        CGImageRelease(pre_bitmap);
         CGImageRef img = [self bitmap];
-        CGContextRef ctx = CGBitmapContextCreate(nil, width, height, 8, spp*width, COLOR_SPACE, kCGImageAlphaPremultipliedLast);
-        CGContextDrawImage(ctx, CGRectMake(0,0,width,height), img);
-        pre_bitmap = CGBitmapContextCreateImage(ctx);
-        CGContextRelease(ctx);
-        image = [[NSImage alloc] initWithCGImage:pre_bitmap size:NSZeroSize];
-        CGImageRelease(img);
+        image = [[NSImage alloc] initWithCGImage:img size:NSZeroSize];
         [image setCacheMode:NSImageCacheAlways];
+        CGImageRelease(img);
     }
     return image;
 }
@@ -670,18 +699,26 @@ done:
 
 - (void)drawLayer:(CGContextRef)context
 {
-    [self drawLayer:context transform:[self layerTransform]];
+    CGContextSaveGState(context);
+    [self transformContext:context];
+    CGContextSetBlendMode(context, mode);
+    CGContextSetAlpha(context,[self opacity_float]);
+    [self drawContent:context];
+    CGContextRestoreGState(context);
+}
+
+- (BOOL)shouldTransform
+{
+    SeaLayer *active = [[document contents] activeLayer];
+
+    return [document currentToolId]==kPositionTool && (active==self || ([active linked] && linked));
 }
 
 - (CGAffineTransform)layerTransform
 {
-    SeaLayer *active = [[document contents] activeLayer];
-
-    bool shouldTransform = active==self || ([active linked] && linked);
-
     CGAffineTransform tx = CGAffineTransformIdentity;
 
-    if([document currentToolId]==kPositionTool && shouldTransform) {
+    if([self shouldTransform]) {
         PositionTool *positionTool = (PositionTool*)[document currentTool];
         tx = [[positionTool transform] cgtransform];
     }
@@ -689,8 +726,9 @@ done:
     return tx;
 }
 
--(void)transformContext:(CGContextRef)context transform:(CGAffineTransform)tx
+-(void)transformContext:(CGContextRef)context
 {
+    CGAffineTransform tx = [self layerTransform];
     CGContextTranslateCTM(context,xoff,yoff);
 
     CGContextTranslateCTM(context,(width/2),(height/2));
@@ -701,55 +739,12 @@ done:
     CGContextScaleCTM(context,1,-1);
 }
 
-- (void)drawLayer:(CGContextRef)context transform:(CGAffineTransform)tx
-{
-    CGContextSaveGState(context);
-    CGContextSetBlendMode(context, mode);
-
-    [self transformContext:context transform:tx];
-
-    CGContextSetAlpha(context,[self opacity_float]);
-
-    [self drawContent:context];
-
-    CGContextRestoreGState(context);
-}
-
 - (void)drawContent:(CGContextRef)context
 {
-    [self image]; // force premultipled bitmap to be created if needed
-    CGContextDrawImage(context,CGRectMake(0,0,width,height),pre_bitmap);
+    CGImageRef img = [self bitmap];
+    CGContextDrawImage(context, CGRectMake(0,0,width,height), img);
+    CGImageRelease(img);
 }
-
-- (void)drawChannelLayer:(CGContextRef)context withImage:(unsigned char *)data0
-{
-    int channel = [[document contents] selectedChannel];
-
-    CGDataProviderRef dp = CGDataProviderCreateWithData(NULL,data0!=nil?data0:[nsdata bytes],width*height*spp,NULL);
-    CGImageRef image = CGImageCreate(width,height,8,8*spp,width*spp,COLOR_SPACE,channel==kAlphaChannelView ? kCGImageAlphaLast : kCGImageAlphaNoneSkipLast,dp,nil,false,0);
-    CGDataProviderRelease(dp);
-
-    CGContextSaveGState(context);
-
-    [self transformContext:context transform:[self layerTransform]];
-
-    CGRect r = CGRectMake(0,0,width,height);
-
-    CGContextSetAlpha(context,1.0);
-
-    if(channel==kAlphaChannelView) {
-        CGContextSetFillColorWithColor(context, CGColorCreateGenericRGB(1,1,1,1));
-        CGContextFillRect(context, r);
-        CGContextSetBlendMode(context, kCGBlendModeDestinationIn);
-    } else {
-        CGContextSetBlendMode(context, kCGBlendModeNormal);
-    }
-
-    CGContextDrawImage(context,r,image);
-    CGImageRelease(image);
-    CGContextRestoreGState(context);
-}
-
 
 - (NSColor *) getPixelX:(int)x Y:(int)y
 {

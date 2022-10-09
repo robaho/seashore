@@ -162,6 +162,11 @@ static NSString*  SelectionEditIdentifier = @"Selection Edit Identifier";
 	return foreground;
 }
 
+- (BOOL)foregroundIsTexture
+{
+    return CGColorGetPattern([foreground CGColor])!=NULL;
+}
+
 - (NSColor *)background
 {
 	return background;
@@ -197,9 +202,6 @@ static NSString*  SelectionEditIdentifier = @"Selection Edit Identifier";
 
 	}
 	[colorSelectView update];
-    if(tool == kTextTool){
-        [[document docView] setNeedsDisplay:TRUE];
-    }
     [[document currentTool] switchingTools:TRUE];
 }
 

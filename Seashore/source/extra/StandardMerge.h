@@ -68,3 +68,50 @@ void replace_alpha_pm(int spp,unsigned char *top,unsigned char *bottom,unsigned 
 void merge_primary_pm(int spp,unsigned char *top,unsigned char *bottom,unsigned char *dest,unsigned char topOpacity);
 void replace_primary_pm(int spp,unsigned char *top,unsigned char *bottom,unsigned char *dest,unsigned char replace);
 
+/*!
+ @function    normalMerge
+ @discussion    Given two pixels in two bitmaps composites the source pixel on
+ to the destination pixel using the normal merge technique.
+ @param        spp
+ The samples per pixel of the bitmaps (can be 2 or 4).
+ @param        destPtr
+ The block of memory containing the pixel upon which the source
+ pixel is being composited.
+ @param        destLoc
+ The position in that block of the pixel.
+ @param        srcPtr
+ The block of memory containing the pixel which is being
+ composited.
+ @param        srcLoc
+ The position in that block of the pixel.
+ @param        srcOpacity
+ The opacity with which the source pixel should be composited.
+ */
+inline void normalMerge(int spp, unsigned char *destPtr, int destLoc, unsigned char *srcPtr, int srcLoc, int srcOpacity);
+
+/*!
+ @function    selectMerge
+ @discussion    Given two pixels in two bitmaps composites the source pixel on
+ to the destination pixel using the selected merge technique.
+ Note for XCF_DISSOLVE_MODE you must call srandom(randomTable[y %
+ 4096]); for (k = 0; k < x; k++)  random();" for the merge to
+ work correctly.
+ @param        choice
+ The selected merge technique (see Constants documentation).
+ @param        spp
+ The samples per pixel of the bitmaps (can be 2 or 4).
+ @param        destPtr
+ The block of memory containing the pixel upon which the source
+ pixel is being composited.
+ @param        destLoc
+ The position in that block of the pixel.
+ @param        srcPtr
+ The block of memory containing the pixel which is being
+ composited.
+ @param        srcLoc
+ The position in that block of the pixel.
+ @param        srcOpacity
+ The opacity with which the source pixel should be composited.
+ */
+inline void selectMerge(int choice, int spp, unsigned char *destPtr, int destLoc, unsigned char *srcPtr, int srcLoc);
+

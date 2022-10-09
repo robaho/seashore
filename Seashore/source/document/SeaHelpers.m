@@ -90,8 +90,6 @@
 
 - (void)activeLayerChanged:(int)eventType
 {
-	id whiteboard = [document whiteboard];
-	
 	if (![[[document contents] activeLayer] hasAlpha] && [[document contents] selectedChannel] == kAlphaChannel) {
 		[[document contents] setSelectedChannel:kAllChannels];
 		[[document helpers] channelChanged];
@@ -101,7 +99,7 @@
 		case kLayerSwitched:
 		case kLayerAdded:
 		case kLayerDeleted:
-			[whiteboard readjustLayer];
+			[[document whiteboard] readjustLayer];
 		break;
 	}
     
@@ -278,7 +276,7 @@
 		break;
 		default:
 			layer = [contents layer:index];
-			[[document whiteboard] update:[layer globalRect]];
+			[[document whiteboard] update:[layer globalBounds]];
 		break;
 	}
 	[(LayerDataSource *)[document dataSource] update];

@@ -23,16 +23,6 @@
 	[mimicBrushCheckbox setState:[gUserDefaults boolForKey:@"eraser mimicBrush"]];
 }
 
-- (IBAction)opacityChanged:(id)sender
-{		
-	[opacityLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"opacity", @"Opacity: %d%%"), [opacitySlider intValue]]];
-}
-
-- (int)opacity
-{
-	return [opacitySlider intValue] * 2.55;
-}
-
 - (BOOL)brushIsErasing
 {
     return TRUE;

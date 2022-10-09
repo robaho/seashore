@@ -58,7 +58,7 @@
 	[[document whiteboard] clearOverlay];
 
 	if(isPreviewing){
-		[self fillAtPoint:where useTolerance:!optionDown];
+		[self fillAtPoint:where useTolerance:!optionDown opacity:[options opacity]];
 	}
 
     [[document docView] setNeedsDisplayInLayerRect:IntSumRects(dirty, rect):8];
@@ -72,7 +72,7 @@
 	[[document whiteboard] clearOverlay];
 
 	if(!isPreviewing || [options modifier] != kShiftModifier){
-		[self fillAtPoint:where useTolerance:!optionDown];
+        [self fillAtPoint:where useTolerance:!optionDown opacity:[options opacity]];
         [[document helpers] applyOverlay];
 	}
 
@@ -82,10 +82,9 @@
     [[document recentsUtility] rememberBucket:options];
 }
 
-- (void)fillAtPoint:(IntPoint)point useTolerance:(BOOL)useTolerance
+- (void)fillAtPoint:(IntPoint)point useTolerance:(BOOL)useTolerance opacity:(int)opacity
 {
     SeaLayer *layer = [[document contents] activeLayer];
-    SeaTexture *activeTexture = [[document textureUtility] activeTexture];
 	int tolerance, width = [layer width], height = [layer height], spp = [[document contents] spp];
 	unsigned char *overlay = [[document whiteboard] overlay], *data = [layer data];
 	unsigned char basePixel[4];
@@ -93,24 +92,24 @@
 	int k, channel;
 	
 	// Set the overlay to fully opaque
-	[[document whiteboard] setOverlayOpacity:255];
+	[[document whiteboard] setOverlayOpacity:opacity];
 	
 	// Determine the bucket's colour
 	if ([options useTextures]) {
 		for (k = 0; k < spp - 1; k++)
 			basePixel[k] = 0;
-		basePixel[spp - 1] = [[document textureUtility] opacity];
+        basePixel[spp - 1] = 255;
 	}
 	else {
 		if (spp == 4) {
 			basePixel[0] = (unsigned char)([color redComponent] * 255.0);
 			basePixel[1] = (unsigned char)([color greenComponent] * 255.0);
 			basePixel[2] = (unsigned char)([color blueComponent] * 255.0);
-			basePixel[3] = (unsigned char)([color alphaComponent] * 255.0);
+            basePixel[3] = 255;
 		}
 		else {
 			basePixel[0] = (unsigned char)([color whiteComponent] * 255.0);
-			basePixel[1] = (unsigned char)([color alphaComponent] * 255.0);
+            basePixel[1] = 255;
 		}
 	}
 
@@ -153,7 +152,7 @@
 		rect = bucketFill(spp, IntMakeRect(0, 0, width, height), overlay, data, width, height, seeds, intervals, basePixel, tolerance, channel);
 	if ([options useTextures] && IntContainsRect(IntMakeRect(0, 0, width, height), rect)) {
         CGContextRef overlayCtx = [[document whiteboard] overlayCtx];
-        textureFill(overlayCtx,[activeTexture image],IntRectMakeNSRect(rect));
+        textureFill(overlayCtx,[[document toolboxUtility] foreground],IntRectMakeNSRect(rect));
 	}
 	
     [[document helpers] overlayChanged:rect];

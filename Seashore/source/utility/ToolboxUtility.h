@@ -21,7 +21,7 @@
 	IBOutlet id seaProxy;
 	
 	// The current foreground and background colour
-	id foreground, background;
+	NSColor *foreground, *background;
 	
 	// The colorSelectView associated with this utility
 	id colorSelectView;
@@ -86,6 +86,8 @@
 	@result		Returns a NSColor representing the background colour.
 */
 - (NSColor *)background;
+
+- (BOOL)foregroundIsTexture;
 
 /*!
 	@method		setForeground:

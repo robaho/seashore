@@ -115,3 +115,4 @@ NS_INLINE bool isSameColor(unsigned char *data,int width,int spp,int x,int y,int
 
 CGImageRef CGImageDeepCopy(CGImageRef image);
 float MaxScale(CGAffineTransform tx);
+CGRect CGImageGetBounds(CGImageRef image);

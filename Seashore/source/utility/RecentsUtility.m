@@ -23,7 +23,6 @@
 @end
 @implementation RememberedBase
 {
-    @public SeaTexture *texture;
     @public NSColor *foreground,*background;
     @public int opacity;
     @public __weak id document;
@@ -35,10 +34,6 @@
 -(NSColor*)background
 {
     return background;
-}
--(SeaTexture*)texture
-{
-    return texture;
 }
 @end
 
@@ -63,15 +58,11 @@
 {
     BrushUtility *brushes = [document brushUtility];
     ToolboxUtility *toolbox = [document toolboxUtility];
-    TextureUtility *textures =[document textureUtility];
-    
+
     [brushes setActiveBrush:brush];
     [brushes setSpacing:spacing];
     [toolbox setForeground:foreground];
     [toolbox setBackground:background];
-    
-    [textures setActiveTexture:texture];
-    [textures setOpacity:opacity];
     
     [toolbox changeToolTo:kBrushTool];
 }
@@ -107,14 +98,10 @@
 -(void)restore
 {
     ToolboxUtility *toolbox = [document toolboxUtility];
-    TextureUtility *textures =[document textureUtility];
     OptionsUtility *options = [document optionsUtility];
     
     [toolbox setForeground:foreground];
     [toolbox setBackground:background];
-    
-    [textures setActiveTexture:texture];
-    [textures setOpacity:opacity];
     
     [toolbox changeToolTo:kPencilTool];
     PencilOptions *opts = [options getOptions:kPencilTool];
@@ -144,13 +131,9 @@
 -(void)restore
 {
     ToolboxUtility *toolbox = [document toolboxUtility];
-    TextureUtility *textures =[document textureUtility];
-    
+
     [toolbox setForeground:foreground];
     [toolbox setBackground:background];
-    
-    [textures setActiveTexture:texture];
-    [textures setOpacity:opacity];
     
     [toolbox changeToolTo:kBucketTool];
 }
@@ -224,11 +207,9 @@
   
     BrushUtility *brushes = [document brushUtility];
     ToolboxUtility *toolbox = [document toolboxUtility];
-    TextureUtility *textures =[document textureUtility];
     SeaBrush *brush = [brushes activeBrush];
     int spacing = [brushes spacing];
-    SeaTexture *texture = [textures activeTexture];
-    int opacity = [textures opacity];
+    int opacity = [options opacity];
     NSColor *foreground = [toolbox foreground];
     NSColor *background = [toolbox background];
 
@@ -238,7 +219,7 @@
             continue;
         }
         RememberedBrush *memory = entry;
-        if(memory->brush==brush && memory->spacing==spacing && memory->texture==texture && memory->foreground==foreground && memory->background==background && memory->opacity==opacity) {
+        if(memory->brush==brush && memory->spacing==spacing && memory->foreground==foreground && memory->background==background && memory->opacity==opacity) {
             if(i==0) {
                 // order not changing, nothing to update
                 return;
@@ -252,7 +233,6 @@
     memory->document = document;
     memory->brush = brush;
     memory->spacing = spacing;
-    memory->texture = texture;
     memory->foreground = foreground;
     memory->background = background;
     memory->opacity = opacity;
@@ -270,10 +250,8 @@
 {
     
     ToolboxUtility *toolbox = [document toolboxUtility];
-    TextureUtility *textures =[document textureUtility];
     int pencilSize = [options pencilSize];
-    SeaTexture *texture = [textures activeTexture];
-    int opacity = [textures opacity];
+    int opacity = [options opacity];
     NSColor *foreground = [toolbox foreground];
     NSColor *background = [toolbox background];
     
@@ -283,7 +261,7 @@
             continue;
         }
         RememberedPencil *memory = entry;
-        if(memory->pencilSize==pencilSize && memory->texture==texture && memory->foreground==foreground && memory->background==background && memory->opacity==opacity) {
+        if(memory->pencilSize==pencilSize && memory->foreground==foreground && memory->background==background && memory->opacity==opacity) {
             if(i==0) {
                 // order not changing, nothing to update
                 return;
@@ -296,7 +274,6 @@
     RememberedPencil *memory = [RememberedPencil new];
     memory->pencilSize = pencilSize;
     memory->document = document;
-    memory->texture = texture;
     memory->foreground = foreground;
     memory->background = background;
     memory->opacity = opacity;
@@ -314,10 +291,8 @@
 {
     
     ToolboxUtility *toolbox = [document toolboxUtility];
-    TextureUtility *textures =[document textureUtility];
     
-    SeaTexture *texture = [textures activeTexture];
-    int opacity = [textures opacity];
+    int opacity = [options opacity];
     NSColor *foreground = [toolbox foreground];
     NSColor *background = [toolbox background];
     
@@ -327,7 +302,7 @@
             continue;
         }
         RememberedBucket *memory = entry;
-        if(memory->texture==texture && memory->foreground==foreground && memory->background==background && memory->opacity==opacity) {
+        if(memory->foreground==foreground && memory->background==background && memory->opacity==opacity) {
             if(i==0) {
                 // order not changing, nothing to update
                 return;
@@ -339,7 +314,6 @@
     
     RememberedBucket *memory = [RememberedBucket new];
     memory->document = document;
-    memory->texture = texture;
     memory->foreground = foreground;
     memory->background = background;
     memory->opacity = opacity;

@@ -474,7 +474,6 @@
 {
 	[helpers endLineDrawing];
 	[[self optionsUtility] viewNeedsDisplay];
-	[gColorPanel orderOut:self];
 }
 
 - (void)windowDidResignKey:(NSNotification *)aNotification

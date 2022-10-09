@@ -32,7 +32,6 @@ enum {
         return;
     }
 
-	// End the sheet
 	[NSApp stopModal];
 	[NSApp endSheet:sheet];
 	[sheet orderOut:self];
@@ -48,13 +47,11 @@ enum {
 	}
     [gFileManager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:0 error:NULL];
 	path = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.gbr", [nameTextbox stringValue]]];
+
+    CGImageRef bitmap = [[document whiteboard] bitmapCG];
+    [self writeToFile:path spacing:self.spacing bitmap:bitmap];
+    CGImageRelease(bitmap);
     
-    SeaDocument *doc = document;
-    
-	// Write document
-    [self writeToFile:path spacing:self.spacing data:[[doc whiteboard] data] spp:[[doc contents] spp] width:[[doc contents] width] height:[[doc contents] height]];
-    
-	// Refresh textures
 	[[document brushUtility] addBrushFromPath:path];
 }
 
@@ -118,15 +115,27 @@ typedef struct {
 } BrushHeader;
 
 #define GBRUSH_MAGIC    (('G' << 24) + ('I' << 16) + ('M' << 8) + ('P' << 0))
-#define window [[[self windowControllers] objectAtIndex:0] window]
-#define int_mult(a,b,t)  ((t) = (a) * (b) + 0x80, ((((t) >> 8) + (t)) >> 8))
 
-- (BOOL)writeToFile:(NSString *)path spacing:(int)spacing data:(unsigned char*)data spp:(int)spp width:(int)width height:(int)height
+- (BOOL)writeToFile:(NSString *)path spacing:(int)spacing bitmap:(CGImageRef)bitmap
 {
     FILE *file;
     BrushHeader header;
     unsigned char* noalpha=NULL;
-    
+
+    int width = (int)CGImageGetWidth(bitmap);
+    int height = (int)CGImageGetHeight(bitmap);
+    CGColorSpaceRef cs = CGImageGetColorSpace(bitmap);
+    int spp = (int)CGColorSpaceGetNumberOfComponents(cs) + 1; // add 1 for alpha
+    CGColorSpaceRelease(cs);
+    CGDataProviderRef dp = CGImageGetDataProvider(bitmap);
+    CFDataRef rawData = CGDataProviderCopyData(dp);
+    CGDataProviderRelease(dp);
+    UInt8 *cfData = (UInt8 *) CFDataGetBytePtr(rawData);
+
+    unsigned char *data = malloc(width*height*spp);
+    memcpy(data,cfData,width*height*spp);
+    CFRelease(rawData);
+
     if(spp==2){
         noalpha = malloc(width*height);
         stripAlphaToWhite(2,noalpha,data,width*height);
@@ -134,16 +143,20 @@ typedef struct {
         for(int i=0;i<width*height;i++) {
             noalpha[i] = noalpha[i] ^ 0xFF;
         }
+        free(data);
         data = noalpha;
         spp=1;
+    } else {
+        unpremultiplyBitmap(spp,data,data,width*height);
     }
-    
+
     NSString* name = [[path lastPathComponent] stringByDeletingPathExtension];
     
     // Open the brush file
     file = fopen([path fileSystemRepresentation], "wb");
-    if (file == NULL)
-    return NO;
+    if (file == NULL) {
+        return NO;
+    }
     
     // Set-up the header
     header.header_size = strlen([name UTF8String]) + 1 + sizeof(header);
@@ -176,10 +189,9 @@ typedef struct {
     // Close the brush file
     fclose(file);
     
-    if(noalpha){
-        free(noalpha);
-    }
-    
+    free(data);
+
+
     return YES;
 }
 

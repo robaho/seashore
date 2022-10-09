@@ -27,11 +27,6 @@
 	if (activeGroupIndex < 0 || activeGroupIndex >= [groups count])
 		activeGroupIndex = 0;
 		
-
-	[opacitySlider setIntValue:100];
-	[opacityLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"opacity", @"Opacity: %d%%"), [opacitySlider intValue]]];
-	opacity = 255;
-	
 	return self;
 }
 
@@ -201,29 +196,6 @@
 	[self update];
 }
 
-- (IBAction)changeOpacity:(id)sender
-{
-	[opacityLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"opacity", @"Opacity: %d%%"), [opacitySlider intValue]]];
-	opacity = (int)([opacitySlider intValue] * 2.55 +.5);
-}
-
-- (int)opacity
-{
-	return opacity;
-}
-
-- (float)opacity_float
-{
-    return opacity/255.0;
-}
-- (void)setOpacity:(int)value
-{
-    if(value<0 || value>255)
-        return;
-    [opacitySlider setIntValue:(int)((value/255.0)*100 +0.5)];
-    [self changeOpacity:opacitySlider];
-}
-
 - (id)activeTexture
 {
     return selected;
@@ -265,14 +237,16 @@
     if (index>=0 && index<[textures count]) {
         selected = [textures objectAtIndex:index];
         [textureNameLabel setStringValue:[selected name]];
-        [opacitySlider setEnabled:YES];
     } else {
         [textureNameLabel setStringValue:@""];
-        [opacitySlider setEnabled:NO];
     }
     [view setNeedsDisplay:YES];
     [[view documentView] update];
-    [colorSelectView setNeedsDisplay:YES];
+
+    NSColor *color = [NSColor colorWithPatternImage:[selected image]];
+
+    [[document toolboxUtility] setForeground:color];
+    [colorSelectView update];
     [[document docView] setNeedsDisplay:YES];
 }
 

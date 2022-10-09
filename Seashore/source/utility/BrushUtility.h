@@ -163,8 +163,8 @@
 
 /*!
  @method        groupNames
- @discussion    Returns the textures' group names (excluding custom groups).
- @result        Returns an NSArray containing the textures' group names.
+ @discussion    Returns the brushes' group names (excluding custom groups).
+ @result        Returns an NSArray containing the brushes' group names.
  */
 - (NSArray *)groupNames;
 

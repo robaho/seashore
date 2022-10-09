@@ -37,11 +37,6 @@
     return [[[document contents] activeLayer] bitmap];
 }
 
-- (unsigned char *)whiteboardData
-{
-	return [[document whiteboard] data];
-}
-
 - (unsigned char *)replace
 {
 	return [[document whiteboard] replace];

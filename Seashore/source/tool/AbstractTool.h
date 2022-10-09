@@ -64,15 +64,6 @@
 - (BOOL)useMouseCoalescing;
 
 /*!
-	@method		foregroundIsTexture
-	@discussion	Returns whether the foreground colour should is the active
-				texture.
-	@result		Returns YES if the foreground colour is the active texture, NO
-				otherwise. The implementation in this class always returns NO.
-*/
-- (BOOL)foregroundIsTexture;
-
-/*!
 	@method		mouseDownAt:withEvent:
 	@discussion	Handles mouse down events.
 	@param		where

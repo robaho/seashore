@@ -34,13 +34,6 @@
 - (unsigned char *)data;
 
 /*!
-	@method		whiteboardData
-	@discussion	Returns the bitmap data of the document.
-	@result		Returns a pointer to the bitmap data of the document.
-*/
-- (unsigned char *)whiteboardData;
-
-/*!
 	@method		replace
 	@discussion	Returns the replace mask of the overlay.
 	@result		Returns a pointer to the 8 bits per pixel replace mask of the

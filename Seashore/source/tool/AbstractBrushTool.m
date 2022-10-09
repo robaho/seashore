@@ -9,7 +9,7 @@
 
 @implementation AbstractBrushTool
 
-- (void)plotBrush:(SeaBrush*)brush at:(NSPoint)where pressure:(int)pressure
+- (IntRect)plotBrush:(SeaBrush*)brush at:(NSPoint)where pressure:(int)pressure
 {
     float brushWidth = [brush width];
     float brushHeight = [brush height];
@@ -28,15 +28,14 @@
 
     CGContextRef overlayCtx = [[document whiteboard] overlayCtx];
 
-    CGContextSetAlpha(overlayCtx, pressureDisabled ? 255 : pressure/255.0);
+    CGContextSetAlpha(overlayCtx, pressureDisabled ? 1.0 : pressure/255.0);
     CGContextDrawImage(overlayCtx, cgRect, brushImage);
 
-    if ([options useTextures] && ![options brushIsErasing]) {
-        NSImage *pattern = [[[document textureUtility] activeTexture] image];
-        textureFill(overlayCtx,pattern, cgRect);
+    if ([options useTextures] && ![options brushIsErasing] && ![brush isPixMap]) {
+        textureFill(overlayCtx,[[document toolboxUtility] foreground],CGRectIntegral(cgRect));
     }
 
-    [[document helpers] overlayChanged:rect];
+    return rect;
 }
 
 - (void)dealloc
@@ -47,17 +46,19 @@
 - (NSColor*)brushColor
 {
     BrushOptions *options = [self getBrushOptions];
+    NSColor *color;
     
     // Determine base pixels and hence brush colour
     if ([options brushIsErasing]) {
-        return [[document contents] background];
+        color = [[document toolboxUtility] background];
     }
     else if ([options useTextures]) {
-        return [NSColor colorWithRed:0 green:0 blue:0 alpha:[[document textureUtility] opacity_float]];
+        color = [NSColor blackColor];
     }
     else {
-        return [[document contents] foreground];
+        color = [[document toolboxUtility] foreground];
     }
+    return [color colorWithAlphaComponent:[options opacity]/255.0];
 }
 
 - (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event
@@ -75,12 +76,18 @@
     CGImageRelease(brushImage);
     brushImage=NULL;
 
-    if(curBrush != NULL)
-        brushImage = getTintedCG([curBrush bitmap],color);
+    if(curBrush != NULL) {
+        if([curBrush isPixMap]) {
+            brushImage = CGImageDeepCopy([curBrush bitmap]);
+        } else {
+            brushImage = getTintedCG([curBrush bitmap],color);
+        }
+    }
 
     [self setOverlayOptions:options];
 
-    [self plotBrush:curBrush at:IntPointMakeNSPoint(where) pressure:pressure];
+    IntRect r = [self plotBrush:curBrush at:IntPointMakeNSPoint(where) pressure:pressure];
+    [[document helpers] overlayChanged:r];
 
     lastPoint = lastPlotPoint = IntPointMakeNSPoint(where);
     distance = 0;
@@ -95,11 +102,7 @@
         if([layer hasAlpha])
             [[document whiteboard] setOverlayBehaviour:kErasingBehaviour];
     }
-    if ([options useTextures])
-        [[document whiteboard] setOverlayOpacity:[[document textureUtility] opacity]];
-    else {
-        [[document whiteboard] setOverlayOpacity:[color alphaComponent] * 255.0];
-    }
+    [[document whiteboard] setOverlayOpacity:[options opacity]];
 }
 
 - (void)mouseDraggedTo:(IntPoint)where withEvent:(NSEvent *)event
@@ -237,6 +240,9 @@
 
     int pressure;
 
+
+    IntRect dirty = IntZeroRect;
+
     // Draw all the points
     for (int n = 0; n < num_points; n++) {
         double t = t0 + n * dt;
@@ -254,9 +260,15 @@
             pressure = lastPressure + 5 * sgn(pressure - lastPressure);
         }
         lastPressure = pressure;
-        [self plotBrush:curBrush at:temp pressure:pressure];
+        IntRect r = [self plotBrush:curBrush at:temp pressure:pressure];
+        dirty = n==0 ? r : IntSumRects(dirty,r);
         lastPlotPoint = temp;
     }
+
+    if(!IntRectIsEmpty(dirty)) {
+        [[document helpers] overlayChanged:dirty];
+    }
+
 
     if(num_points>0){
         distance = total;

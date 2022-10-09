@@ -43,9 +43,6 @@
 	
 	// The index of the currently active texture
     SeaTexture *selected;
-	
-	// The opacity value to be used with the texture
-	int opacity;
 
     // The document which is the focus of this utility
     __weak IBOutlet id document;
@@ -96,14 +93,6 @@
 */
 - (void)addTextureFromPath:(NSString *)path;
 
-/*!	
-	@method		changeOpacity:
-	@discussion	Called after the opacity is changed.
-	@param		sender
-				Ignored.
-*/
-- (IBAction)changeOpacity:(id)sender;
-
 /*!
 	@method		changeGroup:
 	@discussion	Called when the texture group is changed.
@@ -111,23 +100,6 @@
 				Ignored.
 */
 - (IBAction)changeGroup:(id)sender;
-
-/*!
-	@method		opacity
-	@discussion	Returns the opacity to be used by the active texture.
-	@result		Reutrns an integer from 0 to 255 indicating the opacity to be
-				used by the active texture. The texture is fully opaque if the
-				opacity is 255.
-*/
-- (int)opacity;
-
-- (float)opacity_float;
-
-/*!
- @method        setOpacity
- @discussion    sets the opacity, must be between 0 and 255 inclusive. 25 is fully opaque.
- */
-- (void)setOpacity:(int)value;
 
 /*!
 	@method		activeTexture

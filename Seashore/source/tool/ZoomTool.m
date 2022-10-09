@@ -47,12 +47,12 @@
 
 - (void)mouseDraggedTo:(IntPoint)where withEvent:(NSEvent *)event
 {
-    IntRect old = [self postScaledRect];
+    IntRect old = [self zoomRect];
 
     [super mouseDraggedTo:where forRect:old andMask:NULL];
 
     if (intermediate) {
-        [[document helpers] selectionChanged:IntSumRects(old,[self postScaledRect])];
+        [[document helpers] selectionChanged:IntSumRects(old,[self zoomRect])];
     }
 }
 

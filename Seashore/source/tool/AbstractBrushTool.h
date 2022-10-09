@@ -40,7 +40,7 @@ typedef struct {
     unsigned char basePixel[4];
 }
 
-- (void)plotBrush:(SeaBrush*)curBrush at:(NSPoint)temp pressure:(int)pressure;
+- (IntRect)plotBrush:(SeaBrush*)curBrush at:(NSPoint)temp pressure:(int)pressure;
 
 - (BrushOptions*)getBrushOptions;
 

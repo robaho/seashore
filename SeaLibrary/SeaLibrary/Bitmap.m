@@ -215,4 +215,6 @@ float MaxScale(CGAffineTransform t) {
     return MAX(xscale,yscale);
 }
 
-
+CGRect CGImageGetBounds(CGImageRef img) {
+    return CGRectMake(0,0,CGImageGetWidth(img),CGImageGetHeight(img));
+}

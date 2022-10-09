@@ -33,7 +33,6 @@
             [toolboxUtility setBackground:color];
         else {
             [toolboxUtility setForeground:color];
-            [[document textureUtility] setActiveTexture:NULL];
         }
         [toolboxUtility update:NO];
     }

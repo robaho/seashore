@@ -134,8 +134,6 @@
     [verticalMargin setMaxValue:([tool bounds].size.height)];
 
     [tool updateLayer];
-
-    [[document helpers] selectionChanged];
 }
 
 - (TextProperties*)properties

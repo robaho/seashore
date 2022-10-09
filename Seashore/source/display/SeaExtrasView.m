@@ -93,6 +93,7 @@ static CGFloat line_dash_0[2] = {3,3};
         (curToolIndex == kCropTool) ||
         (curToolIndex == kTextTool) ||
         (curToolIndex == kPositionTool) ||
+        (curToolIndex == kZoomTool && [theTool intermediate]) ||
         (curToolIndex == kRectSelectTool && [theTool intermediate]) ||
         (curToolIndex == kEllipseSelectTool && [theTool intermediate]) ||
         (curToolIndex == kLassoTool && [theTool intermediate]) ||
@@ -389,7 +390,7 @@ static bool isBlack(NSColor *c){
         intermediate =  [(AbstractScaleTool *)curTool intermediate] && ! [(AbstractScaleTool *)curTool isMovingOrScaling];
     }
 
-    if(curToolIndex == kZoomTool && [(AbstractScaleTool *)curTool intermediate]) {
+    if(curToolIndex == kZoomTool && [(ZoomTool *)curTool intermediate]) {
         tempSelectRect = [(ZoomTool*)curTool zoomRect];
         tempRect = IntRectMakeNSRect(tempSelectRect);
         tempRect = NSIntegralRectWithOptions(tempRect,NSAlignAllEdgesInward);

@@ -17,9 +17,6 @@
 	
 	// A label indicating the source of the clone
 	IBOutlet id sourceLabel;
-	
-    __weak IBOutlet NSTextField *opacityLabel;
-    __weak IBOutlet NSSlider *opacitySlider;
 }
 
 /*!

@@ -4,7 +4,6 @@
 
 - (id)initWithContentsOfFile:(NSString *)path
 {
-	int k, j, l;
 	BOOL isDir;
 	
 	// Check if file is a directory

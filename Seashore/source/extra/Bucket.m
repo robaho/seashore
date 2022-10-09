@@ -200,12 +200,13 @@ IntRect bucketFill(int spp, IntRect rect, unsigned char *overlay, unsigned char 
 	return result;
 }
 
-void textureFill(CGContextRef context,NSImage *image,CGRect rect)
+void textureFill(CGContextRef context,NSColor *patternColor,CGRect rect)
 {
     CGContextSaveGState(context);
     CGContextClipToRect(context, rect);
     CGContextSetBlendMode(context, kCGBlendModeSourceIn);
-    CGContextDrawTiledImage(context,NSMakeRect(0,0,[image size].width,[image size].height),[image CGImageForProposedRect:NULL context:NULL hints:NULL]);
+    CGContextSetFillColorWithColor(context,[patternColor CGColor]);
+    CGContextFillRect(context,rect);
     CGContextRestoreGState(context);
 }
 

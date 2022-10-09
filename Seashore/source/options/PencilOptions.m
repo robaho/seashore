@@ -29,6 +29,8 @@
         [circularTip setState:(value ? NSOnState : NSOffState)];
     }
 
+    [super loadOpacity:@"pencil opacity"];
+
 	isErasing = NO;
 }
 
@@ -52,6 +54,7 @@
 {
 	[gUserDefaults setInteger:[sizeSlider intValue] forKey:@"pencil size"];
     [gUserDefaults setBool:[self circularTip] forKey:@"pencil circular tip"];
+    [gUserDefaults setInteger:[opacitySlider integerValue] forKey:@"pencil opacity"];
 }
 
 @end

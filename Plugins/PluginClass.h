@@ -130,39 +130,6 @@ void renderCIImage(PluginData *plugin,CIImage *image);
 
 #define PI 3.14159265
 
-/*!
- @function    premultiplyBitmap
- @discussion    Given a bitmap this function premultiplies the primary channels
- and places the result in the output. The output and input can
- both point to the same block of memory.
- @param        spp
- The samples per pixel of the original bitmap.
- @param        destPtr
- The block of memory in which to place the premultiplied bitmap.
- @param        srcPtr
- The block of memory containing the original bitmap.
- @param        length
- The length of the bitmap in terms of pixels (not bytes).
- */
-void premultiplyBitmap(int spp, unsigned char *destPtr, unsigned char *srcPtr, int length);
-
-/*!
- @function    unpremultiplyBitmap
- @discussion    Given a bitmap this function tries to reverse the
- premultiplication of the primary channels and places the result
- in the output. The output and input can  both point to the same
- block of memory.
- @param        spp
- The samples per pixel of the original bitmap.
- @param        destPtr
- The block of memory in which to place the premultiplied bitmap.
- @param        srcPtr
- The block of memory containing the original bitmap.
- @param        length
- The length of the bitmap in terms of pixels (not bytes).
- */
-void unpremultiplyBitmap(int spp, unsigned char *destPtr, unsigned char *srcPtr, int length);
-
 float calculateAngle(IntPoint point,IntPoint apoint);
 int calculateRadius(IntPoint point,IntPoint apoint);
 

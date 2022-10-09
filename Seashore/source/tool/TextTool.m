@@ -38,7 +38,7 @@
     if(!layer)
         return;
 
-    [layer applyTransform:[NSAffineTransform transform]];
+    [layer updateBitmap];
 }
 
 - (void)switchingTools:(BOOL)active
@@ -55,8 +55,7 @@
         hasUndo=FALSE;
         SeaTextLayer *layer = [self textLayer];
         if(layer) {
-            // ensure bitmap is up to date for other tools
-            [layer applyTransform:[NSAffineTransform transform]];
+            [layer updateBitmap];
         }
     }
 }
@@ -242,6 +241,9 @@
         [[[document undoManager] prepareWithInvocationTarget:self] undoTextProperties:layer properties:[layer properties]];
     }
     layer.properties = props;
+
+    [layer updateBitmap];
+    [[document whiteboard] update:[layer globalRect]];
 
     if(![layer.properties.text isEqualToString:oldText]){
         [[document helpers] layerTitleChanged];

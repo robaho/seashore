@@ -77,15 +77,18 @@
     return _properties.text;
 }
 
-- (void)drawContent:(CGContextRef)ctx
+- (void)updateBitmap
 {
-    if(rasterized) {
-        return [super drawContent:ctx];
-    }
 
+    if([self isRasterized])
+        return;
+    
     IntRect local = IntMakeRect(0,0,width,height);
     if(IntRectIsEmpty(local) || !_properties.text)
         return;
+
+    CGContextRef bm = CGBitmapContextCreate([nsdata bytes],width,height,8, width*spp,COLOR_SPACE, kCGImageAlphaPremultipliedLast);
+    CGContextClearRect(bm,CGRectMake(0,0,width,height));
 
     CGMutablePathRef path=CGPathCreateMutable();
     if(_properties.textPath){
@@ -139,11 +142,20 @@
 
     CTFrameRef frame = CTFramesetterCreateFrame(framesetter,CFRangeMake(0, 0),path,(__bridge CFDictionaryRef)frame_attrs);
 
-    CTFrameDraw(frame, ctx);
+    CTFrameDraw(frame, bm);
+
+    CGImageRef t = CGBitmapContextCreateImage(bm);
+    CGImageRelease(t);
+
+    CGContextRelease(bm);
 
     CFRelease(frame);
     CFRelease(path);
     CFRelease(framesetter);
+
+    unpremultiplyBitmap(spp,[nsdata bytes],[nsdata bytes],width*height);
+
+    image = NULL;
 }
 
 - (NSImage*)thumbnail
@@ -194,12 +206,22 @@
 
 - (void)setBounds:(IntRect)bounds
 {
+    int oldWidth = width;
+    int oldHeight = height;
+
     xoff = bounds.origin.x;
     yoff = bounds.origin.y;
     width = MAX(bounds.size.width,1);
     height = MAX(bounds.size.height,1);
 
-    [super applyTransform:[NSAffineTransform transform]];
+    if(oldWidth!=width || oldHeight!=height) {
+        unsigned char *new_data = calloc(width*height*spp,1);
+        CHECK_MALLOC(new_data);
+
+        nsdata = [NSData dataWithBytesNoCopy:new_data length:width*height*spp];
+        [self updateBitmap];
+        [[document whiteboard] readjustLayer];
+    }
 }
 
 - (bool)isTextLayer

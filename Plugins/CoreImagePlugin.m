@@ -185,7 +185,7 @@ static Property PropertyMeta[] = {
     }
     @throw [NSException exceptionWithName:@"CoreImagePropertyNotFound" reason:[NSString stringWithFormat:@"The property \"%d\" was not found.", property] userInfo:NULL];
 }
-- (NSColor*)colorValue:(CIProperty)property
+- (CIColor*)colorValue:(CIProperty)property
 {
     for(PropertyEntry* p in properties){
         if(p.meta.propertyEnum==property) {

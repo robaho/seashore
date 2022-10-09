@@ -17,6 +17,7 @@
 		value = [gUserDefaults integerForKey:@"bucket tolerance"];
         [self setTolerance:value];
 	}
+    [super loadOpacity:@"bucket opacity"];
 }
 
 - (IBAction)toleranceSliderChanged:(id)sender
@@ -40,6 +41,7 @@
 - (void)shutdown
 {
 	[gUserDefaults setInteger:[toleranceSlider intValue] forKey:@"bucket tolerance"];
+    [gUserDefaults setInteger:[opacitySlider integerValue] forKey:@"bucket opacity"];
 }
 
 @end

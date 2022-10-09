@@ -53,8 +53,7 @@
     }
 
     if ([options useTextures] && ![options brushIsErasing]) {
-        NSImage *pattern = [[[document textureUtility] activeTexture] image];
-        textureFill(overlayCtx,pattern, cgRect);
+        textureFill(overlayCtx,[[document toolboxUtility] foreground], cgRect);
     }
 
     [[document helpers] overlayChanged:rect];
@@ -72,7 +71,8 @@
 	// Only continue if the current point is different from the last point
 	if (lastPoint.x == where.x && lastPoint.y == where.y)
 		return;
-	
+
+    IntRect dirty = IntZeroRect;
 	// Draw a line between the last point and this point
 	for (int i = 1; i <= MAX(xDist, yDist); i++) {
         NSPoint curPoint;
@@ -86,9 +86,14 @@
 			curPoint.y = lastPoint.y + i * yMod;
 		}
 
-        [self plotBrush:NULL at:curPoint pressure:255];
+        IntRect r = [self plotBrush:NULL at:curPoint pressure:255];
+        dirty = i==1 ? r : IntSumRects(dirty,r);
 	}
-	
+
+    if(!IntRectIsEmpty(dirty)) {
+        [[document helpers] overlayChanged:dirty];
+    }
+
 	lastPoint = IntPointMakeNSPoint(where);
 }
 

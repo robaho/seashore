@@ -294,7 +294,6 @@
 		A8EDF123078959C80022BB31 /* EyedropOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = A8DFA44504AED02200A80207 /* EyedropOptions.m */; };
 		A8EDF124078959C80022BB31 /* EyedropTool.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B4153404AFC90400A80207 /* EyedropTool.m */; };
 		A8EDF125078959C80022BB31 /* SeaSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = A81BC5F704BA615500A80207 /* SeaSelection.m */; };
-		A8EDF127078959C80022BB31 /* SeaBrushFuncs.m in Sources */ = {isa = PBXBuildFile; fileRef = A8565AAC04BD6F1200A80207 /* SeaBrushFuncs.m */; };
 		A8EDF12C078959C80022BB31 /* StandardMerge.m in Sources */ = {isa = PBXBuildFile; fileRef = A8BC14FF04C0F1A700A80207 /* StandardMerge.m */; };
 		A8EDF12D078959C80022BB31 /* ColorConversion.m in Sources */ = {isa = PBXBuildFile; fileRef = A8BC150304C0F2FD00A80207 /* ColorConversion.m */; };
 		A8EDF12E078959C80022BB31 /* Bucket.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AC9FD304C2900600A80207 /* Bucket.m */; };
@@ -755,8 +754,6 @@
 		A84E106308E7A4FB0084BCB7 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		A8537AEC0788D9F5004EF3B7 /* SeaPlugins.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = SeaPlugins.m; sourceTree = "<group>"; };
 		A8537AED0788D9F5004EF3B7 /* SeaPlugins.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SeaPlugins.h; sourceTree = "<group>"; };
-		A8565AAC04BD6F1200A80207 /* SeaBrushFuncs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeaBrushFuncs.m; sourceTree = "<group>"; };
-		A8565AAE04BD71D200A80207 /* SeaBrushFuncs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeaBrushFuncs.h; sourceTree = "<group>"; };
 		A8585EEB06D4F27D008D4CCA /* PNGExporter.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = PNGExporter.m; sourceTree = "<group>"; };
 		A8585EEC06D4F27D008D4CCA /* PNGExporter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = PNGExporter.h; sourceTree = "<group>"; };
 		A86295E007700FE300C66FF4 /* checkerboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkerboard.png; sourceTree = "<group>"; };
@@ -1453,8 +1450,6 @@
 			children = (
 				A8FBD15D0410B5EC00DF7825 /* SeaBrush.h */,
 				A8FBD15E0410B5EC00DF7825 /* SeaBrush.m */,
-				A8565AAE04BD71D200A80207 /* SeaBrushFuncs.h */,
-				A8565AAC04BD6F1200A80207 /* SeaBrushFuncs.m */,
 				A8B72B47047E1B1200A80207 /* SeaTexture.h */,
 				A8B72B48047E1B1200A80207 /* SeaTexture.m */,
 			);
@@ -2161,7 +2156,6 @@
 				2B7C12E727FD251700A2D658 /* LayerVisibleCell.m in Sources */,
 				A8EDF124078959C80022BB31 /* EyedropTool.m in Sources */,
 				A8EDF125078959C80022BB31 /* SeaSelection.m in Sources */,
-				A8EDF127078959C80022BB31 /* SeaBrushFuncs.m in Sources */,
 				2B399C31279DE15D000D0C58 /* CocoaContent.m in Sources */,
 				A8EDF12C078959C80022BB31 /* StandardMerge.m in Sources */,
 				A8EDF12D078959C80022BB31 /* ColorConversion.m in Sources */,

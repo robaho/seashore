@@ -217,6 +217,9 @@
 
 - (id)activeBrush
 {
+    if(selected==NULL) {
+        selected = [brushes allValues][0];
+    }
     return selected;
 }
 

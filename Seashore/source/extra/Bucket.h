@@ -49,7 +49,7 @@
 				pixels.
 */
 IntRect bucketFill(int spp, IntRect rect, unsigned char *overlay, unsigned char *data, int width, int height, IntPoint seeds[], int numSeeds, unsigned char *fillColor, int tolerance, int channel);
-void textureFill(CGContextRef context,NSImage *image,CGRect rect);
+void textureFill(CGContextRef context,NSColor *patternColor,CGRect rect);
 BOOL shouldFill(unsigned char *overlay, unsigned char *data, IntPoint seeds[], int numSeeds, IntPoint point, int width, int spp, int tolerance, int channel);
 
 void smudgeFill(int spp, int channel, IntRect rect, unsigned char *layerData, unsigned char *data, int width, int height, unsigned char *accum, unsigned char *mask, int brushWidth,int brushHeight, int rate);

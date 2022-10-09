@@ -20,4 +20,26 @@
     [[document brushUtility] showPanelFrom: p onWindow: w];
 }
 
+- (IBAction)opacityChanged:(id)sender
+{
+    [opacityLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"opacity", @"Opacity: %d%%"), [opacitySlider intValue]]];
+}
+
+- (int)opacity
+{
+    return [opacitySlider intValue] * 2.55;
+}
+
+- (void)loadOpacity:(NSString*)tag
+{
+    if ([gUserDefaults objectForKey:tag]==NULL) {
+        [opacitySlider setIntegerValue:100];
+    } else {
+        [opacitySlider setIntegerValue:[gUserDefaults integerForKey:tag]];
+    }
+    [opacityLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"opacity", @"Opacity: %d%%"), [opacitySlider integerValue]]];
+
+
+}
+
 @end

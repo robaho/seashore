@@ -77,12 +77,6 @@
       location = "container:"
       name = "Documentation">
       <FileRef
-         location = "group:SeaMinimal/../Seashore/source/document/XCFContent.h">
-      </FileRef>
-      <FileRef
-         location = "group:Seashore/source/document/../../../XCFContent.h">
-      </FileRef>
-      <FileRef
          location = "group:README.md">
       </FileRef>
       <FileRef

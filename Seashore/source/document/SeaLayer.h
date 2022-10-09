@@ -54,8 +54,6 @@
 	
 	NSData *nsdata;
 
-    CGImageRef pre_bitmap;
-
     NSImage *image,*thumbnail;
 
 	// Remembers whether or not the layer has an alpha channel
@@ -190,6 +188,12 @@
 	@result		The layer rect in document coordinate space.
 */
 - (IntRect)globalRect;
+
+/*!
+ @method        globalBounds
+ @result        The layer rect in document coordinate space after any current position tool transform.
+ */
+- (IntRect)globalBounds;
 
 /*!
  @method        localRect
@@ -511,9 +515,9 @@
 - (void)convertFromType:(int)srcType to:(int)destType;
 
 - (void)drawLayer:(CGContextRef)context;
+- (void)transformContext:(CGContextRef)context;
 - (void)drawContent:(CGContextRef)context;
-
-- (void)drawChannelLayer:(CGContextRef)context withImage:(unsigned char *)data;
+- (bool)isComplexTransform;
 
 - (NSColor*) getPixelX:(int)x Y:(int)y;
 

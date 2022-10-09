@@ -14,63 +14,19 @@
 #import "PluginClass.h"
 #import "PluginData.h"
 
-inline void premultiplyBitmap(int spp, unsigned char *output, unsigned char *input, int length)
-{
-    if(spp==4) {
-        vImage_Buffer obuf = {.data=output,.height=1,.width=length,.rowBytes=length*spp};
-        vImage_Buffer ibuf = {.data=input,.height=1,.width=length,.rowBytes=length*spp};
-
-        vImagePremultiplyData_RGBA8888(&ibuf,&obuf,0);
-    } else { // spp==2 which is grayscale with alpha
-        int temp;
-        for(int i=0;i<length;i++) {
-            *output = int_mult(*input,*(input+1), temp);
-            output+=2;
-            input+=2;
-        }
-    }
-}
-
-inline void unpremultiplyBitmap(int spp, unsigned char *output, unsigned char *input, int length)
-{
-    if(spp==4) {
-        vImage_Buffer obuf = {.data=output,.height=1,.width=length,.rowBytes=length*spp};
-        vImage_Buffer ibuf = {.data=input,.height=1,.width=length,.rowBytes=length*spp};
-
-        vImageUnpremultiplyData_RGBA8888(&ibuf,&obuf,0);
-    } else {
-        for(int i=0;i<length;i++) {
-            *output = MIN((*input * 255 + 128)/ *(input+1),255);
-            output+=2;
-            input+=2;
-        }
-    }
-}
 
 /*
- convert NSImageRep to a format Seashore can work with, which is RGBA, or GrayA. If spp is 4, then RGBA, if 2, the GrayA
+ convert CIImage to a format Seashore can work with, which is RGBA, or GrayA. If spp is 4, then RGBA, if 2, the GrayA
  */
-void convertImageRepWithData(NSImageRep *imageRep,unsigned char *dest,int width,int height,int spp) {
-    
-    NSColorSpaceName csname = MyRGBSpace;
-    if (spp==2) {
-        csname = MyGraySpace;
-    }
+void rasterizeCIImage(CIImage *image,unsigned char *dest,int width,int height,int spp) {
     
     memset(dest,0,width*height*spp);
-    
-    NSBitmapImageRep *bitmapWhoseFormatIKnow = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&dest pixelsWide:width pixelsHigh:height
-                                                                                    bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO
-                                                                                   colorSpaceName:csname bytesPerRow:width*spp
-                                                                                     bitsPerPixel:8*spp];
-    
-    NSRect rect = NSMakeRect(0,0,width,height);
-    
-    [NSGraphicsContext saveGraphicsState];
-    NSGraphicsContext *ctx = [NSGraphicsContext graphicsContextWithBitmapImageRep:bitmapWhoseFormatIKnow];
-    [NSGraphicsContext setCurrentContext:ctx];
-    [imageRep drawInRect:rect fromRect:rect operation:NSCompositingOperationCopy fraction:1.0 respectFlipped:NO hints:NULL];
-    [NSGraphicsContext restoreGraphicsState];
+
+    CGContextRef cg = CGBitmapContextCreate(dest, width,height,8,width*spp,COLOR_SPACE,kCGImageAlphaPremultipliedLast);
+    CIContext *ci = [CIContext contextWithCGContext:cg options:NULL];
+    CGRect r = CGRectMake(0,0,width,height);
+    [ci drawImage:image inRect:r fromRect:r];
+    CGContextRelease(cg);
 }
 
 CIImage *createCIImage(PluginData *pluginData){
@@ -92,9 +48,11 @@ void renderCIImage(PluginData *pluginData,CIImage *image){
     
     unsigned char *overlay = [pluginData overlay];
 
-    NSCIImageRep *imageRep = [NSCIImageRep imageRepWithCIImage:image];
-    
-    convertImageRepWithData(imageRep,overlay,width,height,spp);
+    if(overlay==NULL) {
+        [NSException raise:@"IllegalStateException" format:@"Overlay data reference is nil."];
+    }
+
+    rasterizeCIImage(image,overlay,width,height,spp);
     
     unsigned char *replace = [pluginData replace];
     int i;
@@ -133,9 +91,7 @@ void applyFilterAsOverlay(PluginData *pluginData,CIFilter *filter) {
 
     unsigned char *overlay = [pluginData overlay];
 
-    NSCIImageRep *imageRep = [NSCIImageRep imageRepWithCIImage:outputImage];
-
-    convertImageRepWithData(imageRep,overlay,width,height,spp);
+    rasterizeCIImage(outputImage,overlay,width,height,spp);
 }
 
 void applyFilters(PluginData *pluginData,CIFilter* filter,...) {
@@ -357,5 +313,3 @@ CIColor *createCIColor(NSColor *color) {
     }
     return ci;
 }
-
-

@@ -117,11 +117,11 @@
 		2B84482D28BEE71F00C068D1 /* SharedSource */ = {
 			isa = PBXGroup;
 			children = (
-				2B84482E28BEE71F00C068D1 /* XCFLayer.h */,
-				2B84482F28BEE71F00C068D1 /* ParasiteData.h */,
-				2B84483028BEE71F00C068D1 /* XCFContent.m */,
 				2B84483728BEE71F00C068D1 /* XCFContent.h */,
+				2B84483028BEE71F00C068D1 /* XCFContent.m */,
+				2B84482E28BEE71F00C068D1 /* XCFLayer.h */,
 				2B84483928BEE71F00C068D1 /* XCFLayer.m */,
+				2B84482F28BEE71F00C068D1 /* ParasiteData.h */,
 				2B84483A28BEE71F00C068D1 /* ParasiteData.m */,
 			);
 			name = SharedSource;
@@ -292,7 +292,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACH_O_TYPE = staticlib;
-				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -367,7 +367,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACH_O_TYPE = staticlib;
-				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;

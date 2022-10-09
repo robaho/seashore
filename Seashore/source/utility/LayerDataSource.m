@@ -309,11 +309,12 @@ NSFileHandle *NewFileHandleForWritingFile(NSString *dirpath, NSString *basename,
 
 - (void)update
 {
+    int index = [[document contents] activeLayerIndex];
     if(reloading)
         return;
     reloading=true;
 	[outlineView reloadData];
-    [outlineView selectRow:[[document contents] activeLayerIndex]];
+    [outlineView selectRow:index];
     reloading=false;
 }
 

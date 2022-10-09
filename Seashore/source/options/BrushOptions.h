@@ -17,7 +17,6 @@ enum {
 */
 
 @interface BrushOptions : AbstractPaintOptions {
-	
 	// A checkbox indicating whether to fade
 	IBOutlet id fadeCheckbox;
 	
@@ -108,6 +107,8 @@ enum {
 */
 - (IBAction)modifierPopupChanged:(id)sender;
 
-- (int)opacity;
+
+
+
 
 @end

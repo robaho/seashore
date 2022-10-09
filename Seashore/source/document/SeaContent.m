@@ -250,8 +250,12 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
 - (NSColor *)foreground
 {
     id foreground;
-    
+
     foreground = [[document toolboxUtility] foreground];
+    if(CGColorGetPattern([foreground CGColor])!=NULL) {
+        return [NSColor blackColor];
+    }
+
     if (type == XCF_RGB_IMAGE && selectedChannel != kAlphaChannel)
         return [foreground colorUsingColorSpace:MyRGBCS];
     else if (type == XCF_GRAY_IMAGE)
@@ -264,6 +268,10 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
 {
     id background;
     
+    if(CGColorGetPattern([background CGColor])!=NULL) {
+        return [NSColor whiteColor];
+    }
+
     background = [[document toolboxUtility] background];
     if (type == XCF_RGB_IMAGE && selectedChannel != kAlphaChannel)
         return [background colorUsingColorSpace:MyRGBCS];
@@ -599,7 +607,8 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     [layer trimLayer];
 
     [self addLayerObject:layer];
-    
+
+    [[document selection] clearSelection];
     [[document toolboxUtility] positionTool];
 }
 
@@ -749,8 +758,9 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     
     // Update Seashore with the changes
     activeLayerIndex = [layers indexOfObject:activeLayer];
-    [[document helpers] layerLevelChanged:activeLayerIndex];
-    
+
+    [[document helpers] layerLevelChanged:actualFinal];
+
     // For the undo we need to make sure we get the offset right
     if(source >= dest){
         source++;

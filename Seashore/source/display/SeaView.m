@@ -750,6 +750,7 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
                 case '\t':
                     toolMemory = [toolbox tool];
                     [toolbox changeToolTo:kEyedropTool];
+                break;
                 case 'z':
                     toolMemory = [toolbox tool];
                     [toolbox changeToolTo:kZoomTool];

@@ -1,5 +1,6 @@
 #import "Seashore.h"
 #import "SeaColorProfiles.h"
+#import <Accelerate/Accelerate.h>
 #import <CoreImage/CoreImage.h>
 
 /*!
@@ -53,7 +54,7 @@ enum {
 
 @class SeaDocument;
 
-@interface SeaWhiteboard : NSView <CALayerDelegate> {
+@interface SeaWhiteboard : NSView {
 
 	// The document associated with this whiteboard
 	__weak SeaDocument *document;
@@ -61,8 +62,10 @@ enum {
 	// The width and height of the whiteboard
 	int width, height;
 	
-	// The whiteboard's data
-	unsigned char *data;
+    // The width and height of the overlay and replace
+    int layer_width, layer_height;
+    // Reference to the layer data when size was captured for overlay
+    NSData *layer_data;
 
 	// The overlay for the current layer
 	unsigned char *overlay;
@@ -89,12 +92,11 @@ enum {
 	
 	// Remembers whether is or is not active
     SeaColorProfile *proofProfile;
-	
-    CGContextRef overlayCtx;
-    CGContextRef dataCtx;
-    CGContextRef proofCtx;
 
-    CIFilter *alphaToGray;
+    vImage_Buffer proofBuffer;
+    CGContextRef proofCtx;
+    CGContextRef dataCtx;
+    CGContextRef overlayCtx;
 }
 
 // CREATION METHODS
@@ -230,13 +232,6 @@ enum {
 				printed.
 */
 - (NSImage *)printableImage;
-
-/*!
-	@method		data
-	@discussion	Returns the bitmap data for the whiteboard.
-	@result		Returns a pointer to the bitmap data for the whiteboard.
-*/
-- (unsigned char *)data;
 
 - (NSData*)layerData;
 

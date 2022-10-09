@@ -90,7 +90,7 @@ static BOOL forceAlt = NO;
 
 - (BOOL)useTextures
 {
-    return [[document textureUtility] activeTexture]!=NULL;
+    return [[document toolboxUtility] foregroundIsTexture];
 }
 
 - (void)shutdown

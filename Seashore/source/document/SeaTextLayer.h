@@ -32,6 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (SeaTextLayer*)initWithDocument:(SeaDocument*)document layer:(SeaLayer*)layer properties:(TextProperties*)props;
 - (void)setBounds:(IntRect)bounds;
+- (void)updateBitmap;
 
 @end
 

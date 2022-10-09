@@ -35,11 +35,6 @@
 	return YES;
 }
 
-- (BOOL)foregroundIsTexture
-{
-	return [[self getOptions] useTextures];
-}
-
 - (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event
 {
 }

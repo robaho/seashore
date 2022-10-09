@@ -35,8 +35,6 @@ typedef struct {
 	// Read in the header
 	fread(&header, sizeof(BrushHeader), 1, file);
 	
-	// Convert brush header to proper endianess
-#ifdef __LITTLE_ENDIAN__
 	header.header_size = ntohl(header.header_size);
 	header.version = ntohl(header.version);
 	header.width = ntohl(header.width);
@@ -44,7 +42,6 @@ typedef struct {
 	header.bytes = ntohl(header.bytes);
 	header.magic_number = ntohl(header.magic_number);
 	header.spacing = ntohl(header.spacing);
-#endif
 
 	// Check version compatibility
 	versionGood = (header.version == 2 && header.magic_number == GBRUSH_MAGIC);
@@ -153,6 +150,12 @@ typedef struct {
 {
     CGImageRef bm = [self bitmap];
 
+    if(usePixmap) {
+        NSImage *_thumbnail = [[NSImage alloc] initWithCGImage:bm size:CGSizeMake(CGImageGetWidth(bm),CGImageGetHeight(bm))];
+        [_thumbnail setFlipped:TRUE];
+        return _thumbnail;
+    }
+
     CGImageRef thumbnail = getTintedCG(bm,[NSColor controlTextColor]);
 
     NSImage *_thumbnail = [[NSImage alloc] initWithCGImage:thumbnail size:CGSizeMake(CGImageGetWidth(bm),CGImageGetHeight(bm))];
@@ -246,18 +249,9 @@ typedef struct {
     return bitmap;
 }
 
-- (CGImageRef)maskImg
+- (bool)isPixMap
 {
-    if(maskImg!=NULL) {
-        return maskImg;
-    }
-    CGContextRef ctx = CGBitmapContextCreate(NULL, width, height, 8, width, grayCS, kCGImageAlphaNone);
-    CGContextDrawImage(ctx, NSMakeRect(0,0,width,height),[self bitmap]);
-    maskImg = CGBitmapContextCreateImage(ctx);
-    CGContextRelease(ctx);
-
-    return maskImg;
+    return usePixmap;
 }
-
 
 @end

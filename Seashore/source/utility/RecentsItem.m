@@ -12,7 +12,6 @@
 -(void)drawAt:(NSRect)rect;
 -(NSColor*)foreground;
 -(NSColor*)background;
--(SeaTexture*)texture;
 -(void)restore;
 @end
 
@@ -58,24 +57,15 @@
     
     NSRect bg = NSMakeRect(fg.origin.x+(int)(fg.size.width*.75),fg.origin.x+(int)(fg.size.height*.75),fg.size.width,fg.size.height);
     
-    BOOL foregroundIsTexture = [memory texture]!=NULL;
-    
     [self drawColorWell:bg];
     
-    // Actual Color
     [[memory background] set];
     [[NSBezierPath bezierPathWithRect:bg] fill];
     
     [self drawColorWell:fg];
     
-    if (foregroundIsTexture) {
-        [[NSColor colorWithPatternImage:[[memory texture] image]] set];
-        [[NSBezierPath bezierPathWithRect:fg] fill];
-    }
-    else {
-        [[memory foreground] set];
-        [[NSBezierPath bezierPathWithRect:fg] fill];
-    }
+    [[memory foreground] set];
+    [[NSBezierPath bezierPathWithRect:fg] fill];
 }
 
 - (void)drawColorWell:(NSRect)rect

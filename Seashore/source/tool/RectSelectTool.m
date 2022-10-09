@@ -46,7 +46,7 @@
 
 - (void)mouseUpAt:(IntPoint)where withEvent:(NSEvent *)event
 {
-    if(intermediate && ![super isMovingOrScaling]){
+    if(intermediate && ![super isMovingOrScaling] && !IntRectIsEmpty([self selectionRect])){
         [self createMask];
         // Also, we universally float the selection if alt is down
         if([[self getOptions] modifier] == kAltModifier) {

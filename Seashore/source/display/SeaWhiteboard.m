@@ -15,6 +15,7 @@
 #import "SeaPrefs.h"
 #import "AlphaToGrayFilter.h"
 #import "SeaWindowContent.h"
+#import "StandardMerge.h"
 
 #import <objc/runtime.h>
 
@@ -81,8 +82,7 @@ void DumpObjcMethods(Class clz) {
     if(x<0 || x>=width || y<0 || y>=height)
         return NULL;
 
-    unsigned char *pixelData = data + (width*y+x) * spp;
-
+    unsigned char *pixelData = CGBitmapContextGetData(dataCtx) + (y*CGBitmapContextGetBytesPerRow(dataCtx)) + x*spp;
     float alpha = pixelData[spp-1];
 
     if(alpha==0)
@@ -93,6 +93,7 @@ void DumpObjcMethods(Class clz) {
     } else {
         return [NSColor colorWithRed:pixelData[0]/alpha green:pixelData[1]/alpha blue:pixelData[2]/alpha alpha:pixelData[3]/255.0];
     }
+
 }
 
 - (BOOL)isFlipped
@@ -101,7 +102,6 @@ void DumpObjcMethods(Class clz) {
 }
 
 - (void)dealloc {
-    if (data) free(data);
     if (overlay) free(overlay);
     if (replace) free(replace);
 
@@ -142,11 +142,20 @@ void DumpObjcMethods(Class clz) {
     return FALSE;
 }
 
+- (void)setNeedsDisplay:(BOOL)needsDisplay
+{
+    [super setNeedsDisplay:needsDisplay];
+}
+
 - (void)mergeOverlay0:(unsigned char *)dest rect:(IntRect)r
 {
     SeaLayer *layer = [[document contents] activeLayer];
-    int lw = [layer width];
-    int lh = [layer height];
+
+    int lw = layer_width;
+    int lh = layer_height;
+
+    unsigned char *ld = (unsigned char*)[layer_data bytes];
+
     int xoff = [layer xoff];
     int yoff = [layer yoff];
 
@@ -161,7 +170,7 @@ void DumpObjcMethods(Class clz) {
 
         unsigned char *dpos = dest+(offset)*spp;
         unsigned char *opos = overlay+(offset)*spp;
-        unsigned char *lpos = [layer data]+(offset)*spp;
+        unsigned char *lpos = ld+(offset)*spp;
         unsigned char *rpos = replace+offset;
 
         for(int col=0;col<r.size.width;col++){
@@ -235,8 +244,6 @@ void DumpObjcMethods(Class clz) {
     int rows = (r.size.height-1) / TILE_SIZE + 1;
     int cols = (r.size.width-1) / TILE_SIZE + 1;
 
-//    CGImageRef img = CGBitmapContextCreateImage(overlayCtx);
-
     for(int row=0;row<rows;row++)
         for(int col=0;col<cols;col++){
             int x = col*TILE_SIZE;
@@ -251,39 +258,51 @@ void DumpObjcMethods(Class clz) {
     dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
 }
 
-- (void)drawLayerWithOverlay:(CGContextRef) ctx layer:(SeaLayer*)layer
+- (void)mergeOverlayToTemp
 {
-    int lw = [layer width];
-    int lh = [layer height];
-
-    int xoff = [layer xoff];
-    int yoff = [layer yoff];
-
     if(![temp length])
         return;
 
-    unsigned char *data = [temp bytes];
+    int lw = layer_width;
+    int lh = layer_height;
 
     if(!IntRectIsEmpty(tempOverlayModifiedRect)) {
         tempOverlayModifiedRect = IntConstrainRect(tempOverlayModifiedRect,IntMakeRect(0,0,lw,lh));
-        [self mergeOverlay:data rect:tempOverlayModifiedRect];
+        [self mergeOverlay:[temp bytes] rect:tempOverlayModifiedRect];
         tempOverlayModifiedRect = IntZeroRect;
     }
+}
 
-    CGContextSaveGState(ctx);
+- (void)drawChannelLayer:(CGContextRef)context withImage:(NSData *)data
+{
+    int channel = [[document contents] selectedChannel];
 
-    CGDataProviderRef dp = CGDataProviderCreateWithData(NULL,data,lw*lh*spp,NULL);
-    CGImageRef img = CGImageCreate(lw,lh,8,8*spp,lw*spp,COLOR_SPACE,kCGImageAlphaLast,dp,nil,false,0);
+    int lw = layer_width;
+    int lh = layer_height;
+
+    CGDataProviderRef dp = CGDataProviderCreateWithData(NULL,[data bytes],lw*lh*spp,NULL);
+    CGImageRef image = CGImageCreate(lw,lh,8,8*spp,lw*spp,COLOR_SPACE,channel==kAlphaChannelView ? kCGImageAlphaLast : kCGImageAlphaNoneSkipLast,dp,nil,false,0);
     CGDataProviderRelease(dp);
 
-    CGContextSetAlpha(ctx,[layer opacity_float]);
-    CGContextSetBlendMode(ctx,[layer mode]);
-    CGContextTranslateCTM(ctx,xoff,yoff+lh);
-    CGContextScaleCTM(ctx,1,-1);
-    CGContextDrawImage(ctx,CGRectMake(0,0,lw,lh), img);
-    CGImageRelease(img);
-    CGContextRestoreGState(ctx);
+    CGContextSaveGState(context);
+
+    CGRect r = CGRectMake(0,0,lw,lh);
+
+    CGContextSetAlpha(context,1.0);
+
+    if(channel==kAlphaChannelView) {
+        CGContextSetFillColorWithColor(context, CGColorCreateGenericRGB(1,1,1,1));
+        CGContextFillRect(context, r);
+        CGContextSetBlendMode(context, kCGBlendModeDestinationIn);
+    } else {
+        CGContextSetBlendMode(context, kCGBlendModeNormal);
+    }
+
+    CGContextDrawImage(context,r,image);
+    CGImageRelease(image);
+    CGContextRestoreGState(context);
 }
+
 
 - (BOOL)overlayModified
 {
@@ -294,42 +313,7 @@ void DumpObjcMethods(Class clz) {
 {
     viewDirtyRect = NSIntegralRectWithOptions(viewDirtyRect,NSAlignAllEdgesOutward|NSAlignRectFlipped);
 
-    CGContextRef nsCtx = [[NSGraphicsContext currentContext] graphicsPort];
-    CGContextClipToRect(nsCtx, viewDirtyRect);
-    [self drawInContext:nsCtx dirty:viewDirtyRect];
-    [[document histogram] performSelectorOnMainThread:@selector(update) withObject:nil waitUntilDone:NO];
-}
-
-- (void)drawInContext:(CGContextRef)nsCtx dirty:(NSRect)viewDirtyRect
-{
-    long start = LOG_PERFORMANCE ? getCurrentMillis() : 0;
-
-    CGContextSaveGState(dataCtx);
-    CGContextClipToRect(dataCtx, viewDirtyRect);
-    CGContextClearRect(dataCtx, viewDirtyRect);
-
-    SeaContent *contents = [document contents];
-
-    int layerCount = [contents layerCount];
-
-    SeaLayer* activeLayer = [[document contents] activeLayer];
-
-    for (int i = layerCount-1; i>=0; i--) {
-        SeaLayer *layer = [[document contents] layer:i];
-        if ([layer visible]) {
-            if (layer == activeLayer) {
-                if([self overlayModified]) {
-                    [self drawLayerWithOverlay:dataCtx layer:layer];
-                } else {
-                    [layer drawLayer:dataCtx];
-                }
-            } else {
-                [layer drawLayer:dataCtx];
-            }
-        }
-    }
-
-    CGContextRestoreGState(dataCtx);
+    CGContextRef nsCtx = [[NSGraphicsContext currentContext] CGContext];
 
     float magnification = [[document scrollView] magnification];
 
@@ -343,45 +327,162 @@ void DumpObjcMethods(Class clz) {
         CGContextSetInterpolationQuality(nsCtx, kCGInterpolationNone);
     }
 
-    if(![self whiteboardIsLayerSpecific]) {
-        CGContextTranslateCTM(nsCtx,0,height);
-        CGContextScaleCTM(nsCtx,1,-1);
+    CGContextClipToRect(nsCtx, viewDirtyRect);
+    [self drawInContext:nsCtx dirty:viewDirtyRect proofing:true];
+    [[document histogram] performSelectorOnMainThread:@selector(update) withObject:nil waitUntilDone:NO];
+}
 
-        CGImageRef img = CGBitmapContextCreateImage(dataCtx);
-        if(proofProfile){
-            CGImageRef section = CGImageCreateWithImageInRect(img, viewDirtyRect);
-            CGColorSpaceRef csr = [proofProfile.cs CGColorSpace];
-            int bitmapMode = CGColorSpaceGetModel(csr)==kCGColorSpaceModelCMYK ? kCGImageAlphaNone : kCGImageAlphaPremultipliedLast;
-            CGContextRef pctx = CGBitmapContextCreate(nil,viewDirtyRect.size.width,viewDirtyRect.size.height,8,0,csr,bitmapMode);
-            CGContextDrawImage(pctx, CGRectMake(0,0,viewDirtyRect.size.width,viewDirtyRect.size.height),section);
-            CGImageRelease(section);
-            CGImageRef img0 = CGBitmapContextCreateImage(pctx);
-            CGRect txr = CGRectMake(viewDirtyRect.origin.x,height-viewDirtyRect.origin.y-viewDirtyRect.size.height,viewDirtyRect.size.width,viewDirtyRect.size.height);
-            CGContextDrawImage(nsCtx,txr,img0);
-            CGImageRelease(img0);
-            CGContextRelease(pctx);
-        } else {
-            CGContextDrawImage(nsCtx, CGRectMake(0,0,width,height), img);
-        }
-        CGImageRelease(img);
-    } else {
+- (void)drawInContext:(CGContextRef)nsCtx dirty:(NSRect)viewDirtyRect proofing:(BOOL)proofing
+{
+    SeaLayer* activeLayer = [[document contents] activeLayer];
+
+//    viewDirtyRect = NSIntegralRect(viewDirtyRect);
+
+    [self mergeOverlayToTemp];
+
+    if(proofing && [self whiteboardIsLayerSpecific]) {
+        [activeLayer transformContext:nsCtx];
         if([self overlayModified]) {
-            [activeLayer drawChannelLayer:nsCtx withImage:[temp bytes]];
+            [self drawChannelLayer:nsCtx withImage:temp];
         }
         else {
-            [activeLayer drawChannelLayer:nsCtx withImage:nil];
+            [self drawChannelLayer:nsCtx withImage:[activeLayer layerData]];
         }
+        return;
     }
+
+    long start = LOG_PERFORMANCE ? getCurrentMillis() : 0;
+
+    CGRect r = viewDirtyRect;
+
+    if(SINGLE_THREADED || (r.size.height <= TILE_SIZE && r.size.width <= TILE_SIZE)){
+        [self drawInData:r];
+    } else {
+        int cores = [[NSProcessInfo processInfo] activeProcessorCount];
+        cores = MAX(cores,1);
+
+        int tw = MAX(r.size.width / cores,TILE_SIZE);
+        int th = MAX(r.size.height / cores,TILE_SIZE);
+
+        int y=0;
+        while(y<r.size.height) {
+            int x=0;
+            int height = MIN(th,r.size.height-y);
+            if(r.size.height-y-th<TILE_SIZE) {
+                height = r.size.height-y;
+            }
+            while(x<r.size.width){
+                int width = MIN(tw,r.size.width-x);
+                if(width<=0 || height <=0)
+                    continue;
+                if(r.size.width-x-tw<TILE_SIZE) {
+                    width = r.size.width-x;
+                }
+                IntRect r0 = IntMakeRect(x+r.origin.x,y+r.origin.y,width,height);
+                dispatch_group_async(group, queue, ^{
+                    [self drawInData:IntRectMakeNSRect(r0)];
+                });
+                x+=width;
+            }
+            y+=height;
+        }
+        dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
+    }
+
+    CGContextTranslateCTM(nsCtx,0,height);
+    CGContextScaleCTM(nsCtx,1,-1);
+
+    CGImageRef img = CGBitmapContextCreateImage(dataCtx);
+    CGRect bounds = CGImageGetBounds(img);
+
+    if(proofing && proofProfile) {
+        [self drawProof:viewDirtyRect src:img dst:nsCtx];
+    } else {
+        CGContextDrawImage(nsCtx, bounds, img);
+    }
+    CGImageRelease(img);
 
     if(LOG_PERFORMANCE)
         NSLog(@"whiteboard draw %ld %@",getCurrentMillis()-start,NSStringFromRect(viewDirtyRect));
 }
 
+- (void)drawProof:(NSRect)dirty src:(CGImageRef)src dst:(CGContextRef)dst
+{
+
+    CGAffineTransform t = CGAffineTransformIdentity;
+    t = CGAffineTransformTranslate(t, 0, height);
+    t = CGAffineTransformScale(t, 1, -1);
+    CGRect dirtyTX = CGRectApplyAffineTransform(dirty,t);
+
+    CGImageRef img = CGImageCreateWithImageInRect(src, dirty);
+
+    vImage_CGImageFormat format =
+    {
+        .bitsPerComponent=CGBitmapContextGetBitsPerComponent(proofCtx),
+        .bitsPerPixel=CGBitmapContextGetBitsPerPixel(proofCtx),
+        .colorSpace = CGBitmapContextGetColorSpace(proofCtx),
+        .bitmapInfo = CGBitmapContextGetBitmapInfo(proofCtx),
+        .renderingIntent=kCGRenderingIntentDefault
+    };
+
+    vImageBuffer_InitWithCGImage(
+                                 &proofBuffer,
+                                 &format,
+                                 nil,
+                                 img,
+                                 kvImageNoAllocate);
+
+    // Perform image-processing operations on RGB888 `buffer`.
+
+    CGImageRef outImg = vImageCreateCGImageFromBuffer(
+                                                           &proofBuffer,
+                                                           &format,
+                                                           nil,
+                                                           nil,
+                                                           kvImageNoFlags,
+                                                      nil);
+    CGContextDrawImage(dst, dirtyTX, outImg);
+    CGImageRelease(outImg);
+}
+
+- (void)drawInData:(CGRect)viewDirtyRect
+{
+    CGContextRef ctx = CGBitmapContextCreate(CGBitmapContextGetData(dataCtx),width,height,8, CGBitmapContextGetBytesPerRow(dataCtx),CGBitmapContextGetColorSpace(dataCtx),CGBitmapContextGetBitmapInfo(dataCtx));
+    CGContextTranslateCTM(ctx,0,height);
+    CGContextScaleCTM(ctx,1,-1);
+    CGContextClipToRect(ctx, viewDirtyRect);
+    CGContextClearRect(ctx, viewDirtyRect);
+
+    SeaContent *contents = [document contents];
+    SeaLayer *activeLayer = [contents activeLayer];
+
+    int layerCount = [contents layerCount];
+
+    IntRect r = NSRectMakeIntRect(viewDirtyRect);
+
+    for (int i = layerCount-1; i>=0; i--) {
+        SeaLayer *layer = [[document contents] layer:i];
+        if ([layer visible]) {
+            if (layer == activeLayer) {
+                if([self overlayModified]) {
+                    [self compositeLayer:layer src:[temp bytes] rect:r dest:ctx];
+                } else {
+                    [self compositeLayer:layer src:[layer data] rect:r dest:ctx];
+                }
+            } else {
+                [self compositeLayer:layer src:[layer data] rect:r dest:ctx];
+            }
+        }
+    }
+
+    CGContextRelease(ctx);
+}
+
 - (void)applyOverlay {
   SeaLayer *layer = [[document contents] activeLayer];
 
-  int lw = [layer width];
-  int lh = [layer height];
+  int lw = layer_width;
+  int lh = layer_height;
 
   IntRect r = overlayModifiedRect;
   if(IntRectIsEmpty(r))
@@ -404,7 +505,7 @@ void DumpObjcMethods(Class clz) {
 
   [[layer seaLayerUndo] takeSnapshot:r automatic:YES];
 
-  [self mergeOverlay:[layer data] rect:r];
+  [self mergeOverlay:[layer_data bytes] rect:r];
 
   [layer markRasterized];
 
@@ -429,8 +530,8 @@ finished:
 - (void)clearOverlay {
   SeaLayer *layer = [[document contents] activeLayer];
 
-  int width = [layer width];
-  int height = [layer height];
+  int width = layer_width;
+  int height = layer_height;
 
   memset(overlay, 0, width * height * spp);
   memset(replace, 0, width * height);
@@ -460,44 +561,47 @@ finished:
 }
 
 - (void)readjust {
-  // Resize the memory allocated to the data
-  width = [[document contents] width];
-  height = [[document contents] height];
+    // Resize the memory allocated to the data
+    width = [[document contents] width];
+    height = [[document contents] height];
 
-  // Change the samples per pixel if required
-  if (spp != [[document contents] spp]) {
-    spp = [[document contents] spp];
-  }
-
-  // Revise the data
-  if (data) free(data);
-  data = malloc(make_128(width * height * spp));
-  CHECK_MALLOC(data);
+    // Change the samples per pixel if required
+    if (spp != [[document contents] spp]) {
+        spp = [[document contents] spp];
+    }
 
     CGContextRelease(dataCtx);
-    dataCtx = CGBitmapContextCreateWithData(data, width, height, 8, width*spp, COLOR_SPACE, kCGImageAlphaPremultipliedLast, NULL, NULL);
+    dataCtx = CGBitmapContextCreateWithData(NULL, width, height, 8, 0, COLOR_SPACE, kCGImageAlphaPremultipliedLast, NULL, NULL);
 
-    CGContextTranslateCTM(dataCtx, 0, height);
-    CGContextScaleCTM(dataCtx, 1, -1);
+    if(proofProfile) {
+        CGContextRelease(proofCtx);
+        CGColorSpaceRef csr = [proofProfile.cs CGColorSpace];
+        int bitmapMode = CGColorSpaceGetModel(csr)==kCGColorSpaceModelCMYK ? kCGImageAlphaNone : kCGImageAlphaPremultipliedLast;
+        // proofCtx is not used for rendering, only to describe the output format
+        proofCtx = CGBitmapContextCreate(nil,width,height,8,0,csr,bitmapMode);
+        proofBuffer.data = CGBitmapContextGetData(proofCtx);
+        proofBuffer.width = width;
+        proofBuffer.height = height;
+        proofBuffer.rowBytes = CGBitmapContextGetBytesPerRow(proofCtx);
+    }
 
-  [self readjustLayer];
-  [self update];
+    [self readjustLayer];
+    [self update];
 }
 
 - (void)readjustLayer {
     SeaLayer *layer = [[document contents] activeLayer];
 
-    int lw = [layer width];
-    int lh = [layer height];
+    layer_width = [layer width];
+    layer_height = [layer height];
+    layer_data = [layer layerData];
+
+    int lw = layer_width;
+    int lh = layer_height;
 
     if (overlay) free(overlay);
 
     int len = lw*lh*spp;
-    
-    if(len==0) {
-        lw=lh=1;
-        len=1;
-    }
 
     overlay = malloc(make_128(len));
     CHECK_MALLOC(overlay);
@@ -514,7 +618,7 @@ finished:
     CHECK_MALLOC(replace);
     memset(replace, 0, lw*lh);
 
-    temp = [NSData dataWithBytes:[layer data] length:lw*lh*spp];
+    temp = [NSData dataWithBytes:[layer_data bytes] length:lw*lh*spp];
 
     [self update];
 }
@@ -524,10 +628,12 @@ finished:
 }
 
 - (void)toggleSoftProof:(SeaColorProfile *)profile {
-  proofProfile = profile;
-  [[document docView] setNeedsDisplay:YES];
-  [[document toolboxUtility] update:NO];
-  [[document statusUtility] update];
+    proofProfile = profile;
+    [[document docView] setNeedsDisplay:YES];
+    [[document toolboxUtility] update:NO];
+    [[document statusUtility] update];
+
+    [self readjust];
 }
 
 - (void)update {
@@ -578,7 +684,6 @@ finished:
 {
     CGImageRef img = [self bitmapCG];
     NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithCGImage:img];
-
     CGImageRelease(img);
 
     return rep;
@@ -586,23 +691,79 @@ finished:
 
 - (CGImageRef)bitmapCG
 {
-    return CGBitmapContextCreateImage(dataCtx);
-}
-
-- (unsigned char *)data {
-    return data;
+    CGContextRef ctx = CGBitmapContextCreate(NULL, width, height, 8, spp*width, COLOR_SPACE, kCGImageAlphaPremultipliedLast);
+    CGContextTranslateCTM(ctx,0,height);
+    CGContextScaleCTM(ctx,1,-1);
+    [self drawInContext:ctx dirty:CGRectMake(0,0,width,height) proofing:false];
+    CGImageRef img = CGBitmapContextCreateImage(ctx);
+    CGContextRelease(ctx);
+    return img;
 }
 
 - (NSData*)layerData
 {
     if(![self overlayModified])
-        return [[[document contents] activeLayer] layerData];
+        return layer_data;
     return temp;
 }
 
 - (CGContextRef)overlayCtx
 {
     return overlayCtx;
+}
+
+- (void)compositeLayer:(SeaLayer *)layer src:(unsigned char *)srcPtr rect:(IntRect)r dest:(CGContextRef)ctx
+{
+    if([layer isComplexTransform]) {
+        [layer drawLayer:ctx];
+        return;
+    }
+
+    int opacity = [layer opacity];
+    if (opacity == 0)
+        return;
+
+    unsigned char *destPtr = CGBitmapContextGetData(ctx);
+    int bytesPerRow = CGBitmapContextGetBytesPerRow(ctx);
+
+    IntRect lrect = [layer globalBounds];
+    r = IntConstrainRect(lrect,r);
+
+    int lwidth = [layer width], mode = [layer mode];
+    unsigned char *ldata = srcPtr;
+
+    unsigned char tempSpace[4], tempSpace2[4];
+
+    unsigned char *src = ldata + ((r.origin.y - lrect.origin.y) * lwidth + r.origin.x-lrect.origin.x)*spp;
+    unsigned char *dst = destPtr + (r.origin.y * bytesPerRow) + r.origin.x*spp;
+
+    for (int row = 0; row < r.size.height; row++) {
+
+        unsigned char *src0 = src;
+        unsigned char *dst0 = dst;
+
+        for(int col=0;col<r.size.width;col++) {
+
+            memcpy(tempSpace2,src0,spp);
+            memcpy(tempSpace,dst0,spp);
+
+            if(mode==kCGBlendModeNormal) {
+                // Then merge the pixel in temporary memory with the destination pixel
+                normalMerge(spp, dst0, 0, tempSpace2, 0, opacity);
+            } else {
+                // Apply the appropriate effect using the source pixel
+                selectMerge(mode, spp, tempSpace, 0, tempSpace2, 0);
+
+                // Then merge the pixel in temporary memory with the destination pixel
+                normalMerge(spp, dst0, 0, tempSpace, 0, opacity);
+            }
+
+            src0+=spp;
+            dst0+=spp;
+        }
+        src += lwidth * spp;
+        dst += bytesPerRow;
+    }
 }
 
 @end

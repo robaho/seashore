@@ -55,7 +55,7 @@
     return [NSColor blackColor];
 }
 
-- (void)plotBrush:(SeaBrush*)brush at:(NSPoint)where pressure:(int)pressure
+- (IntRect)plotBrush:(SeaBrush*)brush at:(NSPoint)where pressure:(int)pressure
 {
     int brushWidth = [brush width];
     int brushHeight = [brush height];
@@ -79,7 +79,7 @@
 
     CGContextTranslateCTM(overlayCtx, [layer xoff],[layer yoff]);
 
-    [super plotBrush:brush at:where pressure:pressure];
+    IntRect r = [super plotBrush:brush at:where pressure:pressure];
 
     CGContextTranslateCTM(overlayCtx, -[layer xoff],-[layer yoff]);
 
@@ -91,6 +91,8 @@
     CGContextDrawImage(overlayCtx, CGRectMake(0,0,srcRect0.size.width,srcRect0.size.height), srcImg);
 
     CGContextRestoreGState(overlayCtx);
+
+    return r;
 }
 
 - (BOOL)sourceSet

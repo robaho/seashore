@@ -1,5 +1,4 @@
 #import "Seashore.h"
-#import "SeaBrushFuncs.h"
 
 /*!
 	@class      SeaBrush
@@ -78,6 +77,12 @@
 - (int)height;
 
 /*!
+ @method        isPixMap
+ @result        Returns true if the brush is a pixmap (i.e. colored) brush
+ */
+- (bool)isPixMap;
+
+/*!
 	@method		compare:
 	@discussion	Compares two brushes to see which should come first in the brush
 				utility (comparisons are currently based on the brush's name).
@@ -90,7 +95,6 @@
 -(void)drawBrushAt:(NSRect)rect;
 
 -(CGImageRef)bitmap;
--(CGImageRef)maskImg;
 
 /*!
  @method        mask

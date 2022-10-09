@@ -50,7 +50,9 @@
 	else {
 		[scaleCheckbox setState:[gUserDefaults boolForKey:@"brush scale"]];
 	}
-	
+
+    [super loadOpacity:@"brush opacity"];
+
 	isErasing = NO;
 }
 
@@ -108,11 +110,6 @@
 	return isErasing;
 }
 
-- (int)opacity
-{
-    return 255; // only color opacity is used
-}
-
 - (void)updateModifiers:(unsigned int)modifiers
 {
 	[super updateModifiers:modifiers];
@@ -148,6 +145,7 @@
 	[gUserDefaults setObject:[pressureCheckbox state] ? @"YES" : @"NO" forKey:@"brush pressure"];
 	[gUserDefaults setInteger:[pressurePopup indexOfSelectedItem] forKey:@"brush pressure style"];
 	[gUserDefaults setInteger:[scaleCheckbox state] forKey:@"brush scale"];
+    [gUserDefaults setInteger:[opacitySlider integerValue] forKey:@"brush opacity"];
 }
 
 @end
