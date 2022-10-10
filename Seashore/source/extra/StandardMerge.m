@@ -216,17 +216,15 @@ void overlayMerge(int spp, unsigned char *destPtr, int destLoc, unsigned char *s
     alpha = srcPtr[srcLoc + alphaPos];
 
     for (k = 0; k < alphaPos; k++) {
+        unsigned char src = srcPtr[k];
+        unsigned char dst = destPtr[k];
 
-        float val;
-        float src = srcPtr[k]/255.0;
-        float dst = destPtr[k]/255.0;
-
-        if (dst < 0.5f)
-            val = 2.0f * src * dst;
+        if (dst < 128)
+            val = (2 * int_mult(src,dst,t1));
         else
-            val = 1.0f - 2.0f * (1.0 - dst) * (1.0 - src);
+            val = 255 - 2 * int_mult(255 - dst,255-src,t1);
 
-        destPtr[k] = MAX(0, MIN(255, 255 * val));
+        destPtr[k] = MAX(0, MIN(255, val));
     }
 
     destPtr[destLoc + alphaPos] = MIN(alpha, destPtr[destLoc + alphaPos]);
