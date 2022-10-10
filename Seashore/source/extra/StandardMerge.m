@@ -502,7 +502,7 @@ void exclusionMerge(int spp, unsigned char *destPtr, int destLoc, unsigned char 
     int t1, k;
 
     for (k = 0; k < alphaPos; k++) {
-        t1 = 255*(.5 - 2 * (destPtr[k]/255.0-.5) * (srcPtr[k]/255.0 - .5));
+        t1 = destPtr[k] + srcPtr[k] - 2 * int_mult(destPtr[k],srcPtr[k],t1);
         destPtr[k] = MAX(0, MIN(255, t1));
     }
 

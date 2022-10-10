@@ -120,7 +120,8 @@
             point = bounds.origin;
     }
     else if ([[document selection] active]) {
-        size = [[document selection] localRect].size;
+        size = [[document selection] globalRect].size;
+        point = [[document selection] globalRect].origin;
     }
     else {
         size.height = size.width = 0;
@@ -158,9 +159,11 @@
         }
     }
 
-    if(point.x == -1 || !color){
+    if(point.x == -1){
         [xValue setStringValue:@""];
         [yValue setStringValue:@""];
+    }
+    if(!color) {
         [redValue setStringValue:@""];
         [greenValue setStringValue:@""];
         [blueValue setStringValue:@""];
