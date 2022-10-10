@@ -210,13 +210,24 @@ void multiplyMerge(int spp, unsigned char *destPtr, int destLoc, unsigned char *
 void overlayMerge(int spp, unsigned char *destPtr, int destLoc, unsigned char *srcPtr, int srcLoc)
 {
     unsigned char alpha;
-    int t1, t2;
+    int val,t1;
     int k;
 
     alpha = srcPtr[srcLoc + alphaPos];
 
-    for (k = 0; k < alphaPos; k++)
-        destPtr[destLoc + k] = int_mult(destPtr[destLoc + k], destPtr[destLoc + k] + int_mult(2 * srcPtr[srcLoc + k], 255 - destPtr[destLoc + k], t1), t2);
+    for (k = 0; k < alphaPos; k++) {
+
+        float val;
+        float src = srcPtr[k]/255.0;
+        float dst = destPtr[k]/255.0;
+
+        if (dst < 0.5f)
+            val = 2.0f * src * dst;
+        else
+            val = 1.0f - 2.0f * (1.0 - dst) * (1.0 - src);
+
+        destPtr[k] = MAX(0, MIN(255, 255 * val));
+    }
 
     destPtr[destLoc + alphaPos] = MIN(alpha, destPtr[destLoc + alphaPos]);
 }
