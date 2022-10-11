@@ -253,7 +253,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
 
     foreground = [[document toolboxUtility] foreground];
     if(CGColorGetPattern([foreground CGColor])!=NULL) {
-        return [NSColor blackColor];
+        foreground = [NSColor blackColor];
     }
 
     if (type == XCF_RGB_IMAGE && selectedChannel != kAlphaChannel)
@@ -268,11 +268,11 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
 {
     id background;
     
+    background = [[document toolboxUtility] background];
     if(CGColorGetPattern([background CGColor])!=NULL) {
-        return [NSColor whiteColor];
+        background = [NSColor whiteColor];
     }
 
-    background = [[document toolboxUtility] background];
     if (type == XCF_RGB_IMAGE && selectedChannel != kAlphaChannel)
         return [background colorUsingColorSpace:MyRGBCS];
     else if (type == XCF_GRAY_IMAGE)

@@ -242,7 +242,7 @@
 	@method		foreground
 	@discussion	Returns the foreground colour, converting it to the same colour
 				space as the document and stripping any colour from it if the
-				alpha channel is selected.
+				alpha channel is selected. A pattern color is returned as black.
 	@result		Returns a NSColor representing the foreground colour.
 */
 - (NSColor *)foreground;
@@ -251,7 +251,7 @@
 	@method		background
 	@discussion	Returns the background colour, converting it to the same colour
 				space as the document and stripping any colour from it if the
-				alpha channel is selected.
+				alpha channel is selected. A pattern color is returned as white.
 	@result		Returns a NSColor representing the background colour.
 */
 - (NSColor *)background;
