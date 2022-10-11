@@ -2406,7 +2406,7 @@
 				CODE_SIGN_ENTITLEMENTS = Seashore.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2022100901;
+				CURRENT_PROJECT_VERSION = 2022101001;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2414,12 +2414,13 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.photography";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				MARKETING_VERSION = 3.9;
+				MARKETING_VERSION = 3.9.1;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore;
 				PRODUCT_NAME = Seashore;
@@ -2488,7 +2489,7 @@
 				CODE_SIGN_ENTITLEMENTS = Seashore.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2022100901;
+				CURRENT_PROJECT_VERSION = 2022101001;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2496,12 +2497,13 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
 				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.photography";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				MARKETING_VERSION = 3.9;
+				MARKETING_VERSION = 3.9.1;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore;
 				PRODUCT_NAME = Seashore;
 				PROVISIONING_PROFILE_SPECIFIER = "";
