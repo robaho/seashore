@@ -78,9 +78,6 @@
 
 - (void)clearPointDisplay
 {
-    int xoff = [[[document contents] activeLayer] xoff];
-    int yoff = [[[document contents] activeLayer] yoff];
-
     for(int i=0;i<count;i++){
         [[document docView] setNeedsDisplayInLayerRect:IntEmptyRect(points[i]):26];
     }
@@ -98,6 +95,8 @@
         return;
     }
     
+    draggingPointIndex=-1;
+    
 	if (count < [currentPlugin points]) {
         lastPointTime = getCurrentMillis();
 		points[count] = where;
@@ -112,7 +111,6 @@
         }
     } else if(count>0) {
         // see if we are in a point and if so start dragging
-        draggingPointIndex=-1;
         for(int i=0;i<count;i++){
             IntRect r = [self handleRect:points[i]];
             if(IntPointInRect(where, r)) {
