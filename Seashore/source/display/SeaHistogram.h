@@ -12,12 +12,14 @@ NS_ASSUME_NONNULL_BEGIN
 @interface SeaHistogram : NSView
 {
     __weak IBOutlet id document;
-    IBOutlet id modeComboBox;
+    __weak IBOutlet NSPopUpButton *modeComboBox;
     IBOutlet id histogramView;
+    __weak IBOutlet NSPopUpButton *sourceComboBox;
 }
-- (IBAction)modeChanged:(id)sender;
+- (IBAction)optionsChanged:(id)sender;
 
 - (void)update;
+- (void)shutdown;
 
 @end
 

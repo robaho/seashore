@@ -12,7 +12,7 @@
              [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:YES], @"visibility", sidebar, @"view", nil], [NSNumber numberWithInt:kLayersPanel],
              [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:YES], @"visibility", pointInformation, @"view", nil], [NSNumber numberWithInt:kPointInformation],
              [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:YES], @"visibility", statusBar, @"view", nil], [NSNumber numberWithInt:kStatusBar],
-             [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:YES], @"visibility", recentsBar, @"view", nil], [NSNumber numberWithInt:kRecentsHistogram],
+             [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:YES], @"visibility", rightSideTabs, @"view", nil], [NSNumber numberWithInt:kRecentsHistogram],
              nil];
     
     int i;
@@ -29,6 +29,13 @@
 
     if([[SeaController seaSupport] isSupportPurchased]){
         [self hideBanner];
+    }
+
+    if ([gUserDefaults objectForKey:@"rightsidetabs selected"] != NULL) {
+        int selected = [gUserDefaults integerForKey:@"rightsidetabs selected"];
+        if(selected) {
+            [rightSideTabs selectTabViewItemAtIndex:selected];
+        }
     }
 }
 
@@ -90,6 +97,12 @@
 -(IBAction)showSupportSeashore:(id)sender
 {
     [[SeaController seaSupport] showSupportSeashore:sender];
+}
+
+- (void)shutdown
+{
+    int selected = [rightSideTabs indexOfTabViewItem:[rightSideTabs selectedTabViewItem]];
+    [gUserDefaults setInteger:selected forKey:@"rightsidetabs selected"];
 }
 
 @end

@@ -6,6 +6,11 @@
 
 @implementation SeaDocumentController
 
++ (void) load
+{
+    [SeaDocumentController new];
+}
+
 - (id)init
 {
 	if (![super init])

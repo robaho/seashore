@@ -20,15 +20,6 @@
 	return [mergedCheckbox state];
 }
 
-- (IBAction)opacityChanged:(id)sender {
-    [opacityLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"opacity", @"Opacity: %d%%"), [opacitySlider intValue]]];
-}
-
-- (int)opacity
-{
-    return [opacitySlider intValue] * 2.55;
-}
-
 - (IBAction)mergedChanged:(id)sender
 {
 	id cloneTool = [[document tools] getTool:kCloneTool];

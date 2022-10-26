@@ -707,6 +707,11 @@ finished:
     return temp;
 }
 
+- (CGContextRef)dataCtx
+{
+    return dataCtx;
+}
+
 - (CGContextRef)overlayCtx
 {
     return overlayCtx;

@@ -31,6 +31,19 @@
 		else
 			[repeatPopup selectItemAtIndex:0];
 	}
+    if ([gUserDefaults objectForKey:@"gradient start opacity"] == NULL) {
+        [startOpacitySlider setIntValue:100];
+    }
+    else {
+        [startOpacitySlider setIntValue:[gUserDefaults integerForKey:@"gradient start opacity"]];
+    }
+    if ([gUserDefaults objectForKey:@"gradient end opacity"] == NULL) {
+        [endOpacitySlider setIntValue:100];
+    }
+    else {
+        [endOpacitySlider setIntValue:[gUserDefaults integerForKey:@"gradient end opacity"]];
+    }
+
 }
 
 - (int)type
@@ -62,6 +75,23 @@
 {
 	[gUserDefaults setInteger:[[typePopup selectedItem] tag] forKey:@"gradient type"];
 	[gUserDefaults setInteger:[[repeatPopup selectedItem] tag] forKey:@"gradient repeat"];
+    [gUserDefaults setInteger:[startOpacitySlider intValue] forKey:@"gradient start opacity"];
+    [gUserDefaults setInteger:[endOpacitySlider intValue] forKey:@"gradient end opacity"];
+}
+
+- (IBAction)update:(id)sender {
+    [startOpacityLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"start opacity", @"Start Opacity: %d%%"), [startOpacitySlider intValue]]];
+    [endOpacityLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"end opacity", @"End Opacity: %d%%"), [endOpacitySlider intValue]]];
+    [super update:sender];
+}
+
+- (float)startOpacity
+{
+    return [startOpacitySlider intValue]/100.0;
+}
+- (float)endOpacity
+{
+    return [endOpacitySlider intValue]/100.0;
 }
 
 @end

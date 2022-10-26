@@ -79,6 +79,8 @@
 		2BCD7A14286281F7007EB89B /* Support Seashore.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2BCD7A12286281F7007EB89B /* Support Seashore.rtf */; };
 		2BCD7A18286294E2007EB89B /* SeaWhatsNew.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BCD7A17286294E2007EB89B /* SeaWhatsNew.m */; };
 		2BCD7A1B2862982D007EB89B /* What's New and Tips.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2BCD7A192862982D007EB89B /* What's New and Tips.rtf */; };
+		2BCF02A128FA0F2500733144 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BCF02A028FA0F2500733144 /* CoreFoundation.framework */; };
+		2BCF02A328FA0F3300733144 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BCF02A228FA0F3200733144 /* AppKit.framework */; };
 		2BD591A921E3DBCA002D150B /* AutoEnhance+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591A821E3DBCA002D150B /* AutoEnhance+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BD591AB21E3DBCA002D150B /* AffineTile+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591AA21E3DBCA002D150B /* AffineTile+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BD591AD21E3DBCA002D150B /* Bloom+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591AC21E3DBCA002D150B /* Bloom+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -607,6 +609,8 @@
 		2BCD7A16286294E2007EB89B /* SeaWhatsNew.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaWhatsNew.h; sourceTree = "<group>"; };
 		2BCD7A17286294E2007EB89B /* SeaWhatsNew.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeaWhatsNew.m; sourceTree = "<group>"; };
 		2BCD7A1A2862982D007EB89B /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = "English.lproj/What's New and Tips.rtf"; sourceTree = "<group>"; };
+		2BCF02A028FA0F2500733144 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		2BCF02A228FA0F3200733144 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		2BD591A821E3DBCA002D150B /* AutoEnhance+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "AutoEnhance+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BD591AA21E3DBCA002D150B /* AffineTile+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "AffineTile+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BD591AC21E3DBCA002D150B /* Bloom+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Bloom+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1041,8 +1045,10 @@
 			files = (
 				2BFC6C2B2778DEE400F707D9 /* XCTest.framework in Frameworks */,
 				2B2DEC3C286F35FE0017BBA8 /* Plugins.framework in Frameworks */,
+				2BCF02A328FA0F3300733144 /* AppKit.framework in Frameworks */,
 				2B78488D28877C9B000B4839 /* PocketSVG.framework in Frameworks */,
 				2B2EFAB228BF2BD8009B225D /* SeaLibrary.framework in Frameworks */,
+				2BCF02A128FA0F2500733144 /* CoreFoundation.framework in Frameworks */,
 				2BF19EE328613FED00C35FBE /* Security.framework in Frameworks */,
 				2B2DEC3F286F36040017BBA8 /* GIMPCore.framework in Frameworks */,
 				2BF19EDE2860FBFE00C35FBE /* StoreKit.framework in Frameworks */,
@@ -1191,6 +1197,8 @@
 		2A37F4C3FDCFA73011CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2BCF02A228FA0F3200733144 /* AppKit.framework */,
+				2BCF02A028FA0F2500733144 /* CoreFoundation.framework */,
 				2B2EFA8428BF1B46009B225D /* SeaLibrary.framework */,
 				2B8448BE28BEED9700C068D1 /* libSeaLibrary.a */,
 				2B78486228877B88000B4839 /* PocketSVG.framework */,
@@ -2407,7 +2415,7 @@
 				CODE_SIGN_ENTITLEMENTS = Seashore.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2022101301;
+				CURRENT_PROJECT_VERSION = 2022102501;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2422,7 +2430,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				MARKETING_VERSION = 3.9.2;
+				MARKETING_VERSION = 3.10;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore;
 				PRODUCT_NAME = Seashore;
@@ -2492,7 +2500,7 @@
 				CODE_SIGN_ENTITLEMENTS = Seashore.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2022101301;
+				CURRENT_PROJECT_VERSION = 2022102501;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2507,7 +2515,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				MARKETING_VERSION = 3.9.2;
+				MARKETING_VERSION = 3.10;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore;
 				PRODUCT_NAME = Seashore;
 				PROVISIONING_PROFILE_SPECIFIER = "";

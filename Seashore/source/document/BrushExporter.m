@@ -120,21 +120,23 @@ typedef struct {
 {
     FILE *file;
     BrushHeader header;
+
     unsigned char* noalpha=NULL;
 
     int width = (int)CGImageGetWidth(bitmap);
     int height = (int)CGImageGetHeight(bitmap);
+
     CGColorSpaceRef cs = CGImageGetColorSpace(bitmap);
     int spp = (int)CGColorSpaceGetNumberOfComponents(cs) + 1; // add 1 for alpha
-    CGColorSpaceRelease(cs);
-    CGDataProviderRef dp = CGImageGetDataProvider(bitmap);
-    CFDataRef rawData = CGDataProviderCopyData(dp);
-    CGDataProviderRelease(dp);
-    UInt8 *cfData = (UInt8 *) CFDataGetBytePtr(rawData);
 
     unsigned char *data = malloc(width*height*spp);
-    memcpy(data,cfData,width*height*spp);
-    CFRelease(rawData);
+
+    CGContextRef ctx = CGBitmapContextCreate(data, width, height,8,width*spp,COLOR_SPACE,kCGImageAlphaPremultipliedLast);
+    CGContextTranslateCTM(ctx,0,height);
+    CGContextScaleCTM(ctx,1,-1);
+    CGContextSetBlendMode(ctx,kCGBlendModeCopy);
+    CGContextDrawImage(ctx,CGRectMake(0,0,width,height),bitmap);
+    CGContextRelease(ctx);
 
     if(spp==2){
         noalpha = malloc(width*height);

@@ -56,7 +56,7 @@
     if ([gUserDefaults objectForKey:@"active texture"] == NULL)
         selected = NULL;
     else
-        [self setActiveTextureIndex:[gUserDefaults integerForKey:@"active texture"]];
+        [self setSelectedFromIndex:[gUserDefaults integerForKey:@"active texture"]];
 }
 
 - (void)shutdown
@@ -230,9 +230,8 @@
     }
 }
 
-- (void)setActiveTextureIndex:(int)index
+- (void)setSelectedFromIndex:(int)index
 {
-    selected = NULL;
     NSArray *textures = [groups objectAtIndex:activeGroupIndex];
     if (index>=0 && index<[textures count]) {
         selected = [textures objectAtIndex:index];
@@ -240,6 +239,12 @@
     } else {
         [textureNameLabel setStringValue:@""];
     }
+}
+
+- (void)setActiveTextureIndex:(int)index
+{
+    selected = NULL;
+    [self setSelectedFromIndex:index];
     [view setNeedsDisplay:YES];
     [[view documentView] update];
 

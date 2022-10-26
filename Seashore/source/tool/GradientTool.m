@@ -68,22 +68,22 @@
 		info.start_color[0] = [color redComponent] * 255;
 		info.start_color[1] = [color greenComponent] * 255;
 		info.start_color[2] = [color blueComponent] * 255;
-		info.start_color[3] = [color alphaComponent] * 255;
+		info.start_color[3] = [options startOpacity] * 255;
 		info.end = where;
 		color = [contents background];
 		info.end_color[0] = [color redComponent] * 255;
 		info.end_color[1] = [color greenComponent] * 255;
 		info.end_color[2] = [color blueComponent] * 255;
-		info.end_color[3] = [color alphaComponent] * 255;
+		info.end_color[3] = [options endOpacity] * 255;
 	}
 	else {
 		color = [contents foreground];
 		info.start_color[0] = info.start_color[1] = info.start_color[2] = [color whiteComponent] * 255;
-		info.start_color[3] = [color alphaComponent] * 255;
+		info.start_color[3] = [options startOpacity] * 255;
 		info.end = where;
 		color = [contents background];
 		info.end_color[0] = info.end_color[1] = info.end_color[2] = [color whiteComponent] * 255;
-		info.end_color[3] = [color alphaComponent] * 255;
+		info.end_color[3] = [options endOpacity] * 255;
 	}
 	
 	// Work out the rectangle for the gradient

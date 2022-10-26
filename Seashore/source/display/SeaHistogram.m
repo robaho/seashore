@@ -15,28 +15,50 @@
 
 extern dispatch_queue_t queue;
 
+- (void)awakeFromNib
+{
+    if ([gUserDefaults objectForKey:@"histogram mode"] != NULL) {
+        [modeComboBox selectItemAtIndex:[gUserDefaults integerForKey:@"histogram mode"]];
+    }
+    if ([gUserDefaults objectForKey:@"histogram source"] != NULL) {
+        [sourceComboBox selectItemAtIndex:[gUserDefaults integerForKey:@"histogram source"]];
+    }
+}
+
 - (void)update
 {
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(calculateHistogram) object:nil];
-    [self performSelector:@selector(calculateHistogram) withObject:nil afterDelay:.5];
+    [self performSelector:@selector(calculateHistogram) withObject:nil afterDelay:.5 inModes:@[NSRunLoopCommonModes]];
 }
 
-- (IBAction)modeChanged:(id)sender {
+- (IBAction)optionsChanged:(id)sender {
     [self calculateHistogram];
 }
 
 - (void)calculateHistogram
 {
-    NSData *data_ref = [[document whiteboard] layerData];
-
     SeaContent *contents = [document contents];
-    SeaLayer *layer = [contents activeLayer];
 
     int spp = [contents spp];
-    int lw = [layer width];
-    int lh = [layer height];
-    int xoff = [layer xoff];
-    int yoff = [layer yoff];
+    int sw,sh;
+
+    int source = [sourceComboBox indexOfSelectedItem];
+
+    NSData *data_ref;
+    CGContextRef ctx=NULL;
+
+    if(source==0) { // layer
+        data_ref = [[document whiteboard] layerData];
+        SeaLayer *layer = [contents activeLayer];
+
+        sw = [layer width];
+        sh = [layer height];
+    } else { // image
+        ctx = [[document whiteboard] dataCtx];
+        CGContextRetain(ctx);
+        sw = [contents width];
+        sh = [contents height];
+    }
 
     int mode = [modeComboBox indexOfSelectedItem];
 
@@ -45,15 +67,21 @@ extern dispatch_queue_t queue;
 
     dispatch_async(queue, ^{
 
-        unsigned char *data = [data_ref bytes];
-        if(!data) // text layers do not have histograms
-            return;
+        unsigned char *data;
+        int bytesPerRow;
+        if(ctx!=NULL) {
+            data = CGBitmapContextGetData(ctx);
+            bytesPerRow = CGBitmapContextGetBytesPerRow(ctx);
+        } else {
+            data = [data_ref bytes];
+            bytesPerRow = sw*spp;
+        }
 
         int *histogram = calloc(256*3,sizeof(int)); // allocate enough for all planes
 
-        for (int row=0;row<lh;row++) {
-            for(int col=0;col<lw;col++) {
-                int offset = (row*lw+col)*spp;
+        for (int row=0;row<sh;row++) {
+            for(int col=0;col<sw;col++) {
+                int offset = row*bytesPerRow+col*spp;
 
                 if(data[offset+spp-1]==0)
                     continue; // ignore completely transparent pixels
@@ -78,11 +106,18 @@ extern dispatch_queue_t queue;
                 }
             }
         }
+        CGContextRelease(ctx);
 
         dispatch_async(dispatch_get_main_queue(),^{
             [histogramView updateHistogram:mode histogram:histogram];
         });
     });
+}
+
+- (void)shutdown
+{
+    [gUserDefaults setInteger:[modeComboBox indexOfSelectedItem] forKey:@"histogram mode"];
+    [gUserDefaults setInteger:[sourceComboBox indexOfSelectedItem] forKey:@"histogram source"];
 }
 
 

@@ -642,11 +642,11 @@
                                                         <tabViewItems>
                                                             <tabViewItem label="Recents" identifier="Recents" id="b5B-SY-bWL" userLabel="Recents">
                                                                 <view key="view" id="IH0-9r-NY6">
-                                                                    <rect key="frame" x="10" y="29" width="219" height="227"/>
+                                                                    <rect key="frame" x="10" y="25" width="219" height="231"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <collectionView focusRingType="none" selectable="YES" id="cjF-QV-i89">
-                                                                            <rect key="frame" x="-3" y="4" width="218" height="218"/>
+                                                                            <rect key="frame" x="-3" y="4" width="218" height="222"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                             <color key="primaryBackgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         </collectionView>
@@ -667,7 +667,7 @@
                                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                 </customView>
                                                                                 <popUpButton id="Pz3-mF-ACP" userLabel="Mode">
-                                                                                    <rect key="frame" x="0.0" y="205" width="214" height="20"/>
+                                                                                    <rect key="frame" x="113" y="205" width="101" height="20"/>
                                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                                                     <popUpButtonCell key="cell" type="inline" title="Value" bezelStyle="inline" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" selectedItem="sZk-m0-E0n" id="MgD-UY-W8T" userLabel="Mode">
                                                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -683,7 +683,24 @@
                                                                                         </menu>
                                                                                     </popUpButtonCell>
                                                                                     <connections>
-                                                                                        <action selector="modeChanged:" target="MBr-Kg-xuZ" id="f8Y-s5-Qh7"/>
+                                                                                        <action selector="optionsChanged:" target="MBr-Kg-xuZ" id="f8Y-s5-Qh7"/>
+                                                                                    </connections>
+                                                                                </popUpButton>
+                                                                                <popUpButton id="HVf-de-K98" userLabel="Source">
+                                                                                    <rect key="frame" x="7" y="205" width="101" height="20"/>
+                                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                                                    <popUpButtonCell key="cell" type="inline" title="Layer" bezelStyle="inline" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" selectedItem="kcv-re-nqZ" id="LH0-Md-Re0" userLabel="Source">
+                                                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                                        <font key="font" metaFont="smallSystemBold"/>
+                                                                                        <menu key="menu" id="BIf-Cx-AmS" userLabel="SourceMenu">
+                                                                                            <items>
+                                                                                                <menuItem title="Layer" state="on" id="kcv-re-nqZ" userLabel="Layer"/>
+                                                                                                <menuItem title="Image" id="bwD-mI-nEP" userLabel="Image"/>
+                                                                                            </items>
+                                                                                        </menu>
+                                                                                    </popUpButtonCell>
+                                                                                    <connections>
+                                                                                        <action selector="optionsChanged:" target="MBr-Kg-xuZ" id="asT-iK-1An"/>
                                                                                     </connections>
                                                                                 </popUpButton>
                                                                             </subviews>
@@ -691,6 +708,7 @@
                                                                                 <outlet property="document" destination="-2" id="dRn-VR-mhC"/>
                                                                                 <outlet property="histogramView" destination="WeA-PS-GbO" id="dmv-u8-Dez"/>
                                                                                 <outlet property="modeComboBox" destination="Pz3-mF-ACP" id="UYD-zs-ytD"/>
+                                                                                <outlet property="sourceComboBox" destination="HVf-de-K98" id="Fkv-ji-2iK"/>
                                                                             </connections>
                                                                         </customView>
                                                                     </subviews>
@@ -741,8 +759,8 @@
                     <outlet property="layers" destination="7Qa-Co-cVm" id="c6n-RR-kCs"/>
                     <outlet property="nonSidebar" destination="2730" id="16681"/>
                     <outlet property="pointInformation" destination="XzW-kL-x8j" id="zcc-Nb-gIi"/>
-                    <outlet property="recentsBar" destination="YN2-pl-YCB" id="4Qs-4z-gCK"/>
                     <outlet property="rightSideBar" destination="RuG-ok-73V" id="24D-J6-22e"/>
+                    <outlet property="rightSideTabs" destination="YN2-pl-YCB" id="4Qs-4z-gCK"/>
                     <outlet property="sidebar" destination="2729" id="16664"/>
                     <outlet property="statusBar" destination="YA2-f1-Dus" id="Qr1-LM-WdC"/>
                 </connections>
@@ -1669,7 +1687,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <clipView key="contentView" id="Soe-9G-BN0">
                             <rect key="frame" x="1" y="1" width="231" height="94"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" id="415" customClass="NSExtendedTableView">
                                     <rect key="frame" x="0.0" y="0.0" width="240" height="94"/>
@@ -2723,8 +2741,12 @@ Gw
         <customObject id="1873" userLabel="GradientOptions" customClass="GradientOptions">
             <connections>
                 <outlet property="document" destination="-2" id="2594"/>
+                <outlet property="endOpacityLabel" destination="ir5-UJ-BxP" id="LB7-sm-mRL"/>
+                <outlet property="endOpacitySlider" destination="H0E-Mf-xyW" id="X9D-hJ-DX2"/>
                 <outlet property="modifierPopup" destination="2055" id="2576"/>
                 <outlet property="repeatPopup" destination="2058" id="2575"/>
+                <outlet property="startOpacityLabel" destination="yiU-Mf-HWq" id="1R3-bC-avq"/>
+                <outlet property="startOpacitySlider" destination="NqY-Cr-4Gq" id="zU4-TK-g2S"/>
                 <outlet property="typePopup" destination="2061" id="2574"/>
                 <outlet property="view" destination="1893" id="2220"/>
             </connections>
@@ -3477,7 +3499,7 @@ Gw
                     </popUpButtonCell>
                 </popUpButton>
                 <popUpButton verticalHuggingPriority="750" fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2055">
-                    <rect key="frame" x="-2" y="116" width="233" height="15"/>
+                    <rect key="frame" x="-2" y="79" width="233" height="15"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" title="No modifiers active" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2083" id="16891">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -3530,6 +3552,44 @@ Gw
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="yiU-Mf-HWq">
+                    <rect key="frame" x="-2" y="120" width="96" height="11"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="left" title="Start Opacity: 100%" placeholderString="Opacity: 100%" id="OVO-Yq-Sc4">
+                        <font key="font" metaFont="label" size="9"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <slider toolTip="Opacity of the eraser" verticalHuggingPriority="750" id="NqY-Cr-4Gq">
+                    <rect key="frame" x="99" y="117" width="131" height="17"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <sliderCell key="cell" controlSize="mini" continuous="YES" alignment="left" maxValue="100" doubleValue="100" tickMarkPosition="below" sliderType="linear" id="I9Y-Ib-PDM">
+                        <font key="font" metaFont="label" size="9"/>
+                        <connections>
+                            <action selector="update:" target="1873" id="ulR-JV-i1i"/>
+                        </connections>
+                    </sliderCell>
+                </slider>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="ir5-UJ-BxP">
+                    <rect key="frame" x="-2" y="102" width="96" height="11"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="left" title="End Opacity: 100%" placeholderString="Opacity: 100%" id="fRg-ml-Qs2">
+                        <font key="font" metaFont="label" size="9"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <slider toolTip="Opacity of the eraser" verticalHuggingPriority="750" id="H0E-Mf-xyW">
+                    <rect key="frame" x="99" y="99" width="131" height="17"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <sliderCell key="cell" controlSize="mini" continuous="YES" alignment="left" maxValue="100" doubleValue="100" tickMarkPosition="below" sliderType="linear" id="hv1-uL-LBp">
+                        <font key="font" metaFont="label" size="9"/>
+                    </sliderCell>
+                    <connections>
+                        <action selector="update:" target="1873" id="8XQ-za-Kou"/>
+                    </connections>
+                </slider>
             </subviews>
             <point key="canvasLocation" x="-330" y="718.5"/>
         </customView>

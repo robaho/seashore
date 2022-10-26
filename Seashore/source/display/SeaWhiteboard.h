@@ -235,6 +235,8 @@ enum {
 
 - (NSData*)layerData;
 
+- (CGContextRef)dataCtx;
+
 - (void)drawRect:(NSRect)rect;
 
 - (CGContextRef)overlayCtx;

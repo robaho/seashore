@@ -36,7 +36,7 @@ enum
 	IBOutlet NSView *nonSidebar;
 	IBOutlet NSView *contentView;
 	IBOutlet NSView *statusBar;
-    IBOutlet NSView *recentsBar;
+    IBOutlet NSTabView *rightSideTabs;
     IBOutlet NSView *rightSideBar;
 
     IBOutlet NSView *banner;

@@ -16,9 +16,13 @@
 	// The pop-up menu indicating the gradient's type
 	IBOutlet id typePopup;
 	
-	// The pop-up menu indicating the repeating style for the gradient
-	IBOutlet id repeatPopup;
-	
+    __weak IBOutlet NSTextField *endOpacityLabel;
+    __weak IBOutlet NSSlider *endOpacitySlider;
+    __weak IBOutlet NSSlider *startOpacitySlider;
+    // The pop-up menu indicating the repeating style for the gradient
+    __weak IBOutlet NSTextField *startOpacityLabel;
+    IBOutlet id repeatPopup;
+
 }
 
 /*!
@@ -73,5 +77,10 @@
 	@discussion	Saves current options upon shutdown.
 */
 - (void)shutdown;
+
+// Returns the start opacity from 0..1
+- (float)startOpacity;
+// Returns the end opacity from 0..1
+- (float)endOpacity;
 
 @end

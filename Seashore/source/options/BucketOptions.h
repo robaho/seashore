@@ -54,6 +54,4 @@
 */
 - (void)shutdown;
 
-- (int)opacity;
-
 @end

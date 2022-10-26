@@ -293,7 +293,6 @@ static NSString*  SelectionEditIdentifier = @"Selection Edit Identifier";
 -(void)positionTool
 {
 	oldTool = tool;
-    NSLog(@"switching to position tool");
 	[self changeToolTo: kPositionTool];
 }
 

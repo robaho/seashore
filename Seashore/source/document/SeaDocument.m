@@ -510,6 +510,8 @@
     [[self brushUtility] shutdown];
     [[self optionsUtility] shutdown];
     [[self infoUtility] shutdown];
+    [[self histogram] shutdown];
+    [[[self window] contentView] shutdown];
 
 	// Then call our supervisor
 	[super close];

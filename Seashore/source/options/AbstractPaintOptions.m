@@ -27,7 +27,7 @@
 
 - (int)opacity
 {
-    return [opacitySlider intValue] * 2.55;
+    return roundf([opacitySlider intValue] * 2.55);
 }
 
 - (void)loadOpacity:(NSString*)tag
