@@ -21,6 +21,10 @@
 
 @implementation BrushTool
 
+- (void)awakeFromNib {
+    options = [[BrushOptions alloc] init:document];
+}
+
 - (int)toolId
 {
     return kBrushTool;
@@ -39,11 +43,6 @@
 - (AbstractOptions*)getOptions
 {
     return options;
-}
-
-- (void)setOptions:(AbstractOptions*)newoptions
-{
-    options = (BrushOptions*)newoptions;
 }
 
 - (BrushOptions*)getBrushOptions

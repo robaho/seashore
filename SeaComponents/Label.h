@@ -11,7 +11,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Label : NSTextField
 
+-(void)setTitle:(NSString*)title;
+-(void)makeSmall;
+-(void)makeCompact;
+-(void)makeRegular;
+
 + (Label*)label;
++ (Label*)compactLabel;
++ (Label*)smallLabel;
 @end
 
 NS_ASSUME_NONNULL_END

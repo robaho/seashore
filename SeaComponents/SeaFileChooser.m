@@ -6,25 +6,16 @@
 {
     self = [super initWithFrame:frameRect];
 
-    button = [[NSButton alloc] init];
-    button.title = @"Choose";
-    button.target = self;
-    button.action = @selector(buttonPressed:);
-    button.cell.controlSize = NSControlSizeMini;
-    button.font = [NSFont systemFontOfSize:[NSFont systemFontSizeForControlSize:NSControlSizeMini]];
-    button.bezelStyle = NSRoundedBezelStyle;
-    [button setButtonType:NSMomentaryPushInButton];
-    label = [Label label];
+    button = [SeaButton compactButton:@"Choose" withLabel:@"" target:self action:@selector(buttonPressed:)];
 
     [self addSubview:button];
-    [self addSubview:label];
 
     return self;
 }
 
 - (NSSize)intrinsicContentSize
 {
-    return NSMakeSize(100,20);
+    return [button intrinsicContentSize];
 }
 
 -(void)buttonPressed:(id)sender
@@ -46,9 +37,9 @@
 - (void)updateLabel
 {
     if(!path) {
-        [label setStringValue:[NSString stringWithFormat:title,@"Default"]];
+        [button setLabel:[NSString stringWithFormat:title,@"Default"]];
     } else {
-        [label setStringValue:[NSString stringWithFormat:title,[[path lastPathComponent] stringByDeletingPathExtension]]];
+        [button setLabel:[NSString stringWithFormat:title,[[path lastPathComponent] stringByDeletingPathExtension]]];
     }
 }
 
@@ -60,8 +51,7 @@
 - (void)layout
 {
     NSRect bounds = self.bounds;
-    [label setFrame:NSMakeRect(0,0,bounds.size.width-50,bounds.size.height)];
-    [button setFrame:NSMakeRect(bounds.size.width-50,0,50,bounds.size.height)];
+    [button setFrame:NSMakeRect(0,0,bounds.size.width,bounds.size.height)];
 }
 
 + (SeaFileChooser*)chooserWithTitle:(NSString*)title types:(NSArray*)fileTypes directory:(NSString*)directory  Listener:(id<Listener>)listener

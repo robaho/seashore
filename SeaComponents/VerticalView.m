@@ -19,33 +19,26 @@ static const int GAP = 5;
     return self;
 }
 
-- (void)setFrame:(NSRect)frame
-{
-    [super setFrame:frame];
-    [self setNeedsLayout:TRUE];
-}
-
 - (void)layout
 {
     [super layout];
+
+    NSView *lastVisible;
     
-    NSRect bounds = self.frame;
+    NSRect bounds = self.bounds;
 
     float y = bounds.size.height;
     int height = 0;
     for(NSView* v in self.subviews) {
         if(v.isHidden)
             continue;
-        if(v.class==NSTextField.class){
-            NSTextField *tf = (NSTextField*)v;
-            int old = tf.preferredMaxLayoutWidth;
-            if(old!=bounds.size.width) {
-                tf.preferredMaxLayoutWidth = bounds.size.width;
-                [tf invalidateIntrinsicContentSize];
-            }
+        lastVisible = v;
+        id temp = v;
+        if([temp respondsToSelector:@selector(setPreferredMaxLayoutWidth:)]) {
+            [temp setPreferredMaxLayoutWidth:(_preferredMaxLayoutWidth-2)]; // -2 is hack for multiline text bug
+            [temp invalidateIntrinsicContentSize];
         }
         NSSize size = v.intrinsicContentSize;
-        // set width first so proper height can be determined
         if(size.height==NSViewNoInstrinsicMetric){
             height = v.frame.size.height;
         } else {
@@ -55,31 +48,44 @@ static const int GAP = 5;
         [v setFrame:NSMakeRect(0,y,bounds.size.width,height)];
         y-=GAP; // add some space between components
     }
+    if(_lastFills) {
+        NSRect r = [lastVisible frame];
+        [lastVisible setFrame:NSMakeRect(r.origin.x,0,r.size.width,r.size.height+y)];
+    }
 }
 
 - (NSSize)intrinsicContentSize
 {
-    int w=0,h=0;
+    int w=NSViewNoInstrinsicMetric,h=NSViewNoInstrinsicMetric;
     for(NSView* v in self.subviews){
-        if(!v.isHidden){
-            if(v.class==NSTextField.class){
-                NSTextField *tf = (NSTextField*)v;
-                tf.preferredMaxLayoutWidth = self.frame.size.width;
-                [tf invalidateIntrinsicContentSize];
-            }
-            NSSize size = v.intrinsicContentSize;
-            if(size.width!=NSViewNoInstrinsicMetric){
-                w = MAX(size.width,w);
-            }
-            if(size.height!=NSViewNoInstrinsicMetric){
-                h += size.height;
-            } else {
-                h += v.frame.size.height;
-            }
+        if(v.isHidden) {
+            continue;
+        }
+        id temp = v;
+        if([temp respondsToSelector:@selector(setPreferredMaxLayoutWidth:)]) {
+            [temp setPreferredMaxLayoutWidth:(_preferredMaxLayoutWidth-2)]; // -2 is hack for multiline text bug
+            [temp invalidateIntrinsicContentSize];
+        }
+        NSSize size = v.intrinsicContentSize;
+        if(size.width!=NSViewNoInstrinsicMetric){
+            w = MAX(size.width,w);
+        }
+        if(size.height!=NSViewNoInstrinsicMetric){
+            h = MAX(0,h)+size.height;
             h+=GAP;
         }
     }
     return NSMakeSize(w,h);
+}
+
+- (void)setNeedsLayout:(BOOL)needsLayout
+{
+    [super setNeedsLayout:needsLayout];
+    if(needsLayout) {
+        for(NSView *v in [self subviews]) {
+            [v setNeedsLayout:TRUE];
+        }
+    }
 }
 
 +(VerticalView*)view

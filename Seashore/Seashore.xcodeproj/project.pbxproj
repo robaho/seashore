@@ -28,6 +28,8 @@
 		2B0DF77827FFEF0F002E8B7D /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B0DF77727FFEF0F002E8B7D /* Accelerate.framework */; };
 		2B0DF77A27FFEF15002E8B7D /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B0DF77927FFEF15002E8B7D /* CoreImage.framework */; };
 		2B0DF77C28020B95002E8B7D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B0DF77B28020B95002E8B7D /* QuartzCore.framework */; };
+		2B1467892925EF2100A7E748 /* ConnectedComponents.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B84485A28BEE74300C068D1 /* ConnectedComponents.m */; };
+		2B146799292B4A9E00A7E748 /* AspectRatioPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B146798292B4A9D00A7E748 /* AspectRatioPanel.xib */; };
 		2B1F70EB21DD472B00D6F371 /* SeaColorProfiles.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1F70EA21DD472B00D6F371 /* SeaColorProfiles.m */; };
 		2B205EB5278390C100563706 /* checkerboard-dark.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B205EB4278390C100563706 /* checkerboard-dark.png */; };
 		2B205EB82786A7DA00563706 /* SeaExtrasView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B205EB72786A7DA00563706 /* SeaExtrasView.m */; };
@@ -535,6 +537,7 @@
 		2B0DF77727FFEF0F002E8B7D /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/Accelerate.framework; sourceTree = DEVELOPER_DIR; };
 		2B0DF77927FFEF15002E8B7D /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/CoreImage.framework; sourceTree = DEVELOPER_DIR; };
 		2B0DF77B28020B95002E8B7D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
+		2B146798292B4A9D00A7E748 /* AspectRatioPanel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AspectRatioPanel.xib; sourceTree = "<group>"; };
 		2B1F70E921DD471000D6F371 /* SeaColorProfiles.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaColorProfiles.h; sourceTree = "<group>"; };
 		2B1F70EA21DD472B00D6F371 /* SeaColorProfiles.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeaColorProfiles.m; sourceTree = "<group>"; };
 		2B205EB4278390C100563706 /* checkerboard-dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkerboard-dark.png"; sourceTree = "<group>"; };
@@ -1174,6 +1177,7 @@
 		2A37F4B8FDCFA73011CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2B146798292B4A9D00A7E748 /* AspectRatioPanel.xib */,
 				2B80E9D32435689B0046979F /* PrintPanelAccessory.xib */,
 				2B80E9CB243567FB0046979F /* CocoaContent.xib */,
 				2B80E9CD243567FB0046979F /* MainMenu.xib */,
@@ -2022,6 +2026,7 @@
 				2B80E9D42435689B0046979F /* PrintPanelAccessory.xib in Resources */,
 				A89C5139086E7F8E0032AEBE /* hStatMarkerTemplate.png in Resources */,
 				A80EB8A6086F05E300369324 /* JP2 Icon.icns in Resources */,
+				2B146799292B4A9E00A7E748 /* AspectRatioPanel.xib in Resources */,
 				2BB338C423C1119600647008 /* toFitTemplate.png in Resources */,
 				A81EC6B0094A6C5C00F7D365 /* GIF Icon.icns in Resources */,
 				2BED226A21F3FB40005B496C /* moveTemplate.png in Resources */,
@@ -2102,6 +2107,7 @@
 				2BFC6C352778E06B00F707D9 /* SeashoreTests.m in Sources */,
 				2BFC6C3D2778E69000F707D9 /* StandardMerge.m in Sources */,
 				2B891225289B3AEB00838898 /* NSBezierPath_Extensions.m in Sources */,
+				2B1467892925EF2100A7E748 /* ConnectedComponents.m in Sources */,
 				2BFC6C3E2778E6AB00F707D9 /* ColorConversion.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2415,7 +2421,7 @@
 				CODE_SIGN_ENTITLEMENTS = Seashore.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2022102501;
+				CURRENT_PROJECT_VERSION = 2022112501;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2430,7 +2436,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				MARKETING_VERSION = 3.10;
+				MARKETING_VERSION = 3.11;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore;
 				PRODUCT_NAME = Seashore;
@@ -2500,7 +2506,7 @@
 				CODE_SIGN_ENTITLEMENTS = Seashore.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2022102501;
+				CURRENT_PROJECT_VERSION = 2022112501;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2515,7 +2521,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				MARKETING_VERSION = 3.10;
+				MARKETING_VERSION = 3.11;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore;
 				PRODUCT_NAME = Seashore;
 				PROVISIONING_PROFILE_SPECIFIER = "";

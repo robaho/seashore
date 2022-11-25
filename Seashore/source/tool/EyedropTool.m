@@ -18,6 +18,10 @@
 
 @implementation EyedropTool
 
+- (void)awakeFromNib {
+    options = [[EyedropOptions alloc] init:document];
+}
+
 - (int)toolId
 {
     return kEyedropTool;
@@ -113,10 +117,6 @@ static inline NSColor * averagedPixelValue(id<PixelProvider> pp,int radius, IntP
 - (AbstractOptions*)getOptions
 {
     return options;
-}
-- (void)setOptions:(AbstractOptions*)newoptions
-{
-    options = (EyedropOptions*)newoptions;
 }
 
 - (void)updateCursor:(IntPoint)p cursors:(SeaCursors *)cursors

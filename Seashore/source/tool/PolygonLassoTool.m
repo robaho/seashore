@@ -14,6 +14,10 @@
 
 @implementation PolygonLassoTool
 
+- (void)awakeFromNib {
+    options = [[PolygonLassoOptions alloc] init:document];
+}
+
 - (int)toolId
 {
 	return kPolygonLassoTool;

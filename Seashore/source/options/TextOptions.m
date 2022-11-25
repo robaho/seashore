@@ -12,8 +12,46 @@
 
 @implementation TextOptions
 
-- (void)awakeFromNib
-{	
+- (id)init:(id)document
+{
+    self = [super init:document];
+
+    [modifierPopup setHidden:TRUE];
+
+    self.lastFills = TRUE;
+
+    AbstractTool *tool = [[document tools] getTool:kTextTool];
+
+    alignmentControl = [[NSSegmentedControl alloc] init];
+    [alignmentControl setControlSize:NSSmallControlSize];
+    [alignmentControl setSegmentCount:3];
+    [alignmentControl setImage:[NSImage imageNamed:@"left-align"] forSegment:0];
+    [alignmentControl setImage:[NSImage imageNamed:@"center-align"] forSegment:1];
+    [alignmentControl setImage:[NSImage imageNamed:@"right-align"] forSegment:2];
+    [alignmentControl setTarget:self];
+    [alignmentControl setAction:@selector(update:)];
+    [self addSubview:alignmentControl];
+
+    outlineSlider = [SeaSlider sliderWithCheck:@"Outline (pt)" Min:1 Max:36 Listener:self];
+    [self addSubview:outlineSlider];
+
+    fontButton = [SeaButton compactButton:@"Fonts" withLabel:@"Font" target:self action:@selector(showFonts:)];
+    [self addSubview:fontButton];
+
+    colorWell = [SeaColorWell compactWithTitle:@"Color" Listener:self];
+    [self addSubview:colorWell];
+
+    lineSpacingSlider = [SeaSlider compactSliderWithTitle:@"Line spacing" Min:0 Max:2 Listener:self];
+    [self addSubview:lineSpacingSlider];
+
+    verticalMarginSlider = [SeaSlider compactSliderWithTitle:@"Vertical margin" Min:0 Max:5000 Listener:self];
+    [self addSubview:verticalMarginSlider];
+
+    boundsButton = [SeaButton compactButton:@"Set Text Bounds from Selection" target:tool action:@selector(setTextBoundsFromSelection:)];
+    [self addSubview:boundsButton];
+
+    [lineSpacingSlider setFloatValue:1.0];
+
 	int ivalue;
 	BOOL bvalue;
 	NSFont *font;
@@ -29,14 +67,13 @@
 	}
 	[alignmentControl setSelectedSegment:ivalue];
 
+
 	// Handle the text outline slider
 	if ([gUserDefaults objectForKey:@"text outline slider"] == NULL) {
 		ivalue = 5;
 	}
 	else {
 		ivalue = [gUserDefaults integerForKey:@"text outline slider"];
-		if (ivalue < 1 || ivalue > 24)
-			ivalue = 5;
 	}
 	[outlineSlider setIntValue:ivalue];
 	
@@ -47,25 +84,30 @@
 	else {
 		bvalue = [gUserDefaults boolForKey:@"text outline checkbox"];
 	}
-	[outlineCheckbox setState:bvalue];
-	
-	// Enable or disable the slider appropriately
-	if ([outlineCheckbox state])
-		[outlineSlider setEnabled:YES];
-	else
-		[outlineSlider setEnabled:NO];
+	[outlineSlider setChecked:bvalue];
+
+    [verticalMarginSlider setFloatValue:0.0];
 
 	// Show the slider value
-	[outlineCheckbox setTitle:[NSString stringWithFormat:LOCALSTR(@"outline", @"Outline: %d pt"), [outlineSlider intValue]]];
 	fontManager = [NSFontManager sharedFontManager];
     [fontManager setAction:@selector(changeSpecialFont:)];
 	if ([gUserDefaults objectForKey:@"text font"] != NULL && [gUserDefaults objectForKey:@"text size"]!=NULL) {
 		font = [NSFont fontWithName:[gUserDefaults objectForKey:@"text font"] size:[gUserDefaults integerForKey:@"text size"]];
 		[fontManager setSelectedFont:font isMultiple:NO];
-        [fontLabel setStringValue:[NSString stringWithFormat:@"%@ %d",[font displayName],(int)[font pointSize]]];
+        [fontButton setLabel:[NSString stringWithFormat:@"%@ %d",[font displayName],(int)[font pointSize]]];
 	}
 
+    textArea = [[NSTextFieldRedirect alloc] init];
+    [self addSubview:textArea];
+
     [textArea setDelegate:self];
+
+    return self;
+}
+
+- (void)componentChanged:(id)sender
+{
+    [self update:sender];
 }
 
 - (void)activate:(id)sender
@@ -89,13 +131,7 @@
 {
     font = [sender convertFont:[fontManager selectedFont]];
 
-    [fontLabel setStringValue:[NSString stringWithFormat:@"%@ %d",[font displayName],(int)[font pointSize]]];
-    [self update:sender];
-}
-
-- (IBAction)changeColor:(id)sender
-{
-    color = [gColorPanel color];
+    [fontButton setLabel:[NSString stringWithFormat:@"%@ %d",[font displayName],(int)[font pointSize]]];
     [self update:sender];
 }
 
@@ -117,21 +153,14 @@
 
 - (IBAction)update:(id)sender
 {
-	// Enable or disable the slider appropriately
-	if ([outlineCheckbox state])
-		[outlineSlider setEnabled:YES];
-	else
-		[outlineSlider setEnabled:NO];
-	
-	// Show the slider value
-	[outlineCheckbox setTitle:[NSString stringWithFormat:LOCALSTR(@"outline", @"Outline: %d pt"), [outlineSlider intValue]]];
-
     if([[document toolboxUtility] tool]!=kTextTool)
         return;
 
+    color = [colorWell colorValue];
+
     TextTool *tool = (TextTool*)[document currentTool];
 
-    [verticalMargin setMaxValue:([tool bounds].size.height)];
+    [verticalMarginSlider setMaxValue:([tool bounds].size.height)];
 
     [tool updateLayer];
 }
@@ -140,9 +169,9 @@
 {
     TextProperties* props = [[TextProperties alloc] init];
     props.text = [textArea stringValue];
-    props.lineSpacing = [lineSpacing floatValue];
-    props.verticalMargin = [verticalMargin floatValue];
-    props.outline = [outlineCheckbox state] ? [outlineSlider intValue] : 0;
+    props.lineSpacing = [lineSpacingSlider floatValue];
+    props.verticalMargin = [verticalMarginSlider floatValue];
+    props.outline = [outlineSlider isChecked] ? [outlineSlider intValue] : 0;
     props.alignment = [self alignment];
     props.font = font==NULL ? [fontManager selectedFont] : font;
     props.color = color==NULL ? [[document contents] foreground] : color;
@@ -170,22 +199,22 @@
         [textArea setStringValue:text];
     }
 
-    [lineSpacing setFloatValue:props.lineSpacing];
-    [verticalMargin setFloatValue:props.verticalMargin];
+    [lineSpacingSlider setFloatValue:props.lineSpacing];
+    [verticalMarginSlider setFloatValue:props.verticalMargin];
     [outlineSlider setIntValue:props.outline];
     
     color = props.color;
 
     if(color) {
-        [colorWell setColor:color];
+        [colorWell setColorValue:color];
     } else {
-        [colorWell setColor:[[document contents] foreground]];
+        [colorWell setColorValue:[[document contents] foreground]];
     }
 
     font = props.font;
 
     if(font) {
-        [fontLabel setStringValue:[NSString stringWithFormat:@"%@ %d",[font displayName],(int)[font pointSize]]];
+        [fontButton setLabel:[NSString stringWithFormat:@"%@ %d",[font displayName],(int)[font pointSize]]];
         [fontManager setSelectedFont:font isMultiple:FALSE];
     }
 
@@ -209,7 +238,7 @@
 - (void)shutdown
 {
 	[gUserDefaults setInteger:[alignmentControl selectedSegment] forKey:@"text alignment"];
-	[gUserDefaults setObject:[outlineCheckbox state] ? @"YES" : @"NO" forKey:@"text outline checkbox"];
+	[gUserDefaults setBool:[outlineSlider isChecked] forKey:@"text outline checkbox"];
 	[gUserDefaults setInteger:[outlineSlider intValue] forKey:@"text outline slider"];
 	[gUserDefaults setObject:[[fontManager selectedFont] displayName] forKey:@"text font"];
 	[gUserDefaults setInteger:(int)[[fontManager selectedFont] pointSize] forKey:@"text size"];

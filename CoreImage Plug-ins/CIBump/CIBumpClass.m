@@ -4,7 +4,7 @@
 
 - (id)initWithManager:(PluginData *)data
 {
-    return [super initWithManager:data filter:@"CIBumpDistortion" points:2 properties:kCI_Scale,kCI_PointCenter,kCI_PointRadius,0];
+    return [super initWithManager:data filter:@"CIBumpDistortion" points:2 properties:kCI_ScaleNeg1,kCI_PointCenter,kCI_PointRadius,0];
 }
 
 @end

@@ -11,28 +11,8 @@
 */
 
 @interface BucketOptions : AbstractPaintOptions {
-	
-	// A slider indicating the tolerance of the bucket
-	IBOutlet id toleranceSlider;
-	
-	// A label displaying the tolerance of the bucket
-	IBOutlet id toleranceLabel;
-
+	id toleranceSlider;
 }
-
-/*!
-	@method		awakeFromNib
-	@discussion	Loads previous options from preferences.
-*/
-- (void)awakeFromNib;
-
-/*!
-	@method		toleranceSliderChanged:
-	@discussion	Called when the tolerance is changed.
-	@param		sender
-				Ignored.
-*/
-- (IBAction)toleranceSliderChanged:(id)sender;
 
 /*!
 	@method		tolerance
@@ -41,17 +21,4 @@
 				bucket tool.
 */
 - (int)tolerance;
-
-/*!
- @method        setTolerance
- @discussion    sets the tolerance to be used with the paint bucket tool.
- */
-- (void)setTolerance:(int)value;
-
-/*!
-	@method		shutdown
-	@discussion	Saves current options upon shutdown.
-*/
-- (void)shutdown;
-
 @end

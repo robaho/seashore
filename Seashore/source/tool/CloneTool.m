@@ -21,6 +21,10 @@
 
 @implementation CloneTool
 
+- (void)awakeFromNib {
+    options = [[CloneOptions alloc] init:document];
+}
+
 - (int)toolId
 {
 	return kCloneTool;
@@ -219,10 +223,6 @@
 - (AbstractOptions*)getOptions
 {
     return options;
-}
-- (void)setOptions:(AbstractOptions*)newoptions
-{
-    options = (CloneOptions*)newoptions;
 }
 
 - (BrushOptions*)getBrushOptions

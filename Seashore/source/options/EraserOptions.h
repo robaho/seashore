@@ -12,20 +12,9 @@
 */
 
 @interface EraserOptions : BrushOptions {
-
 	// A checkbox indicating whether to fade in the same style as the paintbrush
-	IBOutlet id mimicBrushCheckbox;
-	
+	id mimicBrushCheckbox;
 }
-
-
-/*!
-	@method		awakeFromNib
-	@discussion	Loads previous options from preferences.
-*/
-- (void)awakeFromNib;
-
-
 /*!
 	@method		mimicBrush
 	@discussion	Returns whether to mimic the paintbrush settings when fading.

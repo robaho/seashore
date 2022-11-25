@@ -6,31 +6,58 @@
 #import "AspectRatio.h"
 #import "TextureUtility.h"
 
-static int lastTool = -1;
-static BOOL forceAlt = NO;
-
 @implementation AbstractOptions
+
+- (id)init:(id)document {
+    self = [super init];
+
+    modifierPopup = [[NSPopUpButton alloc] init];
+    [modifierPopup setControlSize:NSControlSizeMini];
+    [modifierPopup setFont:[NSFont systemFontOfSize:[NSFont systemFontSizeForControlSize:NSControlSizeMini]]];
+    [modifierPopup setTarget:self];
+    [modifierPopup setAction:@selector(modifierPopupChanged:)];
+    [self addModifierMenuItem:@"No modifiers active" tag:0];
+    [self addSubview:modifierPopup];
+
+    self->document = document;
+    return self;
+}
+- (void)modifierPopupChanged:(id)sender
+{
+    [self updateModifiers:[self modifierMask]];
+}
 
 - (void)activate:(id)sender
 {
-	int curTool;
-	
-	document = sender;
-	curTool = [[document toolboxUtility] tool];
-	if (lastTool != curTool) {
-		[self updateModifiers:0];
-		lastTool = curTool;
-	}
 }
 
-- (IBAction)update:(id)sender
+- (void)addModifierMenuItem:(NSString*)title tag:(int)tag
+{
+    [[modifierPopup menu] addItem:[self itemWithTitle:title tag:tag]];
+}
+
+- (NSMenuItem*)itemWithTitle:(NSString *)title tag:(int)tag
+{
+    NSMenuItem *item = [[NSMenuItem alloc] init];
+    [item setTitle:title];
+    [item setTag:tag];
+    return item;
+}
+
+- (void)clearModifierMenu
+{
+    [[modifierPopup menu] removeAllItems];
+    [self addModifierMenuItem:@"No modifiers active" tag:0];
+}
+
+- (void)update:(id)sender
 {
 }
 
 - (void)forceAlt
 {
 	forceAlt = YES;
-    int modifiers = [self modifier];
+    int modifiers = [self modifierMask];
     [self updateModifiers:modifiers];
 }
 
@@ -40,35 +67,78 @@ static BOOL forceAlt = NO;
         forceAlt = NO;
 		[self updateModifiers:0];
 	}
+    [modifierPopup setEnabled:TRUE];
+}
+
+- (int)modifierMask
+{
+    if(forceAlt) {
+        return kAltModifier;
+    }
+    
+    int modifier = [self modifier];
+    int mask = 0;
+    switch(modifier) {
+        case kReservedModifier1:
+            mask = NSAlternateKeyMask | NSControlKeyMask | NSFunctionKeyMask; break;
+        case kReservedModifier2:
+            mask = NSAlternateKeyMask | NSShiftKeyMask | NSFunctionKeyMask; break;
+        case kAltControlModifier:
+            mask = NSAlternateKeyMask | NSControlKeyMask; break;
+        case kShiftControlModifier:
+            mask = NSShiftKeyMask | NSControlKeyMask; break;
+        case kControlModifier:
+            mask = NSControlKeyMask; break;
+        case kShiftModifier:
+            mask = NSShiftKeyMask; break;
+        case kAltModifier:
+            mask = NSAlternateKeyMask; break;
+    }
+    return mask;
 }
 
 - (void)updateModifiers:(unsigned int)modifiers
 {
 	int index;
-	
+
+    if ([[document currentTool] intermediate]) {
+        [modifierPopup setEnabled:FALSE];
+        // do not allow modifier change while tool active
+        return;
+    }
+    [modifierPopup setEnabled:TRUE];
+
 	if (modifierPopup) {
 
         if(forceAlt){
             modifiers |= NSAlternateKeyMask;
         }
-	
-		if ((modifiers & NSAlternateKeyMask) >> 19 && (modifiers & NSControlKeyMask) >> 18) {
+
+        modifiers = modifiers & NSEventModifierFlagDeviceIndependentFlagsMask;
+
+        if(modifiers == (NSAlternateKeyMask | NSControlKeyMask | NSFunctionKeyMask)) {
+            index = [modifierPopup indexOfItemWithTag:kReservedModifier1];
+            if (index > 0) [modifierPopup selectItemAtIndex:index];
+        } else if (modifiers == (NSAlternateKeyMask | NSShiftKeyMask | NSFunctionKeyMask)) {
+            index = [modifierPopup indexOfItemWithTag:kReservedModifier2];
+            if (index > 0) [modifierPopup selectItemAtIndex:index];
+        } else if (modifiers == (NSAlternateKeyMask | NSControlKeyMask)) {
 			index = [modifierPopup indexOfItemWithTag:kAltControlModifier];
 			if (index > 0) [modifierPopup selectItemAtIndex:index];
 		}
-		else if ((modifiers & NSShiftKeyMask) >> 17 && (modifiers & NSControlKeyMask) >> 18) {
+		else if (modifiers == (NSShiftKeyMask | NSControlKeyMask)) {
 			index = [modifierPopup indexOfItemWithTag:kShiftControlModifier];
 			if (index > 0) [modifierPopup selectItemAtIndex:index];
 		}
-		else if ((modifiers & NSControlKeyMask) >> 18) {
+		else if (modifiers == (NSControlKeyMask)) {
 			index = [modifierPopup indexOfItemWithTag:kControlModifier];
 			if (index > 0) [modifierPopup selectItemAtIndex:index];
 		}
-		else if ((modifiers & NSShiftKeyMask) >> 17) {
+		else if (modifiers == (NSShiftKeyMask)) {
 			index = [modifierPopup indexOfItemWithTag:kShiftModifier];
 			if (index > 0) [modifierPopup selectItemAtIndex:index];
 		}
-		else if ((modifiers & NSAlternateKeyMask) >> 19) {
+		else if (modifiers == (NSAlternateKeyMask)) {
 			index = [modifierPopup indexOfItemWithTag:kAltModifier];
 			if (index > 0) [modifierPopup selectItemAtIndex:index];
 		}
@@ -83,11 +153,6 @@ static BOOL forceAlt = NO;
 	return [[modifierPopup selectedItem] tag];
 }
 
-- (IBAction)modifierPopupChanged:(id)sender
-{
-//
-}
-
 - (BOOL)useTextures
 {
     return [[document toolboxUtility] foregroundIsTexture];
@@ -95,11 +160,6 @@ static BOOL forceAlt = NO;
 
 - (void)shutdown
 {
-}
-
-- (id)view
-{
-	return view;
 }
 
 @end

@@ -29,9 +29,9 @@ enum {
 
 @interface PositionOptions : AbstractScaleOptions {
 
-    __weak IBOutlet NSButton *maintainAspectCheckbox;
-    __weak IBOutlet NSButton *autoApplyMoveOnlyCheckbox;
-    __weak IBOutlet NSButton *scaleAndRotateLinkedCheckbox;
+    id maintainAspectCheckbox;
+    id autoApplyMoveOnlyCheckbox;
+    id scaleAndRotateLinkedCheckbox;
 }
 
 /*!
@@ -43,7 +43,6 @@ enum {
 - (BOOL)maintainAspectRatio;
 - (BOOL)autoApply;
 - (BOOL)scaleAndRotateLinked;
-- (IBAction)scaleAndRotateChanged:(id)sender;
 
 /*!
 	@method		shutdown

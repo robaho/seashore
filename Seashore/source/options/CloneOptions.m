@@ -9,22 +9,37 @@
 
 @implementation CloneOptions
 
-- (void)awakeFromNib
+- (id)init:(id)document
 {
-	[mergedCheckbox setState:[gUserDefaults boolForKey:@"clone merged"]];
+    self = [super init:document];
+
+    [super clearModifierMenu];
+    [self addModifierMenuItem:@"Mark source (Option)" tag:1];
+    [self addSubview:modifierPopup positioned:NSWindowBelow relativeTo:opacitySlider];
+
+    [texturesButton setHidden:true];
+    [fadeSlider setHidden:true];
+    [pressurePopup setHidden:true];
+    [scalingCheckbox setHidden:true];
+
+    sourceLabel = [Label compactLabel];
+    [self addSubview:sourceLabel];
+
+    mergedCheckbox = [SeaCheckbox checkboxWithTitle:@"Use sample from all layers" Listener:self];
+    [self addSubview:mergedCheckbox];
+
+    [mergedCheckbox setChecked:[gUserDefaults boolForKey:@"clone merged"]];
+
     [super loadOpacity:@"clone opacity"];
+
+    [self componentChanged:self];
+
+    return self;
 }
 
 - (BOOL)mergedSample
 {
-	return [mergedCheckbox state];
-}
-
-- (IBAction)mergedChanged:(id)sender
-{
-	id cloneTool = [[document tools] getTool:kCloneTool];
-
-	[cloneTool endLineDrawing];
+	return [mergedCheckbox isChecked];
 }
 
 - (BOOL)useTextures
@@ -37,26 +52,31 @@
     return FALSE;
 }
 
-- (IBAction)update:(id)sender
+- (void)update:(id)sender
+{
+    [self componentChanged:sender];
+}
+
+- (void)componentChanged:(id)sender
 {
 	id cloneTool = [[document tools] getTool:kCloneTool];
 	IntPoint sourcePoint;
-	
+
 	if ([cloneTool sourceSet]) {
 		sourcePoint = [cloneTool sourcePoint:YES];
 		if ([cloneTool sourceName] != NULL)
-			[sourceLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"source set", @"Source: (%d, %d) from \"%@\""), sourcePoint.x, sourcePoint.y, [cloneTool sourceName]]];
+			[sourceLabel setTitle:[NSString stringWithFormat:LOCALSTR(@"source set", @"Source: (%d, %d) from \"%@\""), sourcePoint.x, sourcePoint.y, [cloneTool sourceName]]];
 		else
-			[sourceLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"source set document", @"Source: (%d, %d) from whole document"), sourcePoint.x, sourcePoint.y]];
+			[sourceLabel setTitle:[NSString stringWithFormat:LOCALSTR(@"source set document", @"Source: (%d, %d) from whole document"), sourcePoint.x, sourcePoint.y]];
 	}
 	else {
-		[sourceLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"source unset", @"Source: Unset")]];
+		[sourceLabel setTitle:[NSString stringWithFormat:LOCALSTR(@"source unset", @"Source: Unset")]];
 	}
 }
 
 - (void)shutdown
 {
-	[gUserDefaults setObject:[self mergedSample] ? @"YES" : @"NO" forKey:@"clone merged"];
+	[gUserDefaults setBool:[mergedCheckbox isChecked] forKey:@"clone merged"];
     [gUserDefaults setInteger:[opacitySlider intValue] forKey:@"clone opacity"];
 }
 

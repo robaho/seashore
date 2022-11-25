@@ -10,8 +10,12 @@ FOUNDATION_EXPORT const unsigned char SeaComponentsVersionString[];
 
 #import <SeaComponents/Listener.h>
 #import <SeaComponents/VerticalView.h>
+#import <SeaComponents/HorizontalView.h>
 #import <SeaComponents/BorderView.h>
 #import <SeaComponents/SeaSlider.h>
+#import <SeaComponents/SeaButton.h>
+#import <SeaComponents/SeaPopup.h>
+#import <SeaComponents/SeaCheckbox.h>
 #import <SeaComponents/Label.h>
 #import <SeaComponents/SizeableView.h>
 #import <SeaComponents/SeaBox.h>

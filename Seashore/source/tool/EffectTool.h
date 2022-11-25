@@ -61,12 +61,6 @@
 - (void)selectEffect:(PluginClass*)plugin;
 
 /*!
-	@method		reset
-	@discussion	Reset the effect.
-*/
-- (void)reset;
-
-/*!
 	@method		point:
 	@discussion	Returns the given point from the effect tool. Only valid
 				for plug-ins with type one.

@@ -9,12 +9,14 @@ NS_ASSUME_NONNULL_BEGIN
     Label *title;
     id<Listener> listener;
     int format;
+    bool compact;
 }
 
 - (void)setColorValue:(NSColor*)value;
 - (NSColor*)colorValue;
 
 + (SeaColorWell*)colorWellWithTitle:(NSString*)title Listener:(id<Listener>)listener;
++ (SeaColorWell*)compactWithTitle:(NSString*)title Listener:(id<Listener>)listener;
 
 @end
 

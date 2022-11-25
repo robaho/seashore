@@ -10,7 +10,6 @@
 	self = [super init];
 	if(self){
 		aspectType = kNoAspectType;
-		ignoresMove = NO;
 	}
 	return self;
 }
@@ -38,16 +37,6 @@
 - (int)aspectType
 {
 	return aspectType;
-}
-
-- (void)setIgnoresMove:(BOOL)ignoring
-{
-	ignoresMove = ignoring;
-}
-
-- (BOOL)ignoresMove
-{
-	return ignoresMove;
 }
 
 - (void)setOneToOne:(BOOL)b

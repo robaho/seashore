@@ -13,23 +13,11 @@
 @interface GradientOptions : AbstractOptions
 {
 
-	// The pop-up menu indicating the gradient's type
-	IBOutlet id typePopup;
-	
-    __weak IBOutlet NSTextField *endOpacityLabel;
-    __weak IBOutlet NSSlider *endOpacitySlider;
-    __weak IBOutlet NSSlider *startOpacitySlider;
-    // The pop-up menu indicating the repeating style for the gradient
-    __weak IBOutlet NSTextField *startOpacityLabel;
-    IBOutlet id repeatPopup;
-
+	id typePopup;
+    id repeatPopup;
+    id endOpacitySlider;
+    id startOpacitySlider;
 }
-
-/*!
-	@method		awakeFromNib
-	@discussion	Loads previous options from preferences.
-*/
-- (void)awakeFromNib;
 
 /*!
 	@method		type

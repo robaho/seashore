@@ -11,27 +11,8 @@
 */
 
 @interface SmudgeOptions : BrushOptions {
-
-	// A slider indicating the opacity of the bucket
-	IBOutlet id rateSlider;
-	
-	// A label displaying the opacity of the bucket
-	IBOutlet id rateLabel;
+	id rateSlider;
 }
-
-/*!
-	@method		awakeFromNib
-	@discussion	Loads previous options from preferences.
-*/
-- (void)awakeFromNib;
-
-/*!
-	@method		rateChanged:
-	@discussion	Called when the rate is changed.
-	@param		sender
-				Ignored.
-*/
-- (IBAction)rateChanged:(id)sender;
 
 /*!
 	@method		rate

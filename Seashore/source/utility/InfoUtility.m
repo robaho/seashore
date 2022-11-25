@@ -84,7 +84,7 @@
     }
 
     // Set the radius value
-    [radiusValue setIntValue:[[[document tools] getTool:kEyedropTool] sampleSize]];
+    [radiusValue setIntValue:[(EyedropTool*)[[document tools] getTool:kEyedropTool] sampleSize]];
 
     // Update the document information
     xres = [[document contents] xres];
@@ -139,7 +139,7 @@
     [yValue setStringValue:[StringFromPixels(point.y, units, yres) stringByAppendingFormat:@" %@", label]];
 
     // Update the RGBA values
-    color = [[[document tools] getTool:kEyedropTool] getColor];
+    color = [(EyedropTool*)[[document tools] getTool:kEyedropTool] getColor];
     if (color) {
         [colorWell setColor:color];
         if ([[color colorSpaceName] isEqualToString:MyRGBSpace]) {

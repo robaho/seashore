@@ -7,8 +7,18 @@
 
 @implementation PencilOptions
 
-- (void)awakeFromNib
+- (id)init:(id)document
 {
+    self = [super init:document];
+
+    [brushesButton setHidden:true];
+    [fadeSlider setHidden:true];
+    [pressurePopup setHidden:true];
+    [scalingCheckbox setHidden:true];
+
+    sizeSlider = [SeaSlider compactSliderWithTitle:@"Pencil size" Min:1 Max:21 Listener:NULL];
+    [self addSubview:sizeSlider];
+
 	int value;
 	
 	if ([gUserDefaults objectForKey:@"pencil size"] == NULL) {
@@ -16,22 +26,25 @@
 	}
 	else {
 		value = [gUserDefaults integerForKey:@"pencil size"];
-		if (value < [sizeSlider minValue] || value > [sizeSlider maxValue])
-			value = 1;
 	}
 	[sizeSlider setIntValue:value];
 
+    circularTipCheckbox = [SeaCheckbox checkboxWithTitle:@"Circular tip" Listener:NULL];
+    [self addSubview:circularTipCheckbox];
+
     if ([gUserDefaults objectForKey:@"pencil circular tip"] == NULL) {
-        [circularTip setState:NSOnState];
+        [circularTipCheckbox setChecked:TRUE];
     }
     else {
         bool value = [gUserDefaults boolForKey:@"pencil circular tip"];
-        [circularTip setState:(value ? NSOnState : NSOffState)];
+        [circularTipCheckbox setChecked:value];
     }
 
     [super loadOpacity:@"pencil opacity"];
 
 	isErasing = NO;
+
+    return self;
 }
 
 - (int)pencilSize
@@ -39,9 +52,9 @@
 	return [sizeSlider intValue];
 }
 
-- (bool) circularTip
+- (bool)circularTip
 {
-    return [circularTip state] == NSOnState;
+    return [circularTipCheckbox isChecked];
 }
 
 - (void)setPencilSize:(int)pencilSize
@@ -53,8 +66,8 @@
 - (void)shutdown
 {
 	[gUserDefaults setInteger:[sizeSlider intValue] forKey:@"pencil size"];
-    [gUserDefaults setBool:[self circularTip] forKey:@"pencil circular tip"];
-    [gUserDefaults setInteger:[opacitySlider integerValue] forKey:@"pencil opacity"];
+    [gUserDefaults setBool:[circularTipCheckbox isChecked] forKey:@"pencil circular tip"];
+    [gUserDefaults setInteger:[opacitySlider intValue] forKey:@"pencil opacity"];
 }
 
 @end

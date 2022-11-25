@@ -14,6 +14,10 @@
 
 @implementation ZoomTool
 
+- (void)awakeFromNib {
+    options = [[ZoomOptions alloc] init:document];
+}
+
 - (int)toolId
 {
     return kZoomTool;
@@ -22,11 +26,6 @@
 - (AbstractOptions*)getOptions
 {
     return options;
-}
-
-- (void)setOptions:(AbstractOptions*)newoptions
-{
-    options = (ZoomOptions*)newoptions;
 }
 
 - (IntRect)zoomRect
@@ -85,6 +84,7 @@
     } else {
         [view zoomToFitRect:[super postScaledRect]];
     }
+    [options update:self];
 }
 
 - (void)updateCursor:(IntPoint)p cursors:(SeaCursors *)cursors

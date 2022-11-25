@@ -15,6 +15,10 @@
 
 @implementation LassoTool
 
+- (void)awakeFromNib {
+    options = [[LassoOptions alloc] init:document];
+}
+
 - (int)toolId
 {
 	return kLassoTool;
@@ -131,10 +135,6 @@
 - (AbstractOptions*)getOptions
 {
     return options;
-}
-- (void)setOptions:(AbstractOptions*)newoptions
-{
-    options = (LassoOptions*)newoptions;
 }
 
 @end

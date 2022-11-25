@@ -6,6 +6,21 @@
 #import "SeaDocument.h"
 
 @implementation AbstractPaintOptions
+
+- (id)init:(id)document {
+    self = [super init:document];
+
+    opacitySlider = [SeaSlider compactSliderWithTitle:@"Opacity" Min:0 Max:100 Listener:NULL];
+    [self addSubview:opacitySlider];
+
+    brushesButton = [SeaButton compactButton:@"Brushes" target:self action:@selector(toggleBrushes:)];
+    [self addSubview:brushesButton];
+
+    texturesButton = [SeaButton compactButton:@"Textures" target:self action:@selector(toggleTextures:)];
+    [self addSubview:texturesButton];
+
+    return self;
+}
 - (IBAction)toggleTextures:(id)sender
 {
 	NSWindow *w = [document window];
@@ -20,26 +35,18 @@
     [[document brushUtility] showPanelFrom: p onWindow: w];
 }
 
-- (IBAction)opacityChanged:(id)sender
-{
-    [opacityLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"opacity", @"Opacity: %d%%"), [opacitySlider intValue]]];
-}
-
 - (int)opacity
 {
-    return roundf([opacitySlider intValue] * 2.55);
+    return roundf([opacitySlider floatValue] * 2.55);
 }
 
 - (void)loadOpacity:(NSString*)tag
 {
     if ([gUserDefaults objectForKey:tag]==NULL) {
-        [opacitySlider setIntegerValue:100];
+        [opacitySlider setIntValue:100];
     } else {
-        [opacitySlider setIntegerValue:[gUserDefaults integerForKey:tag]];
+        [opacitySlider setIntValue:[gUserDefaults integerForKey:tag]];
     }
-    [opacityLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"opacity", @"Opacity: %d%%"), [opacitySlider integerValue]]];
-
-
 }
 
 @end

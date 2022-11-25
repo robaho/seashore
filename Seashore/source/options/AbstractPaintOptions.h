@@ -12,38 +12,10 @@
 */
 
 @interface AbstractPaintOptions : AbstractOptions {
-    // A slider indicating the opacity of the bucket
-    IBOutlet id opacitySlider;
-
-    // A label displaying the opacity of the bucket
-    IBOutlet id opacityLabel;
+    id opacitySlider;
+    NSView* brushesButton;
+    NSView* texturesButton;
 }
-
-/*!
-	@method		toggleTextures:
-	@discussion	Toggles the modal textures panel.
-	@param		sender
-				Ignored.
-*/
-- (IBAction)toggleTextures:(id)sender;
-
-
-/*!
-	@method		toggleBrushes:
-	@discussion	Toggles the modal brushes panel.
-	@param		sender
-				Ignored.
-*/
-- (IBAction)toggleBrushes:(id)sender;
-
-/*!
- @method        opacityChanged:
- @discussion    Called when the opacity is changed.
- @param        sender
- Ignored.
- */
-- (IBAction)opacityChanged:(id)sender;
-
 /*!
  @method        opacity
  @discussion    Returns the opacity to be used with the eraser tool.

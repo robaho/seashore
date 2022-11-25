@@ -5,8 +5,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SeaFileChooser : NSView
 {
-    Label *label;
-    NSButton *button;
+    SeaButton *button;
     NSString *directory;
     NSString *path;
     NSString *title;

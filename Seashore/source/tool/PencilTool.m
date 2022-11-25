@@ -19,6 +19,10 @@
 
 @implementation PencilTool
 
+- (void)awakeFromNib {
+    options = [[PencilOptions alloc] init:document];
+}
+
 - (int)toolId
 {
 	return kPencilTool;
@@ -111,11 +115,6 @@
 - (AbstractOptions*)getOptions
 {
     return options;
-}
-
-- (void)setOptions:(AbstractOptions*)newoptions
-{
-    options = (PencilOptions*)newoptions;
 }
 
 - (PencilOptions*)getBrushOptions

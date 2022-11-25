@@ -6,21 +6,30 @@
 
 @implementation EraserOptions
 
-- (void)awakeFromNib
+- (id)init:(id)document
 {
+    self = [super init:document];
+
+    [texturesButton setHidden:true];
+    [fadeSlider setHidden:true];
+    [pressurePopup setHidden:true];
+    [scalingCheckbox setHidden:true];
+
 	int value;
+
+    mimicBrushCheckbox = [SeaCheckbox checkboxWithTitle:@"Mimic Brush Fading" Listener:NULL];
+    [self addSubview:mimicBrushCheckbox];
 	
 	if ([gUserDefaults objectForKey:@"eraser opacity"] == NULL) {
 		value = 100;
 	}
 	else {
 		value = [gUserDefaults integerForKey:@"eraser opacity"];
-		if (value < [opacitySlider minValue] || value > [opacitySlider maxValue])
-			value = 100;
 	}
 	[opacitySlider setIntValue:value];
-	[opacityLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"opacity", @"Opacity: %d%%"), value]];
-	[mimicBrushCheckbox setState:[gUserDefaults boolForKey:@"eraser mimicBrush"]];
+	[mimicBrushCheckbox setChecked:[gUserDefaults boolForKey:@"eraser mimicBrush"]];
+
+    return self;
 }
 
 - (BOOL)brushIsErasing
@@ -30,13 +39,13 @@
 
 - (BOOL)mimicBrush
 {
-	return [mimicBrushCheckbox state];
+	return [mimicBrushCheckbox isChecked];
 }
 
 - (void)shutdown
 {
 	[gUserDefaults setInteger:[opacitySlider intValue] forKey:@"eraser opacity"];
-	[gUserDefaults setObject:[mimicBrushCheckbox state] ? @"YES" : @"NO" forKey:@"eraser mimicBrush"];
+	[gUserDefaults setObject:[mimicBrushCheckbox isChecked] ? @"YES" : @"NO" forKey:@"eraser mimicBrush"];
 }
 
 @end

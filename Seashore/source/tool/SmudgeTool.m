@@ -16,6 +16,10 @@
 
 @implementation SmudgeTool
 
+- (void)awakeFromNib {
+    options = [[SmudgeOptions alloc] init:document];
+}
+
 - (int)toolId
 {
 	return kSmudgeTool;
@@ -64,8 +68,6 @@
 
 - (void)endLineDrawing
 {
-    [options update:self];
-
     if(!intermediate)
         return;
 
@@ -76,10 +78,6 @@
 - (AbstractOptions*)getOptions
 {
     return options;
-}
-- (void)setOptions:(AbstractOptions*)newoptions
-{
-    options = (SmudgeOptions*)newoptions;
 }
 
 - (BrushOptions*)getBrushOptions

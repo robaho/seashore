@@ -12,10 +12,7 @@
 */
 
 @interface ZoomOptions : AbstractSelectOptions {
-
-	// A label specifying the current zoom
-    IBOutlet id zoomLabel;
-	
+    id zoomLabel;
 }
 
 @end

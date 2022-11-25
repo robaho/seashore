@@ -26,13 +26,18 @@
 	return self;
 }
 
-- (BOOL) isMovingOrScaling
+- (BOOL)isMovingOrScaling
 {
 	return (translating || scalingDir > kNoDir);
 }
 
 - (AbstractScaleOptions*)scaleOptions {
     return (AbstractScaleOptions*)[self getOptions];
+}
+
+- (BOOL)ignoresMove
+{
+    return FALSE;
 }
 
 - (void)mouseDownAt:(IntPoint)localPoint forRect:(IntRect)globalRect withMaskRect:(IntRect)maskRect andMask:(unsigned char *)mask
@@ -44,11 +49,6 @@
     SeaLayer *layer = [[document contents] activeLayer];
     IntPoint globalPoint = IntOffsetPoint(localPoint, [layer xoff], [layer yoff]);
 
-	if([[self scaleOptions] ignoresMove]){
-        postScaledRect = preScaledRect = IntMakeRect(globalPoint.x,globalPoint.y,0,0);
-		return;
-	}
-	
 	// We need the global point for the handles
 	// Check if location is in existing rect
     scalingDir = getHandle(globalPoint,globalRect,[[document scrollView] magnification]);
@@ -67,7 +67,7 @@
 		} else {
 			preScaledMask = NULL;
 		}
-	} else if (IntPointInRect(localPoint, localRect) ){
+	} else if (IntPointInRect(localPoint, localRect) && ![self ignoresMove] ){
 		// moving the selection
         preScaledRect = globalRect;
 		translating = YES;

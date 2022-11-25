@@ -13,10 +13,6 @@
 @interface AbstractScaleOptions : AbstractOptions {
 	// If shift is held down we need to 
 	int aspectType;
-	
-	// Whether or not we ignore the move action
-	BOOL ignoresMove;
-
     BOOL oneToOne;
 }
 
@@ -37,22 +33,6 @@
 				(see AspectRatio).
 */
 - (int)aspectType;
-
-
-/*!
-	@method		setIgnoresMove
-	@discussion	Used beacuse for some selection modes you don't do a move
-	@param		ingoring
-				Whether or not to ignore the move.
-*/
-- (void)setIgnoresMove:(BOOL)ignoring;
-
-/*!
-	@method		ignoresMove
-	@discussion	When there are special selctions modes we don't move
-	@result		YES if we should not register move drags
-*/
-- (BOOL)ignoresMove;
 
 - (void)setOneToOne:(BOOL)b;
 

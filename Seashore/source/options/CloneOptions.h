@@ -13,17 +13,11 @@
 @interface CloneOptions : BrushOptions {
 
 	// A checkbox that when checked implies that the tool should consider all pixels not those just in the current layer
-	IBOutlet id mergedCheckbox;
+	id mergedCheckbox;
 	
 	// A label indicating the source of the clone
-	IBOutlet id sourceLabel;
+	id sourceLabel;
 }
-
-/*!
-	@method		awakeFromNib
-	@discussion	Loads previous options from preferences.
-*/
-- (void)awakeFromNib;
 
 /*!
 	@method		mergedSample
@@ -33,20 +27,5 @@
 				if only the active layer should be considered.
 */
 - (BOOL)mergedSample;
-
-/*!
-	@method		mergedChanged:
-	@discussion	Called when the merged sample checkbox is changed to unset
-				the source point.
-	@param		sender
-				Ignored.
-*/
-- (IBAction)mergedChanged:(id)sender;
-
-/*!
-	@method		shutdown
-	@discussion	Saves current options upon shutdown.
-*/
-- (void)shutdown;
 
 @end

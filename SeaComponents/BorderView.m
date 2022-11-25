@@ -3,6 +3,7 @@
 //
 
 #import "BorderView.h"
+#import <SeaLibrary/SeaLibrary.h>
 
 @implementation BorderView
 
@@ -15,23 +16,8 @@
     return self;
 }
 
-- (void)drawRect:(NSRect)dirtyRect
-{
-    if(self.needsLayout){
-        [self layout];
-    }
-    [super drawRect:dirtyRect];
-}
-
-- (void)setFrame:(NSRect)frame
-{
-//    NSLog(@"setframe on BorderView");
-    [super setFrame:frame];
-}
-
 - (void)layout
 {
-//    NSLog(@"borderView layout");
     [super layout];
 
     if(_middle && _middle.superview!=self)
@@ -64,6 +50,17 @@
 
     if(bounds.size.height<=0 || bounds.size.width<=0)
         return;
+
+    id temp = _top;
+    if([temp respondsToSelector:@selector(setPreferredMaxLayoutWidth:)]) {
+        [temp setPreferredMaxLayoutWidth:bounds.size.width];
+        [temp invalidateIntrinsicContentSize];
+    }
+    temp = _bottom;
+    if([temp respondsToSelector:@selector(setPreferredMaxLayoutWidth:)]) {
+        [temp setPreferredMaxLayoutWidth:bounds.size.width];
+        [temp invalidateIntrinsicContentSize];
+    }
 
     if(_bottom!=nil && !_bottom.hidden) {
         NSView *v = _bottom;
@@ -113,5 +110,20 @@
                                             bounds.size.height);
     }
 }
+
+- (void)setNeedsLayout:(BOOL)needsLayout
+{
+    [super setNeedsLayout:needsLayout];
+    if(needsLayout) {
+        for(NSView *v in [self subviews]) {
+            [v setNeedsLayout:TRUE];
+        }
+    }
+}
+
++(BorderView*)view {
+    return [[BorderView alloc] init];
+}
+
 
 @end

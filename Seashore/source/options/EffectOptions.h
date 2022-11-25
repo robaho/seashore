@@ -13,23 +13,21 @@
 */
 
 @interface EffectOptions : AbstractOptions {
-	// The instruction for those effects
-	IBOutlet id effectTableInstruction;
-	
+
 	// The label showing the number of clicks remaining
-	IBOutlet id clickCountLabel;
+	id clickCountLabel;
+    // The instruction for those effects
+    NSTextField *instructionsLabel;
 
-    // The label showing the current effect
-    IBOutlet id effectsLabel;
+    id effectsButton;
 
-    IBOutlet id resetButton;
-    IBOutlet id applyButton;
-    IBOutlet id reapplyButton;
+    id resetButton;
+    id applyButton;
+    id reapplyButton;
 
     // holds the view declared by the plugin
-    __weak IBOutlet NSView *pluginViewContainer;
-
-    __weak IBOutlet VerticalView *instructionsArea;
+    NSView *pluginViewContainer;
+    VerticalView *instructionsArea;
     
     PluginClass *currentPlugin;
 }
@@ -40,16 +38,7 @@
 	@param		sender
 				Ignored.
 */
-- (IBAction)updateClickCount:(id)sender;
-
-/*!
-	@method		showEffects:
-	@discussion	Brings the effects panel to the front (it's modal).
-	@param		sender
-				Ignored.
-*/
-- (IBAction)showEffects:(id)sender;
-
+-(void)updateClickCount:(id)sender;
 -(void)installPlugin:(PluginClass*)plugin View:(NSView*)view;
 -(PluginClass*)currentPlugin;
 

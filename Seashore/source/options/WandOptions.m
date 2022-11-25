@@ -7,37 +7,32 @@
 
 @implementation WandOptions
 
-- (void)awakeFromNib
+- (id)init:(id)document
 {
+    self = [super init:document];
+
+    toleranceSlider = [SeaSlider compactSliderWithTitle:@"Tolerance" Min:0 Max:255 Listener:NULL];
+    [self addSubview:toleranceSlider];
+
+    selectAllRegions = [SeaCheckbox checkboxWithTitle:@"Select all regions" Listener:NULL];
+    [self addSubview:selectAllRegions];
+
 	int value;
-	
 	if ([gUserDefaults objectForKey:@"wand tolerance"] == NULL) {
 		[toleranceSlider setIntValue:15];
-		[toleranceLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"tolerance", @"Tolerance: %d"), 15]];
 	}
 	else {
 		value = [gUserDefaults integerForKey:@"wand tolerance"];
-		if (value < 0 || value > 255)
-			value = 0;
 		[toleranceSlider setIntValue:value];
-		[toleranceLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"tolerance", @"Tolerance: %d"), value]];
 	}
     if ([gUserDefaults objectForKey:@"wand selectAllRegions"] == NULL) {
-        [selectAllRegions setState:NSOffState];
     }
     else {
         bool b = [gUserDefaults boolForKey:@"wand selectAllRegions"];
-        if(b) {
-            [selectAllRegions setState:NSOnState];
-        } else {
-            [selectAllRegions setState:NSOffState];
-        }
+        [selectAllRegions setChecked:b];
     }
-}
 
-- (IBAction)toleranceSliderChanged:(id)sender
-{
-	[toleranceLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"tolerance", @"Tolerance: %d"), [toleranceSlider intValue]]];
+    return self;
 }
 
 - (int)tolerance
@@ -47,13 +42,13 @@
 
 - (bool)selectAllRegions
 {
-    return [selectAllRegions state] == NSOnState;
+    return [selectAllRegions isChecked];
 }
 
 - (void)shutdown
 {
 	[gUserDefaults setInteger:[toleranceSlider intValue] forKey:@"wand tolerance"];
-    [gUserDefaults setBool:[selectAllRegions state]==NSOnState forKey:@"wand selectAllRegions"];
+    [gUserDefaults setBool:[selectAllRegions isChecked] forKey:@"wand selectAllRegions"];
 }
 
 @end

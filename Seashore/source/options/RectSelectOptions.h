@@ -1,5 +1,7 @@
 #import "Seashore.h"
 #import "AbstractSelectOptions.h"
+#import "AspectRatio.h"
+#import <SeaComponents/SeaComponents.h>
 
 /*!
 	@class		RectSelectOptions
@@ -11,23 +13,9 @@
 */
 
 @interface RectSelectOptions : AbstractSelectOptions {
-
-	// The slider to select the radius for the rounded rectangle
-	IBOutlet id radiusSlider;
-	
-	// When checked indicates the rectangle should be rounded
-	IBOutlet id radiusCheckbox;
-
-	// The AspectRatio instance linked to this options panel
-	IBOutlet id aspectRatio;
-		
+    id radiusSlider;
+    AspectRatio *aspectRatio;
 }
-
-/*!
-	@method		awakeFromNib
-	@discussion	Loads previous options from preferences.
-*/
-- (void)awakeFromNib;
 
 /*!
 	@method		radius

@@ -6,7 +6,7 @@
 
 @implementation SeaTools
 
-- (id)getTool:(int)whichOne
+- (AbstractTool*)getTool:(int)whichOne
 {
 	switch (whichOne) {
 		case kRectSelectTool:

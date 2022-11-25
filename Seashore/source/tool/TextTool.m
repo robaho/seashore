@@ -19,6 +19,10 @@
 
 @implementation TextTool
 
+- (void)awakeFromNib {
+    options = [[TextOptions alloc] init:document];
+}
+
 - (int)toolId
 {
 	return kTextTool;
@@ -214,15 +218,12 @@
 {
     return options;
 }
-- (void)setOptions:(AbstractOptions*)newoptions
-{
-    options = (TextOptions*)newoptions;
-}
 
 - (void)updateCursor:(IntPoint)p cursors:(SeaCursors *)cursors
 {
     if(!IntRectIsEmpty([self bounds])){
-        return [cursors handleRectCursors:[self bounds] point:p cursor:[NSCursor IBeamCursor]];
+        [cursors handleRectCursors:[self bounds] point:p cursor:[NSCursor IBeamCursor] ignoresMove:false];
+        return;
     }
     [[NSCursor IBeamCursor] set];
 }

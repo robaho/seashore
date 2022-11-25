@@ -13,6 +13,10 @@
 
 @implementation EffectTool
 
+- (void)awakeFromNib {
+    options = [[EffectOptions alloc] init:document];
+}
+
 - (int)toolId
 {
 	return kEffectTool;
@@ -183,10 +187,6 @@
     }
 }
 
-- (void)reset
-{
-}
-
 - (IntPoint)point:(int)index
 {
 	return points[index];
@@ -207,10 +207,7 @@
 {
     return options;
 }
-- (void)setOptions:(AbstractOptions*)newoptions
-{
-    options = (EffectOptions*)newoptions;
-}
+
 - (PluginClass*)plugin
 {
     return currentPlugin;

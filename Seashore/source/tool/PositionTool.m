@@ -29,6 +29,10 @@
 
 @implementation PositionTool
 
+- (void)awakeFromNib {
+    options = [[PositionOptions alloc] init:document];
+}
+
 - (int)toolId
 {
 	return kPositionTool;
@@ -506,11 +510,6 @@
     return options;
 }
 
-- (void)setOptions:(AbstractOptions*)newoptions
-{
-    options = (PositionOptions*)newoptions;
-}
-
 - (void)updateCursor:(IntPoint)p cursors:(SeaCursors*)cursors
 {
     IntRect bounds = [self bounds];
@@ -518,7 +517,8 @@
         [[cursors noopCursor] set];
         return;
     }
-    return [cursors handleRectCursors:bounds point:p cursor:[cursors noopCursor]];
+    [cursors handleRectCursors:bounds point:p cursor:[cursors noopCursor] ignoresMove:false];
+    return;
 }
 
 - (void)aspectChanged

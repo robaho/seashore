@@ -13,6 +13,10 @@
 
 @implementation GradientTool
 
+- (void)awakeFromNib {
+    options = [[GradientOptions alloc] init:document];
+}
+
 - (int)toolId
 {
 	return kGradientTool;
@@ -123,10 +127,6 @@
 - (AbstractOptions*)getOptions
 {
     return options;
-}
-- (void)setOptions:(AbstractOptions*)newoptions
-{
-    options = (GradientOptions*)newoptions;
 }
 
 - (IntPoint)start

@@ -17,6 +17,10 @@
 
 @implementation BucketTool
 
+- (void)awakeFromNib {
+    options = [[BucketOptions alloc] init:document];
+}
+
 - (int)toolId
 {
 	return kBucketTool;
@@ -182,11 +186,6 @@
 - (AbstractOptions*)getOptions
 {
     return options;
-}
-
-- (void)setOptions:(AbstractOptions*)newoptions
-{
-    options = (BucketOptions*)newoptions;
 }
 
 - (NSCursor*)toolCursor:(SeaCursors *)cursors

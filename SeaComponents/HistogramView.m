@@ -9,16 +9,28 @@
 @implementation HistogramView
 
 #define HEIGHT 80
+#define GAP 5
 
 - (void)drawRect:(NSRect)rect
 {
-    int i;
-
     NSArray *colors = [NSArray arrayWithObjects:[NSColor redColor],[NSColor greenColor],[NSColor blueColor],nil];
 
     int series = 1;
     if(mode==4)
         series=3;
+
+    NSGraphicsContext *ctx = [NSGraphicsContext currentContext];
+
+    [ctx saveGraphicsState];
+    [ctx setCompositingOperation:NSCompositeOverlay];
+    [ctx setShouldAntialias:TRUE];
+
+    NSRect bounds = [self bounds];
+
+    NSAffineTransform *tx = [NSAffineTransform transform];
+    [tx scaleXBy:(bounds.size.width-GAP*2)/256 yBy:(bounds.size.height-GAP)];
+    [tx translateXBy:GAP yBy:0];
+    [tx concat];
 
     for(int j=0;j<series;j++) {
         int offset = j * 256;
@@ -35,10 +47,7 @@
                 color = [colors objectAtIndex:j]; break;
         }
 
-        [[NSGraphicsContext currentContext] setCompositingOperation:NSCompositeOverlay];
-        [[NSGraphicsContext currentContext] setShouldAntialias:TRUE];
-
-        for (i = 0; i < 256; i++) {
+        for (int i = 0; i < 256; i++) {
             float val = histogram[i+offset];
             if(val==0.0)
                 continue;
@@ -58,13 +67,14 @@
         [[accent colorWithAlphaComponent:.3] set];
         NSRectFillUsingOperation(NSMakeRect(MIN(upper,lower), 0, abs(upper - lower) + 1, 1),NSCompositeSourceOver);
     }
+
+    [[NSGraphicsContext currentContext] restoreGraphicsState];
 }
 
-- (void)setFrame:(NSRect)frame
-{
-    [super setFrame:frame];
-    [self setBounds:NSMakeRect(-10,0,266,1)];
-}
+//- (NSRect)bounds
+//{
+//    return NSMakeRect(-10,0,266,1);
+//}
 
 - (void)setLowerBound:(int)bound
 {
