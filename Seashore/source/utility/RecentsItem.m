@@ -5,16 +5,6 @@
 
 #define kImageSize 48
 
-#define FG_RECT NSRect fg = NSMakeRect(0,0,10,8);
-
-@protocol Memory
--(NSString*)memoryAsString;
--(void)drawAt:(NSRect)rect;
--(NSColor*)foreground;
--(NSColor*)background;
--(void)restore;
-@end
-
 @interface RecentsView : NSView
 {
     @public id<Memory> memory;
@@ -41,7 +31,7 @@
     [memory drawAt:rect];
 
     NSAffineTransform *at = [NSAffineTransform transform];
-    [at translateXBy:kImageSize-4 yBy:kPreviewHeight/2+4];
+    [at translateXBy:kImageSize-8 yBy:kPreviewHeight/2-8];
     [at concat];
     
     [self drawColorRect];
@@ -53,9 +43,8 @@
 
 - (void)drawColorRect
 {
-    FG_RECT
-    
-    NSRect bg = NSMakeRect(fg.origin.x+(int)(fg.size.width*.75),fg.origin.x+(int)(fg.size.height*.75),fg.size.width,fg.size.height);
+    NSRect fg = NSMakeRect(8,0,10,8);
+    NSRect bg = NSMakeRect(fg.origin.x+(int)(fg.size.width*.75),fg.origin.y+(int)(fg.size.height*.75),fg.size.width,fg.size.height);
     
     [self drawColorWell:bg];
     
@@ -66,6 +55,11 @@
     
     [[memory foreground] set];
     [[NSBezierPath bezierPathWithRect:fg] fill];
+
+    // draw opacity percentage
+    float opacity = [memory opacity];
+    NSString *text = [NSString stringWithFormat:@"%d%%",(int)round(opacity*100)];
+    [text drawAtPoint:NSMakePoint(0,18) withAttributes:[NSDictionary dictionaryWithObject:[NSColor controlTextColor] forKey:NSForegroundColorAttributeName]];
 }
 
 - (void)drawColorWell:(NSRect)rect

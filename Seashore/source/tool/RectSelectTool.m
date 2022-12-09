@@ -10,6 +10,10 @@
 
 @implementation RectSelectTool
 
+- (void)awakeFromNib {
+    options = [[RectSelectOptions alloc] init:document];
+}
+
 - (int)toolId
 {
 	return kRectSelectTool;
@@ -73,10 +77,6 @@
 - (AbstractOptions*)getOptions
 {
     return options;
-}
-- (void)setOptions:(AbstractOptions*)newoptions
-{
-    options = (RectSelectOptions*)newoptions;
 }
 
 @end

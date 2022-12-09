@@ -116,7 +116,9 @@
 
     [attrs setValue:paraStyle forKey:NSParagraphStyleAttributeName];
     [attrs setValue:font forKey:NSFontAttributeName];
-    [attrs setValue:_properties.color forKey:NSForegroundColorAttributeName];
+
+//    [attrs setValue:_properties.color forKey:NSForegroundColorAttributeName];
+//    [attrs setValue:_properties.color forKey:NSStrokeColorAttributeName];
 
     if(_properties.outline)
         [attrs setValue:[NSNumber numberWithInt:_properties.outline] forKey:NSStrokeWidthAttributeName];
@@ -129,12 +131,15 @@
     [attrs2 setValue:paraStyle2 forKey:NSParagraphStyleAttributeName];
 
     NSString *withPara = [NSString stringWithFormat:@"\n%@",_properties.text];
-
     NSMutableAttributedString *s = [[NSMutableAttributedString alloc] initWithString:withPara attributes:attrs];
 
     [s setAttributes:attrs2 range:NSMakeRange(0,1)];
 
-    CFAttributedStringRef asf = (__bridge_retained CFAttributedStringRef)s;
+    CFMutableAttributedStringRef asf = (__bridge_retained CFMutableAttributedStringRef)s;
+
+    // need to set color here for older OSX versions due to bug
+    CFAttributedStringSetAttribute(asf,CFRangeMake(1,_properties.text.length),kCTForegroundColorAttributeName,_properties.color.CGColor);
+
     CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString(asf);
     CFRelease(asf);
 

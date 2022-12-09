@@ -13,13 +13,8 @@
 }
 
 - (IBAction)reportAProblem:(id)sender {
-     NSURL * problem_url = [NSURL URLWithString:@"https://github.com/robaho/seashore/issues"];
+     NSURL * problem_url = [NSURL URLWithString:@"https://github.com/robaho/seashore/issues/new"];
      [[NSWorkspace sharedWorkspace] openURL:problem_url];
-}
-
-- (IBAction)donateToSeashore:(id)sender {
-    NSURL * donate_url = [NSURL URLWithString:@"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=TCF29QJ6J653C&source=url"];
-    [[NSWorkspace sharedWorkspace] openURL:donate_url];
 }
 
 - (void)displayInstantHelp:(int)stringID

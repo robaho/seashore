@@ -28,6 +28,7 @@
     }
     if([notices count]==0){
         [alertButton setHidden:TRUE];
+        [controlView setNeedsLayout:TRUE];
         [win close];
     }
 }
@@ -73,7 +74,6 @@
     NSCell *cell = col.dataCell;
     [cell setStringValue:[notices objectAtIndex:row]];
     float height = [cell cellSizeForBounds:NSMakeRect(0,0,col.width,1000)].height;
-    NSLog(@"width %f height %f",col.width,height);
     return height;
 }
 
@@ -81,6 +81,7 @@
 {
     [alertButton setHidden:FALSE];
     [notices addObject:message];
+    [controlView setNeedsLayout:TRUE];
 }
 
 - (void)windowDidResignKey:(NSNotification *)notification;

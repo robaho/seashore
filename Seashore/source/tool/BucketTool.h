@@ -49,17 +49,6 @@
 - (void)mouseUpAt:(IntPoint)where withEvent:(NSEvent *)event;
 
 /*!
-	@method		fillAtPoint:useTolerance:delay:
-	@param		point
-				The point from which to fill.
-	@param		useTolerance
-				YES if the tolerance settings should be use, NO if the tolerance
-				settings should be ignored the bucket should fill all of the
-				selected area or document. 
-*/
-- (void)fillAtPoint:(IntPoint)point useTolerance:(BOOL)useTolerance;
-
-/*!
 	@method		startPoint
 	@discussion	For figuring out where to draw the center
 */

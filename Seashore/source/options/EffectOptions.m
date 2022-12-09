@@ -8,16 +8,77 @@
 
 @implementation EffectOptions
 
-- (void)awakeFromNib
+- (id)init:(id)document
 {
+    self = [super init:document];
+
+    [self setSubviews:[NSArray array]];
+    [self setIdentifier:@"Effect Options"];
+
+    self.lastFills = TRUE;
+
+    AbstractTool *tool = [[document tools] getTool:kEffectTool];
+
+    BorderView *borderView = [BorderView view];
+    [borderView setIdentifier:@"Effect Options BorderView"];
+
+    NSView *top = [VerticalView view];
+
+    effectsButton = [SeaButton compactButton:@"Effects" withLabel:@"No effect selected." target:self action:@selector(showEffects:)];
+
+    instructionsArea = [VerticalView view];
+    [instructionsArea setIdentifier:@"effects instructions area"];
+
+    clickCountLabel = [Label compactLabel];
+    instructionsLabel = [[NSTextField alloc] init];
+    [instructionsLabel setIdentifier:@"effects instructions label"];
+    [instructionsLabel setFont:[NSFont labelFontOfSize:[NSFont systemFontSizeForControlSize:NSMiniControlSize]]];
+    [instructionsLabel setEditable:FALSE];
+    [instructionsLabel setBordered:FALSE];
+    [instructionsLabel setBezeled:FALSE];
+    [instructionsLabel setDrawsBackground:FALSE];
+
+    instructionsLabel.cell.lineBreakMode=NSLineBreakByWordWrapping;
+    instructionsLabel.cell.usesSingleLineMode=FALSE;
+
+    [instructionsArea addSubview:clickCountLabel];
+    [instructionsArea addSubview:instructionsLabel];
+
+    [top addSubview:effectsButton];
+    [top addSubview:instructionsArea];
+
+    pluginViewContainer = [BorderView view];
+    [pluginViewContainer setIdentifier:@"effects options container"];
+
+    NSView *bottom = [VerticalView view];
+
+    resetButton = [SeaButton compactButton:@"Reset" target:tool action:@selector(reset:)];
+    [bottom addSubview:resetButton];
+    applyButton = [SeaButton compactButton:@"Apply" target:tool action:@selector(apply:)];
+    [bottom addSubview:applyButton];
+    reapplyButton = [SeaButton compactButton:@"Reapply Last Effect" target:tool action:@selector(reapply:)];
+    [bottom addSubview:reapplyButton];
+
+    [borderView addSubview:top];
+    [borderView addSubview:pluginViewContainer];
+    [borderView addSubview:bottom];
+
+    borderView.top = top;
+    borderView.middle = pluginViewContainer;
+    borderView.bottom = bottom;
+
+    [self addSubview:borderView];
+
     [self updateClickCount:self];
+
+    return self;
 }
 
 - (void)updateClickCount:(id)sender
 {
     EffectTool* tool = (EffectTool*)[[document tools] getTool:kEffectTool];
     if(!currentPlugin) {
-        [effectsLabel setStringValue:@"No effect selected."];
+        [effectsButton setLabel:@"No effect selected."];
         [instructionsArea setHidden:TRUE];
         if([tool hasLastEffect]){
             [reapplyButton setHidden:FALSE];
@@ -31,12 +92,12 @@
         [applyButton setHidden:FALSE];
         [resetButton setHidden:FALSE];
         [instructionsArea setHidden:FALSE];
-        [effectsLabel setStringValue:[currentPlugin name]];
+        [effectsButton setLabel:[currentPlugin name]];
         if([currentPlugin respondsToSelector:@selector(instruction)]) {
-            [effectTableInstruction setHidden:FALSE];
-            [effectTableInstruction setStringValue:[currentPlugin instruction]];
+            [instructionsLabel setHidden:FALSE];
+            [instructionsLabel setStringValue:[currentPlugin instruction]];
         } else {
-            [effectTableInstruction setHidden:TRUE];
+            [instructionsLabel setHidden:TRUE];
         }
 
         if([currentPlugin points]>0) {
@@ -48,9 +109,11 @@
         }
         [applyButton setEnabled:[currentPlugin points]==[tool clickCount]];
     }
+    [self setNeedsLayout:TRUE];
+    [self setNeedsDisplay:TRUE];
 }
 
-- (IBAction)showEffects:(id)sender
+- (void)showEffects:(id)sender
 {
     NSMenu *menu = [[SeaController seaPlugins] menu];
 
@@ -71,8 +134,9 @@
     [self updateClickCount:self];
 
     [instructionsArea setNeedsLayout:TRUE];
-    [view setNeedsLayout:TRUE];
-    [view setNeedsDisplay:TRUE];
+
+    [self layout];
+    [self setNeedsDisplay:TRUE];
 }
 
 -(PluginClass*)currentPlugin

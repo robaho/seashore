@@ -47,7 +47,9 @@
 - (id)initWithDocument:(id)newDocument andView:(id)newView;
 - (void)updateCursor:(NSEvent*)event;
 - (IntRect)handleRect:(IntPoint)p;
-- (void)handleRectCursors:(IntRect)rect point:(IntPoint)p cursor:(NSCursor*)cursor;
+/** returns the cursor that was set */
+- (NSCursor*)handleRectCursors:(IntRect)rect point:(IntPoint)p cursor:(nullable NSCursor*)cursor ignoresMove:(BOOL)ignoresMove;
+- (BOOL)isHandleCursor:(nullable NSCursor*)cursor;
 - (BOOL)usePreciseCursor;
 
 @end

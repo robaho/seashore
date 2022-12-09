@@ -21,6 +21,10 @@
 
 @implementation EraserTool
 
+- (void)awakeFromNib {
+    options = [[EraserOptions alloc] init:document];
+}
+
 - (int)toolId
 {
 	return kEraserTool;
@@ -49,10 +53,7 @@
 {
     return options;
 }
-- (void)setOptions:(AbstractOptions*)newoptions
-{
-    options = (EraserOptions*)newoptions;
-}
+
 - (BrushOptions*)getBrushOptions
 {
     return options;

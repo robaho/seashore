@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2B2EFA8828BF1CD2009B225D /* SeaLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2EFA8728BF1CD2009B225D /* SeaLibrary.framework */; };
-		2B2EFAAF28BF2393009B225D /* SeaMinimal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2EFAAB28BF1EBE009B225D /* SeaMinimal.framework */; };
+		2BC3CE49293C1367005394FE /* SeaMinimal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2EFAAB28BF1EBE009B225D /* SeaMinimal.framework */; };
+		2BC3CE62293C1D18005394FE /* SeaLibraryStatic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BC3CE61293C1D18005394FE /* SeaLibraryStatic.framework */; };
 		2BE97F4623CBAC9200A09AAC /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE97F4523CBAC9200A09AAC /* Accelerate.framework */; };
 		2C05A19C06CAA52B00D84F6F /* GeneratePreviewForURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C05A19B06CAA52B00D84F6F /* GeneratePreviewForURL.m */; };
 		61E3BCFB0870B4F2002186A0 /* GenerateThumbnailForURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E3BCFA0870B4F2002186A0 /* GenerateThumbnailForURL.m */; };
@@ -29,6 +29,8 @@
 		2B2EFAAB28BF1EBE009B225D /* SeaMinimal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SeaMinimal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B399C5F279DE941000D0C58 /* Plugins.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Plugins.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B84486B28BEE8D600C068D1 /* libSeaMinimal.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libSeaMinimal.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BC3CE45293C0C20005394FE /* Seashore.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = Seashore.entitlements; path = ../Seashore/Seashore.entitlements; sourceTree = "<group>"; };
+		2BC3CE61293C1D18005394FE /* SeaLibraryStatic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SeaLibraryStatic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BE97F4523CBAC9200A09AAC /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		2C05A19B06CAA52B00D84F6F /* GeneratePreviewForURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratePreviewForURL.m; sourceTree = "<group>"; };
 		61E3BCFA0870B4F2002186A0 /* GenerateThumbnailForURL.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = GenerateThumbnailForURL.m; sourceTree = "<group>"; };
@@ -45,13 +47,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2B2EFAAF28BF2393009B225D /* SeaMinimal.framework in Frameworks */,
+				2BC3CE49293C1367005394FE /* SeaMinimal.framework in Frameworks */,
 				8D576314048677EA00EA77CD /* CoreFoundation.framework in Frameworks */,
 				C86B05270671AA6E00DD9006 /* CoreServices.framework in Frameworks */,
 				F28CFBFD0A3EC0AF000ABFF5 /* ApplicationServices.framework in Frameworks */,
+				2BC3CE62293C1D18005394FE /* SeaLibraryStatic.framework in Frameworks */,
 				2BE97F4623CBAC9200A09AAC /* Accelerate.framework in Frameworks */,
 				F28CFC030A3EC0C6000ABFF5 /* QuickLook.framework in Frameworks */,
-				2B2EFA8828BF1CD2009B225D /* SeaLibrary.framework in Frameworks */,
 				DC0E916C1041DD6300C3FC48 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -62,6 +64,7 @@
 		089C166AFE841209C02AAC07 /* XCFQuickLook */ = {
 			isa = PBXGroup;
 			children = (
+				2BC3CE45293C0C20005394FE /* Seashore.entitlements */,
 				08FB77AFFE84173DC02AAC07 /* Source */,
 				089C167CFE841241C02AAC07 /* Resources */,
 				089C1671FE841209C02AAC07 /* External Frameworks and Libraries */,
@@ -113,6 +116,7 @@
 		2BE97F4423CBAC9100A09AAC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2BC3CE61293C1D18005394FE /* SeaLibraryStatic.framework */,
 				2B2EFAAB28BF1EBE009B225D /* SeaMinimal.framework */,
 				2B2EFA8728BF1CD2009B225D /* SeaLibrary.framework */,
 				2B84486B28BEE8D600C068D1 /* libSeaMinimal.a */,
@@ -220,20 +224,18 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_ENTITLEMENTS = ../Seashore/Seashore.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2022083102;
 				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
-				FRAMEWORK_SEARCH_PATHS = "@executable_path/../Frameworks";
+				FRAMEWORK_SEARCH_PATHS = "@executable_path/../../../Frameworks";
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = OTHER_PLUGIN;
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				MARKETING_VERSION = 3.8;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.xcfquicklook;
 				PRODUCT_NAME = XCFQuickLook;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -246,19 +248,17 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_ENTITLEMENTS = ../Seashore/Seashore.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2022083102;
 				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
-				FRAMEWORK_SEARCH_PATHS = "@executable_path/../Frameworks";
+				FRAMEWORK_SEARCH_PATHS = "@executable_path/../../../Frameworks";
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = OTHER_PLUGIN;
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				MARKETING_VERSION = 3.8;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.xcfquicklook;
 				PRODUCT_NAME = XCFQuickLook;
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -133,7 +133,6 @@
       migratedStopOnEveryIssue = "YES"
       debugServiceExtension = "internal"
       enableGPUValidationMode = "1"
-      showGraphicsOverview = "Yes"
       allowLocationSimulation = "YES"
       queueDebuggingEnabled = "No">
       <BuildableProductRunnable

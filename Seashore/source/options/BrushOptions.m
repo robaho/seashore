@@ -7,65 +7,66 @@
 
 @implementation BrushOptions
 
-- (void)awakeFromNib
+- (id)init:(id)document
 {
-	int rate, style;
-	BOOL fadeOn, pressureOn;
-	
+    self = [super init:document];
+
+    [super clearModifierMenu];
+    [super addModifierMenuItem:@"Erase (Option)" tag:1];
+    [super addModifierMenuItem:@"Draw straight lines (Shift)" tag:2];
+    [super addModifierMenuItem:@"Draw striaght lines at 45° (Shift + Control)" tag:4];
+
+    fadeSlider = [SeaSlider sliderWithCheck:@"Fade-out" Min:1 Max:120 Listener:NULL];
+    [self addSubview:fadeSlider];
+
+    NSMenu *menu = [[NSMenu alloc] init];
+    [menu addItemWithTitle:@"Lighter" action:NULL keyEquivalent:@""];
+    [menu addItemWithTitle:@"Normal" action:NULL keyEquivalent:@""];
+    [menu addItemWithTitle:@"Darker" action:NULL keyEquivalent:@""];
+
+    pressurePopup = [SeaPopup popupWithCheck:@"Pressure sensitive" Menu:menu Listener:NULL];
+    [self addSubview:pressurePopup];
+
 	if ([gUserDefaults objectForKey:@"brush fade"] == NULL) {
-		[fadeCheckbox setState:NSOffState];
-		[fadeCheckbox setTitle:[NSString stringWithFormat:LOCALSTR(@"fade-out", @"Fade-out: %d"), 10]];
-		[fadeSlider setIntValue:10];
-		[fadeSlider setEnabled:NO];
+        [fadeSlider setIntValue:10];
 	}
 	else {
-		rate = [gUserDefaults integerForKey:@"brush fade rate"];
-		if (rate < 1 || rate > 120)
-			rate = 10;
-		fadeOn = [gUserDefaults boolForKey:@"brush fade"];
-		[fadeCheckbox setState:fadeOn];
-		[fadeCheckbox setTitle:[NSString stringWithFormat:LOCALSTR(@"fade-out", @"Fade-out: %d"), rate]];
-		[fadeSlider setIntValue:rate];
-		[fadeSlider setEnabled:fadeOn];
+        [fadeSlider setIntValue:[gUserDefaults integerForKey:@"brush fade rate"]];
+        [fadeSlider setChecked:[gUserDefaults boolForKey:@"brush fade"]];
 	}
 	
 	if ([gUserDefaults objectForKey:@"brush pressure"] == NULL) {
-		[pressureCheckbox setState:NSOffState];
 		[pressurePopup selectItemAtIndex:kLinear];
-		[pressurePopup setEnabled:NO];
 	}
 	else {
-		style = [gUserDefaults integerForKey:@"brush pressure style"];
+		int style = [gUserDefaults integerForKey:@"brush pressure style"];
 		if (style < kQuadratic || style > kSquareRoot)
 			style = kLinear;
-		pressureOn = [gUserDefaults boolForKey:@"brush pressure"];
-		[pressureCheckbox setState:pressureOn];
-		[pressurePopup selectItemAtIndex:style];
-		[pressurePopup setEnabled:pressureOn];
+        [pressurePopup selectItemAtIndex:style];
+        [pressurePopup setChecked:[gUserDefaults boolForKey:@"brush pressure"]];
 	}
+
+    scalingCheckbox = [SeaCheckbox checkboxWithTitle:@"Brush scaling" Listener:NULL];
+
+    [self addSubview:scalingCheckbox];
 	
 	if ([gUserDefaults objectForKey:@"brush scale"] == NULL) {
-		[scaleCheckbox setState:NSOnState];
+		[scalingCheckbox setChecked:true];
 	}
 	else {
-		[scaleCheckbox setState:[gUserDefaults boolForKey:@"brush scale"]];
+		[scalingCheckbox setChecked:[gUserDefaults boolForKey:@"brush scale"]];
 	}
 
     [super loadOpacity:@"brush opacity"];
 
 	isErasing = NO;
-}
 
-- (IBAction)update:(id)sender
-{
-	[fadeSlider setEnabled:[fadeCheckbox state]];
-	[fadeCheckbox setTitle:[NSString stringWithFormat:LOCALSTR(@"fade-out", @"Fade-out: %d"), [fadeSlider intValue]]];
-	[pressurePopup setEnabled:([pressureCheckbox state]==NSOnState)];
+    return self;
 }
 
 - (BOOL)fade
 {
-	return [fadeCheckbox state];
+	return [fadeSlider isChecked];
 }
 
 - (int)fadeValue
@@ -77,7 +78,7 @@
 {
 	double p;
 	
-	if ([pressureCheckbox state] == NSOffState)
+	if (![pressurePopup isChecked])
 		return 255;
 	
 	if (event == NULL)
@@ -102,7 +103,7 @@
 
 - (BOOL)scale
 {
-	return [scaleCheckbox state];
+	return [scalingCheckbox isChecked];
 }
 
 - (BOOL)brushIsErasing
@@ -114,7 +115,7 @@
 {
 	[super updateModifiers:modifiers];
 	int modifier = [super modifier];
-	
+
 	switch (modifier) {
 		case kAltModifier:
 			isErasing = YES;
@@ -125,26 +126,13 @@
 	}
 }
 
-- (IBAction)modifierPopupChanged:(id)sender
-{
-	switch ([[sender selectedItem] tag]) {
-		case kAltModifier:
-			isErasing = YES;
-			break;
-		default:
-			isErasing = NO;
-			break;
-	}
-    
-}
-
 - (void)shutdown
 {
-	[gUserDefaults setObject:[fadeCheckbox state] ? @"YES" : @"NO" forKey:@"brush fade"];
+	[gUserDefaults setObject:[fadeSlider isChecked] ? @"YES" : @"NO" forKey:@"brush fade"];
 	[gUserDefaults setInteger:[fadeSlider intValue] forKey:@"brush fade rate"];
-	[gUserDefaults setObject:[pressureCheckbox state] ? @"YES" : @"NO" forKey:@"brush pressure"];
+	[gUserDefaults setObject:[pressurePopup isChecked] ? @"YES" : @"NO" forKey:@"brush pressure"];
 	[gUserDefaults setInteger:[pressurePopup indexOfSelectedItem] forKey:@"brush pressure style"];
-	[gUserDefaults setInteger:[scaleCheckbox state] forKey:@"brush scale"];
+	[gUserDefaults setInteger:[scalingCheckbox isChecked] forKey:@"brush scale"];
     [gUserDefaults setInteger:[opacitySlider integerValue] forKey:@"brush opacity"];
 }
 

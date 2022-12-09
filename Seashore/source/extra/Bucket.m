@@ -210,10 +210,11 @@ void textureFill(CGContextRef context,NSColor *patternColor,CGRect rect)
     CGContextRestoreGState(context);
 }
 
-void smudgeFill0(int spp, int channel, IntRect rect, unsigned char *layerData, unsigned char *overlay, int width, int height, unsigned char *accum, unsigned char *mask, int brushWidth, int brushHeight, int rate, int startX,int startY)
+void smudgeFill0(int spp, int channel, IntRect rect, unsigned char *layerData, unsigned char *overlay, int width, int height, unsigned char *accum, unsigned char *mask, int brushWidth, int brushHeight, int rate, int startX,int w)
 {
-    int lastX = MIN(brushWidth,startX+TILE_SIZE);
-    int lastY = MIN(brushHeight,startY+TILE_SIZE);
+    int lastX = MIN(startX+w,brushWidth);
+    int startY = 0;
+    int lastY = brushHeight;
 
     int t1;
 
@@ -254,20 +255,16 @@ void smudgeFill0(int spp, int channel, IntRect rect, unsigned char *layerData, u
 
 void smudgeFill(int spp, int channel, IntRect r, unsigned char *layerData, unsigned char *data, int width, int height, unsigned char *accum, unsigned char *mask, int brushWidth, int brushHeight, int rate)
 {
-    if(brushWidth<TILE_SIZE && brushHeight<TILE_SIZE){
+    int cores = MAX([[NSProcessInfo processInfo] activeProcessorCount],1);
+
+    if(cores==1){
         return smudgeFill0(spp,channel,r,layerData,data,width,height,accum,mask,brushWidth,brushHeight,rate, 0,0);
-    }
-
-    int cols = brushWidth / TILE_SIZE + 1;
-    int rows = brushHeight / TILE_SIZE + 1;
-
-    for(int i=0;i<rows;i++) {
-        int startY = i * TILE_SIZE;
-        for(int j=0;j<cols;j++) {
-            int startX = j * TILE_SIZE;
-            dispatch_group_async(group,queue,^{smudgeFill0(spp,channel, r,layerData,data,width,height,accum,mask,brushWidth,brushHeight,rate,startX,startY);});
+    } else {
+        int w = brushWidth/cores;
+        for(int startX=0;startX<brushWidth;startX+=w) {
+            dispatch_group_async(group,queue,^{smudgeFill0(spp,channel,r,layerData,data,width,height,accum,mask,brushWidth,brushHeight,rate,startX,w);});
         }
+        dispatch_group_wait(group,DISPATCH_TIME_FOREVER);
     }
-    dispatch_group_wait(group,DISPATCH_TIME_FOREVER);
 }
 

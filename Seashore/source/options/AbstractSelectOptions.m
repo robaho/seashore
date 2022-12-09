@@ -4,9 +4,18 @@
 
 @implementation AbstractSelectOptions
 
-- (id)init
+- (id)init:(id)document
 {
-	self = [super init];
+    self = [super init:document];
+
+    [self addModifierMenuItem:@"Float selection (Option)" tag:1];
+    [self addModifierMenuItem:@"1:1 aspect ratio (Shift)" tag:2];
+    [self addModifierMenuItem:@"Force new selection (Control)" tag:3];
+    [self addModifierMenuItem:@"Add to selection (Control + Shift)" tag:4];
+    [self addModifierMenuItem:@"Subtract from selection (Control + Option)" tag:5];
+    [self addModifierMenuItem:@"Use intersect of selection" tag:20];
+    [self addModifierMenuItem:@"Use inverse intersect of selection" tag:21];
+
 	mode = kDefaultMode;
 	
 	return self;
@@ -20,12 +29,6 @@
 - (void)setSelectionMode:(int)newMode
 {
 	mode = newMode;
-	if(mode == kDefaultMode){
-		[self setIgnoresMove:NO];
-	}else {
-		[self setIgnoresMove:YES];
-	}
-
 }
 
 - (void)setModeFromModifier:(unsigned int)modifier
@@ -65,8 +68,4 @@
 	[self setModeFromModifier: modifier];
 }
 
-- (IBAction)modifierPopupChanged:(id)sender
-{
-	[self setModeFromModifier: [[sender selectedItem] tag]];
-}
 @end

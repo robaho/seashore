@@ -18,6 +18,15 @@
               andMask: [[document selection] mask]];
 }
 
+- (AbstractSelectOptions*)selectOptions
+{
+    return (AbstractSelectOptions*)[self getOptions];
+}
+
+- (BOOL)ignoresMove {
+    return [[self selectOptions] selectionMode] != kDefaultMode;
+}
+
 - (void)dragHandler:(IntPoint)localPoint withEvent:(NSEvent *)event
 {
     IntRect newRect = [self mouseDraggedTo: localPoint
@@ -59,7 +68,15 @@
 
 - (void)updateCursor:(IntPoint)p cursors:(SeaCursors*)cursors
 {
-    int selectionMode = [(AbstractSelectOptions *)[self getOptions] selectionMode];
+    if([[document selection] active]){
+        IntRect selectionRect = [[document selection] maskRect];
+        NSCursor *c = [cursors handleRectCursors:selectionRect point:p cursor:NULL ignoresMove:[self ignoresMove]];
+        if(c) {
+            return;
+        }
+    }
+
+    int selectionMode = [[self selectOptions] selectionMode];
 
     if(selectionMode == kAddMode){
         [[cursors addCursor] set];
@@ -69,10 +86,6 @@
         return;
     }
 
-    if([[document selection] active]){
-        IntRect selectionRect = [[document selection] maskRect];
-        return [cursors handleRectCursors:selectionRect point:p cursor:[cursors crosspointCursor]];
-    }
     [[cursors crosspointCursor] set];
     return;
 }

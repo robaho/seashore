@@ -8,6 +8,7 @@
 	<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli	
 */
 #import <Cocoa/Cocoa.h>
+#import <SeaComponents/SeaComponents.h>
 
 enum {
     kUIImportance,
@@ -26,6 +27,7 @@ enum {
     NSMutableArray *notices;
     __weak IBOutlet NSPanel *win;
     __weak IBOutlet NSTableView *noticesView;
+    __weak IBOutlet BorderView *controlView;
 }
 
 /*!

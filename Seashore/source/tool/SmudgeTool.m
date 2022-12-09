@@ -16,6 +16,10 @@
 
 @implementation SmudgeTool
 
+- (void)awakeFromNib {
+    options = [[SmudgeOptions alloc] init:document];
+}
+
 - (int)toolId
 {
 	return kSmudgeTool;
@@ -26,7 +30,7 @@
 	return NO;
 }
 
-- (void)plotBrush:(SeaBrush*)brush at:(NSPoint)where pressure:(int)pressure
+- (IntRect)plotBrush:(SeaBrush*)brush at:(NSPoint)where pressure:(int)pressure
 {
     SeaLayer *layer = [[document contents] activeLayer];
     int brushWidth = [brush width];
@@ -38,6 +42,8 @@
     smudgeFill(spp,[[document contents] selectedChannel],rect,[layer data],[[document whiteboard] overlay],[layer width],[layer height],accumData,[brush mask],brushWidth,brushHeight,pressure);
 
     [[document helpers] overlayChanged:rect];
+    
+    return rect;
 }
 
 - (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event
@@ -64,8 +70,6 @@
 
 - (void)endLineDrawing
 {
-    [options update:self];
-
     if(!intermediate)
         return;
 
@@ -76,10 +80,6 @@
 - (AbstractOptions*)getOptions
 {
     return options;
-}
-- (void)setOptions:(AbstractOptions*)newoptions
-{
-    options = (SmudgeOptions*)newoptions;
 }
 
 - (BrushOptions*)getBrushOptions

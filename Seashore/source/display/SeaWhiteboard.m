@@ -63,6 +63,8 @@ void DumpObjcMethods(Class clz) {
 
   document = doc;
 
+  checkerboard = [NSImage imageNamed:@"checkerboard"];
+
   proofProfile = NULL;
 
   [self readjust];
@@ -119,6 +121,9 @@ void DumpObjcMethods(Class clz) {
 }
 
 - (void)overlayModified:(IntRect)layerRect {
+    if(LOG_PERFORMANCE) {
+        NSLog(@"overlay modified %@",NSStringFromIntRect(layerRect));
+    }
     SeaLayer *layer = [[document contents] activeLayer];
 
     if (IntRectIsEmpty(overlayModifiedRect)) {
@@ -134,12 +139,12 @@ void DumpObjcMethods(Class clz) {
 
     layerRect.origin.x += [layer xoff];
     layerRect.origin.y += [layer yoff];
-    [self setNeedsDisplayInRect:IntRectMakeNSRect(layerRect)];
+    [self update:layerRect];
 }
 
 - (BOOL)isOpaque
 {
-    return FALSE;
+    return TRUE;
 }
 
 - (void)setNeedsDisplay:(BOOL)needsDisplay
@@ -238,24 +243,21 @@ void DumpObjcMethods(Class clz) {
 
 - (void)mergeOverlay:(unsigned char *)dest rect:(IntRect)r
 {
-    if(SINGLE_THREADED || (r.size.height <= TILE_SIZE && r.size.width <= TILE_SIZE)){
-        return [self mergeOverlay0:dest rect:r];
-    }
-    int rows = (r.size.height-1) / TILE_SIZE + 1;
-    int cols = (r.size.width-1) / TILE_SIZE + 1;
+    int cores = MAX([[NSProcessInfo processInfo] activeProcessorCount],1);
 
-    for(int row=0;row<rows;row++)
-        for(int col=0;col<cols;col++){
-            int x = col*TILE_SIZE;
-            int y = row*TILE_SIZE;
-            int width = MIN(TILE_SIZE,r.size.width-x);
-            int height = MIN(TILE_SIZE,r.size.height-y);
-            IntRect r0 = IntMakeRect(x+r.origin.x,y+r.origin.y,width,height);
+    if(SINGLE_THREADED || cores==1){
+        return [self mergeOverlay0:dest rect:r];
+    } else {
+        int tw = MAX(r.size.width / cores,8);
+        for(int x=0;x<r.size.width;x+=tw) {
+            int width = MIN(tw,r.size.width-x);
+            IntRect r0 = IntMakeRect(x+r.origin.x,r.origin.y,width,r.size.height);
             dispatch_group_async(group, queue, ^{
                 [self mergeOverlay0:dest rect:r0];
             });
         }
-    dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
+        dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
+    }
 }
 
 - (void)mergeOverlayToTemp
@@ -315,6 +317,8 @@ void DumpObjcMethods(Class clz) {
 
     CGContextRef nsCtx = [[NSGraphicsContext currentContext] graphicsPort];
 
+    [self drawBackground:nsCtx rect:viewDirtyRect];
+
     float magnification = [[document scrollView] magnification];
 
     if ([[SeaController seaPrefs] smartInterpolation]) {
@@ -327,10 +331,57 @@ void DumpObjcMethods(Class clz) {
         CGContextSetInterpolationQuality(nsCtx, kCGInterpolationNone);
     }
 
-    CGContextClipToRect(nsCtx, viewDirtyRect);
     [self drawInContext:nsCtx dirty:viewDirtyRect proofing:true];
     [[document histogram] performSelectorOnMainThread:@selector(update) withObject:nil waitUntilDone:NO];
 }
+
+static void patternCallback(void *info, CGContextRef context) {
+    CGImageRef imageRef = (CGImageRef)info;
+    CGContextDrawImage(context, CGRectMake(0, 0, 32, 32), imageRef);
+}
+
+- (void)drawBackground:(CGContextRef)ctx rect:(NSRect)dirtyRect
+{
+    static const CGPatternCallbacks callbacks = { .drawPattern = patternCallback};
+    static CGPatternRef pattern;
+    static float pattern_magnification = 0;
+    static CGColorSpaceRef patternSpace = nil;
+
+    float magnification = [[document scrollView] magnification];
+
+    CGRect rect = CGRectMake(0,0,[[document contents] width],[[document contents] height]);
+
+    CGContextSetInterpolationQuality(ctx, kCGInterpolationNone);
+
+    if ([[document whiteboard] whiteboardIsLayerSpecific]) {
+        CGContextSetFillColorWithColor(ctx, [[NSColor windowBackgroundColor] CGColor]);
+        CGContextFillRect(ctx,rect);
+    }
+    else {
+        if([(SeaPrefs *)[SeaController seaPrefs] useCheckerboard]){
+            CGImageRef image = [checkerboard CGImageForProposedRect:NULL context:NULL hints:NULL];
+
+            if(magnification!=pattern_magnification) {
+                CGAffineTransform tx = CGAffineTransformIdentity;
+                tx = CGAffineTransformScale(tx, 0.5/magnification,0.5/magnification);
+                CGPatternRelease(pattern);
+                pattern = CGPatternCreate(image,CGRectMake(0,0,32,32), tx, 32, 32,kCGPatternTilingConstantSpacing,TRUE,&callbacks);
+                pattern_magnification = magnification;
+            }
+            if(patternSpace==nil){
+                patternSpace = CGColorSpaceCreatePattern(NULL);
+            }
+            CGContextSetFillColorSpace(ctx, patternSpace);
+            double alpha = 1.0;
+            CGContextSetFillPattern(ctx, pattern, &alpha);
+            CGContextFillRect(ctx,[self bounds]);
+        }else{
+            CGContextSetFillColorWithColor(ctx, [[(SeaPrefs *)[SeaController seaPrefs] transparencyColor] CGColor]);
+            CGContextFillRect(ctx,rect);
+        }
+    }
+}
+
 
 - (void)drawInContext:(CGContextRef)nsCtx dirty:(NSRect)viewDirtyRect proofing:(BOOL)proofing
 {
@@ -338,7 +389,15 @@ void DumpObjcMethods(Class clz) {
 
 //    viewDirtyRect = NSIntegralRect(viewDirtyRect);
 
+    long start = LOG_PERFORMANCE ? getCurrentMillis() : 0;
+
+    IntRect temp_rect = tempOverlayModifiedRect;
+
     [self mergeOverlayToTemp];
+
+    if(LOG_PERFORMANCE) {
+        NSLog(@"whiteboard merge overlay %ld %@",getCurrentMillis()-start,NSStringFromIntRect(temp_rect));
+    }
 
     if(proofing && [self whiteboardIsLayerSpecific]) {
         [activeLayer transformContext:nsCtx];
@@ -351,43 +410,32 @@ void DumpObjcMethods(Class clz) {
         return;
     }
 
-    long start = LOG_PERFORMANCE ? getCurrentMillis() : 0;
+    start = LOG_PERFORMANCE ? getCurrentMillis() : 0;
 
-    CGRect r = viewDirtyRect;
+    CGRect r = IntRectMakeNSRect(whiteboardModifiedRect);
 
-    if(SINGLE_THREADED || (r.size.height <= TILE_SIZE && r.size.width <= TILE_SIZE)){
+    int cores = MAX([[NSProcessInfo processInfo] activeProcessorCount],1);
+
+    if(SINGLE_THREADED || cores==1){
         [self drawInData:r];
     } else {
-        int cores = [[NSProcessInfo processInfo] activeProcessorCount];
-        cores = MAX(cores,1);
-
-        int tw = MAX(r.size.width / cores,TILE_SIZE);
-        int th = MAX(r.size.height / cores,TILE_SIZE);
-
-        int y=0;
-        while(y<r.size.height) {
-            int x=0;
-            int height = MIN(th,r.size.height-y);
-            if(r.size.height-y-th<TILE_SIZE) {
-                height = r.size.height-y;
-            }
-            while(x<r.size.width){
-                int width = MIN(tw,r.size.width-x);
-                if(width<=0 || height <=0)
-                    continue;
-                if(r.size.width-x-tw<TILE_SIZE) {
-                    width = r.size.width-x;
-                }
-                IntRect r0 = IntMakeRect(x+r.origin.x,y+r.origin.y,width,height);
-                dispatch_group_async(group, queue, ^{
-                    [self drawInData:IntRectMakeNSRect(r0)];
-                });
-                x+=width;
-            }
-            y+=height;
+        int tw = MAX(r.size.width / cores,8);
+        for(int x=0;x<r.size.width;x+=tw) {
+            int width = MIN(tw,r.size.width-x);
+            IntRect r0 = IntMakeRect(x+r.origin.x,r.origin.y,width,r.size.height);
+            dispatch_group_async(group, queue, ^{
+                [self drawInData:IntRectMakeNSRect(r0)];
+            });
         }
         dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
     }
+
+    if(LOG_PERFORMANCE)
+        NSLog(@"whiteboard drawInData %ld %@",getCurrentMillis()-start,NSStringFromIntRect(whiteboardModifiedRect));
+
+    start = LOG_PERFORMANCE ? getCurrentMillis() : 0;
+
+    whiteboardModifiedRect = IntZeroRect;
 
     CGContextTranslateCTM(nsCtx,0,height);
     CGContextScaleCTM(nsCtx,1,-1);
@@ -403,7 +451,7 @@ void DumpObjcMethods(Class clz) {
     CGImageRelease(img);
 
     if(LOG_PERFORMANCE)
-        NSLog(@"whiteboard draw %ld %@",getCurrentMillis()-start,NSStringFromRect(viewDirtyRect));
+        NSLog(@"whiteboard draw image/proof %ld %@",getCurrentMillis()-start,NSStringFromRect(viewDirtyRect));
 }
 
 - (void)drawProof:(NSRect)dirty src:(CGImageRef)src dst:(CGContextRef)dst
@@ -478,6 +526,20 @@ void DumpObjcMethods(Class clz) {
     CGContextRelease(ctx);
 }
 
+- (void)copyLayerToTemp:(IntRect)r
+{
+    r = IntConstrainRect(r,IntMakeRect(0,0,layer_width,layer_height));
+    int offset = (r.origin.y*layer_width+r.origin.x)*spp;
+    unsigned char *src = (unsigned char*)[layer_data bytes]+offset;
+    unsigned char *dst = (unsigned char*)[temp bytes]+offset;
+    int width = r.size.width*spp;
+    for(int row=0;row<r.size.height;row++) {
+        memcpy(dst,src,width);
+        src+=layer_width*spp;
+        dst+=layer_width*spp;
+    }
+}
+
 - (void)applyOverlay {
   SeaLayer *layer = [[document contents] activeLayer];
 
@@ -507,6 +569,8 @@ void DumpObjcMethods(Class clz) {
 
   [self mergeOverlay:[layer_data bytes] rect:r];
 
+    [self copyLayerToTemp:r];
+
   [layer markRasterized];
 
 finished:
@@ -532,6 +596,8 @@ finished:
 
   int width = layer_width;
   int height = layer_height;
+
+    [self copyLayerToTemp:overlayModifiedRect];
 
   memset(overlay, 0, width * height * spp);
   memset(replace, 0, width * height);

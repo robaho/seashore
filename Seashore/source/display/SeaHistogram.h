@@ -6,10 +6,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <SeaComponents/SeaComponents.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SeaHistogram : NSView
+@interface SeaHistogram : BorderView
 {
     __weak IBOutlet id document;
     __weak IBOutlet NSPopUpButton *modeComboBox;

@@ -1,4 +1,5 @@
 #import "Seashore.h"
+#include <SeaComponents/SeaComponents.h>
 
 /*!
 	@enum		k...Modifier
@@ -39,17 +40,23 @@ enum {
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
 
-@interface AbstractOptions : NSObject {
-	
-	// The options view associated with this tool
-    IBOutlet id view;
+@interface AbstractOptions : VerticalView {
 	
 	// The modifier options associated with this tool
-	IBOutlet id modifierPopup;
+	id modifierPopup;
+
+    bool forceAlt;
 	
 	// The document associated
 	__weak IBOutlet id document;
 }
+
+- (void)update:(id)sender;
+
+- (id)init:(id)document;
+- (void)clearModifierMenu;
+- (void)addModifierMenuItem:(NSString*)title tag:(int)tag;
+- (NSMenuItem*)itemWithTitle:(NSString*)title tag:(int)tag;
 
 /*!
 	@method		activate:
@@ -58,12 +65,6 @@ enum {
 				The document to activate the options panel with.
 */
 - (void)activate:(id)sender;
-
-/*!
-	@method		update
-	@discussion	Updates the options panel.
-*/
-- (IBAction)update:(id)sender;
 
 /*!
 	@method		forceAlt
@@ -92,15 +93,6 @@ enum {
 */
 - (int)modifier;
 
-
-/*!
-	@method		modifierPopupChanged:
-	@discussion	Called when the popup is changed.
-	@param		sender
-				Needs to be the popup menu.
-*/
-- (IBAction)modifierPopupChanged:(id)sender;
-
 /*!
 	@method		useTextures
 	@discussion	Returns whether or not the tool should use textures.
@@ -114,12 +106,5 @@ enum {
 	@discussion	Saves current options upon shutdown.
 */
 - (void)shutdown;
-
-/*!
-	@method		view
-	@discussion	Returns the option's view
-	@result		Returns the option's view
-*/
-- (id)view;
 
 @end

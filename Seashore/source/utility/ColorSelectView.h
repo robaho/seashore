@@ -17,15 +17,6 @@
 }
 
 /*!
-	@method		initWithFrame:
-	@discussion	Initializes an instance of this class with the given frame.
-	@param		frame
-				The frame with which to initialize the view.
-	@result		Returns instance upon success (or NULL otherwise).
-*/
-- (id)initWithFrame:(NSRect)frame;
-
-/*!
 	@method		setDocument:
 	@discussion	Sets the view and its associated panels to reflect the colours
 				of the given document.

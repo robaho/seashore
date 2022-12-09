@@ -67,7 +67,7 @@
 
     [view setHidden:!visibility];
 
-    [parent setNeedsLayout:TRUE];
+    [parent layout];
     [parent setNeedsDisplay:TRUE];
 
     if([parent isKindOfClass:NSSplitView.class]){

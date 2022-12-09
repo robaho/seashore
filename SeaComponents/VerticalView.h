@@ -5,7 +5,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+IB_DESIGNABLE
 @interface VerticalView : NSView
+
+@property (nonatomic) IBInspectable bool lastFills;
+@property IBInspectable float margin;
+@property IBInspectable float gap;
+
+@property CGFloat preferredMaxLayoutWidth;
 
 + (VerticalView*)view;
 - (void)addSubviews:(NSView*)view, ...;

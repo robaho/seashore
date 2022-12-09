@@ -151,7 +151,8 @@ id seaController;
 	// We can now create the new document
 	document = [[SeaDocument alloc] initWithPasteboard];
     if(!document){
-        [NSAlert alertWithMessageText:@"Unsupported pasteboard format." defaultButton:@"OK" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"Unsupported pasteboard format."];
+        NSAlert *alert = [NSAlert alertWithMessageText:@"Unsupported pasteboard format." defaultButton:@"OK" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"Unsupported pasteboard format."];
+        [alert runModal];
         return;
     }
     

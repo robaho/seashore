@@ -58,6 +58,8 @@ enum {
 
 	// The document associated with this whiteboard
 	__weak SeaDocument *document;
+
+    NSImage *checkerboard;
 	
 	// The width and height of the whiteboard
 	int width, height;

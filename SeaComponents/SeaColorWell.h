@@ -8,14 +8,21 @@ NS_ASSUME_NONNULL_BEGIN
     NSColorWell *colorWell;
     Label *title;
     id<Listener> listener;
-    int format;
+    bool compact;
 }
 
 - (void)setColorValue:(NSColor*)value;
 - (NSColor*)colorValue;
+- (void)disableColorWell;
 
-+ (SeaColorWell*)colorWellWithTitle:(NSString*)title Listener:(id<Listener>)listener;
++ (SeaColorWell*)colorWellWithTitle:(NSString*)title Listener:(nullable id<Listener>)listener;
++ (SeaColorWell*)compactWithTitle:(NSString*)title Listener:(nullable id<Listener>)listener;
 
 @end
+
+@interface MinimalColorWell : NSColorWell
+@end
+
+
 
 NS_ASSUME_NONNULL_END

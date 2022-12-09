@@ -3,9 +3,16 @@
 
 @implementation EllipseSelectOptions
 
-- (void)awakeFromNib
+- (id)init:(id)document
 {
-    [aspectRatio awakeWithMaster:self andString:@"ellipse"];
+    self = [super init:document];
+    [radiusSlider setHidden:TRUE];
+    return self;
 }
+
+- (NSString*)preferenceName {
+    return @"ellipse";
+}
+
 
 @end

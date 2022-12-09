@@ -3,6 +3,6 @@
 
 #import "SeaLibrary/SeaLibrary.h"
 
-#define LOG_PERFORMANCE false
+#define LOG_PERFORMANCE FALSE
 
 #endif /* Seashore_h */

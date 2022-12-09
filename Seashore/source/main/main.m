@@ -8,5 +8,6 @@ int main(int argc, const char *argv[])
 
     [gColorPanel setShowsAlpha:FALSE];
 
-	return NSApplicationMain(argc, argv);
+
+    return NSApplicationMain(argc, argv);
 }

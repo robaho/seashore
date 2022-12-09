@@ -13,10 +13,35 @@
 		2B077FA328831A160083371F /* CurveView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B077FA128831A160083371F /* CurveView.m */; };
 		2B077FB5288345B60083371F /* CurveWithHistogram.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B077FB3288345B60083371F /* CurveWithHistogram.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2B077FB6288345B60083371F /* CurveWithHistogram.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B077FB4288345B60083371F /* CurveWithHistogram.m */; };
+		2B14677D2925EE7400A7E748 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B14677C2925EE7400A7E748 /* AppDelegate.m */; };
+		2B14677F2925EE7500A7E748 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B14677E2925EE7500A7E748 /* Assets.xcassets */; };
+		2B1467822925EE7500A7E748 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B1467802925EE7500A7E748 /* MainMenu.xib */; };
+		2B1467842925EE7500A7E748 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1467832925EE7500A7E748 /* main.m */; };
+		2B14678C2925F02C00A7E748 /* TestAppView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B14678B2925F02C00A7E748 /* TestAppView.m */; };
+		2B14678D2925F0B800A7E748 /* VerticalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B670B8227D536D3003BA6AE /* VerticalView.m */; };
+		2B14678E2925F0FF00A7E748 /* SeaSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B670B7727D52BE8003BA6AE /* SeaSlider.m */; };
+		2B14678F2925F15500A7E748 /* Label.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B670B8527D546D1003BA6AE /* Label.m */; };
+		2B146790292A878300A7E748 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1467612925E9E800A7E748 /* XCTest.framework */; };
+		2B146791292A878300A7E748 /* XCTest.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1467612925E9E800A7E748 /* XCTest.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B146796292B0F8A00A7E748 /* SeaPopup.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B146793292B07E100A7E748 /* SeaPopup.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2B146797292B0F9000A7E748 /* SeaPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B146794292B07E100A7E748 /* SeaPopup.m */; };
+		2B14679C292C5F4700A7E748 /* SeaCheckbox.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B14679A292C5F4700A7E748 /* SeaCheckbox.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2B14679D292C5F4700A7E748 /* SeaCheckbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B14679B292C5F4700A7E748 /* SeaCheckbox.m */; };
+		2B14679E292C5F4700A7E748 /* SeaCheckbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B14679B292C5F4700A7E748 /* SeaCheckbox.m */; };
+		2B1467A1292C982300A7E748 /* SeaButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B14679F292C982300A7E748 /* SeaButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2B1467A2292C982300A7E748 /* SeaButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1467A0292C982300A7E748 /* SeaButton.m */; };
+		2B1467A3292C982300A7E748 /* SeaButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1467A0292C982300A7E748 /* SeaButton.m */; };
+		2B1467AA2931254100A7E748 /* HorizontalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1467A72931254100A7E748 /* HorizontalView.m */; };
+		2B1467AB293126D800A7E748 /* HorizontalView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B1467A62931254100A7E748 /* HorizontalView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2B1467AC293126D800A7E748 /* HorizontalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1467A72931254100A7E748 /* HorizontalView.m */; };
 		2B3DFBAC2873A7B300D39148 /* SeaSeperator.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B3DFBAA2873A7B300D39148 /* SeaSeperator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2B3DFBAD2873A7B300D39148 /* SeaSeperator.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B3DFBAB2873A7B300D39148 /* SeaSeperator.m */; };
 		2B3DFBB3287E672D00D39148 /* HistogramView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B3DFBB1287E672D00D39148 /* HistogramView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2B3DFBB4287E672D00D39148 /* HistogramView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B3DFBB2287E672D00D39148 /* HistogramView.m */; };
+		2B64198B293998C8004CC5E7 /* SeaSizes.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B641989293998C8004CC5E7 /* SeaSizes.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2B64198C293998C8004CC5E7 /* SeaSizes.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B64198A293998C8004CC5E7 /* SeaSizes.m */; };
+		2B641990293BF06C004CC5E7 /* SeaTemplateButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B64198E293BF06C004CC5E7 /* SeaTemplateButton.h */; };
+		2B641991293BF06C004CC5E7 /* SeaTemplateButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B64198F293BF06C004CC5E7 /* SeaTemplateButton.m */; };
 		2B670B5027D52796003BA6AE /* SeaComponents.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B670B4F27D52796003BA6AE /* SeaComponents.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2B670B7B27D52BE8003BA6AE /* BorderView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B670B7527D52BE8003BA6AE /* BorderView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2B670B7D27D52BE8003BA6AE /* SeaSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B670B7727D52BE8003BA6AE /* SeaSlider.m */; };
@@ -36,7 +61,25 @@
 		2B670BC227DC21DC003BA6AE /* SeaFileChooser.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B670BC027DC21DC003BA6AE /* SeaFileChooser.m */; };
 		2B670BC427DC5C8A003BA6AE /* Listener.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B670BC327DC5797003BA6AE /* Listener.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2BB5E045281367EF00EC3014 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BB5E044281367EF00EC3014 /* Cocoa.framework */; };
+		2BC3CE3D293C02C8005394FE /* SeaLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B641992293BF1C2004CC5E7 /* SeaLibrary.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		2BF10A3F293481B8002272AB /* SeaLabelledValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BF10A3D293481B8002272AB /* SeaLabelledValue.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2BF10A40293481B8002272AB /* SeaLabelledValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF10A3E293481B8002272AB /* SeaLabelledValue.m */; };
+		2BF10A422937171B002272AB /* Seashore.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 2BF10A412937171B002272AB /* Seashore.xcconfig */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		2B146792292A878300A7E748 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				2B146791292A878300A7E748 /* XCTest.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		2B0550C2280C626300A7FFFC /* SeaSplitView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaSplitView.h; sourceTree = "<group>"; };
@@ -45,10 +88,34 @@
 		2B077FA128831A160083371F /* CurveView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CurveView.m; sourceTree = "<group>"; };
 		2B077FB3288345B60083371F /* CurveWithHistogram.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CurveWithHistogram.h; sourceTree = "<group>"; };
 		2B077FB4288345B60083371F /* CurveWithHistogram.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CurveWithHistogram.m; sourceTree = "<group>"; };
+		2B1467612925E9E800A7E748 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/MacOSX.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		2B1467792925EE7400A7E748 /* SeaComponentsTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeaComponentsTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B14677B2925EE7400A7E748 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		2B14677C2925EE7400A7E748 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		2B14677E2925EE7500A7E748 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2B1467812925EE7500A7E748 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		2B1467832925EE7500A7E748 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2B1467852925EE7500A7E748 /* SeaComponentsTestApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SeaComponentsTestApp.entitlements; sourceTree = "<group>"; };
+		2B14678A2925F02C00A7E748 /* TestAppView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestAppView.h; sourceTree = "<group>"; };
+		2B14678B2925F02C00A7E748 /* TestAppView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestAppView.m; sourceTree = "<group>"; };
+		2B146793292B07E100A7E748 /* SeaPopup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaPopup.h; sourceTree = "<group>"; };
+		2B146794292B07E100A7E748 /* SeaPopup.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeaPopup.m; sourceTree = "<group>"; };
+		2B14679A292C5F4700A7E748 /* SeaCheckbox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaCheckbox.h; sourceTree = "<group>"; };
+		2B14679B292C5F4700A7E748 /* SeaCheckbox.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeaCheckbox.m; sourceTree = "<group>"; };
+		2B14679F292C982300A7E748 /* SeaButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaButton.h; sourceTree = "<group>"; };
+		2B1467A0292C982300A7E748 /* SeaButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeaButton.m; sourceTree = "<group>"; };
+		2B1467A62931254100A7E748 /* HorizontalView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HorizontalView.h; sourceTree = "<group>"; };
+		2B1467A72931254100A7E748 /* HorizontalView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HorizontalView.m; sourceTree = "<group>"; };
 		2B3DFBAA2873A7B300D39148 /* SeaSeperator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaSeperator.h; sourceTree = "<group>"; };
 		2B3DFBAB2873A7B300D39148 /* SeaSeperator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeaSeperator.m; sourceTree = "<group>"; };
 		2B3DFBB1287E672D00D39148 /* HistogramView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HistogramView.h; sourceTree = "<group>"; };
 		2B3DFBB2287E672D00D39148 /* HistogramView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HistogramView.m; sourceTree = "<group>"; };
+		2B641989293998C8004CC5E7 /* SeaSizes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaSizes.h; sourceTree = "<group>"; };
+		2B64198A293998C8004CC5E7 /* SeaSizes.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeaSizes.m; sourceTree = "<group>"; };
+		2B64198D293B084C004CC5E7 /* Configure.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Configure.h; sourceTree = "<group>"; };
+		2B64198E293BF06C004CC5E7 /* SeaTemplateButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaTemplateButton.h; sourceTree = "<group>"; };
+		2B64198F293BF06C004CC5E7 /* SeaTemplateButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeaTemplateButton.m; sourceTree = "<group>"; };
+		2B641992293BF1C2004CC5E7 /* SeaLibrary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SeaLibrary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B670B4C27D52796003BA6AE /* SeaComponents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SeaComponents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B670B4F27D52796003BA6AE /* SeaComponents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaComponents.h; sourceTree = "<group>"; };
 		2B670B7527D52BE8003BA6AE /* BorderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BorderView.h; sourceTree = "<group>"; };
@@ -70,13 +137,25 @@
 		2B670BC327DC5797003BA6AE /* Listener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Listener.h; sourceTree = "<group>"; };
 		2B78489D288787C3000B4839 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2BB5E044281367EF00EC3014 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		2BF10A3D293481B8002272AB /* SeaLabelledValue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaLabelledValue.h; sourceTree = "<group>"; };
+		2BF10A3E293481B8002272AB /* SeaLabelledValue.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeaLabelledValue.m; sourceTree = "<group>"; };
+		2BF10A412937171B002272AB /* Seashore.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Seashore.xcconfig; path = ../Seashore.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2B1467762925EE7400A7E748 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2B146790292A878300A7E748 /* XCTest.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2B670B4927D52796003BA6AE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2BC3CE3D293C02C8005394FE /* SeaLibrary.framework in Frameworks */,
 				2BB5E045281367EF00EC3014 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -84,11 +163,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2B14677A2925EE7400A7E748 /* SeaComponentsTestApp */ = {
+			isa = PBXGroup;
+			children = (
+				2B14677B2925EE7400A7E748 /* AppDelegate.h */,
+				2B14677C2925EE7400A7E748 /* AppDelegate.m */,
+				2B14677E2925EE7500A7E748 /* Assets.xcassets */,
+				2B1467802925EE7500A7E748 /* MainMenu.xib */,
+				2B1467832925EE7500A7E748 /* main.m */,
+				2B1467852925EE7500A7E748 /* SeaComponentsTestApp.entitlements */,
+				2B14678A2925F02C00A7E748 /* TestAppView.h */,
+				2B14678B2925F02C00A7E748 /* TestAppView.m */,
+			);
+			path = SeaComponentsTestApp;
+			sourceTree = "<group>";
+		};
 		2B670B4227D52796003BA6AE = {
 			isa = PBXGroup;
 			children = (
+				2BF10A412937171B002272AB /* Seashore.xcconfig */,
 				2B78489D288787C3000B4839 /* Info.plist */,
 				2B670B8127D52C2E003BA6AE /* Source */,
+				2B14677A2925EE7400A7E748 /* SeaComponentsTestApp */,
 				2B670B4D27D52796003BA6AE /* Products */,
 				2BB5E043281367EF00EC3014 /* Frameworks */,
 			);
@@ -98,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				2B670B4C27D52796003BA6AE /* SeaComponents.framework */,
+				2B1467792925EE7400A7E748 /* SeaComponentsTestApp.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -133,6 +230,21 @@
 				2B077FA128831A160083371F /* CurveView.m */,
 				2B077FB3288345B60083371F /* CurveWithHistogram.h */,
 				2B077FB4288345B60083371F /* CurveWithHistogram.m */,
+				2B146793292B07E100A7E748 /* SeaPopup.h */,
+				2B146794292B07E100A7E748 /* SeaPopup.m */,
+				2B14679A292C5F4700A7E748 /* SeaCheckbox.h */,
+				2B14679B292C5F4700A7E748 /* SeaCheckbox.m */,
+				2B14679F292C982300A7E748 /* SeaButton.h */,
+				2B1467A0292C982300A7E748 /* SeaButton.m */,
+				2B1467A62931254100A7E748 /* HorizontalView.h */,
+				2B1467A72931254100A7E748 /* HorizontalView.m */,
+				2BF10A3D293481B8002272AB /* SeaLabelledValue.h */,
+				2BF10A3E293481B8002272AB /* SeaLabelledValue.m */,
+				2B641989293998C8004CC5E7 /* SeaSizes.h */,
+				2B64198A293998C8004CC5E7 /* SeaSizes.m */,
+				2B64198D293B084C004CC5E7 /* Configure.h */,
+				2B64198E293BF06C004CC5E7 /* SeaTemplateButton.h */,
+				2B64198F293BF06C004CC5E7 /* SeaTemplateButton.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -140,6 +252,8 @@
 		2BB5E043281367EF00EC3014 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2B641992293BF1C2004CC5E7 /* SeaLibrary.framework */,
+				2B1467612925E9E800A7E748 /* XCTest.framework */,
 				2BB5E044281367EF00EC3014 /* Cocoa.framework */,
 			);
 			name = Frameworks;
@@ -157,11 +271,18 @@
 				2B670B7F27D52BE8003BA6AE /* SeaSlider.h in Headers */,
 				2B670B9127D5DD8C003BA6AE /* SizeableView.h in Headers */,
 				2B670B9927D96FE2003BA6AE /* SeaColorWell.h in Headers */,
+				2BF10A3F293481B8002272AB /* SeaLabelledValue.h in Headers */,
+				2B641990293BF06C004CC5E7 /* SeaTemplateButton.h in Headers */,
 				2B670B9527D83E85003BA6AE /* SeaBox.h in Headers */,
+				2B14679C292C5F4700A7E748 /* SeaCheckbox.h in Headers */,
+				2B146796292B0F8A00A7E748 /* SeaPopup.h in Headers */,
+				2B1467A1292C982300A7E748 /* SeaButton.h in Headers */,
 				2B670B8627D546D1003BA6AE /* Label.h in Headers */,
 				2B670BC127DC21DC003BA6AE /* SeaFileChooser.h in Headers */,
+				2B64198B293998C8004CC5E7 /* SeaSizes.h in Headers */,
 				2B3DFBAC2873A7B300D39148 /* SeaSeperator.h in Headers */,
 				2B0550C4280C626300A7FFFC /* SeaSplitView.h in Headers */,
+				2B1467AB293126D800A7E748 /* HorizontalView.h in Headers */,
 				2B670B8027D52BE8003BA6AE /* VerticalView.h in Headers */,
 				2B077FA228831A160083371F /* CurveView.h in Headers */,
 				2B3DFBB3287E672D00D39148 /* HistogramView.h in Headers */,
@@ -173,6 +294,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		2B1467782925EE7400A7E748 /* SeaComponentsTestApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2B1467862925EE7500A7E748 /* Build configuration list for PBXNativeTarget "SeaComponentsTestApp" */;
+			buildPhases = (
+				2B1467752925EE7400A7E748 /* Sources */,
+				2B1467762925EE7400A7E748 /* Frameworks */,
+				2B1467772925EE7400A7E748 /* Resources */,
+				2B146792292A878300A7E748 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SeaComponentsTestApp;
+			productName = SeaComponentsTestApp;
+			productReference = 2B1467792925EE7400A7E748 /* SeaComponentsTestApp.app */;
+			productType = "com.apple.product-type.application";
+		};
 		2B670B4B27D52796003BA6AE /* SeaComponents */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2B670B5327D52796003BA6AE /* Build configuration list for PBXNativeTarget "SeaComponents" */;
@@ -200,6 +339,9 @@
 				BuildIndependentTargetsInParallel = 1;
 				LastUpgradeCheck = 1320;
 				TargetAttributes = {
+					2B1467782925EE7400A7E748 = {
+						CreatedOnToolsVersion = 14.1;
+					};
 					2B670B4B27D52796003BA6AE = {
 						CreatedOnToolsVersion = 13.2.1;
 					};
@@ -219,49 +361,238 @@
 			projectRoot = "";
 			targets = (
 				2B670B4B27D52796003BA6AE /* SeaComponents */,
+				2B1467782925EE7400A7E748 /* SeaComponentsTestApp */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		2B1467772925EE7400A7E748 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2B14677F2925EE7500A7E748 /* Assets.xcassets in Resources */,
+				2B1467822925EE7500A7E748 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2B670B4A27D52796003BA6AE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2BF10A422937171B002272AB /* Seashore.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		2B1467752925EE7400A7E748 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2B14678F2925F15500A7E748 /* Label.m in Sources */,
+				2B1467842925EE7500A7E748 /* main.m in Sources */,
+				2B14677D2925EE7400A7E748 /* AppDelegate.m in Sources */,
+				2B1467A3292C982300A7E748 /* SeaButton.m in Sources */,
+				2B14678D2925F0B800A7E748 /* VerticalView.m in Sources */,
+				2B14678C2925F02C00A7E748 /* TestAppView.m in Sources */,
+				2B1467AA2931254100A7E748 /* HorizontalView.m in Sources */,
+				2B14678E2925F0FF00A7E748 /* SeaSlider.m in Sources */,
+				2B14679E292C5F4700A7E748 /* SeaCheckbox.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2B670B4827D52796003BA6AE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				2B670B8327D536D3003BA6AE /* VerticalView.m in Sources */,
 				2B3DFBB4287E672D00D39148 /* HistogramView.m in Sources */,
+				2BF10A40293481B8002272AB /* SeaLabelledValue.m in Sources */,
 				2B670B7E27D52BE8003BA6AE /* BorderView.m in Sources */,
+				2B14679D292C5F4700A7E748 /* SeaCheckbox.m in Sources */,
 				2B670B9A27D96FE2003BA6AE /* SeaColorWell.m in Sources */,
+				2B146797292B0F9000A7E748 /* SeaPopup.m in Sources */,
 				2B0550C5280C626300A7FFFC /* SeaSplitView.m in Sources */,
 				2B670B9227D5DD8C003BA6AE /* SizeableView.m in Sources */,
 				2B670B8727D546D1003BA6AE /* Label.m in Sources */,
+				2B64198C293998C8004CC5E7 /* SeaSizes.m in Sources */,
 				2B670B7D27D52BE8003BA6AE /* SeaSlider.m in Sources */,
 				2B670B9627D83E85003BA6AE /* SeaBox.m in Sources */,
+				2B1467A2292C982300A7E748 /* SeaButton.m in Sources */,
 				2B670BC227DC21DC003BA6AE /* SeaFileChooser.m in Sources */,
 				2B077FA328831A160083371F /* CurveView.m in Sources */,
 				2B077FB6288345B60083371F /* CurveWithHistogram.m in Sources */,
 				2B3DFBAD2873A7B300D39148 /* SeaSeperator.m in Sources */,
+				2B1467AC293126D800A7E748 /* HorizontalView.m in Sources */,
+				2B641991293BF06C004CC5E7 /* SeaTemplateButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXVariantGroup section */
+		2B1467802925EE7500A7E748 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2B1467812925EE7500A7E748 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
+		2B1467872925EE7500A7E748 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = SeaComponentsTestApp/SeaComponentsTestApp.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMainNibFile = MainMenu;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.6;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.SeaComponentsTestApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Debug;
+		};
+		2B1467882925EE7500A7E748 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = SeaComponentsTestApp/SeaComponentsTestApp.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMainNibFile = MainMenu;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.6;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.SeaComponentsTestApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Release;
+		};
 		2B670B5127D52796003BA6AE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2BF10A412937171B002272AB /* Seashore.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -272,6 +603,7 @@
 		};
 		2B670B5227D52796003BA6AE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2BF10A412937171B002272AB /* Seashore.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -289,7 +621,9 @@
 				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INSTALL_PATH = "@executable_path/../Frameworks";
+				MACH_O_TYPE = mh_dylib;
 				MARKETING_VERSION = 3.8;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.SeaComponents;
 				PRODUCT_NAME = SeaComponents;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -306,6 +640,7 @@
 				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INSTALL_PATH = "@executable_path/../Frameworks";
+				MACH_O_TYPE = mh_dylib;
 				MARKETING_VERSION = 3.8;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.SeaComponents;
 				PRODUCT_NAME = SeaComponents;
@@ -317,6 +652,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2B1467862925EE7500A7E748 /* Build configuration list for PBXNativeTarget "SeaComponentsTestApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2B1467872925EE7500A7E748 /* Debug */,
+				2B1467882925EE7500A7E748 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		2B670B4627D52796003BA6AE /* Build configuration list for PBXProject "SeaComponents" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

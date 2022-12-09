@@ -28,6 +28,8 @@
 		2B0DF77827FFEF0F002E8B7D /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B0DF77727FFEF0F002E8B7D /* Accelerate.framework */; };
 		2B0DF77A27FFEF15002E8B7D /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B0DF77927FFEF15002E8B7D /* CoreImage.framework */; };
 		2B0DF77C28020B95002E8B7D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B0DF77B28020B95002E8B7D /* QuartzCore.framework */; };
+		2B1467892925EF2100A7E748 /* ConnectedComponents.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B84485A28BEE74300C068D1 /* ConnectedComponents.m */; };
+		2B146799292B4A9E00A7E748 /* AspectRatioPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B146798292B4A9D00A7E748 /* AspectRatioPanel.xib */; };
 		2B1F70EB21DD472B00D6F371 /* SeaColorProfiles.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1F70EA21DD472B00D6F371 /* SeaColorProfiles.m */; };
 		2B205EB5278390C100563706 /* checkerboard-dark.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B205EB4278390C100563706 /* checkerboard-dark.png */; };
 		2B205EB82786A7DA00563706 /* SeaExtrasView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B205EB72786A7DA00563706 /* SeaExtrasView.m */; };
@@ -35,13 +37,10 @@
 		2B2D8CA421F7C822004527F2 /* grabberTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2D8CA321F7C822004527F2 /* grabberTemplate.png */; };
 		2B2D8CC721F996A5004527F2 /* Alpha2Gray.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B2D8CC521F995BB004527F2 /* Alpha2Gray.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2B2D8CCA21F9A870004527F2 /* ZoomTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B2D8CC921F9A870004527F2 /* ZoomTool.m */; };
-		2B2DEC35286F35F40017BBA8 /* SeaComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2DEC32286F35F40017BBA8 /* SeaComponents.framework */; };
-		2B2DEC36286F35F40017BBA8 /* SeaComponents.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2DEC32286F35F40017BBA8 /* SeaComponents.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2B2DEC3C286F35FE0017BBA8 /* Plugins.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2DEC3B286F35FE0017BBA8 /* Plugins.framework */; };
 		2B2DEC3D286F35FE0017BBA8 /* Plugins.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2DEC3B286F35FE0017BBA8 /* Plugins.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2B2DEC3F286F36040017BBA8 /* GIMPCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2DEC3E286F36040017BBA8 /* GIMPCore.framework */; };
 		2B2DEC40286F36040017BBA8 /* GIMPCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2DEC3E286F36040017BBA8 /* GIMPCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2B2EFAB228BF2BD8009B225D /* SeaLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2EFA8428BF1B46009B225D /* SeaLibrary.framework */; };
 		2B399C23279DE147000D0C58 /* SeaWhiteboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B399C21279DE147000D0C58 /* SeaWhiteboard.m */; };
 		2B399C31279DE15D000D0C58 /* CocoaContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B399C27279DE15C000D0C58 /* CocoaContent.m */; };
 		2B399C32279DE15D000D0C58 /* SVGContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B399C28279DE15C000D0C58 /* SVGContent.m */; };
@@ -76,6 +75,11 @@
 		2B8BD34721EA565C00FD9AC5 /* SeaPrintOptionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8BD34521EA565C00FD9AC5 /* SeaPrintOptionsController.m */; };
 		2B8BD59121ED16AB00FD9AC5 /* BrushExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8BD59021ED16AB00FD9AC5 /* BrushExporter.m */; };
 		2BB338C423C1119600647008 /* toFitTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BB338C323C1119600647008 /* toFitTemplate.png */; };
+		2BC3CE3E293C079E005394FE /* SeaLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2EFA8428BF1B46009B225D /* SeaLibrary.framework */; };
+		2BC3CE3F293C079E005394FE /* SeaLibrary.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2EFA8428BF1B46009B225D /* SeaLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BC3CE40293C07A1005394FE /* SeaComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2DEC32286F35F40017BBA8 /* SeaComponents.framework */; };
+		2BC3CE41293C07A1005394FE /* SeaComponents.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2DEC32286F35F40017BBA8 /* SeaComponents.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BC3CE6A293C47BA005394FE /* star.fill@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BC3CE69293C47BA005394FE /* star.fill@2x.png */; };
 		2BCD7A14286281F7007EB89B /* Support Seashore.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2BCD7A12286281F7007EB89B /* Support Seashore.rtf */; };
 		2BCD7A18286294E2007EB89B /* SeaWhatsNew.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BCD7A17286294E2007EB89B /* SeaWhatsNew.m */; };
 		2BCD7A1B2862982D007EB89B /* What's New and Tips.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2BCD7A192862982D007EB89B /* What's New and Tips.rtf */; };
@@ -419,10 +423,11 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				2BC3CE41293C07A1005394FE /* SeaComponents.framework in Embed Frameworks */,
 				2B2DEC40286F36040017BBA8 /* GIMPCore.framework in Embed Frameworks */,
 				2B2DEC3D286F35FE0017BBA8 /* Plugins.framework in Embed Frameworks */,
+				2BC3CE3F293C079E005394FE /* SeaLibrary.framework in Embed Frameworks */,
 				2B78488E28877C9B000B4839 /* PocketSVG.framework in Embed Frameworks */,
-				2B2DEC36286F35F40017BBA8 /* SeaComponents.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -535,6 +540,7 @@
 		2B0DF77727FFEF0F002E8B7D /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/Accelerate.framework; sourceTree = DEVELOPER_DIR; };
 		2B0DF77927FFEF15002E8B7D /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/CoreImage.framework; sourceTree = DEVELOPER_DIR; };
 		2B0DF77B28020B95002E8B7D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
+		2B146798292B4A9D00A7E748 /* AspectRatioPanel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AspectRatioPanel.xib; sourceTree = "<group>"; };
 		2B1F70E921DD471000D6F371 /* SeaColorProfiles.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaColorProfiles.h; sourceTree = "<group>"; };
 		2B1F70EA21DD472B00D6F371 /* SeaColorProfiles.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeaColorProfiles.m; sourceTree = "<group>"; };
 		2B205EB4278390C100563706 /* checkerboard-dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkerboard-dark.png"; sourceTree = "<group>"; };
@@ -605,6 +611,7 @@
 		2B8BD58F21ED169B00FD9AC5 /* BrushExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrushExporter.h; sourceTree = "<group>"; };
 		2B8BD59021ED16AB00FD9AC5 /* BrushExporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrushExporter.m; sourceTree = "<group>"; };
 		2BB338C323C1119600647008 /* toFitTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toFitTemplate.png; sourceTree = "<group>"; };
+		2BC3CE69293C47BA005394FE /* star.fill@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star.fill@2x.png"; sourceTree = "<group>"; };
 		2BCD7A13286281F7007EB89B /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = "English.lproj/Support Seashore.rtf"; sourceTree = "<group>"; };
 		2BCD7A16286294E2007EB89B /* SeaWhatsNew.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaWhatsNew.h; sourceTree = "<group>"; };
 		2BCD7A17286294E2007EB89B /* SeaWhatsNew.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeaWhatsNew.m; sourceTree = "<group>"; };
@@ -1047,10 +1054,10 @@
 				2B2DEC3C286F35FE0017BBA8 /* Plugins.framework in Frameworks */,
 				2BCF02A328FA0F3300733144 /* AppKit.framework in Frameworks */,
 				2B78488D28877C9B000B4839 /* PocketSVG.framework in Frameworks */,
-				2B2EFAB228BF2BD8009B225D /* SeaLibrary.framework in Frameworks */,
 				2BCF02A128FA0F2500733144 /* CoreFoundation.framework in Frameworks */,
 				2BF19EE328613FED00C35FBE /* Security.framework in Frameworks */,
 				2B2DEC3F286F36040017BBA8 /* GIMPCore.framework in Frameworks */,
+				2BC3CE40293C07A1005394FE /* SeaComponents.framework in Frameworks */,
 				2BF19EDE2860FBFE00C35FBE /* StoreKit.framework in Frameworks */,
 				2B0DF77C28020B95002E8B7D /* QuartzCore.framework in Frameworks */,
 				A84E106408E7A4FB0084BCB7 /* IOKit.framework in Frameworks */,
@@ -1058,8 +1065,8 @@
 				A8BF652708E6FEAB006E9BFC /* Carbon.framework in Frameworks */,
 				A8EDF14C078959C80022BB31 /* Cocoa.framework in Frameworks */,
 				2B0DF77627FFEF08002E8B7D /* CoreGraphics.framework in Frameworks */,
-				2B2DEC35286F35F40017BBA8 /* SeaComponents.framework in Frameworks */,
 				2B0DF77A27FFEF15002E8B7D /* CoreImage.framework in Frameworks */,
+				2BC3CE3E293C079E005394FE /* SeaLibrary.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1174,6 +1181,7 @@
 		2A37F4B8FDCFA73011CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2B146798292B4A9D00A7E748 /* AspectRatioPanel.xib */,
 				2B80E9D32435689B0046979F /* PrintPanelAccessory.xib */,
 				2B80E9CB243567FB0046979F /* CocoaContent.xib */,
 				2B80E9CD243567FB0046979F /* MainMenu.xib */,
@@ -1784,6 +1792,7 @@
 				A81A23E504C2A86B00A80207 /* next.png */,
 				A86C61F707C834EF00ABCC82 /* help-bigTemplate.png */,
 				A8BDA2540576105400A80207 /* selection.png */,
+				2BC3CE69293C47BA005394FE /* star.fill@2x.png */,
 				A8CAF01D0815E55300A6D5A6 /* vMarkerTemplate.png */,
 				A8CAF0250815E56000A6D5A6 /* hMarkerTemplate.png */,
 				A89C5136086E7F8E0032AEBE /* vStatMarkerTemplate.png */,
@@ -1985,6 +1994,7 @@
 				A8EDF0CD078959C80022BB31 /* bucket-cursor.png in Resources */,
 				2BCD7A14286281F7007EB89B /* Support Seashore.rtf in Resources */,
 				A8EDF0D0078959C80022BB31 /* brushes in Resources */,
+				2BC3CE6A293C47BA005394FE /* star.fill@2x.png in Resources */,
 				A8EDF0D1078959C80022BB31 /* textures in Resources */,
 				2BED227C21F3FBF3005B496C /* eraserTemplate.png in Resources */,
 				A8EDF0D2078959C80022BB31 /* eyedrop-cursor.png in Resources */,
@@ -2022,6 +2032,7 @@
 				2B80E9D42435689B0046979F /* PrintPanelAccessory.xib in Resources */,
 				A89C5139086E7F8E0032AEBE /* hStatMarkerTemplate.png in Resources */,
 				A80EB8A6086F05E300369324 /* JP2 Icon.icns in Resources */,
+				2B146799292B4A9E00A7E748 /* AspectRatioPanel.xib in Resources */,
 				2BB338C423C1119600647008 /* toFitTemplate.png in Resources */,
 				A81EC6B0094A6C5C00F7D365 /* GIF Icon.icns in Resources */,
 				2BED226A21F3FB40005B496C /* moveTemplate.png in Resources */,
@@ -2102,6 +2113,7 @@
 				2BFC6C352778E06B00F707D9 /* SeashoreTests.m in Sources */,
 				2BFC6C3D2778E69000F707D9 /* StandardMerge.m in Sources */,
 				2B891225289B3AEB00838898 /* NSBezierPath_Extensions.m in Sources */,
+				2B1467892925EF2100A7E748 /* ConnectedComponents.m in Sources */,
 				2BFC6C3E2778E6AB00F707D9 /* ColorConversion.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2415,7 +2427,6 @@
 				CODE_SIGN_ENTITLEMENTS = Seashore.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2022102501;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2430,7 +2441,6 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				MARKETING_VERSION = 3.10;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore;
 				PRODUCT_NAME = Seashore;
@@ -2500,7 +2510,6 @@
 				CODE_SIGN_ENTITLEMENTS = Seashore.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2022102501;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2515,7 +2524,6 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				MARKETING_VERSION = 3.10;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore;
 				PRODUCT_NAME = Seashore;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2576,7 +2584,7 @@
 				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.eolcoder.SeashoreTests;
+				PRODUCT_BUNDLE_IDENTIFIER = spp.seashore.SeashoreTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -2617,7 +2625,7 @@
 				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.eolcoder.SeashoreTests;
+				PRODUCT_BUNDLE_IDENTIFIER = spp.seashore.SeashoreTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = NO;

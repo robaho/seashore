@@ -14,9 +14,21 @@
 
 @implementation CropOptions
 
-- (void)awakeFromNib
-{	
-	[aspectRatio awakeWithMaster:self andString:@"crop"];
+- (id)init:(id)document
+{
+    self = [super init:document];
+
+    [super clearModifierMenu];
+    [super addModifierMenuItem:@"1:1 aspect ratio (Shift)" tag:2];
+    [super addModifierMenuItem:@"Force new selection (Control)" tag:3];
+
+    aspectRatio =  [[AspectRatio alloc] init:document master:self andString:@"crop"];
+    [self addSubview:[aspectRatio view]];
+
+    [self addSubview:[SeaButton compactButton:@"Crop Image" target:self action:@selector(cropImage:)]];
+    [self addSubview:[SeaButton compactButton:@"Crop Layer" target:self action:@selector(cropLayer:)]];
+
+    return self;
 }
 
 - (NSSize)ratio

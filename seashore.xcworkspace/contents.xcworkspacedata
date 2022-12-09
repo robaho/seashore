@@ -187,6 +187,15 @@
          location = "group:CoreImage Plug-ins/CIKaleidoscope/CIKaleidoscope.xcodeproj">
       </FileRef>
       <FileRef
+         location = "group:CoreImage Plug-ins/CIKeystoneHorizontal/CIKeystoneHorizontal.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIKeystoneVertical/CIKeystoneVertical.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIKeystoneCombined/CIKeystoneCombined.xcodeproj">
+      </FileRef>
+      <FileRef
          location = "group:CoreImage Plug-ins/CILenticularHalo/CILenticularHalo.xcodeproj">
       </FileRef>
       <FileRef

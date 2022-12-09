@@ -189,14 +189,11 @@ CGImageRef getTintedCG(CGImageRef src,NSColor *tint){
 }
 
 NSImage *getTinted(NSImage *src,NSColor *tint){
-    NSImage *copy = [src copy];
-    NSRect imageRect = NSMakeRect(0,0,[copy size].width,[copy size].height);
-    [copy lockFocus];
-    [[NSGraphicsContext currentContext] setCompositingOperation:NSCompositeSourceAtop];
-    [tint set];
-    [NSBezierPath fillRect:imageRect];
-    [copy unlockFocus];
-    return copy;
+    NSRect r = NSMakeRect(0,0,src.size.width,src.size.height);
+    CGImageRef img = getTintedCG([src CGImageForProposedRect:&r context:NULL hints:NULL], tint);
+    NSImage *tinted = [[NSImage alloc] initWithCGImage:img size:[src size]];
+    CGImageRelease(img);
+    return tinted;
 }
 
 CGImageRef CGImageDeepCopy(CGImageRef image) {

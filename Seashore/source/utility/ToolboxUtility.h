@@ -24,7 +24,7 @@
 	NSColor *foreground, *background;
 	
 	// The colorSelectView associated with this utility
-	id colorSelectView;
+	IBOutlet id colorSelectView;
 	
 	// The toolbox
 	IBOutlet id toolbox;

@@ -18,13 +18,16 @@
 #import "RecentsItem.h"
 
 @interface RememberedBase : NSObject
-{
-}
+-(NSColor*)foreground;
+-(NSColor*)background;
+/** returns values 0 - 1 */
+-(float)opacity;
 @end
+
 @implementation RememberedBase
 {
     @public NSColor *foreground,*background;
-    @public int opacity;
+    @public float opacity;
     @public __weak id document;
 }
 -(NSColor*)foreground
@@ -35,9 +38,13 @@
 {
     return background;
 }
+- (float)opacity
+{
+    return opacity;
+}
 @end
 
-@interface RememberedBrush : RememberedBase
+@interface RememberedBrush : RememberedBase <Memory>
 @end
 
 @implementation RememberedBrush
@@ -58,17 +65,21 @@
 {
     BrushUtility *brushes = [document brushUtility];
     ToolboxUtility *toolbox = [document toolboxUtility];
+    OptionsUtility *options = [document optionsUtility];
 
     [brushes setActiveBrush:brush];
     [brushes setSpacing:spacing];
     [toolbox setForeground:foreground];
     [toolbox setBackground:background];
-    
+
     [toolbox changeToolTo:kBrushTool];
+    AbstractPaintOptions *opts = [options getOptions:kBrushTool];
+    [opts setOpacityFloat:opacity];
+
 }
 @end
 
-@interface RememberedPencil : RememberedBase
+@interface RememberedPencil : RememberedBase <Memory>
 @end
 
 @implementation RememberedPencil
@@ -102,14 +113,15 @@
     
     [toolbox setForeground:foreground];
     [toolbox setBackground:background];
-    
+
     [toolbox changeToolTo:kPencilTool];
     PencilOptions *opts = [options getOptions:kPencilTool];
     [opts setPencilSize:pencilSize];
+    [opts setOpacityFloat:opacity];
 }
 @end
 
-@interface RememberedBucket : RememberedBase
+@interface RememberedBucket : RememberedBase <Memory>
 @end
 
 @implementation RememberedBucket
@@ -131,11 +143,14 @@
 -(void)restore
 {
     ToolboxUtility *toolbox = [document toolboxUtility];
+    OptionsUtility *options = [document optionsUtility];
 
     [toolbox setForeground:foreground];
     [toolbox setBackground:background];
-    
+
     [toolbox changeToolTo:kBucketTool];
+    AbstractPaintOptions *opts = [options getOptions:kBucketTool];
+    [opts setOpacityFloat:opacity];
 }
 @end
 
@@ -144,7 +159,7 @@
 
 - (id)init
 {
-    memories = [[NSMutableArray alloc] init];
+    memories = [[NSMutableArray<Memory> alloc] init];
     return self;
 }
 
@@ -209,7 +224,7 @@
     ToolboxUtility *toolbox = [document toolboxUtility];
     SeaBrush *brush = [brushes activeBrush];
     int spacing = [brushes spacing];
-    int opacity = [options opacity];
+    float opacity = [options opacityFloat];
     NSColor *foreground = [toolbox foreground];
     NSColor *background = [toolbox background];
 
@@ -251,7 +266,7 @@
     
     ToolboxUtility *toolbox = [document toolboxUtility];
     int pencilSize = [options pencilSize];
-    int opacity = [options opacity];
+    float opacity = [options opacityFloat];
     NSColor *foreground = [toolbox foreground];
     NSColor *background = [toolbox background];
     
@@ -292,7 +307,7 @@
     
     ToolboxUtility *toolbox = [document toolboxUtility];
     
-    int opacity = [options opacity];
+    float opacity = [options opacityFloat];
     NSColor *foreground = [toolbox foreground];
     NSColor *background = [toolbox background];
     
@@ -326,8 +341,6 @@
     
     [self update];
 }
-
-
 
 - (int) memoryCount
 {

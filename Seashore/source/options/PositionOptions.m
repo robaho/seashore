@@ -6,29 +6,52 @@
 #import "SeaDocument.h"
 #import "SeaSelection.h"
 #import "AspectRatio.h"
+#import "PositionTool.h"
 
 @implementation PositionOptions
 
-- (void)awakeFromNib
+- (id)init:(id)document
 {
+    self = [super init:document];
+    [modifierPopup setHidden:TRUE];
+
+    maintainAspectCheckbox = [SeaCheckbox checkboxWithTitle:@"Maintain aspect ratio" Listener:NULL];
+    [self addSubview:maintainAspectCheckbox];
+    scaleAndRotateLinkedCheckbox = [SeaCheckbox checkboxWithTitle:@"Scale & rotate linked layers" Listener:self];
+    [self addSubview:scaleAndRotateLinkedCheckbox];
+    autoApplyMoveOnlyCheckbox = [SeaCheckbox checkboxWithTitle:@"Auto apply transform" Listener:NULL];
+    [self addSubview:autoApplyMoveOnlyCheckbox];
+    [self addSubview:[SeaSeperator withTitle:@""]];
+
+    PositionTool *tool = [[document tools] getTool:kPositionTool];
+
+    [self addSubview:[SeaButton compactButton:@"Scale/Position Layer to Fit" target:tool action:@selector(scaleToFit:)]];
+    [self addSubview:[SeaButton compactButton:@"Zoom to Fit Layer Boundary" target:tool action:@selector(zoomToFitBoundary:)]];
+
+    [self addSubview:[SeaSeperator withTitle:@""]];
+
+    [self addSubview:[SeaButton compactButton:@"Reset Transform" target:tool action:@selector(reset:)]];
+    [self addSubview:[SeaButton compactButton:@"Apply Transform" target:tool action:@selector(apply:)]];
+
+    return self;
 }
 
 - (BOOL)maintainAspectRatio
 {
-    return [maintainAspectCheckbox state] == NSOnState;
+    return [maintainAspectCheckbox isChecked];
 }
 - (BOOL)autoApply
 {
-    return [autoApplyMoveOnlyCheckbox state] == NSOnState;
+    return [autoApplyMoveOnlyCheckbox isChecked];
 }
 
-- (IBAction)scaleAndRotateChanged:(id)sender {
+- (void)componentChanged:(id)sender {
     [[document docView] setNeedsDisplay:TRUE];
 }
 
 - (BOOL)scaleAndRotateLinked
 {
-    return [scaleAndRotateLinkedCheckbox state] == NSOnState;
+    return [scaleAndRotateLinkedCheckbox isChecked];
 }
 
 - (void)shutdown

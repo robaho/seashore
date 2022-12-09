@@ -1,5 +1,6 @@
 #import "Seashore.h"
 #import "AbstractScaleOptions.h"
+#import "AspectRatio.h"
 
 /*!
 	@class		CropOptions
@@ -11,17 +12,9 @@
 */
 
 @interface CropOptions : AbstractScaleOptions {
-
 	// The AspectRatio instance linked to this options panel
-	IBOutlet id aspectRatio;
-	
+	AspectRatio *aspectRatio;
 }
-
-/*!
-	@method		awakeFromNib
-	@discussion	Loads previous options from preferences.
-*/
-- (void)awakeFromNib;
 
 /*!
 	@method		cropImage:

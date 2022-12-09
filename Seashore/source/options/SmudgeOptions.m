@@ -6,40 +6,42 @@
 
 @implementation SmudgeOptions
 
-- (void)awakeFromNib
+- (id)init:(id)document
 {
-	int value;
-	
+    self = [super init:document];
+
+    [modifierPopup setHidden:TRUE];
+
+    [texturesButton setHidden:true];
+    [fadeSlider setHidden:true];
+    [scalingCheckbox setHidden:true];
+    [opacitySlider setHidden:true];
+
+    rateSlider = [SeaSlider compactSliderWithTitle:@"Rate" Min:0 Max:100 Listener:NULL];
+    [self addSubview:rateSlider];
+
+    int value;
 	if ([gUserDefaults objectForKey:@"smudge rate"] == NULL) {
 		value = 50;
 	}
 	else {
 		value = [gUserDefaults integerForKey:@"smudge rate"];
-		if (value < 0 || value > 100)
-			value = 50;
 	}
 	[rateSlider setIntValue:value];
-	[rateLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"rate", @"Rate: %d%%"), value]];
 
     if ([gUserDefaults objectForKey:@"brush pressure"] == NULL) {
-        [pressureCheckbox setState:NSOffState];
         [pressurePopup selectItemAtIndex:kLinear];
-        [pressurePopup setEnabled:NO];
     }
     else {
         int style = [gUserDefaults integerForKey:@"smudge pressure style"];
         if (style < kQuadratic || style > kSquareRoot)
             style = kLinear;
         BOOL pressureOn = [gUserDefaults boolForKey:@"smudge pressure"];
-        [pressureCheckbox setState:pressureOn];
         [pressurePopup selectItemAtIndex:style];
-        [pressurePopup setEnabled:pressureOn];
+        [pressurePopup setChecked:pressureOn];
     }
-}
 
-- (IBAction)rateChanged:(id)sender
-{		
-	[rateLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"rate", @"Rate: %d%%"), [rateSlider intValue]]];
+    return self;
 }
 
 - (int)rate
@@ -50,7 +52,7 @@
 - (void)shutdown
 {
 	[gUserDefaults setInteger:[rateSlider intValue] forKey:@"smudge rate"];
-    [gUserDefaults setObject:[pressureCheckbox state] ? @"YES" : @"NO" forKey:@"smudge pressure"];
+    [gUserDefaults setObject:[pressurePopup isChecked] ? @"YES" : @"NO" forKey:@"smudge pressure"];
     [gUserDefaults setInteger:[pressurePopup indexOfSelectedItem] forKey:@"smudge pressure style"];
 }
 

@@ -14,32 +14,37 @@
 
 @implementation RectSelectOptions
 
-- (void)awakeFromNib
-{	
-	int value;
-	
+- (id)init:(id)document
+{
+    self = [super init:document];
+
+    radiusSlider = [SeaSlider sliderWithCheck:@"Corner Radius" Min:0 Max:80 Listener:NULL];
+    [self addSubview:radiusSlider];
+
+    aspectRatio =  [[AspectRatio alloc] init:document master:self andString:[self preferenceName]];
+    [self addSubview:[aspectRatio view]];
+
 	if ([gUserDefaults objectForKey:@"rect selection radius enabled"] == NULL)
-		[radiusCheckbox setState:NSOffState];
+		[radiusSlider setChecked:NSOffState];
 	else
-		[radiusCheckbox setState:[gUserDefaults boolForKey:@"rect selection radius enabled"]];
-	[radiusSlider setEnabled:[radiusCheckbox state]];
-	
-	if ([gUserDefaults objectForKey:@"rect selection radius"] == NULL) {
-		value = 8;
-	}
-	else {
-		value = [gUserDefaults integerForKey:@"rect selection radius"];
-		if (value < [radiusSlider minValue] || value > [radiusSlider maxValue])
-			value = 8;
-	}
-	[radiusSlider setIntValue:value];
-	[radiusCheckbox setTitle:[NSString stringWithFormat:LOCALSTR(@"corner radius", @"Corner radius: %d"), value]];
-	[aspectRatio awakeWithMaster:self andString:@"rect"];
+		[radiusSlider setChecked:[gUserDefaults boolForKey:@"rect selection radius enabled"]];
+
+    [radiusSlider setIntValue:8];
+	if ([gUserDefaults objectForKey:@"rect selection radius"] != NULL) {
+        int value = [gUserDefaults integerForKey:@"rect selection radius"];
+        [radiusSlider setIntValue:value];
+    }
+
+    return self;
+}
+
+- (NSString*)preferenceName {
+    return @"rect";
 }
 
 - (int)radius
 {
-	if ([radiusCheckbox state])
+	if ([radiusSlider isChecked])
 		return [radiusSlider intValue];
 	else
 		return 0;
@@ -57,14 +62,12 @@
 
 - (IBAction)update:(id)sender;
 {
-	[radiusCheckbox setTitle:[NSString stringWithFormat:LOCALSTR(@"corner radius", @"Corner radius: %d"), [radiusSlider intValue]]];
-	[radiusSlider setEnabled:[radiusCheckbox state]];
 }
 
 - (void)shutdown
 {
 	[gUserDefaults setInteger:[radiusSlider intValue] forKey:@"rect selection radius"];
-	[gUserDefaults setObject:[radiusCheckbox state] ? @"YES" : @"NO" forKey:@"rect selection radius enabled"];
+	[gUserDefaults setObject:[radiusSlider isChecked] ? @"YES" : @"NO" forKey:@"rect selection radius enabled"];
 	[aspectRatio shutdown];
 }
 

@@ -5,8 +5,8 @@
 //  Created by robert engels on 12/26/21.
 //
 
+#import "ConnectedComponents.h"
 #import "StandardMerge.h"
-#import <SeaLibrary/ConnectedComponents.h>
 #import "NSBezierPath_Extensions.h"
 
 #import <XCTest/XCTest.h>

@@ -1,4 +1,5 @@
 #import "Seashore.h"
+#import <SeaComponents/SeaComponents.h>
 
 /*!
 	@enum		k...AspectType
@@ -40,35 +41,30 @@ enum {
 	// The controlling object's identifier (used for preferences)
 	id prefString;
 
-	// When checked indicates the cropping aspect ratio should be restricted
-	IBOutlet id ratioCheckbox;
-	
-	// A popup menu indicating the aspect ratio
-	IBOutlet id ratioPopup;
-	
-	// A panel for selecting the custom aspect ratio
-	IBOutlet NSPanel *panel;
-	
-	// Text boxes for custom ratio values
+    SeaPopup *ratioPopup;
+
+    // Text boxes for custom ratio values
     IBOutlet id xRatioValue;
     IBOutlet id yRatioValue;
-	
-	// Various items associated with the aspect type
-	IBOutlet id toLabel;
-	IBOutlet id aspectTypePopup;
-	
-	// Custom ratio values
-	float ratioX, ratioY;
-	
-	// Forgotten values
-	float forgotX, forgotY;
-	
-	// The type of aspect ratio
-	int aspectType;
-	
+
+    // Various items associated with the aspect type
+    IBOutlet id toLabel;
+    IBOutlet id aspectTypePopup;
+
+	// A panel for selecting the custom aspect ratio
+	IBOutlet NSPanel *panel;
+
+    // Custom ratio values
+    float ratioX, ratioY;
+
+    // Forgotten values
+    float forgotX, forgotY;
+
+    // The type of aspect ratio
+    int aspectType;
 }
 
-- (void)awakeWithMaster:(id)imaster andString:(id)iprefString;
+- (id)init:(id)document master:(id)master andString:(id)iprefString;
 
 /*!
 	@method		setCustomItem:
@@ -124,5 +120,7 @@ enum {
 	@discussion	Saves current options upon shutdown.
 */
 - (void)shutdown;
+
+- (NSView*)view;
 
 @end

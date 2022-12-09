@@ -6,23 +6,30 @@
 
 @implementation BucketOptions
 
-- (void)awakeFromNib
+- (id)init:(id)document
 {
-	int value;
-	
+    self = [super init:document];
+
+    [super clearModifierMenu];
+    [super addModifierMenuItem:@"Flood entire selection (Option)" tag:1];
+    [super addModifierMenuItem:@"Preview flood (Shift)" tag:2];
+
+    [brushesButton setHidden:true];
+
+    toleranceSlider = [SeaSlider compactSliderWithTitle:@"Tolerance" Min:0 Max:255 Listener:NULL];
+    [self addSubview:toleranceSlider];
+
+    int value;
 	if ([gUserDefaults objectForKey:@"bucket tolerance"] == NULL) {
-        [self setTolerance:15];
+        value = 15;
 	}
 	else {
 		value = [gUserDefaults integerForKey:@"bucket tolerance"];
-        [self setTolerance:value];
 	}
-    [super loadOpacity:@"bucket opacity"];
-}
+    [toleranceSlider setIntValue:value];
 
-- (IBAction)toleranceSliderChanged:(id)sender
-{
-    [toleranceLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"tolerance", @"Tolerance: %d"), [toleranceSlider intValue]]];
+    [super loadOpacity:@"bucket opacity"];
+    return self;
 }
 
 - (int)tolerance
@@ -30,18 +37,10 @@
 	return [toleranceSlider intValue];
 }
 
-- (void)setTolerance:(int)value
-{
-    if (value < 0 || value > 255)
-        value = 0;
-    [toleranceSlider setIntValue:value];
-    [self toleranceSliderChanged:toleranceSlider];
-}
-
 - (void)shutdown
 {
 	[gUserDefaults setInteger:[toleranceSlider intValue] forKey:@"bucket tolerance"];
-    [gUserDefaults setInteger:[opacitySlider integerValue] forKey:@"bucket opacity"];
+    [gUserDefaults setInteger:[opacitySlider intValue] forKey:@"bucket opacity"];
 }
 
 @end

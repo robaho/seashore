@@ -13,6 +13,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol Memory
+-(NSString*)memoryAsString;
+-(void)drawAt:(NSRect)rect;
+-(NSColor*)foreground;
+-(NSColor*)background;
+-(float)opacity;
+-(void)restore;
+@end
+
 @interface RecentsUtility : NSObject
 {
     // The document that owns the utility
@@ -20,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 
     __weak IBOutlet NSCollectionView *recentsView;
 
-    NSMutableArray *memories;
+    NSMutableArray<Memory> *memories;
 }
 
 

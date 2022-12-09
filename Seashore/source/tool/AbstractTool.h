@@ -17,7 +17,7 @@
 
 	// The document associated with this tool
 	__weak IBOutlet SeaDocument *document;
-	
+
 	// Is the selection being made
 	BOOL intermediate;
 }
@@ -30,22 +30,7 @@
 */
 - (int)toolId;
 
-/*!
-	@method		setOptions:
-	@discussion	Sets the options for this tool.
-	@param		newOptions
-				The options to set.
-*/
-- (void)setOptions:(AbstractOptions*)newOptions;
-
-/*!
- @method        setOptions:
- @discussion    Sets the options for this tool.
- @param        newOptions
- The options to set.
- */
 - (AbstractOptions*)getOptions;
-
 
 /*!
 	@method		acceptsLineDraws

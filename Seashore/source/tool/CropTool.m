@@ -10,6 +10,10 @@
 
 @implementation CropTool
 
+- (void)awakeFromNib {
+    options = [[CropOptions alloc] init:document];
+}
+
 - (int)toolId
 {
 	return kCropTool;
@@ -100,14 +104,10 @@
 {
     return options;
 }
-- (void)setOptions:(AbstractOptions*)newoptions
-{
-    options = (CropOptions*)newoptions;
-}
 
 - (void)updateCursor:(IntPoint)p cursors:(SeaCursors*)cursors
 {
-    return [cursors handleRectCursors:cropRect point:p cursor:[cursors crosspointCursor]];
+    [cursors handleRectCursors:cropRect point:p cursor:[cursors crosspointCursor] ignoresMove:false];
 }
 
 

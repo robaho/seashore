@@ -18,6 +18,7 @@
 #import "PositionTool.h"
 #import "TextTool.h"
 #import "ZoomTool.h"
+#import <SeaComponents/SeaComponents.h>
 
 @implementation InfoUtility
 
@@ -28,7 +29,35 @@
 
 - (void)awakeFromNib
 {
-	// Shown By Default
+    VerticalView *left = [VerticalView view];
+    xValue = [SeaLabelledValue withLabel:@"X"];
+    yValue = [SeaLabelledValue withLabel:@"Y"];
+    widthValue = [SeaLabelledValue withLabel:@"Width"];
+    heightValue = [SeaLabelledValue withLabel:@"Height"];
+    deltaX = [SeaLabelledValue withLabel:@"Delta X"];
+    deltaY = [SeaLabelledValue withLabel:@"Delta Y"];
+
+    [left addSubviews:xValue,yValue,widthValue,heightValue,deltaX,deltaY,nil];
+
+    VerticalView *right = [VerticalView view];
+    redValue = [SeaLabelledValue withLabel:@"Red"];
+    greenValue = [SeaLabelledValue withLabel:@"Green"];
+    blueValue = [SeaLabelledValue withLabel:@"Blue"];
+    alphaValue = [SeaLabelledValue withLabel:@"Alpha"];
+    radiusValue = [SeaLabelledValue withLabel:@"Radius"];
+    colorWell = [SeaLabelledValue withLabel:@"Color"];
+
+    [colorWell setColorValue:[NSColor colorWithCalibratedWhite: 0 alpha:1.0]];
+
+    [right addSubviews:redValue,greenValue,blueValue,alphaValue,radiusValue,colorWell,nil];
+
+    [view setSubviews:[NSArray array]];
+    [view addSubview:left];
+    [view addSubview:right];
+
+    [layersView layout];
+    [layersView setNeedsDisplay:TRUE];
+
     [toggleButton setState:[self visible]];
 }
 
@@ -79,12 +108,12 @@
         [blueValue setStringValue:@""];
         [alphaValue setStringValue:@""];
         [radiusValue setStringValue:@""];
-        [colorWell setColor: [NSColor colorWithCalibratedWhite: 0 alpha:1.0]];
+        [colorWell setColorValue:[NSColor colorWithCalibratedWhite: 0 alpha:1.0]];
         return;
     }
 
     // Set the radius value
-    [radiusValue setIntValue:[[[document tools] getTool:kEyedropTool] sampleSize]];
+    [radiusValue setIntValue:[(EyedropTool*)[[document tools] getTool:kEyedropTool] sampleSize]];
 
     // Update the document information
     xres = [[document contents] xres];
@@ -139,9 +168,9 @@
     [yValue setStringValue:[StringFromPixels(point.y, units, yres) stringByAppendingFormat:@" %@", label]];
 
     // Update the RGBA values
-    color = [[[document tools] getTool:kEyedropTool] getColor];
+    color = [(EyedropTool*)[[document tools] getTool:kEyedropTool] getColor];
     if (color) {
-        [colorWell setColor:color];
+        [colorWell setColorValue:color];
         if ([[color colorSpaceName] isEqualToString:MyRGBSpace]) {
             [redValue setIntValue:[color redComponent] * 255.0];
             [greenValue setIntValue:[color greenComponent] * 255.0];
@@ -169,13 +198,15 @@
         [blueValue setStringValue:@""];
         [alphaValue setStringValue:@""];
 
-        [colorWell setColor: [NSColor colorWithCalibratedWhite: 0 alpha:1.0]];
+        [colorWell setColorValue: [NSColor colorWithCalibratedWhite: 0 alpha:1.0]];
     }
 }
 
 - (void)update
 {
-   if (![self visible])
+    [toggleButton setState:[self visible]];
+    
+    if (![self visible])
         return;
 
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(doUpdate) object:NULL];

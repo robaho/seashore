@@ -6,46 +6,63 @@
 //
 
 #import "VerticalView.h"
+#import "Configure.h"
 
+IB_DESIGNABLE
 @implementation VerticalView
-
-static const int GAP = 5;
 
 - (VerticalView*)initWithFrame:(NSRect)frameRect
 {
     self = [super initWithFrame:frameRect];
+    self.margin = 5;
+    self.gap = 2;
     self.autoresizesSubviews = FALSE;
     self.translatesAutoresizingMaskIntoConstraints = FALSE;
+
     return self;
 }
 
-- (void)setFrame:(NSRect)frame
+- (void)awakeFromNib
 {
-    [super setFrame:frame];
+    self.autoresizesSubviews = FALSE;
+    self.translatesAutoresizingMaskIntoConstraints = FALSE;
+}
+
+- (void)setFrameSize:(NSSize)size
+{
+    [super setFrameSize:size];
+    [self layout];
+}
+
+- (void)setLastFills:(bool)lastFills
+{
+    _lastFills=lastFills;
     [self setNeedsLayout:TRUE];
 }
 
 - (void)layout
 {
-    [super layout];
-    
-    NSRect bounds = self.frame;
+    VLOG(@"verticalview layout on %@",[self identifier]);
 
-    float y = bounds.size.height;
-    int height = 0;
+    NSView *lastVisible;
+    
+    NSRect bounds = NSMakeRect(0,0,self.frame.size.width,self.frame.size.height);
+    if(bounds.size.width<=0 || bounds.size.height<=0) {
+        return;
+    }
+
+    float y = bounds.size.height-_margin;
     for(NSView* v in self.subviews) {
         if(v.isHidden)
             continue;
-        if(v.class==NSTextField.class){
-            NSTextField *tf = (NSTextField*)v;
-            int old = tf.preferredMaxLayoutWidth;
-            if(old!=bounds.size.width) {
-                tf.preferredMaxLayoutWidth = bounds.size.width;
-                [tf invalidateIntrinsicContentSize];
-            }
+        lastVisible = v;
+        int height = 0;
+        id temp = v;
+        if([temp respondsToSelector:@selector(setPreferredMaxLayoutWidth:)]) {
+            [temp setPreferredMaxLayoutWidth:(_preferredMaxLayoutWidth-2)]; // -2 is hack for multiline text bug
+            [temp invalidateIntrinsicContentSize];
         }
         NSSize size = v.intrinsicContentSize;
-        // set width first so proper height can be determined
         if(size.height==NSViewNoInstrinsicMetric){
             height = v.frame.size.height;
         } else {
@@ -53,32 +70,39 @@ static const int GAP = 5;
         }
         y-=height;
         [v setFrame:NSMakeRect(0,y,bounds.size.width,height)];
-        y-=GAP; // add some space between components
+        VLOG(@"vv set frame on %@ to %@",v,NSStringFromRect(v.frame));
+        y-=_gap; // add some space between components
+    }
+    if(_lastFills) {
+        NSRect r = [lastVisible frame];
+        [lastVisible setFrame:NSMakeRect(r.origin.x,_margin,r.size.width,r.size.height+y)];
     }
 }
 
 - (NSSize)intrinsicContentSize
 {
-    int w=0,h=0;
+    int w=NSViewNoInstrinsicMetric,h=NSViewNoInstrinsicMetric;
+    int visible_count=0;
     for(NSView* v in self.subviews){
-        if(!v.isHidden){
-            if(v.class==NSTextField.class){
-                NSTextField *tf = (NSTextField*)v;
-                tf.preferredMaxLayoutWidth = self.frame.size.width;
-                [tf invalidateIntrinsicContentSize];
-            }
-            NSSize size = v.intrinsicContentSize;
-            if(size.width!=NSViewNoInstrinsicMetric){
-                w = MAX(size.width,w);
-            }
-            if(size.height!=NSViewNoInstrinsicMetric){
-                h += size.height;
-            } else {
-                h += v.frame.size.height;
-            }
-            h+=GAP;
+        if(v.isHidden) {
+            continue;
+        }
+        visible_count++;
+        id temp = v;
+        if([temp respondsToSelector:@selector(setPreferredMaxLayoutWidth:)]) {
+            [temp setPreferredMaxLayoutWidth:(_preferredMaxLayoutWidth-2)]; // -2 is hack for multiline text bug
+            [temp invalidateIntrinsicContentSize];
+        }
+        NSSize size = v.intrinsicContentSize;
+        if(size.width!=NSViewNoInstrinsicMetric){
+            w = MAX(size.width,w);
+        }
+        if(size.height!=NSViewNoInstrinsicMetric){
+            h = MAX(0,h)+size.height;
         }
     }
+    h+=(_margin*2);
+    h+=(visible_count*_gap);
     return NSMakeSize(w,h);
 }
 

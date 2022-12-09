@@ -18,19 +18,4 @@
     NSView *panel;
     SeaSlider *top,*bottom;
 }
-
-/*!
-	@method		topValue
-	@discussion	Returns the value of the top slider.
-	@result		Returns an integer representing value of the top slider.
-*/
-- (int)topValue;
-
-/*!
-	@method		bottomValue
-	@discussion	Returns the value of the bottom slider.
-	@result		Returns an integer representing value of the bottom slider.
-*/
-- (int)bottomValue;
-
 @end

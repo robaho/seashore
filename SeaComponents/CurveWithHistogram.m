@@ -38,7 +38,6 @@
 
 - (void)layout
 {
-    [super layout];
     [cv setFrame:[self bounds]];
     [histo setFrame:[self bounds]];
 }

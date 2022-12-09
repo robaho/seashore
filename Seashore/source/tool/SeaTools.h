@@ -1,4 +1,5 @@
 #import "Seashore.h"
+#import "AbstractTool.h"
 
 /*!
 	@enum		k...Tool
@@ -107,7 +108,7 @@ enum {
 				The tool type for the tool you are seeking.
 	@result		Returns an object that is a subclass of AbstractTool.
 */
-- (id)getTool:(int)whichOne;
+- (AbstractTool*)getTool:(int)whichOne;
 
 /*!
 	@method		allTools

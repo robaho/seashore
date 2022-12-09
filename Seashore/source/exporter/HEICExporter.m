@@ -189,12 +189,14 @@
 
 - (BOOL)writeDocument:(id)document toFile:(NSString *)path
 {
-    int width, height, spp, xres, yres;
-    BOOL hasAlpha = true;
-    
+    int spp, xres, yres;
+
+    if (@available(macOS 10.13.4, *)) {
+        //
+    } else {
+        return NO;
+    }
     // Get the data to write
-    width = [(SeaContent *)[document contents] width];
-    height = [(SeaContent *)[document contents] height];
     spp = [(SeaContent *)[document contents] spp];
     xres = [[document contents] xres];
     yres = [[document contents] yres];
@@ -206,8 +208,12 @@
         NSColorSpace *cs = [[[[document docView] window] screen] colorSpace];
         imageRep = [imageRep bitmapImageRepByConvertingToColorSpace:cs renderingIntent:NSColorRenderingIntentDefault];
     }
-    
-    CIFormat ciFormat = (spp == 4 ? kCIFormatRGBA8 : kCIFormatLA8);
+
+    CIFormat ciFormat;
+    if (@available(macOS 10.13.4, *)) {
+        // make compiler happy by guarding even though this cannot be reached
+        ciFormat = (spp == 4 ? kCIFormatRGBA8 : kCIFormatLA8);
+    }
     
     CGColorSpaceRef ciCS = [[imageRep colorSpace] CGColorSpace];
     

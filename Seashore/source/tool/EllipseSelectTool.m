@@ -12,6 +12,10 @@
 
 @implementation EllipseSelectTool
 
+- (void)awakeFromNib {
+    options = [[EllipseSelectOptions alloc] init:document];
+}
+
 - (int)toolId
 {
 	return kEllipseSelectTool;
@@ -26,10 +30,5 @@
 {
     return options;
 }
-- (void)setOptions:(AbstractOptions*)newoptions
-{
-    options = (EllipseSelectOptions*)newoptions;
-}
-
 
 @end

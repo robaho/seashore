@@ -11,18 +11,9 @@
 */
 
 @interface PencilOptions : BrushOptions {
-	
-	// A slider indicating the size of the pencil block
-	IBOutlet id sizeSlider;
-
-    IBOutlet id circularTip;
+	id sizeSlider;
+    id circularTipCheckbox;
 }
-
-/*!
-	@method		awakeFromNib
-	@discussion	Loads previous options from preferences.
-*/
-- (void)awakeFromNib;
 
 /*!
 	@method		pencilSize

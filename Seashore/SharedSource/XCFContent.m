@@ -131,8 +131,9 @@ static inline void fix_endian_readl(long *input, int size)
     }
     
 	return YES;
-hard_error:
-    return NO;
+
+//hard_error:
+//    return NO;
 }
 
 - (BOOL)readProperties:(FILE *)file sharedInfo:(SharedXCFInfo *)info

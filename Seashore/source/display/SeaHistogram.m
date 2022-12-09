@@ -17,12 +17,15 @@ extern dispatch_queue_t queue;
 
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
     if ([gUserDefaults objectForKey:@"histogram mode"] != NULL) {
         [modeComboBox selectItemAtIndex:[gUserDefaults integerForKey:@"histogram mode"]];
     }
     if ([gUserDefaults objectForKey:@"histogram source"] != NULL) {
         [sourceComboBox selectItemAtIndex:[gUserDefaults integerForKey:@"histogram source"]];
     }
+    self.identifier = @"SeaHistogram";
+    self.innerInset = 5;
 }
 
 - (void)update

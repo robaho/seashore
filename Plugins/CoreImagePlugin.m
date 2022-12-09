@@ -32,8 +32,10 @@ static Property PropertyMeta[] = {
     {kCI_Contrast,@"Contrast",@"contrast",@"inputContrast",kPT_Float,0,5,1},
     {kCI_Saturation,@"Saturation",@"saturation",@"inputSaturation",kPT_Float,0,5,1},
     {kCI_Scale,@"Scale",@"scale",@"inputScale",kPT_Float,0,5,.5},
+    {kCI_Scale1,@"Scale",@"scale",@"inputScale",kPT_Float,0,1,.5},
     {kCI_Scale100,@"Scale",@"scale",@"inputScale",kPT_Float,0,100,10},
     {kCI_Scale1000,@"Scale",@"scale",@"inputScale",kPT_Float,0,1000,50},
+    {kCI_ScaleNeg1,@"Scale",@"scale",@"inputScale",kPT_Float,-1,1,0},
     {kCI_Strength,@"Strength",@"strength",@"inputStrength",kPT_Float,0,5,.5},
     {kCI_Overlap,@"Overlap",@"overlap",@"inputOverlap",kPT_Float,0,5,.75},
     {kCI_NoiseLevel,@"Noise Level",@"noiselevel",@"inputNoiseLevel",kPT_Float,0,1,.02},
@@ -307,6 +309,16 @@ static Property PropertyMeta[] = {
     [self applyFilter:filter];
 }
 
+- (id)initWithManager:(PluginData *)data {
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException
+                                   reason:[NSString stringWithFormat:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)]
+                                 userInfo:nil];
+}
+
++ (BOOL)validatePlugin:(PluginData *)pluginData {
+    return TRUE;
+}
+
 - (CIFilter*)getFilterInstance:(NSString *)name
 {
     CIFilter *filter = [CIFilter filterWithName:name];
@@ -391,11 +403,6 @@ static Property PropertyMeta[] = {
     } else {
         applyFilter(pluginData,filter);
     }
-}
-
-+ (BOOL)validatePlugin:(PluginData*)pluginData
-{
-    return YES;
 }
 
 @end

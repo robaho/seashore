@@ -13,6 +13,10 @@
 
 @implementation EffectTool
 
+- (void)awakeFromNib {
+    options = [[EffectOptions alloc] init:document];
+}
+
 - (int)toolId
 {
 	return kEffectTool;
@@ -158,7 +162,8 @@
     } @catch (NSException *exception) {
         currentPlugin = nil;
         NSLog(@"unable to open plugin %@ %@",exception,[exception callStackSymbols]);
-        [NSAlert alertWithMessageText:@"Error Initializing Plugin" defaultButton:NULL alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"%@",[exception reason]];
+        NSAlert *alert = [NSAlert alertWithMessageText:@"Error Initializing Plugin. Please file a bug." defaultButton:NULL alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"%@.%@",plugin.className,[exception reason]];
+        [alert runModal];
         return;
     }
 
@@ -183,10 +188,6 @@
     }
 }
 
-- (void)reset
-{
-}
-
 - (IntPoint)point:(int)index
 {
 	return points[index];
@@ -207,10 +208,7 @@
 {
     return options;
 }
-- (void)setOptions:(AbstractOptions*)newoptions
-{
-    options = (EffectOptions*)newoptions;
-}
+
 - (PluginClass*)plugin
 {
     return currentPlugin;

@@ -64,6 +64,8 @@ enum {
 */
 - (BOOL) isMovingOrScaling;
 
+- (BOOL) ignoresMove;
+
 /*!
 	@method		mouseDownAt:forRect:andMask:
 	@discussion	Handles mouse down events.

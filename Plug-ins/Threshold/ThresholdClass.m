@@ -155,9 +155,9 @@
 	}
 }
 
-+ (BOOL)validatePlugin:(PluginData*)pluginData
++ (BOOL)validatePlugin:(PluginData *)pluginData
 {
-	return YES;
+    return YES;
 }
 
 @end

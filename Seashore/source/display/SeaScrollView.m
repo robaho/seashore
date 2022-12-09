@@ -43,6 +43,8 @@
     [self setHasHorizontalRuler:YES];
     [self setHasVerticalRuler:YES];
 
+    [self setWantsLayer:TRUE];
+
     horizontalRuler = [self horizontalRulerView];
     verticalRuler = [self verticalRulerView];
 

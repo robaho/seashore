@@ -16,6 +16,17 @@
 		2B2EFA7E28BF1AF1009B225D /* Rects.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8448AC28BEECB000C068D1 /* Rects.m */; };
 		2B2EFA7F28BF1AF1009B225D /* RLE.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8448AB28BEECB000C068D1 /* RLE.m */; };
 		2B2EFAAE28BF2202009B225D /* SeaLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B8448AE28BEECB000C068D1 /* SeaLibrary.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2BC3CE50293C1CEB005394FE /* SeaLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B8448AE28BEECB000C068D1 /* SeaLibrary.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2BC3CE51293C1CEB005394FE /* Constants.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B8448AA28BEECB000C068D1 /* Constants.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2BC3CE52293C1CEB005394FE /* Bitmap.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B8448AF28BEECB000C068D1 /* Bitmap.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2BC3CE53293C1CEB005394FE /* Rects.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B8448B228BEECB100C068D1 /* Rects.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2BC3CE54293C1CEB005394FE /* RLE.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B8448B128BEECB100C068D1 /* RLE.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2BC3CE55293C1CEB005394FE /* Globals.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B8448B028BEECB100C068D1 /* Globals.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2BC3CE57293C1CEB005394FE /* Bitmap.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8448BC28BEECDF00C068D1 /* Bitmap.m */; };
+		2BC3CE58293C1CEB005394FE /* Rects.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8448AC28BEECB000C068D1 /* Rects.m */; };
+		2BC3CE59293C1CEB005394FE /* RLE.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8448AB28BEECB000C068D1 /* RLE.m */; };
+		2BC3CE5C293C1CEB005394FE /* Seashore.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 2BF10A4429371771002272AB /* Seashore.xcconfig */; };
+		2BF10A4529371771002272AB /* Seashore.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 2BF10A4429371771002272AB /* Seashore.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,10 +40,19 @@
 		2B8448B128BEECB100C068D1 /* RLE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLE.h; sourceTree = "<group>"; };
 		2B8448B228BEECB100C068D1 /* Rects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rects.h; sourceTree = "<group>"; };
 		2B8448BC28BEECDF00C068D1 /* Bitmap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bitmap.m; sourceTree = "<group>"; };
+		2BC3CE60293C1CEB005394FE /* SeaLibraryStatic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SeaLibraryStatic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BF10A4429371771002272AB /* Seashore.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Seashore.xcconfig; path = ../Seashore.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		2B2EFA6D28BF1AD3009B225D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BC3CE5A293C1CEB005394FE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -45,6 +65,7 @@
 		2B84488328BEEBDD00C068D1 = {
 			isa = PBXGroup;
 			children = (
+				2BF10A4429371771002272AB /* Seashore.xcconfig */,
 				2B84488E28BEEBDD00C068D1 /* SeaLibrary */,
 				2B84488D28BEEBDD00C068D1 /* Products */,
 			);
@@ -54,6 +75,7 @@
 			isa = PBXGroup;
 			children = (
 				2B2EFA7028BF1AD3009B225D /* SeaLibrary.framework */,
+				2BC3CE60293C1CEB005394FE /* SeaLibraryStatic.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -90,6 +112,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2BC3CE4F293C1CEB005394FE /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2BC3CE50293C1CEB005394FE /* SeaLibrary.h in Headers */,
+				2BC3CE51293C1CEB005394FE /* Constants.h in Headers */,
+				2BC3CE52293C1CEB005394FE /* Bitmap.h in Headers */,
+				2BC3CE53293C1CEB005394FE /* Rects.h in Headers */,
+				2BC3CE54293C1CEB005394FE /* RLE.h in Headers */,
+				2BC3CE55293C1CEB005394FE /* Globals.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -109,6 +144,24 @@
 			name = SeaLibrary;
 			productName = SeaLibrary;
 			productReference = 2B2EFA7028BF1AD3009B225D /* SeaLibrary.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		2BC3CE4E293C1CEB005394FE /* SeaLibraryStatic */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2BC3CE5D293C1CEB005394FE /* Build configuration list for PBXNativeTarget "SeaLibraryStatic" */;
+			buildPhases = (
+				2BC3CE4F293C1CEB005394FE /* Headers */,
+				2BC3CE56293C1CEB005394FE /* Sources */,
+				2BC3CE5A293C1CEB005394FE /* Frameworks */,
+				2BC3CE5B293C1CEB005394FE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SeaLibraryStatic;
+			productName = SeaLibrary;
+			productReference = 2BC3CE60293C1CEB005394FE /* SeaLibraryStatic.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -139,6 +192,7 @@
 			projectRoot = "";
 			targets = (
 				2B2EFA6F28BF1AD3009B225D /* SeaLibrary */,
+				2BC3CE4E293C1CEB005394FE /* SeaLibraryStatic */,
 			);
 		};
 /* End PBXProject section */
@@ -148,6 +202,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2BF10A4529371771002272AB /* Seashore.xcconfig in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BC3CE5B293C1CEB005394FE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2BC3CE5C293C1CEB005394FE /* Seashore.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,6 +224,16 @@
 				2B2EFA7D28BF1AF1009B225D /* Bitmap.m in Sources */,
 				2B2EFA7E28BF1AF1009B225D /* Rects.m in Sources */,
 				2B2EFA7F28BF1AF1009B225D /* RLE.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BC3CE56293C1CEB005394FE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2BC3CE57293C1CEB005394FE /* Bitmap.m in Sources */,
+				2BC3CE58293C1CEB005394FE /* Rects.m in Sources */,
+				2BC3CE59293C1CEB005394FE /* RLE.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,11 +260,11 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACH_O_TYPE = staticlib;
+				MACH_O_TYPE = mh_dylib;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MARKETING_VERSION = 1.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.eolcoder.SeaLibrary;
+				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.SeaLibrary;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -220,10 +293,10 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACH_O_TYPE = staticlib;
+				MACH_O_TYPE = mh_dylib;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.eolcoder.SeaLibrary;
+				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.SeaLibrary;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -234,6 +307,7 @@
 		};
 		2B84489328BEEBDD00C068D1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2BF10A4429371771002272AB /* Seashore.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -291,6 +365,7 @@
 		};
 		2B84489428BEEBDD00C068D1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2BF10A4429371771002272AB /* Seashore.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -339,6 +414,71 @@
 			};
 			name = Release;
 		};
+		2BC3CE5E293C1CEB005394FE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MARKETING_VERSION = 1.0;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.SeaLibrary;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		2BC3CE5F293C1CEB005394FE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.SeaLibrary;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -356,6 +496,15 @@
 			buildConfigurations = (
 				2B84489328BEEBDD00C068D1 /* Debug */,
 				2B84489428BEEBDD00C068D1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2BC3CE5D293C1CEB005394FE /* Build configuration list for PBXNativeTarget "SeaLibraryStatic" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2BC3CE5E293C1CEB005394FE /* Debug */,
+				2BC3CE5F293C1CEB005394FE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

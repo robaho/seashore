@@ -67,8 +67,7 @@ static NSString*  SelectionEditIdentifier = @"Selection Edit Identifier";
 
 - (void)awakeFromNib
 {
-
-	// Create the toolbar instance, and attach it to our document window 
+	// Create the toolbar instance, and attach it to our document window
     toolbar = [[NSToolbar alloc] initWithIdentifier: DocToolbarIdentifier];
     
     // Set up toolbar properties: Allow customization, give a default display mode, and remember state in user defaults 

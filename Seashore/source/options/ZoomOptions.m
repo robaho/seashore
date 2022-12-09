@@ -8,14 +8,23 @@
 
 @implementation ZoomOptions
 
-- (IBAction)update:(id)sender
+- (id)init:(id)document
 {
-	[zoomLabel setStringValue:[NSString stringWithFormat:LOCALSTR(@"zoom", @"Zoom: %.0f%%"), [[document docView] zoom] * 100.0]];
+    self = [super init:document];
+
+    [super clearModifierMenu];
+    [super addModifierMenuItem:@"Zoom out (Option)" tag:1];
+
+    zoomLabel = [Label smallLabel];
+    [self addSubview:zoomLabel];
+    [self update:zoomLabel];
+
+    return self;
 }
 
-- (BOOL)ignoresMove
+- (IBAction)update:(id)sender
 {
-    return TRUE;
+	[zoomLabel setTitle:[NSString stringWithFormat:LOCALSTR(@"zoom", @"Zoom: %.0f%%"), [[document docView] zoom] * 100.0]];
 }
 
 @end

@@ -111,6 +111,7 @@ QuickLookGeneratorPluginType *AllocQuickLookGeneratorPluginType(CFUUIDRef inFact
 
         /* This function returns the IUnknown interface so set the refCount to one. */
     theNewInstance->refCount = 1;
+
     return theNewInstance;
 }
 

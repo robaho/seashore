@@ -11,24 +11,9 @@
 		2B8BD58521ECF39000FD9AC5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B8BD58421ECF39000FD9AC5 /* QuartzCore.framework */; };
 		2B8BD58621ECF39000FD9AC5 /* Plugins.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B8BD58021ECF38200FD9AC5 /* Plugins.framework */; };
 		2BE472E527DD063D003048CC /* SeaComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE472E127DD05E6003048CC /* SeaComponents.framework */; };
-		2BE472E627DD063D003048CC /* SeaComponents.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE472E127DD05E6003048CC /* SeaComponents.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A831E1410789471D0009080F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A831E13F0789471D0009080F /* Localizable.strings */; };
 		A86E1A9A0BF2132D00CCFBB8 /* CIEdgesClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A86E1A990BF2132D00CCFBB8 /* CIEdgesClass.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		2BE472E727DD063E003048CC /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				2BE472E627DD063D003048CC /* SeaComponents.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		2B8BD58021ECF38200FD9AC5 /* Plugins.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Plugins.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -115,7 +100,6 @@
 				8D5B49AF048680CD000E48DA /* Resources */,
 				8D5B49B1048680CD000E48DA /* Sources */,
 				8D5B49B3048680CD000E48DA /* Frameworks */,
-				2BE472E727DD063E003048CC /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

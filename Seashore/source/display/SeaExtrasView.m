@@ -379,7 +379,7 @@ static bool isBlack(NSColor *c){
     // Get the data for drawing rounded rectangular selections
     special = NO;
     if (curToolIndex == kRectSelectTool) {
-        radius = [(RectSelectOptions *)[[document optionsUtility] currentOptions] radius];
+        radius = [(RectSelectOptions *)[[document currentTool] getOptions] radius];
         tempSelectRect = [(RectSelectTool *)curTool selectionRect];
         special = tempSelectRect.size.width < 2 * radius && tempSelectRect.size.height < 2 * radius;
     }

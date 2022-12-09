@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2B2EFA8C28BF1CE7009B225D /* SeaLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2EFA8B28BF1CE7009B225D /* SeaLibrary.framework */; };
 		2B2EFAAA28BF1EB0009B225D /* SeaMinimal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2EFAA928BF1EB0009B225D /* SeaMinimal.framework */; };
 		2B6ECD20279E598400ABA072 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B6ECD1F279E598400ABA072 /* Cocoa.framework */; };
+		2BC3CE66293C1D2F005394FE /* SeaLibraryStatic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BC3CE65293C1D2F005394FE /* SeaLibraryStatic.framework */; };
 		2BF24FF927A71D7D005DE2F8 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BF24FF827A71D7D005DE2F8 /* Accelerate.framework */; };
 		8D576314048677EA00EA77CD /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */; };
 		8D5B49A804867FD3000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8D5B49A704867FD3000E48DA /* InfoPlist.strings */; };
@@ -26,6 +26,7 @@
 		2B2EFAA928BF1EB0009B225D /* SeaMinimal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SeaMinimal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B6ECD1F279E598400ABA072 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		2B7C29A328BEDB5800C84A93 /* libSeaMinimal.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libSeaMinimal.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BC3CE65293C1D2F005394FE /* SeaLibraryStatic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SeaLibraryStatic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BF24FF827A71D7D005DE2F8 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		8D576316048677EA00EA77CD /* XCFSpotlight.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XCFSpotlight.mdimporter; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D576317048677EA00EA77CD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -42,13 +43,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2BC3CE66293C1D2F005394FE /* SeaLibraryStatic.framework in Frameworks */,
 				2B2EFAAA28BF1EB0009B225D /* SeaMinimal.framework in Frameworks */,
 				2B6ECD20279E598400ABA072 /* Cocoa.framework in Frameworks */,
 				8D576314048677EA00EA77CD /* CoreFoundation.framework in Frameworks */,
 				2BF24FF927A71D7D005DE2F8 /* Accelerate.framework in Frameworks */,
 				C86B05270671AA6E00DD9006 /* CoreServices.framework in Frameworks */,
 				DC0D54CB104200B40037378A /* Foundation.framework in Frameworks */,
-				2B2EFA8C28BF1CE7009B225D /* SeaLibrary.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,6 +109,7 @@
 		2B399BBC279DCFFA000D0C58 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2BC3CE65293C1D2F005394FE /* SeaLibraryStatic.framework */,
 				2B2EFAA928BF1EB0009B225D /* SeaMinimal.framework */,
 				2B2EFA8B28BF1CE7009B225D /* SeaLibrary.framework */,
 				2B7C29A328BEDB5800C84A93 /* libSeaMinimal.a */,
@@ -214,12 +216,10 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2022083102;
 				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
 				GCC_PREPROCESSOR_DEFINITIONS = OTHER_PLUGIN;
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				MARKETING_VERSION = 3.8;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.xcfspotlight;
 				PRODUCT_NAME = XCFSpotlight;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -234,12 +234,10 @@
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2022083102;
 				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
 				GCC_PREPROCESSOR_DEFINITIONS = OTHER_PLUGIN;
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				MARKETING_VERSION = 3.8;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.xcfspotlight;
 				PRODUCT_NAME = XCFSpotlight;
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -17,6 +17,7 @@
 
 - (void)selectionChanged
 {
+    [[document whiteboard] update];
 	[[document docView] setNeedsDisplay:YES]; 
 	[[document infoUtility] update];
     [[document histogram] update];
@@ -37,12 +38,6 @@
 
     // End line drawing twice
     [[document docView] endLineDrawing];
-	
-	// Special case for the effect tool
-	if ([[document toolboxUtility] tool] == kEffectTool) {
-		[curTool reset];
-        [[document docView] setNeedsDisplay:YES];
-	}
 }
 
 - (void)channelChanged
@@ -64,6 +59,8 @@
     [[document scrollView] updateRulers];
 	[[document optionsUtility] update];
 	[[document statusUtility] update];
+    AbstractTool *tool = [[document tools] getTool:kZoomTool];
+    [[tool getOptions] update:self];
 }
 
 - (void)boundariesAndContentChanged

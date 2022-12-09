@@ -13,28 +13,10 @@
 @interface WandOptions : AbstractSelectOptions {
 	
 	// A slider indicating the tolerance of the wand
-	IBOutlet id toleranceSlider;
-	
-	// A label displaying the tolerance of the wand
-	IBOutlet id toleranceLabel;
-	
+	id toleranceSlider;
     // if checked then non-continguous regions are checked
-    IBOutlet id selectAllRegions;
+    id selectAllRegions;
 }
-
-/*!
-	@method		awakeFromNib
-	@discussion	Loads previous options from preferences.
-*/
-- (void)awakeFromNib;
-
-/*!
-	@method		toleranceSliderChanged:
-	@discussion	Called when the tolerance is changed.
-	@param		sender
-				Ignored.
-*/
-- (IBAction)toleranceSliderChanged:(id)sender;
 
 /*!
 	@method		tolerance
@@ -50,11 +32,5 @@
  @result        Returns a Bool.
  */
 - (bool)selectAllRegions;
-
-/*!
-	@method		shutdown
-	@discussion	Saves current options upon shutdown.
-*/
-- (void)shutdown;
 
 @end

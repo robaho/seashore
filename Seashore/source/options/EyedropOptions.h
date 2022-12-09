@@ -19,13 +19,6 @@
 	IBOutlet id mergedCheckbox;
 	
 }
-
-/*!
-	@method		awakeFromNib
-	@discussion	Loads previous options from preferences.
-*/
-- (void)awakeFromNib;
-
 /*!
 	@method		sampleSize
 	@discussion	Returns the size of the sample square.

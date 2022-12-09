@@ -96,11 +96,9 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
         [[document warnings] addMessage:LOCALSTR(@"strange res message", @"This image has an unusual resolution. To fix this use \"Image > Resolution...\" and set to 72 x 72 dpi.") level:kLowImportance];
     }
 
-    background = [[SeaBackground alloc] initWithDocument:document];
     whiteboard = [document whiteboard];
     extrasView = [[SeaExtrasView alloc] initWithDocument:document];
 
-    [self addSubview:background];
     [self addSubview:whiteboard];
 
     [self layout];
@@ -345,7 +343,8 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
 {
     IntPoint localPoint;
     NSPoint globalPoint;
-    id options = [[document optionsUtility] currentOptions];
+
+    AbstractOptions* options = [[document currentTool] getOptions];
 
     [cursorsManager updateCursor:theEvent];
 
@@ -391,6 +390,8 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
     
     [curTool mouseDownAt:localPoint withEvent:theEvent];
     lastLocalPoint = localPoint;
+
+    [options updateModifiers:[theEvent modifierFlags]];
 }
 
 - (void)rightMouseDragged:(NSEvent *)theEvent
@@ -403,7 +404,8 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
     IntPoint localPoint;
     int deltaX, deltaY;
     double angle;
-    id options = [[document optionsUtility] currentOptions];
+
+    id options = [[document currentTool] getOptions];
 
     NSPoint globalPoint = [self convertPoint:[theEvent locationInWindow] fromView:NULL];
 
@@ -453,13 +455,14 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
     id curTool = [document currentTool];
     NSPoint localPoint;
     IntPoint localActiveLayerPoint;
-    AbstractOptions *options = [[document optionsUtility] currentOptions];
+
+    AbstractOptions* options = [[document currentTool] getOptions];
 
     // Return to normal coalescing
     NSEvent.mouseCoalescingEnabled = true;
 
     // Check if it is a line draw
-    if ([curTool acceptsLineDraws] && ([(AbstractOptions*)options modifier] == kShiftModifier || [options modifier] == kShiftControlModifier)) {
+    if ([curTool acceptsLineDraws] && ([options modifier] == kShiftModifier || [options modifier] == kShiftControlModifier)) {
         lineDraw = YES;
         return;
     }
@@ -491,7 +494,7 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
 
 - (void)flagsChanged:(NSEvent *)theEvent
 {
-    [(AbstractOptions *)[[document optionsUtility] currentOptions] updateModifiers:[theEvent modifierFlags]];
+    [[[document currentTool] getOptions] updateModifiers:[theEvent modifierFlags]];
     [cursorsManager updateCursor:theEvent];
 }
 

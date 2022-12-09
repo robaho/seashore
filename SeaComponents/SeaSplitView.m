@@ -9,10 +9,10 @@
 
 @implementation SeaSplitView
 
-- (void)layout
+- (void)awakeFromNib
 {
-//    NSLog(@"layout seasplitview");
-    [super layout];
+    self.autoresizesSubviews = TRUE;
+    self.translatesAutoresizingMaskIntoConstraints = TRUE;
 }
 
 @end

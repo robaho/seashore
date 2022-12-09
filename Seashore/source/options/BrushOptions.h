@@ -17,30 +17,12 @@ enum {
 */
 
 @interface BrushOptions : AbstractPaintOptions {
-	// A checkbox indicating whether to fade
-	IBOutlet id fadeCheckbox;
-	
-	// A slider indicating the rate of fading
 	IBOutlet id fadeSlider;
-	
-	// A checkbox indicating whether to listen to pressure information
-	IBOutlet id pressureCheckbox;
-	
-	// A popup menu indicating pressure style
 	IBOutlet id pressurePopup;
+	IBOutlet id scalingCheckbox;
 	
-	// A checkbox indicating whether to scale
-	IBOutlet id scaleCheckbox;
-	
-	// Are we erasing stuff?
 	BOOL isErasing;
 }
-
-/*!
-	@method		awakeFromNib
-	@discussion	Loads previous options from preferences.
-*/
-- (void)awakeFromNib;
 
 /*!
 	@method		fade
@@ -56,7 +38,6 @@ enum {
 */
 - (int)fadeValue;
 
-- (BOOL)isPressureSensitive;
 /*!
 	@method		pressureValue
 	@discussion	Returns the pressure value that should be used for the brush.
@@ -90,25 +71,5 @@ enum {
 				its normal operation.
 */
 - (BOOL)brushIsErasing;
-
-/*!
-	@method		updateModifiers:
-	@discussion	Updates the modifier pop-up.
-	@param		modifiers
-				An unsigned int representing the new modifiers.
-*/
-- (void)updateModifiers:(unsigned int)modifiers;
-
-/*!
-	@method		modifierPopupChanged:
-	@discussion	Called when the popup is changed.
-	@param		sender
-				Needs to be the popup menu.
-*/
-- (IBAction)modifierPopupChanged:(id)sender;
-
-
-
-
 
 @end

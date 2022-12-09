@@ -13,9 +13,13 @@
 
 - (void)awakeFromNib
 {
-    [fgWell activate:TRUE];
+    [gColorPanel setIsVisible:[gUserDefaults boolForKey:@"colorpanel visible"]];
+    if([gColorPanel isVisible]) {
+        [fgWell activate:TRUE];
+    }
 }
 - (void)dealloc {
+    [gUserDefaults setBool:[gColorPanel isVisible] forKey:@"colorpanel visible"];
     [gColorPanel setTarget:nil];
     [gColorPanel setAction:NULL];
 }
@@ -30,7 +34,6 @@
 {
 	return YES;
 }
-
 
 - (IBAction)swapColors:(id)sender
 {
@@ -86,16 +89,14 @@
     NSColor *border = [self isActive] ? [NSColor lightGrayColor] : [NSColor darkGrayColor];
 
     NSRect outer = [self bounds];
-    NSRect inner = NSGrowRect(outer,-4);
+    int vborder = outer.size.height*.20;
+    int hborder = outer.size.width*.20;
+    int borderWidth = MIN(hborder,vborder);
+    NSRect inner = CGRectInset(outer, borderWidth, borderWidth);
 
     [border setFill];
     NSRectFill(outer);
-    [color setFill];
-    NSRectFill(inner);
-    [NSBezierPath setDefaultLineWidth:1];
-    [[NSColor lightGrayColor] set];
-    [NSBezierPath strokeRect:inner];
-
+    [super drawWellInside:inner];
 }
 
 @end

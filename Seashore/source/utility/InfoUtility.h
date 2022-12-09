@@ -31,20 +31,20 @@ enum {
 	__weak IBOutlet id document;
 	
 	// Displays the red, green, blue and alpha value of the focused pixel
-	IBOutlet id redValue;
-    IBOutlet id greenValue;
-    IBOutlet id blueValue;
-    IBOutlet id alphaValue;
-	IBOutlet id colorWell;
+	id redValue;
+    id greenValue;
+    id blueValue;
+    id alphaValue;
+	id colorWell;
 	
 	// Displays the x and y co-ordinates of the cursor
-    IBOutlet id xValue;
-    IBOutlet id yValue;
-	IBOutlet id widthValue;
-    IBOutlet id heightValue;
-	IBOutlet id deltaX;
-	IBOutlet id deltaY;
-	IBOutlet id radiusValue;
+    id xValue;
+    id yValue;
+	id widthValue;
+    id heightValue;
+	id deltaX;
+	id deltaY;
+	id radiusValue;
 
 	// The active measuring style
 	int measureStyle;
@@ -53,7 +53,7 @@ enum {
 	IBOutlet id view;
 	IBOutlet id controlView;
 	IBOutlet id toggleButton;
-
+    IBOutlet id layersView;
 }
 
 /*!

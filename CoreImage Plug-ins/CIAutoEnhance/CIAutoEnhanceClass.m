@@ -18,7 +18,7 @@
     NSArray *adjustments = [myImage autoAdjustmentFilters];
     for (CIFilter *filter in adjustments) {
         [filter setValue:myImage forKey:kCIInputImageKey];
-        myImage = filter.outputImage;
+        myImage = [filter valueForKey: @"outputImage"];
     }
     
     renderCIImage(pluginData,myImage);

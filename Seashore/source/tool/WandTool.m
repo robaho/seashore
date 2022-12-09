@@ -11,6 +11,10 @@
 
 @implementation WandTool
 
+- (void)awakeFromNib {
+    options = [[WandOptions alloc] init:document];
+}
+
 - (int)toolId
 {
 	return kWandTool;
@@ -146,10 +150,5 @@ done:
 {
     return options;
 }
-- (void)setOptions:(AbstractOptions*)newoptions
-{
-    options = (WandOptions*)newoptions;
-}
-
 
 @end

@@ -56,7 +56,7 @@
     urdlCursor = _resizeCursor;
     uldrCursor = _resizeCursor;
 	
-	handleCursors[0]  = uldrCursor;
+	handleCursors[0] = uldrCursor;
 	handleCursors[1] = udCursor;
 	handleCursors[2] = urdlCursor;
 	handleCursors[3] = lrCursor;
@@ -94,25 +94,40 @@
     return;
 }
 
-- (void)handleRectCursors:(IntRect)rect point:(IntPoint)p cursor:(NSCursor*)cursor
+- (NSCursor*)handleRectCursors:(IntRect)rect point:(IntPoint)p cursor:(nullable NSCursor*)cursor ignoresMove:(BOOL)ignoresMove
 {
    if (!IntRectIsEmpty(rect)) {
         int handle = getHandle(p, rect, currentScale);
         if(handle>=0) {
-            handleCursors[handle].set;
-            return;
+            NSCursor *c=handleCursors[handle];
+            [c set];
+            return c;
         }
         if(IntPointInRect(p, rect)) {
-            _handCursor.set;
-            return;
+            if(ignoresMove) {
+                return NULL;
+            }
+            [_handCursor set];
+            return _handCursor;
         }
     }
-    [cursor set];
+    if(cursor) [cursor set];
+    return cursor;
 }
 
 - (BOOL)usePreciseCursor
 {
     return [(SeaPrefs*)[SeaController seaPrefs] preciseCursor];
+}
+
+- (BOOL)isHandleCursor:(nullable NSCursor*)cursor {
+    if(!cursor)
+        return false;
+    for(int i=0;i<8;i++) {
+        if(cursor==handleCursors[i])
+            return true;
+    }
+    return false;
 }
 
 @end

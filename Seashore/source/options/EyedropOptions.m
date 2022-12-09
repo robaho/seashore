@@ -6,8 +6,18 @@
 
 @implementation EyedropOptions
 
-- (void)awakeFromNib
+- (id)init:document
 {
+    self = [super init:document];
+
+    [super clearModifierMenu];
+    [super addModifierMenuItem:@"Select background color" tag:1];
+
+    sizeSlider = [SeaSlider compactSliderWithTitle:@"Sample size" Min:1 Max:11 Listener:NULL];
+    [self addSubview:sizeSlider];
+    mergedCheckbox = [SeaCheckbox checkboxWithTitle:@"Use sample from all layers" Listener:NULL];
+    [self addSubview:mergedCheckbox];
+
 	int value;
 	
 	if ([gUserDefaults objectForKey:@"eyedrop size"] == NULL) {
@@ -15,11 +25,11 @@
 	}
 	else {
 		value = [gUserDefaults integerForKey:@"eyedrop size"];
-		if (value < [sizeSlider minValue] || value > [sizeSlider maxValue])
-			value = 1;
 	}
 	[sizeSlider setIntValue:value];
-	[mergedCheckbox setState:[gUserDefaults boolForKey:@"eyedrop merged"]];
+	[mergedCheckbox setChecked:[gUserDefaults boolForKey:@"eyedrop merged"]];
+
+    return self;
 }
 
 - (int)sampleSize
@@ -29,13 +39,13 @@
 
 - (BOOL)mergedSample
 {
-	return [mergedCheckbox state];
+	return [mergedCheckbox isChecked];
 }
 
 - (void)shutdown
 {
 	[gUserDefaults setInteger:[self sampleSize] forKey:@"eyedrop size"];
-	[gUserDefaults setObject:[self mergedSample] ? @"YES" : @"NO" forKey:@"eyedrop merged"];
+    [gUserDefaults setBool:[self mergedSample] forKey:@"eyedrop merged"];
 }
 
 @end
