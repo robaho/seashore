@@ -67,12 +67,20 @@ void DumpObjcMethods(Class clz) {
 
   proofProfile = NULL;
 
-  [self readjust];
+    mutex = [[NSObject alloc] init];
 
-  if (queue == NULL) {
-    queue = dispatch_queue_create("SeaWhiteboard", DISPATCH_QUEUE_CONCURRENT);
-    group = dispatch_group_create();
-  }
+    if (queue == NULL) {
+        queue = dispatch_queue_create("SeaWhiteboard", DISPATCH_QUEUE_CONCURRENT);
+        group = dispatch_group_create();
+    }
+
+    renderSem = dispatch_semaphore_create(0);
+    SeaWhiteboard *ref = self;
+    dispatch_async(queue, ^{
+        [ref renderLoop];
+    });
+
+  [self readjust];
 
   [self setCanDrawConcurrently:TRUE];
 
@@ -131,10 +139,13 @@ void DumpObjcMethods(Class clz) {
     } else {
         overlayModifiedRect = IntSumRects(overlayModifiedRect, layerRect);
     }
-    if (IntRectIsEmpty(tempOverlayModifiedRect)) {
-        tempOverlayModifiedRect = layerRect;
-    } else {
-        tempOverlayModifiedRect = IntSumRects(tempOverlayModifiedRect, layerRect);
+
+    @synchronized(self) {
+        if (IntRectIsEmpty(tempOverlayModifiedRect)) {
+            tempOverlayModifiedRect = layerRect;
+        } else {
+            tempOverlayModifiedRect = IntSumRects(tempOverlayModifiedRect, layerRect);
+        }
     }
 
     layerRect.origin.x += [layer xoff];
@@ -243,20 +254,24 @@ void DumpObjcMethods(Class clz) {
 
 - (void)mergeOverlay:(unsigned char *)dest rect:(IntRect)r
 {
-    int cores = MAX([[NSProcessInfo processInfo] activeProcessorCount],1);
+    @synchronized(mutex) {
+        int cores = MAX([[NSProcessInfo processInfo] activeProcessorCount],1);
 
-    if(SINGLE_THREADED || cores==1){
-        return [self mergeOverlay0:dest rect:r];
-    } else {
-        int tw = MAX(r.size.width / cores,8);
-        for(int x=0;x<r.size.width;x+=tw) {
-            int width = MIN(tw,r.size.width-x);
-            IntRect r0 = IntMakeRect(x+r.origin.x,r.origin.y,width,r.size.height);
-            dispatch_group_async(group, queue, ^{
-                [self mergeOverlay0:dest rect:r0];
-            });
+        if(SINGLE_THREADED || cores==1){
+            return [self mergeOverlay0:dest rect:r];
+        } else {
+            dispatch_group_t group = dispatch_group_create();
+
+            int tw = MAX(r.size.width / cores,8);
+            for(int x=0;x<r.size.width;x+=tw) {
+                int width = MIN(tw,r.size.width-x);
+                IntRect r0 = IntMakeRect(x+r.origin.x,r.origin.y,width,r.size.height);
+                dispatch_group_async(group, queue, ^{
+                    [self mergeOverlay0:dest rect:r0];
+                });
+            }
+            dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
         }
-        dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
     }
 }
 
@@ -268,10 +283,21 @@ void DumpObjcMethods(Class clz) {
     int lw = layer_width;
     int lh = layer_height;
 
-    if(!IntRectIsEmpty(tempOverlayModifiedRect)) {
-        tempOverlayModifiedRect = IntConstrainRect(tempOverlayModifiedRect,IntMakeRect(0,0,lw,lh));
-        [self mergeOverlay:[temp bytes] rect:tempOverlayModifiedRect];
+    IntRect r;
+
+    @synchronized(self) {
+        r = tempOverlayModifiedRect;
         tempOverlayModifiedRect = IntZeroRect;
+    }
+
+    if(!IntRectIsEmpty(r)) {
+        r = IntConstrainRect(r,IntMakeRect(0,0,lw,lh));
+
+        long start = getCurrentMillis();
+        [self mergeOverlay:[temp bytes] rect:r];
+        if(LOG_PERFORMANCE) {
+            NSLog(@"whiteboard merge overlay %ld %@",getCurrentMillis()-start,NSStringFromIntRect(r));
+        }
     }
 }
 
@@ -313,25 +339,27 @@ void DumpObjcMethods(Class clz) {
 
 - (void)drawRect:(NSRect)viewDirtyRect
 {
-    viewDirtyRect = NSIntegralRectWithOptions(viewDirtyRect,NSAlignAllEdgesOutward|NSAlignRectFlipped);
-
-    CGContextRef nsCtx = [[NSGraphicsContext currentContext] graphicsPort];
-
-    [self drawBackground:nsCtx rect:viewDirtyRect];
-
-    float magnification = [[document scrollView] magnification];
-
-    if ([[SeaController seaPrefs] smartInterpolation]) {
-        if (magnification > 2) {
-            CGContextSetInterpolationQuality(nsCtx, kCGInterpolationNone);
+    @synchronized(mutex) {
+        viewDirtyRect = NSIntegralRectWithOptions(viewDirtyRect,NSAlignAllEdgesOutward|NSAlignRectFlipped);
+        
+        CGContextRef nsCtx = [[NSGraphicsContext currentContext] graphicsPort];
+        
+        [self drawBackground:nsCtx rect:viewDirtyRect];
+        
+        float magnification = [[document scrollView] magnification];
+        
+        if ([[SeaController seaPrefs] smartInterpolation]) {
+            if (magnification > 2) {
+                CGContextSetInterpolationQuality(nsCtx, kCGInterpolationNone);
+            } else {
+                CGContextSetInterpolationQuality(nsCtx, kCGInterpolationHigh);
+            }
         } else {
-            CGContextSetInterpolationQuality(nsCtx, kCGInterpolationHigh);
+            CGContextSetInterpolationQuality(nsCtx, kCGInterpolationNone);
         }
-    } else {
-        CGContextSetInterpolationQuality(nsCtx, kCGInterpolationNone);
+        
+        [self drawInContext:nsCtx dirty:viewDirtyRect proofing:true];
     }
-
-    [self drawInContext:nsCtx dirty:viewDirtyRect proofing:true];
     [[document histogram] performSelectorOnMainThread:@selector(update) withObject:nil waitUntilDone:NO];
 }
 
@@ -387,18 +415,6 @@ static void patternCallback(void *info, CGContextRef context) {
 {
     SeaLayer* activeLayer = [[document contents] activeLayer];
 
-//    viewDirtyRect = NSIntegralRect(viewDirtyRect);
-
-    long start = LOG_PERFORMANCE ? getCurrentMillis() : 0;
-
-    IntRect temp_rect = tempOverlayModifiedRect;
-
-    [self mergeOverlayToTemp];
-
-    if(LOG_PERFORMANCE) {
-        NSLog(@"whiteboard merge overlay %ld %@",getCurrentMillis()-start,NSStringFromIntRect(temp_rect));
-    }
-
     if(proofing && [self whiteboardIsLayerSpecific]) {
         [activeLayer transformContext:nsCtx];
         if([self overlayModified]) {
@@ -410,32 +426,7 @@ static void patternCallback(void *info, CGContextRef context) {
         return;
     }
 
-    start = LOG_PERFORMANCE ? getCurrentMillis() : 0;
-
-    CGRect r = IntRectMakeNSRect(whiteboardModifiedRect);
-
-    int cores = MAX([[NSProcessInfo processInfo] activeProcessorCount],1);
-
-    if(SINGLE_THREADED || cores==1){
-        [self drawInData:r];
-    } else {
-        int tw = MAX(r.size.width / cores,8);
-        for(int x=0;x<r.size.width;x+=tw) {
-            int width = MIN(tw,r.size.width-x);
-            IntRect r0 = IntMakeRect(x+r.origin.x,r.origin.y,width,r.size.height);
-            dispatch_group_async(group, queue, ^{
-                [self drawInData:IntRectMakeNSRect(r0)];
-            });
-        }
-        dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
-    }
-
-    if(LOG_PERFORMANCE)
-        NSLog(@"whiteboard drawInData %ld %@",getCurrentMillis()-start,NSStringFromIntRect(whiteboardModifiedRect));
-
-    start = LOG_PERFORMANCE ? getCurrentMillis() : 0;
-
-    whiteboardModifiedRect = IntZeroRect;
+    long start = LOG_PERFORMANCE ? getCurrentMillis() : 0;
 
     CGContextTranslateCTM(nsCtx,0,height);
     CGContextScaleCTM(nsCtx,1,-1);
@@ -511,14 +502,18 @@ static void patternCallback(void *info, CGContextRef context) {
     for (int i = layerCount-1; i>=0; i--) {
         SeaLayer *layer = [[document contents] layer:i];
         if ([layer visible]) {
+            bool rendered;
             if (layer == activeLayer) {
                 if([self overlayModified]) {
-                    [self compositeLayer:layer src:[temp bytes] rect:r dest:ctx];
+                    rendered=[self compositeLayer:layer src:[temp bytes] rect:r dest:ctx];
                 } else {
-                    [self compositeLayer:layer src:[layer data] rect:r dest:ctx];
+                    rendered=[self compositeLayer:layer src:[layer data] rect:r dest:ctx];
                 }
             } else {
-                [self compositeLayer:layer src:[layer data] rect:r dest:ctx];
+                rendered=[self compositeLayer:layer src:[layer data] rect:r dest:ctx];
+            }
+            if(!rendered) {
+                break;
             }
         }
     }
@@ -541,73 +536,77 @@ static void patternCallback(void *info, CGContextRef context) {
 }
 
 - (void)applyOverlay {
-  SeaLayer *layer = [[document contents] activeLayer];
+    long start = LOG_PERFORMANCE ? getCurrentMillis() : 0;
 
-  int lw = layer_width;
-  int lh = layer_height;
+    @synchronized (mutex) {
+        SeaLayer *layer = [[document contents] activeLayer];
 
-  IntRect r = overlayModifiedRect;
-  if(IntRectIsEmpty(r))
-      return;
+        int lw = layer_width;
+        int lh = layer_height;
 
-  long start = LOG_PERFORMANCE ? getCurrentMillis() : 0;
+        IntRect r = overlayModifiedRect;
+        if(IntRectIsEmpty(r))
+            return;
 
-  r = IntConstrainRect(overlayModifiedRect,IntMakeRect(0,0,lw,lh));
+        r = IntConstrainRect(overlayModifiedRect,IntMakeRect(0,0,lw,lh));
 
-  bool isSelectionActive = [[document selection] active];
-  IntRect selectionRect = [[document selection] localRect];
+        bool isSelectionActive = [[document selection] active];
+        IntRect selectionRect = [[document selection] localRect];
 
-  if (isSelectionActive) {
-    r = IntConstrainRect(selectionRect, r);
-  }
+        if (isSelectionActive) {
+            r = IntConstrainRect(selectionRect, r);
+        }
 
-  if (r.size.width == 0 || r.size.height == 0) {
-    goto finished;
-  }
+        if (r.size.width == 0 || r.size.height == 0) {
+            goto finished;
+        }
 
-  [[layer seaLayerUndo] takeSnapshot:r automatic:YES];
+        [[layer seaLayerUndo] takeSnapshot:r automatic:YES];
 
-  [self mergeOverlay:[layer_data bytes] rect:r];
+        [self mergeOverlay:[layer_data bytes] rect:r];
 
-    [self copyLayerToTemp:r];
+        [self copyLayerToTemp:r];
 
-  [layer markRasterized];
+        [layer markRasterized];
 
-finished:
+    finished:
 
-  memset(overlay, 0, lw * lh * spp);
-//  memset([temp bytes], 0, lw * lh * spp);
-  memset(replace, 0, lw * lh);
+        memset(overlay, 0, lw * lh * spp);
+        //  memset([temp bytes], 0, lw * lh * spp);
+        memset(replace, 0, lw * lh);
 
-  IntRect temp = overlayModifiedRect;
-  overlayModifiedRect = tempOverlayModifiedRect = IntZeroRect;
+        IntRect temp = overlayModifiedRect;
+        overlayModifiedRect = tempOverlayModifiedRect = IntZeroRect;
 
-  overlayOpacity = 0;
-  overlayBehaviour = kNormalBehaviour;
+        overlayOpacity = 0;
+        overlayBehaviour = kNormalBehaviour;
 
-  [[document whiteboard] update:IntOffsetRect(temp, [layer xoff], [layer yoff])];
+        [[document whiteboard] update:IntOffsetRect(temp, [layer xoff], [layer yoff])];
+    }
 
   if(LOG_PERFORMANCE)
       NSLog(@"apply finished %ld",getCurrentMillis()-start);
 }
 
 - (void)clearOverlay {
-  SeaLayer *layer = [[document contents] activeLayer];
+    @synchronized (mutex) {
+        SeaLayer *layer = [[document contents] activeLayer];
 
-  int width = layer_width;
-  int height = layer_height;
+        int width = layer_width;
+        int height = layer_height;
 
-    [self copyLayerToTemp:overlayModifiedRect];
+        [self copyLayerToTemp:overlayModifiedRect];
 
-  memset(overlay, 0, width * height * spp);
-  memset(replace, 0, width * height);
+        memset(overlay, 0, width * height * spp);
+        memset(replace, 0, width * height);
 
-  IntRect temp = overlayModifiedRect;
-  overlayModifiedRect = tempOverlayModifiedRect = IntZeroRect;
-  overlayOpacity = 0;
-  overlayBehaviour = kNormalBehaviour;
+        IntRect temp = overlayModifiedRect;
+        overlayModifiedRect = tempOverlayModifiedRect = IntZeroRect;
+        overlayOpacity = 0;
+        overlayBehaviour = kNormalBehaviour;
 
-  [self update:IntOffsetRect(temp, [layer xoff], [layer yoff])];
+        [self update:IntOffsetRect(temp, [layer xoff], [layer yoff])];
+    }
 }
 
 - (unsigned char *)overlay {
@@ -627,64 +626,68 @@ finished:
 }
 
 - (void)readjust {
-    // Resize the memory allocated to the data
-    width = [[document contents] width];
-    height = [[document contents] height];
+    @synchronized(mutex) {
+        // Resize the memory allocated to the data
+        width = [[document contents] width];
+        height = [[document contents] height];
 
-    // Change the samples per pixel if required
-    if (spp != [[document contents] spp]) {
-        spp = [[document contents] spp];
+        // Change the samples per pixel if required
+        if (spp != [[document contents] spp]) {
+            spp = [[document contents] spp];
+        }
+
+        CGContextRelease(dataCtx);
+        dataCtx = CGBitmapContextCreateWithData(NULL, width, height, 8, 0, COLOR_SPACE, kCGImageAlphaPremultipliedLast, NULL, NULL);
+
+        if(proofProfile) {
+            CGContextRelease(proofCtx);
+            CGColorSpaceRef csr = [proofProfile.cs CGColorSpace];
+            int bitmapMode = CGColorSpaceGetModel(csr)==kCGColorSpaceModelCMYK ? kCGImageAlphaNone : kCGImageAlphaPremultipliedLast;
+            // proofCtx is not used for rendering, only to describe the output format
+            proofCtx = CGBitmapContextCreate(nil,width,height,8,0,csr,bitmapMode);
+            proofBuffer.data = CGBitmapContextGetData(proofCtx);
+            proofBuffer.width = width;
+            proofBuffer.height = height;
+            proofBuffer.rowBytes = CGBitmapContextGetBytesPerRow(proofCtx);
+        }
+
+        [self readjustLayer];
     }
-
-    CGContextRelease(dataCtx);
-    dataCtx = CGBitmapContextCreateWithData(NULL, width, height, 8, 0, COLOR_SPACE, kCGImageAlphaPremultipliedLast, NULL, NULL);
-
-    if(proofProfile) {
-        CGContextRelease(proofCtx);
-        CGColorSpaceRef csr = [proofProfile.cs CGColorSpace];
-        int bitmapMode = CGColorSpaceGetModel(csr)==kCGColorSpaceModelCMYK ? kCGImageAlphaNone : kCGImageAlphaPremultipliedLast;
-        // proofCtx is not used for rendering, only to describe the output format
-        proofCtx = CGBitmapContextCreate(nil,width,height,8,0,csr,bitmapMode);
-        proofBuffer.data = CGBitmapContextGetData(proofCtx);
-        proofBuffer.width = width;
-        proofBuffer.height = height;
-        proofBuffer.rowBytes = CGBitmapContextGetBytesPerRow(proofCtx);
-    }
-
-    [self readjustLayer];
     [self update];
 }
 
 - (void)readjustLayer {
-    SeaLayer *layer = [[document contents] activeLayer];
+    @synchronized (mutex) {
+        SeaLayer *layer = [[document contents] activeLayer];
 
-    layer_width = [layer width];
-    layer_height = [layer height];
-    layer_data = [layer layerData];
+        layer_width = [layer width];
+        layer_height = [layer height];
+        layer_data = [layer layerData];
 
-    int lw = layer_width;
-    int lh = layer_height;
+        int lw = layer_width;
+        int lh = layer_height;
 
-    if (overlay) free(overlay);
+        if (overlay) free(overlay);
 
-    int len = lw*lh*spp;
+        int len = lw*lh*spp;
 
-    overlay = malloc(make_128(len));
-    CHECK_MALLOC(overlay);
-    memset(overlay, 0, len);
+        overlay = malloc(make_128(len));
+        CHECK_MALLOC(overlay);
+        memset(overlay, 0, len);
 
-    CGContextRelease(overlayCtx);
-    overlayCtx = CGBitmapContextCreateWithData(overlay, lw, lh, 8, lw*spp, COLOR_SPACE, kCGImageAlphaPremultipliedLast, NULL, NULL);
-    CGContextTranslateCTM(overlayCtx, 0, lh);
-    CGContextScaleCTM(overlayCtx, 1, -1);
+        CGContextRelease(overlayCtx);
+        overlayCtx = CGBitmapContextCreateWithData(overlay, lw, lh, 8, lw*spp, COLOR_SPACE, kCGImageAlphaPremultipliedLast, NULL, NULL);
+        CGContextTranslateCTM(overlayCtx, 0, lh);
+        CGContextScaleCTM(overlayCtx, 1, -1);
 
-    if (replace) free(replace);
+        if (replace) free(replace);
 
-    replace = malloc(make_128(lw*lh));
-    CHECK_MALLOC(replace);
-    memset(replace, 0, lw*lh);
+        replace = malloc(make_128(lw*lh));
+        CHECK_MALLOC(replace);
+        memset(replace, 0, lw*lh);
 
-    temp = [NSData dataWithBytes:[layer_data bytes] length:lw*lh*spp];
+        temp = [NSData dataWithBytes:[layer_data bytes] length:lw*lh*spp];
+    }
 
     [self update];
 }
@@ -709,13 +712,85 @@ finished:
 - (void)update:(IntRect)documentRect {
   if (documentRect.size.width == 0 || documentRect.size.height == 0) return;  // nothing to update
 
-  if (IntRectIsEmpty(whiteboardModifiedRect))
-    whiteboardModifiedRect = documentRect;
-  else
-    whiteboardModifiedRect = IntSumRects(whiteboardModifiedRect, documentRect);
+    @synchronized (self) {
+        if (IntRectIsEmpty(whiteboardModifiedRect))
+            whiteboardModifiedRect = documentRect;
+        else
+            whiteboardModifiedRect = IntSumRects(whiteboardModifiedRect, documentRect);
+    }
 
-  [self setNeedsDisplayInRect:IntRectMakeNSRect(documentRect)];
-  [[document docView] setNeedsDisplayInDocumentRect:(documentRect):16];
+    dispatch_semaphore_signal(renderSem);
+}
+
+- (void)shutdown
+{
+    exitRender=TRUE;
+    dispatch_semaphore_signal(renderSem);
+}
+
+- (void)renderLoop
+{
+    while(!exitRender) {
+        dispatch_semaphore_wait(renderSem, DISPATCH_TIME_FOREVER);
+        [self render];
+    }
+}
+
+- (void)render
+{
+    @synchronized (mutex) {
+        [self mergeOverlayToTemp];
+
+        IntRect dirty = IntZeroRect;
+
+        @synchronized(self) {
+            if(!IntRectIsEmpty(whiteboardModifiedRect)) {
+                dirty = whiteboardModifiedRect;
+                whiteboardModifiedRect = IntZeroRect;
+            }
+        }
+
+        if(IntRectIsEmpty(dirty)) {
+            return;
+        }
+
+        IntRect r = IntConstrainRect(dirty, IntMakeRect(0,0,width,height));
+
+        long start = getCurrentMillis();
+
+        if(!IntRectIsEmpty(r)) {
+            int cores = MAX([[NSProcessInfo processInfo] activeProcessorCount],1);
+
+            if(SINGLE_THREADED || cores==1){
+                [self drawInData:IntRectMakeNSRect(r)];
+            } else {
+                dispatch_group_t group = dispatch_group_create();
+                int tw = MAX(r.size.width / cores,8);
+                for(int x=0;x<r.size.width;x+=tw) {
+                    int width = MIN(tw,r.size.width-x);
+                    IntRect r0 = IntMakeRect(x+r.origin.x,r.origin.y,width,r.size.height);
+                    dispatch_group_async(group, queue, ^{
+                        [self drawInData:IntRectMakeNSRect(r0)];
+                    });
+                }
+                dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
+            }
+
+            NSValue *_dirty = [NSValue valueWithRect:IntRectMakeNSRect(dirty)];
+
+            [self performSelectorOnMainThread:@selector(requestDraw:) withObject:_dirty waitUntilDone:FALSE];
+
+            if(LOG_PERFORMANCE)
+                NSLog(@"whiteboard drawInData %ld %@",getCurrentMillis()-start,NSStringFromIntRect(r));
+        }
+    }
+}
+
+- (void)requestDraw:(NSValue *)value
+{
+    NSRect dirty = [value rectValue];
+    [self setNeedsDisplayInRect:dirty];
+    [[self->document docView] setNeedsDisplayInDocumentRect:NSRectMakeIntRect(dirty):16];
 }
 
 - (NSImage *)printableImage
@@ -783,16 +858,16 @@ finished:
     return overlayCtx;
 }
 
-- (void)compositeLayer:(SeaLayer *)layer src:(unsigned char *)srcPtr rect:(IntRect)r dest:(CGContextRef)ctx
+- (BOOL)compositeLayer:(SeaLayer *)layer src:(unsigned char *)srcPtr rect:(IntRect)r dest:(CGContextRef)ctx
 {
     if([layer isComplexTransform]) {
         [layer drawLayer:ctx];
-        return;
+        return TRUE;
     }
 
     int opacity = [layer opacity];
     if (opacity == 0)
-        return;
+        return TRUE;
 
     unsigned char *destPtr = CGBitmapContextGetData(ctx);
     int bytesPerRow = CGBitmapContextGetBytesPerRow(ctx);
@@ -801,17 +876,22 @@ finished:
     r = IntConstrainRect(lrect,r);
 
     int lwidth = [layer width], mode = [layer mode];
-    unsigned char *ldata = srcPtr;
 
     unsigned char tempSpace[4], tempSpace2[4];
 
-    unsigned char *src = ldata + ((r.origin.y - lrect.origin.y) * lwidth + r.origin.x-lrect.origin.x)*spp;
+    unsigned char *src = srcPtr + ((r.origin.y - lrect.origin.y) * lwidth + r.origin.x-lrect.origin.x)*spp;
     unsigned char *dst = destPtr + (r.origin.y * bytesPerRow) + r.origin.x*spp;
 
     for (int row = 0; row < r.size.height; row++) {
 
         unsigned char *src0 = src;
         unsigned char *dst0 = dst;
+
+        @synchronized(self) {
+            if(!IntRectIsEmpty(whiteboardModifiedRect) && IntContainsRect(whiteboardModifiedRect, r)) {
+                return FALSE;
+            }
+        }
 
         for(int col=0;col<r.size.width;col++) {
 
@@ -835,6 +915,7 @@ finished:
         src += lwidth * spp;
         dst += bytesPerRow;
     }
+    return TRUE;
 }
 
 @end

@@ -128,11 +128,15 @@
 }
 - (void)mouseDraggedTo:(IntPoint)where withEvent:(NSEvent *)event
 {
+    lastPointTime = getCurrentMillis();
+
     if(draggingPointIndex>=0){
         [[document docView] setNeedsDisplayInLayerRect:IntEmptyRect(points[draggingPointIndex]):26];
         points[draggingPointIndex] = IntOffsetPoint(draggingPointOriginal, where.x-draggingPointStart.x, where.y-draggingPointStart.y);
         [self performSelector:@selector(execute) withObject:NULL afterDelay:.1];
-        [[document docView] setNeedsDisplayInLayerRect:IntEmptyRect(points[draggingPointIndex]):26];
+        for(int i=0;i<count;i++){
+            [[document docView] setNeedsDisplayInLayerRect:IntEmptyRect(points[i]):26];
+        }
     }
 }
 - (void)mouseMovedTo:(IntPoint)where withEvent:(NSEvent *)event
@@ -147,6 +151,11 @@
         [[document docView] setNeedsDisplayInLayerRect:IntEmptyRect(points[i]):26];
     }
     [self performSelector:@selector(clearPointDisplay) withObject:NULL afterDelay:.5];
+}
+
+- (void)mouseUpAt:(IntPoint)where withEvent:(NSEvent *)event
+{
+    draggingPointIndex=-1;
 }
 
 - (void)selectEffect:(PluginClass*)plugin
@@ -235,7 +244,7 @@
     if(!currentPlugin)
         return FALSE;
 
-    return count<[currentPlugin points] || getCurrentMillis()-lastPointTime < 500;
+    return count<[currentPlugin points] || draggingPointIndex>=0 || getCurrentMillis()-lastPointTime < 500;
 }
 
 - (void)updateCursor:(IntPoint)p cursors:(SeaCursors*)cursors

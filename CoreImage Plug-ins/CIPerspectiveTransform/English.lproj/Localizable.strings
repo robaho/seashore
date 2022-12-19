@@ -9,12 +9,12 @@
 	<key>description</key>
 	<string>Applies a perspective transform to the selection.</string>
 	<key>groupName</key>
-	<string>Transform</string>
+	<string>Geometry</string>
 	<key>instruction</key>
 	<string>Click four times: to indicate the points of the perspective transform in a clockwise direction from the top-left.</string>
 	<key>license</key>
 	<string>Public Domain</string>
 	<key>name</key>
-	<string>Perspective</string>
+	<string>Perspective Transform</string>
 </dict>
 </plist>

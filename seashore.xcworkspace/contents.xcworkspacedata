@@ -223,6 +223,12 @@
          location = "group:CoreImage Plug-ins/CIPerspectiveTile/CIPerspectiveTile.xcodeproj">
       </FileRef>
       <FileRef
+         location = "group:CoreImage Plug-ins/CIPerspectiveCorrection/CIPerspectiveCorrection.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CoreImage Plug-ins/CIPerspectiveRotate/CIPerspectiveRotate.xcodeproj">
+      </FileRef>
+      <FileRef
          location = "group:CoreImage Plug-ins/CIPerspectiveTransform/CIPerspectiveTransform.xcodeproj">
       </FileRef>
       <FileRef
@@ -251,6 +257,9 @@
       </FileRef>
       <FileRef
          location = "group:CoreImage Plug-ins/CIStarshine/CIStarshine.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:/Users/robertengels/seashore/CoreImage Plug-ins/CIStraighten/CIStraighten.xcodeproj">
       </FileRef>
       <FileRef
          location = "group:CoreImage Plug-ins/CISunbeams/CISunbeams.xcodeproj">

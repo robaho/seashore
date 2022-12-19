@@ -2,6 +2,7 @@
 #import "SeaColorProfiles.h"
 #import <Accelerate/Accelerate.h>
 #import <CoreImage/CoreImage.h>
+#import <objc/runtime.h>
 
 /*!
 	@enum		k...ChannelsView
@@ -59,6 +60,10 @@ enum {
 	// The document associated with this whiteboard
 	__weak SeaDocument *document;
 
+    NSObject *mutex;
+    dispatch_semaphore_t renderSem;
+    bool exitRender;
+
     NSImage *checkerboard;
 	
 	// The width and height of the whiteboard
@@ -111,12 +116,6 @@ enum {
 	@result		Returns instance upon success (or NULL otherwise).
 */
 - (id)initWithDocument:(id)doc;
-
-/*!
-	@method		dealloc
-	@discussion	Frees memory occupied by an instance of this class.
-*/
-- (void)dealloc;
 
 // OVERLAY METHODS
 
@@ -250,5 +249,7 @@ enum {
 - (NSBitmapImageRep *)bitmap;
 
 - (CGImageRef)bitmapCG;
+
+- (void)shutdown;
 
 @end

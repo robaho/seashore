@@ -507,6 +507,7 @@
 
 - (void)close
 {
+    [[self whiteboard] shutdown];
     [[self textureUtility] shutdown];
     [[self brushUtility] shutdown];
     [[self optionsUtility] shutdown];

@@ -47,6 +47,8 @@ static Property PropertyMeta[] = {
     {kCI_PointRadius,@"Radius",NULL,@"inputRadius",kPT_Point,0,0,0},
     {kCI_PointWidth,@"Width",NULL,@"inputWidth",kPT_Point,0,0,0},
     {kCI_PointAngle,@"Angle",NULL,@"inputAngle",kPT_Point,0,0,0},
+    {kCI_FocalLength,@"Focal Length",NULL,@"inputFocalLength",kPT_Float,1,500,50},
+    {kCI_Crop,@"Crop",NULL,@"inputCrop",kPT_Float,0,500,0},
     {kCI_GCR,@"Gray Component Replacement",@"gcr",@"inputGCR",kPT_Float,0,1,1},
     {kCI_UCR,@"Under Color Removal",@"ucr",@"inputUCR",kPT_Float,0,1,.5},
     {kCI_Exposure,@"Exposure",@"exposure",@"inputEV",kPT_Float,-3,3,.5},
@@ -59,6 +61,9 @@ static Property PropertyMeta[] = {
     {kCI_Point1,@"Point 1",NULL,@"inputPoint1",kPT_Point,0,0,1},
     {kCI_Point2,@"Point 2",NULL,@"inputPoint2",kPT_Point,0,0,2},
     {kCI_Point3,@"Point 3",NULL,@"inputPoint3",kPT_Point,0,0,3},
+    {kCI_Pitch,@"Pitch",@"pitch",@"inputPitch",kPT_Angle,-360,360,0},
+    {kCI_Roll,@"Roll",@"roll",@"inputRoll",kPT_Angle,-360,360,0},
+    {kCI_Angle,@"Yaw",@"yaw",@"inputYaw",kPT_Angle,-360,360,0},
 
 };
 

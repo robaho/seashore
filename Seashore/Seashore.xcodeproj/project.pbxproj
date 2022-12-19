@@ -48,6 +48,7 @@
 		2B399C34279DE15D000D0C58 /* SeaContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B399C2B279DE15C000D0C58 /* SeaContent.m */; };
 		2B399C35279DE15D000D0C58 /* SeaDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B399C2E279DE15C000D0C58 /* SeaDocument.m */; };
 		2B3DFBB02874E19200D39148 /* SeaHistogram.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B3DFBAF2874E19200D39148 /* SeaHistogram.m */; };
+		2B40F45029444E870011D4DF /* PerspectiveTransform.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B40F44F29444E870011D4DF /* PerspectiveTransform.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2B78488D28877C9B000B4839 /* PocketSVG.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B78486228877B88000B4839 /* PocketSVG.framework */; };
 		2B78488E28877C9B000B4839 /* PocketSVG.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2B78486228877B88000B4839 /* PocketSVG.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2B78489528877E71000B4839 /* ColorLevels.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B78489428877E69000B4839 /* ColorLevels.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -75,6 +76,12 @@
 		2B8BD34721EA565C00FD9AC5 /* SeaPrintOptionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8BD34521EA565C00FD9AC5 /* SeaPrintOptionsController.m */; };
 		2B8BD59121ED16AB00FD9AC5 /* BrushExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8BD59021ED16AB00FD9AC5 /* BrushExporter.m */; };
 		2BB338C423C1119600647008 /* toFitTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BB338C323C1119600647008 /* toFitTemplate.png */; };
+		2BB3D0802942F788002F1E9D /* KeystoneCombined.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BB3D07D2942F788002F1E9D /* KeystoneCombined.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BB3D0812942F788002F1E9D /* KeystoneHorizontal.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BB3D07E2942F788002F1E9D /* KeystoneHorizontal.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BB3D0822942F789002F1E9D /* KeystoneVertical.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BB3D07F2942F788002F1E9D /* KeystoneVertical.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BB3D0832942F7A1002F1E9D /* PerspectiveCorrection.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BB3D0792942F6B6002F1E9D /* PerspectiveCorrection.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BB3D08529439EAF002F1E9D /* Straighten.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BB3D08429439EAF002F1E9D /* Straighten.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BB3D0872943FBFA002F1E9D /* PerspectiveRotate.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BB3D0862943FBFA002F1E9D /* PerspectiveRotate.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BC3CE3E293C079E005394FE /* SeaLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2EFA8428BF1B46009B225D /* SeaLibrary.framework */; };
 		2BC3CE3F293C079E005394FE /* SeaLibrary.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2EFA8428BF1B46009B225D /* SeaLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BC3CE40293C07A1005394FE /* SeaComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2DEC32286F35F40017BBA8 /* SeaComponents.framework */; };
@@ -121,7 +128,6 @@
 		2BD591EB21E3DBCB002D150B /* OpTile+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591EA21E3DBCB002D150B /* OpTile+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BD591ED21E3DBCB002D150B /* ParallelogramTile+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591EC21E3DBCB002D150B /* ParallelogramTile+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BD591EF21E3DBCC002D150B /* PerspectiveTile+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591EE21E3DBCC002D150B /* PerspectiveTile+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591F121E3DBCC002D150B /* PerspectiveTransform+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591F021E3DBCC002D150B /* PerspectiveTransform+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BD591F321E3DBCC002D150B /* Pinch+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591F221E3DBCC002D150B /* Pinch+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BD591F521E3DBCC002D150B /* Pixellate+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591F421E3DBCC002D150B /* Pixellate+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BD591F721E3DBCC002D150B /* Pointillize+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591F621E3DBCC002D150B /* Pointillize+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -464,9 +470,12 @@
 			dstSubfolderSpec = 13;
 			files = (
 				2B78489528877E71000B4839 /* ColorLevels.bundle in CopyFiles */,
+				2BB3D0872943FBFA002F1E9D /* PerspectiveRotate.bundle in CopyFiles */,
 				2B78489628877E71000B4839 /* ToneCurve.bundle in CopyFiles */,
 				2B2D8CC721F996A5004527F2 /* Alpha2Gray.bundle in CopyFiles */,
 				2BD591BD21E3DBCA002D150B /* Crystallize+.bundle in CopyFiles */,
+				2BB3D0832942F7A1002F1E9D /* PerspectiveCorrection.bundle in CopyFiles */,
+				2BB3D0802942F788002F1E9D /* KeystoneCombined.bundle in CopyFiles */,
 				2BD5920F21E3DBCD002D150B /* VertStripes+.bundle in CopyFiles */,
 				2BD591AB21E3DBCA002D150B /* AffineTile+.bundle in CopyFiles */,
 				2BD591CD21E3DBCB002D150B /* Gaussian+.bundle in CopyFiles */,
@@ -477,11 +486,14 @@
 				2BD591BB21E3DBCA002D150B /* CMYKHalftone+.bundle in CopyFiles */,
 				2BD5920321E3DBCC002D150B /* Starshine+.bundle in CopyFiles */,
 				2BD591E521E3DBCB002D150B /* Monochrome+.bundle in CopyFiles */,
+				2B40F45029444E870011D4DF /* PerspectiveTransform.bundle in CopyFiles */,
 				2BD591ED21E3DBCB002D150B /* ParallelogramTile+.bundle in CopyFiles */,
 				2BD591CB21E3DBCA002D150B /* GammaAdjust+.bundle in CopyFiles */,
 				2BD5920D21E3DBCD002D150B /* UnsharpMask+.bundle in CopyFiles */,
 				2BD591AD21E3DBCA002D150B /* Bloom+.bundle in CopyFiles */,
 				2BD591F521E3DBCC002D150B /* Pixellate+.bundle in CopyFiles */,
+				2BB3D0822942F789002F1E9D /* KeystoneVertical.bundle in CopyFiles */,
+				2BB3D08529439EAF002F1E9D /* Straighten.bundle in CopyFiles */,
 				2BD5921921E3DBCD002D150B /* Threshold.bundle in CopyFiles */,
 				2BD591FB21E3DBCC002D150B /* Random+.bundle in CopyFiles */,
 				2BD5921521E3DBCD002D150B /* ZoomBlur+.bundle in CopyFiles */,
@@ -518,11 +530,11 @@
 				2BD591D921E3DBCB002D150B /* HorizStripes+.bundle in CopyFiles */,
 				2BD5921F21E3DBCD002D150B /* CMYK.bundle in CopyFiles */,
 				2BD591C721E3DBCA002D150B /* Exposure+.bundle in CopyFiles */,
-				2BD591F121E3DBCC002D150B /* PerspectiveTransform+.bundle in CopyFiles */,
 				2BD591C921E3DBCA002D150B /* FalseColor+.bundle in CopyFiles */,
 				2BD5920521E3DBCC002D150B /* Sunbeams+.bundle in CopyFiles */,
 				2BD591A921E3DBCA002D150B /* AutoEnhance+.bundle in CopyFiles */,
 				2BD591CF21E3DBCB002D150B /* GlassDistortion+.bundle in CopyFiles */,
+				2BB3D0812942F788002F1E9D /* KeystoneHorizontal.bundle in CopyFiles */,
 				2BD591DB21E3DBCB002D150B /* Invert+.bundle in CopyFiles */,
 				2BD591E921E3DBCB002D150B /* NoiseReduction+.bundle in CopyFiles */,
 			);
@@ -572,6 +584,7 @@
 		2B399CA5279E0558000D0C58 /* SeaLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeaLayer.h; sourceTree = "<group>"; };
 		2B3DFBAE2874E19200D39148 /* SeaHistogram.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaHistogram.h; sourceTree = "<group>"; };
 		2B3DFBAF2874E19200D39148 /* SeaHistogram.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeaHistogram.m; sourceTree = "<group>"; };
+		2B40F44F29444E870011D4DF /* PerspectiveTransform.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = PerspectiveTransform.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B78486228877B88000B4839 /* PocketSVG.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PocketSVG.framework; path = ../PocketSVG/PocketSVG.framework; sourceTree = SOURCE_ROOT; };
 		2B78489328877E60000B4839 /* ToneCurve.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = ToneCurve.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B78489428877E69000B4839 /* ColorLevels.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = ColorLevels.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -611,6 +624,15 @@
 		2B8BD58F21ED169B00FD9AC5 /* BrushExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrushExporter.h; sourceTree = "<group>"; };
 		2B8BD59021ED16AB00FD9AC5 /* BrushExporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrushExporter.m; sourceTree = "<group>"; };
 		2BB338C323C1119600647008 /* toFitTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toFitTemplate.png; sourceTree = "<group>"; };
+		2BB3D0792942F6B6002F1E9D /* PerspectiveCorrection.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = PerspectiveCorrection.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BB3D07A2942F6C3002F1E9D /* KeystoneHorizontal.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = KeystoneHorizontal.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BB3D07B2942F6C9002F1E9D /* KeystoneVertical.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = KeystoneVertical.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BB3D07C2942F6CD002F1E9D /* KeystoneCombined.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = KeystoneCombined.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BB3D07D2942F788002F1E9D /* KeystoneCombined.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = KeystoneCombined.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BB3D07E2942F788002F1E9D /* KeystoneHorizontal.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = KeystoneHorizontal.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BB3D07F2942F788002F1E9D /* KeystoneVertical.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = KeystoneVertical.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BB3D08429439EAF002F1E9D /* Straighten.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = Straighten.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BB3D0862943FBFA002F1E9D /* PerspectiveRotate.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = PerspectiveRotate.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BC3CE69293C47BA005394FE /* star.fill@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star.fill@2x.png"; sourceTree = "<group>"; };
 		2BCD7A13286281F7007EB89B /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = "English.lproj/Support Seashore.rtf"; sourceTree = "<group>"; };
 		2BCD7A16286294E2007EB89B /* SeaWhatsNew.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaWhatsNew.h; sourceTree = "<group>"; };
@@ -1205,6 +1227,9 @@
 		2A37F4C3FDCFA73011CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2BB3D07D2942F788002F1E9D /* KeystoneCombined.bundle */,
+				2BB3D07E2942F788002F1E9D /* KeystoneHorizontal.bundle */,
+				2BB3D07F2942F788002F1E9D /* KeystoneVertical.bundle */,
 				2BCF02A228FA0F3200733144 /* AppKit.framework */,
 				2BCF02A028FA0F2500733144 /* CoreFoundation.framework */,
 				2B2EFA8428BF1B46009B225D /* SeaLibrary.framework */,
@@ -1222,6 +1247,9 @@
 				2BFC6C2A2778DEE400F707D9 /* XCTest.framework */,
 				1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */,
 				1058C7A8FEA54F5311CA2CBB /* Other Frameworks */,
+				2BB3D08429439EAF002F1E9D /* Straighten.bundle */,
+				2BB3D0862943FBFA002F1E9D /* PerspectiveRotate.bundle */,
+				2B40F44F29444E870011D4DF /* PerspectiveTransform.bundle */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1242,6 +1270,10 @@
 		2BD5923B21E3DBEF002D150B /* EmbeddedBinaries */ = {
 			isa = PBXGroup;
 			children = (
+				2BB3D07C2942F6CD002F1E9D /* KeystoneCombined.bundle */,
+				2BB3D07B2942F6C9002F1E9D /* KeystoneVertical.bundle */,
+				2BB3D07A2942F6C3002F1E9D /* KeystoneHorizontal.bundle */,
+				2BB3D0792942F6B6002F1E9D /* PerspectiveCorrection.bundle */,
 				2B78489428877E69000B4839 /* ColorLevels.bundle */,
 				2B78489328877E60000B4839 /* ToneCurve.bundle */,
 				2B2D8CC521F995BB004527F2 /* Alpha2Gray.bundle */,

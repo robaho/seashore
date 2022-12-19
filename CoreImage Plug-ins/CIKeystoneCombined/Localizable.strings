@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+<key>author</key>
+<string>Robert Engels</string>
+<key>copyright</key>
+<string>Public Domain 2022</string>
+<key>description</key>
+<string>Perform both horizontal and vertical keystone correction.</string>
+<key>groupName</key>
+<string>Geometry</string>
+<key>instruction</key>
+<string>Click four times: to indicate the points of the guide in a clockwise direction from the top-left.</string>
+<key>license</key>
+<string>Public Domain</string>
+<key>name</key>
+<string>Keystone Combined Correction</string>
+</dict>
+</plist>

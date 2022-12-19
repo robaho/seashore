@@ -38,7 +38,7 @@
 	return NO;
 }
 
-- (void)plotBrush:(SeaBrush*)curBrush at:(NSPoint)where pressure:(int)pressure
+- (IntRect)plotBrush:(SeaBrush*)curBrush at:(NSPoint)where pressure:(int)pressure
 {
     int size = [options pencilSize];
 
@@ -61,6 +61,8 @@
     }
 
     [[document helpers] overlayChanged:rect];
+
+    return rect;
 
 }
 

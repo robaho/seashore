@@ -37,6 +37,8 @@ typedef enum {
     kCI_PointRadius,
     kCI_PointWidth,
     kCI_PointAngle,
+    kCI_FocalLength,
+    kCI_Crop,
     kCI_GCR,
     kCI_UCR,
     kCI_Exposure,
@@ -49,6 +51,9 @@ typedef enum {
     kCI_Point1,
     kCI_Point2,
     kCI_Point3,
+    kCI_Pitch,
+    kCI_Roll,
+    kCI_Yaw,
 } CIProperty;
 
 @interface CoreImagePlugin : NSObject <PluginClass>

@@ -234,6 +234,8 @@
 {
     if([options autoApply] && [self isChanged]) {
         [self apply:self];
+    } else {
+        [self reset:self];
     }
 }
 

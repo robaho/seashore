@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+<key>author</key>
+<string>Robert Engels</string>
+<key>copyright</key>
+<string>Public Domain 2022</string>
+<key>description</key>
+<string>Apply a homogenous rotation transform to an image.</string>
+<key>groupName</key>
+<string>Geometry</string>
+<key>instruction</key>
+<string></string>
+<key>license</key>
+<string>Public Domain</string>
+<key>name</key>
+<string>Perspective Rotate</string>
+</dict>
+</plist>
