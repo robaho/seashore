@@ -29,6 +29,10 @@ xcsharedata/
 *.xcscmblueprint
 .DS_Store
 
+build.log
+build.errors
+mybuild.sh
+
 ### Xcode Patch ###
 *.xcodeproj/*
 !*.xcodeproj/project.pbxproj
