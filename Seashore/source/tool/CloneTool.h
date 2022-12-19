@@ -18,9 +18,9 @@
 	
 	// A timer to allow the source to set
 	id fadingTimer;
-	
-    CGImageRef srcImg;
-    CGRect srcRect;
+
+    CGContextRef srcCtx;
+    IntRect srcRect;
     NSString *srcName;
     
     CloneOptions *options;

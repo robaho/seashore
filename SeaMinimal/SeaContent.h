@@ -9,7 +9,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface SeaContent : NSObject
 {
     int width,height,type;
-    int spp;
     int xres,yres;
     bool hasAlpha;
 
@@ -31,7 +30,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (int) height;
 - (int) xres;
 - (int) yres;
-- (int) spp;
 - (int) type;
 - (bool) hasAlpha;
 - (int) layerCount;

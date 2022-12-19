@@ -5,13 +5,10 @@
 
 - (CGImageRef) render:(SeaContent*)content
 {
-    int spp = [content spp];
     int width = [content width];
     int height = [content height];
 
-    NSLog(@"width %d height %d",width,height);
-
-    CGContextRef ctx = CGBitmapContextCreate(NULL,width,height,8,0,COLOR_SPACE,kCGImageAlphaPremultipliedLast);
+    CGContextRef ctx = CGBitmapContextCreate(NULL,width,height,8,0,COLOR_SPACE,kCGImageAlphaPremultipliedFirst);
 
     CGContextTranslateCTM(ctx,0,height);
     CGContextScaleCTM(ctx,1,-1);

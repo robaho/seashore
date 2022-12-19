@@ -14,6 +14,7 @@
 #import "AbstractTool.h"
 #import "SeaScrollView.h"
 #import "SeaHistogram.h"
+#import "SeaPluginData.h"
 
 /*!
 	@class		SeaDocument
@@ -25,7 +26,7 @@
 */
 @class SeaHelpers;
 @class SeaSelection;
-@class PluginClass;
+@protocol PluginClass;
 
 @interface SeaDocument : NSDocument {
 
@@ -51,7 +52,7 @@
 	IBOutlet id warnings;
 	
 	// The plug-in data used by this document
-	IBOutlet id pluginData;
+	__weak IBOutlet SeaPluginData *pluginData;
 	
 	// An outlet to the view associated with this document
     IBOutlet id contentView;
@@ -109,7 +110,7 @@
 @property (strong) IBOutlet InfoUtility *infoUtility;
 @property (strong) IBOutlet StatusUtility *statusUtility;
 
-@property (strong) PluginClass *lastPlugin;
+@property (strong) id<PluginClass> lastPlugin;
 
 // CREATION METHODS
 
@@ -221,7 +222,7 @@
 	@discussion	Returns the object shared between Seashore and most plug-ins.
 	@result		Returns an instance of PluginData.
 */
-- (id)pluginData;
+- (SeaPluginData*)pluginData;
 
 /*!
 	@method		docView

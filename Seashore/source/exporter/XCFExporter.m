@@ -164,13 +164,14 @@ static inline void fix_endian_write(int *input, int size)
 
 - (BOOL)writeLayerHeader:(int)index file:(FILE *)file
 {
-	id contents = [document contents];
+	SeaContent *contents = [document contents];
 	id layer = [contents layer:index];
 
 	// Write the width, height and type of the layer
 	tempIntString[0] = [(SeaLayer *)layer width];
 	tempIntString[1] = [(SeaLayer *)layer height];
-	tempIntString[2] = ([(SeaContent *)contents spp] == 4) ? GIMP_RGBA_IMAGE : GIMP_GRAYA_IMAGE;
+	tempIntString[2] = [contents isRGB] ? GIMP_RGBA_IMAGE : GIMP_GRAYA_IMAGE;
+
 	fix_endian_write(tempIntString, 3);
 	fwrite(tempIntString, sizeof(int), 3, file);
 	
@@ -304,11 +305,13 @@ static inline void fix_endian_write(int *input, int size)
 - (BOOL)writeLayerPixels:(int)index file:(FILE *)file
 {
 	SeaLayer *layer = [[document contents] layer:index];
-	int width = [layer width], height = [layer height], spp = [[document contents] spp];
+	int width = [layer width], height = [layer height];
 	int tilesPerRow = (width % XCF_TILE_WIDTH) ? (width / XCF_TILE_WIDTH + 1) : (width / XCF_TILE_WIDTH);
 	int tilesPerColumn = (height % XCF_TILE_HEIGHT) ? (height / XCF_TILE_HEIGHT + 1) : (height / XCF_TILE_HEIGHT);
 	int offsetPos, oldPos, whichTile, i, j, k, tileWidth, tileHeight, tileSize, srcLoc, destLoc, compressedLength;
 	unsigned char *totalData, *tileData, *compressedTileData;
+
+    int spp = [[document contents] isRGB] ? 4 : 2;
 
 	// Direct to the layer's pixels
 	tempIntString[0] = ftell(file) + 2 * sizeof(int);
@@ -360,10 +363,16 @@ static inline void fix_endian_write(int *input, int size)
 		// Copy data from totalData to tileData
 		for (j = 0; j < tileHeight; j++) {
 			for (i = 0; i < tileWidth; i++) {
-				srcLoc = (((whichTile % tilesPerRow) * XCF_TILE_WIDTH) + i) * spp + ((whichTile /  tilesPerRow) * XCF_TILE_HEIGHT + j) * width * spp;
+				srcLoc = (((whichTile % tilesPerRow) * XCF_TILE_WIDTH) + i) * SPP + ((whichTile /  tilesPerRow) * XCF_TILE_HEIGHT + j) * width * SPP;
 				destLoc = (i + j * tileWidth) * spp;
-				for (k = 0; k < spp; k++) 
-					tileData[destLoc + k] = totalData[srcLoc + k];
+                tileData[destLoc+spp-1] = totalData[srcLoc+alphaPos];
+                if(spp==2) {
+                    tileData[destLoc+0] = totalData[srcLoc+CR];
+                } else {
+                    tileData[destLoc+0] = totalData[srcLoc+CR];
+                    tileData[destLoc+1] = totalData[srcLoc+CG];
+                    tileData[destLoc+2] = totalData[srcLoc+CB];
+                }
 			}
 		}
 		

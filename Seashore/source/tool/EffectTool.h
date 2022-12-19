@@ -28,7 +28,7 @@
     
     EffectOptions *options;
     
-    PluginClass *currentPlugin;
+    id<PluginClass> currentPlugin;
     
     NSView *pluginView;
     
@@ -38,7 +38,7 @@
     IntPoint draggingPointStart;
     IntPoint draggingPointOriginal;
     
-    PluginClass *lastPlugin;
+    id<PluginClass> lastPlugin;
 }
 
 /*!
@@ -58,7 +58,7 @@
                  The newly selected effect/plugin.
     @discussion    Call to select a new effect.
 */
-- (void)selectEffect:(PluginClass*)plugin;
+- (void)selectEffect:(id<PluginClass>)plugin;
 
 /*!
 	@method		point:
@@ -83,7 +83,7 @@
     @discussion    returns the current effect or nil.
     @result        returns the current effect or nil.
 */
-- (PluginClass*)plugin;
+- (id<PluginClass>)plugin;
 
 - (void)settingsChanged;
 

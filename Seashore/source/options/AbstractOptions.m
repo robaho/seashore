@@ -73,11 +73,11 @@
 
 - (void)unforceAlt
 {
+    [modifierPopup setEnabled:TRUE];
 	if (forceAlt) {
         forceAlt = NO;
 		[self updateModifiers:0];
 	}
-    [modifierPopup setEnabled:TRUE];
 }
 
 - (int)modifierMask

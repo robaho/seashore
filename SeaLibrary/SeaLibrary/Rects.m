@@ -250,6 +250,3 @@ inline IntRect IntEmptyRect(IntPoint origin){
 inline IntPoint IntOffsetPoint(IntPoint p,int xoff,int yoff) {
     return IntMakePoint(p.x+xoff,p.y+yoff);
 }
-inline bool IntRectIsEmpty(IntRect rect){
-    return rect.size.width==0 || rect.size.height==0;
-}

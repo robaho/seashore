@@ -19,9 +19,9 @@
 
 - (id)initWithDocument:(id)doc
 {	
-    int height = width = mode = 0; // must have a min size or memory allocates don't work
+    height= width = mode = 0;
 	opacity = 255; xoff = yoff = 0;
-	spp = 4; visible = YES; nsdata = [NSData data]; hasAlpha = YES;
+	visible = YES; nsdata = [NSData data]; hasAlpha = YES;
 	lostprops = NULL; lostprops_len = 0;
 	document = doc;
 	seaLayerUndo = [[SeaLayerUndo alloc] initWithDocument:doc forLayer:self];
@@ -35,7 +35,7 @@
 	return self;
 }
 
--  (id)initWithDocument:(id)doc width:(int)lwidth height:(int)lheight opaque:(BOOL)opaque spp:(int)lspp;
+-  (id)initWithDocument:(id)doc width:(int)lwidth height:(int)lheight opaque:(BOOL)opaque;
 {
 	// Call the core initializer
 	if (![self initWithDocument:doc])
@@ -46,11 +46,8 @@
 	
 	// Extract appropriate values of master
 	width = lwidth; height = lheight;
-	
-	// Get the appropriate samples per pixel
-	spp = lspp;
 
-    int len = width*height*spp;
+    int len = width*height*SPP;
 	
 	// Create a representation in memory of the blank canvas
 	unsigned char *data = malloc(len);
@@ -68,7 +65,7 @@
 	return self;
 }
 
-- (id)initWithDocument:(id)doc rect:(IntRect)lrect data:(unsigned char *)ldata spp:(int)lspp
+- (id)initWithDocument:(id)doc rect:(IntRect)lrect data:(unsigned char *)ldata
 {
 	// Call the core initializer
 	if (![self initWithDocument:doc])
@@ -77,10 +74,8 @@
 	// Derive the width and height from the imageRep
 	xoff = lrect.origin.x; yoff = lrect.origin.y;
 	width = lrect.size.width; height = lrect.size.height;
-    // Get the appropriate samples per pixel
-    spp = lspp;
 
-    nsdata = [NSData dataWithBytesNoCopy:ldata length:width*height*spp];
+    nsdata = [NSData dataWithBytesNoCopy:ldata length:width*height*SPP];
 
     if(width<=0 || height<=0)
         return NULL;
@@ -106,7 +101,6 @@
         return NULL;
 
 	mode = [layer mode];
-	spp = [[[layer document] contents] spp];
 
     nsdata = [NSData dataWithBytes:[[layer layerData] bytes] length:[[layer layerData] length]];
 	xoff = [layer xoff];
@@ -215,74 +209,20 @@
 {
     Margins m = [self contentMargins];
     
-	if (m.left != 0 || m.top != 0 || m.right != 0 || m.bottom != 0)
-		[self setMarginLeft:-m.left top:-m.top right:-m.right bottom:-m.bottom];
+    if (!MarginsIsEmpty(m)) {
+        [self setMarginLeft:-m.left top:-m.top right:-m.right bottom:-m.bottom];
+    }
 }
 
 - (Margins)contentMargins
 {
-    int i, j, k;
-    int left, right, top, bottom;
-
-    // Start out with invalid content borders
-    left = right = top = bottom = -1;
-
     if(![nsdata length]) {
-        return (Margins){0,0,0,0};
+        return (Margins){-1,-1,-1,-1};
     }
 
     unsigned char *data = [nsdata bytes];
 
-    // Determine left content margin
-    for (i = 0; i < width && left == -1; i++) {
-        for (j = 0; j < height && left == -1; j++) {
-            if (data[j * width * spp + i * spp + (spp - 1)] != 0) {
-                for (k = 0; k < spp; k++) {
-                    if (data[j * width * spp + i * spp + k] != data[k])
-                        left = i;
-                }
-            }
-        }
-    }
-
-    // Determine right content margin
-    for (i = width - 1; i >= 0 && right == -1; i--) {
-        for (j = 0; j < height && right == -1; j++) {
-            if (data[j * width * spp + i * spp + (spp - 1)] != 0) {
-                for (k = 0; k < spp; k++) {
-                    if (data[j * width * spp + i * spp + k] != data[k])
-                        right = width - 1 - i;
-                }
-            }
-        }
-    }
-
-    // Determine top content margin
-    for (j = 0; j < height && top == -1; j++) {
-        for (i = 0; i < width && top == -1; i++) {
-            if (data[j * width * spp + i * spp + (spp - 1)] != 0) {
-                for (k = 0; k < spp; k++) {
-                    if (data[j * width * spp + i * spp + k] != data[k])
-                        top = j;
-                }
-            }
-        }
-    }
-
-    // Determine bottom content margin
-    for (j = height - 1; j >= 0 && bottom == -1; j--) {
-        for (i = 0; i < width && bottom == -1; i++) {
-            if (data[j * width * spp + i * spp + (spp - 1)] != 0) {
-                for (k = 0; k < spp; k++) {
-                    if (data[j * width * spp + i * spp + k] != data[k])
-                        bottom = height - 1 - j;
-                }
-            }
-        }
-    }
-
-    Margins m = { left:left, top:top, right:right, bottom:bottom};
-    return m;
+    return determineContentMargins(data,width,height);
 }
 
 - (void)flipHorizontally
@@ -368,18 +308,18 @@
         goto done;
     }
 
-    unsigned char *new_data = calloc(w*h*spp,1);
-    CHECK_MALLOC(new_data);
-    
-    CGContextRef ctx = CGBitmapContextCreate(new_data,w,h,8,w*spp, COLOR_SPACE, kCGImageAlphaPremultipliedLast);
+    CGContextRef ctx = CreateImageContext(bounds);
+
+    unsigned char *new_data = ImageContextGetData(ctx);
+
     CGContextTranslateCTM(ctx,(w/2),(h/2));
     CGContextConcatCTM(ctx,[tx cgtransform]);
     CGContextTranslateCTM(ctx,-(width/2),-(height/2));
     [self drawContent:ctx];
     CGContextRelease(ctx);
 
-    unpremultiplyBitmap(spp, new_data, new_data, w*h);
-    nsdata = [NSData dataWithBytesNoCopy:new_data length:w*h*spp];
+    unpremultiplyBitmap(SPP, new_data, new_data, w*h);
+    nsdata = [NSData dataWithBytesNoCopy:new_data length:w*h*SPP];
 
 done:
     width=w;
@@ -505,7 +445,7 @@ done:
 
 	if (hasAlpha) {
 		for (i = 0; i < width * height; i++) {
-			if (data[(i + 1) * spp - 1] != 255)
+			if (data[i * SPP + alphaPos] != 255)
 				return NO;
 		}
 	}
@@ -591,7 +531,7 @@ done:
         goto done;
     }
 
-    int len = newWidth * newHeight * spp;
+    int len = newWidth * newHeight * SPP;
 	newImageData = malloc(make_128(len));
 
     unsigned char *data = [nsdata bytes];
@@ -600,16 +540,24 @@ done:
 	for (j = 0; j < newHeight; j++) {
 		for (i = 0; i < newWidth; i++) {
 			
-			destPos = (j * newWidth + i) * spp;
+			destPos = (j * newWidth + i) * SPP;
 			
 			if (i < left || i >= left + width || j < top || j >= top + height) {
-				if (!hasAlpha) { for (k = 0; k < spp; k++) newImageData[destPos + k] = 255; }
-				else { for (k = 0; k < spp; k++) newImageData[destPos + k] = 0; }
+                // The dimensions are being increased, so need to fill the new area.
+				if (!hasAlpha) {
+                    for (k = 0; k < SPP; k++) {
+                        newImageData[destPos + k] = 255;
+                    }
+                }
+                else {
+                    for (k = 0; k < SPP; k++){
+                        newImageData[destPos + k] = 0;
+                    }
+                }
 			}
 			else {
-				srcPos = ((j - top) * width + (i - left)) * spp;
-				for (k = 0; k < spp; k++)
-					newImageData[destPos + k] = data[srcPos + k];
+				srcPos = ((j - top) * width + (i - left)) * SPP;
+                memcpy(newImageData+destPos,data+srcPos,SPP);
 			}
 			
 		}
@@ -629,8 +577,8 @@ done:
     if(![nsdata length])
         return NULL;
 
-    CGDataProviderRef dp = CGDataProviderCreateWithData(NULL,[nsdata bytes],width*height*spp,NULL);
-    CGImageRef image = CGImageCreate(width,height,8,8*spp,width*spp,COLOR_SPACE,kCGImageAlphaLast,dp,nil,false,0);
+    CGDataProviderRef dp = CGDataProviderCreateWithData(NULL,[nsdata bytes],width*height*SPP,NULL);
+    CGImageRef image = CGImageCreate(width,height,8,8*SPP,width*SPP,COLOR_SPACE,kCGImageAlphaFirst,dp,nil,false,0);
     CGDataProviderRelease(dp);
     return image;
 }
@@ -639,28 +587,12 @@ done:
 {
     rect = IntConstrainRect([self localRect],rect);
 
-    int w = rect.size.width;
-    int h = rect.size.height;
-
-    if(w==0 || h==0 || ![nsdata length])
-        return NULL;
-
-    int len = rect.size.width*rect.size.height*spp;
-    unsigned char *p = malloc(len);
-    CFDataRef copydata = CFDataCreateWithBytesNoCopy(NULL,p,len,NULL);
-
-    unsigned char *data = [nsdata bytes];
-
-    CGDataProviderRef dp = CGDataProviderCreateWithCFData(copydata);
-    CGImageRef image = CGImageCreate(w,h,8,8*spp,w*spp,COLOR_SPACE,kCGImageAlphaLast,dp,nil,false,0);
-    CGDataProviderRelease(dp);
-
-    // copy data
-    for(int y=0;y<h;y++) {
-        memcpy(p+(w*y)*spp,data+((rect.origin.y+y)*width+rect.origin.x)*spp,w*spp);
-    }
-
-    return image;
+    CGImageRef bm = [self bitmap];
+    CGImageRef subimage = CGImageCreateWithImageInRect(bm, IntRectMakeNSRect(rect));
+    CGImageRef copy = CGImageDeepCopy(subimage);
+    CGImageRelease(subimage);
+    CGImageRelease(bm);
+    return copy;
 }
 
 - (NSImage *)image
@@ -676,25 +608,12 @@ done:
 
 - (void)convertFromType:(int)srcType to:(int)destType
 {
-	// Don't do anything if there is nothing to do
-	if (srcType == destType)
-		return;
-    
-    image = NULL;
+    if(srcType==destType || destType!=XCF_GRAY_IMAGE)
+        return;
 
-    CGImageRef bitmap = [self bitmap];
-    NSBitmapImageRep *imageRep = [[NSBitmapImageRep alloc] initWithCGImage:bitmap];
-    CGImageRelease(bitmap);
-		
-	if (srcType == XCF_RGB_IMAGE && destType == XCF_GRAY_IMAGE) {
-        spp=2;
-    } else {
-        spp=4;
-    }
-    
-    unsigned char *newdata = convertImageRep(imageRep,spp);
+    unsigned char *data = (unsigned char*)[nsdata bytes];
 
-    nsdata = [NSData dataWithBytesNoCopy:newdata length:width*height*spp];
+    mapRGBAtoGrayA(data,width*height*SPP);
 }
 
 - (void)drawLayer:(CGContextRef)context
@@ -754,13 +673,9 @@ done:
     if(x<0 || x>=width || y<0 || y>=height)
         return NULL;
 
-    unsigned char *pixelData = [nsdata bytes] + (width*y+x) * spp;
+    unsigned char *pixelData = [nsdata bytes] + (width*y+x) * SPP;
 
-    if(spp==2){
-        return [NSColor colorWithRed:pixelData[0]/255.0 green:pixelData[0]/255.0 blue:pixelData[0]/255.0 alpha:pixelData[1]/255.0];
-    } else {
-        return [NSColor colorWithRed:pixelData[0]/255.0 green:pixelData[1]/255.0 blue:pixelData[2]/255.0 alpha:pixelData[3]/255.0];
-    }
+    return [NSColor colorWithRed:pixelData[CR]/255.0 green:pixelData[CG]/255.0 blue:pixelData[CB]/255.0 alpha:pixelData[alphaPos]/255.0];
 }
 
 @end

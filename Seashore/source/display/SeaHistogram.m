@@ -42,7 +42,6 @@ extern dispatch_queue_t queue;
 {
     SeaContent *contents = [document contents];
 
-    int spp = [contents spp];
     int sw,sh;
 
     int source = [sourceComboBox indexOfSelectedItem];
@@ -65,7 +64,7 @@ extern dispatch_queue_t queue;
 
     int mode = [modeComboBox indexOfSelectedItem];
 
-    if(spp==2)
+    if([contents type]==XCF_GRAY_IMAGE)
         mode = 0; // only value supported
 
     dispatch_async(queue, ^{
@@ -77,22 +76,22 @@ extern dispatch_queue_t queue;
             bytesPerRow = CGBitmapContextGetBytesPerRow(ctx);
         } else {
             data = [data_ref bytes];
-            bytesPerRow = sw*spp;
+            bytesPerRow = sw*SPP;
         }
 
         int *histogram = calloc(256*3,sizeof(int)); // allocate enough for all planes
 
         for (int row=0;row<sh;row++) {
             for(int col=0;col<sw;col++) {
-                int offset = row*bytesPerRow+col*spp;
+                int offset = row*bytesPerRow+col*SPP;
 
-                if(data[offset+spp-1]==0)
+                if(data[offset+alphaPos]==0)
                     continue; // ignore completely transparent pixels
 
                 int max = 0;
                 switch(mode) {
                     case 0: // value
-                        for (int i = 0; i < spp - 1; i++)
+                        for (int i = CR; i <= CB; i++)
                             max = MAX(max,data[offset + i]);
                         histogram[max]++;
                         break;
@@ -102,8 +101,8 @@ extern dispatch_queue_t queue;
                         histogram[data[offset+mode-1]]++;
                         break;
                     case 4:
-                        for (int i = 0; i < spp - 1; i++) {
-                            int value = data[offset+i];
+                        for (int i = 0; i < SPP-1; i++) {
+                            int value = data[offset+i+CR];
                             histogram[i*256+value]++;
                         }
                 }

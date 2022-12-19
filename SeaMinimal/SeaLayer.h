@@ -7,7 +7,6 @@ NS_ASSUME_NONNULL_BEGIN
 {
     int mode;
     int width,height;
-    int spp;
 
     NSString *name;
     int opacity;

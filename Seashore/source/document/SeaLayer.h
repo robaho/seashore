@@ -38,10 +38,6 @@
 	// The layer's offset
 	int xoff, yoff;
 	
-	// The samples per pixel in this layer
-	// (this should be the same as determined from the document's type)
-	int spp;
-	
 	// Is the layer visible?
 	BOOL visible;
 	
@@ -76,7 +72,7 @@
 - (id)initWithDocument:(id)doc;
 
 /*!
-	@method		initWithDocument:width:height:opaque:spp:
+	@method		initWithDocument:width:height:opaque
 	@discussion	Initializes an instance of this class with the given values.
 	@param		doc
 				The document with which to initialize the instance.
@@ -86,15 +82,12 @@
 				The height with which to initialize the instance.
 	@param		opaque
 				YES if the layer should be opaque, NO otherwise.
-	@param		lspp
-				The samples per pixel of the layer. This argument may seem
-				redundant but it's not.
 	@result		Returns instance upon success (or NULL otherwise).
 */
-- (id)initWithDocument:(id)doc width:(int)lwidth height:(int)lheight opaque:(BOOL)opaque spp:(int)lspp;
+- (id)initWithDocument:(id)doc width:(int)lwidth height:(int)lheight opaque:(BOOL)opaque;
 
 /*!
-	@method		initWithDocument:rect:data:spp:
+	@method		initWithDocument:rect:data
 	@discussion	Initializes an instance of this class with the given bitmap data
 				note that the bitmap data is copied so you are still free to
 				throw away and play with the bitmap data after you have passed
@@ -105,14 +98,10 @@
 				The rectangle with which to initialize the instance. This
 				determines the width, height and offsets of the layer.
 	@param		ldata
-				The block of memory containing the bitmap data (data must be of
-				same spp as document).
-	@param		lspp
-				The samples per pixel of the layer. This argument may seem
-				redundant but it's not.
+				The block of memory containing the bitmap data
 	@result		Returns instance upon success (or NULL otherwise).
 */
-- (id)initWithDocument:(id)doc rect:(IntRect)lrect data:(unsigned char *)ldata spp:(int)lspp;
+- (id)initWithDocument:(id)doc rect:(IntRect)lrect data:(unsigned char *)ldata;
 
 /*!
 	@method		initWithDocument:layer:type:

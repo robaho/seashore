@@ -1,7 +1,6 @@
 #import "Seashore.h"
 #import "SmudgeOptions.h"
 #import "AbstractBrushTool.h"
-#import "DebugView.h"
 #import <Accelerate/Accelerate.h>
 
 /*!
@@ -16,7 +15,7 @@
 
 @interface SmudgeTool : AbstractBrushTool {
     SmudgeOptions *options;
-    unsigned char *accumData;
+    unsigned char *accumData, *tempData;
     int rate;
 }
 @end

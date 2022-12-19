@@ -24,6 +24,7 @@
 	BOOL isPreviewing;
     
     BucketOptions *options;
+    CGContextRef textureCtx;
 }
 
 /*!

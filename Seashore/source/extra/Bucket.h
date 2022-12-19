@@ -9,6 +9,18 @@
 */
 
 #import "Seashore.h"
+#include <Accelerate/Accelerate.h>
+
+
+typedef struct {
+    unsigned char *overlay;
+    unsigned char *data;
+    IntPoint *seeds;
+    int numSeeds;
+    int tolerance;
+    int channel;
+    int width,height;
+} fillContext;
 
 /*!
 	@function	bucketFill
@@ -16,8 +28,6 @@
 				colours with a single given colour. The function does not work
 				on the bitmap directly but instead on an overlay which can later
 				be composited on to the bitmap.
-	@param		spp
-				The samples per pixel of the bitmap and overlay.
 	@param		rect
 				The largest region of the bitmap to fill (must lie entirely
 				within bitmap).
@@ -48,8 +58,19 @@
 	@result		Returns the smallest possible IntRect including all affected
 				pixels.
 */
-IntRect bucketFill(int spp, IntRect rect, unsigned char *overlay, unsigned char *data, int width, int height, IntPoint seeds[], int numSeeds, unsigned char *fillColor, int tolerance, int channel);
-void textureFill(CGContextRef context,NSColor *patternColor,CGRect rect);
-BOOL shouldFill(unsigned char *overlay, unsigned char *data, IntPoint seeds[], int numSeeds, IntPoint point, int width, int spp, int tolerance, int channel);
-
-void smudgeFill(int spp, int channel, IntRect rect, unsigned char *layerData, unsigned char *data, int width, int height, unsigned char *accum, unsigned char *mask, int brushWidth,int brushHeight, int rate);
+IntRect bucketFill(fillContext *ctx,IntRect rect,unsigned char *fillColor);
+/*!
+@function    textureFill
+@discussion    Given a bitmap, this function fills the bitmap with the given
+texture replacing the bitmap's colour but preserving the
+bitmap's transparency. It is often applied to the overlay.
+@param        texture
+The texture image.
+@param        rect
+The region of the bitmap to replace with the given texture (must
+*/
+void textureFill(CGContextRef dst,CGContextRef textureCtx, IntRect rect);
+void cloneFill(CGContextRef dst,CGContextRef srcCtx,IntRect rect,IntPoint offset,IntRect srcRect);
+BOOL shouldFill(fillContext *ctx,IntPoint point);
+void smudgeFill(IntRect rect, unsigned char *layerData, unsigned char *data, int width, int height, unsigned char *accum, unsigned char *temp, unsigned char *mask, int brushWidth,int brushHeight, int rate);
+void blitImage(CGContextRef dst,vImage_Buffer *iBuf,IntRect r,unsigned char opacity);

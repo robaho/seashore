@@ -25,45 +25,61 @@
 
 - (int)toolId
 {
-	return kPencilTool;
+    return kPencilTool;
 }
 
 - (BOOL)acceptsLineDraws
 {
-	return YES;
+    return YES;
 }
 
 - (BOOL)useMouseCoalescing
 {
-	return NO;
+    return NO;
 }
 
-- (IntRect)plotBrush:(SeaBrush*)curBrush at:(NSPoint)where pressure:(int)pressure
+//- (IntRect)plotBrushAt:(NSPoint)where pressure:(int)pressure
+//{
+//    int size = [options pencilSize];
+//
+//    CGRect cgRect = NSIntegralRect(CGRectMake(where.x-size/2,where.y-size/2,size,size));
+//
+//    IntRect rect = NSRectMakeIntRect(cgRect);
+//
+//    CGContextRef overlayCtx = [[document whiteboard] overlayCtx];
+//
+//    CGContextSetAlpha(overlayCtx, 1.0);
+//    CGContextSetFillColorWithColor(overlayCtx, [color CGColor]);
+//    if([options circularTip]) {
+//        CGContextFillEllipseInRect(overlayCtx,cgRect);
+//    } else {
+//        CGContextFillRect(overlayCtx,cgRect);
+//    }
+//
+//    if ([options useTextures] && ![options brushIsErasing]) {
+//        textureFill(overlayCtx,[[document toolboxUtility] foreground], cgRect);
+//    }
+//
+//    [[document helpers] overlayChanged:rect];
+//
+//    return rect;
+//}
+
+
+- (CGImageRef)getBrushImage
 {
     int size = [options pencilSize];
 
-    CGRect cgRect = CGRectMake(where.x-size/2,where.y-size/2,size,size);
-
-    IntRect rect = NSRectMakeIntRect(NSIntegralRect(cgRect));
-
-    CGContextRef overlayCtx = [[document whiteboard] overlayCtx];
-
-    CGContextSetAlpha(overlayCtx, 1.0);
-    CGContextSetFillColorWithColor(overlayCtx, [color CGColor]);
+    CGContextRef ctx = CGBitmapContextCreate(NULL, size, size, 8, 0, rgbCS, kCGImageAlphaPremultipliedLast);
+    CGContextSetFillColorWithColor(ctx, [color CGColor]);
     if([options circularTip]) {
-        CGContextFillEllipseInRect(overlayCtx,cgRect);
+        CGContextFillEllipseInRect(ctx,CGRectMake(0,0,size,size));
     } else {
-        CGContextFillRect(overlayCtx,cgRect);
+        CGContextFillRect(ctx,CGRectMake(0,0,size,size));
     }
-
-    if ([options useTextures] && ![options brushIsErasing]) {
-        textureFill(overlayCtx,[[document toolboxUtility] foreground], cgRect);
-    }
-
-    [[document helpers] overlayChanged:rect];
-
-    return rect;
-
+    CGImageRef image = CGBitmapContextCreateImage(ctx);
+    CGContextRelease(ctx);
+    return image;
 }
 
 - (void)plotPoints:(IntPoint)where pressure:(int)origPressure
@@ -92,7 +108,7 @@
 			curPoint.y = lastPoint.y + i * yMod;
 		}
 
-        IntRect r = [self plotBrush:NULL at:curPoint pressure:255];
+        IntRect r = [self plotBrushAt:curPoint pressure:255];
         dirty = i==1 ? r : IntSumRects(dirty,r);
 	}
 

@@ -24,7 +24,7 @@
     if(![nsdata length])
         return;
     
-    CGContextRef bm = CGBitmapContextCreate([nsdata bytes],width,height,8,width*spp,COLOR_SPACE,kCGImageAlphaPremultipliedLast);
+    CGContextRef bm = CGBitmapContextCreate([nsdata bytes],width,height,8,width*SPP,COLOR_SPACE,kCGImageAlphaPremultipliedFirst);
     CGImageRef image = CGBitmapContextCreateImage(bm);
 
     CGContextSaveGState(context);

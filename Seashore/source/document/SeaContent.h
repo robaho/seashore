@@ -107,13 +107,8 @@
 */
 - (int)type;
 
-/*!
-	@method		spp
-	@discussion	Returns the samples per pixel of the document.
-	@result		Returns an integer indicating the samples per pixel of the
-				document.
-*/
-- (int)spp;
+- (BOOL)isRGB;
+- (BOOL)isGrayscale;
 
 /*!
 	@method		xres
@@ -573,18 +568,6 @@
 - (void)mergeDown;
 
 /*!
-	@method		merge
-	@discussion	Merges the layers passed into it into one layer.
-	@param		mergingLayers
-				Any array of all of the layers that should be merged.
-	@param		useRepresenation
-				Whether or not to use the image's bitmap representation.
-	@param		withName
-				The name of the new layer that will be output
-*/
-- (void)merge:(NSArray *)mergingLayers useRepresentation: (BOOL)useRepresenation withName:(NSString *)newName;
-
-/*!
 	@method		undoMergeWith:andOrdering:
 	@discussion	Undoes the merging of the  layers (this method should only
 				ever be called by the undo manager following a call to merge).
@@ -594,18 +577,6 @@
 				The indexes of the the lost layers of the image.
 */
 - (void)undoMergeWith:(int)origNoLayers andOrdering:(NSMutableDictionary *)ordering;
-
-/*!
-	@method		redoMergeWith:andOrdering:
-	@discussion	Redoes the merging of the  layers (this method should only
-				ever be called by the undo manager following a call to 
-				undoMerge:fromLostIndex:).
-	@param		origNoLayers
-				The number of layers before the document was merged.
-	@param		ordering
-				The indexes of the the lost layers of the image.
-*/
-- (void)redoMergeWith:(int)origNoLayers andOrdering:(NSMutableDictionary *)ordering;
 
 /*!
 	@method		convertToType:

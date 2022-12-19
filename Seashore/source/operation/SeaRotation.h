@@ -48,7 +48,7 @@
 {
 
 	// The document and sheet associated with this object
-    __weak IBOutlet id document;
+    __weak IBOutlet SeaDocument *document;
 	IBOutlet id sheet;
 	
 	// A label specifying the layer being rotated

@@ -24,10 +24,6 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		2B0DF77627FFEF08002E8B7D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B0DF77527FFEF08002E8B7D /* CoreGraphics.framework */; };
-		2B0DF77827FFEF0F002E8B7D /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B0DF77727FFEF0F002E8B7D /* Accelerate.framework */; };
-		2B0DF77A27FFEF15002E8B7D /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B0DF77927FFEF15002E8B7D /* CoreImage.framework */; };
-		2B0DF77C28020B95002E8B7D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B0DF77B28020B95002E8B7D /* QuartzCore.framework */; };
 		2B1467892925EF2100A7E748 /* ConnectedComponents.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B84485A28BEE74300C068D1 /* ConnectedComponents.m */; };
 		2B146799292B4A9E00A7E748 /* AspectRatioPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B146798292B4A9D00A7E748 /* AspectRatioPanel.xib */; };
 		2B1F70EB21DD472B00D6F371 /* SeaColorProfiles.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1F70EA21DD472B00D6F371 /* SeaColorProfiles.m */; };
@@ -35,12 +31,7 @@
 		2B205EB82786A7DA00563706 /* SeaExtrasView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B205EB72786A7DA00563706 /* SeaExtrasView.m */; };
 		2B2D8CA221F7A026004527F2 /* OptionHelpButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B2D8CA121F7A026004527F2 /* OptionHelpButton.m */; };
 		2B2D8CA421F7C822004527F2 /* grabberTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B2D8CA321F7C822004527F2 /* grabberTemplate.png */; };
-		2B2D8CC721F996A5004527F2 /* Alpha2Gray.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B2D8CC521F995BB004527F2 /* Alpha2Gray.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2B2D8CCA21F9A870004527F2 /* ZoomTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B2D8CC921F9A870004527F2 /* ZoomTool.m */; };
-		2B2DEC3C286F35FE0017BBA8 /* Plugins.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2DEC3B286F35FE0017BBA8 /* Plugins.framework */; };
-		2B2DEC3D286F35FE0017BBA8 /* Plugins.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2DEC3B286F35FE0017BBA8 /* Plugins.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2B2DEC3F286F36040017BBA8 /* GIMPCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2DEC3E286F36040017BBA8 /* GIMPCore.framework */; };
-		2B2DEC40286F36040017BBA8 /* GIMPCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2DEC3E286F36040017BBA8 /* GIMPCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2B399C23279DE147000D0C58 /* SeaWhiteboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B399C21279DE147000D0C58 /* SeaWhiteboard.m */; };
 		2B399C31279DE15D000D0C58 /* CocoaContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B399C27279DE15C000D0C58 /* CocoaContent.m */; };
 		2B399C32279DE15D000D0C58 /* SVGContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B399C28279DE15C000D0C58 /* SVGContent.m */; };
@@ -48,11 +39,8 @@
 		2B399C34279DE15D000D0C58 /* SeaContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B399C2B279DE15C000D0C58 /* SeaContent.m */; };
 		2B399C35279DE15D000D0C58 /* SeaDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B399C2E279DE15C000D0C58 /* SeaDocument.m */; };
 		2B3DFBB02874E19200D39148 /* SeaHistogram.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B3DFBAF2874E19200D39148 /* SeaHistogram.m */; };
-		2B40F45029444E870011D4DF /* PerspectiveTransform.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B40F44F29444E870011D4DF /* PerspectiveTransform.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2B78488D28877C9B000B4839 /* PocketSVG.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B78486228877B88000B4839 /* PocketSVG.framework */; };
 		2B78488E28877C9B000B4839 /* PocketSVG.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2B78486228877B88000B4839 /* PocketSVG.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2B78489528877E71000B4839 /* ColorLevels.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B78489428877E69000B4839 /* ColorLevels.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2B78489628877E71000B4839 /* ToneCurve.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B78489328877E60000B4839 /* ToneCurve.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2B7C12DF27F9362100A2D658 /* NSAffineTransform_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B7C12DE27F9362100A2D658 /* NSAffineTransform_Extensions.m */; };
 		2B7C12E127FCFCE800A2D658 /* linkTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B7C12E027FCFCE800A2D658 /* linkTemplate.png */; };
 		2B7C12E427FD014C00A2D658 /* LayerInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B7C12E327FD014C00A2D658 /* LayerInfoCell.m */; };
@@ -76,85 +64,96 @@
 		2B8BD34721EA565C00FD9AC5 /* SeaPrintOptionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8BD34521EA565C00FD9AC5 /* SeaPrintOptionsController.m */; };
 		2B8BD59121ED16AB00FD9AC5 /* BrushExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8BD59021ED16AB00FD9AC5 /* BrushExporter.m */; };
 		2BB338C423C1119600647008 /* toFitTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BB338C323C1119600647008 /* toFitTemplate.png */; };
-		2BB3D0802942F788002F1E9D /* KeystoneCombined.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BB3D07D2942F788002F1E9D /* KeystoneCombined.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BB3D0812942F788002F1E9D /* KeystoneHorizontal.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BB3D07E2942F788002F1E9D /* KeystoneHorizontal.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BB3D0822942F789002F1E9D /* KeystoneVertical.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BB3D07F2942F788002F1E9D /* KeystoneVertical.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BB3D0832942F7A1002F1E9D /* PerspectiveCorrection.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BB3D0792942F6B6002F1E9D /* PerspectiveCorrection.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BB3D08529439EAF002F1E9D /* Straighten.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BB3D08429439EAF002F1E9D /* Straighten.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BB3D0872943FBFA002F1E9D /* PerspectiveRotate.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BB3D0862943FBFA002F1E9D /* PerspectiveRotate.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BC3CE3E293C079E005394FE /* SeaLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2EFA8428BF1B46009B225D /* SeaLibrary.framework */; };
-		2BC3CE3F293C079E005394FE /* SeaLibrary.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2EFA8428BF1B46009B225D /* SeaLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BC3CE40293C07A1005394FE /* SeaComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2DEC32286F35F40017BBA8 /* SeaComponents.framework */; };
-		2BC3CE41293C07A1005394FE /* SeaComponents.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2DEC32286F35F40017BBA8 /* SeaComponents.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BC3CE6A293C47BA005394FE /* star.fill@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BC3CE69293C47BA005394FE /* star.fill@2x.png */; };
 		2BCD7A14286281F7007EB89B /* Support Seashore.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2BCD7A12286281F7007EB89B /* Support Seashore.rtf */; };
 		2BCD7A18286294E2007EB89B /* SeaWhatsNew.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BCD7A17286294E2007EB89B /* SeaWhatsNew.m */; };
 		2BCD7A1B2862982D007EB89B /* What's New and Tips.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2BCD7A192862982D007EB89B /* What's New and Tips.rtf */; };
 		2BCF02A128FA0F2500733144 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BCF02A028FA0F2500733144 /* CoreFoundation.framework */; };
 		2BCF02A328FA0F3300733144 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BCF02A228FA0F3200733144 /* AppKit.framework */; };
-		2BD591A921E3DBCA002D150B /* AutoEnhance+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591A821E3DBCA002D150B /* AutoEnhance+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591AB21E3DBCA002D150B /* AffineTile+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591AA21E3DBCA002D150B /* AffineTile+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591AD21E3DBCA002D150B /* Bloom+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591AC21E3DBCA002D150B /* Bloom+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591AF21E3DBCA002D150B /* Brightness+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591AE21E3DBCA002D150B /* Brightness+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591B121E3DBCA002D150B /* Bump+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591B021E3DBCA002D150B /* Bump+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591B321E3DBCA002D150B /* Checkerboard+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591B221E3DBCA002D150B /* Checkerboard+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591B521E3DBCA002D150B /* CircularScreen+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591B421E3DBCA002D150B /* CircularScreen+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591B721E3DBCA002D150B /* CircularWrap+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591B621E3DBCA002D150B /* CircularWrap+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591B921E3DBCA002D150B /* CircleSplash+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591B821E3DBCA002D150B /* CircleSplash+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591BB21E3DBCA002D150B /* CMYKHalftone+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591BA21E3DBCA002D150B /* CMYKHalftone+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591BD21E3DBCA002D150B /* Crystallize+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591BC21E3DBCA002D150B /* Crystallize+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591BF21E3DBCA002D150B /* DisplacementDistortion+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591BE21E3DBCA002D150B /* DisplacementDistortion+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591C121E3DBCA002D150B /* DotScreen+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591C021E3DBCA002D150B /* DotScreen+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591C321E3DBCA002D150B /* Edges+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591C221E3DBCA002D150B /* Edges+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591C521E3DBCA002D150B /* EdgeWork+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591C421E3DBCA002D150B /* EdgeWork+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591C721E3DBCA002D150B /* Exposure+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591C621E3DBCA002D150B /* Exposure+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591C921E3DBCA002D150B /* FalseColor+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591C821E3DBCA002D150B /* FalseColor+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591CB21E3DBCA002D150B /* GammaAdjust+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591CA21E3DBCA002D150B /* GammaAdjust+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591CD21E3DBCB002D150B /* Gaussian+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591CC21E3DBCB002D150B /* Gaussian+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591CF21E3DBCB002D150B /* GlassDistortion+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591CE21E3DBCB002D150B /* GlassDistortion+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591D121E3DBCB002D150B /* GlassLozenge+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591D021E3DBCB002D150B /* GlassLozenge+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591D321E3DBCB002D150B /* Gloom+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591D221E3DBCB002D150B /* Gloom+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591D521E3DBCB002D150B /* HatchedScreen+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591D421E3DBCB002D150B /* HatchedScreen+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591D721E3DBCB002D150B /* Hole+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591D621E3DBCB002D150B /* Hole+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591D921E3DBCB002D150B /* HorizStripes+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591D821E3DBCB002D150B /* HorizStripes+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591DB21E3DBCB002D150B /* Invert+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591DA21E3DBCB002D150B /* Invert+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591DD21E3DBCB002D150B /* Kaleidoscope+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591DC21E3DBCB002D150B /* Kaleidoscope+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591DF21E3DBCB002D150B /* LenticularHalo+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591DE21E3DBCB002D150B /* LenticularHalo+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591E121E3DBCB002D150B /* LineScreen+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591E021E3DBCB002D150B /* LineScreen+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591E321E3DBCB002D150B /* Median+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591E221E3DBCB002D150B /* Median+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591E521E3DBCB002D150B /* Monochrome+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591E421E3DBCB002D150B /* Monochrome+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591E721E3DBCB002D150B /* MotionBlur+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591E621E3DBCB002D150B /* MotionBlur+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591E921E3DBCB002D150B /* NoiseReduction+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591E821E3DBCB002D150B /* NoiseReduction+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591EB21E3DBCB002D150B /* OpTile+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591EA21E3DBCB002D150B /* OpTile+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591ED21E3DBCB002D150B /* ParallelogramTile+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591EC21E3DBCB002D150B /* ParallelogramTile+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591EF21E3DBCC002D150B /* PerspectiveTile+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591EE21E3DBCC002D150B /* PerspectiveTile+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591F321E3DBCC002D150B /* Pinch+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591F221E3DBCC002D150B /* Pinch+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591F521E3DBCC002D150B /* Pixellate+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591F421E3DBCC002D150B /* Pixellate+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591F721E3DBCC002D150B /* Pointillize+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591F621E3DBCC002D150B /* Pointillize+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591F921E3DBCC002D150B /* Posterize+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591F821E3DBCC002D150B /* Posterize+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591FB21E3DBCC002D150B /* Random+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591FA21E3DBCC002D150B /* Random+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591FD21E3DBCC002D150B /* Sepia+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591FC21E3DBCC002D150B /* Sepia+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD591FF21E3DBCC002D150B /* Sharpen+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD591FE21E3DBCC002D150B /* Sharpen+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD5920121E3DBCC002D150B /* SpotLight+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD5920021E3DBCC002D150B /* SpotLight+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD5920321E3DBCC002D150B /* Starshine+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD5920221E3DBCC002D150B /* Starshine+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD5920521E3DBCC002D150B /* Sunbeams+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD5920421E3DBCC002D150B /* Sunbeams+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD5920721E3DBCC002D150B /* TorusLens+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD5920621E3DBCC002D150B /* TorusLens+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD5920921E3DBCC002D150B /* TriangleTile+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD5920821E3DBCC002D150B /* TriangleTile+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD5920B21E3DBCD002D150B /* Twirl+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD5920A21E3DBCC002D150B /* Twirl+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD5920D21E3DBCD002D150B /* UnsharpMask+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD5920C21E3DBCD002D150B /* UnsharpMask+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD5920F21E3DBCD002D150B /* VertStripes+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD5920E21E3DBCD002D150B /* VertStripes+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD5921121E3DBCD002D150B /* Vortex+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD5921021E3DBCD002D150B /* Vortex+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD5921321E3DBCD002D150B /* WhitePointAdjust+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD5921221E3DBCD002D150B /* WhitePointAdjust+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD5921521E3DBCD002D150B /* ZoomBlur+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD5921421E3DBCD002D150B /* ZoomBlur+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD5921921E3DBCD002D150B /* Threshold.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD5921821E3DBCD002D150B /* Threshold.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD5921F21E3DBCD002D150B /* CMYK.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD5921E21E3DBCD002D150B /* CMYK.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD5922321E3DBCD002D150B /* Greyscale.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD5922221E3DBCD002D150B /* Greyscale.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD5922721E3DBCE002D150B /* HSV.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD5922621E3DBCE002D150B /* HSV.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD5925221E3E894002D150B /* XCFQuickLook.qlgenerator in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD5924D21E3E7CF002D150B /* XCFQuickLook.qlgenerator */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BD5925621E3E910002D150B /* XCFSpotlight.mdimporter in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BD5924F21E3E7CF002D150B /* XCFSpotlight.mdimporter */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BDD5E5C2208A05D00F9BC74 /* RecentsUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BDD5E5B2208A05D00F9BC74 /* RecentsUtility.m */; };
 		2BDD5E5F2208AE3200F9BC74 /* RecentsItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BDD5E5E2208AE3200F9BC74 /* RecentsItem.m */; };
 		2BDD5E63220F33A300F9BC74 /* pencilLargeTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BDD5E62220F33A300F9BC74 /* pencilLargeTemplate.png */; };
+		2BE0CC9D294FBFE3001A05AD /* SeaComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE0CC9B294FBFE3001A05AD /* SeaComponents.framework */; };
+		2BE0CC9E294FBFE3001A05AD /* SeaComponents.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE0CC9B294FBFE3001A05AD /* SeaComponents.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CC9F294FBFE3001A05AD /* SeaLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE0CC9C294FBFE3001A05AD /* SeaLibrary.framework */; };
+		2BE0CCA0294FBFE3001A05AD /* SeaLibrary.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE0CC9C294FBFE3001A05AD /* SeaLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CCA3294FC8D2001A05AD /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE0CCA2294FC8D2001A05AD /* Accelerate.framework */; };
+		2BE0CCA5294FC8E3001A05AD /* GIMPCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE0CCA4294FC8E3001A05AD /* GIMPCore.framework */; };
+		2BE0CCA6294FC8E4001A05AD /* GIMPCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE0CCA4294FC8E3001A05AD /* GIMPCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CCA8294FCCD0001A05AD /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE0CCA7294FCCCF001A05AD /* StoreKit.framework */; };
+		2BE0CCAA294FCDE0001A05AD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE0CCA9294FCDE0001A05AD /* Security.framework */; };
+		2BE0CCAC294FCF41001A05AD /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE0CCAB294FCF40001A05AD /* CoreImage.framework */; };
+		2BE0CCF2294FD744001A05AD /* Alpha2Gray.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCAD294FD744001A05AD /* Alpha2Gray.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CCF3294FD744001A05AD /* AffineTile+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCAE294FD744001A05AD /* AffineTile+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CCF4294FD745001A05AD /* AutoEnhance+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCAF294FD744001A05AD /* AutoEnhance+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CCF5294FD745001A05AD /* Bloom+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCB0294FD744001A05AD /* Bloom+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CCF6294FD745001A05AD /* Brightness+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCB1294FD744001A05AD /* Brightness+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CCF7294FD746001A05AD /* Bump+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCB2294FD744001A05AD /* Bump+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CCF8294FD746001A05AD /* Checkerboard+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCB3294FD744001A05AD /* Checkerboard+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CCF9294FD747001A05AD /* CircleSplash+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCB4294FD744001A05AD /* CircleSplash+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CCFA294FD747001A05AD /* CircularScreen+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCB5294FD744001A05AD /* CircularScreen+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CCFB294FD748001A05AD /* CircularWrap+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCB6294FD744001A05AD /* CircularWrap+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CCFC294FD748001A05AD /* CMYKHalftone+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCB7294FD744001A05AD /* CMYKHalftone+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CCFD294FD749001A05AD /* Crystallize+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCB8294FD744001A05AD /* Crystallize+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CCFE294FD749001A05AD /* DisplacementDistortion+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCB9294FD744001A05AD /* DisplacementDistortion+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CCFF294FD74A001A05AD /* DotScreen+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCBA294FD744001A05AD /* DotScreen+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD00294FD74A001A05AD /* Edges+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCBB294FD744001A05AD /* Edges+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD01294FD74B001A05AD /* EdgeWork+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCBC294FD744001A05AD /* EdgeWork+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD02294FD74C001A05AD /* Exposure+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCBD294FD744001A05AD /* Exposure+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD03294FD74C001A05AD /* FalseColor+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCBE294FD744001A05AD /* FalseColor+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD04294FD74D001A05AD /* GammaAdjust+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCBF294FD744001A05AD /* GammaAdjust+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD05294FD74D001A05AD /* Gaussian+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCC0294FD744001A05AD /* Gaussian+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD06294FD74E001A05AD /* GlassDistortion+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCC1294FD744001A05AD /* GlassDistortion+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD07294FD74F001A05AD /* GlassLozenge+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCC2294FD744001A05AD /* GlassLozenge+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD08294FD74F001A05AD /* Gloom+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCC3294FD744001A05AD /* Gloom+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD09294FD750001A05AD /* HatchedScreen+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCC4294FD744001A05AD /* HatchedScreen+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD0A294FD751001A05AD /* Hole+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCC5294FD744001A05AD /* Hole+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD0B294FD751001A05AD /* HorizStripes+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCC6294FD744001A05AD /* HorizStripes+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD0C294FD752001A05AD /* Invert+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCC7294FD744001A05AD /* Invert+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD0D294FD753001A05AD /* Kaleidoscope+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCC8294FD744001A05AD /* Kaleidoscope+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD0E294FD754001A05AD /* KeystoneCombined.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCC9294FD744001A05AD /* KeystoneCombined.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD0F294FD754001A05AD /* KeystoneHorizontal.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCCA294FD744001A05AD /* KeystoneHorizontal.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD10294FD755001A05AD /* KeystoneVertical.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCCB294FD744001A05AD /* KeystoneVertical.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD11294FD756001A05AD /* LenticularHalo+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCCC294FD744001A05AD /* LenticularHalo+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD12294FD757001A05AD /* LineScreen+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCCD294FD744001A05AD /* LineScreen+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD13294FD758001A05AD /* Median+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCCE294FD744001A05AD /* Median+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD14294FD758001A05AD /* Monochrome+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCCF294FD744001A05AD /* Monochrome+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD15294FD759001A05AD /* MotionBlur+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCD0294FD744001A05AD /* MotionBlur+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD16294FD75A001A05AD /* NoiseReduction+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCD1294FD744001A05AD /* NoiseReduction+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD17294FD75B001A05AD /* OpTile+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCD2294FD744001A05AD /* OpTile+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD18294FD75C001A05AD /* ParallelogramTile+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCD3294FD744001A05AD /* ParallelogramTile+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD19294FD75D001A05AD /* PerspectiveCorrection.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCD4294FD744001A05AD /* PerspectiveCorrection.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD1A294FD75E001A05AD /* PerspectiveRotate.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCD5294FD744001A05AD /* PerspectiveRotate.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD1B294FD75E001A05AD /* PerspectiveTile+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCD6294FD744001A05AD /* PerspectiveTile+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD1C294FD75F001A05AD /* PerspectiveTransform.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCD7294FD744001A05AD /* PerspectiveTransform.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD1D294FD760001A05AD /* Pinch+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCD8294FD744001A05AD /* Pinch+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD1E294FD761001A05AD /* Pixellate+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCD9294FD744001A05AD /* Pixellate+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD1F294FD762001A05AD /* Pointillize+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCDA294FD744001A05AD /* Pointillize+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD20294FD763001A05AD /* Posterize+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCDB294FD744001A05AD /* Posterize+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD21294FD764001A05AD /* Random+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCDC294FD744001A05AD /* Random+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD22294FD765001A05AD /* Sepia+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCDD294FD744001A05AD /* Sepia+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD23294FD766001A05AD /* Sharpen+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCDE294FD744001A05AD /* Sharpen+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD24294FD767001A05AD /* SpotLight+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCDF294FD744001A05AD /* SpotLight+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD25294FD768001A05AD /* Starshine+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCE0294FD744001A05AD /* Starshine+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD26294FD769001A05AD /* Straighten.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCE1294FD744001A05AD /* Straighten.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD27294FD76A001A05AD /* Sunbeams+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCE2294FD744001A05AD /* Sunbeams+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD28294FD76B001A05AD /* TorusLens+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCE3294FD744001A05AD /* TorusLens+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD29294FD76C001A05AD /* TriangleTile+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCE4294FD744001A05AD /* TriangleTile+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD2A294FD76E001A05AD /* Twirl+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCE5294FD744001A05AD /* Twirl+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD2B294FD76F001A05AD /* UnsharpMask+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCE6294FD744001A05AD /* UnsharpMask+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD2C294FD770001A05AD /* VertStripes+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCE7294FD744001A05AD /* VertStripes+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD2D294FD771001A05AD /* Vortex+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCE8294FD744001A05AD /* Vortex+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD2E294FD772001A05AD /* WhitePointAdjust+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCE9294FD744001A05AD /* WhitePointAdjust+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD2F294FD773001A05AD /* ZoomBlur+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCEA294FD744001A05AD /* ZoomBlur+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD30294FD774001A05AD /* CMYK.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCEB294FD744001A05AD /* CMYK.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD31294FD776001A05AD /* ColorLevels.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCEC294FD744001A05AD /* ColorLevels.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD32294FD777001A05AD /* HSV.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCED294FD744001A05AD /* HSV.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD33294FD778001A05AD /* Threshold.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCEE294FD744001A05AD /* Threshold.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD34294FD779001A05AD /* ToneCurve.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCEF294FD744001A05AD /* ToneCurve.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD38294FD794001A05AD /* Plugins.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE0CD37294FD794001A05AD /* Plugins.framework */; };
+		2BE0CD39294FD795001A05AD /* Plugins.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE0CD37294FD794001A05AD /* Plugins.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD3A294FECFA001A05AD /* XCFQuickLook.qlgenerator in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCF0294FD744001A05AD /* XCFQuickLook.qlgenerator */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BE0CD3B294FED06001A05AD /* XCFSpotlight.mdimporter in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCF1294FD744001A05AD /* XCFSpotlight.mdimporter */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BE76CD221EE937400B6C65F /* Seashore.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 2BE76CD121EE937400B6C65F /* Seashore.xcconfig */; };
 		2BEA688227B7408F00BC1453 /* SeaScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BEA688127B7408F00BC1453 /* SeaScrollView.m */; };
 		2BEC1D6627A2DC54008F5612 /* SeaBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BEC1D6527A2DC54008F5612 /* SeaBackground.m */; };
@@ -177,8 +176,6 @@
 		2BED227A21F3FBB7005B496C /* pencilTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BED227921F3FBB7005B496C /* pencilTemplate.png */; };
 		2BED227C21F3FBF3005B496C /* eraserTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BED227B21F3FBF3005B496C /* eraserTemplate.png */; };
 		2BED227E21F4D958005B496C /* clone-cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BED227D21F4D958005B496C /* clone-cursor.png */; };
-		2BF19EDE2860FBFE00C35FBE /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BF19EDD2860FBFE00C35FBE /* StoreKit.framework */; };
-		2BF19EE328613FED00C35FBE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BF19EE228613FED00C35FBE /* Security.framework */; };
 		2BF40507227DC8DB0091E1EA /* swapTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF40506227DC8DB0091E1EA /* swapTemplate.png */; };
 		2BF4050A228258A90091E1EA /* HEICExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF40509228258A90091E1EA /* HEICExporter.m */; };
 		2BF873852860E532002C30C7 /* SeaSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF873842860E532002C30C7 /* SeaSupport.m */; };
@@ -225,7 +222,7 @@
 		A8A9496C0B8AB04900BBD71C /* CropOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = A8A9496A0B8AB04900BBD71C /* CropOptions.m */; };
 		A8A949740B8AB1FC00BBD71C /* AspectRatio.m in Sources */ = {isa = PBXBuildFile; fileRef = A8A949720B8AB1FC00BBD71C /* AspectRatio.m */; };
 		A8BF652708E6FEAB006E9BFC /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8BF652608E6FEAB006E9BFC /* Carbon.framework */; };
-		A8CA58EE07936EBF004BE921 /* PluginData.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CA58EC07936EBF004BE921 /* PluginData.m */; };
+		A8CA58EE07936EBF004BE921 /* SeaPluginData.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CA58EC07936EBF004BE921 /* SeaPluginData.m */; };
 		A8CAF01E0815E55300A6D5A6 /* vMarkerTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = A8CAF01D0815E55300A6D5A6 /* vMarkerTemplate.png */; };
 		A8CAF0260815E56000A6D5A6 /* hMarkerTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = A8CAF0250815E56000A6D5A6 /* hMarkerTemplate.png */; };
 		A8D52D2F0A8C26A100927657 /* AbstractSelectOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = A8D52D2D0A8C26A100927657 /* AbstractSelectOptions.m */; };
@@ -409,7 +406,7 @@
 			dstPath = Contents/Library/QuickLook;
 			dstSubfolderSpec = 1;
 			files = (
-				2BD5925221E3E894002D150B /* XCFQuickLook.qlgenerator in CopyFiles */,
+				2BE0CD3A294FECFA001A05AD /* XCFQuickLook.qlgenerator in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -419,7 +416,7 @@
 			dstPath = Contents/Library/Spotlight;
 			dstSubfolderSpec = 1;
 			files = (
-				2BD5925621E3E910002D150B /* XCFSpotlight.mdimporter in CopyFiles */,
+				2BE0CD3B294FED06001A05AD /* XCFSpotlight.mdimporter in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,10 +426,10 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				2BC3CE41293C07A1005394FE /* SeaComponents.framework in Embed Frameworks */,
-				2B2DEC40286F36040017BBA8 /* GIMPCore.framework in Embed Frameworks */,
-				2B2DEC3D286F35FE0017BBA8 /* Plugins.framework in Embed Frameworks */,
-				2BC3CE3F293C079E005394FE /* SeaLibrary.framework in Embed Frameworks */,
+				2BE0CCA6294FC8E4001A05AD /* GIMPCore.framework in Embed Frameworks */,
+				2BE0CD39294FD795001A05AD /* Plugins.framework in Embed Frameworks */,
+				2BE0CCA0294FBFE3001A05AD /* SeaLibrary.framework in Embed Frameworks */,
+				2BE0CC9E294FBFE3001A05AD /* SeaComponents.framework in Embed Frameworks */,
 				2B78488E28877C9B000B4839 /* PocketSVG.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -469,74 +466,73 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				2B78489528877E71000B4839 /* ColorLevels.bundle in CopyFiles */,
-				2BB3D0872943FBFA002F1E9D /* PerspectiveRotate.bundle in CopyFiles */,
-				2B78489628877E71000B4839 /* ToneCurve.bundle in CopyFiles */,
-				2B2D8CC721F996A5004527F2 /* Alpha2Gray.bundle in CopyFiles */,
-				2BD591BD21E3DBCA002D150B /* Crystallize+.bundle in CopyFiles */,
-				2BB3D0832942F7A1002F1E9D /* PerspectiveCorrection.bundle in CopyFiles */,
-				2BB3D0802942F788002F1E9D /* KeystoneCombined.bundle in CopyFiles */,
-				2BD5920F21E3DBCD002D150B /* VertStripes+.bundle in CopyFiles */,
-				2BD591AB21E3DBCA002D150B /* AffineTile+.bundle in CopyFiles */,
-				2BD591CD21E3DBCB002D150B /* Gaussian+.bundle in CopyFiles */,
-				2BD5920721E3DBCC002D150B /* TorusLens+.bundle in CopyFiles */,
-				2BD591B921E3DBCA002D150B /* CircleSplash+.bundle in CopyFiles */,
-				2BD591F321E3DBCC002D150B /* Pinch+.bundle in CopyFiles */,
-				2BD591D521E3DBCB002D150B /* HatchedScreen+.bundle in CopyFiles */,
-				2BD591BB21E3DBCA002D150B /* CMYKHalftone+.bundle in CopyFiles */,
-				2BD5920321E3DBCC002D150B /* Starshine+.bundle in CopyFiles */,
-				2BD591E521E3DBCB002D150B /* Monochrome+.bundle in CopyFiles */,
-				2B40F45029444E870011D4DF /* PerspectiveTransform.bundle in CopyFiles */,
-				2BD591ED21E3DBCB002D150B /* ParallelogramTile+.bundle in CopyFiles */,
-				2BD591CB21E3DBCA002D150B /* GammaAdjust+.bundle in CopyFiles */,
-				2BD5920D21E3DBCD002D150B /* UnsharpMask+.bundle in CopyFiles */,
-				2BD591AD21E3DBCA002D150B /* Bloom+.bundle in CopyFiles */,
-				2BD591F521E3DBCC002D150B /* Pixellate+.bundle in CopyFiles */,
-				2BB3D0822942F789002F1E9D /* KeystoneVertical.bundle in CopyFiles */,
-				2BB3D08529439EAF002F1E9D /* Straighten.bundle in CopyFiles */,
-				2BD5921921E3DBCD002D150B /* Threshold.bundle in CopyFiles */,
-				2BD591FB21E3DBCC002D150B /* Random+.bundle in CopyFiles */,
-				2BD5921521E3DBCD002D150B /* ZoomBlur+.bundle in CopyFiles */,
-				2BD591EF21E3DBCC002D150B /* PerspectiveTile+.bundle in CopyFiles */,
-				2BD591BF21E3DBCA002D150B /* DisplacementDistortion+.bundle in CopyFiles */,
-				2BD591C521E3DBCA002D150B /* EdgeWork+.bundle in CopyFiles */,
-				2BD591B121E3DBCA002D150B /* Bump+.bundle in CopyFiles */,
-				2BD5920921E3DBCC002D150B /* TriangleTile+.bundle in CopyFiles */,
-				2BD591EB21E3DBCB002D150B /* OpTile+.bundle in CopyFiles */,
-				2BD591C121E3DBCA002D150B /* DotScreen+.bundle in CopyFiles */,
-				2BD591FF21E3DBCC002D150B /* Sharpen+.bundle in CopyFiles */,
-				2BD591C321E3DBCA002D150B /* Edges+.bundle in CopyFiles */,
-				2BD5920B21E3DBCD002D150B /* Twirl+.bundle in CopyFiles */,
-				2BD5921321E3DBCD002D150B /* WhitePointAdjust+.bundle in CopyFiles */,
-				2BD5922321E3DBCD002D150B /* Greyscale.bundle in CopyFiles */,
-				2BD591D121E3DBCB002D150B /* GlassLozenge+.bundle in CopyFiles */,
-				2BD5922721E3DBCE002D150B /* HSV.bundle in CopyFiles */,
-				2BD591FD21E3DBCC002D150B /* Sepia+.bundle in CopyFiles */,
-				2BD591AF21E3DBCA002D150B /* Brightness+.bundle in CopyFiles */,
-				2BD591E721E3DBCB002D150B /* MotionBlur+.bundle in CopyFiles */,
-				2BD591DD21E3DBCB002D150B /* Kaleidoscope+.bundle in CopyFiles */,
-				2BD591E121E3DBCB002D150B /* LineScreen+.bundle in CopyFiles */,
-				2BD591DF21E3DBCB002D150B /* LenticularHalo+.bundle in CopyFiles */,
-				2BD591F721E3DBCC002D150B /* Pointillize+.bundle in CopyFiles */,
-				2BD5921121E3DBCD002D150B /* Vortex+.bundle in CopyFiles */,
-				2BD591D721E3DBCB002D150B /* Hole+.bundle in CopyFiles */,
-				2BD591B521E3DBCA002D150B /* CircularScreen+.bundle in CopyFiles */,
-				2BD591F921E3DBCC002D150B /* Posterize+.bundle in CopyFiles */,
-				2BD591B321E3DBCA002D150B /* Checkerboard+.bundle in CopyFiles */,
-				2BD591D321E3DBCB002D150B /* Gloom+.bundle in CopyFiles */,
-				2BD591B721E3DBCA002D150B /* CircularWrap+.bundle in CopyFiles */,
-				2BD591E321E3DBCB002D150B /* Median+.bundle in CopyFiles */,
-				2BD5920121E3DBCC002D150B /* SpotLight+.bundle in CopyFiles */,
-				2BD591D921E3DBCB002D150B /* HorizStripes+.bundle in CopyFiles */,
-				2BD5921F21E3DBCD002D150B /* CMYK.bundle in CopyFiles */,
-				2BD591C721E3DBCA002D150B /* Exposure+.bundle in CopyFiles */,
-				2BD591C921E3DBCA002D150B /* FalseColor+.bundle in CopyFiles */,
-				2BD5920521E3DBCC002D150B /* Sunbeams+.bundle in CopyFiles */,
-				2BD591A921E3DBCA002D150B /* AutoEnhance+.bundle in CopyFiles */,
-				2BD591CF21E3DBCB002D150B /* GlassDistortion+.bundle in CopyFiles */,
-				2BB3D0812942F788002F1E9D /* KeystoneHorizontal.bundle in CopyFiles */,
-				2BD591DB21E3DBCB002D150B /* Invert+.bundle in CopyFiles */,
-				2BD591E921E3DBCB002D150B /* NoiseReduction+.bundle in CopyFiles */,
+				2BE0CD11294FD756001A05AD /* LenticularHalo+.bundle in CopyFiles */,
+				2BE0CCFD294FD749001A05AD /* Crystallize+.bundle in CopyFiles */,
+				2BE0CD09294FD750001A05AD /* HatchedScreen+.bundle in CopyFiles */,
+				2BE0CD0A294FD751001A05AD /* Hole+.bundle in CopyFiles */,
+				2BE0CD15294FD759001A05AD /* MotionBlur+.bundle in CopyFiles */,
+				2BE0CCF8294FD746001A05AD /* Checkerboard+.bundle in CopyFiles */,
+				2BE0CCF6294FD745001A05AD /* Brightness+.bundle in CopyFiles */,
+				2BE0CD0B294FD751001A05AD /* HorizStripes+.bundle in CopyFiles */,
+				2BE0CD1E294FD761001A05AD /* Pixellate+.bundle in CopyFiles */,
+				2BE0CCFB294FD748001A05AD /* CircularWrap+.bundle in CopyFiles */,
+				2BE0CCFE294FD749001A05AD /* DisplacementDistortion+.bundle in CopyFiles */,
+				2BE0CD32294FD777001A05AD /* HSV.bundle in CopyFiles */,
+				2BE0CD06294FD74E001A05AD /* GlassDistortion+.bundle in CopyFiles */,
+				2BE0CCF3294FD744001A05AD /* AffineTile+.bundle in CopyFiles */,
+				2BE0CD2D294FD771001A05AD /* Vortex+.bundle in CopyFiles */,
+				2BE0CD2B294FD76F001A05AD /* UnsharpMask+.bundle in CopyFiles */,
+				2BE0CD1A294FD75E001A05AD /* PerspectiveRotate.bundle in CopyFiles */,
+				2BE0CD26294FD769001A05AD /* Straighten.bundle in CopyFiles */,
+				2BE0CD00294FD74A001A05AD /* Edges+.bundle in CopyFiles */,
+				2BE0CD1C294FD75F001A05AD /* PerspectiveTransform.bundle in CopyFiles */,
+				2BE0CD08294FD74F001A05AD /* Gloom+.bundle in CopyFiles */,
+				2BE0CCF5294FD745001A05AD /* Bloom+.bundle in CopyFiles */,
+				2BE0CD2F294FD773001A05AD /* ZoomBlur+.bundle in CopyFiles */,
+				2BE0CD2E294FD772001A05AD /* WhitePointAdjust+.bundle in CopyFiles */,
+				2BE0CD29294FD76C001A05AD /* TriangleTile+.bundle in CopyFiles */,
+				2BE0CD21294FD764001A05AD /* Random+.bundle in CopyFiles */,
+				2BE0CD1B294FD75E001A05AD /* PerspectiveTile+.bundle in CopyFiles */,
+				2BE0CD10294FD755001A05AD /* KeystoneVertical.bundle in CopyFiles */,
+				2BE0CD07294FD74F001A05AD /* GlassLozenge+.bundle in CopyFiles */,
+				2BE0CD22294FD765001A05AD /* Sepia+.bundle in CopyFiles */,
+				2BE0CD23294FD766001A05AD /* Sharpen+.bundle in CopyFiles */,
+				2BE0CD04294FD74D001A05AD /* GammaAdjust+.bundle in CopyFiles */,
+				2BE0CD13294FD758001A05AD /* Median+.bundle in CopyFiles */,
+				2BE0CCF9294FD747001A05AD /* CircleSplash+.bundle in CopyFiles */,
+				2BE0CCF7294FD746001A05AD /* Bump+.bundle in CopyFiles */,
+				2BE0CD12294FD757001A05AD /* LineScreen+.bundle in CopyFiles */,
+				2BE0CD2C294FD770001A05AD /* VertStripes+.bundle in CopyFiles */,
+				2BE0CD31294FD776001A05AD /* ColorLevels.bundle in CopyFiles */,
+				2BE0CCFC294FD748001A05AD /* CMYKHalftone+.bundle in CopyFiles */,
+				2BE0CD1D294FD760001A05AD /* Pinch+.bundle in CopyFiles */,
+				2BE0CD18294FD75C001A05AD /* ParallelogramTile+.bundle in CopyFiles */,
+				2BE0CD28294FD76B001A05AD /* TorusLens+.bundle in CopyFiles */,
+				2BE0CD01294FD74B001A05AD /* EdgeWork+.bundle in CopyFiles */,
+				2BE0CD33294FD778001A05AD /* Threshold.bundle in CopyFiles */,
+				2BE0CD0E294FD754001A05AD /* KeystoneCombined.bundle in CopyFiles */,
+				2BE0CD1F294FD762001A05AD /* Pointillize+.bundle in CopyFiles */,
+				2BE0CCF4294FD745001A05AD /* AutoEnhance+.bundle in CopyFiles */,
+				2BE0CD03294FD74C001A05AD /* FalseColor+.bundle in CopyFiles */,
+				2BE0CD30294FD774001A05AD /* CMYK.bundle in CopyFiles */,
+				2BE0CCFA294FD747001A05AD /* CircularScreen+.bundle in CopyFiles */,
+				2BE0CD17294FD75B001A05AD /* OpTile+.bundle in CopyFiles */,
+				2BE0CD24294FD767001A05AD /* SpotLight+.bundle in CopyFiles */,
+				2BE0CD0C294FD752001A05AD /* Invert+.bundle in CopyFiles */,
+				2BE0CD02294FD74C001A05AD /* Exposure+.bundle in CopyFiles */,
+				2BE0CD16294FD75A001A05AD /* NoiseReduction+.bundle in CopyFiles */,
+				2BE0CD14294FD758001A05AD /* Monochrome+.bundle in CopyFiles */,
+				2BE0CD2A294FD76E001A05AD /* Twirl+.bundle in CopyFiles */,
+				2BE0CCF2294FD744001A05AD /* Alpha2Gray.bundle in CopyFiles */,
+				2BE0CD34294FD779001A05AD /* ToneCurve.bundle in CopyFiles */,
+				2BE0CD05294FD74D001A05AD /* Gaussian+.bundle in CopyFiles */,
+				2BE0CD27294FD76A001A05AD /* Sunbeams+.bundle in CopyFiles */,
+				2BE0CD0F294FD754001A05AD /* KeystoneHorizontal.bundle in CopyFiles */,
+				2BE0CD20294FD763001A05AD /* Posterize+.bundle in CopyFiles */,
+				2BE0CD0D294FD753001A05AD /* Kaleidoscope+.bundle in CopyFiles */,
+				2BE0CD25294FD768001A05AD /* Starshine+.bundle in CopyFiles */,
+				2BE0CD19294FD75D001A05AD /* PerspectiveCorrection.bundle in CopyFiles */,
+				2BE0CCFF294FD74A001A05AD /* DotScreen+.bundle in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -548,10 +544,6 @@
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		2B08E5C021E28C4C0011037C /* Seashore.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Seashore.entitlements; sourceTree = "<group>"; };
-		2B0DF77527FFEF08002E8B7D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
-		2B0DF77727FFEF0F002E8B7D /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/Accelerate.framework; sourceTree = DEVELOPER_DIR; };
-		2B0DF77927FFEF15002E8B7D /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/CoreImage.framework; sourceTree = DEVELOPER_DIR; };
-		2B0DF77B28020B95002E8B7D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		2B146798292B4A9D00A7E748 /* AspectRatioPanel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AspectRatioPanel.xib; sourceTree = "<group>"; };
 		2B1F70E921DD471000D6F371 /* SeaColorProfiles.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaColorProfiles.h; sourceTree = "<group>"; };
 		2B1F70EA21DD472B00D6F371 /* SeaColorProfiles.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeaColorProfiles.m; sourceTree = "<group>"; };
@@ -561,13 +553,8 @@
 		2B2D8CA021F7A026004527F2 /* OptionHelpButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OptionHelpButton.h; sourceTree = "<group>"; };
 		2B2D8CA121F7A026004527F2 /* OptionHelpButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OptionHelpButton.m; sourceTree = "<group>"; };
 		2B2D8CA321F7C822004527F2 /* grabberTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grabberTemplate.png; sourceTree = "<group>"; };
-		2B2D8CC521F995BB004527F2 /* Alpha2Gray.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = Alpha2Gray.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B2D8CC821F9A870004527F2 /* ZoomTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZoomTool.h; sourceTree = "<group>"; };
 		2B2D8CC921F9A870004527F2 /* ZoomTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZoomTool.m; sourceTree = "<group>"; };
-		2B2DEC32286F35F40017BBA8 /* SeaComponents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SeaComponents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2B2DEC3B286F35FE0017BBA8 /* Plugins.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Plugins.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2B2DEC3E286F36040017BBA8 /* GIMPCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GIMPCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2B2EFA8428BF1B46009B225D /* SeaLibrary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SeaLibrary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B2EFAAD28BF203D009B225D /* Seashore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Seashore.h; sourceTree = "<group>"; };
 		2B399C1E279DE146000D0C58 /* SeaWhiteboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeaWhiteboard.h; sourceTree = "<group>"; };
 		2B399C21279DE147000D0C58 /* SeaWhiteboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeaWhiteboard.m; sourceTree = "<group>"; };
@@ -584,10 +571,7 @@
 		2B399CA5279E0558000D0C58 /* SeaLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeaLayer.h; sourceTree = "<group>"; };
 		2B3DFBAE2874E19200D39148 /* SeaHistogram.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaHistogram.h; sourceTree = "<group>"; };
 		2B3DFBAF2874E19200D39148 /* SeaHistogram.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeaHistogram.m; sourceTree = "<group>"; };
-		2B40F44F29444E870011D4DF /* PerspectiveTransform.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = PerspectiveTransform.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B78486228877B88000B4839 /* PocketSVG.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PocketSVG.framework; path = ../PocketSVG/PocketSVG.framework; sourceTree = SOURCE_ROOT; };
-		2B78489328877E60000B4839 /* ToneCurve.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = ToneCurve.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		2B78489428877E69000B4839 /* ColorLevels.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = ColorLevels.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B7C12DD27F9362100A2D658 /* NSAffineTransform_Extensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSAffineTransform_Extensions.h; sourceTree = "<group>"; };
 		2B7C12DE27F9362100A2D658 /* NSAffineTransform_Extensions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSAffineTransform_Extensions.m; sourceTree = "<group>"; };
 		2B7C12E027FCFCE800A2D658 /* linkTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = linkTemplate.png; sourceTree = "<group>"; };
@@ -613,7 +597,6 @@
 		2B84485528BEE74300C068D1 /* XCFLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCFLayer.m; sourceTree = "<group>"; };
 		2B84485628BEE74300C068D1 /* ParasiteData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParasiteData.m; sourceTree = "<group>"; };
 		2B84485A28BEE74300C068D1 /* ConnectedComponents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectedComponents.m; sourceTree = "<group>"; };
-		2B8448BE28BEED9700C068D1 /* libSeaLibrary.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libSeaLibrary.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B88401F2894B6C500E5EF28 /* textLayerTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = textLayerTemplate.png; sourceTree = "<group>"; };
 		2B8840212895C30300E5EF28 /* XCFTextLayerSupport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCFTextLayerSupport.h; sourceTree = "<group>"; };
 		2B8840222895C30300E5EF28 /* XCFTextLayerSupport.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCFTextLayerSupport.m; sourceTree = "<group>"; };
@@ -624,15 +607,6 @@
 		2B8BD58F21ED169B00FD9AC5 /* BrushExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrushExporter.h; sourceTree = "<group>"; };
 		2B8BD59021ED16AB00FD9AC5 /* BrushExporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrushExporter.m; sourceTree = "<group>"; };
 		2BB338C323C1119600647008 /* toFitTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toFitTemplate.png; sourceTree = "<group>"; };
-		2BB3D0792942F6B6002F1E9D /* PerspectiveCorrection.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = PerspectiveCorrection.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BB3D07A2942F6C3002F1E9D /* KeystoneHorizontal.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = KeystoneHorizontal.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BB3D07B2942F6C9002F1E9D /* KeystoneVertical.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = KeystoneVertical.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BB3D07C2942F6CD002F1E9D /* KeystoneCombined.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = KeystoneCombined.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BB3D07D2942F788002F1E9D /* KeystoneCombined.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = KeystoneCombined.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BB3D07E2942F788002F1E9D /* KeystoneHorizontal.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = KeystoneHorizontal.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BB3D07F2942F788002F1E9D /* KeystoneVertical.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = KeystoneVertical.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BB3D08429439EAF002F1E9D /* Straighten.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = Straighten.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BB3D0862943FBFA002F1E9D /* PerspectiveRotate.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = PerspectiveRotate.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BC3CE69293C47BA005394FE /* star.fill@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star.fill@2x.png"; sourceTree = "<group>"; };
 		2BCD7A13286281F7007EB89B /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = "English.lproj/Support Seashore.rtf"; sourceTree = "<group>"; };
 		2BCD7A16286294E2007EB89B /* SeaWhatsNew.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaWhatsNew.h; sourceTree = "<group>"; };
@@ -640,72 +614,88 @@
 		2BCD7A1A2862982D007EB89B /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = "English.lproj/What's New and Tips.rtf"; sourceTree = "<group>"; };
 		2BCF02A028FA0F2500733144 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		2BCF02A228FA0F3200733144 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
-		2BD591A821E3DBCA002D150B /* AutoEnhance+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "AutoEnhance+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591AA21E3DBCA002D150B /* AffineTile+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "AffineTile+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591AC21E3DBCA002D150B /* Bloom+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Bloom+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591AE21E3DBCA002D150B /* Brightness+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Brightness+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591B021E3DBCA002D150B /* Bump+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Bump+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591B221E3DBCA002D150B /* Checkerboard+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Checkerboard+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591B421E3DBCA002D150B /* CircularScreen+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "CircularScreen+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591B621E3DBCA002D150B /* CircularWrap+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "CircularWrap+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591B821E3DBCA002D150B /* CircleSplash+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "CircleSplash+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591BA21E3DBCA002D150B /* CMYKHalftone+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "CMYKHalftone+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591BC21E3DBCA002D150B /* Crystallize+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Crystallize+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591BE21E3DBCA002D150B /* DisplacementDistortion+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "DisplacementDistortion+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591C021E3DBCA002D150B /* DotScreen+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "DotScreen+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591C221E3DBCA002D150B /* Edges+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Edges+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591C421E3DBCA002D150B /* EdgeWork+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "EdgeWork+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591C621E3DBCA002D150B /* Exposure+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Exposure+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591C821E3DBCA002D150B /* FalseColor+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "FalseColor+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591CA21E3DBCA002D150B /* GammaAdjust+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "GammaAdjust+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591CC21E3DBCB002D150B /* Gaussian+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Gaussian+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591CE21E3DBCB002D150B /* GlassDistortion+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "GlassDistortion+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591D021E3DBCB002D150B /* GlassLozenge+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "GlassLozenge+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591D221E3DBCB002D150B /* Gloom+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Gloom+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591D421E3DBCB002D150B /* HatchedScreen+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "HatchedScreen+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591D621E3DBCB002D150B /* Hole+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Hole+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591D821E3DBCB002D150B /* HorizStripes+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "HorizStripes+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591DA21E3DBCB002D150B /* Invert+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Invert+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591DC21E3DBCB002D150B /* Kaleidoscope+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Kaleidoscope+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591DE21E3DBCB002D150B /* LenticularHalo+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "LenticularHalo+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591E021E3DBCB002D150B /* LineScreen+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "LineScreen+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591E221E3DBCB002D150B /* Median+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Median+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591E421E3DBCB002D150B /* Monochrome+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Monochrome+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591E621E3DBCB002D150B /* MotionBlur+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "MotionBlur+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591E821E3DBCB002D150B /* NoiseReduction+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "NoiseReduction+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591EA21E3DBCB002D150B /* OpTile+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "OpTile+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591EC21E3DBCB002D150B /* ParallelogramTile+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "ParallelogramTile+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591EE21E3DBCC002D150B /* PerspectiveTile+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "PerspectiveTile+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591F021E3DBCC002D150B /* PerspectiveTransform+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "PerspectiveTransform+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591F221E3DBCC002D150B /* Pinch+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Pinch+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591F421E3DBCC002D150B /* Pixellate+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Pixellate+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591F621E3DBCC002D150B /* Pointillize+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Pointillize+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591F821E3DBCC002D150B /* Posterize+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Posterize+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591FA21E3DBCC002D150B /* Random+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Random+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591FC21E3DBCC002D150B /* Sepia+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Sepia+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD591FE21E3DBCC002D150B /* Sharpen+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Sharpen+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD5920021E3DBCC002D150B /* SpotLight+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "SpotLight+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD5920221E3DBCC002D150B /* Starshine+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Starshine+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD5920421E3DBCC002D150B /* Sunbeams+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Sunbeams+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD5920621E3DBCC002D150B /* TorusLens+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "TorusLens+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD5920821E3DBCC002D150B /* TriangleTile+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "TriangleTile+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD5920A21E3DBCC002D150B /* Twirl+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Twirl+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD5920C21E3DBCD002D150B /* UnsharpMask+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "UnsharpMask+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD5920E21E3DBCD002D150B /* VertStripes+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "VertStripes+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD5921021E3DBCD002D150B /* Vortex+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Vortex+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD5921221E3DBCD002D150B /* WhitePointAdjust+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "WhitePointAdjust+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD5921421E3DBCD002D150B /* ZoomBlur+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "ZoomBlur+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD5921821E3DBCD002D150B /* Threshold.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = Threshold.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD5921E21E3DBCD002D150B /* CMYK.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = CMYK.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD5922221E3DBCD002D150B /* Greyscale.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = Greyscale.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD5922621E3DBCE002D150B /* HSV.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = HSV.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD5924D21E3E7CF002D150B /* XCFQuickLook.qlgenerator */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = XCFQuickLook.qlgenerator; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BD5924F21E3E7CF002D150B /* XCFSpotlight.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = XCFSpotlight.mdimporter; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BDD5E5A2208A05D00F9BC74 /* RecentsUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecentsUtility.h; sourceTree = "<group>"; };
 		2BDD5E5B2208A05D00F9BC74 /* RecentsUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecentsUtility.m; sourceTree = "<group>"; };
 		2BDD5E5D2208AE3200F9BC74 /* RecentsItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecentsItem.h; sourceTree = "<group>"; };
 		2BDD5E5E2208AE3200F9BC74 /* RecentsItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecentsItem.m; sourceTree = "<group>"; };
 		2BDD5E62220F33A300F9BC74 /* pencilLargeTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pencilLargeTemplate.png; sourceTree = "<group>"; };
+		2BE0CC9B294FBFE3001A05AD /* SeaComponents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SeaComponents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CC9C294FBFE3001A05AD /* SeaLibrary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SeaLibrary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCA2294FC8D2001A05AD /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		2BE0CCA4294FC8E3001A05AD /* GIMPCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GIMPCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCA7294FCCCF001A05AD /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		2BE0CCA9294FCDE0001A05AD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		2BE0CCAB294FCF40001A05AD /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		2BE0CCAD294FD744001A05AD /* Alpha2Gray.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = Alpha2Gray.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCAE294FD744001A05AD /* AffineTile+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "AffineTile+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCAF294FD744001A05AD /* AutoEnhance+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "AutoEnhance+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCB0294FD744001A05AD /* Bloom+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Bloom+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCB1294FD744001A05AD /* Brightness+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Brightness+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCB2294FD744001A05AD /* Bump+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Bump+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCB3294FD744001A05AD /* Checkerboard+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Checkerboard+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCB4294FD744001A05AD /* CircleSplash+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "CircleSplash+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCB5294FD744001A05AD /* CircularScreen+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "CircularScreen+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCB6294FD744001A05AD /* CircularWrap+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "CircularWrap+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCB7294FD744001A05AD /* CMYKHalftone+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "CMYKHalftone+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCB8294FD744001A05AD /* Crystallize+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Crystallize+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCB9294FD744001A05AD /* DisplacementDistortion+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "DisplacementDistortion+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCBA294FD744001A05AD /* DotScreen+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "DotScreen+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCBB294FD744001A05AD /* Edges+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Edges+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCBC294FD744001A05AD /* EdgeWork+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "EdgeWork+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCBD294FD744001A05AD /* Exposure+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Exposure+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCBE294FD744001A05AD /* FalseColor+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "FalseColor+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCBF294FD744001A05AD /* GammaAdjust+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "GammaAdjust+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCC0294FD744001A05AD /* Gaussian+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Gaussian+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCC1294FD744001A05AD /* GlassDistortion+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "GlassDistortion+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCC2294FD744001A05AD /* GlassLozenge+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "GlassLozenge+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCC3294FD744001A05AD /* Gloom+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Gloom+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCC4294FD744001A05AD /* HatchedScreen+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "HatchedScreen+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCC5294FD744001A05AD /* Hole+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Hole+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCC6294FD744001A05AD /* HorizStripes+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "HorizStripes+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCC7294FD744001A05AD /* Invert+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Invert+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCC8294FD744001A05AD /* Kaleidoscope+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Kaleidoscope+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCC9294FD744001A05AD /* KeystoneCombined.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = KeystoneCombined.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCCA294FD744001A05AD /* KeystoneHorizontal.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = KeystoneHorizontal.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCCB294FD744001A05AD /* KeystoneVertical.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = KeystoneVertical.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCCC294FD744001A05AD /* LenticularHalo+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "LenticularHalo+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCCD294FD744001A05AD /* LineScreen+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "LineScreen+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCCE294FD744001A05AD /* Median+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Median+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCCF294FD744001A05AD /* Monochrome+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Monochrome+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCD0294FD744001A05AD /* MotionBlur+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "MotionBlur+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCD1294FD744001A05AD /* NoiseReduction+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "NoiseReduction+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCD2294FD744001A05AD /* OpTile+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "OpTile+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCD3294FD744001A05AD /* ParallelogramTile+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "ParallelogramTile+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCD4294FD744001A05AD /* PerspectiveCorrection.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = PerspectiveCorrection.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCD5294FD744001A05AD /* PerspectiveRotate.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = PerspectiveRotate.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCD6294FD744001A05AD /* PerspectiveTile+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "PerspectiveTile+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCD7294FD744001A05AD /* PerspectiveTransform.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = PerspectiveTransform.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCD8294FD744001A05AD /* Pinch+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Pinch+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCD9294FD744001A05AD /* Pixellate+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Pixellate+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCDA294FD744001A05AD /* Pointillize+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Pointillize+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCDB294FD744001A05AD /* Posterize+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Posterize+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCDC294FD744001A05AD /* Random+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Random+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCDD294FD744001A05AD /* Sepia+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Sepia+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCDE294FD744001A05AD /* Sharpen+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Sharpen+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCDF294FD744001A05AD /* SpotLight+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "SpotLight+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCE0294FD744001A05AD /* Starshine+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Starshine+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCE1294FD744001A05AD /* Straighten.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = Straighten.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCE2294FD744001A05AD /* Sunbeams+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Sunbeams+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCE3294FD744001A05AD /* TorusLens+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "TorusLens+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCE4294FD744001A05AD /* TriangleTile+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "TriangleTile+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCE5294FD744001A05AD /* Twirl+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Twirl+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCE6294FD744001A05AD /* UnsharpMask+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "UnsharpMask+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCE7294FD744001A05AD /* VertStripes+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "VertStripes+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCE8294FD744001A05AD /* Vortex+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Vortex+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCE9294FD744001A05AD /* WhitePointAdjust+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "WhitePointAdjust+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCEA294FD744001A05AD /* ZoomBlur+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "ZoomBlur+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCEB294FD744001A05AD /* CMYK.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = CMYK.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCEC294FD744001A05AD /* ColorLevels.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = ColorLevels.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCED294FD744001A05AD /* HSV.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = HSV.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCEE294FD744001A05AD /* Threshold.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = Threshold.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCEF294FD744001A05AD /* ToneCurve.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = ToneCurve.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCF0294FD744001A05AD /* XCFQuickLook.qlgenerator */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = XCFQuickLook.qlgenerator; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CCF1294FD744001A05AD /* XCFSpotlight.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = XCFSpotlight.mdimporter; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CD37294FD794001A05AD /* Plugins.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Plugins.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BE76CD121EE937400B6C65F /* Seashore.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Seashore.xcconfig; path = ../Seashore.xcconfig; sourceTree = "<group>"; };
 		2BEA688027B7408F00BC1453 /* SeaScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaScrollView.h; sourceTree = "<group>"; };
 		2BEA688127B7408F00BC1453 /* SeaScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeaScrollView.m; sourceTree = "<group>"; };
@@ -730,10 +720,7 @@
 		2BED227921F3FBB7005B496C /* pencilTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pencilTemplate.png; sourceTree = "<group>"; };
 		2BED227B21F3FBF3005B496C /* eraserTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eraserTemplate.png; sourceTree = "<group>"; };
 		2BED227D21F4D958005B496C /* clone-cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clone-cursor.png"; sourceTree = "<group>"; };
-		2BF066B927DFFD1900FC090D /* PluginClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PluginClass.h; sourceTree = "<group>"; };
 		2BF19EDC2860F9E000C35FBE /* StoreKitConfig.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = StoreKitConfig.storekit; sourceTree = "<group>"; };
-		2BF19EDD2860FBFE00C35FBE /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
-		2BF19EE228613FED00C35FBE /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		2BF40506227DC8DB0091E1EA /* swapTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = swapTemplate.png; sourceTree = "<group>"; };
 		2BF405082282589B0091E1EA /* HEICExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEICExporter.h; sourceTree = "<group>"; };
 		2BF40509228258A90091E1EA /* HEICExporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEICExporter.m; sourceTree = "<group>"; };
@@ -891,8 +878,8 @@
 		A8C2681A0554875500A80207 /* RectSelectTool.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = RectSelectTool.m; sourceTree = "<group>"; };
 		A8C47DA4045285AE00A80207 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
 		A8CA47A406D82C10006F0681 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
-		A8CA58EB07936EBF004BE921 /* PluginData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PluginData.h; sourceTree = "<group>"; };
-		A8CA58EC07936EBF004BE921 /* PluginData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PluginData.m; sourceTree = "<group>"; };
+		A8CA58EB07936EBF004BE921 /* SeaPluginData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeaPluginData.h; sourceTree = "<group>"; };
+		A8CA58EC07936EBF004BE921 /* SeaPluginData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeaPluginData.m; sourceTree = "<group>"; };
 		A8CAF01D0815E55300A6D5A6 /* vMarkerTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vMarkerTemplate.png; sourceTree = "<group>"; };
 		A8CAF0250815E56000A6D5A6 /* hMarkerTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hMarkerTemplate.png; sourceTree = "<group>"; };
 		A8CB36A40456C87500A80207 /* BucketTool.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BucketTool.h; sourceTree = "<group>"; };
@@ -1072,23 +1059,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2BE0CCA5294FC8E3001A05AD /* GIMPCore.framework in Frameworks */,
+				2BE0CD38294FD794001A05AD /* Plugins.framework in Frameworks */,
 				2BFC6C2B2778DEE400F707D9 /* XCTest.framework in Frameworks */,
-				2B2DEC3C286F35FE0017BBA8 /* Plugins.framework in Frameworks */,
 				2BCF02A328FA0F3300733144 /* AppKit.framework in Frameworks */,
+				2BE0CCA8294FCCD0001A05AD /* StoreKit.framework in Frameworks */,
+				2BE0CC9D294FBFE3001A05AD /* SeaComponents.framework in Frameworks */,
+				2BE0CCAA294FCDE0001A05AD /* Security.framework in Frameworks */,
+				2BE0CC9F294FBFE3001A05AD /* SeaLibrary.framework in Frameworks */,
 				2B78488D28877C9B000B4839 /* PocketSVG.framework in Frameworks */,
 				2BCF02A128FA0F2500733144 /* CoreFoundation.framework in Frameworks */,
-				2BF19EE328613FED00C35FBE /* Security.framework in Frameworks */,
-				2B2DEC3F286F36040017BBA8 /* GIMPCore.framework in Frameworks */,
-				2BC3CE40293C07A1005394FE /* SeaComponents.framework in Frameworks */,
-				2BF19EDE2860FBFE00C35FBE /* StoreKit.framework in Frameworks */,
-				2B0DF77C28020B95002E8B7D /* QuartzCore.framework in Frameworks */,
+				2BE0CCAC294FCF41001A05AD /* CoreImage.framework in Frameworks */,
 				A84E106408E7A4FB0084BCB7 /* IOKit.framework in Frameworks */,
-				2B0DF77827FFEF0F002E8B7D /* Accelerate.framework in Frameworks */,
+				2BE0CCA3294FC8D2001A05AD /* Accelerate.framework in Frameworks */,
 				A8BF652708E6FEAB006E9BFC /* Carbon.framework in Frameworks */,
 				A8EDF14C078959C80022BB31 /* Cocoa.framework in Frameworks */,
-				2B0DF77627FFEF08002E8B7D /* CoreGraphics.framework in Frameworks */,
-				2B0DF77A27FFEF15002E8B7D /* CoreImage.framework in Frameworks */,
-				2BC3CE3E293C079E005394FE /* SeaLibrary.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1129,7 +1114,6 @@
 			isa = PBXGroup;
 			children = (
 				2BE76CD121EE937400B6C65F /* Seashore.xcconfig */,
-				2BD5923B21E3DBEF002D150B /* EmbeddedBinaries */,
 				2B08E5C021E28C4C0011037C /* Seashore.entitlements */,
 				2A37F4ABFDCFA73011CA2CEA /* Application Classes */,
 				F50687FD039B9946016F7F19 /* Document Classes */,
@@ -1157,7 +1141,6 @@
 		2A37F4ABFDCFA73011CA2CEA /* Application Classes */ = {
 			isa = PBXGroup;
 			children = (
-				2BF066B927DFFD1900FC090D /* PluginClass.h */,
 				F5CE256503D66572013D2EC9 /* SeaController.h */,
 				F5CE256603D66572013D2EC9 /* SeaController.m */,
 				A8D7CC580A20A74300FFC6A4 /* SeaDocumentController.h */,
@@ -1227,29 +1210,89 @@
 		2A37F4C3FDCFA73011CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2BB3D07D2942F788002F1E9D /* KeystoneCombined.bundle */,
-				2BB3D07E2942F788002F1E9D /* KeystoneHorizontal.bundle */,
-				2BB3D07F2942F788002F1E9D /* KeystoneVertical.bundle */,
+				2BE0CD37294FD794001A05AD /* Plugins.framework */,
+				2BE0CCAD294FD744001A05AD /* Alpha2Gray.bundle */,
+				2BE0CCAE294FD744001A05AD /* AffineTile+.bundle */,
+				2BE0CCAF294FD744001A05AD /* AutoEnhance+.bundle */,
+				2BE0CCB0294FD744001A05AD /* Bloom+.bundle */,
+				2BE0CCB1294FD744001A05AD /* Brightness+.bundle */,
+				2BE0CCB2294FD744001A05AD /* Bump+.bundle */,
+				2BE0CCB3294FD744001A05AD /* Checkerboard+.bundle */,
+				2BE0CCB4294FD744001A05AD /* CircleSplash+.bundle */,
+				2BE0CCB5294FD744001A05AD /* CircularScreen+.bundle */,
+				2BE0CCB6294FD744001A05AD /* CircularWrap+.bundle */,
+				2BE0CCB7294FD744001A05AD /* CMYKHalftone+.bundle */,
+				2BE0CCB8294FD744001A05AD /* Crystallize+.bundle */,
+				2BE0CCB9294FD744001A05AD /* DisplacementDistortion+.bundle */,
+				2BE0CCBA294FD744001A05AD /* DotScreen+.bundle */,
+				2BE0CCBB294FD744001A05AD /* Edges+.bundle */,
+				2BE0CCBC294FD744001A05AD /* EdgeWork+.bundle */,
+				2BE0CCBD294FD744001A05AD /* Exposure+.bundle */,
+				2BE0CCBE294FD744001A05AD /* FalseColor+.bundle */,
+				2BE0CCBF294FD744001A05AD /* GammaAdjust+.bundle */,
+				2BE0CCC0294FD744001A05AD /* Gaussian+.bundle */,
+				2BE0CCC1294FD744001A05AD /* GlassDistortion+.bundle */,
+				2BE0CCC2294FD744001A05AD /* GlassLozenge+.bundle */,
+				2BE0CCC3294FD744001A05AD /* Gloom+.bundle */,
+				2BE0CCC4294FD744001A05AD /* HatchedScreen+.bundle */,
+				2BE0CCC5294FD744001A05AD /* Hole+.bundle */,
+				2BE0CCC6294FD744001A05AD /* HorizStripes+.bundle */,
+				2BE0CCC7294FD744001A05AD /* Invert+.bundle */,
+				2BE0CCC8294FD744001A05AD /* Kaleidoscope+.bundle */,
+				2BE0CCC9294FD744001A05AD /* KeystoneCombined.bundle */,
+				2BE0CCCA294FD744001A05AD /* KeystoneHorizontal.bundle */,
+				2BE0CCCB294FD744001A05AD /* KeystoneVertical.bundle */,
+				2BE0CCCC294FD744001A05AD /* LenticularHalo+.bundle */,
+				2BE0CCCD294FD744001A05AD /* LineScreen+.bundle */,
+				2BE0CCCE294FD744001A05AD /* Median+.bundle */,
+				2BE0CCCF294FD744001A05AD /* Monochrome+.bundle */,
+				2BE0CCD0294FD744001A05AD /* MotionBlur+.bundle */,
+				2BE0CCD1294FD744001A05AD /* NoiseReduction+.bundle */,
+				2BE0CCD2294FD744001A05AD /* OpTile+.bundle */,
+				2BE0CCD3294FD744001A05AD /* ParallelogramTile+.bundle */,
+				2BE0CCD4294FD744001A05AD /* PerspectiveCorrection.bundle */,
+				2BE0CCD5294FD744001A05AD /* PerspectiveRotate.bundle */,
+				2BE0CCD6294FD744001A05AD /* PerspectiveTile+.bundle */,
+				2BE0CCD7294FD744001A05AD /* PerspectiveTransform.bundle */,
+				2BE0CCD8294FD744001A05AD /* Pinch+.bundle */,
+				2BE0CCD9294FD744001A05AD /* Pixellate+.bundle */,
+				2BE0CCDA294FD744001A05AD /* Pointillize+.bundle */,
+				2BE0CCDB294FD744001A05AD /* Posterize+.bundle */,
+				2BE0CCDC294FD744001A05AD /* Random+.bundle */,
+				2BE0CCDD294FD744001A05AD /* Sepia+.bundle */,
+				2BE0CCDE294FD744001A05AD /* Sharpen+.bundle */,
+				2BE0CCDF294FD744001A05AD /* SpotLight+.bundle */,
+				2BE0CCE0294FD744001A05AD /* Starshine+.bundle */,
+				2BE0CCE1294FD744001A05AD /* Straighten.bundle */,
+				2BE0CCE2294FD744001A05AD /* Sunbeams+.bundle */,
+				2BE0CCE3294FD744001A05AD /* TorusLens+.bundle */,
+				2BE0CCE4294FD744001A05AD /* TriangleTile+.bundle */,
+				2BE0CCE5294FD744001A05AD /* Twirl+.bundle */,
+				2BE0CCE6294FD744001A05AD /* UnsharpMask+.bundle */,
+				2BE0CCE7294FD744001A05AD /* VertStripes+.bundle */,
+				2BE0CCE8294FD744001A05AD /* Vortex+.bundle */,
+				2BE0CCE9294FD744001A05AD /* WhitePointAdjust+.bundle */,
+				2BE0CCEA294FD744001A05AD /* ZoomBlur+.bundle */,
+				2BE0CCEB294FD744001A05AD /* CMYK.bundle */,
+				2BE0CCEC294FD744001A05AD /* ColorLevels.bundle */,
+				2BE0CCED294FD744001A05AD /* HSV.bundle */,
+				2BE0CCEE294FD744001A05AD /* Threshold.bundle */,
+				2BE0CCEF294FD744001A05AD /* ToneCurve.bundle */,
+				2BE0CCF0294FD744001A05AD /* XCFQuickLook.qlgenerator */,
+				2BE0CCF1294FD744001A05AD /* XCFSpotlight.mdimporter */,
+				2BE0CCAB294FCF40001A05AD /* CoreImage.framework */,
+				2BE0CCA9294FCDE0001A05AD /* Security.framework */,
+				2BE0CCA7294FCCCF001A05AD /* StoreKit.framework */,
+				2BE0CCA4294FC8E3001A05AD /* GIMPCore.framework */,
+				2BE0CCA2294FC8D2001A05AD /* Accelerate.framework */,
+				2BE0CC9B294FBFE3001A05AD /* SeaComponents.framework */,
+				2BE0CC9C294FBFE3001A05AD /* SeaLibrary.framework */,
 				2BCF02A228FA0F3200733144 /* AppKit.framework */,
 				2BCF02A028FA0F2500733144 /* CoreFoundation.framework */,
-				2B2EFA8428BF1B46009B225D /* SeaLibrary.framework */,
-				2B8448BE28BEED9700C068D1 /* libSeaLibrary.a */,
 				2B78486228877B88000B4839 /* PocketSVG.framework */,
-				2B2DEC32286F35F40017BBA8 /* SeaComponents.framework */,
-				2B2DEC3E286F36040017BBA8 /* GIMPCore.framework */,
-				2B2DEC3B286F35FE0017BBA8 /* Plugins.framework */,
-				2BF19EE228613FED00C35FBE /* Security.framework */,
-				2BF19EDD2860FBFE00C35FBE /* StoreKit.framework */,
-				2B0DF77B28020B95002E8B7D /* QuartzCore.framework */,
-				2B0DF77927FFEF15002E8B7D /* CoreImage.framework */,
-				2B0DF77727FFEF0F002E8B7D /* Accelerate.framework */,
-				2B0DF77527FFEF08002E8B7D /* CoreGraphics.framework */,
 				2BFC6C2A2778DEE400F707D9 /* XCTest.framework */,
 				1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */,
 				1058C7A8FEA54F5311CA2CBB /* Other Frameworks */,
-				2BB3D08429439EAF002F1E9D /* Straighten.bundle */,
-				2BB3D0862943FBFA002F1E9D /* PerspectiveRotate.bundle */,
-				2B40F44F29444E870011D4DF /* PerspectiveTransform.bundle */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1257,89 +1300,14 @@
 		2B84484928BEE74300C068D1 /* SharedSource */ = {
 			isa = PBXGroup;
 			children = (
-				2B84484A28BEE74300C068D1 /* XCFLayer.h */,
 				2B84484B28BEE74300C068D1 /* ParasiteData.h */,
-				2B84484C28BEE74300C068D1 /* XCFContent.m */,
 				2B84485328BEE74300C068D1 /* XCFContent.h */,
+				2B84484C28BEE74300C068D1 /* XCFContent.m */,
+				2B84484A28BEE74300C068D1 /* XCFLayer.h */,
 				2B84485528BEE74300C068D1 /* XCFLayer.m */,
 				2B84485628BEE74300C068D1 /* ParasiteData.m */,
 			);
 			path = SharedSource;
-			sourceTree = "<group>";
-		};
-		2BD5923B21E3DBEF002D150B /* EmbeddedBinaries */ = {
-			isa = PBXGroup;
-			children = (
-				2BB3D07C2942F6CD002F1E9D /* KeystoneCombined.bundle */,
-				2BB3D07B2942F6C9002F1E9D /* KeystoneVertical.bundle */,
-				2BB3D07A2942F6C3002F1E9D /* KeystoneHorizontal.bundle */,
-				2BB3D0792942F6B6002F1E9D /* PerspectiveCorrection.bundle */,
-				2B78489428877E69000B4839 /* ColorLevels.bundle */,
-				2B78489328877E60000B4839 /* ToneCurve.bundle */,
-				2B2D8CC521F995BB004527F2 /* Alpha2Gray.bundle */,
-				2BD5924F21E3E7CF002D150B /* XCFSpotlight.mdimporter */,
-				2BD5924D21E3E7CF002D150B /* XCFQuickLook.qlgenerator */,
-				2BD591D021E3DBCB002D150B /* GlassLozenge+.bundle */,
-				2BD591CE21E3DBCB002D150B /* GlassDistortion+.bundle */,
-				2BD591CC21E3DBCB002D150B /* Gaussian+.bundle */,
-				2BD591CA21E3DBCA002D150B /* GammaAdjust+.bundle */,
-				2BD591C821E3DBCA002D150B /* FalseColor+.bundle */,
-				2BD591C621E3DBCA002D150B /* Exposure+.bundle */,
-				2BD591C421E3DBCA002D150B /* EdgeWork+.bundle */,
-				2BD591C221E3DBCA002D150B /* Edges+.bundle */,
-				2BD591C021E3DBCA002D150B /* DotScreen+.bundle */,
-				2BD591BE21E3DBCA002D150B /* DisplacementDistortion+.bundle */,
-				2BD591BC21E3DBCA002D150B /* Crystallize+.bundle */,
-				2BD591BA21E3DBCA002D150B /* CMYKHalftone+.bundle */,
-				2BD591B821E3DBCA002D150B /* CircleSplash+.bundle */,
-				2BD591B621E3DBCA002D150B /* CircularWrap+.bundle */,
-				2BD591B421E3DBCA002D150B /* CircularScreen+.bundle */,
-				2BD591B221E3DBCA002D150B /* Checkerboard+.bundle */,
-				2BD591B021E3DBCA002D150B /* Bump+.bundle */,
-				2BD591AE21E3DBCA002D150B /* Brightness+.bundle */,
-				2BD591AC21E3DBCA002D150B /* Bloom+.bundle */,
-				2BD591AA21E3DBCA002D150B /* AffineTile+.bundle */,
-				2BD591A821E3DBCA002D150B /* AutoEnhance+.bundle */,
-				2BD591F821E3DBCC002D150B /* Posterize+.bundle */,
-				2BD591F621E3DBCC002D150B /* Pointillize+.bundle */,
-				2BD591F421E3DBCC002D150B /* Pixellate+.bundle */,
-				2BD591F221E3DBCC002D150B /* Pinch+.bundle */,
-				2BD591F021E3DBCC002D150B /* PerspectiveTransform+.bundle */,
-				2BD591EE21E3DBCC002D150B /* PerspectiveTile+.bundle */,
-				2BD591EC21E3DBCB002D150B /* ParallelogramTile+.bundle */,
-				2BD591EA21E3DBCB002D150B /* OpTile+.bundle */,
-				2BD591E821E3DBCB002D150B /* NoiseReduction+.bundle */,
-				2BD591E621E3DBCB002D150B /* MotionBlur+.bundle */,
-				2BD591E421E3DBCB002D150B /* Monochrome+.bundle */,
-				2BD591E221E3DBCB002D150B /* Median+.bundle */,
-				2BD591E021E3DBCB002D150B /* LineScreen+.bundle */,
-				2BD591DE21E3DBCB002D150B /* LenticularHalo+.bundle */,
-				2BD591DC21E3DBCB002D150B /* Kaleidoscope+.bundle */,
-				2BD591DA21E3DBCB002D150B /* Invert+.bundle */,
-				2BD591D821E3DBCB002D150B /* HorizStripes+.bundle */,
-				2BD591D621E3DBCB002D150B /* Hole+.bundle */,
-				2BD591D421E3DBCB002D150B /* HatchedScreen+.bundle */,
-				2BD591D221E3DBCB002D150B /* Gloom+.bundle */,
-				2BD5922621E3DBCE002D150B /* HSV.bundle */,
-				2BD5922221E3DBCD002D150B /* Greyscale.bundle */,
-				2BD5921E21E3DBCD002D150B /* CMYK.bundle */,
-				2BD5921821E3DBCD002D150B /* Threshold.bundle */,
-				2BD5921421E3DBCD002D150B /* ZoomBlur+.bundle */,
-				2BD5921221E3DBCD002D150B /* WhitePointAdjust+.bundle */,
-				2BD5921021E3DBCD002D150B /* Vortex+.bundle */,
-				2BD5920E21E3DBCD002D150B /* VertStripes+.bundle */,
-				2BD5920C21E3DBCD002D150B /* UnsharpMask+.bundle */,
-				2BD5920A21E3DBCC002D150B /* Twirl+.bundle */,
-				2BD5920821E3DBCC002D150B /* TriangleTile+.bundle */,
-				2BD5920621E3DBCC002D150B /* TorusLens+.bundle */,
-				2BD5920421E3DBCC002D150B /* Sunbeams+.bundle */,
-				2BD5920221E3DBCC002D150B /* Starshine+.bundle */,
-				2BD5920021E3DBCC002D150B /* SpotLight+.bundle */,
-				2BD591FE21E3DBCC002D150B /* Sharpen+.bundle */,
-				2BD591FC21E3DBCC002D150B /* Sepia+.bundle */,
-				2BD591FA21E3DBCC002D150B /* Random+.bundle */,
-			);
-			name = EmbeddedBinaries;
 			sourceTree = "<group>";
 		};
 		2BFB123D27951CD80063A750 /* Core Image Filters */ = {
@@ -1644,8 +1612,8 @@
 				2B399C28279DE15C000D0C58 /* SVGContent.m */,
 				2B399C25279DE15C000D0C58 /* XBMContent.h */,
 				2B399C29279DE15C000D0C58 /* XBMContent.m */,
-				A8CA58EB07936EBF004BE921 /* PluginData.h */,
-				A8CA58EC07936EBF004BE921 /* PluginData.m */,
+				A8CA58EB07936EBF004BE921 /* SeaPluginData.h */,
+				A8CA58EC07936EBF004BE921 /* SeaPluginData.m */,
 				A8A6C05804C7DC6100A80207 /* SeaHelpers.m */,
 				A8A6C05704C7DC6100A80207 /* SeaHelpers.h */,
 				2B399CA5279E0558000D0C58 /* SeaLayer.h */,
@@ -2239,7 +2207,7 @@
 				A8EDF147078959C80022BB31 /* WandOptions.m in Sources */,
 				A8EDF148078959C80022BB31 /* PNGExporter.m in Sources */,
 				A8EDF14A078959C80022BB31 /* SeaPlugins.m in Sources */,
-				A8CA58EE07936EBF004BE921 /* PluginData.m in Sources */,
+				A8CA58EE07936EBF004BE921 /* SeaPluginData.m in Sources */,
 				A8D6BCEC07C215E000B91A1D /* CocoaImporter.m in Sources */,
 				A8D6C11D07C2323200B91A1D /* XCFImporter.m in Sources */,
 				A81F6EB307C2EE35005C2DBD /* XBMImporter.m in Sources */,
@@ -2411,7 +2379,6 @@
 			baseConfigurationReference = 2BE76CD121EE937400B6C65F /* Seashore.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
@@ -2432,21 +2399,14 @@
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SELECTED_FILES = readwrite;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				"OTHER_CFLAGS[arch=*]" = (
-					"-D",
-					DEBUG,
-				);
 			};
 			name = Debug;
 		};
@@ -2454,17 +2414,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_ENTITLEMENTS = Seashore.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../PocketSVG/**";
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Seashore;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.graphics-design";
@@ -2472,8 +2427,6 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore;
 				PRODUCT_NAME = Seashore;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2500,7 +2453,6 @@
 			baseConfigurationReference = 2BE76CD121EE937400B6C65F /* Seashore.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
@@ -2523,7 +2475,6 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SELECTED_FILES = readwrite;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -2537,17 +2488,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_ENTITLEMENTS = Seashore.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../PocketSVG/**";
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 3;
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Seashore;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.graphics-design";
@@ -2555,7 +2501,6 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore;
 				PRODUCT_NAME = Seashore;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2600,10 +2545,6 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GENERATE_INFOPLIST_FILE = YES;

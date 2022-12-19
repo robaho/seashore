@@ -16,6 +16,7 @@
 #import "AlphaToGrayFilter.h"
 #import "SeaWindowContent.h"
 #import "StandardMerge.h"
+#import "DebugView.h"
 
 #import <objc/runtime.h>
 
@@ -24,7 +25,7 @@ dispatch_group_t group;
 
 #define TILE_SIZE 64
 
-#define SINGLE_THREADED false
+#define SINGLE_THREADED FALSE
 
 /**
  *  Gets a list of all methods on a class (or metaclass)
@@ -92,18 +93,13 @@ void DumpObjcMethods(Class clz) {
     if(x<0 || x>=width || y<0 || y>=height)
         return NULL;
 
-    unsigned char *pixelData = CGBitmapContextGetData(dataCtx) + (y*CGBitmapContextGetBytesPerRow(dataCtx)) + x*spp;
-    float alpha = pixelData[spp-1];
+    unsigned char *pixelData = CGBitmapContextGetData(dataCtx) + (y*CGBitmapContextGetBytesPerRow(dataCtx)) + x*SPP;
+    float alpha = pixelData[alphaPos];
 
     if(alpha==0)
         return [NSColor colorWithRed:0 green:0 blue:0 alpha:0];
 
-    if(spp==2){
-        return [NSColor colorWithRed:pixelData[0]/alpha green:pixelData[0]/alpha blue:pixelData[0]/alpha alpha:pixelData[1]/255.0];
-    } else {
-        return [NSColor colorWithRed:pixelData[0]/alpha green:pixelData[1]/alpha blue:pixelData[2]/alpha alpha:pixelData[3]/255.0];
-    }
-
+    return [NSColor colorWithRed:pixelData[CR]/alpha green:pixelData[CG]/alpha blue:pixelData[CB]/alpha alpha:pixelData[alphaPos]/255.0];
 }
 
 - (BOOL)isFlipped
@@ -148,9 +144,7 @@ void DumpObjcMethods(Class clz) {
         }
     }
 
-    layerRect.origin.x += [layer xoff];
-    layerRect.origin.y += [layer yoff];
-    [self update:layerRect];
+    dispatch_semaphore_signal(renderSem); // will pass tempOverlayModifiedRect to whiteboardModifiedRect when it runs
 }
 
 - (BOOL)isOpaque
@@ -184,9 +178,9 @@ void DumpObjcMethods(Class clz) {
     for(int row=0;row<r.size.height;row++){
         int offset = (r.origin.y+row)*lw + r.origin.x;
 
-        unsigned char *dpos = dest+(offset)*spp;
-        unsigned char *opos = overlay+(offset)*spp;
-        unsigned char *lpos = ld+(offset)*spp;
+        unsigned char *dpos = dest+(offset)*SPP;
+        unsigned char *opos = overlay+(offset)*SPP;
+        unsigned char *lpos = ld+(offset)*SPP;
         unsigned char *rpos = replace+offset;
 
         for(int col=0;col<r.size.width;col++){
@@ -215,38 +209,38 @@ void DumpObjcMethods(Class clz) {
                 case(kAllChannels):
                     switch(overlayBehaviour){
                         case kReplacingBehaviour:
-                            replace_pm(spp,opos,lpos,dpos,opacity);
+                            replace_pm(opos,lpos,dpos,opacity);
                             break;
                         case kErasingBehaviour:
-                            erase_pm(spp,opos,lpos,dpos,opacity);
+                            erase_pm(opos,lpos,dpos,opacity);
                             break;
                         default:
-                            merge_pm(spp,opos,lpos,dpos,opacity);
+                            merge_pm(opos,lpos,dpos,opacity);
                             break;
                     }
                     break;
                 case(kAlphaChannel):
                     switch(overlayBehaviour){
                         case kReplacingBehaviour:
-                            replace_alpha_pm(spp,opos,lpos,dpos,opacity);
+                            replace_alpha_pm(opos,lpos,dpos,opacity);
                         default:
-                            merge_alpha_pm(spp,opos,lpos,dpos,opacity);
+                            merge_alpha_pm(opos,lpos,dpos,opacity);
                             break;
                     }
                     break;
                 case(kPrimaryChannels):
                     switch(overlayBehaviour){
                         case kReplacingBehaviour:
-                            replace_primary_pm(spp,opos,lpos,dpos,opacity);
+                            replace_primary_pm(opos,lpos,dpos,opacity);
                         default:
-                            merge_primary_pm(spp,opos,lpos,dpos,opacity);
+                            merge_primary_pm(opos,lpos,dpos,opacity);
                             break;
                     }
                     break;
             }
-            dpos+=spp;
-            opos+=spp;
-            lpos+=spp;
+            dpos+=SPP;
+            opos+=SPP;
+            lpos+=SPP;
             rpos++;
         }
     }
@@ -262,10 +256,10 @@ void DumpObjcMethods(Class clz) {
         } else {
             dispatch_group_t group = dispatch_group_create();
 
-            int tw = MAX(r.size.width / cores,8);
-            for(int x=0;x<r.size.width;x+=tw) {
-                int width = MIN(tw,r.size.width-x);
-                IntRect r0 = IntMakeRect(x+r.origin.x,r.origin.y,width,r.size.height);
+            int th = MAX(r.size.height / cores,8);
+            for(int y=0;y<r.size.height;y+=th) {
+                int height = MIN(th,r.size.height-y);
+                IntRect r0 = IntMakeRect(r.origin.x,y+r.origin.y,r.size.width,height);
                 dispatch_group_async(group, queue, ^{
                     [self mergeOverlay0:dest rect:r0];
                 });
@@ -290,13 +284,24 @@ void DumpObjcMethods(Class clz) {
         tempOverlayModifiedRect = IntZeroRect;
     }
 
-    if(!IntRectIsEmpty(r)) {
-        r = IntConstrainRect(r,IntMakeRect(0,0,lw,lh));
+    r = IntConstrainRect(r,IntMakeRect(0,0,lw,lh));
 
-        long start = getCurrentMillis();
-        [self mergeOverlay:[temp bytes] rect:r];
-        if(LOG_PERFORMANCE) {
-            NSLog(@"whiteboard merge overlay %ld %@",getCurrentMillis()-start,NSStringFromIntRect(r));
+    if(IntRectIsEmpty(r)) {
+        return;
+    }
+
+    long start = getCurrentMillis();
+    [self mergeOverlay:[temp bytes] rect:r];
+    if(LOG_PERFORMANCE) {
+        NSLog(@"whiteboard merge overlay %ld %@",getCurrentMillis()-start,NSStringFromIntRect(r));
+    }
+    @synchronized(self) {
+        SeaLayer *layer = [[document contents] activeLayer];
+        IntRect wr = IntOffsetRect(r, [layer xoff], [layer yoff]);
+        if(IntRectIsEmpty(whiteboardModifiedRect)) {
+            whiteboardModifiedRect = wr;
+        } else {
+            whiteboardModifiedRect = IntSumRects(whiteboardModifiedRect,wr);
         }
     }
 }
@@ -308,8 +313,8 @@ void DumpObjcMethods(Class clz) {
     int lw = layer_width;
     int lh = layer_height;
 
-    CGDataProviderRef dp = CGDataProviderCreateWithData(NULL,[data bytes],lw*lh*spp,NULL);
-    CGImageRef image = CGImageCreate(lw,lh,8,8*spp,lw*spp,COLOR_SPACE,channel==kAlphaChannelView ? kCGImageAlphaLast : kCGImageAlphaNoneSkipLast,dp,nil,false,0);
+    CGDataProviderRef dp = CGDataProviderCreateWithData(NULL,[data bytes],lw*lh*SPP,NULL);
+    CGImageRef image = CGImageCreate(lw,lh,8,8*SPP,lw*SPP,COLOR_SPACE,channel==kAlphaChannelView ? kCGImageAlphaFirst : kCGImageAlphaNoneSkipFirst,dp,nil,false,0);
     CGDataProviderRelease(dp);
 
     CGContextSaveGState(context);
@@ -499,10 +504,10 @@ static void patternCallback(void *info, CGContextRef context) {
 
     IntRect r = NSRectMakeIntRect(viewDirtyRect);
 
-    for (int i = layerCount-1; i>=0; i--) {
+    bool rendered=TRUE;
+    for (int i = layerCount-1; i>=0 && rendered; i--) {
         SeaLayer *layer = [[document contents] layer:i];
         if ([layer visible]) {
-            bool rendered;
             if (layer == activeLayer) {
                 if([self overlayModified]) {
                     rendered=[self compositeLayer:layer src:[temp bytes] rect:r dest:ctx];
@@ -512,26 +517,29 @@ static void patternCallback(void *info, CGContextRef context) {
             } else {
                 rendered=[self compositeLayer:layer src:[layer data] rect:r dest:ctx];
             }
-            if(!rendered) {
-                break;
-            }
         }
     }
 
     CGContextRelease(ctx);
+
+    if(rendered) {
+        CFRunLoopPerformBlock(CFRunLoopGetMain(), kCFRunLoopCommonModes, ^{
+            [self setNeedsDisplayInRect:viewDirtyRect];
+        });
+    }
 }
 
 - (void)copyLayerToTemp:(IntRect)r
 {
     r = IntConstrainRect(r,IntMakeRect(0,0,layer_width,layer_height));
-    int offset = (r.origin.y*layer_width+r.origin.x)*spp;
+    int offset = (r.origin.y*layer_width+r.origin.x)*SPP;
     unsigned char *src = (unsigned char*)[layer_data bytes]+offset;
     unsigned char *dst = (unsigned char*)[temp bytes]+offset;
-    int width = r.size.width*spp;
+    int width = r.size.width*SPP;
     for(int row=0;row<r.size.height;row++) {
         memcpy(dst,src,width);
-        src+=layer_width*spp;
-        dst+=layer_width*spp;
+        src+=layer_width*SPP;
+        dst+=layer_width*SPP;
     }
 }
 
@@ -571,8 +579,7 @@ static void patternCallback(void *info, CGContextRef context) {
 
     finished:
 
-        memset(overlay, 0, lw * lh * spp);
-        //  memset([temp bytes], 0, lw * lh * spp);
+        memset(overlay, 0, lw * lh * SPP);
         memset(replace, 0, lw * lh);
 
         IntRect temp = overlayModifiedRect;
@@ -597,7 +604,7 @@ static void patternCallback(void *info, CGContextRef context) {
 
         [self copyLayerToTemp:overlayModifiedRect];
 
-        memset(overlay, 0, width * height * spp);
+        memset(overlay, 0, width * height * SPP);
         memset(replace, 0, width * height);
 
         IntRect temp = overlayModifiedRect;
@@ -631,18 +638,13 @@ static void patternCallback(void *info, CGContextRef context) {
         width = [[document contents] width];
         height = [[document contents] height];
 
-        // Change the samples per pixel if required
-        if (spp != [[document contents] spp]) {
-            spp = [[document contents] spp];
-        }
-
         CGContextRelease(dataCtx);
-        dataCtx = CGBitmapContextCreateWithData(NULL, width, height, 8, 0, COLOR_SPACE, kCGImageAlphaPremultipliedLast, NULL, NULL);
+        dataCtx = CGBitmapContextCreateWithData(NULL, width, height, 8, 0, COLOR_SPACE, kCGImageAlphaPremultipliedFirst, NULL, NULL);
 
         if(proofProfile) {
             CGContextRelease(proofCtx);
             CGColorSpaceRef csr = [proofProfile.cs CGColorSpace];
-            int bitmapMode = CGColorSpaceGetModel(csr)==kCGColorSpaceModelCMYK ? kCGImageAlphaNone : kCGImageAlphaPremultipliedLast;
+            int bitmapMode = CGColorSpaceGetModel(csr)==kCGColorSpaceModelCMYK ? kCGImageAlphaNone : kCGImageAlphaPremultipliedFirst;
             // proofCtx is not used for rendering, only to describe the output format
             proofCtx = CGBitmapContextCreate(nil,width,height,8,0,csr,bitmapMode);
             proofBuffer.data = CGBitmapContextGetData(proofCtx);
@@ -669,14 +671,14 @@ static void patternCallback(void *info, CGContextRef context) {
 
         if (overlay) free(overlay);
 
-        int len = lw*lh*spp;
+        int len = lw*lh*SPP;
 
         overlay = malloc(make_128(len));
         CHECK_MALLOC(overlay);
         memset(overlay, 0, len);
 
         CGContextRelease(overlayCtx);
-        overlayCtx = CGBitmapContextCreateWithData(overlay, lw, lh, 8, lw*spp, COLOR_SPACE, kCGImageAlphaPremultipliedLast, NULL, NULL);
+        overlayCtx = CGBitmapContextCreateWithData(overlay, lw, lh, 8, lw*SPP, COLOR_SPACE, kCGImageAlphaPremultipliedFirst, NULL, NULL);
         CGContextTranslateCTM(overlayCtx, 0, lh);
         CGContextScaleCTM(overlayCtx, 1, -1);
 
@@ -686,7 +688,7 @@ static void patternCallback(void *info, CGContextRef context) {
         CHECK_MALLOC(replace);
         memset(replace, 0, lw*lh);
 
-        temp = [NSData dataWithBytes:[layer_data bytes] length:lw*lh*spp];
+        temp = [NSData dataWithBytes:[layer_data bytes] length:lw*lh*SPP];
     }
 
     [self update];
@@ -765,10 +767,10 @@ static void patternCallback(void *info, CGContextRef context) {
                 [self drawInData:IntRectMakeNSRect(r)];
             } else {
                 dispatch_group_t group = dispatch_group_create();
-                int tw = MAX(r.size.width / cores,8);
-                for(int x=0;x<r.size.width;x+=tw) {
-                    int width = MIN(tw,r.size.width-x);
-                    IntRect r0 = IntMakeRect(x+r.origin.x,r.origin.y,width,r.size.height);
+                int th = MAX(r.size.height / cores,8);
+                for(int y=0;y<r.size.height;y+=th) {
+                    int height = MIN(th,r.size.height-y);
+                    IntRect r0 = IntMakeRect(r.origin.x,y+r.origin.y,r.size.width,height);
                     dispatch_group_async(group, queue, ^{
                         [self drawInData:IntRectMakeNSRect(r0)];
                     });
@@ -776,9 +778,9 @@ static void patternCallback(void *info, CGContextRef context) {
                 dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
             }
 
-            NSValue *_dirty = [NSValue valueWithRect:IntRectMakeNSRect(dirty)];
-
-            [self performSelectorOnMainThread:@selector(requestDraw:) withObject:_dirty waitUntilDone:FALSE];
+            CFRunLoopPerformBlock(CFRunLoopGetMain(), kCFRunLoopCommonModes, ^{
+                [[self->document docView] setNeedsDisplayInDocumentRect:dirty:16];
+            });
 
             if(LOG_PERFORMANCE)
                 NSLog(@"whiteboard drawInData %ld %@",getCurrentMillis()-start,NSStringFromIntRect(r));
@@ -786,16 +788,9 @@ static void patternCallback(void *info, CGContextRef context) {
     }
 }
 
-- (void)requestDraw:(NSValue *)value
-{
-    NSRect dirty = [value rectValue];
-    [self setNeedsDisplayInRect:dirty];
-    [[self->document docView] setNeedsDisplayInDocumentRect:NSRectMakeIntRect(dirty):16];
-}
-
 - (NSImage *)printableImage
 {
-    NSBitmapImageRep *imageRep = [self bitmap];
+    NSBitmapImageRep *imageRep = [self image];
 
     NSImage *image = [[NSImage alloc] init];
 
@@ -809,7 +804,7 @@ static void patternCallback(void *info, CGContextRef context) {
 
 - (NSBitmapImageRep*)sampleImage
 {
-    CGImageRef img = [self bitmapCG];
+    CGImageRef img = [self bitmap];
     CGRect r = NSMakeRect(width/2-80,height/2-80,160,160);
     CGImageRef sub = CGImageCreateWithImageInRect(img, r);
 
@@ -821,18 +816,23 @@ static void patternCallback(void *info, CGContextRef context) {
     return rep;
 }
 
-- (NSBitmapImageRep*)bitmap
+- (NSBitmapImageRep*)image
 {
-    CGImageRef img = [self bitmapCG];
+    CGImageRef img = [self bitmap];
+    if([[document contents] isGrayscale]){
+        CGImageRef gray = convertToGrayA(img);
+        CGImageRelease(img);
+        img = gray;
+    }
     NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithCGImage:img];
     CGImageRelease(img);
 
     return rep;
 }
 
-- (CGImageRef)bitmapCG
+- (CGImageRef)bitmap
 {
-    CGContextRef ctx = CGBitmapContextCreate(NULL, width, height, 8, spp*width, COLOR_SPACE, kCGImageAlphaPremultipliedLast);
+    CGContextRef ctx = CreateImageContext(IntMakeSize(width,height));
     CGContextTranslateCTM(ctx,0,height);
     CGContextScaleCTM(ctx,1,-1);
     [self drawInContext:ctx dirty:CGRectMake(0,0,width,height) proofing:false];
@@ -861,6 +861,7 @@ static void patternCallback(void *info, CGContextRef context) {
 - (BOOL)compositeLayer:(SeaLayer *)layer src:(unsigned char *)srcPtr rect:(IntRect)r dest:(CGContextRef)ctx
 {
     if([layer isComplexTransform]) {
+        CGContextSetInterpolationQuality(ctx,kCGInterpolationNone);
         [layer drawLayer:ctx];
         return TRUE;
     }
@@ -872,6 +873,8 @@ static void patternCallback(void *info, CGContextRef context) {
     unsigned char *destPtr = CGBitmapContextGetData(ctx);
     int bytesPerRow = CGBitmapContextGetBytesPerRow(ctx);
 
+    IntRect copy = r;
+
     IntRect lrect = [layer globalBounds];
     r = IntConstrainRect(lrect,r);
 
@@ -879,43 +882,60 @@ static void patternCallback(void *info, CGContextRef context) {
 
     unsigned char tempSpace[4], tempSpace2[4];
 
-    unsigned char *src = srcPtr + ((r.origin.y - lrect.origin.y) * lwidth + r.origin.x-lrect.origin.x)*spp;
-    unsigned char *dst = destPtr + (r.origin.y * bytesPerRow) + r.origin.x*spp;
+    unsigned char *src = srcPtr + ((r.origin.y - lrect.origin.y) * lwidth + r.origin.x-lrect.origin.x)*SPP;
+    unsigned char *dst = destPtr + (r.origin.y * bytesPerRow) + r.origin.x*SPP;
 
     for (int row = 0; row < r.size.height; row++) {
 
         unsigned char *src0 = src;
         unsigned char *dst0 = dst;
 
-        @synchronized(self) {
-            if(!IntRectIsEmpty(whiteboardModifiedRect) && IntContainsRect(whiteboardModifiedRect, r)) {
-                return FALSE;
+        if(row%10==0) {
+            @synchronized(self) {
+                if(!IntRectIsEmpty(whiteboardModifiedRect) && IntContainsRect(whiteboardModifiedRect, copy)) {
+                    return FALSE;
+                }
             }
         }
 
         for(int col=0;col<r.size.width;col++) {
 
-            memcpy(tempSpace2,src0,spp);
-            memcpy(tempSpace,dst0,spp);
-
             if(mode==kCGBlendModeNormal) {
                 // Then merge the pixel in temporary memory with the destination pixel
-                normalMerge(spp, dst0, 0, tempSpace2, 0, opacity);
+                normalMerge(dst0, src0, opacity);
             } else {
+                memcpy(tempSpace2,src0,SPP);
+                memcpy(tempSpace,dst0,SPP);
+
                 // Apply the appropriate effect using the source pixel
-                selectMerge(mode, spp, tempSpace, 0, tempSpace2, 0);
+                selectMerge(mode, tempSpace, tempSpace2);
 
                 // Then merge the pixel in temporary memory with the destination pixel
-                normalMerge(spp, dst0, 0, tempSpace, 0, opacity);
+                normalMerge(dst0, tempSpace, opacity);
             }
 
-            src0+=spp;
-            dst0+=spp;
+            src0+=SPP;
+            dst0+=SPP;
         }
-        src += lwidth * spp;
+        src += lwidth * SPP;
         dst += bytesPerRow;
     }
     return TRUE;
+}
+
+- (void)debugTempLayer
+{
+    NSLog(@"creating debugview for temp");
+    CGContextRef tmp = CGBitmapContextCreateWithData([temp bytes], layer_width, layer_height, 8, layer_width*SPP, COLOR_SPACE, kCGImageAlphaPremultipliedFirst, NULL, NULL);
+
+    [DebugView createWithContext:tmp];
+
+    CGContextRelease(tmp);
+}
+- (void)debugDataCtx
+{
+    NSLog(@"creating debugview for data");
+    [DebugView createWithContext:dataCtx];
 }
 
 @end

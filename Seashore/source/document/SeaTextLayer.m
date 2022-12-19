@@ -79,7 +79,6 @@
 
 - (void)updateBitmap
 {
-
     if([self isRasterized])
         return;
     
@@ -87,7 +86,7 @@
     if(IntRectIsEmpty(local) || !_properties.text)
         return;
 
-    CGContextRef bm = CGBitmapContextCreate([nsdata bytes],width,height,8, width*spp,COLOR_SPACE, kCGImageAlphaPremultipliedLast);
+    CGContextRef bm = CreateImageContextWithData([nsdata bytes],IntMakeSize(width,height));
     CGContextClearRect(bm,CGRectMake(0,0,width,height));
 
     CGMutablePathRef path=CGPathCreateMutable();
@@ -103,6 +102,11 @@
         CGPathAddRect(path, NULL,CGRectMake(0,0,local.size.width,local.size.height));
     }
 
+    NSColor *color = _properties.color;
+    if([[document contents] isGrayscale]) {
+        color = [color colorUsingColorSpace:MyGrayCS];
+    }
+
     NSFont *font = _properties.font;
     float fontSize = [font pointSize] * ([[document contents] yres] / 72.0);
     font = [NSFont fontWithName:[font displayName] size:fontSize];
@@ -116,9 +120,6 @@
 
     [attrs setValue:paraStyle forKey:NSParagraphStyleAttributeName];
     [attrs setValue:font forKey:NSFontAttributeName];
-
-//    [attrs setValue:_properties.color forKey:NSForegroundColorAttributeName];
-//    [attrs setValue:_properties.color forKey:NSStrokeColorAttributeName];
 
     if(_properties.outline)
         [attrs setValue:[NSNumber numberWithInt:_properties.outline] forKey:NSStrokeWidthAttributeName];
@@ -138,7 +139,7 @@
     CFMutableAttributedStringRef asf = (__bridge_retained CFMutableAttributedStringRef)s;
 
     // need to set color here for older OSX versions due to bug
-    CFAttributedStringSetAttribute(asf,CFRangeMake(1,_properties.text.length),kCTForegroundColorAttributeName,_properties.color.CGColor);
+    CFAttributedStringSetAttribute(asf,CFRangeMake(1,_properties.text.length),kCTForegroundColorAttributeName,color.CGColor);
 
     CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString(asf);
     CFRelease(asf);
@@ -158,7 +159,7 @@
     CFRelease(path);
     CFRelease(framesetter);
 
-    unpremultiplyBitmap(spp,[nsdata bytes],[nsdata bytes],width*height);
+    unpremultiplyBitmap(SPP,[nsdata bytes],[nsdata bytes],width*height);
 
     image = NULL;
 }
@@ -220,10 +221,10 @@
     height = MAX(bounds.size.height,1);
 
     if(oldWidth!=width || oldHeight!=height) {
-        unsigned char *new_data = calloc(width*height*spp,1);
+        unsigned char *new_data = calloc(width*height*SPP,1);
         CHECK_MALLOC(new_data);
 
-        nsdata = [NSData dataWithBytesNoCopy:new_data length:width*height*spp];
+        nsdata = [NSData dataWithBytesNoCopy:new_data length:width*height*SPP];
         [self updateBitmap];
         [[document whiteboard] readjustLayer];
     }

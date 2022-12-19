@@ -286,7 +286,7 @@ static inline void fix_endian_readl(long *input, int size)
 {
 	int tilesPerRow = (width % XCF_TILE_WIDTH) ? (width / XCF_TILE_WIDTH + 1) : (width / XCF_TILE_WIDTH);
 	int tilesPerColumn = (height % XCF_TILE_HEIGHT) ? (height / XCF_TILE_HEIGHT + 1) : (height / XCF_TILE_HEIGHT);
-	int whichTile = 0, i, j, k, curColor, srcSPP, destSPP;
+	int whichTile = 0, i, j, k, curColor;
 	int tileHeight, tileWidth;
     long tileOffset, oldOffset;
     int srcLoc, destLoc, expectedSize, srcSize;
@@ -300,8 +300,8 @@ static inline void fix_endian_readl(long *input, int size)
     fread(tempIntString, sizeof(int), 3, file); // read width, height, bpp
     fix_endian_read(tempIntString, 3);
     
-	destSPP = tempIntString[2];
-	srcSPP = destSPP;
+	int destSPP = tempIntString[2];
+	int srcSPP = destSPP;
     
     oldOffset = [self readOffset:file]; // we only ever process the 1st level
     oldOffset+=8; // skip width & height
@@ -429,8 +429,7 @@ static inline void fix_endian_readl(long *input, int size)
 	
 	// Free the redundant tile data, remember the images samples per pixel
 	free(tileData);
-	spp = destSPP;
-	
+
 	return totalData;
 }
 
@@ -468,7 +467,13 @@ static inline int alphaReplaceMerge(int dstOpacity,int srcOpacity)
     oldOffset+=8; // skip width & height
 
 	tileData = malloc(XCF_TILE_HEIGHT * XCF_TILE_WIDTH);
-			
+
+    int spp;
+    if (info->type == XCF_INDEXED_IMAGE || info->type == XCF_RGB_IMAGE)
+        spp = 4;
+    else
+        spp = 2;
+
 	do {
 		
         // Read the offset of the next tile
@@ -572,8 +577,6 @@ static inline int alphaReplaceMerge(int dstOpacity,int srcOpacity)
 	if (data == NULL)
 		return NO;
 
-    nsdata = [NSData dataWithBytesNoCopy:data length:width*height*spp];
-
 	// Read in the mask (and overwrite the alpha channel)
 	if (maskOffset != 0) {
 		info->maskToAlpha = YES;
@@ -585,7 +588,23 @@ static inline int alphaReplaceMerge(int dstOpacity,int srcOpacity)
 	else {
 		info->maskToAlpha = NO;
 	}
-	
+
+    if(info->type==XCF_GRAY_IMAGE) {
+        // convert to ARGB
+        NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:2 hasAlpha:YES isPlanar:NO colorSpaceName:MyGraySpace bytesPerRow:width*2 bitsPerPixel:8*2];
+        unsigned char *new_data = convertToRGBA(rep);
+        free(data);
+        data = new_data;
+    } else {
+        // convert to ARGB
+        NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:4 hasAlpha:YES isPlanar:NO colorSpaceName:MyRGBSpace bytesPerRow:width*4 bitsPerPixel:8*4];
+        unsigned char *new_data = convertToRGBA(rep);
+        free(data);
+        data = new_data;
+    }
+
+    nsdata = [NSData dataWithBytesNoCopy:data length:width*height*4];
+
 	return YES;
 }
 
@@ -636,17 +655,11 @@ static inline int alphaReplaceMerge(int dstOpacity,int srcOpacity)
         return self;
     }
     @catch (NSException *exception) {
-        NSMutableDictionary * info = [NSMutableDictionary dictionary];
-        [info setValue:exception.name forKey:@"ExceptionName"];
-        [info setValue:exception.reason forKey:@"ExceptionReason"];
-        [info setValue:exception.callStackReturnAddresses forKey:@"ExceptionCallStackReturnAddresses"];
-        [info setValue:exception.callStackSymbols forKey:@"ExceptionCallStackSymbols"];
-        [info setValue:exception.userInfo forKey:@"ExceptionUserInfo"];
-        [info setValue:@"Error reading XCF file. Please report to the developer using 'Help->Report A Problem' and attach the file." forKey:NSLocalizedRecoverySuggestionErrorKey];
-        [info setValue:exception.reason forKey:NSLocalizedFailureReasonErrorKey];
+        NSLog(@"unable to open xcf file %@ %@",exception,[exception callStackSymbols]);
 
-        NSError *error = [[NSError alloc] initWithDomain:@"Seashore" code:100 userInfo:info];
-        [[NSAlert alertWithError:error] runModal];
+        NSAlert *alert = [NSAlert alertWithMessageText:@"Unable to open XCF file. Please use `Help -> Report a Bug` and attach the file." defaultButton:NULL alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"%@",[exception reason]];
+        [alert runModal];
+
         return NULL;
     }
 }

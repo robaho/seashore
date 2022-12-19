@@ -348,8 +348,6 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
 
     [cursorsManager updateCursor:theEvent];
 
-    shouldClearModifiers=FALSE;
-
     // Check if it is a line draw
     if (lineDraw) {
         [self mouseDragged:theEvent];
@@ -392,8 +390,6 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
     
     [curTool mouseDownAt:localPoint withEvent:theEvent];
     lastLocalPoint = localPoint;
-
-    [options updateModifiers:[theEvent modifierFlags]];
 }
 
 - (void)rightMouseDragged:(NSEvent *)theEvent
@@ -408,8 +404,6 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
     double angle;
 
     id options = [[document currentTool] getOptions];
-
-    shouldClearModifiers=FALSE;
 
     NSPoint globalPoint = [self convertPoint:[theEvent locationInWindow] fromView:NULL];
 
@@ -465,9 +459,6 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
     // Return to normal coalescing
     NSEvent.mouseCoalescingEnabled = true;
 
-    // Unforce alt
-    [options unforceAlt];
-
     // Check if it is a line draw
     if ([curTool acceptsLineDraws] && ([options modifier] == kShiftModifier || [options modifier] == kShiftControlModifier)) {
         lineDraw = YES;
@@ -487,8 +478,9 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
     delta = IntMakePoint(0,0);
 
     [curTool mouseUpAt:localActiveLayerPoint withEvent:theEvent];
-    
     [cursorsManager updateCursor:theEvent];
+
+    [options unforceAlt];
 }
 
 - (IntPoint)delta
@@ -502,20 +494,6 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
 
     [[[document currentTool] getOptions] updateModifiers:mods];
     [cursorsManager updateCursor:theEvent];
-
-    if (mods & NSShiftKeyMask) {
-        // clear the modifiers if the shift key is tapped by itself
-        if((mods & NSDeviceIndependentModifierFlagsMask) == NSShiftKeyMask) {
-            shouldClearModifiers=TRUE;
-        }
-    } else if (!(mods & NSShiftKeyMask)) {
-        if(shouldClearModifiers) {
-            shouldClearModifiers=FALSE;
-            [[document helpers] endLineDrawing];
-            AbstractOptions* options = [[document currentTool] getOptions];
-            [options updateModifiers:0];
-        }
-    }
 }
 
 - (void)keyDown:(NSEvent *)theEvent
@@ -532,9 +510,6 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
     
     // End the line drawing
     [[document helpers] endLineDrawing];
-
-    // the user pressed a key in addition to the command key
-    shouldClearModifiers = FALSE;
     
     // Check for zoom-in or zoom-out
     mods = [theEvent modifierFlags];
@@ -780,6 +755,15 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
                 case 'z':
                     toolMemory = [toolbox tool];
                     [toolbox changeToolTo:kZoomTool];
+                    break;
+#ifdef DEBUG
+                case '1':
+                    [[document whiteboard] debugTempLayer];
+                    break;
+                case '2':
+                    [[document whiteboard] debugDataCtx];
+                    break;
+#endif
                 break;
             }
         }

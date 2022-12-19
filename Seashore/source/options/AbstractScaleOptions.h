@@ -1,5 +1,6 @@
 #import "Seashore.h"
 #import "AbstractOptions.h"
+#import "AspectRatio.h"
 
 /*		
 	@class		AbstractScaleOptions

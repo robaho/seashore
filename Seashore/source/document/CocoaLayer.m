@@ -5,7 +5,7 @@
 
 @implementation CocoaLayer
 
-- (id)initWithImageRep:(id)imageRep document:(id)doc spp:(int)lspp
+- (id)initWithImageRep:(id)imageRep document:(id)doc
 {
     int i;
 	// Initialize superclass first
@@ -25,21 +25,18 @@
     width = (int)lwidth;
     height = (int)lheight;
     
-	// Determine samples per pixel
-	spp = lspp;
-
-    unsigned char *data = convertImageRep(imageRep,spp);
+    unsigned char *data = convertToRGBA(imageRep);
     if(!data){
         return NULL;
     }
     
     hasAlpha = NO;
     for (i = 0; i < width * height; i++) {
-        if (data[(i + 1) * spp - 1] != 255)
+        if (data[i*SPP+alphaPos] != 255)
             hasAlpha = YES;
     }
 
-    nsdata = [NSData dataWithBytesNoCopy:data length:width*height*spp];
+    nsdata = [NSData dataWithBytesNoCopy:data length:width*height*SPP];
     
 	return self;
 }

@@ -1,35 +1,11 @@
-#import "SeaLibrary/SeaLibrary.h"
+#import <SeaLibrary/SeaLibrary.h>
 
 /*!
-	@enum		Overlay behaviours
-	@constant	kNormalBehaviour
-				Indicates the overlay is to be composited on to the underlying layer.
-	@constant	kErasingBehaviour
-				Indicates the overlay is to erase the underlying layer.
-	@constant	kReplacingBehaviour
-				Indicates the overlay is to replace the underling layer where specified.
-*/
-enum {
-	kNormalBehaviour,
-	kErasingBehaviour,
-	kReplacingBehaviour
-};
-
-/*!
-	@class		PluginData
-	@abstract	The object shared between Seashore and most plug-ins.
-	@discussion	N/A
-				<br><br>
-				<b>License:</b> Public Domain 2004<br>
-				<b>Copyright:</b> N/A
+	@protocol		PluginData
+	@abstract   	The object shared between Seashore and most plug-ins.
 */
 
-@interface PluginData : NSObject {
-
-	// The document associated with this object
-    __weak IBOutlet id document;
-
-}
+@protocol PluginData
 
 /*!
 	@method		selection
@@ -75,13 +51,6 @@ enum {
 - (unsigned char *)overlay;
 
 /*!
-	@method		spp
-	@discussion	Returns the document's samples per pixel (either 2 or 4).
-	@result		Returns an integer indicating the document's sample per pixel.
-*/
-- (int)spp;
-
-/*!
 	@method		channel
 	@discussion	Returns the currently selected channel.
 	@result		Returns an integer representing the currently selected channel.
@@ -109,6 +78,8 @@ enum {
 				otherwise.
 */
 - (BOOL)hasAlpha;
+
+- (BOOL)isGrayscale;
 
 /*!
 	@method		point:
@@ -138,13 +109,6 @@ enum {
 - (NSColor *)backColor;
 
 /*!
-	@method		window
-	@discussion	Returns the window to use for the plug-in's panel.
-	@result		Returns the window to use for the plug-in's panel.
-*/
-- (id)window;
-
-/*!
 	@method		setOverlayBehaviour:
 	@discussion	Sets the overlay behaviour.
 	@param		value
@@ -160,24 +124,6 @@ enum {
 				overlay.
 */
 - (void)setOverlayOpacity:(int)value;
-
-/*!
-	@method		apply
-	@discussion	Apply the plug-in changes.
-*/
-- (void)apply;
-
-/*!
-	@method		preview
-	@discussion	Preview the plug-in changes.
-*/
-- (void)preview;
-
-/*!
-	@method		cancel
-	@discussion	Cancel the plug-in changes.
-*/
-- (void)cancel;
 
 /*!
     @discussion callback to let tool know the plugin settings changed

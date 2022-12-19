@@ -81,8 +81,7 @@
 
 - (void)clearCrop
 {
-	cropRect.size.width = cropRect.size.height = 0;
-	[[document helpers] selectionChanged];
+    [self setCropRect:IntZeroRect];
 }
 
 - (void)adjustCrop:(IntPoint)offset
@@ -96,6 +95,7 @@
 - (void)setCropRect:(IntRect)newCropRect
 {
     IntRect old = cropRect;
+    postScaledRect = newCropRect;
 	cropRect = newCropRect;
     [self cropRectChanged:IntSumRects(old,cropRect)];
 }

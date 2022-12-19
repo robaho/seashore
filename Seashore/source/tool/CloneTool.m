@@ -40,7 +40,7 @@
 
 - (void)dealloc
 {
-    CGImageRelease(srcImg);
+    CGContextRelease(srcCtx);
 }
 
 - (BOOL)acceptsLineDraws
@@ -59,42 +59,16 @@
     return [NSColor blackColor];
 }
 
-- (IntRect)plotBrush:(SeaBrush*)brush at:(NSPoint)where pressure:(int)pressure
+- (IntRect)plotBrushAt:(NSPoint)where pressure:(int)pressure
 {
-    int brushWidth = [brush width];
-    int brushHeight = [brush height];
-
-    SeaLayer *layer = [[document contents] activeLayer];
-
-    CGRect rect = NSMakeRect(where.x-brushWidth/2.0,where.y-brushHeight/2.0,brushWidth,brushHeight);
-    CGRect global = CGRectOffset(rect,[layer xoff],[layer yoff]);
+    IntRect r = [super plotBrushAt:where pressure:pressure];
 
     CGContextRef overlayCtx = [[document whiteboard] overlayCtx];
 
-    CGContextSaveGState(overlayCtx);
+    SeaLayer *layer = [[document contents] activeLayer];
+    IntPoint w = IntMakePoint(r.origin.x+[layer xoff],r.origin.y+[layer yoff]);
 
-    // everything is done in global coordinates for clone since it is easier
-    CGContextTranslateCTM(overlayCtx, -[layer xoff],-[layer yoff]);
-
-    CGRect srcRect0 = CGRectOffset(srcRect,startPoint.x-sourcePoint.x,startPoint.y-sourcePoint.y);
-
-    CGContextClipToRect(overlayCtx,srcRect0);
-    CGContextClipToRect(overlayCtx,global);
-
-    CGContextTranslateCTM(overlayCtx, [layer xoff],[layer yoff]);
-
-    IntRect r = [super plotBrush:brush at:where pressure:pressure];
-
-    CGContextTranslateCTM(overlayCtx, -[layer xoff],-[layer yoff]);
-
-    CGContextSetBlendMode(overlayCtx, kCGBlendModeSourceIn);
-
-    CGContextTranslateCTM(overlayCtx,srcRect0.origin.x,srcRect0.origin.y+srcRect0.size.height);
-    CGContextScaleCTM(overlayCtx,1,-1);
-
-    CGContextDrawImage(overlayCtx, CGRectMake(0,0,srcRect0.size.width,srcRect0.size.height), srcImg);
-
-    CGContextRestoreGState(overlayCtx);
+    cloneFill(overlayCtx,srcCtx,r,IntMakePoint(sourcePoint.x+(w.x-startPoint.x),sourcePoint.y+(w.y-startPoint.y)),srcRect);
 
     return r;
 }
@@ -151,22 +125,27 @@
             [[document docView] setNeedsDisplayInDocumentRect:IntEmptyRect(sourcePoint):26];
 		}
 
-        CGImageRelease(srcImg);
-        srcImg=NULL;
+        CGContextRelease(srcCtx);
+
+        // srcRect 0,0 globally is the upper left of the image
 
         if([options mergedSample]) {
             int w = [[document contents] width];
             int h = [[document contents] height];
-            CGImageRef img = [[document whiteboard] bitmapCG];
-            srcImg = CGImageDeepCopy(img);
+            CGImageRef img = [[document whiteboard] bitmap];
+            srcCtx = CGBitmapContextCreate(NULL,w,h,8,w*4,rgbCS,kCGImageAlphaPremultipliedFirst);
+            CGContextDrawImage(srcCtx,CGRectMake(0,0,w,h),img);
             CGImageRelease(img);
-            srcRect = NSMakeRect(0,0,w,h);
+            srcRect = IntMakeRect(0,0,w,h);
             srcName = NULL;
         } else {
+            int w = [layer width];
+            int h = [layer height];
             CGImageRef img = [layer bitmap];
-            srcImg = CGImageDeepCopy(img);
+            srcCtx = CGBitmapContextCreate(NULL,w,h,8,w*4,rgbCS,kCGImageAlphaPremultipliedFirst);
+            CGContextDrawImage(srcCtx,CGRectMake(0,0,w,h),img);
             CGImageRelease(img);
-            srcRect = IntRectMakeNSRect([layer globalRect]);
+            srcRect = IntMakeRect([layer xoff],[layer yoff], w, h);
             srcName = [layer name];
         }
         sourceSet = YES;

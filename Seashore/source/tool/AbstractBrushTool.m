@@ -7,32 +7,78 @@
 
 #define EPSILON 0.0001
 
+@interface BrushCache : NSObject
+{
+    CGImageRef images[256];
+    CGImageRef brush;
+    int brushWidth;
+    int brushHeight;
+}
+- (id)initWithBrush:(CGImageRef)brush;
+- (CGImageRef)getBrush:(int)pressure;
+- (CGImageRef)brush;
+@end
+
+@implementation BrushCache
+- (id)initWithBrush:(CGImageRef)brush {
+    self->brush = brush;
+    brushWidth = CGImageGetWidth(brush);
+    brushHeight = CGImageGetHeight(brush);
+    return self;
+}
+- (CGImageRef)brush {
+    return brush;
+}
+- (void)dealloc
+{
+    for(int i=0;i<256;i++) {
+        CGImageRelease(images[i]);
+    }
+}
+- (CGImageRef)getBrush:(int)pressure {
+    CGImageRef scaled = images[pressure];
+    if(!scaled) {
+        double factor = (0.30 * ((float)pressure / 255.0) + 0.70);
+        int bw = (int)(factor * brushWidth);
+        int bh = (int)(factor * brushHeight);
+        images[pressure] = CGImageScale(brush,bw,bh);
+    }
+    return images[pressure];
+}
+@end
+
 @implementation AbstractBrushTool
 
-- (IntRect)plotBrush:(SeaBrush*)brush at:(NSPoint)where pressure:(int)pressure
+- (IntRect)plotBrushAt:(NSPoint)where pressure:(int)pressure
 {
-    float brushWidth = [brush width];
-    float brushHeight = [brush height];
+    CGImageRef _brush = brushImage;
 
     BrushOptions *options = [self getBrushOptions];
 
     if([options scale]) {
-        double factor = (0.30 * ((float)pressure / 255.0) + 0.70);
-        brushWidth = factor * brushWidth;
-        brushHeight = factor * brushHeight;
+        _brush = [brushCache getBrush:pressure];
     }
 
-    CGRect cgRect = CGRectMake(where.x-brushWidth/2.0,where.y-brushHeight/2.0,brushWidth,brushHeight);
+    int brushWidth = CGImageGetWidth(_brush);
+    int brushHeight = CGImageGetHeight(_brush);
 
-    IntRect rect = NSRectMakeIntRect(NSIntegralRectWithOptions(cgRect,NSAlignAllEdgesOutward|NSAlignRectFlipped));
+    if(_brush!=lastBufferImage) {
+        if(lastBufferImage) {
+            free(buffer.data);
+        }
+        vImage_CGImageFormat iFormat = {};
+        vImageBuffer_InitWithCGImage(&buffer, &iFormat, NULL, _brush, 0);
+        lastBufferImage=_brush;
+    }
+
+    IntRect rect = IntMakeRect(where.x-brushWidth/2,where.y-brushHeight/2,brushWidth,brushHeight);
 
     CGContextRef overlayCtx = [[document whiteboard] overlayCtx];
 
-    CGContextSetAlpha(overlayCtx, pressureDisabled ? 1.0 : pressure/255.0);
-    CGContextDrawImage(overlayCtx, cgRect, brushImage);
+    blitImage(overlayCtx,&buffer,rect,pressureDisabled ? 255 : pressure);
 
     if ([options useTextures] && ![options brushIsErasing] && ![brush isPixMap]) {
-        textureFill(overlayCtx,[[document toolboxUtility] foreground],CGRectIntegral(cgRect));
+        textureFill(overlayCtx,textureCtx,rect);
     }
 
     return rect;
@@ -41,6 +87,7 @@
 - (void)dealloc
 {
     CGImageRelease(brushImage);
+    CGContextRelease(textureCtx);
 }
 
 - (NSColor*)brushColor
@@ -50,20 +97,32 @@
     
     // Determine base pixels and hence brush colour
     if ([options brushIsErasing]) {
-        color = [[document toolboxUtility] background];
+        color = [[document contents] background];
     }
     else if ([options useTextures]) {
         color = [NSColor blackColor];
     }
     else {
-        color = [[document toolboxUtility] foreground];
+        color = [[document contents] foreground];
     }
     return [color colorWithAlphaComponent:[options opacity]/255.0];
 }
 
+- (CGImageRef)getBrushImage
+{
+    if(brush != NULL) {
+        if([brush isPixMap]) {
+            return CGImageDeepCopy([brush bitmap]);
+        } else {
+            return getTintedCG([brush bitmap],color);
+        }
+    }
+    return nil;
+}
+
 - (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event
 {
-    SeaBrush *curBrush = [[document brushUtility] activeBrush];
+    brush = [[document brushUtility] activeBrush];
 
     BrushOptions *options = [self getBrushOptions];
 
@@ -74,19 +133,30 @@
     color = [self brushColor];
 
     CGImageRelease(brushImage);
-    brushImage=NULL;
 
-    if(curBrush != NULL) {
-        if([curBrush isPixMap]) {
-            brushImage = CGImageDeepCopy([curBrush bitmap]);
-        } else {
-            brushImage = getTintedCG([curBrush bitmap],color);
-        }
+    brushImage = [self getBrushImage];
+    if([[document contents] isGrayscale]) {
+        CGImageRef gray = convertToGrayA(brushImage);
+        CGImageRelease(brushImage);
+        brushImage = gray;
+    }
+    brushCache = [[BrushCache alloc] initWithBrush:brushImage];
+
+    if([options useTextures]) {
+        CGContextRelease(textureCtx);
+
+        NSImage *pattern = [[[document toolboxUtility] foreground] patternImage];
+        int w = pattern.size.width;
+        int h = pattern.size.height;
+
+        textureCtx = CGBitmapContextCreate(NULL, w,h, 8, w*SPP, rgbCS, kCGImageAlphaPremultipliedFirst);
+        CGImageRef img = [pattern CGImageForProposedRect:NULL context:NULL hints:NULL];
+        CGContextDrawImage(textureCtx,CGRectMake(0,0,w,h), img);
     }
 
     [self setOverlayOptions:options];
 
-    IntRect r = [self plotBrush:curBrush at:IntPointMakeNSPoint(where) pressure:pressure];
+    IntRect r = [self plotBrushAt:IntPointMakeNSPoint(where) pressure:pressure];
     [[document helpers] overlayChanged:r];
 
     lastPoint = lastPlotPoint = IntPointMakeNSPoint(where);
@@ -141,13 +211,12 @@
     return [[document brushUtility] spacing];
 }
 
-- (void)plotPoints:(IntPoint)to pressure:(int)origPressure
+- (void)plotPoints:(IntPoint)to pressure:(int)startingPressure
 {
     NSPoint curPoint = IntPointMakeNSPoint(to);
 
-    SeaBrush *curBrush = [[document brushUtility] activeBrush];
-    float brushWidth = [curBrush width];
-    float brushHeight = [curBrush height];
+    float brushWidth = [brush width];
+    float brushHeight = [brush height];
 
     double brushSpacing = [self getBrushSpacing] / 100.0;
 
@@ -251,16 +320,16 @@
             int temp0;
             double dtx = (double)(initial + t * dist) / fadeValue;
             pressure = (int)(exp (- dtx * dtx * 5.541) * 255.0);
-            pressure = int_mult(pressure, origPressure, temp0);
+            pressure = int_mult(pressure, startingPressure, temp0);
         }
         else {
-            pressure = origPressure;
+            pressure = startingPressure;
         }
         if (lastPressure > -1 && abs(pressure - lastPressure) > 5) {
             pressure = lastPressure + 5 * sgn(pressure - lastPressure);
         }
         lastPressure = pressure;
-        IntRect r = [self plotBrush:curBrush at:temp pressure:pressure];
+        IntRect r = [self plotBrushAt:temp pressure:pressure];
         dirty = n==0 ? r : IntSumRects(dirty,r);
         lastPlotPoint = temp;
     }
@@ -268,7 +337,6 @@
     if(!IntRectIsEmpty(dirty)) {
         [[document helpers] overlayChanged:dirty];
     }
-
 
     if(num_points>0){
         distance = total;

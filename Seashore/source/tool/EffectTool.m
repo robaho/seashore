@@ -1,7 +1,7 @@
 #import "EffectTool.h"
 #import "SeaController.h"
 #import "SeaPlugins.h"
-#import "PluginClass.h"
+#import <Plugins/PluginClass.h>
 #import "SeaDocument.h"
 #import "SeaContent.h"
 #import "SeaLayer.h"
@@ -10,6 +10,7 @@
 #import "SeaDocument.h"
 #import "SeaSelection.h"
 #import "SeaHelpers.h"
+#import <CoreImage/CoreImage.h>
 
 @implementation EffectTool
 
@@ -158,20 +159,21 @@
     draggingPointIndex=-1;
 }
 
-- (void)selectEffect:(PluginClass*)plugin
+- (void)selectEffect:(id<PluginClass>)plugin
 {
-    PluginData* data = [document pluginData];
-    if(![[plugin class] validatePlugin:data]){
+    SeaPluginData* data = [document pluginData];
+    Class class = [plugin class];
+    if(![class validatePlugin:data]){
         currentPlugin = nil;
         return;
     }
-    currentPlugin = [[plugin class] alloc];
+    currentPlugin = [object_getClass(plugin) alloc];
     @try {
         currentPlugin = [currentPlugin initWithManager:data];
     } @catch (NSException *exception) {
         currentPlugin = nil;
         NSLog(@"unable to open plugin %@ %@",exception,[exception callStackSymbols]);
-        NSAlert *alert = [NSAlert alertWithMessageText:@"Error Initializing Plugin. Please file a bug." defaultButton:NULL alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"%@.%@",plugin.className,[exception reason]];
+        NSAlert *alert = [NSAlert alertWithMessageText:@"Error Initializing Plugin. Please file a bug." defaultButton:NULL alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"%@.%@",object_getClassName(plugin),[exception reason]];
         [alert runModal];
         return;
     }
@@ -218,7 +220,7 @@
     return options;
 }
 
-- (PluginClass*)plugin
+- (id<PluginClass>)plugin
 {
     return currentPlugin;
 }
@@ -262,6 +264,48 @@
     }
     [super updateCursor:p cursors:cursors];
 }
+
+- (IntPoint)convertCIPoint:(CGPoint)p
+{
+    int height = [[[document contents] activeLayer] height];
+
+//     [CIVector vectorWithX:point.x Y:height - point.y];
+
+    return IntMakePoint(p.x,height-p.y);
+}
+
+- (void)detectRectangle:(id)sender
+{
+    if (@available(macOS 10.10, *)) {
+        CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeRectangle context:NULL options:NULL];
+        CIImage *image = [self createCIImage];
+        NSArray<CIFeature*> *features = [detector featuresInImage:image];
+        if([features count]>0 && [currentPlugin points]>=4) {
+            CIRectangleFeature *feature = (CIRectangleFeature*)features[0];
+            points[0] = [self convertCIPoint:feature.topLeft];
+            points[1] = [self convertCIPoint:feature.topRight];
+            points[2] = [self convertCIPoint:feature.bottomRight];
+            points[3] = [self convertCIPoint:feature.bottomLeft];
+        }
+        if(count<4) {
+            count=4;
+        }
+        [options updateClickCount:self];
+        if (count == [currentPlugin points]) {
+            [self performSelector:@selector(execute) withObject:NULL afterDelay:0];
+        }
+    }
+}
+
+- (CIImage*)createCIImage
+{
+    CGImageRef bitmap = [[[document contents] activeLayer] bitmap];
+    CIImage *inputImage = [CIImage imageWithCGImage:bitmap];
+    CGImageRelease(bitmap);
+    return inputImage;
+}
+
+
 
 
 

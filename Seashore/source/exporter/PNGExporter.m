@@ -30,7 +30,7 @@
     int xres = [[document contents] xres];
     int yres = [[document contents] yres];
 	
-    NSBitmapImageRep *imageRep = [[document whiteboard] bitmap];
+    NSBitmapImageRep *imageRep = [[document whiteboard] image];
 
     NSSize newSize;
     newSize.width = [imageRep pixelsWide] * 72.0 / xres;  // x-resolution

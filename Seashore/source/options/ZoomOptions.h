@@ -11,7 +11,7 @@
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
 
-@interface ZoomOptions : AbstractSelectOptions {
+@interface ZoomOptions : AbstractScaleOptions {
     id zoomLabel;
 }
 

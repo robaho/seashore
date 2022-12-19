@@ -27,3 +27,4 @@ FOUNDATION_EXPORT const unsigned char SeaComponentsVersionString[];
 #import <SeaComponents/HistogramView.h>
 #import <SeaComponents/CurveView.h>
 #import <SeaComponents/CurveWithHistogram.h>
+#import <SeaLibrary/SeaLibrary.h>

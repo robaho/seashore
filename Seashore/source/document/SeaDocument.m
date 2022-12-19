@@ -27,6 +27,8 @@
 #import "AbstractTool.h"
 #import "SeaScrollView.h"
 
+@protocol PluginData;
+
 @implementation SeaDocument
 
 - (id)init
@@ -250,7 +252,7 @@
 	return warnings;
 }
 
-- (id)pluginData
+- (SeaPluginData*)pluginData
 {
 	return pluginData;
 }
@@ -259,7 +261,6 @@
 {
 	return seaView;
 }
-
 
 - (id)window
 {

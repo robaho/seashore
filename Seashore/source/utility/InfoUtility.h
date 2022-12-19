@@ -24,11 +24,12 @@ enum {
 				<b>License:</b> GNU General Public License<br>
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
+@class SeaDocument;
 
 @interface InfoUtility : NSObject {
 	
 	// The document which is the focus of this utility
-	__weak IBOutlet id document;
+	__weak IBOutlet SeaDocument *document;
 	
 	// Displays the red, green, blue and alpha value of the focused pixel
 	id redValue;

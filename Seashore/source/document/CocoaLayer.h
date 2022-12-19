@@ -15,7 +15,7 @@
 }
 
 /*!
-	@method		initWithImageRep:document:spp:
+	@method		initWithImageRep:document
 	@discussion	Initializes an instance of this class with the given image
 				representation and document.
 	@param		imageRep
@@ -25,11 +25,8 @@
 				use SeaLayer's conversion routines after this method).
 	@param		doc
 				The document to be associated with this instance.
-	@param		lspp
-				The samples per pixel of the layer. This argument may seem
-				redundant but it's not.
 	@result		Returns instance upon success (or NULL otherwise).
 */
-- (id)initWithImageRep:(id)imageRep document:(id)doc spp:(int)lspp;
+- (id)initWithImageRep:(id)imageRep document:(id)doc;
 
 @end

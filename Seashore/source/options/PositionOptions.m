@@ -19,8 +19,6 @@
     [self addSubview:maintainAspectCheckbox];
     scaleAndRotateLinkedCheckbox = [SeaCheckbox checkboxWithTitle:@"Scale & rotate linked layers" Listener:self];
     [self addSubview:scaleAndRotateLinkedCheckbox];
-    autoApplyMoveOnlyCheckbox = [SeaCheckbox checkboxWithTitle:@"Auto apply transform" Listener:NULL];
-    [self addSubview:autoApplyMoveOnlyCheckbox];
     [self addSubview:[SeaSeperator withTitle:@""]];
 
     PositionTool *tool = [[document tools] getTool:kPositionTool];
@@ -39,10 +37,6 @@
 - (BOOL)maintainAspectRatio
 {
     return [maintainAspectCheckbox isChecked];
-}
-- (BOOL)autoApply
-{
-    return [autoApplyMoveOnlyCheckbox isChecked];
 }
 
 - (void)componentChanged:(id)sender {

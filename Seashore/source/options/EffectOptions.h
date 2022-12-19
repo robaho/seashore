@@ -1,6 +1,6 @@
 #import "Seashore.h"
 #import "AbstractOptions.h"
-#import "PluginClass.h"
+#import <Plugins/PluginClass.h>
 #import <SeaComponents/SeaComponents.h>
 
 /*!
@@ -24,12 +24,13 @@
     id resetButton;
     id applyButton;
     id reapplyButton;
+    id detectRectangleButton;
 
     // holds the view declared by the plugin
     NSView *pluginViewContainer;
     VerticalView *instructionsArea;
     
-    PluginClass *currentPlugin;
+    id<PluginClass> currentPlugin;
 }
 
 /*!
@@ -39,7 +40,7 @@
 				Ignored.
 */
 -(void)updateClickCount:(id)sender;
--(void)installPlugin:(PluginClass*)plugin View:(NSView*)view;
--(PluginClass*)currentPlugin;
+-(void)installPlugin:(id<PluginClass>)plugin View:(NSView*)view;
+-(id<PluginClass>)currentPlugin;
 
 @end

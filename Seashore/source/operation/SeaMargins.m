@@ -37,10 +37,6 @@
 {
 }
 
-- (void)determineContentBorders
-{
-}
-
 - (void)show
 {
 	units = [document measureStyle];
@@ -89,7 +85,7 @@
 
     [[document helpers] endLineDrawing];
 
-    if([contentRelative state]) {
+    if([adjustSizeToFitContent state]) {
         IntRect r = [self contentRect];
         int left = r.origin.x;
         int top = r.origin.y;
@@ -111,11 +107,13 @@
     for(int i=0;i<[[document contents] layerCount];i++){
         SeaLayer *layer = [[document contents] layer:i];
         Margins m = [layer contentMargins];
-        IntRect r0 = IntMakeRect([layer xoff]+m.left,[layer yoff]+m.top,[layer width]-(m.right+m.left),[layer height]-(m.top+m.bottom));
-        if(IntRectIsEmpty(r)) {
-            r = r0;
-        } else {
-            r = IntSumRects(r,r0);
+        if(!MarginsIsEmpty(m)) {
+            IntRect r0 = IntMakeRect([layer xoff]+m.left,[layer yoff]+m.top,[layer width]-(m.right+m.left),[layer height]-(m.top+m.bottom));
+            if(IntRectIsEmpty(r)) {
+                r = r0;
+            } else {
+                r = IntSumRects(r,r0);
+            }
         }
     }
     return r;
@@ -132,7 +130,9 @@
     Margins m = [[[document contents] activeLayer] contentMargins];
 	int index = [[document contents] activeLayerIndex];
 
-	[self setMarginLeft:-m.left top:-m.top right:-m.right bottom:-m.bottom index:index];
+    if (!MarginsIsEmpty(m)) {
+        [self setMarginLeft:-m.left top:-m.top right:-m.right bottom:-m.bottom index:index];
+    }
 }
 
 - (IBAction)condenseToSelection:(id)sender
@@ -275,13 +275,13 @@
     int oldWidth = [[document contents] width];
     int oldHeight = [[document contents] height];
 
-    bool relative = [contentRelative state];
+    bool adjustToFit = [adjustSizeToFitContent state];
 
-    [widthValue setEnabled:!relative];
-    [heightValue setEnabled:!relative];
-    [adjustLayerBoundaries setEnabled:!relative];
+    [widthValue setEnabled:!adjustToFit];
+    [heightValue setEnabled:!adjustToFit];
+    [adjustLayerBoundaries setEnabled:!adjustToFit];
 
-    bool offsets_enabled = !relative && ![adjustLayerBoundaries state];
+    bool offsets_enabled = !adjustToFit && ![adjustLayerBoundaries state];
 
     [leftValue setEnabled:offsets_enabled];
     [topValue setEnabled:offsets_enabled];
@@ -292,7 +292,7 @@
     int width = PixelsFromFloat([widthValue floatValue], units, xres);
     int height = PixelsFromFloat([heightValue floatValue], units, yres);
 
-    if(relative) {
+    if(adjustToFit) {
         IntRect r = [self contentRect];
         [widthValue setStringValue:StringFromPixels(r.size.width, units, xres)];
         [heightValue setStringValue:StringFromPixels(r.size.height, units, yres)];

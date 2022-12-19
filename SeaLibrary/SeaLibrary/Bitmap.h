@@ -28,7 +28,28 @@ enum {
 	kCMYKColorSpace
 };
 
-unsigned char *convertImageRep(NSImageRep *imageRep, int spp);
+/*! copies a bitmap rect into a destination area of the rect size */
+CG_INLINE void SAVE_BITMAP(unsigned char *dst,unsigned char *src,IntRect rect,int bitmapWidth){
+    for (int i = 0; i < rect.size.height; i++) {
+        memcpy(dst, src + ((rect.origin.y + i) * bitmapWidth + rect.origin.x) * SPP, rect.size.width * SPP);
+        dst += rect.size.width * SPP;
+    }
+}
+
+/*! copies a bitmap into a larger bitmap at rect */
+CG_INLINE void RESTORE_BITMAP(unsigned char *dst,unsigned char *src,IntRect rect,int bitmapWidth){
+    // Replace the image data with that of the record
+    for (int i = 0; i < rect.size.height; i++) {
+        memcpy(dst + ((rect.origin.y + i) * bitmapWidth + rect.origin.x) * SPP, src, rect.size.width * SPP);
+        src += rect.size.width * SPP;
+    }
+}
+
+/** return a point to a memory block that is a RGBA representation of the imageRep with same width & height*/
+unsigned char *convertToRGBA(NSImageRep *imageRep);
+CGImageRef convertToGrayA(CGImageRef src);
+/** change RGB pixels to gray in place */
+void mapRGBAtoGrayA(unsigned char* data,int bytes);
 
 /*!
 	@function	stripAlphaToWhite
@@ -104,15 +125,20 @@ unsigned char *stripAlpha(unsigned char *srcData,int width,int height,int spp);
 CGImageRef getTintedCG(CGImageRef src,NSColor *tint);
 NSImage *getTinted(NSImage* src,NSColor *tint);
 
-NS_INLINE bool isSameColor(unsigned char *data,int width,int spp,int x,int y,int x0,int y0) {
-    for(int i=0;i<spp;i++) {
-        if(data[(width*y+x)*spp+i]!=data[(width*y0+x0)*spp+i]){
-            return false;
-        }
-    }
-    return true;
+NS_INLINE bool isSameColor(unsigned char *data,int width,int x,int y,int x0,int y0) {
+    return *(uint32_t*)(data+(width*y+x)*SPP)==*(uint32_t*)(data+(width*y0+x0)*SPP);
 }
 
 CGImageRef CGImageDeepCopy(CGImageRef image);
+CGImageRef CGImageScale(CGImageRef image,int width,int height);
 float MaxScale(CGAffineTransform tx);
 CGRect CGImageGetBounds(CGImageRef image);
+CGSize CGImageGetSize(CGImageRef image);
+CGContextRef CreateImageContext(IntSize size);
+CGContextRef CreateImageContextWithData(unsigned char *data,IntSize size);
+unsigned char *ImageContextGetData(CGContextRef ctx);
+
+Margins determineContentMargins(unsigned char *image,int width,int height);
+
+#define COMPONENT(data,x,y,width,component) data[(y*width+x)*SPP+component]
+#define ALPHA(data,x,y,width) data[(y*width+x)*SPP+alphaPos]

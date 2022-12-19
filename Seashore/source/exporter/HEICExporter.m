@@ -85,12 +85,8 @@
 
 - (void)showOptions:(id)document
 {
-    unsigned char *data;
-    int width = [(SeaContent *)[document contents] width], height = [(SeaContent *)[document contents] height], spp = [[document contents] spp];
-    int i, j, k, x, y;
     id realImage, compressImage;
-    float value;
-    
+
     // Work things out
     if (targetWeb)
         [targetRadios selectCellAtRow:0 column:0];
@@ -102,7 +98,6 @@
         [compressSlider setIntValue:webCompression];
     else
         [compressSlider setIntValue:printCompression];
-    value = [self reviseCompression];
 
     realImageRep = [[document whiteboard] sampleImage];
     realImage = [[NSImage alloc] initWithSize:NSMakeSize(160, 160)];
@@ -189,7 +184,7 @@
 
 - (BOOL)writeDocument:(id)document toFile:(NSString *)path
 {
-    int spp, xres, yres;
+    int xres, yres;
 
     if (@available(macOS 10.13.4, *)) {
         //
@@ -197,11 +192,10 @@
         return NO;
     }
     // Get the data to write
-    spp = [(SeaContent *)[document contents] spp];
     xres = [[document contents] xres];
     yres = [[document contents] yres];
 
-    NSBitmapImageRep *imageRep = [[document whiteboard] bitmap];
+    NSBitmapImageRep *imageRep = [[document whiteboard] image];
 
     if (!targetWeb) {
         // use color space of display device where the window is
@@ -212,7 +206,7 @@
     CIFormat ciFormat;
     if (@available(macOS 10.13.4, *)) {
         // make compiler happy by guarding even though this cannot be reached
-        ciFormat = (spp == 4 ? kCIFormatRGBA8 : kCIFormatLA8);
+        ciFormat = [[document contents] isRGB] ? kCIFormatRGBA8 : kCIFormatLA8;
     }
     
     CGColorSpaceRef ciCS = [[imageRep colorSpace] CGColorSpace];

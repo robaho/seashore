@@ -31,6 +31,7 @@
 		2B84486B28BEE8D600C068D1 /* libSeaMinimal.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libSeaMinimal.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BC3CE45293C0C20005394FE /* Seashore.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = Seashore.entitlements; path = ../Seashore/Seashore.entitlements; sourceTree = "<group>"; };
 		2BC3CE61293C1D18005394FE /* SeaLibraryStatic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SeaLibraryStatic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE0CC99294FBF0E001A05AD /* Seashore.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Seashore.xcconfig; path = ../Seashore.xcconfig; sourceTree = "<group>"; };
 		2BE97F4523CBAC9200A09AAC /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		2C05A19B06CAA52B00D84F6F /* GeneratePreviewForURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratePreviewForURL.m; sourceTree = "<group>"; };
 		61E3BCFA0870B4F2002186A0 /* GenerateThumbnailForURL.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = GenerateThumbnailForURL.m; sourceTree = "<group>"; };
@@ -64,6 +65,7 @@
 		089C166AFE841209C02AAC07 /* XCFQuickLook */ = {
 			isa = PBXGroup;
 			children = (
+				2BE0CC99294FBF0E001A05AD /* Seashore.xcconfig */,
 				2BC3CE45293C0C20005394FE /* Seashore.entitlements */,
 				08FB77AFFE84173DC02AAC07 /* Source */,
 				089C167CFE841241C02AAC07 /* Resources */,
@@ -233,7 +235,6 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				FRAMEWORK_SEARCH_PATHS = "@executable_path/../../../Frameworks";
 				GCC_MODEL_TUNING = G5;
-				GCC_PREPROCESSOR_DEFINITIONS = OTHER_PLUGIN;
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.xcfquicklook;
@@ -256,7 +257,6 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				FRAMEWORK_SEARCH_PATHS = "@executable_path/../../../Frameworks";
 				GCC_MODEL_TUNING = G5;
-				GCC_PREPROCESSOR_DEFINITIONS = OTHER_PLUGIN;
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.xcfquicklook;
@@ -268,6 +268,7 @@
 		};
 		2CA326230896AD4900168862 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2BE0CC99294FBF0E001A05AD /* Seashore.xcconfig */;
 			buildSettings = {
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -288,7 +289,6 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -296,13 +296,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				ONLY_ACTIVE_ARCH = YES;
 				USE_HEADERMAP = YES;
 			};
 			name = Debug;
 		};
 		2CA326240896AD4900168862 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2BE0CC99294FBF0E001A05AD /* Seashore.xcconfig */;
 			buildSettings = {
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;

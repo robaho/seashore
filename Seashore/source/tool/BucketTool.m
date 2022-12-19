@@ -44,6 +44,18 @@
 	}
 	
 	intermediate = YES;
+
+    if([options useTextures]) {
+        CGContextRelease(textureCtx);
+
+        NSImage *pattern = [[[document toolboxUtility] foreground] patternImage];
+        int w = pattern.size.width;
+        int h = pattern.size.height;
+
+        textureCtx = CGBitmapContextCreate(NULL, w,h, 8, w*SPP, rgbCS, kCGImageAlphaPremultipliedFirst);
+        CGImageRef img = [pattern CGImageForProposedRect:NULL context:NULL hints:NULL];
+        CGContextDrawImage(textureCtx,CGRectMake(0,0,w,h), img);
+    }
 }
 
 - (void)mouseDraggedTo:(IntPoint)where withEvent:(NSEvent *)event
@@ -89,33 +101,31 @@
 - (void)fillAtPoint:(IntPoint)point useTolerance:(BOOL)useTolerance opacity:(int)opacity
 {
     SeaLayer *layer = [[document contents] activeLayer];
-	int tolerance, width = [layer width], height = [layer height], spp = [[document contents] spp];
+	int tolerance, width = [layer width], height = [layer height];
 	unsigned char *overlay = [[document whiteboard] overlay], *data = [layer data];
 	unsigned char basePixel[4];
+
 	NSColor *color = [[document contents] foreground];
-	int k, channel;
+	int channel;
 	
 	// Set the overlay to fully opaque
 	[[document whiteboard] setOverlayOpacity:opacity];
 	
-	// Determine the bucket's colour
 	if ([options useTextures]) {
-		for (k = 0; k < spp - 1; k++)
-			basePixel[k] = 0;
-        basePixel[spp - 1] = 255;
+        color = [[NSColor blackColor] colorUsingColorSpace:MyRGBCS];
 	}
-	else {
-		if (spp == 4) {
-			basePixel[0] = (unsigned char)([color redComponent] * 255.0);
-			basePixel[1] = (unsigned char)([color greenComponent] * 255.0);
-			basePixel[2] = (unsigned char)([color blueComponent] * 255.0);
-            basePixel[3] = 255;
-		}
-		else {
-			basePixel[0] = (unsigned char)([color whiteComponent] * 255.0);
-            basePixel[1] = 255;
-		}
-	}
+
+    if([[document contents] isRGB]) {
+        basePixel[0] = 255;
+        basePixel[1] = (unsigned char)([color redComponent] * 255.0);
+        basePixel[2] = (unsigned char)([color greenComponent] * 255.0);
+        basePixel[3] = (unsigned char)([color blueComponent] * 255.0);
+    } else {
+        basePixel[0] = 255;
+        basePixel[1] = (unsigned char)([color whiteComponent] * 255.0);
+        basePixel[2] = (unsigned char)([color whiteComponent] * 255.0);
+        basePixel[3] = (unsigned char)([color whiteComponent] * 255.0);
+    }
 
     int seedIndex;
     int xDelta = point.x - startPoint.x;
@@ -134,7 +144,7 @@
             continue;
         // check if color already exists in seeds
         for(int i=0;i<inrect;i++) {
-            if(isSameColor(data,width,spp,x,y,seeds[i].x,seeds[i].y))
+            if(isSameColor(data,width,x,y,seeds[i].x,seeds[i].y))
                 goto next_seed;
         }
         seeds[inrect] = IntMakePoint(x, y);
@@ -150,13 +160,25 @@
 	else
 		tolerance = 255;
     channel = [[document contents] selectedChannel];
+
+    fillContext ctx;
+    ctx.overlay = overlay;
+    ctx.data = data;
+    ctx.width = width;
+    ctx.height = height;
+    ctx.tolerance = tolerance;
+    ctx.channel = channel;
+    ctx.seeds = seeds;
+    ctx.numSeeds = intervals;
+
 	if ([[document selection] active])
-		rect = bucketFill(spp, [[document selection] localRect], overlay, data, width, height, seeds, intervals, basePixel, tolerance, channel);
+        rect = bucketFill(&ctx,[[document selection] localRect], basePixel);
 	else
-		rect = bucketFill(spp, IntMakeRect(0, 0, width, height), overlay, data, width, height, seeds, intervals, basePixel, tolerance, channel);
+        rect = bucketFill(&ctx,IntMakeRect(0, 0, width, height), basePixel);
+
 	if ([options useTextures] && IntContainsRect(IntMakeRect(0, 0, width, height), rect)) {
         CGContextRef overlayCtx = [[document whiteboard] overlayCtx];
-        textureFill(overlayCtx,[[document toolboxUtility] foreground],IntRectMakeNSRect(rect));
+        textureFill(overlayCtx,textureCtx,rect);
 	}
 	
     [[document helpers] overlayChanged:rect];

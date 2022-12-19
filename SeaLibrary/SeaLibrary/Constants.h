@@ -325,4 +325,4 @@ enum {
 extern CGColorSpaceRef rgbCS;
 extern CGColorSpaceRef grayCS;
 
-#define COLOR_SPACE (spp==4?rgbCS:grayCS)
+#define COLOR_SPACE rgbCS

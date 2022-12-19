@@ -83,12 +83,8 @@
 
 - (void)showOptions:(id)document
 {
-    unsigned char *data;
-    int width = [(SeaContent *)[document contents] width], height = [(SeaContent *)[document contents] height], spp = [[document contents] spp];
-    int i, j, k, x, y;
     id realImage, compressImage;
-    float value;
-    
+
     // Work things out
     if (targetWeb)
         [targetRadios selectCellAtRow:0 column:0];
@@ -100,8 +96,7 @@
         [compressSlider setIntValue:webCompression];
     else
         [compressSlider setIntValue:printCompression];
-    value = [self reviseCompression];
-    
+
     // Set-up the sample data
     NSBitmapImageRep *sample = [(SeaWhiteboard *)[document whiteboard] sampleImage];
 
@@ -195,7 +190,7 @@
     int yres = [[document contents] yres];
 
     // Make an image representation from the data
-    NSBitmapImageRep *imageRep = [[document whiteboard] bitmap];
+    NSBitmapImageRep *imageRep = [[document whiteboard] image];
 
     if (!targetWeb) {
         // use color space of display device where the window is

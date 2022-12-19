@@ -12,12 +12,19 @@
 #import "SmudgeOptions.h"
 #import "Bucket.h"
 #import <Accelerate/Accelerate.h>
-#import "DebugView.h"
 
 @implementation SmudgeTool
 
 - (void)awakeFromNib {
     options = [[SmudgeOptions alloc] init:document];
+}
+
+- (void)dealloc
+{
+    if(accumData){
+        free(accumData);
+        free(tempData);
+    }
 }
 
 - (int)toolId
@@ -30,35 +37,34 @@
 	return NO;
 }
 
-- (IntRect)plotBrush:(SeaBrush*)brush at:(NSPoint)where pressure:(int)pressure
+- (IntRect)plotBrushAt:(NSPoint)where pressure:(int)pressure
 {
     SeaLayer *layer = [[document contents] activeLayer];
+
     int brushWidth = [brush width];
     int brushHeight = [brush height];
-    int spp = [[document contents] spp];
 
     IntRect rect = IntMakeRect(where.x-brushWidth/2,where.y-brushHeight/2,brushWidth,brushHeight);
+    smudgeFill(rect,[layer data],[[document whiteboard] overlay],[layer width],[layer height],accumData,tempData,[brush mask],brushWidth,brushHeight,pressure);
 
-    smudgeFill(spp,[[document contents] selectedChannel],rect,[layer data],[[document whiteboard] overlay],[layer width],[layer height],accumData,[brush mask],brushWidth,brushHeight,pressure);
-
-    [[document helpers] overlayChanged:rect];
-    
     return rect;
 }
 
 - (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event
 {
-	SeaBrush *curBrush = [[document brushUtility] activeBrush];
-	int brushWidth = [curBrush width], brushHeight = [curBrush height];
-    int spp = [[document contents] spp];
+    brush = [[document brushUtility] activeBrush];
+
+	int brushWidth = [brush width], brushHeight = [brush height];
 
     if(accumData){
         free(accumData);
+        free(tempData);
     }
 
     rate = [options rate];
 
-    accumData = calloc(brushWidth*brushHeight*spp,1);
+    accumData = calloc(brushWidth*brushHeight*SPP,1);
+    tempData = calloc(brushWidth*brushHeight*SPP,1);
 
     [super mouseDownAt:where withEvent:event];
 }

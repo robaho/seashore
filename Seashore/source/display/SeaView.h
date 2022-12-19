@@ -53,8 +53,6 @@ enum {
 	// Is this a line draw? (sent to mouseDragged methods)
 	BOOL lineDraw;
 
-    BOOL shouldClearModifiers;
-	
 	// Is scaling mode active
 	int scalingMode;
 

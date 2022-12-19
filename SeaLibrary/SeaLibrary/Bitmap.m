@@ -6,35 +6,50 @@
 CGColorSpaceRef rgbCS;
 CGColorSpaceRef grayCS;
 
-void convertRGBA2GrayA(unsigned char *dbitmap, unsigned char *ibitmap, int width, int height)
+CGImageRef CGImageScale(CGImageRef image,int width,int height) {
+    CGContextRef ctx = CGBitmapContextCreate(NULL,width,height,8,0,CGImageGetColorSpace(image),kCGImageAlphaPremultipliedFirst);
+    CGContextDrawImage(ctx, CGRectMake(0,0,width,height),image);
+    CGImageRef scaled = CGBitmapContextCreateImage(ctx);
+    CGContextRelease(ctx);
+    return scaled;
+}
+
+CGImageRef convertToGrayA(CGImageRef src)
 {
-    int i, ispp=4;
-    
-    for (i = 0; i < width * height; i++) {
-        dbitmap[i * 2] = ((int)ibitmap[i * ispp] + (int)ibitmap[i * ispp + 1] + (int)ibitmap[i * ispp + 2]) / 3;
-        if (ispp == 4) dbitmap[i * 2 + 1] = ibitmap[i * 4 + 3];
+    CGContextRef ctx = CGBitmapContextCreate(NULL,CGImageGetWidth(src),CGImageGetHeight(src),8,0,grayCS,kCGImageAlphaPremultipliedFirst);
+    CGContextDrawImage(ctx,CGImageGetBounds(src),src);
+    CGImageRef dst=CGBitmapContextCreateImage(ctx);
+    CGContextRelease(ctx);
+    return dst;
+}
+
+void mapRGBAtoGrayA(unsigned char *data,int length) {
+    for(int i=0;i<length;i+=4) {
+        int gray = ((int)data[i+1] + (int)data[i+2] + (int)data[i+3]) / 3;
+        memset(data+1,gray,3);
     }
 }
 
 /*
  convert NSImageRep to a format Seashore can work with, which is RGBA, or GrayA. If spp is 4, then RGBA, if 2, the GrayA
  */
-unsigned char *convertImageRep(NSImageRep *imageRep,int spp) {
+unsigned char *convertToRGBA(NSImageRep *imageRep) {
     
     int width = (int)[imageRep pixelsWide];
     int height = (int)[imageRep pixelsHigh];
     
-    unsigned char *buffer = calloc(width*height*spp,sizeof(unsigned char));
+    unsigned char *buffer = calloc(width*height*4,sizeof(unsigned char));
     
     if(!buffer){
         return NULL;
     }
     
     NSBitmapImageRep *bitmapWhoseFormatIKnow = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&buffer pixelsWide:width pixelsHigh:height
-                                                                                    bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO
-                                                                                   colorSpaceName:(spp == 4 ? MyRGBSpace : MyGraySpace)
-                                                                                     bytesPerRow:width*spp
-                                                                                     bitsPerPixel:8*spp];
+                                                                                    bitsPerSample:8 samplesPerPixel:4 hasAlpha:YES isPlanar:NO
+                                                                                   colorSpaceName:MyRGBSpace
+                                                                                    bitmapFormat:NSBitmapFormatAlphaFirst
+                                                                                     bytesPerRow:width*4
+                                                                                     bitsPerPixel:8*4];
     
     [bitmapWhoseFormatIKnow setSize:[imageRep size]];
     
@@ -44,40 +59,13 @@ unsigned char *convertImageRep(NSImageRep *imageRep,int spp) {
     [imageRep draw];
     [NSGraphicsContext restoreGraphicsState];
 
-    unpremultiplyBitmap(spp,buffer,buffer,width*height);
+    unpremultiplyBitmap(4,buffer,buffer,width*height);
 
     return buffer;
 }
 
-unsigned char *stripAlpha(unsigned char *srcData,int width,int height,int spp) {
-    int i,j;
-    bool hasAlpha = false;
-    unsigned char *destData;
-    
-    // Determine whether or not an alpha channel would be redundant
-    for (i = 0; i < width * height && hasAlpha == NO; i++) {
-        if (srcData[(i + 1) * spp - 1] != 255)
-            hasAlpha = YES;
-    }
-    
-    // Strip the alpha channel if necessary
-    if (!hasAlpha) {
-        spp--;
-        destData = malloc(width * height * spp);
-        for (i = 0; i < width * height; i++) {
-            for (j = 0; j < spp; j++)
-                destData[i * spp + j] = srcData[i * (spp + 1) + j];
-        }
-        return destData;
-    }
-    else
-        return srcData;
-
-}
-
 inline void stripAlphaToWhite(int spp, unsigned char *output, unsigned char *input, int length)
 {
-	const int alphaPos = spp - 1;
 	const int outputSPP = spp - 1;
 	unsigned char alpha;
 	double alphaRatio;
@@ -92,14 +80,13 @@ inline void stripAlphaToWhite(int spp, unsigned char *output, unsigned char *inp
 		
 		if (alpha == 255) {
 			for (k = 0; k < outputSPP; k++)
-				output[i * outputSPP + k] = input[i * spp + k];
+				output[i * outputSPP + k] = input[i * spp + CR +k];
 		}
 		else {
 			if (alpha != 0) {
-
 				alphaRatio = 255.0 / alpha;
 				for (k = 0; k < outputSPP; k++) {
-					newValue = 0.5 + input[i * spp + k] * alphaRatio;
+					newValue = 0.5 + input[i * spp + CR + k] * alphaRatio;
 					newValue = MIN(newValue, 255);
 					output[i * outputSPP + k] = int_mult(newValue, alpha, t1) + int_mult(255, (255 - alpha), t2);
 				}
@@ -110,13 +97,13 @@ inline void stripAlphaToWhite(int spp, unsigned char *output, unsigned char *inp
 	} 
 }
 
-inline void premultiplyBitmap(int spp, unsigned char *output, unsigned char *input, int length)
+void premultiplyBitmap(int spp, unsigned char *output, unsigned char *input, int length)
 {
     if(spp==4) {
         vImage_Buffer obuf = {.data=output,.height=1,.width=length,.rowBytes=length*spp};
         vImage_Buffer ibuf = {.data=input,.height=1,.width=length,.rowBytes=length*spp};
 
-        vImagePremultiplyData_RGBA8888(&ibuf,&obuf,0);
+        vImagePremultiplyData_ARGB8888(&ibuf,&obuf,0);
     } else { // spp==2 which is grayscale with alpha
         int temp;
         for(int i=0;i<length;i++) {
@@ -127,13 +114,13 @@ inline void premultiplyBitmap(int spp, unsigned char *output, unsigned char *inp
     }
 }
 
-inline void unpremultiplyBitmap(int spp, unsigned char *output, unsigned char *input, int length)
+void unpremultiplyBitmap(int spp, unsigned char *output, unsigned char *input, int length)
 {
     if(spp==4) {
         vImage_Buffer obuf = {.data=output,.height=1,.width=length,.rowBytes=length*spp};
         vImage_Buffer ibuf = {.data=input,.height=1,.width=length,.rowBytes=length*spp};
 
-        vImageUnpremultiplyData_RGBA8888(&ibuf,&obuf,0);
+        vImageUnpremultiplyData_ARGB8888(&ibuf,&obuf,0);
     } else {
         for(int i=0;i<length;i++) {
             unsigned char alpha = *(input+1);
@@ -199,7 +186,7 @@ NSImage *getTinted(NSImage *src,NSColor *tint){
 CGImageRef CGImageDeepCopy(CGImageRef image) {
     int width = CGImageGetWidth(image);
     int height = CGImageGetHeight(image);
-    CGContextRef ctx = CGBitmapContextCreate(nil, width, height, CGImageGetBitsPerComponent(image), CGImageGetBytesPerRow(image), CGImageGetColorSpace(image), kCGImageAlphaPremultipliedLast);
+    CGContextRef ctx = CGBitmapContextCreate(nil, width, height, CGImageGetBitsPerComponent(image), CGImageGetBytesPerRow(image), CGImageGetColorSpace(image), kCGImageAlphaPremultipliedFirst);
     CGContextDrawImage(ctx, CGRectMake(0,0,width,height),image);
     CGImageRef copy = CGBitmapContextCreateImage(ctx);
     CGContextRelease(ctx);
@@ -214,4 +201,66 @@ float MaxScale(CGAffineTransform t) {
 
 CGRect CGImageGetBounds(CGImageRef img) {
     return CGRectMake(0,0,CGImageGetWidth(img),CGImageGetHeight(img));
+}
+
+CGSize CGImageGetSize(CGImageRef img) {
+    return CGSizeMake(CGImageGetWidth(img),CGImageGetHeight(img));
+}
+
+CGContextRef CreateImageContext(IntSize size) {
+    unsigned char *data = calloc(size.width*size.height*4,1);
+    return CreateImageContextWithData(data,size);
+}
+
+CGContextRef CreateImageContextWithData(unsigned char *data,IntSize size) {
+    return CGBitmapContextCreate(data,size.width,size.height,8,size.width*4,COLOR_SPACE,kCGImageAlphaPremultipliedFirst);
+}
+
+unsigned char *ImageContextGetData(CGContextRef ctx) {
+    return (unsigned char*)CGBitmapContextGetData(ctx);
+}
+
+Margins determineContentMargins(unsigned char *data,int width,int height)
+{
+    int i,j,k;
+    int top=-1,left=-1,bottom=-1,right=-1;
+
+    // Determine left content margin
+    for (i = 0; i < width && left == -1; i++) {
+        for (j = 0; j < height && left == -1; j++) {
+            if (ALPHA(data,i,j,width) != 0) {
+                left = i;
+            }
+        }
+    }
+
+    // Determine right content margin
+    for (i = width - 1; i >= 0 && right == -1; i--) {
+        for (j = 0; j < height && right == -1; j++) {
+            if (ALPHA(data,i,j,width) != 0) {
+                right = width - 1 - i;
+            }
+        }
+    }
+
+    // Determine top content margin
+    for (j = 0; j < height && top == -1; j++) {
+        for (i = 0; i < width && top == -1; i++) {
+            if (ALPHA(data,i,j,width) != 0) {
+                top = j;
+            }
+        }
+    }
+
+    // Determine bottom content margin
+    for (j = height - 1; j >= 0 && bottom == -1; j--) {
+        for (i = 0; i < width && bottom == -1; i++) {
+            if (ALPHA(data,i,j,width) != 0) {
+                bottom = height - 1 - j;
+            }
+        }
+    }
+
+    Margins m = {.left=left,.right=right,.top=top,.bottom=bottom};
+    return m;
 }

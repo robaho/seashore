@@ -33,7 +33,7 @@ enum {
     IBOutlet id sheet;
 
 	// The check box telling us whether to add margin's relative to content
-	IBOutlet id contentRelative;
+	IBOutlet id adjustSizeToFitContent;
     
     // adjust layer positioning after size change
     IBOutlet id adjustLayerBoundaries;

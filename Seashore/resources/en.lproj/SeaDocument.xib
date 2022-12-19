@@ -28,7 +28,7 @@
                 <outlet property="optionsButton" destination="74" id="326"/>
                 <outlet property="optionsSummary" destination="692" id="693"/>
                 <outlet property="optionsUtility" destination="1599" id="ZAY-Wm-jVg"/>
-                <outlet property="pluginData" destination="383" id="385"/>
+                <outlet property="pluginData" destination="383" id="PFj-TT-Lsa"/>
                 <outlet property="pngExporter" destination="329" id="333"/>
                 <outlet property="recentsUtility" destination="s3c-Oa-QRW" id="hdm-qJ-bDc"/>
                 <outlet property="statusUtility" destination="14766" id="ezD-tk-efh"/>
@@ -1835,10 +1835,31 @@ Gw
             </view>
             <point key="canvasLocation" x="-415" y="-421"/>
         </window>
+        <customObject id="288" userLabel="SeaOperations" customClass="SeaOperations">
+            <connections>
+                <outlet property="seaAlignment" destination="662" id="861"/>
+                <outlet property="seaDocRotation" destination="859" id="862"/>
+                <outlet property="seaFlip" destination="373" id="374"/>
+                <outlet property="seaMargins" destination="119" id="296"/>
+                <outlet property="seaResolution" destination="93" id="295"/>
+                <outlet property="seaRotation" destination="688" id="690"/>
+                <outlet property="seaScale" destination="207" id="294"/>
+            </connections>
+        </customObject>
+        <customObject id="859" userLabel="SeaDocRotation" customClass="SeaDocRotation">
+            <connections>
+                <outlet property="document" destination="-2" id="860"/>
+            </connections>
+        </customObject>
+        <customObject id="662" userLabel="SeaAlignment" customClass="SeaAlignment">
+            <connections>
+                <outlet property="document" destination="-2" id="664"/>
+            </connections>
+        </customObject>
         <customObject id="119" userLabel="SeaMargins" customClass="SeaMargins">
             <connections>
                 <outlet property="adjustLayerBoundaries" destination="3fZ-J8-EIr" id="jTN-hP-nqH"/>
-                <outlet property="contentRelative" destination="622" id="627"/>
+                <outlet property="adjustSizeToFitContent" destination="622" id="627"/>
                 <outlet property="document" destination="-2" id="144"/>
                 <outlet property="heightLabel" destination="pHi-7s-5ZG" id="CPQ-WO-umF"/>
                 <outlet property="heightValue" destination="1046" id="9bo-Ff-sdU"/>
@@ -2100,6 +2121,11 @@ Gw
             </view>
             <point key="canvasLocation" x="-1838" y="-1055.5"/>
         </window>
+        <customObject id="373" userLabel="SeaFlip" customClass="SeaFlip">
+            <connections>
+                <outlet property="document" destination="-2" id="375"/>
+            </connections>
+        </customObject>
         <customObject id="207" userLabel="SeaScale" customClass="SeaScale">
             <connections>
                 <outlet property="document" destination="-2" id="219"/>
@@ -2114,6 +2140,11 @@ Gw
                 <outlet property="widthValue" destination="572" id="591"/>
                 <outlet property="xScaleValue" destination="569" id="592"/>
                 <outlet property="yScaleValue" destination="566" id="593"/>
+            </connections>
+        </customObject>
+        <customObject id="383" userLabel="SeaPluginData" customClass="SeaPluginData">
+            <connections>
+                <outlet property="document" destination="-2" id="J5b-Gk-EUc"/>
             </connections>
         </customObject>
         <customObject id="259" userLabel="SeaTools" customClass="SeaTools">
@@ -2136,17 +2167,6 @@ Gw
                 <outlet property="textTool" destination="310" id="325"/>
                 <outlet property="wandTool" destination="378" id="379"/>
                 <outlet property="zoomTool" destination="D6l-fn-e2E" id="8jP-dh-6FM"/>
-            </connections>
-        </customObject>
-        <customObject id="288" userLabel="SeaOperations" customClass="SeaOperations">
-            <connections>
-                <outlet property="seaAlignment" destination="662" id="861"/>
-                <outlet property="seaDocRotation" destination="859" id="862"/>
-                <outlet property="seaFlip" destination="373" id="374"/>
-                <outlet property="seaMargins" destination="119" id="296"/>
-                <outlet property="seaResolution" destination="93" id="295"/>
-                <outlet property="seaRotation" destination="688" id="690"/>
-                <outlet property="seaScale" destination="207" id="294"/>
             </connections>
         </customObject>
         <customObject id="291" userLabel="SeaHelpers" customClass="SeaHelpers">
@@ -2297,21 +2317,6 @@ Gw
             </connections>
         </customObject>
         <customObject id="331" userLabel="XCFExporter" customClass="XCFExporter"/>
-        <customObject id="662" userLabel="SeaAlignment" customClass="SeaAlignment">
-            <connections>
-                <outlet property="document" destination="-2" id="664"/>
-            </connections>
-        </customObject>
-        <customObject id="373" userLabel="SeaFlip" customClass="SeaFlip">
-            <connections>
-                <outlet property="document" destination="-2" id="375"/>
-            </connections>
-        </customObject>
-        <customObject id="383" userLabel="PluginData" customClass="PluginData">
-            <connections>
-                <outlet property="document" destination="-2" id="384"/>
-            </connections>
-        </customObject>
         <customObject id="421" userLabel="TextureExporter" customClass="TextureExporter">
             <connections>
                 <outlet property="categoryTable" destination="415" id="434"/>
@@ -2360,11 +2365,6 @@ Gw
                 <outlet property="panel" destination="Ymb-N1-0M8" id="B29-iu-LhF"/>
                 <outlet property="realImageView" destination="1NF-9N-fRh" id="bwZ-QK-Tjg"/>
                 <outlet property="targetRadios" destination="ss3-fb-gJH" id="dfh-hQ-hhX"/>
-            </connections>
-        </customObject>
-        <customObject id="859" userLabel="SeaDocRotation" customClass="SeaDocRotation">
-            <connections>
-                <outlet property="document" destination="-2" id="860"/>
             </connections>
         </customObject>
         <customObject id="870" userLabel="GIFExporter" customClass="GIFExporter"/>

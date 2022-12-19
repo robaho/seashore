@@ -14,7 +14,7 @@
     return @"Sample";
 }
 
-- (id)initWithManager:(PluginData *)data {
+- (id)initWithManager:(id<PluginData>)data {
     return self;
 }
 
@@ -32,7 +32,7 @@
     return 0;
 }
 
-+ (BOOL)validatePlugin:(PluginData*)pluginData
++ (BOOL)validatePlugin:(id<PluginData>)pluginData
 {
     return YES;
 }

@@ -2,7 +2,7 @@
 #import "SeaController.h"
 #import "SeaPlugins.h"
 #import "SeaTools.h"
-#import "PluginClass.h"
+#import <Plugins/PluginClass.h>
 #import "InfoPanel.h"
 #import "EffectTool.h"
 
@@ -31,6 +31,7 @@
 
     clickCountLabel = [Label compactLabel];
     instructionsLabel = [[NSTextField alloc] init];
+
     [instructionsLabel setIdentifier:@"effects instructions label"];
     [instructionsLabel setFont:[NSFont labelFontOfSize:[NSFont systemFontSizeForControlSize:NSMiniControlSize]]];
     [instructionsLabel setEditable:FALSE];
@@ -41,8 +42,11 @@
     instructionsLabel.cell.lineBreakMode=NSLineBreakByWordWrapping;
     instructionsLabel.cell.usesSingleLineMode=FALSE;
 
+    detectRectangleButton = [SeaButton compactButton:@"Detect Rectangle" target:tool action:@selector(detectRectangle:)];
+
     [instructionsArea addSubview:clickCountLabel];
     [instructionsArea addSubview:instructionsLabel];
+    [instructionsArea addSubview:detectRectangleButton];
 
     [top addSubview:effectsButton];
     [top addSubview:instructionsArea];
@@ -93,11 +97,22 @@
         [resetButton setHidden:FALSE];
         [instructionsArea setHidden:FALSE];
         [effectsButton setLabel:[currentPlugin name]];
+
         if([currentPlugin respondsToSelector:@selector(instruction)]) {
             [instructionsLabel setHidden:FALSE];
             [instructionsLabel setStringValue:[currentPlugin instruction]];
         } else {
             [instructionsLabel setHidden:TRUE];
+        }
+
+        if (@available(macOS 10.10, *)) {
+            if([currentPlugin respondsToSelector:@selector(detectRectangle)]) {
+                [detectRectangleButton setHidden:FALSE];
+            } else {
+                [detectRectangleButton setHidden:TRUE];
+            }
+        } else {
+            [detectRectangleButton setHidden:TRUE];
         }
 
         if([currentPlugin points]>0) {
@@ -120,7 +135,7 @@
     [NSMenu popUpContextMenu:menu withEvent:[[NSApplication sharedApplication] currentEvent] forView:(NSButton *)sender];
 }
 
-- (void)installPlugin:(PluginClass*)plugin View:(NSView *)pluginView
+- (void)installPlugin:(id<PluginClass>)plugin View:(NSView *)pluginView
 {
     [pluginViewContainer setSubviews:[NSArray array]];
 
@@ -139,7 +154,7 @@
     [self setNeedsDisplay:TRUE];
 }
 
--(PluginClass*)currentPlugin
+-(id<PluginClass>)currentPlugin
 {
     return currentPlugin;
 }

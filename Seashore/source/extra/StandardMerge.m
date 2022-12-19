@@ -1,11 +1,11 @@
 #import "StandardMerge.h"
 #import "ColorConversion.h"
 
-#define alphaPos (spp - 1)
+#define SPP 4
 
-void merge_alpha_pm(int spp, unsigned char *top, unsigned char *bottom, unsigned char *dest,unsigned char topOpacity)
+void merge_alpha_pm(unsigned char *top, unsigned char *bottom, unsigned char *dest,unsigned char topOpacity)
 {
-    memcpy(dest,bottom,spp);
+    memcpy(dest,bottom,SPP);
 
     if (topOpacity == 0) {
         return;
@@ -19,9 +19,8 @@ void merge_alpha_pm(int spp, unsigned char *top, unsigned char *bottom, unsigned
     dest[alphaPos] = merged;
 }
 
-
 // merge pre-multiplied top onto non-premultiplied bottom into non-premultiplied dest
-void merge_primary_pm(int spp, unsigned char *top, unsigned char *bottom, unsigned char *dest,unsigned char topOpacity)
+void merge_primary_pm(unsigned char *top, unsigned char *bottom, unsigned char *dest,unsigned char topOpacity)
 {
     int t1,t2;
 
@@ -30,554 +29,468 @@ void merge_primary_pm(int spp, unsigned char *top, unsigned char *bottom, unsign
     alpha = int_mult(alpha,topOpacity,t1);
 
     if (alpha == 0) {
-        memcpy(dest,bottom,spp);
+        memcpy(dest,bottom,SPP);
         return;
     }
 
-    unsigned char _top[spp];
-    unpremultiplyBitmap(spp,_top,top,1);
+    unsigned char _top[SPP];
+    unpremultiplyBitmap(SPP,_top,top,1);
 
-    for (int k = 0; k < spp - 1; k++)
+    for (int k = CR; k <= CB; k++)
         dest[k] = int_mult(bottom[k], 255 - alpha, t1) + int_mult(_top[k], alpha, t2);
-    dest[spp-1]=bottom[spp-1];
+    dest[alphaPos]=bottom[alphaPos];
 }
 
-void replace_pm(int spp, unsigned char *top, unsigned char *bottom, unsigned char *dest, unsigned char topOpacity)
+void replace_pm(unsigned char *top, unsigned char *bottom, unsigned char *dest, unsigned char topOpacity)
 {
     if(topOpacity) {
-        memcpy(dest,top,spp);
+        memcpy(dest,top,SPP);
     } else {
-        memcpy(dest,bottom,spp);
+        memcpy(dest,bottom,SPP);
     }
 }
 
-void replace_alpha_pm(int spp, unsigned char *top, unsigned char *bottom, unsigned char *dest, unsigned char topOpacity)
+void replace_alpha_pm(unsigned char *top, unsigned char *bottom, unsigned char *dest, unsigned char topOpacity)
 {
     int t1,t2;
 
     if (topOpacity==0) {
-        memcpy(dest,bottom,spp);
+        memcpy(dest,bottom,SPP);
         return;
     }
 
-    unpremultiplyBitmap(spp,dest,bottom,1);
+    unpremultiplyBitmap(SPP,dest,bottom,1);
 
-    dest[spp - 1] = int_mult(bottom[spp - 1], 255 - topOpacity, t1) + int_mult(top[0], topOpacity, t2);
+    dest[alphaPos] = int_mult(bottom[alphaPos], 255 - topOpacity, t1) + int_mult(top[alphaPos], topOpacity, t2);
 
-    premultiplyBitmap(spp,dest,dest,1);
+    premultiplyBitmap(SPP,dest,dest,1);
 }
 
-void replace_primary_pm(int spp, unsigned char *top, unsigned char *bottom, unsigned char *dest, unsigned char topOpacity)
+void replace_primary_pm(unsigned char *top, unsigned char *bottom, unsigned char *dest, unsigned char topOpacity)
 {
     if (topOpacity==0) {
-        memcpy(dest,bottom,spp);
+        memcpy(dest,bottom,SPP);
         return;
     }
     unsigned char alpha = bottom[alphaPos];
-    unpremultiplyBitmap(spp,dest,top,1);
+    unpremultiplyBitmap(SPP,dest,top,1);
     dest[alphaPos] = alpha;
-    premultiplyBitmap(spp,dest,dest,1);
+    premultiplyBitmap(SPP,dest,dest,1);
 }
 
-void erase_pm(int spp,unsigned char *top,unsigned char *bottom,unsigned char *dest,unsigned char topOpacity){
+void erase_pm(unsigned char *top,unsigned char *bottom,unsigned char *dest,unsigned char topOpacity){
     int t1;
     unsigned char alpha = int_mult(top[alphaPos],topOpacity,t1);
-    memcpy(dest,bottom,spp-1);
+    memcpy(dest+CR,bottom+CR,SPP-1);
     dest[alphaPos]=MAX(bottom[alphaPos]-alpha,0);
 }
 
-#define alphaPos (spp - 1)
-
-void normalMerge(int spp, unsigned char *destPtr, int destLoc, unsigned char *srcPtr, int srcLoc, int srcOpacity)
-{
-    unsigned char alpha;
-    int t1, t2;
-
-    unsigned char *sPtr = srcPtr+srcLoc;
-    unsigned char *sPtrEnd = sPtr+alphaPos;
-    unsigned char *dPtr = destPtr+destLoc;
-
-    alpha = int_mult(*(sPtrEnd), srcOpacity, t1);
-    unsigned char alpha0 = 255-alpha;
-
-    if (alpha == 0)
-        return;
-
-    if (alpha == 255) {
-        while(sPtr<sPtrEnd) {
-            *dPtr++ = *sPtr++;
-        }
-        *dPtr = 255;
-    }
-    else {
-        while(sPtr<sPtrEnd) {
-            *dPtr = int_mult (*sPtr, alpha, t1) + int_mult (*dPtr,alpha0, t2);
-            sPtr++;
-            dPtr++;
-        }
-        *dPtr = alpha + int_mult(alpha0, *dPtr, t1);
-    }
-}
-
-void blendPixel(int spp, unsigned char *destPtr, int destLoc, unsigned char *srcPtr, int srcLoc, int blend)
-{
-    const int blend1 = 256 - blend;
-    const int blend2 = blend + 1;
-    int a1, a2, a;
-
-    unsigned char *sPtr = srcPtr+srcLoc;
-    unsigned char *sPtrEnd = sPtr+alphaPos;
-    unsigned char *dPtr = destPtr+destLoc;
-    unsigned char *dPtrEnd = dPtr+alphaPos;
-
-    a1 = blend1 * *sPtrEnd;
-    a2 = blend2 * *dPtrEnd;
-    a = a1 + a2;
-
-    if (a == 0) {
-        memset(dPtr,0,spp);
-    }
-    else {
-        for (;sPtr<sPtrEnd;dPtr++,sPtr++)
-            *dPtr = (*sPtr * a1 + *dPtr * a2) / a;
-        *dPtrEnd = a >> 8;
-    }
-}
-
-void dissolveMerge(int spp, unsigned char *destPtr, int destLoc, unsigned char *srcPtr, int srcLoc)
+void dissolveMerge(unsigned char *dest, unsigned char *src)
 {
     unsigned char alpha;
     int randVal;
     int k;
 
-    alpha = srcPtr[srcLoc + alphaPos];
+    alpha = src[alphaPos];
 
-    for (k = 0; k < alphaPos; k++)
-        destPtr[destLoc + k] = srcPtr[srcLoc + k];
+    for (k = CR; k <= CB; k++)
+        dest[k] = src[k];
 
     randVal = (random() & 0xff);
-    destPtr[destLoc + alphaPos] = (randVal > alpha) ? 0 : alpha;
+    dest[alphaPos] = (randVal > alpha) ? 0 : alpha;
 }
 
-void additiveMerge(int spp, unsigned char *destPtr, int destLoc, unsigned char *srcPtr, int srcLoc)
+void additiveMerge(unsigned char *dest, unsigned char *src)
 {
     unsigned char alpha;
     int k;
 
-    alpha = srcPtr[srcLoc + alphaPos];
+    alpha = src[alphaPos];
 
-    for (k = 0; k < alphaPos; k++) {
-        if (srcPtr[srcLoc + k] + destPtr[destLoc + k] < 255)
-            destPtr[destLoc + k] = srcPtr[srcLoc + k] + destPtr[destLoc + k];
+    for (k = CR; k <= CB; k++) {
+        if (src[k] + dest[k] < 255)
+            dest[k] = src[k] + dest[k];
         else
-            destPtr[destLoc + k] = 255;
+            dest[k] = 255;
     }
 
-    destPtr[destLoc + alphaPos] = MIN(alpha, destPtr[destLoc + alphaPos]);
+    dest[alphaPos] = MIN(alpha, dest[alphaPos]);
 }
 
-void differenceMerge(int spp, unsigned char *destPtr, int destLoc, unsigned char *srcPtr, int srcLoc)
+void differenceMerge(unsigned char *dest, unsigned char *src)
 {
     unsigned char alpha;
     int k;
 
-    alpha = srcPtr[srcLoc + alphaPos];
+    alpha = src[alphaPos];
 
-    for (k = 0; k < alphaPos; k++) {
-        if (srcPtr[srcLoc + k] > destPtr[destLoc + k])
-            destPtr[destLoc + k] = srcPtr[srcLoc + k] - destPtr[destLoc + k];
+    for (k = CR; k <= CB; k++) {
+        if (src[k] > dest[k])
+            dest[k] = src[k] - dest[k];
         else
-            destPtr[destLoc + k] = destPtr[destLoc + k] - srcPtr[srcLoc + k];
+            dest[k] = dest[k] - src[k];
     }
 
-    destPtr[destLoc + alphaPos] = MIN(alpha, destPtr[destLoc + alphaPos]);
+    dest[alphaPos] = MIN(alpha, dest[alphaPos]);
 }
 
-void multiplyMerge(int spp, unsigned char *destPtr, int destLoc, unsigned char *srcPtr, int srcLoc)
+void multiplyMerge(unsigned char *dest, unsigned char *src)
 {
     unsigned char alpha;
     int t1;
     int k;
 
-    alpha = srcPtr[srcLoc + alphaPos];
+    alpha = src[alphaPos];
 
-    for (k = 0; k < alphaPos; k++)
-        destPtr[destLoc + k] = int_mult(srcPtr[srcLoc + k], destPtr[destLoc + k], t1);
+    for (k = CR; k <= CB; k++)
+        dest[k] = int_mult(src[k], dest[k], t1);
 
-    destPtr[destLoc + alphaPos] = MIN(alpha, destPtr[destLoc + alphaPos]);
+    dest[alphaPos] = MIN(alpha, dest[alphaPos]);
 }
 
-void overlayMerge(int spp, unsigned char *destPtr, int destLoc, unsigned char *srcPtr, int srcLoc)
+void overlayMerge(unsigned char *dest, unsigned char *src)
 {
     unsigned char alpha;
     int val,t1;
     int k;
 
-    alpha = srcPtr[srcLoc + alphaPos];
+    alpha = src[alphaPos];
 
-    for (k = 0; k < alphaPos; k++) {
-        unsigned char src = srcPtr[k];
-        unsigned char dst = destPtr[k];
+    for (k = CR; k <= CB; k++) {
+        unsigned char s = src[k];
+        unsigned char d = dest[k];
 
-        if (dst < 128)
-            val = (2 * int_mult(src,dst,t1));
+        if (d < 128)
+            val = (2 * int_mult(s,d,t1));
         else
-            val = 255 - 2 * int_mult(255 - dst,255-src,t1);
+            val = 255 - 2 * int_mult(255 - d,255-s,t1);
 
-        destPtr[k] = MAX(0, MIN(255, val));
+        dest[k] = MAX(0, MIN(255, val));
     }
 
-    destPtr[destLoc + alphaPos] = MIN(alpha, destPtr[destLoc + alphaPos]);
+    dest[alphaPos] = MIN(alpha, dest[alphaPos]);
 }
 
-void screenMerge(int spp, unsigned char *destPtr, int destLoc, unsigned char *srcPtr, int srcLoc)
+void screenMerge(unsigned char *dest, unsigned char *src)
 {
     unsigned char alpha;
     int t1;
     int k;
 
-    alpha = srcPtr[srcLoc + alphaPos];
+    alpha = src[alphaPos];
 
-    for (k = 0; k < alphaPos; k++) {
-        destPtr[destLoc + k] = 255 - int_mult((255 - srcPtr[srcLoc + k]), (255 - destPtr[destLoc + k]), t1);
+    for (k = CR; k <= CB; k++) {
+        dest[k] = 255 - int_mult((255 - src[k]), (255 - dest[k]), t1);
     }
 
-    destPtr[destLoc + alphaPos] = MIN(alpha, destPtr[destLoc + alphaPos]);
+    dest[alphaPos] = MIN(alpha, dest[alphaPos]);
 }
 
-void subtractiveMerge(int spp, unsigned char *destPtr, int destLoc, unsigned char *srcPtr, int srcLoc)
+void subtractiveMerge(unsigned char *dest, unsigned char *src)
 {
     unsigned char alpha;
     int k;
 
-    alpha = srcPtr[srcLoc + alphaPos];
+    alpha = src[alphaPos];
 
-    for (k = 0; k < alphaPos; k++) {
-        if (destPtr[destLoc + k] - srcPtr[srcLoc + k] > 0)
-            destPtr[destLoc + k] = destPtr[destLoc + k] - srcPtr[srcLoc + k];
+    for (k = CR; k <= CB; k++) {
+        if (dest[k] - src[k] > 0)
+            dest[k] = dest[k] - src[k];
         else
-            destPtr[destLoc + k] = 0;
+            dest[k] = 0;
     }
 
-    destPtr[destLoc + alphaPos] = MIN(alpha, destPtr[destLoc + alphaPos]);
+    dest[alphaPos] = MIN(alpha, dest[alphaPos]);
 }
 
-void darkenMerge(int spp, unsigned char *destPtr, int destLoc, unsigned char *srcPtr, int srcLoc)
+void darkenMerge(unsigned char *dest, unsigned char *src)
 {
     unsigned char alpha;
     int k;
 
-    alpha = srcPtr[srcLoc + alphaPos];
+    alpha = src[alphaPos];
 
-    for (k = 0; k < alphaPos; k++) {
-        if (srcPtr[srcLoc + k] > destPtr[destLoc + k])
-            destPtr[destLoc + k] = destPtr[destLoc + k];
+    for (k = CR; k <= CB; k++) {
+        if (src[k] > dest[k])
+            dest[k] = dest[k];
         else
-            destPtr[destLoc + k] = srcPtr[srcLoc + k];
+            dest[k] = src[k];
     }
 
-    destPtr[destLoc + alphaPos] = MIN(alpha, destPtr[destLoc + alphaPos]);
+    dest[alphaPos] = MIN(alpha, dest[alphaPos]);
 }
 
-void lightenMerge(int spp, unsigned char *destPtr, int destLoc, unsigned char *srcPtr, int srcLoc)
+void lightenMerge(unsigned char *dest, unsigned char *src)
 {
     unsigned char alpha;
     int k;
 
-    alpha = srcPtr[srcLoc + alphaPos];
+    alpha = src[alphaPos];
 
-    for (k = 0; k < alphaPos; k++) {
-        if (destPtr[destLoc + k] > srcPtr[srcLoc + k])
-            destPtr[destLoc + k] = destPtr[destLoc + k];
+    for (k = CR; k <= CB; k++) {
+        if (dest[k] > src[k])
+            dest[k] = dest[k];
         else
-            destPtr[destLoc + k] = srcPtr[srcLoc + k];
+            dest[k] = src[k];
     }
 
-    destPtr[destLoc + alphaPos] = MIN(alpha, destPtr[destLoc + alphaPos]);
+    dest[alphaPos] = MIN(alpha, dest[alphaPos]);
 }
 
-void divideMerge(int spp, unsigned char *destPtr, int destLoc, unsigned char *srcPtr, int srcLoc)
+void divideMerge(unsigned char *dest, unsigned char *src)
 {
     unsigned char alpha;
     int temp;
     int k;
 
-    alpha = srcPtr[srcLoc + alphaPos];
+    alpha = src[alphaPos];
 
-    for (k = 0; k < alphaPos; k++) {
-        temp = ((destPtr[destLoc + k] * 256) / (1 + srcPtr[srcLoc + k]));
-        destPtr[destLoc + k] = MIN (temp, 255);
+    for (k = CR; k <= CB; k++) {
+        temp = ((dest[k] * 256) / (1 + src[k]));
+        dest[k] = MIN (temp, 255);
     }
 
-    destPtr[destLoc + alphaPos] = MIN(alpha, destPtr[destLoc + alphaPos]);
+    dest[alphaPos] = MIN(alpha, dest[alphaPos]);
 }
 
-void hueMerge(int spp, unsigned char *destPtr, int destLoc, unsigned char *srcPtr, int srcLoc)
+void hueMerge(unsigned char *dest, unsigned char *src)
 {
     int r1, g1, b1, r2, g2, b2;
     int alpha;
 
-    if (spp > 2) {
+    alpha = src[alphaPos];
 
-        alpha = srcPtr[srcLoc + alphaPos];
+    r1 = dest[CR]; g1 = dest[CG]; b1 = dest[CB];
+    r2 = src[CR]; g2 = src[CG]; b2 = src[CB];
 
-        r1 = destPtr[destLoc]; g1 = destPtr[destLoc + 1]; b1 = destPtr[destLoc + 2];
-        r2 = srcPtr[srcLoc]; g2 = srcPtr[srcLoc + 1]; b2 = srcPtr[srcLoc + 2];
+    RGBtoHSV(&r1, &g1, &b1);
+    RGBtoHSV(&r2, &g2, &b2);
 
-        RGBtoHSV(&r1, &g1, &b1);
-        RGBtoHSV(&r2, &g2, &b2);
+    r1 = r2;
 
-        r1 = r2;
+    HSVtoRGB(&r1, &g1, &b1);
 
-        HSVtoRGB(&r1, &g1, &b1);
-
-        destPtr[destLoc] = r1; destPtr[destLoc + 1] = g1; destPtr[destLoc + 2] = b1;
-
-        destPtr[destLoc + alphaPos] = MIN(alpha, destPtr[destLoc + alphaPos]);
-
-    }
-    else
-        normalMerge(spp, destPtr, destLoc, srcPtr, srcLoc, 255);
+    dest[CR] = r1; dest[CG] = g1; dest[CB] = b1;
+    dest[alphaPos] = MIN(alpha, dest[alphaPos]);
 }
 
-void saturationMerge(int spp, unsigned char *destPtr, int destLoc, unsigned char *srcPtr, int srcLoc)
+void saturationMerge(unsigned char *dest, unsigned char *src)
 {
     int r1, g1, b1, r2, g2, b2;
     int alpha;
 
-    if (spp > 2) {
+    alpha = src[alphaPos];
 
-        alpha = srcPtr[srcLoc + alphaPos];
+    r1 = dest[CR]; g1 = dest[CG]; b1 = dest[CB];
+    r2 = src[CR]; g2 = src[CG]; b2 = src[CB];
 
-        r1 = destPtr[destLoc]; g1 = destPtr[destLoc + 1]; b1 = destPtr[destLoc + 2];
-        r2 = srcPtr[srcLoc]; g2 = srcPtr[srcLoc + 1]; b2 = srcPtr[srcLoc + 2];
+    RGBtoHSV(&r1, &g1, &b1);
+    RGBtoHSV(&r2, &g2, &b2);
 
-        RGBtoHSV(&r1, &g1, &b1);
-        RGBtoHSV(&r2, &g2, &b2);
+    g1 = g2;
 
-        g1 = g2;
+    HSVtoRGB(&r1, &g1, &b1);
 
-        HSVtoRGB(&r1, &g1, &b1);
-
-        destPtr[destLoc] = r1; destPtr[destLoc + 1] = g1; destPtr[destLoc + 2] = b1;
-
-        destPtr[destLoc + alphaPos] = MIN(alpha, destPtr[destLoc + alphaPos]);
-
-    }
-    else
-        normalMerge(spp, destPtr, destLoc, srcPtr, srcLoc, 255);
+    dest[CR] = r1; dest[CG] = g1; dest[CB] = b1;
+    dest[alphaPos] = MIN(alpha, dest[alphaPos]);
 }
 
-void valueMerge(int spp, unsigned char *destPtr, int destLoc, unsigned char *srcPtr, int srcLoc)
+void valueMerge(unsigned char *dest, unsigned char *src)
 {
     int r1, g1, b1, r2, g2, b2;
     int alpha;
 
-    if (spp > 2) {
+    alpha = src[alphaPos];
 
-        alpha = srcPtr[srcLoc + alphaPos];
+    r1 = dest[CR]; g1 = dest[CG]; b1 = dest[CB];
+    r2 = src[CR]; g2 = src[CG]; b2 = src[CB];
 
-        r1 = destPtr[destLoc]; g1 = destPtr[destLoc + 1]; b1 = destPtr[destLoc + 2];
-        r2 = srcPtr[srcLoc]; g2 = srcPtr[srcLoc + 1]; b2 = srcPtr[srcLoc + 2];
+    RGBtoHSV(&r1, &g1, &b1);
+    RGBtoHSV(&r2, &g2, &b2);
 
-        RGBtoHSV(&r1, &g1, &b1);
-        RGBtoHSV(&r2, &g2, &b2);
+    b1 = b2;
 
-        b1 = b2;
+    HSVtoRGB(&r1, &g1, &b1);
 
-        HSVtoRGB(&r1, &g1, &b1);
-
-        destPtr[destLoc] = r1; destPtr[destLoc + 1] = g1; destPtr[destLoc + 2] = b1;
-
-        destPtr[destLoc + alphaPos] = MIN(alpha, destPtr[destLoc + alphaPos]);
-
-    }
-    else
-        normalMerge(spp, destPtr, destLoc, srcPtr, srcLoc, 255);
+    dest[CR] = r1; dest[CG] = g1; dest[CB] = b1;
+    dest[alphaPos] = MIN(alpha, dest[alphaPos]);
 }
 
-void colorMerge(int spp, unsigned char *destPtr, int destLoc, unsigned char *srcPtr, int srcLoc)
+void colorMerge(unsigned char *dest, unsigned char *src)
 {
     int r1, g1, b1, r2, g2, b2;
     int alpha;
 
-    if (spp > 2) {
+    alpha = src[alphaPos];
 
-        alpha = srcPtr[srcLoc + alphaPos];
+    r1 = dest[CR]; g1 = dest[CG]; b1 = dest[CB];
+    r2 = src[CR]; g2 = src[CG]; b2 = src[CB];
 
-        r1 = destPtr[destLoc]; g1 = destPtr[destLoc + 1]; b1 = destPtr[destLoc + 2];
-        r2 = srcPtr[srcLoc]; g2 = srcPtr[srcLoc + 1]; b2 = srcPtr[srcLoc + 2];
+    RGBtoHLS(&r1, &g1, &b1);
+    RGBtoHLS(&r2, &g2, &b2);
 
-        RGBtoHLS(&r1, &g1, &b1);
-        RGBtoHLS(&r2, &g2, &b2);
+    r1 = r2;
+    b1 = b2;
 
-        r1 = r2;
-        b1 = b2;
+    HLStoRGB(&r1, &g1, &b1);
 
-        HLStoRGB(&r1, &g1, &b1);
-
-        destPtr[destLoc] = r1; destPtr[destLoc + 1] = g1; destPtr[destLoc + 2] = b1;
-
-        destPtr[destLoc + alphaPos] = MIN(alpha, destPtr[destLoc + alphaPos]);
-
-    }
-    else
-        normalMerge(spp, destPtr, destLoc, srcPtr, srcLoc, 255);
+    dest[CR] = r1; dest[CG] = g1; dest[CB] = b1;
+    dest[alphaPos] = MIN(alpha, dest[alphaPos]);
 }
 
-void dodgeMerge(int spp, unsigned char *destPtr, int destLoc, unsigned char *srcPtr, int srcLoc)
+void dodgeMerge(unsigned char *dest, unsigned char *src)
 {
     int t1, k;
 
-    for (k = 0; k < alphaPos; k++) {
-        t1 = destPtr[k] << 8;
-        t1 /= 256 - srcPtr[k];
-        destPtr[k] = MAX(0, MIN(255, t1));
+    for (k = CR; k <= CB; k++) {
+        t1 = dest[k] << 8;
+        t1 /= 256 - src[k];
+        dest[k] = MAX(0, MIN(255, t1));
     }
 
-    destPtr[destLoc + alphaPos] = MIN(srcPtr[srcLoc + alphaPos], destPtr[destLoc + alphaPos]);
+    dest[alphaPos] = MIN(src[alphaPos], dest[alphaPos]);
 }
 
-void burnMerge(int spp, unsigned char *destPtr, int destLoc, unsigned char *srcPtr, int srcLoc)
+void burnMerge(unsigned char *dest, unsigned char *src)
 {
     int t1, k;
 
-    for (k = 0; k < alphaPos; k++) {
-        t1 = (255 - destPtr[k]) << 8;
-        t1 /= srcPtr[k] + 1;
-        destPtr[k] = MAX(0, MIN(255, 255 - t1));
+    for (k = CR; k <= CB; k++) {
+        t1 = (255 - dest[k]) << 8;
+        t1 /= src[k] + 1;
+        dest[k] = MAX(0, MIN(255, 255 - t1));
     }
 
-    destPtr[destLoc + alphaPos] = MIN(srcPtr[srcLoc + alphaPos], destPtr[destLoc + alphaPos]);
+    dest[alphaPos] = MIN(src[alphaPos], dest[alphaPos]);
 }
 
-void hardlightMerge(int spp, unsigned char *destPtr, int destLoc, unsigned char *srcPtr, int srcLoc)
+void hardlightMerge(unsigned char *dest, unsigned char *src)
 {
     int t1, k;
 
-    for (k = 0; k < alphaPos; k++) {
-        if (srcPtr[k] > 128) {
-            t1 = (255 - destPtr[k]) * (255 - ((srcPtr[k] - 128) << 1));
-            destPtr[k] = MAX(0, MIN(255, 255 - (t1 >> 8)));
+    for (k = CR; k <= CB; k++) {
+        if (src[k] > 128) {
+            t1 = (255 - dest[k]) * (255 - ((src[k] - 128) << 1));
+            dest[k] = MAX(0, MIN(255, 255 - (t1 >> 8)));
         }
         else {
-            t1 = destPtr[k] * (srcPtr[k] << 1);
-            destPtr[k] = MAX(0, MIN(255, t1 >> 8));
+            t1 = dest[k] * (src[k] << 1);
+            dest[k] = MAX(0, MIN(255, t1 >> 8));
         }
     }
 
-    destPtr[destLoc + alphaPos] = MIN(srcPtr[srcLoc + alphaPos], destPtr[destLoc + alphaPos]);
+    dest[alphaPos] = MIN(src[alphaPos], dest[alphaPos]);
 }
 
-void softlightMerge(int spp, unsigned char *destPtr, int destLoc, unsigned char *srcPtr, int srcLoc)
+void softlightMerge(unsigned char *dest, unsigned char *src)
 {
     int t1, t2, tM, tS, k;
 
-    for (k = 0; k < alphaPos; k++) {
-        tM = int_mult(destPtr[k], srcPtr[k], t1);
-        tS = 255 - int_mult(255 - destPtr[k], 255 - srcPtr[k], t1);
-        destPtr[k] = int_mult(255 - destPtr[k], tM, t1) + int_mult(destPtr[k], tS, t2);
+    for (k = CR; k <= CB; k++) {
+        tM = int_mult(dest[k], src[k], t1);
+        tS = 255 - int_mult(255 - dest[k], 255 - src[k], t1);
+        dest[k] = int_mult(255 - dest[k], tM, t1) + int_mult(dest[k], tS, t2);
     }
 
-    destPtr[destLoc + alphaPos] = MIN(srcPtr[srcLoc + alphaPos], destPtr[destLoc + alphaPos]);
+    dest[alphaPos] = MIN(src[alphaPos], dest[alphaPos]);
 }
 
-void grainExtractMerge(int spp, unsigned char *destPtr, int destLoc, unsigned char *srcPtr, int srcLoc)
+void grainExtractMerge(unsigned char *dest, unsigned char *src)
 {
     int t1, k;
 
-    for (k = 0; k < alphaPos; k++) {
-        t1 = destPtr[k] - srcPtr[k] + 128;
-        destPtr[k] = MAX(0, MIN(255, t1));
+    for (k = CR; k <= CB; k++) {
+        t1 = dest[k] - src[k] + 128;
+        dest[k] = MAX(0, MIN(255, t1));
     }
 
-    destPtr[destLoc + alphaPos] = MIN(srcPtr[srcLoc + alphaPos], destPtr[destLoc + alphaPos]);
+    dest[alphaPos] = MIN(src[alphaPos], dest[alphaPos]);
 }
 
-void grainMergeMerge(int spp, unsigned char *destPtr, int destLoc, unsigned char *srcPtr, int srcLoc)
+void grainMergeMerge(unsigned char *dest, unsigned char *src)
 {
     int t1, k;
 
-    for (k = 0; k < alphaPos; k++) {
-        t1 = destPtr[k] + srcPtr[k] - 128;
-        destPtr[k] = MAX(0, MIN(255, t1));
+    for (k = CR; k <= CB; k++) {
+        t1 = dest[k] + src[k] - 128;
+        dest[k] = MAX(0, MIN(255, t1));
     }
 
-    destPtr[destLoc + alphaPos] = MIN(srcPtr[srcLoc + alphaPos], destPtr[destLoc + alphaPos]);
+    dest[alphaPos] = MIN(src[alphaPos], dest[alphaPos]);
 }
 
-void exclusionMerge(int spp, unsigned char *destPtr, int destLoc, unsigned char *srcPtr, int srcLoc)
+void exclusionMerge(unsigned char *dest, unsigned char *src)
 {
     int t1, k;
 
-    for (k = 0; k < alphaPos; k++) {
-        t1 = destPtr[k] + srcPtr[k] - 2 * int_mult(destPtr[k],srcPtr[k],t1);
-        destPtr[k] = MAX(0, MIN(255, t1));
+    for (k = CR; k <= CB; k++) {
+        t1 = dest[k] + src[k] - 2 * int_mult(dest[k],src[k],t1);
+        dest[k] = MAX(0, MIN(255, t1));
     }
 
-    destPtr[destLoc + alphaPos] = MIN(srcPtr[srcLoc + alphaPos], destPtr[destLoc + alphaPos]);
+    dest[alphaPos] = MIN(src[alphaPos], dest[alphaPos]);
 }
 
 
-void selectMerge(int choice, int spp, unsigned char *destPtr, int destLoc, unsigned char *srcPtr, int srcLoc)
+void selectMerge(int choice, unsigned char *destPtr, unsigned char *srcPtr)
 {
     switch (choice) {
 //        case XCF_DISSOLVE_MODE:
 //            dissolveMerge(spp, destPtr, destLoc, srcPtr, srcLoc);
 //            break;
         case kCGBlendModeMultiply:
-            multiplyMerge(spp, destPtr, destLoc, srcPtr, srcLoc);
+            multiplyMerge(destPtr, srcPtr);
             break;
         case kCGBlendModeScreen:
-            screenMerge(spp, destPtr, destLoc, srcPtr, srcLoc);
+            screenMerge(destPtr, srcPtr);
             break;
         case kCGBlendModeOverlay:
-            overlayMerge(spp, destPtr, destLoc, srcPtr, srcLoc);
+            overlayMerge(destPtr, srcPtr);
             break;
         case kCGBlendModeDifference:
-            differenceMerge(spp, destPtr, destLoc, srcPtr, srcLoc);
+            differenceMerge(destPtr, srcPtr);
             break;
         case kCGBlendModePlusLighter:
-            additiveMerge(spp, destPtr, destLoc, srcPtr, srcLoc);
+            additiveMerge(destPtr, srcPtr);
             break;
 //        case XCF_SUBTRACT_MODE:
 //            subtractiveMerge(spp, destPtr, destLoc, srcPtr, srcLoc);
 //            break;
         case kCGBlendModeDarken:
-            darkenMerge(spp, destPtr, destLoc, srcPtr, srcLoc);
+            darkenMerge(destPtr, srcPtr);
             break;
         case kCGBlendModeLighten:
-            lightenMerge(spp, destPtr, destLoc, srcPtr, srcLoc);
+            lightenMerge(destPtr, srcPtr);
             break;
         case kCGBlendModeHue:
-            hueMerge(spp, destPtr, destLoc, srcPtr, srcLoc);
+            hueMerge(destPtr, srcPtr);
             break;
         case kCGBlendModeSaturation:
-            saturationMerge(spp, destPtr, destLoc, srcPtr, srcLoc);
+            saturationMerge(destPtr, srcPtr);
             break;
         case kCGBlendModeLuminosity:
-            valueMerge(spp, destPtr, destLoc, srcPtr, srcLoc);
+            valueMerge(destPtr, srcPtr);
             break;
         case kCGBlendModeColor:
-            colorMerge(spp, destPtr, destLoc, srcPtr, srcLoc);
+            colorMerge(destPtr, srcPtr);
             break;
 //        case XCF_DIVIDE_MODE:
 //            divideMerge(spp, destPtr, destLoc, srcPtr, srcLoc);
 //            break;
         case kCGBlendModeColorDodge:
-            dodgeMerge(spp, destPtr, destLoc, srcPtr, srcLoc);
+            dodgeMerge(destPtr, srcPtr);
             break;
         case kCGBlendModeColorBurn:
-            burnMerge(spp, destPtr, destLoc, srcPtr, srcLoc);
+            burnMerge(destPtr, srcPtr);
             break;
         case kCGBlendModeHardLight:
-            hardlightMerge(spp, destPtr, destLoc, srcPtr, srcLoc);
+            hardlightMerge(destPtr, srcPtr);
             break;
         case kCGBlendModeSoftLight:
-            softlightMerge(spp, destPtr, destLoc, srcPtr, srcLoc);
+            softlightMerge(destPtr, srcPtr);
             break;
         case kCGBlendModeExclusion:
-            exclusionMerge(spp,destPtr,destLoc,srcPtr,srcLoc);
+            exclusionMerge(destPtr, srcPtr);
             break;
 //        case XCF_GRAIN_EXTRACT_MODE:
 //            grainExtractMerge(spp, destPtr, destLoc, srcPtr, srcLoc);
@@ -586,7 +499,7 @@ void selectMerge(int choice, int spp, unsigned char *destPtr, int destLoc, unsig
 //            grainMergeMerge(spp, destPtr, destLoc, srcPtr, srcLoc);
 //            break;
         default:
-            normalMerge(spp, destPtr, destLoc, srcPtr, srcLoc, 255);
+            normalMerge(destPtr, srcPtr, 255);
 #ifdef DEBUG
             NSLog(@"Unknown mode %d passed to selectMerge()",choice);
 #endif

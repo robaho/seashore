@@ -42,8 +42,7 @@
 
 - (void)channelChanged
 {
-	if ([[document contents] spp] != 2)
-		[[document toolboxUtility] update:NO];
+    [[document toolboxUtility] update:NO];
     [[document docView] setNeedsDisplay:YES];
 	[[document statusUtility] update];
 }

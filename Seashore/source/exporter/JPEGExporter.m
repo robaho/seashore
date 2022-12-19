@@ -195,7 +195,7 @@
 	int xres = [[document contents] xres];
 	int yres = [[document contents] yres];
     
-    NSBitmapImageRep *imageRep = [[document whiteboard] bitmap];
+    NSBitmapImageRep *imageRep = [[document whiteboard] image];
 
 	NSDictionary *exifData = [[document contents] exifData];
 	if (exifData) [imageRep setProperty:@"NSImageEXIFData" withValue:exifData];

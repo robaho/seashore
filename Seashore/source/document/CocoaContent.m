@@ -184,7 +184,7 @@
     fileColorSpace = [(NSBitmapImageRep*)imageRep colorSpace];
 	
 	// Create the layer
-	layer = [[CocoaLayer alloc] initWithImageRep:imageRep document:doc spp:(type == XCF_RGB_IMAGE) ? 4 : 2];
+	layer = [[CocoaLayer alloc] initWithImageRep:imageRep document:doc];
 	if (layer == NULL) {
 		return NULL;
 	}

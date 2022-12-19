@@ -56,8 +56,6 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     NSString *imageRepDataType;
     NSData *imageRepData;
     NSBitmapImageRep *imageRep;
-    NSImage *image;
-    int dspp;
     unsigned char *data;
     
     // Get the data from the pasteboard
@@ -91,20 +89,14 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
         type = XCF_RGB_IMAGE;
     }
     
-    // Put it in a nice form
-    if (type == XCF_RGB_IMAGE)
-        dspp = 4;
-    else
-        dspp = 2;
-    
-    data = convertImageRep(imageRep,dspp);
+    data = convertToRGBA(imageRep);
     if (!data) {
         NSLog(@"Required conversion not supported.");
         return NULL;
     }
     
     // Add layer
-    SeaLayer *new_layer = [[SeaLayer alloc] initWithDocument:doc rect:IntMakeRect(0, 0, width, height) data:data spp:dspp];
+    SeaLayer *new_layer = [[SeaLayer alloc] initWithDocument:doc rect:IntMakeRect(0, 0, width, height) data:data];
     if(new_layer==NULL){
         NSLog(@"Unable to add layer.");
         return NULL;
@@ -128,7 +120,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     height = dheight; width = dwidth;
     
     // Add in a single layer
-    layers = [[NSArray alloc] initWithObjects:[[SeaLayer alloc] initWithDocument:doc width:dwidth height:dheight opaque:dopaque spp:[self spp]], NULL];
+    layers = [[NSArray alloc] initWithObjects:[[SeaLayer alloc] initWithDocument:doc width:dwidth height:dheight opaque:dopaque], NULL];
     
     return self;
 }
@@ -159,25 +151,6 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
 - (int)type
 {
     return type;
-}
-
-- (int)spp
-{
-    int result = 0;
-    
-    switch (type) {
-        case XCF_RGB_IMAGE:
-            result = 4;
-        break;
-        case XCF_GRAY_IMAGE:
-            result = 2;
-        break;
-        default:
-            NSLog(@"Document type not recognised by spp");
-        break;
-    }
-    
-    return result;
 }
 
 - (int)xres
@@ -446,7 +419,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     if (index == kActiveLayer)
         index = activeLayerIndex;
 
-    SeaLayer *layerToAdd = [[SeaLayer alloc] initWithDocument:document width:width height:height opaque:NO spp:[self spp]];
+    SeaLayer *layerToAdd = [[SeaLayer alloc] initWithDocument:document width:width height:height opaque:NO];
 
     // Inform the helpers we will change the layer
     [[document helpers] activeLayerWillChange];
@@ -575,8 +548,8 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     unsigned char *data;
     IntRect rect;
     id layer;
-    int i, spp = [[document contents] spp];
-    
+    int i;
+
     // Check the state is valid
     if (![[document selection] active])
         return;
@@ -590,7 +563,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     // Check that the selection contains something
     containsNothing = YES;
     for (i = 0; containsNothing && (i < rect.size.width * rect.size.height); i++) {
-        if (data[(i + 1) * spp - 1] != 0x00)
+        if (data[i*SPP+alphaPos] != 0x00)
             containsNothing = NO;
     }
     if (containsNothing) {
@@ -603,7 +576,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     if(!duplicate)
         [[document selection] deleteSelection];
 
-    layer = [[SeaLayer alloc] initWithDocument:document rect:rect data:data spp:spp];
+    layer = [[SeaLayer alloc] initWithDocument:document rect:rect data:data];
     [layer trimLayer];
 
     [self addLayerObject:layer];
@@ -631,7 +604,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     IntRect rect;
     id layer;
     unsigned char *data;
-    int i, spp = [[document contents] spp],dspp;
+    int i;
     NSPoint centerPoint;
     IntPoint sel_point;
     IntSize sel_size;
@@ -689,13 +662,13 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
         rect = IntMakeRect(centerPoint.x - sel_size.width / 2, centerPoint.y - sel_size.height / 2, sel_size.width, sel_size.height);
     }
     
-    data = convertImageRep(imageRep,spp);
+    data = convertToRGBA(imageRep);
     if (!data) {
         NSLog(@"Required conversion not supported.");
         return;
     }
     
-    layer = [[SeaLayer alloc] initWithDocument:document rect:rect data:data spp:spp];
+    layer = [[SeaLayer alloc] initWithDocument:document rect:rect data:data];
 
     [layer trimLayer];
     [self addLayerObject:layer atIndex:index];
@@ -849,7 +822,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
 
     id pboard = [NSPasteboard generalPasteboard];
 
-    CGImageRef image = [[document whiteboard] bitmapCG];
+    CGImageRef image = [[document whiteboard] bitmap];
 
     // Check selection
     if ([[document selection] active]) {
@@ -925,18 +898,16 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
 
     IntRect rect = IntConstrainRect(topRect,bottomRect);
 
-    int spp = [self spp];
-
     [[document helpers] documentWillFlatten];
 
     NSArray *copy = [layers copy];
     [[[document undoManager] prepareWithInvocationTarget:self] undoMergeWith:copy];
 
-    int size = [bottom width]*[bottom height]*spp;
+    int size = [bottom width]*[bottom height]*SPP;
     unsigned char *data = malloc(size);
     memcpy(data,[bottom data],size);
 
-    SeaLayer *new_layer = [[SeaLayer alloc] initWithDocument:document rect:[bottom globalRect] data:data spp:spp];
+    SeaLayer *new_layer = [[SeaLayer alloc] initWithDocument:document rect:[bottom globalRect] data:data];
     [new_layer setName:[[NSString alloc] initWithString:[bottom name]]];
 
     NSMutableArray *tempArray = [NSMutableArray array];
@@ -952,20 +923,20 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     }
 
     for(int y=0;y<rect.size.height;y++){
-        int tOffset = ((rect.origin.y - topRect.origin.y + y) * [top width] + rect.origin.x-topRect.origin.x) * spp;
-        int bOffset = ((rect.origin.y - bottomRect.origin.y + y) * [bottom width] + rect.origin.x-bottomRect.origin.x) * spp;
+        int tOffset = ((rect.origin.y - topRect.origin.y + y) * [top width] + rect.origin.x-topRect.origin.x) * SPP;
+        int bOffset = ((rect.origin.y - bottomRect.origin.y + y) * [bottom width] + rect.origin.x-bottomRect.origin.x) * SPP;
 
         unsigned char *td = [top data]+tOffset;
         unsigned char *bd = [new_layer data]+bOffset;
 
         for(int x=0;x<rect.size.width;x++) {
             if(selectedChannel==kAlphaChannel) {
-                bd[spp-1] = td[spp-1];
+                bd[alphaPos] = td[alphaPos];
             } else if(selectedChannel==kPrimaryChannels){
-                memcpy(bd,td,spp-1);
+                memcpy(bd+CR,td+CR,SPP-1);
             }
-            td+=spp;
-            bd+=spp;
+            td+=SPP;
+            bd+=SPP;
         }
     }
 
@@ -1012,9 +983,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
 
     // Create the replacement flat layer
 
-    unsigned char *data;
     SeaLayer *layer, *tempLayer = [SeaLayer alloc];
-    int spp = [self spp];
 
     IntRect rect = IntMakeRect(0,0,0,0);
     NSMutableArray *tempArray = [NSMutableArray array];
@@ -1033,11 +1002,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
         }
     }
 
-
-    data = malloc(make_128(rect.size.width * rect.size.height * spp));
-    memset(data, 0, rect.size.width * rect.size.height * spp);
-
-    CGContextRef ctx = CGBitmapContextCreate(data,rect.size.width,rect.size.height,8,rect.size.width*spp,COLOR_SPACE, kCGImageAlphaPremultipliedLast);
+    CGContextRef ctx = CreateImageContext(rect.size);
     CGContextTranslateCTM(ctx,0,rect.size.height);
     CGContextScaleCTM(ctx,1,-1);
     CGContextTranslateCTM(ctx, -rect.origin.x,-rect.origin.y);
@@ -1050,7 +1015,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
 
     CGContextRelease(ctx);
 
-    layer = [[SeaLayer alloc] initWithDocument:document rect:rect data:data spp:spp];
+    layer = [[SeaLayer alloc] initWithDocument:document rect:rect data:ImageContextGetData(ctx)];
     [layer setName:[[NSString alloc] initWithString:newName]];
 
     // Revise layers
@@ -1153,6 +1118,15 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
         [layers0 addObject:textLayer];
     }
     layers = [NSArray arrayWithArray:layers0];
+}
+
+- (BOOL)isRGB
+{
+    return type == XCF_RGB_IMAGE;
+}
+- (BOOL)isGrayscale
+{
+    return type == XCF_GRAY_IMAGE;
 }
 
 @end

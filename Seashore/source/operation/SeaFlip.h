@@ -21,11 +21,13 @@ enum {
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
 
+@class SeaDocument;
+
 @interface SeaFlip : NSObject
 {
 
 	// The document associated with this object
-    __weak IBOutlet id document;
+    __weak IBOutlet SeaDocument *document;
 	
 }
 

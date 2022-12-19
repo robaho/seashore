@@ -8,6 +8,7 @@
 #import "ConnectedComponents.h"
 #import "StandardMerge.h"
 #import "NSBezierPath_Extensions.h"
+#import <Accelerate/Accelerate.h>
 
 #import <XCTest/XCTest.h>
 
@@ -53,11 +54,11 @@
 
 
 - (void)testAlphaBlendSymetry {
-    unsigned char temp0[4] = { 0xFF,0xFF,0xFF,0xFF};
-    unsigned char temp1[4] = { 0xFF,0xFF,0xFF,0xFF};
+    unsigned char top[4] = { 0xFF,0xFF,0xFF,0xFF};
+    unsigned char bottom[4] = { 0xFF,0xFF,0xFF,0xFF};
     unsigned char tempR[4];
 
-    merge_pm(4, temp1, temp0, tempR, 255);
+    merge_pm(top,bottom,tempR, 255);
 
     assert(tempR[0]==0xFF);
     assert(tempR[1]==0xFF);
@@ -66,16 +67,83 @@
 }
 
 - (void)testBlendWhiteOnWhite {
-    unsigned char temp0[4] = { 0xFF,0xFF,0xFF,0xFF};
-    unsigned char temp1[4] = { 0x7f,0x7f,0x7f,0x7f};
+    unsigned char bottom[4] = { 0xFF,0xFF,0xFF,0xFF};
+    unsigned char top[4] = { 0x7f,0x7f,0x7f,0x7f};
     unsigned char tempR[4];
 
-    merge_pm(4, temp1, temp0, tempR, 255);
+    merge_pm(top, bottom, bottom, 255);
 
     assert(tempR[0]==0xFF);
     assert(tempR[1]==0xFF);
     assert(tempR[2]==0xFF);
     assert(tempR[3]==0xFF);
+}
+
+- (void)test_merge_pm {
+    unsigned char bottom[4] = { 0x7f,0xFF,0xFF,0xFF}; // ARGB non premuliplied
+    unsigned char top[4] = { 0x7f,0x7f,0x7f,0x7f}; // ARGB premultipled
+    unsigned char dst[4];
+
+    merge_pm(top, bottom, dst, 255);
+
+    assert(dst[0]==0xBF);
+    assert(dst[1]==0xFF);
+    assert(dst[2]==0xFF);
+    assert(dst[3]==0xFF);
+}
+
+- (void)test_merge_pm_2 {
+    unsigned char bottom[4] = { 0x7f,0xFF,0xF0,0xD0}; // ARGB non premuliplied
+    unsigned char top[4] = { 0x7f,0x7f,0x7f,0x7f}; // ARGB premultipled
+    unsigned char dst[4];
+
+    merge_pm(top, bottom, dst, 255);
+
+    assert(dst[0]==0xBF);
+    assert(dst[1]==0xFF);
+    assert(dst[2]==0xF9);
+    assert(dst[3]==0xEF);
+}
+
+
+- (void)testVImageComposite {
+    CGContextRef ctx = CGBitmapContextCreate(NULL, 400,400,8, 0,CGColorSpaceCreateDeviceRGB(),kCGImageAlphaPremultipliedFirst);
+    CGContextClearRect(ctx, CGRectMake(0,0,400,400));
+    CGContextSetFillColorWithColor(ctx,[NSColor redColor].CGColor);
+    CGContextFillRect(ctx,CGRectMake(50,50,100,100));
+    CGImageRef bottom = CGBitmapContextCreateImage(ctx);
+    CGContextSetAlpha(ctx, 1);
+    CGContextClearRect(ctx, CGRectMake(0,0,400,400));
+    CGContextSetFillColorWithColor(ctx,[NSColor blueColor].CGColor);
+    CGContextFillRect(ctx,CGRectMake(100,100,100,100));
+    CGImageRef top = CGBitmapContextCreateImage(ctx);
+    CGContextRelease(ctx);
+
+    vImage_Buffer bottomB = {};
+    vImage_Buffer topB = {};
+
+    vImage_CGImageFormat iFormat = {};
+    vImageBuffer_InitWithCGImage(&bottomB, &iFormat, NULL, bottom, 0);
+    vImageBuffer_InitWithCGImage(&topB, &iFormat, NULL, top, 0);
+    vImagePremultipliedConstAlphaBlend_ARGB8888(&topB, 127, &bottomB, &bottomB, 0);
+    
+
+    vImage_Error err;
+    CGImageRef result = vImageCreateCGImageFromBuffer(&bottomB, &iFormat, NULL, NULL, 0,&err);
+    //
+
+}
+
+- (void)testPixelAccess
+{
+    uint8_t argb[] = { 0x00, 0x01, 0x02, 0x03};
+//    uint32_t argb_i = htonl(*(uint32_t*)argb);
+    uint32_t argb_i = *(uint32_t*)argb;
+
+    assert(((argb_i>>0) & 0xFF) == 0x00);
+    assert(((argb_i>>8) & 0xFF) == 0x01);
+    assert(((argb_i>>16) & 0xFF) == 0x02);
+    assert(((argb_i>>24) & 0xFF) == 0x03);
 }
 
 - (void)testPerformanceExample {

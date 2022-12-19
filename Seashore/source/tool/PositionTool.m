@@ -230,15 +230,6 @@
     return x!=0 || y!=0 || scaleX !=1.0 || scaleY != 1.0 || rotation!=0;
 }
 
-- (void)maybeAutoApply
-{
-    if([options autoApply] && [self isChanged]) {
-        [self apply:self];
-    } else {
-        [self reset:self];
-    }
-}
-
 - (IntRect)bounds
 {
     return [self bounds:[[document contents] activeLayer]];
@@ -498,13 +489,13 @@
     if(active){
         [self updateButtons];
     } else {
-        [self maybeAutoApply];
+        [self apply:self];
     }
 }
 
 - (void)endLineDrawing
 {
-    [self maybeAutoApply];
+    [self apply:self];
 }
 
 - (AbstractOptions*)getOptions

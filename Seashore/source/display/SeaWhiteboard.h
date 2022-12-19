@@ -94,9 +94,6 @@ enum {
     IntRect tempOverlayModifiedRect;
     IntRect whiteboardModifiedRect;
 
-	// The whiteboard's samples per pixel
-	int spp;
-	
 	// Remembers whether is or is not active
     SeaColorProfile *proofProfile;
 
@@ -246,10 +243,13 @@ enum {
 
 - (NSBitmapImageRep *)sampleImage;
 
-- (NSBitmapImageRep *)bitmap;
+- (NSBitmapImageRep *)image;
 
-- (CGImageRef)bitmapCG;
+- (CGImageRef)bitmap;
 
 - (void)shutdown;
+
+-(void)debugTempLayer;
+-(void)debugDataCtx;
 
 @end

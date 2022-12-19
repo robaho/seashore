@@ -1,4 +1,3 @@
-#import "SeaLibrary/SeaLibrary.h"
 #import "SeaContent.h"
 
 @implementation SeaContent
@@ -17,24 +16,6 @@
 - (int) yres
 {
     return yres;
-}
-- (int)spp
-{
-    int result = 0;
-
-    switch (type) {
-        case XCF_RGB_IMAGE:
-            result = 4;
-            break;
-        case XCF_GRAY_IMAGE:
-            result = 2;
-            break;
-        default:
-            NSLog(@"Document type not recognised by spp");
-            break;
-    }
-
-    return result;
 }
 - (int) type
 {

@@ -9,14 +9,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DebugView : NSView
+@interface DebugView : NSImageView
 
 @property NSBitmapImageRep *rep;
 
 +(DebugView *)createWithRep:(NSBitmapImageRep *)rep;
-+(DebugView *)createWithData:(unsigned char *)data width:(int)width height:(int)height spp:(int)spp snapshot:(BOOL)snapshot;
-
--(void)update;
++(DebugView *)createWithData:(unsigned char *)data width:(int)width height:(int)height snapshot:(BOOL)snapshot;
++(DebugView *)createWithContext:(CGContextRef)ctx;
 
 @end
 

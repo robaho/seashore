@@ -274,5 +274,11 @@ NSString* NSStringFromIntRect(IntRect rect);
  */
 NSString* NSStringFromIntPoint(IntPoint point);
 
-bool IntRectIsEmpty(IntRect rect);
+CG_INLINE bool IntRectIsEmpty(IntRect rect) {
+    return rect.size.width==0 || rect.size.height==0;
+}
+
+CG_INLINE bool MarginsIsEmpty(Margins m) {
+    return m.left==-1 || m.right==-1 || m.top==-1 || m.bottom==-1;
+}
 

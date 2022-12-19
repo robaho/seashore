@@ -4,6 +4,12 @@
 #include "gimprgb.h"
 #include "gimpadaptivesupersample.h"
 
+#define CR 1
+#define CB 2
+#define CG 3
+#define alphaPos 0
+
+
 /*  local function prototypes  */
 
 static gdouble gradient_calc_conical_sym_factor  (gdouble          dist,
@@ -630,10 +636,10 @@ gradient_put_pixel (int      x,
   temp = ((ppd->rect.origin.y + y) * ppd->width + (ppd->rect.origin.x + x)) * ppd->spp;
   if (ppd->spp == 4)
     {
-      data[temp] = color->r * 255.0;
-      data[temp + 1] = color->g * 255.0;
-      data[temp + 2] = color->b * 255.0;
-      data[temp + 3] = color->a * 255.0;
+      data[temp + CR] = color->r * 255.0;
+      data[temp + CG] = color->g * 255.0;
+      data[temp + CB] = color->b * 255.0;
+      data[temp + alphaPos] = color->a * 255.0;
     }
   else if (ppd->spp == 2)
     {
@@ -654,19 +660,19 @@ void GCFillGradient(unsigned char *dest, int destWidth, int destHeight, IntRect 
 	rbd.gradient = NULL;
 	rbd.reverse = 0;
 
-	rbd.fg.r = (double)info.start_color[0] / 255.0;
-	rbd.fg.g = (double)info.start_color[1] / 255.0;
-	rbd.fg.b = (double)info.start_color[2] / 255.0;
-	rbd.fg.a = (double)info.start_color[3] / 255.0;
+	rbd.fg.r = (double)info.start_color[CR] / 255.0;
+	rbd.fg.g = (double)info.start_color[CG] / 255.0;
+	rbd.fg.b = (double)info.start_color[CB] / 255.0;
+	rbd.fg.a = (double)info.start_color[alphaPos] / 255.0;
 
     rbd.fg.r *= rbd.fg.a;
     rbd.fg.b *= rbd.fg.a;
     rbd.fg.g *= rbd.fg.a;
 
-	rbd.bg.r = (double)info.end_color[0] / 255.0;
-	rbd.bg.g = (double)info.end_color[1] / 255.0;
-	rbd.bg.b = (double)info.end_color[2] / 255.0;
-	rbd.bg.a = (double)info.end_color[3] / 255.0;
+	rbd.bg.r = (double)info.end_color[CR] / 255.0;
+	rbd.bg.g = (double)info.end_color[CB] / 255.0;
+	rbd.bg.b = (double)info.end_color[CG] / 255.0;
+	rbd.bg.a = (double)info.end_color[alphaPos] / 255.0;
 
     rbd.bg.r *= rbd.bg.a;
     rbd.bg.b *= rbd.bg.a;
@@ -745,10 +751,10 @@ void GCFillGradient(unsigned char *dest, int destWidth, int destHeight, IntRect 
 			for (x = rect.origin.x; x < rect.origin.x + rect.size.width; x++) {
 				gradient_render_pixel (x - rect.origin.x, y - rect.origin.y, &color, &rbd);
 				if (spp == 4) {
-					dest[(y * destWidth + x) * spp] = color.r * 255.0;
-					dest[(y * destWidth + x) * spp + 1] = color.g * 255.0;
-					dest[(y * destWidth + x) * spp + 2] = color.b * 255.0;
-					dest[(y * destWidth + x) * spp + 3] = color.a * 255.0;
+					dest[(y * destWidth + x) * spp + CR] = color.r * 255.0;
+					dest[(y * destWidth + x) * spp + CG] = color.g * 255.0;
+					dest[(y * destWidth + x) * spp + CB] = color.b * 255.0;
+					dest[(y * destWidth + x) * spp + alphaPos] = color.a * 255.0;
 				}
 				else if (spp == 2) {
 					double gray = INTENSITY (color.r, color.g, color.b);

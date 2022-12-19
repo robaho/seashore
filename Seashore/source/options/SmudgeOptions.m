@@ -13,12 +13,20 @@
     [modifierPopup setHidden:TRUE];
 
     [texturesButton setHidden:true];
-    [fadeSlider setHidden:true];
+//    [fadeSlider setHidden:true];
     [scalingCheckbox setHidden:true];
     [opacitySlider setHidden:true];
 
     rateSlider = [SeaSlider compactSliderWithTitle:@"Rate" Min:0 Max:100 Listener:NULL];
     [self addSubview:rateSlider];
+
+    if ([gUserDefaults objectForKey:@"smudge fade"] == NULL) {
+        [fadeSlider setIntValue:10];
+    }
+    else {
+        [fadeSlider setIntValue:[gUserDefaults integerForKey:@"smudge fade rate"]];
+        [fadeSlider setChecked:[gUserDefaults boolForKey:@"smudge fade"]];
+    }
 
     int value;
 	if ([gUserDefaults objectForKey:@"smudge rate"] == NULL) {
@@ -51,6 +59,8 @@
 
 - (void)shutdown
 {
+    [gUserDefaults setObject:[fadeSlider isChecked] ? @"YES" : @"NO" forKey:@"smudge fade"];
+    [gUserDefaults setInteger:[fadeSlider intValue] forKey:@"smudge fade rate"];
 	[gUserDefaults setInteger:[rateSlider intValue] forKey:@"smudge rate"];
     [gUserDefaults setObject:[pressurePopup isChecked] ? @"YES" : @"NO" forKey:@"smudge pressure"];
     [gUserDefaults setInteger:[pressurePopup indexOfSelectedItem] forKey:@"smudge pressure style"];

@@ -30,12 +30,10 @@ enum {
 @interface PositionOptions : AbstractScaleOptions {
 
     id maintainAspectCheckbox;
-    id autoApplyMoveOnlyCheckbox;
     id scaleAndRotateLinkedCheckbox;
 }
 
 - (BOOL)maintainAspectRatio;
-- (BOOL)autoApply;
 - (BOOL)scaleAndRotateLinked;
 
 @end

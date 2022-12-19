@@ -41,6 +41,7 @@
 		0867D6A5FE840307C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		2B784897288786B1000B4839 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2BE0CC98294FA5E5001A05AD /* Seashore.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Seashore.xcconfig; path = ../Seashore.xcconfig; sourceTree = "<group>"; };
 		A80162E10D17F4BB00C4A2BE /* GIMPRotating.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = GIMPRotating.c; path = source/GIMPRotating.c; sourceTree = "<group>"; };
 		A80162EC0D17F5B800C4A2BE /* gimpmatrix.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = gimpmatrix.h; path = source/gimpmatrix.h; sourceTree = "<group>"; };
 		A80162ED0D17F5B800C4A2BE /* gimpmatrix.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gimpmatrix.c; path = source/gimpmatrix.c; sourceTree = "<group>"; };
@@ -83,6 +84,7 @@
 		0867D691FE84028FC02AAC07 /* GIMPCore */ = {
 			isa = PBXGroup;
 			children = (
+				2BE0CC98294FA5E5001A05AD /* Seashore.xcconfig */,
 				2B784897288786B1000B4839 /* Info.plist */,
 				A8BEC8970501889400A80207 /* Public Headers */,
 				A87138DB069C3ACA00A80207 /* Supersampling */,
@@ -289,9 +291,8 @@
 /* Begin XCBuildConfiguration section */
 		2B1F690C21D7095700D6F371 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2BE0CC98294FA5E5001A05AD /* Seashore.xcconfig */;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
 			};
 			name = Debug;
 		};
@@ -300,13 +301,9 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2022083102;
 				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INSTALL_PATH = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				MARKETING_VERSION = 3.8;
-				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.GIMPCore;
 				PRODUCT_NAME = GIMPCore;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -316,9 +313,8 @@
 		};
 		2B1F690E21D7095C00D6F371 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2BE0CC98294FA5E5001A05AD /* Seashore.xcconfig */;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
 			};
 			name = Release;
 		};
@@ -327,12 +323,9 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2022083102;
 				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INSTALL_PATH = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				MARKETING_VERSION = 3.8;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.GIMPCore;
 				PRODUCT_NAME = GIMPCore;
 				PROVISIONING_PROFILE_SPECIFIER = "";

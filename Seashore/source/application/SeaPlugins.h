@@ -2,7 +2,7 @@
 #import "SeaDocument.h"
 #import "SeaController.h"
 
-@class PluginClass;
+@protocol PluginClass;
 
 /*!
 	@enum		k...Plugin
@@ -31,7 +31,7 @@ enum {
 	IBOutlet id controller;
 
 	// An array of all Seahore's plug-ins
-	NSArray<PluginClass*> *plugins;
+	NSArray<id<PluginClass>> *plugins;
 
 	// The submenu to add plug-ins to
 	IBOutlet id effectMenu;

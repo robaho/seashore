@@ -10,18 +10,6 @@
 
 @implementation DebugView
 
-- (void)drawRect:(NSRect)dirtyRect {
-    [super drawRect:dirtyRect];
-
-    [_rep drawAtPoint:NSMakePoint(0,0)];
-}
-
--(void)update
-{
-    [_rep bitmapData];
-    [self setNeedsDisplay:TRUE];
-}
-
 - (BOOL)isFlipped
 {
     return FALSE;
@@ -31,35 +19,42 @@
 {
     DebugView *dv = [[DebugView alloc] init];
     dv.rep = rep;
+    dv.imageScaling = NSImageScaleProportionallyDown;
 
-    [dv setFrame:NSMakeRect(0,0,[rep pixelsWide],[rep pixelsHigh])];
+    NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(400,400)];
+    [image addRepresentation:rep];
 
-    NSWindow *win = [[NSWindow alloc] initWithContentRect:NSMakeRect(0,0,320,200) styleMask:NSWindowStyleMaskResizable|NSWindowStyleMaskTitled backing:0 defer:FALSE];
+    dv.image = image;
 
-    NSScrollView *sv = [[NSScrollView alloc] init];
-    [sv setScrollerStyle:NSScrollerStyleLegacy];
-    [sv setDocumentView:dv];
+    NSWindow *win = [[NSWindow alloc] initWithContentRect:NSMakeRect(0,0,400,400) styleMask:NSWindowStyleMaskResizable|NSWindowStyleMaskTitled backing:0 defer:FALSE];
 
-    [sv setHasHorizontalScroller:TRUE];
-    [sv setHasVerticalScroller:TRUE];
-    [sv setAutohidesScrollers:TRUE];
-
-    [win setContentView:sv];
-    [win setContentSize:NSMakeSize(320,200)];
+    [win setContentView:dv];
+    [win setContentSize:NSMakeSize(400,400)];
     [win setTitle:@"DebugWindow"];
     [win orderFront:NULL];
 
     return dv;
 }
 
-+ (DebugView *)createWithData:(unsigned char *)data width:(int)width height:(int)height spp:(int)spp snapshot:(BOOL)snapshot
++ (DebugView *)createWithData:(unsigned char *)data width:(int)width height:(int)height snapshot:(BOOL)snapshot
 {
     if(snapshot){
-        unsigned char *tmp = malloc(width*height*spp);
-        memcpy(tmp,data,width*height*spp);
+        unsigned char *tmp = malloc(width*height*SPP);
+        memcpy(tmp,data,width*height*SPP);
         data = tmp;
     }
-    NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:spp hasAlpha:TRUE isPlanar:FALSE colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace bytesPerRow:width*spp bitsPerPixel:spp*8];
+    NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:SPP hasAlpha:TRUE isPlanar:FALSE colorSpaceName:MyRGBSpace bitmapFormat:kCGImageAlphaPremultipliedFirst bytesPerRow:width*SPP bitsPerPixel:SPP*8];
+
+    return [DebugView createWithRep:rep];
+}
+
++ (DebugView *)createWithContext:(CGContextRef)ctx
+{
+    CGImageRef img = CGBitmapContextCreateImage(ctx);
+
+    NSBitmapImageRep * rep = [[NSBitmapImageRep alloc] initWithCGImage:img];
+
+    CGImageRelease(img);
 
     return [DebugView createWithRep:rep];
 }

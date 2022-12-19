@@ -16,5 +16,6 @@
 
 @interface PencilTool : AbstractBrushTool {
     PencilOptions *options;
+    CGLayerRef layer;
 }
 @end

@@ -241,23 +241,24 @@ static Property PropertyMeta[] = {
     @throw [NSException exceptionWithName:@"CoreImagePropertyNotFound" reason:[NSString stringWithFormat:@"The property \"%d\" was not found.", property] userInfo:NULL];
 }
 
--(CoreImagePlugin*)initWithManager:(PluginData*)pluginData filter:(NSString* _Nullable)filterName points:(int)points properties:(CIProperty)property,...
+-(CoreImagePlugin*)initWithManager:(id<PluginData>)pluginData filter:(NSString* _Nullable)filterName points:(int)points properties:(CIProperty)property,...
 {
     va_list args;
     va_start(args, property);
     return [self initWithManager:pluginData filter:filterName points:points bg:FALSE property:property vaList:args];
 }
 
--(CoreImagePlugin*)initWithManager:(PluginData*)pluginData filter:(NSString* _Nullable)filterName points:(int)points bg:(BOOL)bg properties:(CIProperty)property,...
+-(CoreImagePlugin*)initWithManager:(id<PluginData>)pluginData filter:(NSString* _Nullable)filterName points:(int)points bg:(BOOL)bg properties:(CIProperty)property,...
 {
     va_list args;
     va_start(args, property);
     return [self initWithManager:pluginData filter:filterName points:points bg:bg property:property vaList:args];
 }
 
--(CoreImagePlugin*)initWithManager:(PluginData*)pluginData filter:(NSString* _Nullable)filterName points:(int)points bg:(BOOL)bg property:(CIProperty)property vaList:(va_list)vaList
+-(CoreImagePlugin*)initWithManager:(id<PluginData>)pluginData filter:(NSString* _Nullable)filterName points:(int)points bg:(BOOL)bg property:(CIProperty)property vaList:(va_list)vaList
 {
-    self->pluginData = pluginData;
+    self = [super initWithManager:pluginData];
+
     self->points = points;
     self->filterName = filterName;
     self->bg = bg;
@@ -288,39 +289,13 @@ static Property PropertyMeta[] = {
     return self->points;
 }
 
-- (NSString *)name
-{
-    return [gOurBundle localizedStringForKey:@"name" value:@"Missing Name" table:NULL];
-}
-
-- (NSString *)groupName
-{
-    return [gOurBundle localizedStringForKey:@"groupName" value:@"Missing Group" table:NULL];
-}
-
-- (NSString *)instruction
-{
-    return [gOurBundle localizedStringForKey:@"instruction" value:@"No instructions." table:NULL];
-}
-
-- (NSString *)sanity
-{
-    return @"Seashore Approved (Bobo)";
-}
-
 - (void)execute
 {
     CIFilter *filter = [self createFilter];
     [self applyFilter:filter];
 }
 
-- (id)initWithManager:(PluginData *)data {
-    @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                   reason:[NSString stringWithFormat:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)]
-                                 userInfo:nil];
-}
-
-+ (BOOL)validatePlugin:(PluginData *)pluginData {
++ (BOOL)validatePlugin:(id<PluginData>)pluginData {
     return TRUE;
 }
 
@@ -401,12 +376,12 @@ static Property PropertyMeta[] = {
         bool opaque = ![pluginData hasAlpha];
 
         if (opaque){
-            applyFilterBG(pluginData,filter);
+            [super applyFilterBG:filter];
         } else {
-            applyFilter(pluginData,filter);
+            [super applyFilter:filter];
         }
     } else {
-        applyFilter(pluginData,filter);
+        [super applyFilter:filter];
     }
 }
 

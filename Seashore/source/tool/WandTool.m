@@ -53,7 +53,7 @@
 
     SeaLayer *layer = [[document contents] activeLayer];
     
-    int width = [layer width], height = [layer height], spp = [[document contents] spp];
+    int width = [layer width], height = [layer height];
     unsigned char *overlay = [[document whiteboard] overlay], *data = [layer data];
     unsigned char basePixel[4];
     
@@ -70,9 +70,8 @@
         [[document selection] clearSelection];
     
     // Fill the region to be selected
-    for (int k = 0; k < spp - 1; k++)
-        basePixel[k] = 0;
-    basePixel[spp - 1] = 255;
+    memset(basePixel,0,SPP);
+    basePixel[alphaPos] = 255;
     
     int tolerance = [options tolerance];
     int mode = [options selectionMode];
@@ -97,7 +96,7 @@
             continue;
         // check if color already exists in seeds
         for(int i=0;i<inrect;i++) {
-            if(isSameColor(data,width,spp,x,y,seeds[i].x,seeds[i].y))
+            if(isSameColor(data,width,x,y,seeds[i].x,seeds[i].y))
                 goto next_seed;
         }
         seeds[inrect] = IntMakePoint(x, y);
@@ -107,19 +106,29 @@
     }
     intervals=inrect;
 
+    fillContext ctx;
+    ctx.overlay = overlay;
+    ctx.data = data;
+    ctx.width = width;
+    ctx.height = height;
+    ctx.seeds = seeds;
+    ctx.numSeeds = intervals;
+    ctx.tolerance = tolerance;
+    ctx.channel = channel;
+
     if(selectAllRegions) {
-        memset(overlay,0,width*height*spp);
+        memset(overlay,0,width*height*SPP);
         rect = IntMakeRect(0,0,width,height);
         for(int row=0;row<height;row++){
             for(int col=0;col<width;col++){
                 IntPoint p = IntMakePoint(col,row);
-                if(shouldFill(overlay,data,seeds,intervals,p,width,spp,tolerance,channel)) {
-                    memcpy(&(overlay[(row * width + col) * spp]), basePixel, spp);
+                if(shouldFill(&ctx,p)) {
+                    memcpy(&(overlay[(row * width + col) * SPP]), basePixel, SPP);
                 }
             }
         }
     } else {
-        rect = bucketFill(spp, IntMakeRect(0, 0, width, height), overlay, data, width, height, seeds, intervals, basePixel, tolerance, channel);
+        rect = bucketFill(&ctx, IntMakeRect(0, 0, width, height), basePixel);
     }
     
     free(seeds);

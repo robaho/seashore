@@ -80,28 +80,18 @@ static inline NSColor * averagedPixelValue(id<PixelProvider> pp,int radius, IntP
 - (NSColor *)getSample:(id<PixelProvider>)pp
 {
     IntPoint pos = [[document docView] getMousePosition:NO];
-    int spp = [[document contents] spp];
     int radius = [options sampleSize] - 1;
 
     float t[4];
-    if (spp == 2) {
-        NSColor *avg = averagedPixelValue(pp,radius,pos);
-        if(avg==NULL)
-            return NULL;
-        t[0] = [avg redComponent];
-        t[1] = [avg alphaComponent];
-        return [NSColor colorWithDeviceWhite:(float)t[0] alpha:(float)t[1]];
-    }
-    else {
-        NSColor *avg = averagedPixelValue(pp,radius,pos);
-        if(avg==NULL)
-            return NULL;
-        t[0] = [avg redComponent];
-        t[1] = [avg greenComponent];
-        t[2] = [avg blueComponent];
-        t[3] = [avg alphaComponent];
-        return [NSColor colorWithDeviceRed:(float)t[0] green:(float)t[1] blue:(float)t[2] alpha:(float)t[3]];
-    }
+
+    NSColor *avg = averagedPixelValue(pp,radius,pos);
+    if(avg==NULL)
+        return NULL;
+    t[0] = [avg redComponent];
+    t[1] = [avg greenComponent];
+    t[2] = [avg blueComponent];
+    t[3] = [avg alphaComponent];
+    return [NSColor colorWithDeviceRed:(float)t[0] green:(float)t[1] blue:(float)t[2] alpha:(float)t[3]];
 }
 
 - (NSColor *)getColor

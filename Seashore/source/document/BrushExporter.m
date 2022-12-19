@@ -48,7 +48,7 @@ enum {
     [gFileManager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:0 error:NULL];
 	path = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.gbr", [nameTextbox stringValue]]];
 
-    CGImageRef bitmap = [[document whiteboard] bitmapCG];
+    CGImageRef bitmap = [[[document whiteboard] image] CGImage];
     [self writeToFile:path spacing:self.spacing bitmap:bitmap];
     CGImageRelease(bitmap);
     

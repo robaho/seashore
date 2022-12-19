@@ -67,36 +67,42 @@
 		else 
 			where.y = startPoint.y - abs(deltaX);
 	}
-	if ([contents spp] == 4) {
-		color = [contents foreground];
-		info.start_color[0] = [color redComponent] * 255;
-		info.start_color[1] = [color greenComponent] * 255;
-		info.start_color[2] = [color blueComponent] * 255;
-		info.start_color[3] = [options startOpacity] * 255;
-		info.end = where;
-		color = [contents background];
-		info.end_color[0] = [color redComponent] * 255;
-		info.end_color[1] = [color greenComponent] * 255;
-		info.end_color[2] = [color blueComponent] * 255;
-		info.end_color[3] = [options endOpacity] * 255;
-	}
-	else {
-		color = [contents foreground];
-		info.start_color[0] = info.start_color[1] = info.start_color[2] = [color whiteComponent] * 255;
-		info.start_color[3] = [options startOpacity] * 255;
-		info.end = where;
-		color = [contents background];
-		info.end_color[0] = info.end_color[1] = info.end_color[2] = [color whiteComponent] * 255;
-		info.end_color[3] = [options endOpacity] * 255;
-	}
-	
+
+    if([[document contents] isRGB]) {
+        color = [contents foreground];
+        info.start_color[CR] = [color redComponent] * 255;
+        info.start_color[CB] = [color greenComponent] * 255;
+        info.start_color[CG] = [color blueComponent] * 255;
+        info.start_color[alphaPos] = [options startOpacity] * 255;
+        info.end = where;
+
+        color = [contents background];
+        info.end_color[CR] = [color redComponent] * 255;
+        info.end_color[CB] = [color greenComponent] * 255;
+        info.end_color[CG] = [color blueComponent] * 255;
+        info.end_color[alphaPos] = [options endOpacity] * 255;
+    } else {
+        color = [contents foreground];
+        info.start_color[CR] = [color whiteComponent] * 255;
+        info.start_color[CB] = [color whiteComponent] * 255;
+        info.start_color[CG] = [color whiteComponent] * 255;
+        info.start_color[alphaPos] = [options startOpacity] * 255;
+        info.end = where;
+
+        color = [contents background];
+        info.end_color[CR] = [color whiteComponent] * 255;
+        info.end_color[CB] = [color whiteComponent] * 255;
+        info.end_color[CG] = [color whiteComponent] * 255;
+        info.end_color[alphaPos] = [options endOpacity] * 255;
+    }
+
 	// Work out the rectangle for the gradient
 	if ([[document selection] active])
 		rect = [[document selection] localRect];
 	else
 		rect = IntMakeRect(0, 0, [[contents activeLayer] width], [[contents activeLayer] height]);
 	
-	GCFillGradient([[document whiteboard] overlay], [[contents activeLayer] width], [[contents activeLayer] height], rect, [contents spp], info, NULL);
+	GCFillGradient([[document whiteboard] overlay], [[contents activeLayer] width], [[contents activeLayer] height], rect, SPP, info, NULL);
 
     [[document helpers] overlayChanged:rect];
 	[[document helpers] applyOverlay];

@@ -1,7 +1,5 @@
-#import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
-#import "PluginClass.h"
-#import "PluginData.h"
+#import "PluginClassImpl.h"
 #import <SeaComponents/SeaComponents.h>
 #import <CoreImage/CoreImage.h>
 
@@ -56,9 +54,8 @@ typedef enum {
     kCI_Yaw,
 } CIProperty;
 
-@interface CoreImagePlugin : NSObject <PluginClass>
+@interface CoreImagePlugin : PluginClassImpl <PluginClass>
 {
-    PluginData *pluginData;
     NSMutableArray *properties;
     VerticalView *panel;
     int points;
@@ -69,8 +66,8 @@ typedef enum {
 -(NSView*)initialize;
 -(void)execute;
 -(void)apply:(id)sender;
--(CoreImagePlugin*)initWithManager:(PluginData*)pluginData filter:(NSString* _Nullable)filterName points:(int)points properties:(CIProperty)property,...;
--(CoreImagePlugin*)initWithManager:(PluginData*)pluginData filter:(NSString* _Nullable)filterName points:(int)points bg:(BOOL)bg properties:(CIProperty)property,...;
+-(CoreImagePlugin*)initWithManager:(id<PluginData>)pluginData filter:(NSString* _Nullable)filterName points:(int)points properties:(CIProperty)property,...;
+-(CoreImagePlugin*)initWithManager:(id<PluginData>)pluginData filter:(NSString* _Nullable)filterName points:(int)points bg:(BOOL)bg properties:(CIProperty)property,...;
 -(int)intValue:(CIProperty)property;
 -(float)floatValue:(CIProperty)property;
 -(float)radiansValue:(CIProperty)property;

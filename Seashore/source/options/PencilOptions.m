@@ -16,7 +16,7 @@
     [pressurePopup setHidden:true];
     [scalingCheckbox setHidden:true];
 
-    sizeSlider = [SeaSlider compactSliderWithTitle:@"Pencil size" Min:1 Max:21 Listener:NULL];
+    sizeSlider = [SeaSlider compactSliderWithTitle:@"Pencil size" Min:1 Max:100 Listener:NULL];
     [self addSubview:sizeSlider];
 
 	int value;

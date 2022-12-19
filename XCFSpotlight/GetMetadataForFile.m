@@ -79,8 +79,10 @@ Boolean GetMetadataForFile(void* thisInterface,
 		}else{
 			[dict setObject:[NSNumber numberWithInt:0] forKey:(NSString *)kMDItemOrientation];
 		}
+
+        int spp = [contents type] == XCF_RGB_IMAGE ? 4 : 2;
 		
-		[dict setObject:[NSNumber numberWithInt:[contents spp] * 8] forKey:(NSString *)kMDItemBitsPerSample];
+		[dict setObject:[NSNumber numberWithInt:spp * 8] forKey:(NSString *)kMDItemBitsPerSample];
 		
 		[dict setObject:[NSNumber numberWithInt:[contents xres]] forKey:(NSString *)kMDItemResolutionWidthDPI];
 		

@@ -27,7 +27,7 @@
 
 - (BOOL) writeDocument: (id) document toFile: (NSString *) path
 {
-    NSBitmapImageRep *bm = [[document whiteboard] bitmap];
+    NSBitmapImageRep *bm = [[document whiteboard] image];
     
 	NSDictionary *gifProperties = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:YES], NSImageDitherTransparency, NULL];
 	

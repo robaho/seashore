@@ -1,5 +1,5 @@
 #import "SeaPlugins.h"
-#import "PluginClass.h"
+#import <Plugins/PluginClass.h>
 #import "SeaSelection.h"
 #import "SeaHelpers.h"
 #import "SeaController.h"
@@ -10,7 +10,7 @@
 
 @implementation SeaPlugins
 
-NSInteger plugin_sort(PluginClass *obj1,PluginClass *obj2, void *context)
+NSInteger plugin_sort(id<PluginClass> obj1,id<PluginClass> obj2, void *context)
 {
     int result;
     
@@ -70,7 +70,7 @@ NSInteger plugin_sort(PluginClass *obj1,PluginClass *obj2, void *context)
 {
     id menuItem, submenuItem;
     NSMenu *submenu;
-    PluginClass *plugin;
+    id<PluginClass> plugin;
     int i;
 
     NSMenu *menu = effectMenu;
@@ -116,7 +116,7 @@ NSInteger plugin_sort(PluginClass *obj1,PluginClass *obj2, void *context)
 - (void)terminate
 {
     EffectOptions *options = (EffectOptions*)[[gCurrentDocument optionsUtility] getOptions:kEffectTool];
-    [gUserDefaults setObject:[[options currentPlugin] className] forKey:@"effectClass"];
+    [gUserDefaults setObject:[[[options currentPlugin] class] className] forKey:@"effectClass"];
 }
 
 - (id)data
@@ -127,12 +127,12 @@ NSInteger plugin_sort(PluginClass *obj1,PluginClass *obj2, void *context)
 - (IBAction)run:(id)sender
 {
     int index = (int)([sender tag] - 10000);
-    PluginClass *base = [plugins objectAtIndex:index];
-    PluginClass *plugin;
-    if (gCurrentDocument.lastPlugin && [gCurrentDocument.lastPlugin class] == [base class]){
+    id<PluginClass> base = [plugins objectAtIndex:index];
+    id<PluginClass> plugin;
+    if (gCurrentDocument.lastPlugin && object_getClass(gCurrentDocument.lastPlugin) == object_getClass(base)){
         plugin = gCurrentDocument.lastPlugin;
     } else {
-        plugin = [[base class] alloc];
+        plugin = [object_getClass(base) alloc];
     }
     
     if (plugin) {

@@ -8,6 +8,7 @@
 #import "SeaBrush.h"
 #import "BrushOptions.h"
 #import "AbstractTool.h"
+#import <Accelerate/Accelerate.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -27,6 +28,8 @@ typedef struct {
     unsigned char special;
 } BTPointRecord;
 
+@class BrushCache;
+
 @interface AbstractBrushTool : AbstractTool {
     // The last point we've been and the last point a brush was plotted (there is a difference)
     NSPoint lastPoint, lastPlotPoint;
@@ -36,11 +39,18 @@ typedef struct {
     bool pressureDisabled;
 
     NSColor *color;
+    SeaBrush *brush;
     CGImageRef brushImage;
+    BrushCache *brushCache;
     unsigned char basePixel[4];
+
+    CGContextRef textureCtx;
+
+    vImage_Buffer buffer;
+    CGImageRef lastBufferImage;
 }
 
-- (IntRect)plotBrush:(SeaBrush*)curBrush at:(NSPoint)temp pressure:(int)pressure;
+- (IntRect)plotBrushAt:(NSPoint)temp pressure:(int)pressure;
 
 - (BrushOptions*)getBrushOptions;
 

@@ -10,6 +10,12 @@
 #import "Rects.h"
 #import "Constants.h"
 
+#define alphaPos 0
+#define SPP 4
+#define CR 1
+#define CG 2
+#define CB 3
+
 #ifdef __BIG_ENDIAN__
 #define MSB 0
 #define LSB 1

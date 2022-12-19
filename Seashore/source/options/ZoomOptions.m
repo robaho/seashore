@@ -27,4 +27,13 @@
 	[zoomLabel setTitle:[NSString stringWithFormat:LOCALSTR(@"zoom", @"Zoom: %.0f%%"), [[document docView] zoom] * 100.0]];
 }
 
+- (int)aspectType {
+    return kNoAspectType;
+}
+
+- (BOOL)isOneToOne {
+    return false;
+}
+
+
 @end

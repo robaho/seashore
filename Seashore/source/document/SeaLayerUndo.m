@@ -30,7 +30,7 @@
 - (LayerSnapshot*)takeSnapshot:(IntRect)rect automatic:(BOOL)automatic
 {
 	unsigned char *data, *temp_ptr;
-	int i, width, sectionSize, spp;
+	int i, width, sectionSize;
 
     long start = LOG_PERFORMANCE ? getCurrentMillis() : 0;
 	
@@ -40,8 +40,7 @@
 	if (rect.size.height <= 0) return NULL;
 	
 	// Set up variables
-	spp = [[document contents] spp];
-	sectionSize = rect.size.width * rect.size.height * spp;
+	sectionSize = rect.size.width * rect.size.height * SPP;
 	data = [layer data];
 	width = [layer width];
 
@@ -56,10 +55,7 @@
         snapshot->rect = rect;
 
         CHECK_MALLOC(temp_ptr);
-        for (i = 0; i < rect.size.height; i++) {
-            memcpy(temp_ptr, data + ((rect.origin.y + i) * width + rect.origin.x) * spp, rect.size.width * spp);
-            temp_ptr += rect.size.width * spp;
-        }
+        SAVE_BITMAP(temp_ptr,data,rect,width);
     }
 
     if(LOG_PERFORMANCE)
@@ -72,7 +68,7 @@
 {
 	IntRect rect;
 	unsigned char *data, *temp_ptr, *o_temp_ptr = NULL, *odata = NULL;
-	int i, width, spp, lindex;
+	int i, width, lindex;
 	
 	// Allow the undo/redo
 	if (automatic) [[[document undoManager] prepareWithInvocationTarget:self] restoreSnapshot:snapshot automatic:YES];
@@ -80,30 +76,22 @@
 	// Set-up variables
 	data = [layer data];
 	width = [layer width];
-	spp = [[document contents] spp];
 	lindex = [layer index];
     
     temp_ptr = snapshot->data;
     rect = snapshot->rect;
     
-    int datasize =rect.size.width * rect.size.height * spp;
+    int datasize =rect.size.width * rect.size.height * SPP;
     
     if (automatic) {
         if(data!=NULL) {
             o_temp_ptr = odata = malloc(datasize);
-            for (i = 0; i < rect.size.height; i++) {
-                memcpy(o_temp_ptr, data + ((rect.origin.y + i) * width + rect.origin.x) * spp, rect.size.width * spp);
-                o_temp_ptr += rect.size.width * spp;
-            }
+            SAVE_BITMAP(o_temp_ptr,data,rect,width);
         }
 	}
 
     if(data!=NULL) {
-        // Replace the image data with that of the record
-        for (i = 0; i < rect.size.height; i++) {
-            memcpy(data + ((rect.origin.y + i) * width + rect.origin.x) * spp, temp_ptr, rect.size.width * spp);
-            temp_ptr += rect.size.width * spp;
-        }
+        RESTORE_BITMAP(data,temp_ptr,rect,width);
     }
 		
 	// Call for an update

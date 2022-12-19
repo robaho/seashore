@@ -7,28 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2B1F6E8D21D9550D00D6F371 /* PluginClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1F6E8C21D9550D00D6F371 /* PluginClass.m */; };
+		2B1F6E8D21D9550D00D6F371 /* PluginClassImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1F6E8C21D9550D00D6F371 /* PluginClassImpl.m */; };
 		2B2EFA8328BF1B22009B225D /* SeaLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2EFA8228BF1B22009B225D /* SeaLibrary.framework */; };
 		2B670BC727DCFD64003BA6AE /* CoreImagePlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B670BC527DCFD64003BA6AE /* CoreImagePlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2B670BC827DCFD64003BA6AE /* CoreImagePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B670BC627DCFD64003BA6AE /* CoreImagePlugin.m */; };
 		2B670BD027DD00DE003BA6AE /* PluginData.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B670BCE27DD00DD003BA6AE /* PluginData.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2B670BD127DD00DE003BA6AE /* PluginClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B670BCF27DD00DE003BA6AE /* PluginClass.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2B670BD127DD00DE003BA6AE /* PluginClassImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B670BCF27DD00DE003BA6AE /* PluginClassImpl.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2BB5E0272813634E00EC3014 /* SeaComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BB5E0242813634E00EC3014 /* SeaComponents.framework */; };
 		2BB5E04B2813684100EC3014 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BB5E04A2813684100EC3014 /* CoreGraphics.framework */; };
 		2BB5E04D2813685900EC3014 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BB5E04C2813685900EC3014 /* CoreImage.framework */; };
 		2BB5E04F2813686400EC3014 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BB5E04E2813686400EC3014 /* Cocoa.framework */; };
 		2BB5E0512813686B00EC3014 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BB5E0502813686B00EC3014 /* Accelerate.framework */; };
+		2BEDFB04294637CF006F9177 /* PluginClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BEDFB03294633F2006F9177 /* PluginClass.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2B1F683421D6F43800D6F371 /* Plugins.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Plugins.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2B1F6E8C21D9550D00D6F371 /* PluginClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PluginClass.m; sourceTree = "<group>"; };
+		2B1F6E8C21D9550D00D6F371 /* PluginClassImpl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PluginClassImpl.m; sourceTree = "<group>"; };
 		2B2EFA8228BF1B22009B225D /* SeaLibrary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SeaLibrary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B670BC527DCFD64003BA6AE /* CoreImagePlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreImagePlugin.h; sourceTree = "<group>"; };
 		2B670BC627DCFD64003BA6AE /* CoreImagePlugin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoreImagePlugin.m; sourceTree = "<group>"; };
 		2B670BCD27DD00DD003BA6AE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2B670BCE27DD00DD003BA6AE /* PluginData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PluginData.h; sourceTree = "<group>"; };
-		2B670BCF27DD00DE003BA6AE /* PluginClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PluginClass.h; sourceTree = "<group>"; };
+		2B670BCF27DD00DE003BA6AE /* PluginClassImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PluginClassImpl.h; sourceTree = "<group>"; };
 		2B7C29A028BEDB3100C84A93 /* libSeaLibrary.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libSeaLibrary.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BB5E0242813634E00EC3014 /* SeaComponents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SeaComponents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BB5E0252813634E00EC3014 /* SeaLibrary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SeaLibrary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -37,6 +38,7 @@
 		2BB5E04C2813685900EC3014 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		2BB5E04E2813686400EC3014 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		2BB5E0502813686B00EC3014 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		2BEDFB03294633F2006F9177 /* PluginClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PluginClass.h; sourceTree = "<group>"; };
 		2BF10A462937178D002272AB /* Seashore.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Seashore.xcconfig; path = ../Seashore.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -79,9 +81,10 @@
 		2B1F684E21D6F48E00D6F371 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				2B670BCF27DD00DE003BA6AE /* PluginClass.h */,
+				2BEDFB03294633F2006F9177 /* PluginClass.h */,
 				2B670BCE27DD00DD003BA6AE /* PluginData.h */,
-				2B1F6E8C21D9550D00D6F371 /* PluginClass.m */,
+				2B670BCF27DD00DE003BA6AE /* PluginClassImpl.h */,
+				2B1F6E8C21D9550D00D6F371 /* PluginClassImpl.m */,
 				2B670BC527DCFD64003BA6AE /* CoreImagePlugin.h */,
 				2B670BC627DCFD64003BA6AE /* CoreImagePlugin.m */,
 			);
@@ -112,7 +115,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2B670BC727DCFD64003BA6AE /* CoreImagePlugin.h in Headers */,
-				2B670BD127DD00DE003BA6AE /* PluginClass.h in Headers */,
+				2B670BD127DD00DE003BA6AE /* PluginClassImpl.h in Headers */,
+				2BEDFB04294637CF006F9177 /* PluginClass.h in Headers */,
 				2B670BD027DD00DE003BA6AE /* PluginData.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -173,7 +177,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2B1F6E8D21D9550D00D6F371 /* PluginClass.m in Sources */,
+				2B1F6E8D21D9550D00D6F371 /* PluginClassImpl.m in Sources */,
 				2B670BC827DCFD64003BA6AE /* CoreImagePlugin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -185,12 +189,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2BF10A462937178D002272AB /* Seashore.xcconfig */;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
 			};
 			name = Debug;
 		};
@@ -198,27 +196,21 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2BF10A462937178D002272AB /* Seashore.xcconfig */;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
 			};
 			name = Release;
 		};
 		2B1F683D21D6F43800D6F371 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2BF10A462937178D002272AB /* Seashore.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2022083102;
 				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				MACH_O_TYPE = mh_dylib;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				MARKETING_VERSION = 3.8;
-				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.Plugins;
 				PRODUCT_NAME = Plugins;
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "${PROJECT_DIR}/..";
 			};
@@ -226,13 +218,11 @@
 		};
 		2B1F683E21D6F43800D6F371 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2BF10A462937178D002272AB /* Seashore.xcconfig */;
 			buildSettings = {
-				CURRENT_PROJECT_VERSION = 2022083102;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				MACH_O_TYPE = mh_dylib;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				MARKETING_VERSION = 3.8;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.Plugins;
 				PRODUCT_NAME = Plugins;
 				SKIP_INSTALL = YES;
@@ -250,7 +240,7 @@
 				2B1F683B21D6F43800D6F371 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		2B1F683C21D6F43800D6F371 /* Build configuration list for PBXNativeTarget "Plugins" */ = {
 			isa = XCConfigurationList;
@@ -259,7 +249,7 @@
 				2B1F683E21D6F43800D6F371 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};

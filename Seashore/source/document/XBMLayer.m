@@ -17,15 +17,13 @@
 		return NULL;
 	
 	// Set the samples per pixel correctly
-	spp = 2; width = info->width; height = info->height;
+	int width = info->width; height = info->height;
 
     if(!width || !height)
         return NULL;
 
-	unsigned char *data = malloc(make_128(width * height * spp));
-	memset(data, 0xFF, width * height * spp);
-
-    nsdata = [NSData dataWithBytesNoCopy:data length:width*height*spp];
+	unsigned char *data = malloc(make_128(width * height * 2));
+	memset(data, 0xFF, width * height * 2);
 
 	do {
 		// Throw away everything till we get to the good stuff
@@ -65,7 +63,11 @@
 		} while (pos < width * height && i < 8 && !(pos % width == 0));
 	
 	} while (pos < width * height);
-	
+
+    // TODO FIX ME!
+
+    nsdata = [NSData dataWithBytesNoCopy:data length:width*height*2];
+
 	return self;
 }
 

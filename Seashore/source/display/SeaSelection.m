@@ -256,7 +256,7 @@
 	SeaLayer *layer = [[document contents] activeLayer];
 	int width = [layer width];
     int height = [layer height];
-	int i, j, spp = [[document contents] spp];
+    int i, j;
 
 	unsigned char *overlay, *newMask, oldMaskPoint, newMaskPoint;
 	int tempMask, tempMaskProduct;
@@ -294,8 +294,8 @@
 				// Find the mask of the new point
                 if(IntPointInRect(p,newRect)) {
                     // overlay data is layer based, selection is global
-					newMaskPoint = overlay[(y  * width + x) * spp + (spp - 1)];
-                    overlay[(y  * width + x) * spp + (spp - 1)] = 0;
+					newMaskPoint = overlay[(y  * width + x) * SPP + alphaPos];
+                    overlay[(y  * width + x) * SPP + alphaPos] = 0;
                 } else
 					newMaskPoint = 0x00;
 
@@ -343,7 +343,7 @@
 				if(newMaskPoint > 0x00)
 					active=YES;
 			}else{
-                int offset = (y * width + x + 1) * spp - 1;
+                int offset = (y * width + x ) * SPP + alphaPos;
 				newMask[maskOffset] = overlay[offset];
                 overlay[offset] = 0;
 			}
@@ -372,7 +372,6 @@
 
 	SeaLayer *layer = [[document contents] activeLayer];
 	unsigned char *data = [layer data];
-	int spp = [[document contents] spp], i;
 
 	// Free previous mask information
 	if (mask) { free(mask); mask = NULL; }
@@ -384,8 +383,8 @@
 
 	// Make the mask
 	mask = malloc(maskRect.size.width * maskRect.size.height);
-	for (i = 0; i < maskRect.size.width * maskRect.size.height; i++) {
-		mask[i] = data[(i + 1) * spp - 1];
+	for (int i = 0; i < maskRect.size.width * maskRect.size.height; i++) {
+		mask[i] = data[i * SPP + alphaPos];
 	}
 	[self trimSelection];
 	[self updateMaskImage];
@@ -532,8 +531,9 @@
 
 - (unsigned char *)selectionData
 {
+    // TODO FIX ME should this return premultiplied ???
 	SeaLayer *layer = [[document contents] activeLayer];
-	int spp = [[document contents] spp], width = [layer width];
+	int width = [layer width];
 	unsigned char *destPtr, *srcPtr;
 
 	IntRect localRect = [self localRect];
@@ -547,27 +547,27 @@
 	selectedChannel = [[document contents] selectedChannel];
 	
 	// Copy the image data
-	destPtr = malloc(make_128(localRect.size.width * localRect.size.height * spp));
+	destPtr = malloc(make_128(localRect.size.width * localRect.size.height * SPP));
     CHECK_MALLOC(destPtr);
 
-    srcPtr = [layer data] + (width*localRect.origin.y+localRect.origin.x)*spp;
+    srcPtr = [layer data] + (width*localRect.origin.y+localRect.origin.x)*SPP;
     
 	for (j = 0; j < localRect.size.height; j++) {
 		for (i = 0; i < localRect.size.width; i++) {
             unsigned maskVal = mask[maskOffset + j * maskRect.size.width + i];
-            unsigned char *dptr = destPtr+(j * localRect.size.width + i)*spp;
+            unsigned char *dptr = destPtr+(j * localRect.size.width + i)*SPP;
 			switch (selectedChannel) {
 				case kAllChannels:
-                    memcpy(dptr,srcPtr+(j * width + i)*spp,spp);
-					dptr[spp-1] = int_mult(dptr[spp-1], maskVal, t1);
+                    memcpy(dptr,srcPtr+(j * width + i)*SPP,SPP);
+					dptr[alphaPos] = int_mult(dptr[alphaPos], maskVal, t1);
 				break;
 				case kPrimaryChannels:
-                    memcpy(dptr,srcPtr+(j * width + i)*spp,spp);
-                    dptr[spp-1] = maskVal;
+                    memcpy(dptr,srcPtr+(j * width + i)*SPP,SPP);
+                    dptr[alphaPos] = maskVal;
 				break;
 				case kAlphaChannel:
-                    memcpy(dptr,srcPtr+(j * width + i)*spp + spp - 1,spp-1);
-                    dptr[spp-1] = maskVal;
+                    memset(dptr,srcPtr[(j * width + i)*SPP+alphaPos],SPP);
+                    dptr[alphaPos] = maskVal;
 				break;
 			}
 		}
@@ -598,7 +598,6 @@
 - (void)copySelection
 {
 	id pboard = [NSPasteboard generalPasteboard];
-	int spp = [[document contents] spp], i;
 
     IntRect localRect = [self localRect];
 
@@ -609,8 +608,8 @@
 		
 		// Check for nothingness
 		BOOL containsNothing = YES;
-		for (i = 0; containsNothing && (i < localRect.size.width * localRect.size.height); i++) {
-			if (data[(i + 1) * spp - 1] != 0x00)
+		for (int i = 0; containsNothing && (i < localRect.size.width * localRect.size.height); i++) {
+			if (data[i * SPP +alphaPos] != 0x00)
 				containsNothing = NO;
 		}
 		if (containsNothing) {
@@ -622,10 +621,10 @@
 		// Declare the data being added to the pasteboard
 		[pboard declareTypes:[NSArray arrayWithObject:NSTIFFPboardType] owner:NULL];
 
-        premultiplyBitmap(spp,data,data, localRect.size.width*localRect.size.height);
+        premultiplyBitmap(SPP,data,data, localRect.size.width*localRect.size.height);
 
 		// Add it to the pasteboard
-		NSBitmapImageRep *imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:localRect.size.width pixelsHigh:localRect.size.height bitsPerSample:8 samplesPerPixel:spp hasAlpha:YES isPlanar:NO colorSpaceName:(spp == 4) ? MyRGBSpace : MyGraySpace bytesPerRow:localRect.size.width * spp bitsPerPixel:8 * spp];
+		NSBitmapImageRep *imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:localRect.size.width pixelsHigh:localRect.size.height bitsPerSample:8 samplesPerPixel:SPP hasAlpha:YES isPlanar:NO colorSpaceName:(SPP == 4) ? MyRGBSpace : MyGraySpace bytesPerRow:localRect.size.width * SPP bitsPerPixel:8 * SPP];
 
 		[pboard setData:[imageRep TIFFRepresentation] forType:NSTIFFPboardType];
 

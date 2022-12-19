@@ -113,7 +113,7 @@
 	}
 		
 	// Create the layer
-	layer = [[CocoaLayer alloc] initWithImageRep:imageRep document:doc spp:[[doc contents] spp]];
+	layer = [[CocoaLayer alloc] initWithImageRep:imageRep document:doc];
 	if (layer == NULL) {
 		return NO;
 	}

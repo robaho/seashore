@@ -78,7 +78,7 @@
     [view displayRectIgnoringOpacity:[svg frame] inContext:ctx];
     [NSGraphicsContext restoreGraphicsState];
     
-    return [[CocoaLayer alloc] initWithImageRep:imageRep document:doc spp:4];
+    return [[CocoaLayer alloc] initWithImageRep:imageRep document:doc];
 }
 
 - (IBAction)endPanel:(id)sender
