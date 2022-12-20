@@ -1,5 +1,7 @@
 #import <Foundation/Foundation.h>
 
+#define OTHER_PLUGIN 1
+
 #import "ParasiteData.h"
 #import "SeaDocument.h"
 #import "SeaLayer.h"

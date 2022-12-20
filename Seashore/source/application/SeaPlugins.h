@@ -32,6 +32,7 @@ enum {
 
 	// An array of all Seahore's plug-ins
 	NSArray<id<PluginClass>> *plugins;
+    NSMutableSet<NSNumber*> *disabled;
 
 	// The submenu to add plug-ins to
 	IBOutlet id effectMenu;
@@ -84,12 +85,6 @@ enum {
 - (IBAction)reapplyEffect:(id)sender;
 
 /*!
-	@method		cancelReapply
-	@discussion	Prevents reapplication of the last effect.
-*/
-- (void)cancelReapply;
-
-/*!
 	@method		hasLastEffect
 	@discussion	Returns whether there is a last effect.
 	@result		Returns YES if there is a last effect, NO otherwise.
@@ -107,5 +102,7 @@ enum {
 	@result		YES if the menu item should be enabled, NO otherwise.
 */
 - (BOOL)validateMenuItem:(id)menuItem;
+
+- (void)disablePlugin:(id<PluginClass>)plugin;
 
 @end

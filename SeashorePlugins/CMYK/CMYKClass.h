@@ -10,6 +10,6 @@
 #import <Cocoa/Cocoa.h>
 #import <Plugins/CoreImagePlugin.h>
 
-@interface CMYKClass : PluginClassImpl {
+@interface CMYKClass : PluginClassImpl <PluginClass>{
 }
 @end

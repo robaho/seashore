@@ -47,9 +47,16 @@
 
 - (void)execute
 {
-    if(count==[currentPlugin points]) {
-        [currentPlugin execute];
-        [[document helpers] overlayChanged:[self selection]];
+    @try {
+        if(count==[currentPlugin points]) {
+            [currentPlugin execute];
+            [[document helpers] overlayChanged:[self selection]];
+        }
+    } @catch (NSException *exception) {
+        NSAlert *alert = [NSAlert alertWithMessageText:@"Unable to execute plugin. Disabling the plugin." defaultButton:NULL alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"%@",[exception reason]];
+        [alert runModal];
+        [[SeaController seaPlugins] disablePlugin:currentPlugin];
+        [self reset:self];
     }
 }
 
@@ -171,9 +178,10 @@
     @try {
         currentPlugin = [currentPlugin initWithManager:data];
     } @catch (NSException *exception) {
-        currentPlugin = nil;
+        [[SeaController seaPlugins] disablePlugin:currentPlugin];
         NSLog(@"unable to open plugin %@ %@",exception,[exception callStackSymbols]);
-        NSAlert *alert = [NSAlert alertWithMessageText:@"Error Initializing Plugin. Please file a bug." defaultButton:NULL alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"%@.%@",object_getClassName(plugin),[exception reason]];
+        NSAlert *alert = [NSAlert alertWithMessageText:@"Unable to initialize plugin. Maybe OSX too old? Plugin will be disabled." defaultButton:NULL alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"%@.%@",[[currentPlugin class] className],[exception reason]];
+        currentPlugin = nil;
         [alert runModal];
         return;
     }

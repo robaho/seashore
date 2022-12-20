@@ -12,7 +12,7 @@
 #import <Plugins/CoreImagePlugin.h>
 #import <SeaComponents/SeaComponents.h>
 
-@interface HSVClass : PluginClassImpl {
+@interface HSVClass : PluginClassImpl <PluginClass> {
     SeaSlider *hue,*saturation,*value;
     VerticalView *panel;
 }

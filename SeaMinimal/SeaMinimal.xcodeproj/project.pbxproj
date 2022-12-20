@@ -43,10 +43,10 @@
 		2B84483728BEE71F00C068D1 /* XCFContent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCFContent.h; sourceTree = "<group>"; };
 		2B84483928BEE71F00C068D1 /* XCFLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCFLayer.m; sourceTree = "<group>"; };
 		2B84483A28BEE71F00C068D1 /* ParasiteData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ParasiteData.m; sourceTree = "<group>"; };
+		2B879E0E295017A90052EBFA /* Seashore.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Seashore.xcconfig; path = ../Seashore.xcconfig; sourceTree = "<group>"; };
 		2BB5E02E2813641200EC3014 /* SeaComponents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SeaComponents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BB5E0462813681400EC3014 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		2BB5E0482813682D00EC3014 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		2BE0CCA1294FC735001A05AD /* SeaMinimal.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = SeaMinimal.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,7 +64,7 @@
 		2B43BF4E27DD1D670094F84E = {
 			isa = PBXGroup;
 			children = (
-				2BE0CCA1294FC735001A05AD /* SeaMinimal.xcconfig */,
+				2B879E0E295017A90052EBFA /* Seashore.xcconfig */,
 				2B7600A028878BA8007E02C5 /* Info.plist */,
 				2B84482D28BEE71F00C068D1 /* SharedSource */,
 				2B6B80C827DD356500A2B3E5 /* Source */,
@@ -166,7 +166,7 @@
 		2B43BF4F27DD1D670094F84E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				BuildIndependentTargetsInParallel = 1;
+				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1320;
 				TargetAttributes = {
 					2B2EFA9328BF1E67009B225D = {
@@ -358,18 +358,16 @@
 		};
 		2B43BF5D27DD1D670094F84E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2BE0CCA1294FC735001A05AD /* SeaMinimal.xcconfig */;
+			baseConfigurationReference = 2B879E0E295017A90052EBFA /* Seashore.xcconfig */;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
 		2B43BF5E27DD1D670094F84E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2BE0CCA1294FC735001A05AD /* SeaMinimal.xcconfig */;
+			baseConfigurationReference = 2B879E0E295017A90052EBFA /* Seashore.xcconfig */;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				SKIP_INSTALL = YES;
 			};
 			name = Release;

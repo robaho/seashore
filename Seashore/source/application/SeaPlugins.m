@@ -29,6 +29,8 @@ NSInteger plugin_sort(id<PluginClass> obj1,id<PluginClass> obj2, void *context)
     // Add standard plug-ins
     plugins = [NSArray array];
     pluginsPath = [gMainBundle builtInPlugInsPath];
+
+    disabled = [NSMutableSet set];
     
     [self loadPlugins:pluginsPath];
     [self loadPlugins:[NSHomeDirectory() stringByAppendingPathComponent:@"Library/Application Support/Seashore/PlugIns"]];
@@ -51,9 +53,15 @@ NSInteger plugin_sort(id<PluginClass> obj1,id<PluginClass> obj2, void *context)
 
     // Check added plug-ins
     for (NSString *filename in files) {
-        NSBundle *bundle = [NSBundle bundleWithPath:[NSString stringWithFormat:@"%@/%@", pluginsPath, filename]];
+        NSString *path = [NSString stringWithFormat:@"%@/%@", pluginsPath, filename];
+        NSBundle *bundle = [NSBundle bundleWithPath:path];
         if (bundle && [bundle principalClass]) {
-            id plugin = [[bundle principalClass] alloc];
+            Class klass = [bundle principalClass];
+            if(![klass conformsToProtocol:@protocol(PluginClass)]) {
+                NSLog(@"%@ does not implement PluginClass, ignoring.",path);
+                continue;
+            }
+            id plugin = [klass alloc];
             if (plugin) {
                 plugins = [plugins arrayByAddingObject:plugin];
             } else {
@@ -165,11 +173,26 @@ NSInteger plugin_sort(id<PluginClass> obj1,id<PluginClass> obj2, void *context)
     
     // Never if we are told not to
     if ([menuItem tag] >= 10000 && [menuItem tag] < 17500) {
-        if (![[[plugins objectAtIndex:[menuItem tag] - 10000] class] validatePlugin:[document pluginData]])
+        int index = [menuItem tag]-10000;
+
+        if([disabled containsObject:[NSNumber numberWithInt:index]]) {
+            return NO;
+        }
+        if (![[[plugins objectAtIndex:index] class] validatePlugin:[document pluginData]])
             return NO;
     }
 
     return YES;
+}
+
+- (void)disablePlugin:(id<PluginClass>)plugin
+{
+    Class klass = [plugin class];
+    for(int i=0;i<[plugins count];i++) {
+        if([klass isEqualTo:[[plugins objectAtIndex:i] class]]) {
+            [disabled addObject:[NSNumber numberWithInt:i]];
+        }
+    }
 }
 
 @end
