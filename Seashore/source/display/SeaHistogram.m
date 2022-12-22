@@ -98,7 +98,7 @@ extern dispatch_queue_t queue;
                     case 1: // red
                     case 2: // green
                     case 3: // blue
-                        histogram[data[offset+mode-1]]++;
+                        histogram[data[offset+mode-1+CR]]++;
                         break;
                     case 4:
                         for (int i = 0; i < SPP-1; i++) {

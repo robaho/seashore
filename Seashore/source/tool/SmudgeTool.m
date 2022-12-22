@@ -50,7 +50,7 @@
     int brushHeight = [brush height];
 
     IntRect rect = IntMakeRect(where.x-brushWidth/2,where.y-brushHeight/2,brushWidth,brushHeight);
-    smudgeFill(rect,[layer data],[[document whiteboard] overlay],[layer width],[layer height],accumData,tempData,[brush mask],brushWidth,brushHeight,pressure);
+    smudgeFill(rect,[layer data],[[document whiteboard] overlay],[layer width],[layer height],accumData,tempData,[brush mask],brushWidth,brushHeight,pressure,&noMoreBlur);
 
     return rect;
 }
@@ -58,6 +58,8 @@
 - (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event
 {
     brush = [[document brushUtility] activeBrush];
+    
+    noMoreBlur=FALSE;
 
 	int brushWidth = [brush width], brushHeight = [brush height];
 

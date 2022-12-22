@@ -155,16 +155,46 @@ CGImageRef getTintedCG(CGImageRef src,NSColor *tint){
     int w = (int)CGImageGetWidth(src);
     int h = (int)CGImageGetHeight(src);
 
-    CGContextRef ctx = CGBitmapContextCreateWithData(NULL, w, h, 8, 0, rgbCS, kCGImageAlphaPremultipliedLast, NULL, NULL);
-    CGRect r = CGRectMake(0,0,w,h);
-    CGContextClearRect(ctx, r);
-    CGContextClipToMask(ctx, r, src);
-    CGContextSetFillColorWithColor(ctx, [tint CGColor]);
-    CGContextFillRect(ctx, r);
-    CGImageRef i = CGBitmapContextCreateImage(ctx);
-    CGContextRelease(ctx);
+    double colorf[4];
+    [[tint colorUsingColorSpace:MyRGBCS] getComponents:colorf];
 
-    return i;
+    uint8_t color[4];
+    color[0] = 0xFF;
+    color[1] = round(colorf[0]*255);
+    color[2] = round(colorf[1]*255);
+    color[3] = round(colorf[2]*255);
+
+    vImage_Buffer tinted;
+    vImageBuffer_Init(&tinted,h,w,8*4,kvImageNoFlags);
+    vImageBufferFill_ARGB8888(&tinted,color,kvImageNoFlags);
+
+    vImage_Buffer mask;
+    vImage_Error err;
+    vImage_CGImageFormat format = {};
+
+    if(CGImageGetBitsPerPixel(src)==8) { // image is a mask
+        err = vImageBuffer_InitWithCGImage(&mask,&format,NULL,src,kvImageNoFlags|kvImagePrintDiagnosticsToConsole);
+        vImageOverwriteChannels_ARGB8888(&mask, &tinted, &tinted, 0x8, kvImageNoFlags);
+    } else {
+        CGImageRef gray = convertToAGGG(src);
+        err = vImageBuffer_InitWithCGImage(&mask,&format,NULL,gray,kvImageNoFlags|kvImagePrintDiagnosticsToConsole);
+        CGImageRelease(gray);
+        vImageSelectChannels_ARGB8888(&mask, &tinted, &tinted, 0x8, kvImageNoFlags);
+    }
+
+    vImagePremultiplyData_ARGB8888(&tinted,&tinted,kvImageNoFlags);
+
+    format.bitsPerPixel=32;
+    format.bitsPerComponent=8;
+    format.colorSpace=NULL;
+    format.bitmapInfo=kCGImageAlphaPremultipliedFirst;
+
+    CGImageRef cgimg = vImageCreateCGImageFromBuffer(&tinted, &format, NULL, NULL, kvImageNoFlags, &err);
+
+    free(tinted.data);
+    free(mask.data);
+
+    return cgimg;
 }
 
 NSImage *getTinted(NSImage *src,NSColor *tint){
@@ -214,7 +244,7 @@ unsigned char *ImageContextGetData(CGContextRef ctx) {
 
 Margins determineContentMargins(unsigned char *data,int width,int height)
 {
-    int i,j,k;
+    int i,j;
     int top=-1,left=-1,bottom=-1,right=-1;
 
     // Determine left content margin

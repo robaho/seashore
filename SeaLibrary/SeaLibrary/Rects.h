@@ -282,3 +282,7 @@ CG_INLINE bool MarginsIsEmpty(Margins m) {
     return m.left==-1 || m.right==-1 || m.top==-1 || m.bottom==-1;
 }
 
+CG_INLINE IntRectIsEqual(IntRect r1,IntRect r2) {
+    return r1.size.width==r2.size.width && r1.size.height==r2.size.height && r1.origin.x==r2.origin.x && r1.origin.y==r2.origin.y;
+}
+

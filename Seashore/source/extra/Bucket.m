@@ -260,7 +260,11 @@ void cloneFill0(CGContextRef dst,CGContextRef srcCtx,IntRect rect,IntPoint offse
     int srcHeight= CGBitmapContextGetHeight(srcCtx);
 
     for (int row=0;row<rect.size.height;row++) {
+        if(row+rect.origin.y<0 || row+rect.origin.y>=height)
+            continue;
         for(int col=0;col<rect.size.width;col++) {
+            if(col+rect.origin.x<0 || col+rect.origin.x>=width)
+                continue;
 
             int srow = row+offset.y;
             int scol = col+offset.x;
@@ -294,64 +298,32 @@ void cloneFill(CGContextRef dst,CGContextRef srcCtx,IntRect rect,IntPoint offset
     dispatch_group_wait(group,DISPATCH_TIME_FOREVER);
 }
 
-void smudgeFill(IntRect rect, unsigned char *layerData, unsigned char *overlay, int width, int height, unsigned char *accum, unsigned char *temp, unsigned char *mask, int brushWidth, int brushHeight, int rate)
+void smudgeFill(IntRect rect, unsigned char *layerData, unsigned char *overlay, int width, int height, unsigned char *accum, unsigned char *temp, unsigned char *mask, int brushWidth, int brushHeight, int rate, bool *noMoreBlur)
 {
-    int t1;
-
     IntRect r = IntConstrainRect(IntMakeRect(0,0,width,height),rect);
 
     int brushOffset = (r.origin.y-rect.origin.y)*brushWidth + (r.origin.x-rect.origin.x);
     int layerOffset = ((r.origin.y)*width+r.origin.x) * SPP;
 
-    unsigned char *maskPtr = mask+brushOffset;
-    unsigned char *accumPtr = accum+brushOffset*SPP;
-    unsigned char *tempPtr = temp+brushOffset*SPP;
-    unsigned char *overlayPtr = overlay+layerOffset;
-    unsigned char *layerPtr = layerData+layerOffset;
+    vImage_Buffer layerB = { .data=layerData+layerOffset,.rowBytes=width*4,.width=r.size.width,.height=r.size.height};
+    vImage_Buffer overlayB = layerB; overlayB.data=overlay+layerOffset;
+    vImage_Buffer accumB = { .data=accum+brushOffset*SPP,.rowBytes=brushWidth*4,.width=r.size.width,.height=r.size.height};
+    vImage_Buffer tempB = accumB; tempB.data = temp+brushOffset*SPP;
+    vImage_Buffer maskB = {.data=mask+brushOffset,.rowBytes=brushWidth,.width=r.size.width,.height=r.size.height};
 
-    unsigned char *maskPtr0 = maskPtr;
-    unsigned char *accumPtr0 = accumPtr;
-    unsigned char *layerPtr0 = layerPtr;
-
-    bool changed=false;
-    for(int row=0;row<r.size.height;row++) {
-        for(int col=0;col<r.size.width;col++) {
-            int col0 = col*SPP;
-            int alpha = int_mult(maskPtr0[col],layerPtr0[col0+alphaPos],t1);
-            if(alpha && accumPtr0[col0+alphaPos]==0) {
-                accumPtr0[col0+alphaPos]=alpha;
-                premultiply_pm(layerPtr0+col0,accumPtr0+col0);
-                changed=true;
-            }
-        }
-        accumPtr0 += brushWidth*SPP;
-        maskPtr0 += brushWidth;
-        layerPtr0 += width*SPP;
+    if(!*noMoreBlur) {
+        vImageAlphaBlend_ARGB8888(&accumB,&layerB,&tempB,kvImageNoFlags);
+        vImageAlphaBlend_ARGB8888(&tempB,&accumB,&accumB,kvImageNoFlags);
+        vImageTentConvolve_ARGB8888(&accumB,&tempB,nil,0, 0,17,17,nil,kvImageCopyInPlace);
+        vImageOverwriteChannels_ARGB8888(&maskB, &tempB, &tempB, 0x8,kvImageNoFlags);
+        vImagePremultiplyData_ARGB8888(&tempB,&tempB,kvImageNoFlags);
     }
 
-    vImage_Buffer top;
-    top.data = accumPtr;
-    top.width = r.size.width;
-    top.height = r.size.height;
-    top.rowBytes = brushWidth * SPP;
+    vImagePremultipliedConstAlphaBlend_ARGB8888(&tempB,rate,&overlayB,&overlayB,kvImageNoFlags);
 
-    vImage_Buffer tempB;
-    tempB.data = tempPtr;
-    tempB.width = r.size.width;
-    tempB.height = r.size.height;
-    tempB.rowBytes = brushWidth * SPP;
-
-    if(changed) {
-        vImageTentConvolve_ARGB8888(&top,&tempB,nil,0, 0,17,17,nil,kvImageEdgeExtend);
+    if(IntRectIsEqual(r,rect)) {
+        *noMoreBlur=TRUE;
     }
-
-    vImage_Buffer bottom;
-    bottom.data = overlayPtr;
-    bottom.width = r.size.width;
-    bottom.height = r.size.height;
-    bottom.rowBytes = width * SPP;
-
-    vImagePremultipliedConstAlphaBlend_ARGB8888(&tempB,rate,&bottom,&bottom,kvImageNoFlags);
 }
 
 void blitImage(CGContextRef dstCtx,vImage_Buffer *iBuf,IntRect imageR,unsigned char opacity) {
@@ -381,7 +353,6 @@ void blitImage(CGContextRef dstCtx,vImage_Buffer *iBuf,IntRect imageR,unsigned c
     sBuf.height = r.size.height;
     sBuf.rowBytes = imageBPR;
 
-//    vImageAlphaBlend_ARGB8888(&sBuf,&dBuf,&dBuf,kvImageNoFlags);
     vImagePremultipliedConstAlphaBlend_ARGB8888(&sBuf,opacity, &dBuf, &dBuf,kvImageNoFlags);
 }
 

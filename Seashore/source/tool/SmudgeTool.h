@@ -17,5 +17,6 @@
     SmudgeOptions *options;
     unsigned char *accumData, *tempData;
     int rate;
+    bool noMoreBlur;
 }
 @end
