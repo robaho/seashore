@@ -644,7 +644,7 @@ static void patternCallback(void *info, CGContextRef context) {
         if(proofProfile) {
             CGContextRelease(proofCtx);
             CGColorSpaceRef csr = [proofProfile.cs CGColorSpace];
-            int bitmapMode = CGColorSpaceGetModel(csr)==kCGColorSpaceModelCMYK ? kCGImageAlphaNone : kCGImageAlphaPremultipliedFirst;
+            int bitmapMode = CGColorSpaceGetModel(csr)==kCGColorSpaceModelCMYK ? kCGImageAlphaNone : kCGImageAlphaPremultipliedLast;
             // proofCtx is not used for rendering, only to describe the output format
             proofCtx = CGBitmapContextCreate(nil,width,height,8,0,csr,bitmapMode);
             proofBuffer.data = CGBitmapContextGetData(proofCtx);
@@ -820,7 +820,7 @@ static void patternCallback(void *info, CGContextRef context) {
 {
     CGImageRef img = [self bitmap];
     if([[document contents] isGrayscale]){
-        CGImageRef gray = convertToGrayA(img);
+        CGImageRef gray = convertToGA(img);
         CGImageRelease(img);
         img = gray;
     }
@@ -937,6 +937,12 @@ static void patternCallback(void *info, CGContextRef context) {
     NSLog(@"creating debugview for data");
     [DebugView createWithContext:dataCtx];
 }
+- (void)debugOverlayCtx
+{
+    NSLog(@"creating debugview for overlay");
+    [DebugView createWithContext:overlayCtx];
+}
+
 
 @end
 

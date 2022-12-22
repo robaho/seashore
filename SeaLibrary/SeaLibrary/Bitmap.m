@@ -14,26 +14,43 @@ CGImageRef CGImageScale(CGImageRef image,int width,int height) {
     return scaled;
 }
 
-CGImageRef convertToGrayA(CGImageRef src)
+CGImageRef convertToGA(CGImageRef src)
 {
-    CGContextRef ctx = CGBitmapContextCreate(NULL,CGImageGetWidth(src),CGImageGetHeight(src),8,0,grayCS,kCGImageAlphaPremultipliedFirst);
+    CGContextRef ctx = CGBitmapContextCreate(NULL,CGImageGetWidth(src),CGImageGetHeight(src),8,0,grayCS,kCGImageAlphaPremultipliedLast);
     CGContextDrawImage(ctx,CGImageGetBounds(src),src);
     CGImageRef dst=CGBitmapContextCreateImage(ctx);
     CGContextRelease(ctx);
     return dst;
 }
 
-void mapRGBAtoGrayA(unsigned char *data,int length) {
+CGImageRef convertToARGB(CGImageRef src)
+{
+    CGContextRef ctx = CGBitmapContextCreate(NULL,CGImageGetWidth(src),CGImageGetHeight(src),8,0,rgbCS,kCGImageAlphaPremultipliedFirst);
+    CGContextDrawImage(ctx,CGImageGetBounds(src),src);
+    CGImageRef dst=CGBitmapContextCreateImage(ctx);
+    CGContextRelease(ctx);
+    return dst;
+}
+
+CGImageRef convertToAGGG(CGImageRef src)
+{
+    CGImageRef gray = convertToGA(src);
+    CGImageRef aggg = convertToARGB(gray);
+    CGImageRelease(gray);
+    return aggg;
+}
+
+void mapARGBtoAGGG(unsigned char *data,int length) {
     for(int i=0;i<length;i+=4) {
         int gray = ((int)data[i+1] + (int)data[i+2] + (int)data[i+3]) / 3;
-        memset(data+1,gray,3);
+        memset(data+i+1,gray,3);
     }
 }
 
 /*
- convert NSImageRep to a format Seashore can work with, which is RGBA, or GrayA. If spp is 4, then RGBA, if 2, the GrayA
+ convert NSImageRep to a format Seashore can work with, which is ARGB
  */
-unsigned char *convertToRGBA(NSImageRep *imageRep) {
+unsigned char *convertRepToARGB(NSImageRep *imageRep) {
     
     int width = (int)[imageRep pixelsWide];
     int height = (int)[imageRep pixelsHigh];
@@ -62,39 +79,6 @@ unsigned char *convertToRGBA(NSImageRep *imageRep) {
     unpremultiplyBitmap(4,buffer,buffer,width*height);
 
     return buffer;
-}
-
-inline void stripAlphaToWhite(int spp, unsigned char *output, unsigned char *input, int length)
-{
-	const int outputSPP = spp - 1;
-	unsigned char alpha;
-	double alphaRatio;
-	int t1, t2, newValue;
-	int i, k;
-	
-	memset(output, 255, length * outputSPP);
-	
-	for (i = 0; i < length; i++) {
-		
-		alpha = input[i * spp + alphaPos];
-		
-		if (alpha == 255) {
-			for (k = 0; k < outputSPP; k++)
-				output[i * outputSPP + k] = input[i * spp + CR +k];
-		}
-		else {
-			if (alpha != 0) {
-				alphaRatio = 255.0 / alpha;
-				for (k = 0; k < outputSPP; k++) {
-					newValue = 0.5 + input[i * spp + CR + k] * alphaRatio;
-					newValue = MIN(newValue, 255);
-					output[i * outputSPP + k] = int_mult(newValue, alpha, t1) + int_mult(255, (255 - alpha), t2);
-				}
-				
-			}
-		}
-	
-	} 
 }
 
 void premultiplyBitmap(int spp, unsigned char *output, unsigned char *input, int length)
@@ -132,6 +116,14 @@ void unpremultiplyBitmap(int spp, unsigned char *output, unsigned char *input, i
             input+=2;
         }
     }
+}
+
+void unpremultiplyRGBA(unsigned char *output, unsigned char *input, int length)
+{
+    vImage_Buffer obuf = {.data=output,.height=1,.width=length,.rowBytes=length*4};
+    vImage_Buffer ibuf = {.data=input,.height=1,.width=length,.rowBytes=length*4};
+
+    vImageUnpremultiplyData_RGBA8888(&ibuf,&obuf,0);
 }
 
 inline unsigned char averagedComponentValue(int spp, unsigned char *data, int width, int height, int component, int radius, IntPoint where)

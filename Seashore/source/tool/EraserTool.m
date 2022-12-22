@@ -40,6 +40,11 @@
 	return NO;
 }
 
+- (bool)applyTextures
+{
+    return FALSE;
+}
+
 - (void)setOverlayOptions:(BrushOptions*)options
 {
     SeaLayer *layer = [[document contents] activeLayer];

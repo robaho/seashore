@@ -592,13 +592,13 @@ static inline int alphaReplaceMerge(int dstOpacity,int srcOpacity)
     if(info->type==XCF_GRAY_IMAGE) {
         // convert to ARGB
         NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:2 hasAlpha:YES isPlanar:NO colorSpaceName:MyGraySpace bytesPerRow:width*2 bitsPerPixel:8*2];
-        unsigned char *new_data = convertToRGBA(rep);
+        unsigned char *new_data = convertRepToARGB(rep);
         free(data);
         data = new_data;
     } else {
         // convert to ARGB
         NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:4 hasAlpha:YES isPlanar:NO colorSpaceName:MyRGBSpace bytesPerRow:width*4 bitsPerPixel:8*4];
-        unsigned char *new_data = convertToRGBA(rep);
+        unsigned char *new_data = convertRepToARGB(rep);
         free(data);
         data = new_data;
     }

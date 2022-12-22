@@ -263,7 +263,9 @@ static Property PropertyMeta[] = {
     self->filterName = filterName;
     self->bg = bg;
 
-    [self getFilterInstance:self->filterName];
+    if(self->filterName) {
+        [self getFilterInstance:self->filterName];
+    }
 
     self->properties = [NSMutableArray array];
     self->panel = [VerticalView view];

@@ -55,6 +55,9 @@
         textureCtx = CGBitmapContextCreate(NULL, w,h, 8, w*SPP, rgbCS, kCGImageAlphaPremultipliedFirst);
         CGImageRef img = [pattern CGImageForProposedRect:NULL context:NULL hints:NULL];
         CGContextDrawImage(textureCtx,CGRectMake(0,0,w,h), img);
+        if([[document contents] isGrayscale]) {
+            mapARGBtoAGGG(CGBitmapContextGetData(textureCtx),w*h*SPP);
+        }
     }
 }
 
@@ -115,16 +118,16 @@
         color = [[NSColor blackColor] colorUsingColorSpace:MyRGBCS];
 	}
 
-    if([[document contents] isRGB]) {
+    if([[document contents] isRGB] || [options useTextures]) {
         basePixel[0] = 255;
-        basePixel[1] = (unsigned char)([color redComponent] * 255.0);
-        basePixel[2] = (unsigned char)([color greenComponent] * 255.0);
-        basePixel[3] = (unsigned char)([color blueComponent] * 255.0);
+        basePixel[1] = (unsigned char)(round([color redComponent] * 255.0));
+        basePixel[2] = (unsigned char)round(([color greenComponent] * 255.0));
+        basePixel[3] = (unsigned char)(round([color blueComponent] * 255.0));
     } else {
         basePixel[0] = 255;
-        basePixel[1] = (unsigned char)([color whiteComponent] * 255.0);
-        basePixel[2] = (unsigned char)([color whiteComponent] * 255.0);
-        basePixel[3] = (unsigned char)([color whiteComponent] * 255.0);
+        basePixel[1] = (unsigned char)(round([color whiteComponent] * 255.0));
+        basePixel[2] = (unsigned char)(round([color whiteComponent] * 255.0));
+        basePixel[3] = (unsigned char)(round([color whiteComponent] * 255.0));
     }
 
     int seedIndex;

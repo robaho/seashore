@@ -251,5 +251,6 @@ enum {
 
 -(void)debugTempLayer;
 -(void)debugDataCtx;
+-(void)debugOverlayCtx;
 
 @end

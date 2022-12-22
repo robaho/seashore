@@ -47,14 +47,14 @@
     return [(EyedropOptions*)options sampleSize];
 }
 
-static inline NSColor * averagedPixelValue(id<PixelProvider> pp,int radius, IntPoint where)
+static inline NSColor *averagedPixelValue(id<PixelProvider> pp,int radius, IntPoint where)
 {
     float colors[] = {0,0,0,0};
 
     int count = 0;
 
-    for (int j = where.y - radius; j <= where.y + radius; j++) {
-        for (int i = where.x - radius; i <= where.x + radius; i++) {
+    for (int j = where.y - radius - 1; j <= where.y + radius - 1; j++) {
+        for (int i = where.x - radius - 1; i <= where.x + radius -1; i++) {
             NSColor *c = [pp getPixelX:i Y:j];
             if(c==NULL)
                 continue;

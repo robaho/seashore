@@ -381,6 +381,7 @@ void blitImage(CGContextRef dstCtx,vImage_Buffer *iBuf,IntRect imageR,unsigned c
     sBuf.height = r.size.height;
     sBuf.rowBytes = imageBPR;
 
+//    vImageAlphaBlend_ARGB8888(&sBuf,&dBuf,&dBuf,kvImageNoFlags);
     vImagePremultipliedConstAlphaBlend_ARGB8888(&sBuf,opacity, &dBuf, &dBuf,kvImageNoFlags);
 }
 

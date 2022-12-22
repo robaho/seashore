@@ -621,13 +621,21 @@
 		// Declare the data being added to the pasteboard
 		[pboard declareTypes:[NSArray arrayWithObject:NSTIFFPboardType] owner:NULL];
 
-        premultiplyBitmap(SPP,data,data, localRect.size.width*localRect.size.height);
+        premultiplyBitmap(SPP,data,data,localRect.size.width*localRect.size.height);
+
+        CGContextRef ctx = CreateImageContextWithData(data,localRect.size);
+        CGImageRef img = CGBitmapContextCreateImage(ctx);
+        if([[document contents] isGrayscale]) {
+            CGImageRef gray = convertToGA(img);
+            CGImageRelease(img);
+            img = gray;
+        }
+        CGContextRelease(ctx);
 
 		// Add it to the pasteboard
-		NSBitmapImageRep *imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:localRect.size.width pixelsHigh:localRect.size.height bitsPerSample:8 samplesPerPixel:SPP hasAlpha:YES isPlanar:NO colorSpaceName:(SPP == 4) ? MyRGBSpace : MyGraySpace bytesPerRow:localRect.size.width * SPP bitsPerPixel:8 * SPP];
-
+        NSBitmapImageRep *imageRep = [[NSBitmapImageRep alloc] initWithCGImage:img];
 		[pboard setData:[imageRep TIFFRepresentation] forType:NSTIFFPboardType];
-
+        CGImageRelease(img);
         free(data);
 		
 		// Stores the point of the last copied selection and its size

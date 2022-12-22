@@ -108,8 +108,6 @@ typedef struct {
 
 - (void)dealloc
 {
-	int i;
-	
 	if (mask) free(mask);
 	if (pixmap) free(pixmap);
 
@@ -160,7 +158,6 @@ typedef struct {
 
     NSImage *_thumbnail = [[NSImage alloc] initWithCGImage:thumbnail size:CGSizeMake(CGImageGetWidth(bm),CGImageGetHeight(bm))];
     [_thumbnail setFlipped:TRUE];
-
     CGImageRelease(thumbnail);
 
     return _thumbnail;
@@ -188,6 +185,13 @@ typedef struct {
 
 - (unsigned char*)mask
 {
+    if(mask==0) {     // we have a tool that needs a mask for a pixmap brush, so create it
+        mask = malloc(width*height);
+        CGContextRef ctx = CGBitmapContextCreate(mask, width, height,8,width,grayCS,kCGImageAlphaOnly);
+        CGContextSetBlendMode(ctx,kCGBlendModeCopy);
+        CGContextDrawImage(ctx,CGRectMake(0,0,width,height),[self bitmap]);
+        CGContextRelease(ctx);
+    }
     return mask;
 }
 
@@ -201,7 +205,7 @@ typedef struct {
     if (width <= BrushThumbnail && height <= BrushThumbnail) {
         rect = NSMakeRect(rect.origin.x+(rect.size.width-width)/2,rect.origin.y+(rect.size.height-height)/2,width,height);
     } else {
-        float proportion = width/height;
+        float proportion = (float)width/(float)height;
 
         if(proportion>1) {
             float new_height = BrushThumbnail/proportion;
@@ -218,7 +222,7 @@ typedef struct {
     NSImage *thumbnail = [self thumbnail];
 
     // Draw the thumbnail
-    [thumbnail drawInRect:rect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:TRUE hints:NULL];
+    [thumbnail drawInRect:rect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:FALSE hints:NULL];
 
     // Draw the pixel tag if needed
     NSString *pixelTag = [self pixelTag];

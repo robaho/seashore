@@ -172,16 +172,16 @@
     if (color) {
         [colorWell setColorValue:color];
         if ([[color colorSpaceName] isEqualToString:MyRGBSpace]) {
-            [redValue setIntValue:[color redComponent] * 255.0];
-            [greenValue setIntValue:[color greenComponent] * 255.0];
-            [blueValue setIntValue:[color blueComponent] * 255.0];
-            [alphaValue setIntValue:[color alphaComponent] * 255.0];
+            [redValue setIntValue:round([color redComponent] * 255.0)];
+            [greenValue setIntValue:round([color greenComponent] * 255.0)];
+            [blueValue setIntValue:round([color blueComponent] * 255.0)];
+            [alphaValue setIntValue:round([color alphaComponent] * 255.0)];
         }
         else if ([[color colorSpaceName] isEqualToString:MyGraySpace]) {
-            [redValue setIntValue:[color whiteComponent] * 255.0];
-            [greenValue setIntValue:[color whiteComponent] * 255.0];
-            [blueValue setIntValue:[color whiteComponent] * 255.0];
-            [alphaValue setIntValue:[color alphaComponent] * 255.0];
+            [redValue setIntValue:round([color whiteComponent] * 255.0)];
+            [greenValue setIntValue:round([color whiteComponent] * 255.0)];
+            [blueValue setIntValue:round([color whiteComponent] * 255.0)];
+            [alphaValue setIntValue:round([color alphaComponent] * 255.0)];
         }
         else {
             NSLog(@"Color space not recognized by information utility.");

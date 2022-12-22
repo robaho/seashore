@@ -613,7 +613,7 @@ done:
 
     unsigned char *data = (unsigned char*)[nsdata bytes];
 
-    mapRGBAtoGrayA(data,width*height*SPP);
+    mapARGBtoAGGG(data,width*height*SPP);
 }
 
 - (void)drawLayer:(CGContextRef)context
@@ -674,6 +674,8 @@ done:
         return NULL;
 
     unsigned char *pixelData = [nsdata bytes] + (width*y+x) * SPP;
+
+//    NSLog(@"pixel %d %d %d %d",pixelData[CR],pixelData[CG],pixelData[CB],pixelData[alphaPos]);
 
     return [NSColor colorWithRed:pixelData[CR]/255.0 green:pixelData[CG]/255.0 blue:pixelData[CB]/255.0 alpha:pixelData[alphaPos]/255.0];
 }

@@ -32,6 +32,11 @@
 	return kSmudgeTool;
 }
 
+- (bool)applyTextures
+{
+    return FALSE;
+}
+
 - (BOOL)useMouseCoalescing
 {
 	return NO;

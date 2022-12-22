@@ -89,7 +89,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
         type = XCF_RGB_IMAGE;
     }
     
-    data = convertToRGBA(imageRep);
+    data = convertRepToARGB(imageRep);
     if (!data) {
         NSLog(@"Required conversion not supported.");
         return NULL;
@@ -568,7 +568,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     }
     if (containsNothing) {
         free(data);
-        NSRunAlertPanel(LOCALSTR(@"empty selection title", @"Selection empty"), LOCALSTR(@"empty selection body", @"The selection cannot be floated since it is empty."), LOCALSTR(@"ok", @"OK"), NULL, NULL);
+        NSRunAlertPanel(LOCALSTR(@"empty selection title", @"Selection empty"), LOCALSTR(@"empty selection body", @"The layer cannot be created since the selection is empty."), LOCALSTR(@"ok", @"OK"), NULL, NULL);
         return;
     }
 
@@ -662,7 +662,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
         rect = IntMakeRect(centerPoint.x - sel_size.width / 2, centerPoint.y - sel_size.height / 2, sel_size.width, sel_size.height);
     }
     
-    data = convertToRGBA(imageRep);
+    data = convertRepToARGB(imageRep);
     if (!data) {
         NSLog(@"Required conversion not supported.");
         return;

@@ -25,7 +25,7 @@
     width = (int)lwidth;
     height = (int)lheight;
     
-    unsigned char *data = convertToRGBA(imageRep);
+    unsigned char *data = convertRepToARGB(imageRep);
     if(!data){
         return NULL;
     }

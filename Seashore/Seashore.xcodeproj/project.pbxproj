@@ -63,6 +63,7 @@
 		2B891225289B3AEB00838898 /* NSBezierPath_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B891223289A9F8B00838898 /* NSBezierPath_Extensions.m */; };
 		2B8BD34721EA565C00FD9AC5 /* SeaPrintOptionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8BD34521EA565C00FD9AC5 /* SeaPrintOptionsController.m */; };
 		2B8BD59121ED16AB00FD9AC5 /* BrushExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8BD59021ED16AB00FD9AC5 /* BrushExporter.m */; };
+		2BA290C829527C3300175B25 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BA290C729527C3200175B25 /* CoreGraphics.framework */; };
 		2BB338C423C1119600647008 /* toFitTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BB338C323C1119600647008 /* toFitTemplate.png */; };
 		2BC3CE6A293C47BA005394FE /* star.fill@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BC3CE69293C47BA005394FE /* star.fill@2x.png */; };
 		2BCD7A14286281F7007EB89B /* Support Seashore.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2BCD7A12286281F7007EB89B /* Support Seashore.rtf */; };
@@ -606,6 +607,7 @@
 		2B8BD34521EA565C00FD9AC5 /* SeaPrintOptionsController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeaPrintOptionsController.m; sourceTree = "<group>"; };
 		2B8BD58F21ED169B00FD9AC5 /* BrushExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrushExporter.h; sourceTree = "<group>"; };
 		2B8BD59021ED16AB00FD9AC5 /* BrushExporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrushExporter.m; sourceTree = "<group>"; };
+		2BA290C729527C3200175B25 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		2BB338C323C1119600647008 /* toFitTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toFitTemplate.png; sourceTree = "<group>"; };
 		2BC3CE69293C47BA005394FE /* star.fill@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star.fill@2x.png"; sourceTree = "<group>"; };
 		2BCD7A13286281F7007EB89B /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = "English.lproj/Support Seashore.rtf"; sourceTree = "<group>"; };
@@ -1071,6 +1073,7 @@
 				2BCF02A128FA0F2500733144 /* CoreFoundation.framework in Frameworks */,
 				2BE0CCAC294FCF41001A05AD /* CoreImage.framework in Frameworks */,
 				A84E106408E7A4FB0084BCB7 /* IOKit.framework in Frameworks */,
+				2BA290C829527C3300175B25 /* CoreGraphics.framework in Frameworks */,
 				2BE0CCA3294FC8D2001A05AD /* Accelerate.framework in Frameworks */,
 				A8BF652708E6FEAB006E9BFC /* Carbon.framework in Frameworks */,
 				A8EDF14C078959C80022BB31 /* Cocoa.framework in Frameworks */,
@@ -1210,6 +1213,7 @@
 		2A37F4C3FDCFA73011CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2BA290C729527C3200175B25 /* CoreGraphics.framework */,
 				2BE0CD37294FD794001A05AD /* Plugins.framework */,
 				2BE0CCAD294FD744001A05AD /* Alpha2Gray.bundle */,
 				2BE0CCAE294FD744001A05AD /* AffineTile+.bundle */,

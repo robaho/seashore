@@ -49,6 +49,12 @@
 
 @implementation AbstractBrushTool
 
+- (bool)applyTextures
+{
+    BrushOptions *options = [self getBrushOptions];
+    return [options useTextures] && ![options brushIsErasing] && ![brush isPixMap];
+}
+
 - (IntRect)plotBrushAt:(NSPoint)where pressure:(int)pressure
 {
     CGImageRef _brush = brushImage;
@@ -66,7 +72,8 @@
         if(lastBufferImage) {
             free(buffer.data);
         }
-        vImage_CGImageFormat iFormat = {};
+        vImage_CGImageFormat iFormat = {.bitsPerComponent=8,.bitsPerPixel=32,.bitmapInfo=kCGImageAlphaPremultipliedFirst};
+//        vImage_CGImageFormat iFormat = {.bitsPerComponent=8,.bitsPerPixel=32,.bitmapInfo=kCGImageAlphaFirst};
         vImageBuffer_InitWithCGImage(&buffer, &iFormat, NULL, _brush, 0);
         lastBufferImage=_brush;
     }
@@ -77,7 +84,10 @@
 
     blitImage(overlayCtx,&buffer,rect,pressureDisabled ? 255 : pressure);
 
-    if ([options useTextures] && ![options brushIsErasing] && ![brush isPixMap]) {
+//    CGContextSetAlpha(overlayCtx, pressureDisabled ? 1.0 : pressure/255.0);
+//    CGContextDrawImage(overlayCtx, IntRectMakeNSRect(rect),_brush);
+
+    if([self applyTextures]) {
         textureFill(overlayCtx,textureCtx,rect);
     }
 
@@ -136,7 +146,7 @@
 
     brushImage = [self getBrushImage];
     if([[document contents] isGrayscale]) {
-        CGImageRef gray = convertToGrayA(brushImage);
+        CGImageRef gray = convertToAGGG(brushImage);
         CGImageRelease(brushImage);
         brushImage = gray;
     }
@@ -152,6 +162,10 @@
         textureCtx = CGBitmapContextCreate(NULL, w,h, 8, w*SPP, rgbCS, kCGImageAlphaPremultipliedFirst);
         CGImageRef img = [pattern CGImageForProposedRect:NULL context:NULL hints:NULL];
         CGContextDrawImage(textureCtx,CGRectMake(0,0,w,h), img);
+
+        if([[document contents] isGrayscale]) {
+            mapARGBtoAGGG(CGBitmapContextGetData(textureCtx),w*h*SPP);
+        }
     }
 
     [self setOverlayOptions:options];

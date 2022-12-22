@@ -38,39 +38,17 @@
     return NO;
 }
 
-//- (IntRect)plotBrushAt:(NSPoint)where pressure:(int)pressure
-//{
-//    int size = [options pencilSize];
-//
-//    CGRect cgRect = NSIntegralRect(CGRectMake(where.x-size/2,where.y-size/2,size,size));
-//
-//    IntRect rect = NSRectMakeIntRect(cgRect);
-//
-//    CGContextRef overlayCtx = [[document whiteboard] overlayCtx];
-//
-//    CGContextSetAlpha(overlayCtx, 1.0);
-//    CGContextSetFillColorWithColor(overlayCtx, [color CGColor]);
-//    if([options circularTip]) {
-//        CGContextFillEllipseInRect(overlayCtx,cgRect);
-//    } else {
-//        CGContextFillRect(overlayCtx,cgRect);
-//    }
-//
-//    if ([options useTextures] && ![options brushIsErasing]) {
-//        textureFill(overlayCtx,[[document toolboxUtility] foreground], cgRect);
-//    }
-//
-//    [[document helpers] overlayChanged:rect];
-//
-//    return rect;
-//}
-
+- (bool)applyTextures
+{
+    BrushOptions *options = [self getBrushOptions];
+    return [options useTextures] && ![options brushIsErasing];
+}
 
 - (CGImageRef)getBrushImage
 {
     int size = [options pencilSize];
 
-    CGContextRef ctx = CGBitmapContextCreate(NULL, size, size, 8, 0, rgbCS, kCGImageAlphaPremultipliedLast);
+    CGContextRef ctx = CGBitmapContextCreate(NULL, size, size, 8, 0, rgbCS, kCGImageAlphaPremultipliedFirst);
     CGContextSetFillColorWithColor(ctx, [color CGColor]);
     if([options circularTip]) {
         CGContextFillEllipseInRect(ctx,CGRectMake(0,0,size,size));

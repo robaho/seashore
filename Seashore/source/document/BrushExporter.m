@@ -50,8 +50,7 @@ enum {
 
     CGImageRef bitmap = [[[document whiteboard] image] CGImage];
     [self writeToFile:path spacing:self.spacing bitmap:bitmap];
-    CGImageRelease(bitmap);
-    
+
 	[[document brushUtility] addBrushFromPath:path];
 }
 
@@ -127,29 +126,29 @@ typedef struct {
     int height = (int)CGImageGetHeight(bitmap);
 
     CGColorSpaceRef cs = CGImageGetColorSpace(bitmap);
-    int spp = (int)CGColorSpaceGetNumberOfComponents(cs) + 1; // add 1 for alpha
 
-    unsigned char *data = malloc(width*height*spp);
+    bool isGray = CGColorSpaceGetNumberOfComponents(cs)==1;
 
-    CGContextRef ctx = CGBitmapContextCreate(data, width, height,8,width*spp,COLOR_SPACE,kCGImageAlphaPremultipliedLast);
-    CGContextTranslateCTM(ctx,0,height);
-    CGContextScaleCTM(ctx,1,-1);
+    unsigned char *data = malloc(width*height*4);
+
+    CGContextRef ctx = CGBitmapContextCreate(data, width, height,8,width*4,COLOR_SPACE,kCGImageAlphaPremultipliedLast);
     CGContextSetBlendMode(ctx,kCGBlendModeCopy);
     CGContextDrawImage(ctx,CGRectMake(0,0,width,height),bitmap);
+
     CGContextRelease(ctx);
 
-    if(spp==2){
+    int spp=4;
+
+    if(isGray){
         noalpha = malloc(width*height);
-        stripAlphaToWhite(2,noalpha,data,width*height);
-        // need to invert to black color space
         for(int i=0;i<width*height;i++) {
-            noalpha[i] = noalpha[i] ^ 0xFF;
+            noalpha[i] = data[i*4+3]; // RGBA source
         }
         free(data);
         data = noalpha;
         spp=1;
     } else {
-        unpremultiplyBitmap(spp,data,data,width*height);
+        unpremultiplyRGBA(data,data,width*height);
     }
 
     NSString* name = [[path lastPathComponent] stringByDeletingPathExtension];

@@ -507,6 +507,22 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
     ToolboxUtility *toolbox = [document toolboxUtility];
     
     int curToolIndex = [toolbox tool];
+
+#ifdef DEBUG
+    // need to handle these before any other processing or the data could be changed
+    switch([[theEvent charactersIgnoringModifiers] characterAtIndex:0]){
+        case '1':
+            [[document whiteboard] debugTempLayer];
+            return;
+        case '2':
+            [[document whiteboard] debugDataCtx];
+            return;
+        case '3':
+            [[document whiteboard] debugOverlayCtx];
+            return;
+    }
+#endif
+
     
     // End the line drawing
     [[document helpers] endLineDrawing];
@@ -756,14 +772,6 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
                     toolMemory = [toolbox tool];
                     [toolbox changeToolTo:kZoomTool];
                     break;
-#ifdef DEBUG
-                case '1':
-                    [[document whiteboard] debugTempLayer];
-                    break;
-                case '2':
-                    [[document whiteboard] debugDataCtx];
-                    break;
-#endif
                 break;
             }
         }

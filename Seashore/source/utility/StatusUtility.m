@@ -56,7 +56,7 @@
         statusString = [statusString stringByAppendingFormat: @"%@ %C %@ %@", StringFromPixels([contents width] , newUnits, [contents xres]), 0x00D7, StringFromPixels([contents height], newUnits, [contents yres]), UnitsString(newUnits)];
         statusString = [[NSString stringWithFormat:@"%.0f%% %@ ", [[document docView] zoom] * 100, divider] stringByAppendingString: statusString];
         statusString = [statusString stringByAppendingFormat: @" %@ %d dpi", divider, [contents xres]];
-        statusString = [statusString stringByAppendingFormat: @" %@ %@", divider, [contents type] ? @"Grayscale" : @"Full Color"];
+        statusString = [statusString stringByAppendingFormat: @" %@ %@", divider, [contents isGrayscale] ? @"Grayscale" : @"Full Color"];
         
         SeaColorProfile *cp = [[document whiteboard] proofProfile];
         if(cp!=NULL && cp.cs!=NULL) {

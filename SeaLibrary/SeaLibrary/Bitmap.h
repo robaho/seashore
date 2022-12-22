@@ -46,28 +46,15 @@ CG_INLINE void RESTORE_BITMAP(unsigned char *dst,unsigned char *src,IntRect rect
 }
 
 /** return a point to a memory block that is a RGBA representation of the imageRep with same width & height*/
-unsigned char *convertToRGBA(NSImageRep *imageRep);
-CGImageRef convertToGrayA(CGImageRef src);
-/** change RGB pixels to gray in place */
-void mapRGBAtoGrayA(unsigned char* data,int bytes);
+unsigned char *convertRepToARGB(NSImageRep *imageRep);
 
-/*!
-	@function	stripAlphaToWhite
-	@discussion	Given a bitmap this function strips the alpha channel making it
-				appear as though the image is on a white background and places
-				the result in the output. The output and input can both point to
-				the same block of memory.
-	@param		spp
-				The samples per pixel of the original bitmap.
-	@param		output
-				The block of memory in which to place the bitmap once its alpha
-				channel has been stripped.
-	@param		input
-				The block of memory containing the original bitmap.
-	@param		length
-				The length of the bitmap in terms of pixels (not bytes).
-*/
-void stripAlphaToWhite(int spp, unsigned char *output, unsigned char *input, int length);
+CGImageRef convertToGA(CGImageRef src);
+CGImageRef convertToAGGG(CGImageRef src);
+CGImageRef convertToARGB(CGImageRef src);
+
+
+/** change RGB pixels to gray in place */
+void mapARGBtoAGGG(unsigned char* data,int bytes);
 
 /*!
 	@function	premultiplyBitmap
@@ -94,6 +81,8 @@ void premultiplyBitmap(int spp, unsigned char *destPtr, unsigned char *srcPtr, i
 */
 void unpremultiplyBitmap(int spp, unsigned char *destPtr, unsigned char *srcPtr, int length);
 
+void unpremultiplyRGBA(unsigned char *destPtr, unsigned char *srcPtr, int length);
+
 /*!
 	@function	averagedComponentValue
 	@discussion	Given a point on the bitmap this function finds the average
@@ -116,11 +105,6 @@ void unpremultiplyBitmap(int spp, unsigned char *destPtr, unsigned char *srcPtr,
 				The point at which to centre the box.
 */
 unsigned char averagedComponentValue(int spp, unsigned char *data, int width, int height, int component, int radius, IntPoint where);
-
-/*
- return data with alpha stripped if alpha not used, otherwise just return the source data
- */
-unsigned char *stripAlpha(unsigned char *srcData,int width,int height,int spp);
 
 CGImageRef getTintedCG(CGImageRef src,NSColor *tint);
 NSImage *getTinted(NSImage* src,NSColor *tint);
