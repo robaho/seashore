@@ -293,6 +293,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2BE0CC98294FA5E5001A05AD /* Seashore.xcconfig */;
 			buildSettings = {
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -302,12 +303,10 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
-				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
-				INSTALL_PATH = "@executable_path/../Frameworks";
+				GENERATE_INFOPLIST_FILE = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.GIMPCore;
 				PRODUCT_NAME = GIMPCore;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -315,6 +314,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2BE0CC98294FA5E5001A05AD /* Seashore.xcconfig */;
 			buildSettings = {
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
@@ -324,12 +324,10 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
-				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
-				INSTALL_PATH = "@executable_path/../Frameworks";
+				GENERATE_INFOPLIST_FILE = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.GIMPCore;
 				PRODUCT_NAME = GIMPCore;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};

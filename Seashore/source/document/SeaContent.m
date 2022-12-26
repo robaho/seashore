@@ -134,18 +134,20 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
 {
     id layer;
     int i;
-    
-    // Change the width and height of the document
-    width += left + right;
-    height += top + bottom;
-    
-    // Change the layer offsets of the document
-    for (i = 0; i < [layers count]; i++) {
-        layer = [layers objectAtIndex:i];
-        if (left) [layer setOffsets:IntMakePoint([layer xoff] + left, [layer yoff])];
-        if (top) [layer setOffsets:IntMakePoint([layer xoff], [layer yoff] + top)];
+
+    @synchronized (document.mutex) {
+        // Change the width and height of the document
+        width += left + right;
+        height += top + bottom;
+
+        // Change the layer offsets of the document
+        for (i = 0; i < [layers count]; i++) {
+            layer = [layers objectAtIndex:i];
+            if (left) [layer setOffsets:IntMakePoint([layer xoff] + left, [layer yoff])];
+            if (top) [layer setOffsets:IntMakePoint([layer xoff], [layer yoff] + top)];
+        }
+        [[document selection] adjustOffset:IntMakePoint(left, top)];
     }
-    [[document selection] adjustOffset:IntMakePoint(left, top)];
 }
 
 - (int)type
@@ -289,37 +291,43 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
 {
     if(activeLayerIndex==value)
         return;
-    [[document helpers] activeLayerWillChange];
-    activeLayerIndex = value;
-    [[document helpers] activeLayerChanged:kLayerSwitched];
+    @synchronized (document.mutex) {
+        [[document helpers] activeLayerWillChange];
+        activeLayerIndex = value;
+        [[document helpers] activeLayerChanged:kLayerSwitched];
+    }
 }
 
 - (void)layerBelow
 {
-    int newIndex;
-    [[document helpers] activeLayerWillChange];
-    if(activeLayerIndex + 1 >= [self layerCount])
-    {
-        newIndex = 0;
-    }else {
-        newIndex = activeLayerIndex + 1;
+    @synchronized (document.mutex) {
+        int newIndex;
+        [[document helpers] activeLayerWillChange];
+        if(activeLayerIndex + 1 >= [self layerCount])
+        {
+            newIndex = 0;
+        }else {
+            newIndex = activeLayerIndex + 1;
+        }
+        activeLayerIndex = newIndex;
+        [[document helpers] activeLayerChanged:kLayerSwitched];
     }
-    activeLayerIndex = newIndex;
-    [[document helpers] activeLayerChanged:kLayerSwitched];
 }
 
 - (void)layerAbove
 {
-    int newIndex;
-    [[document helpers] activeLayerWillChange];
-    if(activeLayerIndex - 1 < 0)
-    {
-        newIndex = [self layerCount] - 1;
-    }else {
-        newIndex = activeLayerIndex - 1;
+    @synchronized (document.mutex) {
+        int newIndex;
+        [[document helpers] activeLayerWillChange];
+        if(activeLayerIndex - 1 < 0)
+        {
+            newIndex = [self layerCount] - 1;
+        }else {
+            newIndex = activeLayerIndex - 1;
+        }
+        activeLayerIndex = newIndex;
+        [[document helpers] activeLayerChanged:kLayerSwitched];
     }
-    activeLayerIndex = newIndex;
-    [[document helpers] activeLayerChanged:kLayerSwitched];
 }
 
 - (BOOL)canImportLayerFromFile:(NSString *)path
@@ -421,23 +429,25 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
 
     SeaLayer *layerToAdd = [[SeaLayer alloc] initWithDocument:document width:width height:height opaque:NO];
 
-    // Inform the helpers we will change the layer
-    [[document helpers] activeLayerWillChange];
-    
-    // Create a new array with all the existing layers and the one being added
-    for (i = 0; i < [layers count] + 1; i++) {
-        if (i == index)
-            tempArray = [tempArray arrayByAddingObject:layerToAdd];
-        else
-            tempArray = [tempArray arrayByAddingObject:(i > activeLayerIndex) ? [layers objectAtIndex:i - 1] : [layers objectAtIndex:i]];
+    @synchronized (document.mutex) {
+        // Inform the helpers we will change the layer
+        [[document helpers] activeLayerWillChange];
+
+        // Create a new array with all the existing layers and the one being added
+        for (i = 0; i < [layers count] + 1; i++) {
+            if (i == index)
+                tempArray = [tempArray arrayByAddingObject:layerToAdd];
+            else
+                tempArray = [tempArray arrayByAddingObject:(i > activeLayerIndex) ? [layers objectAtIndex:i - 1] : [layers objectAtIndex:i]];
+        }
+
+        // Now substitute in our new array
+        layers = tempArray;
+
+        // Inform document of layer change
+        [[document helpers] activeLayerChanged:kLayerAdded];
     }
-    
-    // Now substitute in our new array
-    layers = tempArray;
-    
-    // Inform document of layer change
-    [[document helpers] activeLayerChanged:kLayerAdded];
-    
+
     // Make action undoable
     [(SeaContent *)[[document undoManager] prepareWithInvocationTarget:self] deleteLayer:index];
 }
@@ -449,20 +459,22 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
 
 - (void)addLayerObject:(id)layer atIndex:(int)index
 {
-    [[document helpers] activeLayerWillChange];
+    @synchronized (document.mutex) {
+        [[document helpers] activeLayerWillChange];
 
-    NSMutableArray *temp = [NSMutableArray arrayWithArray:layers];
-    [temp insertObject:layer atIndex:index];
+        NSMutableArray *temp = [NSMutableArray arrayWithArray:layers];
+        [temp insertObject:layer atIndex:index];
 
-    layers = [NSArray arrayWithArray:temp];
+        layers = [NSArray arrayWithArray:temp];
 
-    activeLayerIndex = index;
-    
-    // Inform document of layer change
-    [[document helpers] activeLayerChanged:kLayerAdded];
-    
-    // Make action undoable
-    [(SeaContent *)[[document undoManager] prepareWithInvocationTarget:self] deleteLayer:index];
+        activeLayerIndex = index;
+
+        // Inform document of layer change
+        [[document helpers] activeLayerChanged:kLayerAdded];
+
+        // Make action undoable
+        [(SeaContent *)[[document undoManager] prepareWithInvocationTarget:self] deleteLayer:index];
+    }
 }
 
 - (void)copyLayer:(id)layer
@@ -494,24 +506,27 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     // Correct index
     if (index == kActiveLayer) index = activeLayerIndex;
     layer = [layers objectAtIndex:index];
-    
-    // Inform the helpers we will change the layer
-    [[document helpers] activeLayerWillChange];
-    
-    // Create a new array with all the existing layers except the one being deleted
-    for (i = 0; i < [layers count]; i++) {
-        if (i != index) {
-            tempArray = [tempArray arrayByAddingObject:[layers objectAtIndex:i]];
+
+    @synchronized (document.mutex) {
+        // Inform the helpers we will change the layer
+        [[document helpers] activeLayerWillChange];
+
+        // Create a new array with all the existing layers except the one being deleted
+        for (i = 0; i < [layers count]; i++) {
+            if (i != index) {
+                tempArray = [tempArray arrayByAddingObject:[layers objectAtIndex:i]];
+            }
         }
+
+        layers = tempArray;
+
+        // Change the layer
+        if (activeLayerIndex >= [layers count]) activeLayerIndex = [layers count] - 1;
+
+        [[document helpers] activeLayerChanged:kLayerDeleted];
     }
     
-    layers = tempArray;
-    
-    // Change the layer
-    if (activeLayerIndex >= [layers count]) activeLayerIndex = [layers count] - 1;
-    
-    [[document helpers] activeLayerChanged:kLayerDeleted];
-    
+
     // Make action undoable
     [[[document undoManager] prepareWithInvocationTarget:self] restoreLayer:layer atIndex:index];
 }
@@ -520,25 +535,27 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
 {
     NSArray *tempArray;
     int i;
-    
-    [[document helpers] activeLayerWillChange];
-    
-    // Create a new array with all the existing layers including the one being restored
-    tempArray = [NSArray array];
-    for (i = 0; i < [layers count] + 1; i++) {
-        if (i == index) {
-            tempArray = [tempArray arrayByAddingObject:layer];
-        }
-        else {
-            tempArray = [tempArray arrayByAddingObject:[layers objectAtIndex:(i > index) ? i - 1 : i]];
-        }
-    }
-    
-    layers = tempArray;
 
-    activeLayerIndex = index;
-        
-    [[document helpers] activeLayerChanged:kLayerAdded];
+    @synchronized (document.mutex) {
+        [[document helpers] activeLayerWillChange];
+
+        // Create a new array with all the existing layers including the one being restored
+        tempArray = [NSArray array];
+        for (i = 0; i < [layers count] + 1; i++) {
+            if (i == index) {
+                tempArray = [tempArray arrayByAddingObject:layer];
+            }
+            else {
+                tempArray = [tempArray arrayByAddingObject:[layers objectAtIndex:(i > index) ? i - 1 : i]];
+            }
+        }
+
+        layers = tempArray;
+
+        activeLayerIndex = index;
+
+        [[document helpers] activeLayerChanged:kLayerAdded];
+    }
     [(SeaContent *)[[document undoManager] prepareWithInvocationTarget:self] deleteLayer:index];
 }
 
@@ -725,20 +742,22 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     }
     
     [tempArray insertObject:[layers objectAtIndex:source] atIndex:actualFinal];
-    
-    // Now substitute in our new array
-    layers = [NSArray arrayWithArray:tempArray];
-    
-    // Update Seashore with the changes
-    activeLayerIndex = [layers indexOfObject:activeLayer];
 
-    [[document helpers] layerLevelChanged:actualFinal];
+    @synchronized (document.mutex) {
+        // Now substitute in our new array
+        layers = [NSArray arrayWithArray:tempArray];
 
-    // For the undo we need to make sure we get the offset right
-    if(source >= dest){
-        source++;
+        // Update Seashore with the changes
+        activeLayerIndex = [layers indexOfObject:activeLayer];
+
+        [[document helpers] layerLevelChanged:actualFinal];
+
+        // For the undo we need to make sure we get the offset right
+        if(source >= dest){
+            source++;
+        }
     }
-    
+
     // Make action undoable
     [[[document undoManager] prepareWithInvocationTarget:self] moveLayerOfIndex: actualFinal toIndex: source];
 }
@@ -870,7 +889,9 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
 {
     [[document helpers] endLineDrawing];
 
-    [self merge:layers withName: LOCALSTR(@"flattened", @"Flattened Layer")];
+    @synchronized (document.mutex) {
+        [self merge:layers withName: LOCALSTR(@"flattened", @"Flattened Layer")];
+    }
 }
 
 - (void)mergeLinked
@@ -885,7 +906,9 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
         if ([layer linked])
             [linkedLayers addObject: layer];
     }
-    [self merge:linkedLayers withName: LOCALSTR(@"flattened", @"Flattened Layer")];
+    @synchronized (document.mutex) {
+        [self merge:linkedLayers withName: LOCALSTR(@"flattened", @"Flattened Layer")];
+    }
 }
 
 // merge layer down based on selected channel
@@ -897,8 +920,6 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     IntRect topRect = [top globalRect],bottomRect = [bottom globalRect];
 
     IntRect rect = IntConstrainRect(topRect,bottomRect);
-
-    [[document helpers] documentWillFlatten];
 
     NSArray *copy = [layers copy];
     [[[document undoManager] prepareWithInvocationTarget:self] undoMergeWith:copy];
@@ -940,11 +961,16 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
         }
     }
 
-    activeLayerIndex = [tempArray indexOfObject:new_layer];
-    layers = tempArray;
-    selectedChannel = kAllChannels;
+    @synchronized (document.mutex) {
+        [[document helpers] documentWillFlatten];
 
-    [[document helpers] documentFlattened];
+        activeLayerIndex = [tempArray indexOfObject:new_layer];
+        layers = tempArray;
+        selectedChannel = kAllChannels;
+
+        [[document helpers] documentFlattened];
+    }
+
 }
 
 
@@ -960,10 +986,12 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
                               [layers objectAtIndex:activeLayerIndex+1],
                               nil];
 
-    if(selectedChannel == kAllChannels) {
-        [self merge:layersToMerge withName: [[layers objectAtIndex:activeLayerIndex + 1] name]];
-    } else {
-        [self mergeChannelDown];
+    @synchronized (document.mutex) {
+        if(selectedChannel == kAllChannels) {
+            [self merge:layersToMerge withName: [[layers objectAtIndex:activeLayerIndex + 1] name]];
+        } else {
+            [self mergeChannelDown];
+        }
     }
 }
 
@@ -1013,10 +1041,12 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
         [layer drawLayer:ctx];
     }
 
-    CGContextRelease(ctx);
+    unpremultiplyBitmap(SPP,ImageContextGetData(ctx),ImageContextGetData(ctx),rect.size.width*rect.size.height);
 
     layer = [[SeaLayer alloc] initWithDocument:document rect:rect data:ImageContextGetData(ctx)];
     [layer setName:[[NSString alloc] initWithString:newName]];
+
+    CGContextRelease(ctx);
 
     // Revise layers
     activeLayerIndex = [tempArray indexOfObject:tempLayer];
@@ -1060,16 +1090,18 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     }
 
     [[[document undoManager] prepareWithInvocationTarget:self] revertToType:type withRecord:snapshots];
-    
-    // Go through and convert all layers to the new given type
-    for (i = 0; i < [layers count]; i++)
-        [[layers objectAtIndex:i] convertFromType:type to:newType];
-        
-    // Then save the new type
-    type = newType;
-    
-    // Update everything
-    [[document helpers] typeChanged]; 
+
+    @synchronized (document.mutex) {
+        // Go through and convert all layers to the new given type
+        for (i = 0; i < [layers count]; i++)
+            [[layers objectAtIndex:i] convertFromType:type to:newType];
+
+        // Then save the new type
+        type = newType;
+
+        // Update everything
+        [[document helpers] typeChanged];
+    }
 }
 
 - (void)revertToType:(int)newType withRecord:(NSMutableArray<LayerSnapshot*>*)snapshots
@@ -1078,20 +1110,22 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     
     // Make action undoable
     [[[document undoManager] prepareWithInvocationTarget:self] convertToType:type];
-    
-    // Go through and convert all layers to the new given type
-    for (i = 0; i < [layers count]; i++)
-        [[layers objectAtIndex:i] convertFromType:type to:newType];
 
-    // Then save the new type
-    type = newType;
-    
-    // Restore the layers
-    for (i = 0; i < [layers count]; i++)
-        [[[layers objectAtIndex:i] seaLayerUndo] restoreSnapshot:[snapshots objectAtIndex:i] automatic:NO];
-    
-    // Update everything
-    [[document helpers] typeChanged]; 
+    @synchronized (document.mutex) {
+        // Go through and convert all layers to the new given type
+        for (i = 0; i < [layers count]; i++)
+            [[layers objectAtIndex:i] convertFromType:type to:newType];
+
+        // Then save the new type
+        type = newType;
+
+        // Restore the layers
+        for (i = 0; i < [layers count]; i++)
+            [[[layers objectAtIndex:i] seaLayerUndo] restoreSnapshot:[snapshots objectAtIndex:i] automatic:NO];
+
+        // Update everything
+        [[document helpers] typeChanged];
+    }
 }
 
 - (ParasiteData*)parasites{
@@ -1117,7 +1151,9 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
         SeaTextLayer *textLayer = [[SeaTextLayer alloc] initWithDocument:document layer:(SeaLayer*)layer properties:props];
         [layers0 addObject:textLayer];
     }
-    layers = [NSArray arrayWithArray:layers0];
+    @synchronized (document.mutex) {
+        layers = [NSArray arrayWithArray:layers0];
+    }
 }
 
 - (BOOL)isRGB

@@ -8,7 +8,7 @@
 
 - (id)initWithManager:(id<PluginData>)data
 {
-    return [super initWithManager:data filter:@"CIGlassLozenge" points:2 properties:kCI_Radius,kCI_Refraction,kCI_Point0,kCI_Point1,0];
+    return [super initWithManager:data filter:@"CIGlassLozenge" points:2 bg:TRUE properties:kCI_Radius,kCI_Refraction,kCI_Point0,kCI_Point1,0];
 }
 
 - (void)execute
@@ -16,8 +16,6 @@
     int height = [pluginData height];
     IntPoint point = [pluginData point:0];
     IntPoint apoint = [pluginData point:1];
-    
-    bool opaque = ![pluginData hasAlpha];
     
     CIFilter *filter = [CIFilter filterWithName:@"CIGlassLozenge"];
     if (filter == NULL) {
@@ -29,11 +27,7 @@
     [filter setValue:[NSNumber numberWithInt:[self intValue:kCI_Radius]] forKey:@"inputRadius"];
     [filter setValue:[NSNumber numberWithFloat:[self floatValue:kCI_Refraction]] forKey:@"inputRefraction"];
     
-    if (opaque){
-        [self applyFilterBG:filter];
-    } else {
-        [self applyFilter:filter];
-    }
+    [self applyFilter:filter];
 }
 
 @end

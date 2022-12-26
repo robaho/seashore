@@ -268,8 +268,6 @@
     IntRect bounds = [self bounds:layer];
     IntRect dirty = bounds;
 
-    NSLog(@"bounds %@",NSStringFromIntRect(bounds));
-
     if(bounds.size.width > width || bounds.size.height > height) {
         // need scale
         float sX = width / (float)bounds.size.width;
@@ -374,7 +372,9 @@
 {
     IntPoint oldOffsets = IntMakePoint([layer xoff],[layer yoff]);
     [[[document undoManager] prepareWithInvocationTarget:self] undoTranslateOnly:oldOffsets forLayer:[layer index]];
-    [layer setOffsets:IntMakePoint([layer xoff]+x,[layer yoff]+y)];
+    @synchronized (document.mutex) {
+        [layer setOffsets:IntMakePoint([layer xoff]+x,[layer yoff]+y)];
+    }
 }
 
 - (void)applyTransform:(SeaLayer*)layer
@@ -401,8 +401,10 @@
 
     [[[document undoManager] prepareWithInvocationTarget:self] undoApplyTransform:undoRecord];
 
-    [layer scaleX:scaleX scaleY:scaleY rotate:rotation];
-    [layer setOffsets:IntMakePoint(bounds.origin.x,bounds.origin.y)];
+    @synchronized (document.mutex) {
+        [layer scaleX:scaleX scaleY:scaleY rotate:rotation];
+        [layer setOffsets:IntMakePoint(bounds.origin.x,bounds.origin.y)];
+    }
 }
 
 - (void)undoTranslateOnly:(IntPoint)origin forLayer:(int)index
@@ -412,8 +414,10 @@
 
     oldOffsets.x = [layer xoff]; oldOffsets.y = [layer yoff];
     [[[document undoManager] prepareWithInvocationTarget:self] undoTranslateOnly:oldOffsets forLayer:index];
-    [layer setOffsets:origin];
-    [[document helpers] layerOffsetsChanged:index from:oldOffsets];
+    @synchronized (document.mutex) {
+        [layer setOffsets:origin];
+        [[document helpers] layerOffsetsChanged:index from:oldOffsets];
+    }
     [self updateButtons];
 }
 
@@ -442,16 +446,18 @@
 
     [[[document undoManager] prepareWithInvocationTarget:self] undoApplyTransform:redoRecord];
 
-    [layer setOffsets:IntMakePoint(undoRecord->rect.origin.x, undoRecord->rect.origin.y)];
-    [layer setMarginLeft:0 top:0 right:undoRecord->rect.size.width - [layer width] bottom:undoRecord->rect.size.height - [layer height]];
-    [[layer seaLayerUndo] restoreSnapshot:undoRecord->snapshot automatic:NO];
+    @synchronized (document.mutex) {
+        [layer setOffsets:IntMakePoint(undoRecord->rect.origin.x, undoRecord->rect.origin.y)];
+        [layer setMarginLeft:0 top:0 right:undoRecord->rect.size.width - [layer width] bottom:undoRecord->rect.size.height - [layer height]];
+        [[layer seaLayerUndo] restoreSnapshot:undoRecord->snapshot automatic:NO];
 
-    scaleX = scaleY = 1;
-    rotation = 0;
-    x = y = 0;
+        scaleX = scaleY = 1;
+        rotation = 0;
+        x = y = 0;
+        [[document helpers] layerBoundariesChanged:undoRecord->index];
+    }
 
     [self updateButtons];
-    [[document helpers] layerBoundariesChanged:undoRecord->index];
 }
 
 - (NSAffineTransform*)transform

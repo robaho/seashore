@@ -111,6 +111,7 @@
 @property (strong) IBOutlet StatusUtility *statusUtility;
 
 @property (strong) id<PluginClass> lastPlugin;
+@property (strong) NSObject *mutex;
 
 // CREATION METHODS
 

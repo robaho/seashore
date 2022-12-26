@@ -42,6 +42,7 @@
 
 	// Set data members appropriately
 	whiteboard = NULL;
+    _mutex = [[NSObject alloc] init];
 	
 	// Set the measure style
 	measureStyle = [(SeaDocumentController *)[NSDocumentController sharedDocumentController] units];
@@ -534,13 +535,17 @@
 - (IBAction)customUndo:(id)sender
 {
     [[self helpers] endLineDrawing];
-	[[self undoManager] undo];
+    @synchronized (_mutex) {
+        [[self undoManager] undo];
+    }
 }
 
 - (IBAction)customRedo:(id)sender
 {
     [[self helpers] endLineDrawing];
-	[[self undoManager] redo];
+    @synchronized (_mutex) {
+        [[self undoManager] redo];
+    }
 }
 
 - (void)commitEditingWithDelegate:(id)delegate didCommitSelector:(SEL)didCommitSelector contextInfo:(void *)contextInfo

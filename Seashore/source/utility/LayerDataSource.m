@@ -47,10 +47,11 @@
     if(index==[[document contents] activeLayerIndex]){
         return;
     }
-    
-    [[document helpers] activeLayerWillChange];
-    [[document contents] setActiveLayerIndex:index];
-    [[document helpers] activeLayerChanged:kLayerSwitched];
+    @synchronized (document.mutex) {
+        [[document helpers] activeLayerWillChange];
+        [[document contents] setActiveLayerIndex:index];
+        [[document helpers] activeLayerChanged:kLayerSwitched];
+    }
 }
 
 // ================================================================

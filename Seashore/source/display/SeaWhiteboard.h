@@ -60,7 +60,6 @@ enum {
 	// The document associated with this whiteboard
 	__weak SeaDocument *document;
 
-    NSObject *mutex;
     dispatch_semaphore_t renderSem;
     bool exitRender;
 

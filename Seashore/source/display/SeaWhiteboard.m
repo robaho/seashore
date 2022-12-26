@@ -66,9 +66,7 @@ void DumpObjcMethods(Class clz) {
 
   checkerboard = [NSImage imageNamed:@"checkerboard"];
 
-  proofProfile = NULL;
-
-    mutex = [[NSObject alloc] init];
+    proofProfile = NULL;
 
     if (queue == NULL) {
         queue = dispatch_queue_create("SeaWhiteboard", DISPATCH_QUEUE_CONCURRENT);
@@ -248,7 +246,7 @@ void DumpObjcMethods(Class clz) {
 
 - (void)mergeOverlay:(unsigned char *)dest rect:(IntRect)r
 {
-    @synchronized(mutex) {
+    @synchronized(document.mutex) {
         int cores = MAX([[NSProcessInfo processInfo] activeProcessorCount],1);
 
         if(SINGLE_THREADED || cores==1){
@@ -344,7 +342,7 @@ void DumpObjcMethods(Class clz) {
 
 - (void)drawRect:(NSRect)viewDirtyRect
 {
-    @synchronized(mutex) {
+    @synchronized(document.mutex) {
         viewDirtyRect = NSIntegralRectWithOptions(viewDirtyRect,NSAlignAllEdgesOutward|NSAlignRectFlipped);
         
         CGContextRef nsCtx = [[NSGraphicsContext currentContext] graphicsPort];
@@ -546,7 +544,7 @@ static void patternCallback(void *info, CGContextRef context) {
 - (void)applyOverlay {
     long start = LOG_PERFORMANCE ? getCurrentMillis() : 0;
 
-    @synchronized (mutex) {
+    @synchronized (document.mutex) {
         SeaLayer *layer = [[document contents] activeLayer];
 
         int lw = layer_width;
@@ -596,7 +594,7 @@ static void patternCallback(void *info, CGContextRef context) {
 }
 
 - (void)clearOverlay {
-    @synchronized (mutex) {
+    @synchronized (document.mutex) {
         SeaLayer *layer = [[document contents] activeLayer];
 
         int width = layer_width;
@@ -633,7 +631,7 @@ static void patternCallback(void *info, CGContextRef context) {
 }
 
 - (void)readjust {
-    @synchronized(mutex) {
+    @synchronized(document.mutex) {
         // Resize the memory allocated to the data
         width = [[document contents] width];
         height = [[document contents] height];
@@ -659,7 +657,7 @@ static void patternCallback(void *info, CGContextRef context) {
 }
 
 - (void)readjustLayer {
-    @synchronized (mutex) {
+    @synchronized (document.mutex) {
         SeaLayer *layer = [[document contents] activeLayer];
 
         layer_width = [layer width];
@@ -740,7 +738,7 @@ static void patternCallback(void *info, CGContextRef context) {
 
 - (void)render
 {
-    @synchronized (mutex) {
+    @synchronized (document.mutex) {
         [self mergeOverlayToTemp];
 
         IntRect dirty = IntZeroRect;
@@ -832,12 +830,13 @@ static void patternCallback(void *info, CGContextRef context) {
 
 - (CGImageRef)bitmap
 {
-    CGContextRef ctx = CreateImageContext(IntMakeSize(width,height));
+    CGContextRef ctx = CreateAutoFreeImageContext(IntMakeSize(width,height));
     CGContextTranslateCTM(ctx,0,height);
     CGContextScaleCTM(ctx,1,-1);
     [self drawInContext:ctx dirty:CGRectMake(0,0,width,height) proofing:false];
     CGImageRef img = CGBitmapContextCreateImage(ctx);
     CGContextRelease(ctx);
+
     return img;
 }
 

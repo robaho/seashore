@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface SeaCheckbox : NSView
 {
     NSButton *checkbox;
-    id<Listener> listener;
+    __weak id<Listener> listener;
 }
 
 - (bool)isChecked;

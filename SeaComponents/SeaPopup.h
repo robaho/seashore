@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSPopUpButton *popup;
     NSButton *checkbox;
     Label *title;
-    id<Listener> listener;
+    __weak id<Listener> listener;
     bool compact;
     bool checkable;
 }

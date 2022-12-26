@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
     int selected_point;
     NSPoint downAt;
     CGPoint starting;
-    id<Listener> listener;
+    __weak id<Listener> listener;
 }
 
 - (CGPoint)point:(int)index;

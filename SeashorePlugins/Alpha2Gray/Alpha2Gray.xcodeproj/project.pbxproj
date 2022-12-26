@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2B2D8CC121F98ACE004527F2 /* Alpha2GrayClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B2D8CC021F98ACE004527F2 /* Alpha2GrayClass.m */; };
 		2B2D8CC421F98B1D004527F2 /* Plugins.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2D8CC321F98B1D004527F2 /* Plugins.framework */; };
+		2BDC06BA2957733A00C033FD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2BDC06B92957733A00C033FD /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -16,6 +17,7 @@
 		2B2D8CBF21F98ACE004527F2 /* Alpha2GrayClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Alpha2GrayClass.h; sourceTree = "<group>"; };
 		2B2D8CC021F98ACE004527F2 /* Alpha2GrayClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Alpha2GrayClass.m; sourceTree = "<group>"; };
 		2B2D8CC321F98B1D004527F2 /* Plugins.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Plugins.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BDC06B92957733A00C033FD /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +35,7 @@
 		2B2D8CAC21F98A38004527F2 = {
 			isa = PBXGroup;
 			children = (
+				2BDC06B92957733A00C033FD /* Localizable.strings */,
 				2B2D8CBE21F98AA1004527F2 /* Classes */,
 				2B2D8CB621F98A38004527F2 /* Products */,
 				2B2D8CC221F98B1D004527F2 /* Frameworks */,
@@ -120,6 +123,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2BDC06BA2957733A00C033FD /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

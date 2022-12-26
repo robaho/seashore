@@ -588,6 +588,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2BF10A412937171B002272AB /* Seashore.xcconfig */;
 			buildSettings = {
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -595,6 +596,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2BF10A412937171B002272AB /* Seashore.xcconfig */;
 			buildSettings = {
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
@@ -602,15 +604,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
-				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
-				INSTALL_PATH = "@executable_path/../Frameworks";
-				MACH_O_TYPE = mh_dylib;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.SeaComponents;
 				PRODUCT_NAME = SeaComponents;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -618,15 +617,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
-				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
-				INSTALL_PATH = "@executable_path/../Frameworks";
-				MACH_O_TYPE = mh_dylib;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.SeaComponents;
 				PRODUCT_NAME = SeaComponents;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};

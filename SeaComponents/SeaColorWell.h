@@ -7,7 +7,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
     NSColorWell *colorWell;
     Label *title;
-    id<Listener> listener;
+    __weak id<Listener> listener;
     bool compact;
 }
 

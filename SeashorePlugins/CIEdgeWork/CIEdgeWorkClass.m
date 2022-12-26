@@ -16,9 +16,9 @@
     bool opaque = ![pluginData hasAlpha];
 
     if (opaque){
-        [self applyFilterFGBG:filter];
+        [super applyFilterFGBG:filter];
     } else {
-        [self applyFilterFG:filter];
+        [super applyFilterFG:filter];
     }
 }
 

@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
     Label *title;
     Label *value;
     int valueType;
-    id<Listener> listener;
+    __weak id<Listener> listener;
     int format;
     bool compact;
     bool checkable;

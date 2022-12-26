@@ -16,11 +16,34 @@ CGImageRef CGImageScale(CGImageRef image,int width,int height) {
 
 CGImageRef convertToGA(CGImageRef src)
 {
-    CGContextRef ctx = CGBitmapContextCreate(NULL,CGImageGetWidth(src),CGImageGetHeight(src),8,0,grayCS,kCGImageAlphaPremultipliedLast);
-    CGContextDrawImage(ctx,CGImageGetBounds(src),src);
-    CGImageRef dst=CGBitmapContextCreateImage(ctx);
+    int w = (int)CGImageGetWidth(src);
+    int h = (int)CGImageGetHeight(src);
+
+    CGContextRef ctx = CreateAutoFreeImageContext(IntMakeSize(w,h));
+    unsigned char *data = ImageContextGetData(ctx);
+
+    CGContextDrawImage(ctx, CGImageGetBounds(src), src);
+    mapARGBtoAGGG(data,w*h);
+
+    unsigned char *grayA = calloc(w*h*2,1);
+
+    for(int row=0;row<h;row++) {
+        for(int col=0;col<w;col++) {
+            grayA[(row*w+col)*2+1] = data[(row*w+col)*4+alphaPos];
+            grayA[(row*w+col)*2+0] = data[(row*w+col)*4+CR];
+        }
+    }
+
+    CFDataRef cfd = CFDataCreate(NULL, grayA, w*h*2);
+    free(grayA);
+
+    CGDataProviderRef dp = CGDataProviderCreateWithCFData(cfd);
+    CGImageRef image = CGImageCreate(w,h,8,8*2,w*2,grayCS,kCGImageAlphaPremultipliedLast,dp,nil,false,0);
+    CGDataProviderRelease(dp);
     CGContextRelease(ctx);
-    return dst;
+    CFRelease(cfd);
+
+    return image;
 }
 
 CGImageRef convertToARGB(CGImageRef src)
@@ -34,10 +57,15 @@ CGImageRef convertToARGB(CGImageRef src)
 
 CGImageRef convertToAGGG(CGImageRef src)
 {
-    CGImageRef gray = convertToGA(src);
-    CGImageRef aggg = convertToARGB(gray);
-    CGImageRelease(gray);
-    return aggg;
+    int w = (int)CGImageGetWidth(src);
+    int h = (int)CGImageGetHeight(src);
+
+    CGContextRef ctx = CreateAutoFreeImageContext(IntMakeSize(w,h));
+    CGContextDrawImage(ctx, CGImageGetBounds(src), src);
+    mapARGBtoAGGG(ImageContextGetData(ctx),w*h);
+    CGImageRef gray = CGBitmapContextCreateImage(ctx);
+    CGContextRelease(ctx);
+    return gray;
 }
 
 void mapARGBtoAGGG(unsigned char *data,int length) {
@@ -232,6 +260,10 @@ CGSize CGImageGetSize(CGImageRef img) {
 CGContextRef CreateImageContext(IntSize size) {
     unsigned char *data = calloc(size.width*size.height*4,1);
     return CreateImageContextWithData(data,size);
+}
+
+CGContextRef CreateAutoFreeImageContext(IntSize size) {
+    return CreateImageContextWithData(NULL,size);
 }
 
 CGContextRef CreateImageContextWithData(unsigned char *data,IntSize size) {

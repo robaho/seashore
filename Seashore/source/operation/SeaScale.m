@@ -228,9 +228,10 @@
 - (void)scaleToWidth:(int)width height:(int)height interpolation:(int)interpolation index:(int)index
 {
     ScaleUndoRecord *undoRecord = [[ScaleUndoRecord alloc] init];
-	
-	// Do the scale
-	[self scaleToWidth:width height:height xorg: 0 yorg: 0 moving: NO interpolation:interpolation index:index undoRecord:undoRecord];
+
+    @synchronized (document.mutex) {
+        [self scaleToWidth:width height:height xorg: 0 yorg: 0 moving: NO interpolation:interpolation index:index undoRecord:undoRecord];
+    }
 
 	[[[document undoManager] prepareWithInvocationTarget:self] undoScale:undoRecord];
 
@@ -248,8 +249,9 @@
 {
     ScaleUndoRecord *undoRecord = [[ScaleUndoRecord alloc] init];
 	
-	// Do the scale
-	[self scaleToWidth:width height:height xorg: xorg yorg: yorg moving: YES interpolation:interpolation index:index undoRecord:undoRecord];
+    @synchronized (document.mutex) {
+        [self scaleToWidth:width height:height xorg: xorg yorg: yorg moving: YES interpolation:interpolation index:index undoRecord:undoRecord];
+    }
 	
 	[[[document undoManager] prepareWithInvocationTarget:self] undoScale:undoRecord];
 
@@ -272,61 +274,63 @@
 	int whichLayer;
 	int layerCount = [contents layerCount];
 	int changeX, changeY;
-	
-	// We have different responses depending on whether the image is scaled or not
-	if (undoRecord->isScaled) {
-		
-		if (undoRecord->index == kAllLayers) {
-			
-			// Change the document's size
-			[[document contents] setWidth:undoRecord->unscaledWidth height:undoRecord->unscaledHeight];
-			
-			// Go through each layer
-			for (whichLayer = 0; whichLayer < layerCount; whichLayer++) {
-			
-				// Determine the current layer
-				curLayer = [[document contents] layer:whichLayer];
 
-                ScaleSnapshotUndoRecord *r = undoRecord->records[whichLayer];
-				
-				// Change the layer's size
-				changeX = r->rect.size.width - [curLayer width];
-				changeY = r->rect.size.height - [curLayer height];
-				[curLayer setMarginLeft:0 top:0 right:changeX bottom:changeY];
-				[curLayer setOffsets:r->rect.origin];
-				[[curLayer seaLayerUndo] restoreSnapshot:r->snapshot automatic:NO];
+    @synchronized (document.mutex) {
 
-			}
-			// Now the image is no longer scaled
-			undoRecord->isScaled = NO;
-			
-		}
-		else {
-		
-			// Determine the current layer
-			curLayer = [[document contents] layer:undoRecord->index];
+        // We have different responses depending on whether the image is scaled or not
+        if (undoRecord->isScaled) {
 
-            ScaleSnapshotUndoRecord *r = undoRecord->records[0];
-			
-			// Change the layer's size
-			changeX = r->rect.size.width - [curLayer width];
-			changeY = r->rect.size.height - [curLayer height];
-			[curLayer setMarginLeft:0 top:0 right:changeX bottom:changeY];
-			[curLayer setOffsets:r->rect.origin];
-			[[curLayer seaLayerUndo] restoreSnapshot:r->snapshot automatic:NO];
-			
-			// Now the image is no longer scaled
-			undoRecord->isScaled = NO;
+            if (undoRecord->index == kAllLayers) {
+
+                // Change the document's size
+                [[document contents] setWidth:undoRecord->unscaledWidth height:undoRecord->unscaledHeight];
+
+                // Go through each layer
+                for (whichLayer = 0; whichLayer < layerCount; whichLayer++) {
+
+                    // Determine the current layer
+                    curLayer = [[document contents] layer:whichLayer];
+
+                    ScaleSnapshotUndoRecord *r = undoRecord->records[whichLayer];
+
+                    // Change the layer's size
+                    changeX = r->rect.size.width - [curLayer width];
+                    changeY = r->rect.size.height - [curLayer height];
+                    [curLayer setMarginLeft:0 top:0 right:changeX bottom:changeY];
+                    [curLayer setOffsets:r->rect.origin];
+                    [[curLayer seaLayerUndo] restoreSnapshot:r->snapshot automatic:NO];
+
+                }
+                // Now the image is no longer scaled
+                undoRecord->isScaled = NO;
+
+            }
+            else {
+
+                // Determine the current layer
+                curLayer = [[document contents] layer:undoRecord->index];
+
+                ScaleSnapshotUndoRecord *r = undoRecord->records[0];
+
+                // Change the layer's size
+                changeX = r->rect.size.width - [curLayer width];
+                changeY = r->rect.size.height - [curLayer height];
+                [curLayer setMarginLeft:0 top:0 right:changeX bottom:changeY];
+                [curLayer setOffsets:r->rect.origin];
+                [[curLayer seaLayerUndo] restoreSnapshot:r->snapshot automatic:NO];
+
+                // Now the image is no longer scaled
+                undoRecord->isScaled = NO;
+            }
+
         }
-	
-	}
-	else {
-		
-		// Otherwise just reverse the process with the information we stored on the original scaling
-		[self scaleToWidth:undoRecord->scaledWidth height:undoRecord->scaledHeight xorg: undoRecord->scaledXOrg yorg: undoRecord->scaledYOrg moving: undoRecord->isMoving interpolation:undoRecord->interpolation index:undoRecord->index undoRecord:NULL];
-		undoRecord->isScaled = YES;
-	
-	}
+        else {
+
+            // Otherwise just reverse the process with the information we stored on the original scaling
+            [self scaleToWidth:undoRecord->scaledWidth height:undoRecord->scaledHeight xorg: undoRecord->scaledXOrg yorg: undoRecord->scaledYOrg moving: undoRecord->isMoving interpolation:undoRecord->interpolation index:undoRecord->index undoRecord:NULL];
+            undoRecord->isScaled = YES;
+        }
+    }
 	[[[document undoManager] prepareWithInvocationTarget:self] undoScale:undoRecord];
 	
 	// Clear selection

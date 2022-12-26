@@ -120,6 +120,7 @@ CGRect CGImageGetBounds(CGImageRef image);
 CGSize CGImageGetSize(CGImageRef image);
 CGContextRef CreateImageContext(IntSize size);
 CGContextRef CreateImageContextWithData(unsigned char *data,IntSize size);
+CGContextRef CreateAutoFreeImageContext(IntSize size);
 unsigned char *ImageContextGetData(CGContextRef ctx);
 
 Margins determineContentMargins(unsigned char *image,int width,int height);

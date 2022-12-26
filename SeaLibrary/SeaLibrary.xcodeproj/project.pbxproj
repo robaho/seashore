@@ -16,16 +16,22 @@
 		2B2EFA7E28BF1AF1009B225D /* Rects.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8448AC28BEECB000C068D1 /* Rects.m */; };
 		2B2EFA7F28BF1AF1009B225D /* RLE.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8448AB28BEECB000C068D1 /* RLE.m */; };
 		2B2EFAAE28BF2202009B225D /* SeaLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B8448AE28BEECB000C068D1 /* SeaLibrary.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2BC3CE50293C1CEB005394FE /* SeaLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B8448AE28BEECB000C068D1 /* SeaLibrary.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2BC3CE51293C1CEB005394FE /* Constants.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B8448AA28BEECB000C068D1 /* Constants.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2BC3CE52293C1CEB005394FE /* Bitmap.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B8448AF28BEECB000C068D1 /* Bitmap.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2BC3CE53293C1CEB005394FE /* Rects.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B8448B228BEECB100C068D1 /* Rects.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2BC3CE54293C1CEB005394FE /* RLE.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B8448B128BEECB100C068D1 /* RLE.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2BC3CE55293C1CEB005394FE /* Globals.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B8448B028BEECB100C068D1 /* Globals.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2BC3CE57293C1CEB005394FE /* Bitmap.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8448BC28BEECDF00C068D1 /* Bitmap.m */; };
-		2BC3CE58293C1CEB005394FE /* Rects.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8448AC28BEECB000C068D1 /* Rects.m */; };
-		2BC3CE59293C1CEB005394FE /* RLE.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8448AB28BEECB000C068D1 /* RLE.m */; };
-		2BC3CE5C293C1CEB005394FE /* Seashore.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 2BF10A4429371771002272AB /* Seashore.xcconfig */; };
+		2BC9B00D295893B80042CA01 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BC9B00C295893B80042CA01 /* CoreGraphics.framework */; };
+		2BC9B00F295894600042CA01 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BC9B00E295894600042CA01 /* Accelerate.framework */; };
+		2BC9B0112958949B0042CA01 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BC9B0102958949B0042CA01 /* AppKit.framework */; };
+		2BC9B0162958A9350042CA01 /* SeaLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B8448AE28BEECB000C068D1 /* SeaLibrary.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2BC9B0172958A9350042CA01 /* Constants.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B8448AA28BEECB000C068D1 /* Constants.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2BC9B0182958A9350042CA01 /* Bitmap.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B8448AF28BEECB000C068D1 /* Bitmap.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2BC9B0192958A9350042CA01 /* Rects.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B8448B228BEECB100C068D1 /* Rects.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2BC9B01A2958A9350042CA01 /* RLE.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B8448B128BEECB100C068D1 /* RLE.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2BC9B01B2958A9350042CA01 /* Globals.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B8448B028BEECB100C068D1 /* Globals.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2BC9B01D2958A9350042CA01 /* Bitmap.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8448BC28BEECDF00C068D1 /* Bitmap.m */; };
+		2BC9B01E2958A9350042CA01 /* Rects.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8448AC28BEECB000C068D1 /* Rects.m */; };
+		2BC9B01F2958A9350042CA01 /* RLE.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8448AB28BEECB000C068D1 /* RLE.m */; };
+		2BC9B0212958A9350042CA01 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BC9B0102958949B0042CA01 /* AppKit.framework */; };
+		2BC9B0222958A9350042CA01 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BC9B00C295893B80042CA01 /* CoreGraphics.framework */; };
+		2BC9B0232958A9350042CA01 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BC9B00E295894600042CA01 /* Accelerate.framework */; };
+		2BC9B0252958A9350042CA01 /* Seashore.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 2BF10A4429371771002272AB /* Seashore.xcconfig */; };
 		2BF10A4529371771002272AB /* Seashore.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 2BF10A4429371771002272AB /* Seashore.xcconfig */; };
 /* End PBXBuildFile section */
 
@@ -40,7 +46,10 @@
 		2B8448B128BEECB100C068D1 /* RLE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLE.h; sourceTree = "<group>"; };
 		2B8448B228BEECB100C068D1 /* Rects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rects.h; sourceTree = "<group>"; };
 		2B8448BC28BEECDF00C068D1 /* Bitmap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bitmap.m; sourceTree = "<group>"; };
-		2BC3CE60293C1CEB005394FE /* SeaLibraryStatic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SeaLibraryStatic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BC9B00C295893B80042CA01 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		2BC9B00E295894600042CA01 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		2BC9B0102958949B0042CA01 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		2BC9B0292958A9350042CA01 /* SeaLibraryStatic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SeaLibraryStatic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BF10A4429371771002272AB /* Seashore.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Seashore.xcconfig; path = ../Seashore.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -49,13 +58,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2BC9B0112958949B0042CA01 /* AppKit.framework in Frameworks */,
+				2BC9B00D295893B80042CA01 /* CoreGraphics.framework in Frameworks */,
+				2BC9B00F295894600042CA01 /* Accelerate.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2BC3CE5A293C1CEB005394FE /* Frameworks */ = {
+		2BC9B0202958A9350042CA01 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2BC9B0212958A9350042CA01 /* AppKit.framework in Frameworks */,
+				2BC9B0222958A9350042CA01 /* CoreGraphics.framework in Frameworks */,
+				2BC9B0232958A9350042CA01 /* Accelerate.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,6 +83,7 @@
 				2BF10A4429371771002272AB /* Seashore.xcconfig */,
 				2B84488E28BEEBDD00C068D1 /* SeaLibrary */,
 				2B84488D28BEEBDD00C068D1 /* Products */,
+				2BC9B00B295893B80042CA01 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -75,7 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				2B2EFA7028BF1AD3009B225D /* SeaLibrary.framework */,
-				2BC3CE60293C1CEB005394FE /* SeaLibraryStatic.framework */,
+				2BC9B0292958A9350042CA01 /* SeaLibraryStatic.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -96,6 +112,16 @@
 			path = SeaLibrary;
 			sourceTree = "<group>";
 		};
+		2BC9B00B295893B80042CA01 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2BC9B0102958949B0042CA01 /* AppKit.framework */,
+				2BC9B00E295894600042CA01 /* Accelerate.framework */,
+				2BC9B00C295893B80042CA01 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -112,16 +138,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2BC3CE4F293C1CEB005394FE /* Headers */ = {
+		2BC9B0152958A9350042CA01 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2BC3CE50293C1CEB005394FE /* SeaLibrary.h in Headers */,
-				2BC3CE51293C1CEB005394FE /* Constants.h in Headers */,
-				2BC3CE52293C1CEB005394FE /* Bitmap.h in Headers */,
-				2BC3CE53293C1CEB005394FE /* Rects.h in Headers */,
-				2BC3CE54293C1CEB005394FE /* RLE.h in Headers */,
-				2BC3CE55293C1CEB005394FE /* Globals.h in Headers */,
+				2BC9B0162958A9350042CA01 /* SeaLibrary.h in Headers */,
+				2BC9B0172958A9350042CA01 /* Constants.h in Headers */,
+				2BC9B0182958A9350042CA01 /* Bitmap.h in Headers */,
+				2BC9B0192958A9350042CA01 /* Rects.h in Headers */,
+				2BC9B01A2958A9350042CA01 /* RLE.h in Headers */,
+				2BC9B01B2958A9350042CA01 /* Globals.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,14 +172,14 @@
 			productReference = 2B2EFA7028BF1AD3009B225D /* SeaLibrary.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		2BC3CE4E293C1CEB005394FE /* SeaLibraryStatic */ = {
+		2BC9B0142958A9350042CA01 /* SeaLibraryStatic */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2BC3CE5D293C1CEB005394FE /* Build configuration list for PBXNativeTarget "SeaLibraryStatic" */;
+			buildConfigurationList = 2BC9B0262958A9350042CA01 /* Build configuration list for PBXNativeTarget "SeaLibraryStatic" */;
 			buildPhases = (
-				2BC3CE4F293C1CEB005394FE /* Headers */,
-				2BC3CE56293C1CEB005394FE /* Sources */,
-				2BC3CE5A293C1CEB005394FE /* Frameworks */,
-				2BC3CE5B293C1CEB005394FE /* Resources */,
+				2BC9B0152958A9350042CA01 /* Headers */,
+				2BC9B01C2958A9350042CA01 /* Sources */,
+				2BC9B0202958A9350042CA01 /* Frameworks */,
+				2BC9B0242958A9350042CA01 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -161,7 +187,7 @@
 			);
 			name = SeaLibraryStatic;
 			productName = SeaLibrary;
-			productReference = 2BC3CE60293C1CEB005394FE /* SeaLibraryStatic.framework */;
+			productReference = 2BC9B0292958A9350042CA01 /* SeaLibraryStatic.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -192,7 +218,7 @@
 			projectRoot = "";
 			targets = (
 				2B2EFA6F28BF1AD3009B225D /* SeaLibrary */,
-				2BC3CE4E293C1CEB005394FE /* SeaLibraryStatic */,
+				2BC9B0142958A9350042CA01 /* SeaLibraryStatic */,
 			);
 		};
 /* End PBXProject section */
@@ -206,11 +232,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2BC3CE5B293C1CEB005394FE /* Resources */ = {
+		2BC9B0242958A9350042CA01 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2BC3CE5C293C1CEB005394FE /* Seashore.xcconfig in Resources */,
+				2BC9B0252958A9350042CA01 /* Seashore.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,13 +253,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2BC3CE56293C1CEB005394FE /* Sources */ = {
+		2BC9B01C2958A9350042CA01 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2BC3CE57293C1CEB005394FE /* Bitmap.m in Sources */,
-				2BC3CE58293C1CEB005394FE /* Rects.m in Sources */,
-				2BC3CE59293C1CEB005394FE /* RLE.m in Sources */,
+				2BC9B01D2958A9350042CA01 /* Bitmap.m in Sources */,
+				2BC9B01E2958A9350042CA01 /* Rects.m in Sources */,
+				2BC9B01F2958A9350042CA01 /* RLE.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,55 +269,26 @@
 		2B2EFA7528BF1AD3009B225D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACH_O_TYPE = mh_dylib;
-				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.SeaLibrary;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
 		2B2EFA7628BF1AD3009B225D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACH_O_TYPE = mh_dylib;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.SeaLibrary;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
@@ -299,45 +296,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2BF10A4429371771002272AB /* Seashore.xcconfig */;
 			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -345,96 +304,35 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2BF10A4429371771002272AB /* Seashore.xcconfig */;
 			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
-		2BC3CE5E293C1CEB005394FE /* Debug */ = {
+		2BC9B0272958A9350042CA01 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
 				MACH_O_TYPE = staticlib;
-				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.SeaLibrary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
-		2BC3CE5F293C1CEB005394FE /* Release */ = {
+		2BC9B0282958A9350042CA01 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
 				MACH_O_TYPE = staticlib;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.SeaLibrary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
@@ -459,11 +357,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2BC3CE5D293C1CEB005394FE /* Build configuration list for PBXNativeTarget "SeaLibraryStatic" */ = {
+		2BC9B0262958A9350042CA01 /* Build configuration list for PBXNativeTarget "SeaLibraryStatic" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				2BC3CE5E293C1CEB005394FE /* Debug */,
-				2BC3CE5F293C1CEB005394FE /* Release */,
+				2BC9B0272958A9350042CA01 /* Debug */,
+				2BC9B0282958A9350042CA01 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

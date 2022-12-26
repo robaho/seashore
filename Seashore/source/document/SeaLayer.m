@@ -298,32 +298,34 @@
 
 - (void)applyTransform:(NSAffineTransform*)tx
 {
-    IntSize bounds = [self bounds:tx];
+    @synchronized (document.mutex) {
+        IntSize bounds = [self bounds:tx];
 
-    int w = bounds.width;
-    int h = bounds.height;
+        int w = bounds.width;
+        int h = bounds.height;
 
-    if(w==0 || h==0) {
-        nsdata = [NSData data];
-        goto done;
+        if(w==0 || h==0) {
+            nsdata = [NSData data];
+            goto done;
+        }
+
+        CGContextRef ctx = CreateImageContext(bounds);
+
+        unsigned char *new_data = ImageContextGetData(ctx);
+
+        CGContextTranslateCTM(ctx,(w/2),(h/2));
+        CGContextConcatCTM(ctx,[tx cgtransform]);
+        CGContextTranslateCTM(ctx,-(width/2),-(height/2));
+        [self drawContent:ctx];
+        CGContextRelease(ctx);
+
+        unpremultiplyBitmap(SPP, new_data, new_data, w*h);
+        nsdata = [NSData dataWithBytesNoCopy:new_data length:w*h*SPP];
+
+    done:
+        width=w;
+        height=h;
     }
-
-    CGContextRef ctx = CreateImageContext(bounds);
-
-    unsigned char *new_data = ImageContextGetData(ctx);
-
-    CGContextTranslateCTM(ctx,(w/2),(h/2));
-    CGContextConcatCTM(ctx,[tx cgtransform]);
-    CGContextTranslateCTM(ctx,-(width/2),-(height/2));
-    [self drawContent:ctx];
-    CGContextRelease(ctx);
-
-    unpremultiplyBitmap(SPP, new_data, new_data, w*h);
-    nsdata = [NSData dataWithBytesNoCopy:new_data length:w*h*SPP];
-
-done:
-    width=w;
-    height=h;
 }
 
 - (bool)isComplexTransform
@@ -522,54 +524,56 @@ done:
 	unsigned char *newImageData;
 	int i, j, k, destPos, srcPos, newWidth, newHeight;
 	
-	// Allocate an appropriate amount of memory for the new bitmap
-	newWidth = width + left + right;
-	newHeight = height + top + bottom;
-    
-    if(newWidth<=0 || newHeight<=0){
-        nsdata = [NSData data];
-        goto done;
-    }
+    @synchronized(document.mutex) {
+        // Allocate an appropriate amount of memory for the new bitmap
+        newWidth = width + left + right;
+        newHeight = height + top + bottom;
 
-    int len = newWidth * newHeight * SPP;
-	newImageData = malloc(make_128(len));
+        if(newWidth<=0 || newHeight<=0){
+            nsdata = [NSData data];
+            goto done;
+        }
 
-    unsigned char *data = [nsdata bytes];
+        int len = newWidth * newHeight * SPP;
+        newImageData = malloc(make_128(len));
 
-	// Fill the new bitmap with the appropriate values
-	for (j = 0; j < newHeight; j++) {
-		for (i = 0; i < newWidth; i++) {
-			
-			destPos = (j * newWidth + i) * SPP;
-			
-			if (i < left || i >= left + width || j < top || j >= top + height) {
-                // The dimensions are being increased, so need to fill the new area.
-				if (!hasAlpha) {
-                    for (k = 0; k < SPP; k++) {
-                        newImageData[destPos + k] = 255;
+        unsigned char *data = [nsdata bytes];
+
+        // Fill the new bitmap with the appropriate values
+        for (j = 0; j < newHeight; j++) {
+            for (i = 0; i < newWidth; i++) {
+
+                destPos = (j * newWidth + i) * SPP;
+
+                if (i < left || i >= left + width || j < top || j >= top + height) {
+                    // The dimensions are being increased, so need to fill the new area.
+                    if (!hasAlpha) {
+                        for (k = 0; k < SPP; k++) {
+                            newImageData[destPos + k] = 255;
+                        }
+                    }
+                    else {
+                        for (k = 0; k < SPP; k++){
+                            newImageData[destPos + k] = 0;
+                        }
                     }
                 }
                 else {
-                    for (k = 0; k < SPP; k++){
-                        newImageData[destPos + k] = 0;
-                    }
+                    srcPos = ((j - top) * width + (i - left)) * SPP;
+                    memcpy(newImageData+destPos,data+srcPos,SPP);
                 }
-			}
-			else {
-				srcPos = ((j - top) * width + (i - left)) * SPP;
-                memcpy(newImageData+destPos,data+srcPos,SPP);
-			}
-			
-		}
-	}
-	
-    nsdata = [NSData dataWithBytesNoCopy:newImageData length:len];
 
-done:
-	width = newWidth; height = newHeight;
-	xoff -= left; yoff -= top; 
-	
-    image = NULL;
+            }
+        }
+
+        nsdata = [NSData dataWithBytesNoCopy:newImageData length:len];
+
+    done:
+        width = newWidth; height = newHeight;
+        xoff -= left; yoff -= top;
+
+        image = NULL;
+    }
 }
 
 - (CGImageRef)bitmap

@@ -29,9 +29,9 @@ CG_INLINE void merge_pm(unsigned char *top,unsigned char *bottom,unsigned char *
     uint8_t b_g = PM(b>>16,b_a);
     uint8_t b_b = PM(b>>24,b_a);
 
-    uint8_t c_r = (((t_r + (b_r*alpha0+127)/255) * 255)/c_a);
-    uint8_t c_g = (((t_g + (b_g*alpha0+127)/255) * 255)/c_a);
-    uint8_t c_b = (((t_b + (b_b*alpha0+127)/255) * 255)/c_a);
+    uint32_t c_r = (((t_r + (b_r*alpha0+127)/255) * 255)/c_a);
+    uint32_t c_g = (((t_g + (b_g*alpha0+127)/255) * 255)/c_a);
+    uint32_t c_b = (((t_b + (b_b*alpha0+127)/255) * 255)/c_a);
 
     *(uint32_t*)dst = c_a | (c_r<<8) | (c_g<<16) | (c_b<<24);
 }
@@ -42,9 +42,9 @@ CG_INLINE void premultiply_pm(unsigned char *src,unsigned char *dest){
 
     uint32_t t = *(uint32_t*)src;
 
-    uint8_t t_r = PM(t>>8,opacity);
-    uint8_t t_g = PM(t>>16,opacity);
-    uint8_t t_b = PM(t>>24,opacity);
+    uint32_t t_r = PM(t>>8,opacity);
+    uint32_t t_g = PM(t>>16,opacity);
+    uint32_t t_b = PM(t>>24,opacity);
 
     *(uint32_t*)dest = opacity | (t_r<<8) | (t_g<<16) | (t_b<<24);
 }

@@ -4,7 +4,7 @@
 
 - (id)initWithManager:(id<PluginData>)data
 {
-    self = [super initWithManager:data filter:@"CIDisplacementDistortion" points:0 properties:kCI_Scale1000,0];
+    self = [super initWithManager:data filter:@"CIDisplacementDistortion" points:0 bg:TRUE properties:kCI_Scale1000,0];
 
     NSString *directory = [NSString stringWithFormat:@"%@/textures/", [[NSBundle mainBundle] resourcePath]];
     texture = [SeaFileChooser chooserWithTitle:@"Texture: %@" types:[NSImage imageTypes] directory:directory Listener:self];
@@ -20,8 +20,6 @@
     if(texturePath)
         path = texturePath;
 
-    bool opaque = ![pluginData hasAlpha];
-
     CIFilter *filter = [CIFilter filterWithName:@"CIAffineTile"];
     [filter setDefaults];
     [filter setValue:[CIImage imageWithContentsOfURL:[NSURL fileURLWithPath:path]] forKey:@"inputImage"];
@@ -36,12 +34,7 @@
     [filter setValue:texture_output forKey:@"inputDisplacementImage"];
     [filter setValue:[NSNumber numberWithFloat:[self floatValue:kCI_Scale1000]] forKey:@"inputScale"];
 
-    if (opaque) {
-        [self applyFilterBG:filter];
-    }
-    else {
-        [self applyFilter:filter];
-    }
+    [self applyFilter:filter];
 }
 
 @end
