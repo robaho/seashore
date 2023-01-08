@@ -490,14 +490,40 @@
 - (NSImage *)thumbnail
 {
     if(thumbnail==NULL){
-        NSImage *tmp = [self image];
-        thumbnail = [NSImage imageWithSize:[image size] flipped:FALSE drawingHandler:^BOOL(NSRect dstRect) {
-            float max_scale = MaxScale(CGContextGetCTM([[NSGraphicsContext currentContext] graphicsPort]));
+
+        int tw = 256,th = 256;
+
+        float wscale = tw/(float)width;
+        float hscale = th/(float)height;
+        float scale = MIN(wscale,hscale);
+
+        int w = width*scale;
+        int h = height*scale;
+        unsigned char *_data = malloc(w*h*4);
+
+        vImage_Buffer src = {.data=[self data],.rowBytes=width*4,.width=width,.height=height};
+        vImage_Buffer dst = {.data=_data,.rowBytes=w*4,.width=w,.height=h};
+
+        vImageScale_ARGB8888(&src, &dst, NULL, kvImageNoFlags);
+        vImagePremultiplyData_ARGB8888(&dst, &dst, kvImageNoFlags);
+        vImage_CGImageFormat format = {.bitsPerComponent=8,.bitsPerPixel=8*4,.bitmapInfo=kCGImageAlphaPremultipliedFirst};
+
+        vImage_Error error;
+        CGImageRef _scaled = vImageCreateCGImageFromBuffer(&dst, &format, NULL, NULL, kvImageNoFlags, &error);
+        free(_data);
+
+        NSImage *scaled = [[NSImage alloc] initWithCGImage:_scaled size:NSMakeSize(w,h)];
+        CGImageRelease(_scaled);
+
+        thumbnail = [NSImage imageWithSize:NSMakeSize(256,256) flipped:FALSE drawingHandler:^BOOL(NSRect dstRect) {
             [[NSGraphicsContext currentContext] setShouldAntialias:FALSE];
             [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
-            [tmp drawInRect:dstRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+            CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
+            CGRect r = CGRectMake((tw-w)/2, (th-h)/2, w, h);
+            [scaled drawInRect:r fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+            float max_scale = MaxScale(CGContextGetCTM(ctx));
             CGFloat dashes[] = {2/max_scale,4/max_scale};
-            NSBezierPath *path = [NSBezierPath bezierPathWithRect:dstRect];
+            NSBezierPath *path = [NSBezierPath bezierPathWithRect:r];
             [[NSColor controlTextColor] set];
             [path setLineDash:dashes count:2 phase:0];
             [path setLineWidth:2/max_scale];
@@ -604,7 +630,7 @@
     if(image==NULL){
         CGImageRef img = [self bitmap];
         image = [[NSImage alloc] initWithCGImage:img size:NSZeroSize];
-        [image setCacheMode:NSImageCacheAlways];
+//        [image setCacheMode:NSImageCacheAlways];
         CGImageRelease(img);
     }
     return image;

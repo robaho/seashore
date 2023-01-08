@@ -74,9 +74,8 @@ void DumpObjcMethods(Class clz) {
     }
 
     renderSem = dispatch_semaphore_create(0);
-    SeaWhiteboard *ref = self;
     dispatch_async(queue, ^{
-        [ref renderLoop];
+        [self renderLoop];
     });
 
   [self readjust];

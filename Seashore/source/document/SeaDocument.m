@@ -58,19 +58,10 @@
     BOOL dopaque;
     
     // Initialize superclass first
-    if (![super init])
+    if (![self init])
         return NULL;
     
     [self setFileType:typeName];
-    
-    // Reset uniqueLayerID
-    uniqueLayerID = -1;
-
-    // Set data members appropriately
-    whiteboard = NULL;
-    
-    // Set the measure style
-    measureStyle = [(SeaDocumentController *)[NSDocumentController sharedDocumentController] units];
     
     // Create contents
     dtype = [(SeaDocumentController *)[NSDocumentController sharedDocumentController] type];
@@ -102,17 +93,8 @@
     }
     
 	// Initialize superclass first
-	if (![super init])
+	if (![self init])
 		return NULL;
-	
-	// Reset uniqueLayerID
-	uniqueLayerID = -1;
-
-	// Set data members appropriately
-	whiteboard = NULL;
-	
-	// Set the measure style
-	measureStyle = [(SeaPrefs *)[SeaController seaPrefs] newUnits];
 	
 	// Create contents
 	contents = [[SeaContent alloc] initFromPasteboardWithDocument:self];
@@ -125,6 +107,8 @@
 
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
+    
     if (@available(macOS 10.13.4, *)) {
         exporters = [NSArray arrayWithObjects:
                      gifExporter,

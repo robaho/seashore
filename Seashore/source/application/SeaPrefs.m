@@ -388,7 +388,6 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
     [layerBoundaryLinesCheckbox setState:layerBoundaryLines];
 	[guideColorMenu selectItemAtIndex:guideColor];
     [undoLevelsInput setIntValue:undoLevels];
-    [openUntitledCheckbox setState:openUntitled];
     [canvasShadowCheckbox setState:showCanvasShadow];
 
 	// Display the preferences dialog

@@ -14,6 +14,7 @@
 - (void)awakeFromNib
 {
     [gColorPanel setIsVisible:[gUserDefaults boolForKey:@"colorpanel visible"]];
+    [gColorPanel setShowsAlpha:FALSE];
     if([gColorPanel isVisible]) {
         [fgWell activate:TRUE];
     }

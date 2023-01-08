@@ -161,18 +161,16 @@ id seaController;
 	[document showWindows];
 }
 
-- (void)registerForTermination:(id)object
+- (void)registerForTermination:(id<SeaTerminate>)object
 {
     terminationObjects = [terminationObjects arrayByAddingObject:object];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)notification
 {
-	int i;
-	
-	// Inform those that wish to know
-    for (i = 0; i < [terminationObjects count]; i++) {
-        id<SeaTerminate> t = [terminationObjects objectAtIndex:i];
+    [gUserDefaults setBool:[gColorPanel isVisible] forKey:@"colorpanel visible"];
+
+    for (id<SeaTerminate> t in terminationObjects) {
 		[t terminate];
     }
 	
