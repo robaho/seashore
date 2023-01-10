@@ -292,7 +292,7 @@
         int s0 = (int)floor(stOffset + 0.5);
         int sn = (int)floor(stOffset + stFactor + 0.5);
 
-        double t0 = (s0 - stOffset) / stFactor;
+        t0 = (s0 - stOffset) / stFactor;
         double tn = (sn - stOffset) / stFactor;
 
         int x = (int)floor(lastPoint.x + t0 * deltaX);
