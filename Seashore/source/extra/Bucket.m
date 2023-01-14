@@ -9,7 +9,6 @@
 #define alphaPos 0
 
 extern dispatch_queue_t queue;
-extern dispatch_group_t group;
 
 inline BOOL shouldFill(fillContext *ctx,IntPoint point)
 {
@@ -241,6 +240,7 @@ void textureFill(CGContextRef dst, CGContextRef textureCtx, IntRect rect)
         return;
     }
 
+    dispatch_group_t group = dispatch_group_create();
     int h = MAX(rect.size.height/cores,1);
     for(int row=0;row<rect.size.height;row+=h) {
         IntRect rect0 = IntMakeRect(rect.origin.x,row+rect.origin.y,rect.size.width,MIN(h,rect.size.height-row));
@@ -290,6 +290,7 @@ void cloneFill(CGContextRef dst,CGContextRef srcCtx,IntRect rect,IntPoint offset
         return;
     }
 
+    dispatch_group_t group = dispatch_group_create();
     int h = MAX(rect.size.height/cores,1);
     for(int row=0;row<rect.size.height;row+=h) {
         IntRect rect0 = IntMakeRect(rect.origin.x,row+rect.origin.y,rect.size.width,MIN(h,rect.size.height-row));

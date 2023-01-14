@@ -67,8 +67,10 @@
 - (void)setBounds:(IntRect)bounds
 {
     IntRect dirty = textRect;
-    if(edittingLayer)
+    if(edittingLayer) {
+        dirty = [[self textLayer] globalRect];
         [[self textLayer] setBounds:bounds];
+    }
     textRect = bounds;
     dirty = IntSumRects(dirty,textRect);
     [[document helpers] layerOffsetsChanged:dirty];
@@ -159,12 +161,34 @@
                                        forRect: textRect
                                        andMask: NULL];
 
-    [self setBounds:dragged];
+    IntRect dirty = textRect;
+    textRect = dragged;
+    dirty = IntSumRects(dirty,textRect);
+
+    [[document helpers] selectionChanged:dirty];
+
+    if(edittingLayer) {
+        if(textRect.size.width == [[self textLayer] globalRect].size.width &&
+           textRect.size.height == [[self textLayer] globalRect].size.height) {
+            [self setBounds:textRect];
+        } else {
+            // only resize on interval to allow smoother dragging
+            [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(updateBounds) object:nil];
+            [self performSelector:@selector(updateBounds) withObject:nil afterDelay:.05 inModes:@[NSRunLoopCommonModes]];
+        }
+    }
+
+}
+
+- (void)updateBounds
+{
+    [self setBounds:textRect];
 }
 
 - (void)mouseUpAt:(IntPoint)where withEvent:(NSEvent *)event
 {
     [self mouseUpAt:where forRect:IntZeroRect andMask:NULL];
+    [self setBounds:textRect];
 
     SeaTextLayer *layer = [self textLayer];
 

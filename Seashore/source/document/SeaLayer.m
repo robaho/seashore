@@ -607,7 +607,7 @@
     if(![nsdata length])
         return NULL;
 
-    CGDataProviderRef dp = CGDataProviderCreateWithData(NULL,[nsdata bytes],width*height*SPP,NULL);
+    CGDataProviderRef dp = CGDataProviderCreateWithCFData((__bridge CFDataRef)nsdata);
     CGImageRef image = CGImageCreate(width,height,8,8*SPP,width*SPP,COLOR_SPACE,kCGImageAlphaFirst,dp,nil,false,0);
     CGDataProviderRelease(dp);
     return image;

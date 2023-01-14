@@ -215,18 +215,20 @@
     int oldWidth = width;
     int oldHeight = height;
 
-    xoff = bounds.origin.x;
-    yoff = bounds.origin.y;
-    width = MAX(bounds.size.width,1);
-    height = MAX(bounds.size.height,1);
+    @synchronized (document.mutex) {
+        xoff = bounds.origin.x;
+        yoff = bounds.origin.y;
+        width = MAX(bounds.size.width,1);
+        height = MAX(bounds.size.height,1);
 
-    if(oldWidth!=width || oldHeight!=height) {
-        unsigned char *new_data = calloc(width*height*SPP,1);
-        CHECK_MALLOC(new_data);
+        if(oldWidth!=width || oldHeight!=height) {
+            unsigned char *new_data = calloc(width*height*SPP,1);
+            CHECK_MALLOC(new_data);
 
-        nsdata = [NSData dataWithBytesNoCopy:new_data length:width*height*SPP];
-        [self updateBitmap];
-        [[document whiteboard] readjustLayer];
+            nsdata = [NSData dataWithBytesNoCopy:new_data length:width*height*SPP];
+            [self updateBitmap];
+            [[document whiteboard] readjustLayer];
+        }
     }
 }
 

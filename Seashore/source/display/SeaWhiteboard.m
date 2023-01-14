@@ -21,7 +21,6 @@
 #import <objc/runtime.h>
 
 dispatch_queue_t queue;
-dispatch_group_t group;
 
 #define TILE_SIZE 64
 
@@ -69,8 +68,7 @@ void DumpObjcMethods(Class clz) {
     proofProfile = NULL;
 
     if (queue == NULL) {
-        queue = dispatch_queue_create("SeaWhiteboard", DISPATCH_QUEUE_CONCURRENT);
-        group = dispatch_group_create();
+        queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH,0);
     }
 
     renderSem = dispatch_semaphore_create(0);
@@ -310,7 +308,7 @@ void DumpObjcMethods(Class clz) {
     int lw = layer_width;
     int lh = layer_height;
 
-    CGDataProviderRef dp = CGDataProviderCreateWithData(NULL,[data bytes],lw*lh*SPP,NULL);
+    CGDataProviderRef dp = CGDataProviderCreateWithCFData((__bridge CFDataRef)data);
     CGImageRef image = CGImageCreate(lw,lh,8,8*SPP,lw*SPP,COLOR_SPACE,channel==kAlphaChannelView ? kCGImageAlphaFirst : kCGImageAlphaNoneSkipFirst,dp,nil,false,0);
     CGDataProviderRelease(dp);
 
@@ -520,7 +518,7 @@ static void patternCallback(void *info, CGContextRef context) {
     CGContextRelease(ctx);
 
     if(rendered) {
-        CFRunLoopPerformBlock(CFRunLoopGetMain(), kCFRunLoopCommonModes, ^{
+        dispatch_async(dispatch_get_main_queue(),^{
             [self setNeedsDisplayInRect:viewDirtyRect];
         });
     }
@@ -775,13 +773,14 @@ static void patternCallback(void *info, CGContextRef context) {
                 dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
             }
 
-            CFRunLoopPerformBlock(CFRunLoopGetMain(), kCFRunLoopCommonModes, ^{
-                [[self->document docView] setNeedsDisplayInDocumentRect:dirty:16];
-            });
-
             if(LOG_PERFORMANCE)
                 NSLog(@"whiteboard drawInData %ld %@",getCurrentMillis()-start,NSStringFromIntRect(r));
         }
+
+        // always need to update the extras view since bounds may be outside the image canvas
+        CFRunLoopPerformBlock(CFRunLoopGetMain(), kCFRunLoopCommonModes, ^{
+            [[self->document docView] setNeedsDisplayInDocumentRect:dirty:16];
+        });
     }
 }
 

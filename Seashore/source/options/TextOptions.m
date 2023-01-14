@@ -255,4 +255,9 @@
     return false;
 }
 
+- (int)aspectType
+{
+    return kNoAspectType;
+}
+
 @end

@@ -78,8 +78,13 @@ inline static NSColor* secondaryLabelColor(void)
 -(void)setColorValue:(NSColor *)color
 {
     [value setHidden:TRUE];
-    [colorWell setHidden:FALSE];
-    [colorWell setColor:color];
+
+    if(color) {
+        [colorWell setHidden:FALSE];
+        [colorWell setColor:color];
+    } else {
+        [colorWell setHidden:TRUE];
+    }
     [self layout];
     [self setNeedsDisplay:TRUE];
 }

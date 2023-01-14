@@ -93,7 +93,12 @@
 
 - (void)setColorValue:(NSColor*)value
 {
-    [colorWell setColor:value];
+    if(value) {
+        [colorWell setColor:value];
+        [colorWell setHidden:FALSE];
+    } else {
+        [colorWell setHidden:TRUE];
+    }
 }
 
 - (NSColor*)colorValue

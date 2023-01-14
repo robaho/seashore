@@ -108,7 +108,7 @@
         [blueValue setStringValue:@""];
         [alphaValue setStringValue:@""];
         [radiusValue setStringValue:@""];
-        [colorWell setColorValue:[NSColor colorWithCalibratedWhite: 0 alpha:1.0]];
+        [colorWell setColorValue:NULL];
         return;
     }
 
@@ -197,8 +197,9 @@
         [greenValue setStringValue:@""];
         [blueValue setStringValue:@""];
         [alphaValue setStringValue:@""];
+        [radiusValue setStringValue:@""];
 
-        [colorWell setColorValue: [NSColor colorWithCalibratedWhite: 0 alpha:1.0]];
+        [colorWell setColorValue:NULL];
     }
 }
 
