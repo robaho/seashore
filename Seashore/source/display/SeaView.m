@@ -79,7 +79,7 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
     magnifyTimer = NULL;
     magnifyFactor = 1.0;
     tabletEraser = 0;
-    toolMemory = kEyedropTool;
+    toolMemory = -1;
     scrollZoom = lastTrigger = 0.0;
     
     // Set the delta
@@ -795,7 +795,10 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
             break;
             case '\t':
             case 'z':
-                [[document toolboxUtility] changeToolTo:toolMemory];
+                if(toolMemory!=-1) {
+                    [[document toolboxUtility] changeToolTo:toolMemory];
+                    toolMemory=-1;
+                }
             break;
         }
     }
