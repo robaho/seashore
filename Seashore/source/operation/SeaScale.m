@@ -231,28 +231,26 @@
 
     @synchronized (document.mutex) {
         [self scaleToWidth:width height:height xorg: 0 yorg: 0 moving: NO interpolation:interpolation index:index undoRecord:undoRecord];
+
+        [[[document undoManager] prepareWithInvocationTarget:self] undoScale:undoRecord];
+
+        // Clear selection
+        [[document selection] clearSelection];
+
+        // Do appropriate updating
+        if (index == kAllLayers)
+            [[document helpers] boundariesAndContentChanged];
+        else
+            [[document helpers] layerBoundariesChanged:index];
     }
-
-	[[[document undoManager] prepareWithInvocationTarget:self] undoScale:undoRecord];
-
-	// Clear selection
-	[[document selection] clearSelection];
-	
-	// Do appropriate updating
-	if (index == kAllLayers)
-		[[document helpers] boundariesAndContentChanged];
-	else
-		[[document helpers] layerBoundariesChanged:index];
 }
 
 - (void)scaleToWidth:(int)width height:(int)height xorg:(int)xorg yorg:(int)yorg interpolation:(int)interpolation index:(int)index
 {
     ScaleUndoRecord *undoRecord = [[ScaleUndoRecord alloc] init];
 	
-    @synchronized (document.mutex) {
-        [self scaleToWidth:width height:height xorg: xorg yorg: yorg moving: YES interpolation:interpolation index:index undoRecord:undoRecord];
-    }
-	
+    [self scaleToWidth:width height:height xorg: xorg yorg: yorg moving: YES interpolation:interpolation index:index undoRecord:undoRecord];
+
 	[[[document undoManager] prepareWithInvocationTarget:self] undoScale:undoRecord];
 
 	// Clear selection
