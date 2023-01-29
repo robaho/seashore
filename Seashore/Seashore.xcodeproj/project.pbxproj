@@ -74,7 +74,7 @@
 		2BDD5E5C2208A05D00F9BC74 /* RecentsUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BDD5E5B2208A05D00F9BC74 /* RecentsUtility.m */; };
 		2BDD5E5F2208AE3200F9BC74 /* RecentsItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BDD5E5E2208AE3200F9BC74 /* RecentsItem.m */; };
 		2BDD5E63220F33A300F9BC74 /* pencilLargeTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BDD5E62220F33A300F9BC74 /* pencilLargeTemplate.png */; };
-		2BDE5B63298738F0000267E2 /* layer-infoTemplate@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BDE5B62298738F0000267E2 /* layer-infoTemplate@2x.png */; };
+		2BDE5B6529873C1A000267E2 /* layer-infoTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BDE5B6429873C1A000267E2 /* layer-infoTemplate.png */; };
 		2BE0CC9D294FBFE3001A05AD /* SeaComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE0CC9B294FBFE3001A05AD /* SeaComponents.framework */; };
 		2BE0CC9E294FBFE3001A05AD /* SeaComponents.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE0CC9B294FBFE3001A05AD /* SeaComponents.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BE0CC9F294FBFE3001A05AD /* SeaLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE0CC9C294FBFE3001A05AD /* SeaLibrary.framework */; };
@@ -621,7 +621,7 @@
 		2BDD5E5D2208AE3200F9BC74 /* RecentsItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecentsItem.h; sourceTree = "<group>"; };
 		2BDD5E5E2208AE3200F9BC74 /* RecentsItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecentsItem.m; sourceTree = "<group>"; };
 		2BDD5E62220F33A300F9BC74 /* pencilLargeTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pencilLargeTemplate.png; sourceTree = "<group>"; };
-		2BDE5B62298738F0000267E2 /* layer-infoTemplate@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "layer-infoTemplate@2x.png"; sourceTree = "<group>"; };
+		2BDE5B6429873C1A000267E2 /* layer-infoTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "layer-infoTemplate.png"; sourceTree = "<group>"; };
 		2BE0CC9B294FBFE3001A05AD /* SeaComponents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SeaComponents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BE0CC9C294FBFE3001A05AD /* SeaLibrary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SeaLibrary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BE0CCA2294FC8D2001A05AD /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
@@ -1863,7 +1863,7 @@
 		F5FE2C7003C43530013856BA /* layers */ = {
 			isa = PBXGroup;
 			children = (
-				2BDE5B62298738F0000267E2 /* layer-infoTemplate@2x.png */,
+				2BDE5B6429873C1A000267E2 /* layer-infoTemplate.png */,
 				2B88401F2894B6C500E5EF28 /* textLayerTemplate.png */,
 				2B7C12E027FCFCE800A2D658 /* linkTemplate.png */,
 				2BB338C323C1119600647008 /* toFitTemplate.png */,
@@ -1996,7 +1996,6 @@
 				2BED227321F3FB40005B496C /* polygonTemplate.png in Resources */,
 				A8EDF0CB078959C80022BB31 /* brush-cursor.png in Resources */,
 				A8EDF0CD078959C80022BB31 /* bucket-cursor.png in Resources */,
-				2BDE5B63298738F0000267E2 /* layer-infoTemplate@2x.png in Resources */,
 				2BCD7A14286281F7007EB89B /* Support Seashore.rtf in Resources */,
 				A8EDF0D0078959C80022BB31 /* brushes in Resources */,
 				2BC3CE6A293C47BA005394FE /* star.fill@2x.png in Resources */,
@@ -2032,6 +2031,7 @@
 				A86C61F807C834EF00ABCC82 /* help-bigTemplate.png in Resources */,
 				A8CAF01E0815E55300A6D5A6 /* vMarkerTemplate.png in Resources */,
 				A8CAF0260815E56000A6D5A6 /* hMarkerTemplate.png in Resources */,
+				2BDE5B6529873C1A000267E2 /* layer-infoTemplate.png in Resources */,
 				2BED227121F3FB40005B496C /* cropTemplate.png in Resources */,
 				A89C5138086E7F8E0032AEBE /* vStatMarkerTemplate.png in Resources */,
 				2B80E9D42435689B0046979F /* PrintPanelAccessory.xib in Resources */,
