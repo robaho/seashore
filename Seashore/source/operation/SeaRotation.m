@@ -93,7 +93,7 @@ static inline float mod_float(float value, float divisor)
 	undoRecord->isRotated = YES;
 	undoRecord->withTrim = trim;
 	[[[document undoManager] prepareWithInvocationTarget:self] undoRotation:undoRecord];
-	[activeLayer setRotation:degrees interpolation:NSImageInterpolationHigh withTrim:trim];
+	[activeLayer setRotation:degrees withTrim:trim];
 	[[document selection] clearSelection];
 	if (!trim && ![activeLayer hasAlpha]) {
 		undoRecord->disableAlpha = YES;
@@ -129,7 +129,7 @@ static inline float mod_float(float value, float divisor)
 	else {
 		// If not rotated...
 		layer = [contents layer:undoRecord->index];
-		[layer setRotation:undoRecord->rotation interpolation:NSImageInterpolationHigh withTrim:undoRecord->withTrim];
+		[layer setRotation:undoRecord->rotation withTrim:undoRecord->withTrim];
 		if (undoRecord->withTrim) [[document selection] selectOpaque];
 		else [[document selection] clearSelection];
 		[[document helpers] layerBoundariesChanged:kActiveLayer];

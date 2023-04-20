@@ -19,8 +19,6 @@
 				The new X origin that the layer is scaled to.
 	@field		scaledYOrg
 				The new Y origin that the layer is scaled to.
-	@field		interpolation
-				The interpolation style to be used when scaling.
 	@field		isScaled
 				YES if the layer or document is currently scaled, NO otherwise.
 	@field		indicies
@@ -52,7 +50,6 @@
 	int scaledHeight;
 	int scaledXOrg;
 	int scaledYOrg;
-	int interpolation;
 	BOOL isMoving;
 	BOOL isScaled;
 	NSMutableArray<ScaleSnapshotUndoRecord*> *records;
@@ -92,9 +89,6 @@
 
 	// The options
     IBOutlet id keepProportions;
-	
-	// The interpolation style to be used for scaling. The "tag" for each item is the associated NSImageInterpolation value.
-	IBOutlet id interpolationPopup;
 	
 	// A label specifying the layer or document being scaled
     IBOutlet id selectionLabel;
@@ -141,29 +135,23 @@
 - (IBAction)cancel:(id)sender;
 
 /*!
-	@method		scaleToWidth:height:interpolation:index:
+	@method		scaleToWidth:height:index:
 	@discussion	Scales the given layer (or entire document) so that it matches
-				the specified height and width. Interpolation (allowing for
-				smoother scaling) is used as specified (handles updates and
-				undos).
+				the specified height and width
 	@param		width
 				The revised width of the document or layer.
 	@param		height
 				The revised height of the document or layer.
-	@param		interpolation
-				The interpolation style to be used.
 	@param		index
 				The index of the layer to be scaled (or kAllLayers to indicate
 				the entire document).
 */
-- (void)scaleToWidth:(int)width height:(int)height interpolation:(int)interpolation index:(int)index;
+- (void)scaleToWidth:(int)width height:(int)height index:(int)index;
 
 /*!
-	@method		scaleToWidth:height:xorg:yorg:interpolation:index:
+	@method		scaleToWidth:height:xorg:yorg:index:
 	@discussion	Scales the given layer (or entire document) so that it matches
-				the specified height and width. Interpolation (allowing for
-				smoother scaling) is used as specified (handles updates and
-				undos).
+				the specified height and width.
 	@param		width
 				The revised width of the document or layer.
 	@param		height
@@ -172,13 +160,11 @@
 				The x origin of the newly scaled layer.
 	@param		yorg
 				The y origin of the newly scaled layer.
-	@param		interpolation
-				The interpolation style to be used.
 	@param		index
 				The index of the layer to be scaled (or kAllLayers to indicate
 				the entire document).
 */
-- (void)scaleToWidth:(int)width height:(int)height xorg:(int)xorg yorg:(int)yorg interpolation:(int)interpolation index:(int)index;
+- (void)scaleToWidth:(int)width height:(int)height xorg:(int)xorg yorg:(int)yorg index:(int)index;
 
 /*!
 	@method		togglePreserveSize:

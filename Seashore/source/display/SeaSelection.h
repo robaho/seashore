@@ -282,10 +282,8 @@ enum {
 				The scaling to be done horizontally on the selection.
 	@param		yScale
 				The scaling to be done vertically on the selection.
-	@param		interpolation
-				The interpolation to be used when scaling.
 */
-- (void)scaleSelectionHorizontally:(float)xScale vertically:(float)yScale interpolation:(int)interpolation;
+- (void)scaleSelectionHorizontally:(float)xScale vertically:(float)yScale;
 
 /*!
 	@method		scaleSelectionTo:from:interpolation:usingMask:
@@ -294,12 +292,10 @@ enum {
 				The rectangle of the new selection.
 	@param		oldRect
 				The rectangle of the old selection.
-	@param		interpolation
-				The interpolation to be used when scaling.
 	@param		oldMask
 				The mask that should be scaled to the newRect.
 */
-- (void)scaleSelectionTo:(IntRect)newRect from:(IntRect)oldRect interpolation:(int)interpolation usingMask:(unsigned char*)oldMask;
+- (void)scaleSelectionTo:(IntRect)newRect from:(IntRect)oldRect usingMask:(unsigned char*)oldMask;
 
 /*!
 	@method		trimSelection

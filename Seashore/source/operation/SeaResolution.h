@@ -77,7 +77,6 @@
 /*!
 	@method		togglePreserveSize:
 	@discussion	Called after the user checks/unchecks the preserve size checkbox
-				enabling/disabling the interpolation pop-up menu as appropriate.
 	@param		sender
 				Ignored.
 */

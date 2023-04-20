@@ -669,7 +669,7 @@
     maskRect = IntOffsetRect(maskRect,offset.x,offset.y);
 }
 
-- (void)scaleSelectionHorizontally:(float)xScale vertically:(float)yScale interpolation:(int)interpolation
+- (void)scaleSelectionHorizontally:(float)xScale vertically:(float)yScale
 {
 	IntRect newRect;
 	
@@ -682,11 +682,11 @@
 		newRect.origin.y *= yScale;
 		newRect.size.width *= xScale;
 		newRect.size.height *= yScale;
-		[self scaleSelectionTo: newRect from: rect interpolation: interpolation usingMask: NULL];
+		[self scaleSelectionTo: newRect from: rect usingMask: NULL];
 	}
 }
 
-- (void)scaleSelectionTo:(IntRect)newRect from: (IntRect)oldRect interpolation:(int)interpolation usingMask: (unsigned char*)oldMask
+- (void)scaleSelectionTo:(IntRect)newRect from: (IntRect)oldRect usingMask: (unsigned char*)oldMask
 {
 	BOOL hFlip = NO;
 	BOOL vFlip = NO;
@@ -726,7 +726,7 @@
             dest.width=newRect.size.width;
             dest.rowBytes=newRect.size.width;
 
-            vImageScale_Planar8(&src, &dest, NULL, kvImageNoFlags);
+            vImageScale_Planar8(&src, &dest, NULL,kvImageHighQualityResampling);
 
             if (vFlip) {
                 vImageVerticalReflect_Planar8(&dest, &dest,0);

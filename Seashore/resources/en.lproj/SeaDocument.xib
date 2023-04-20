@@ -1959,22 +1959,6 @@ Gw
                                         <outlet property="nextKeyView" destination="560" id="1097"/>
                                     </connections>
                                 </textField>
-                                <popUpButton toolTip="Specifies the image smoothing style used with scaling" verticalHuggingPriority="750" fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="564">
-                                    <rect key="frame" x="62" y="16" width="179" height="22"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <popUpButtonCell key="cell" type="push" title="No Interpolation" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="clipping" state="on" borderStyle="borderAndBezel" tag="1" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="570" id="17025" userLabel="InterpolationMenu">
-                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                        <font key="font" metaFont="message" size="11"/>
-                                        <menu key="menu" title="OtherViews" id="561">
-                                            <items>
-                                                <menuItem title="No Interpolation" state="on" tag="1" id="570"/>
-                                                <menuItem title="Low Interpolation" tag="2" id="565" userLabel="Low Interpolation"/>
-                                                <menuItem title="Medium Interpolation" tag="4" id="567" userLabel="Medium Interpolation"/>
-                                                <menuItem title="High Interpolation" tag="3" id="are-iy-Pvz" userLabel="High Interpolation"/>
-                                            </items>
-                                        </menu>
-                                    </popUpButtonCell>
-                                </popUpButton>
                                 <textField toolTip="Percentage to scale image by vertically" verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="566">
                                     <rect key="frame" x="118" y="134" width="68" height="22"/>
                                     <autoresizingMask key="autoresizingMask"/>
@@ -2131,7 +2115,6 @@ Gw
                 <outlet property="document" destination="-2" id="219"/>
                 <outlet property="heightUnits" destination="577" id="605"/>
                 <outlet property="heightValue" destination="563" id="588"/>
-                <outlet property="interpolationPopup" destination="564" id="589"/>
                 <outlet property="keepProportions" destination="560" id="590"/>
                 <outlet property="presetsMenu" destination="583" id="599"/>
                 <outlet property="selectionLabel" destination="216" id="217"/>
@@ -3405,7 +3388,7 @@ DQ
         <image name="eyedropTemplate" width="24" height="24"/>
         <image name="gradientTemplate" width="24" height="24"/>
         <image name="lassoTemplate" width="24" height="24"/>
-        <image name="layer-infoTemplate" width="18" height="18"/>
+        <image name="layer-infoTemplate" width="16" height="16"/>
         <image name="moveTemplate" width="24" height="24"/>
         <image name="newTemplate" width="32" height="23"/>
         <image name="normalTemplate" width="32" height="23"/>

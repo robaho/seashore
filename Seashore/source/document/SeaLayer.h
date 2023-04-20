@@ -243,13 +243,10 @@
 				directly impact the bitmap.
 	@param		degrees
 				The number of degrees to rotate by.
-	@param		interpolation
-				The interpolation style to be used with rotation (see
-				NSGraphicsContext).
 	@param		trim
 				YES if the layer should be trimmed afterwards, NO otherwise.
 */
-- (void)setRotation:(float)degrees interpolation:(int)interpolation withTrim:(BOOL)trim;
+- (void)setRotation:(float)degrees withTrim:(BOOL)trim;
 
 /*!
 	@method		visible

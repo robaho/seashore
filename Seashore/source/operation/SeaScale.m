@@ -82,17 +82,6 @@
 	// Set the options appropriately
 	[keepProportions setState:NSOnState];
 	
-	// Set the interpolation style
-	if ([gUserDefaults objectForKey:@"interpolation"] == NULL) {
-		value = 3;
-	}
-	else {
-		value = [gUserDefaults integerForKey:@"interpolation"];
-		if (value < 0 || value >= [interpolationPopup numberOfItems])
-            value = 3;
-	}
-    [interpolationPopup selectItemAtIndex:value];
-	
 	// Show the sheet
 	[NSApp beginSheet:sheet modalForWindow:[document window] modalDelegate:NULL didEndSelector:NULL contextInfo:NULL];
 }
@@ -112,10 +101,7 @@
     [NSApp endSheet:[sender window]];
     [sheet orderOut:self];
     
-	// End the sheet
-	[gUserDefaults setInteger:[interpolationPopup indexOfSelectedItem] forKey:@"interpolation"];
-
-	// Parse width and height	
+	// Parse width and height
 	newWidth = PixelsFromFloat([widthValue floatValue],units,xres);
 	newHeight = PixelsFromFloat([heightValue floatValue],units,yres);
 	
@@ -129,10 +115,8 @@
 		if (newWidth == [(SeaContent *)[contents activeLayer] width] && newHeight == [(SeaContent *)[contents activeLayer] height]) { return; }
 	}
     
-    NSImageInterpolation interpolation = [interpolationPopup selectedTag];
-	
 	// Make the changes
-	[self scaleToWidth:newWidth height:newHeight interpolation:interpolation index:workingIndex];
+	[self scaleToWidth:newWidth height:newHeight index:workingIndex];
 }
 
 - (IBAction)cancel:(id)sender
@@ -141,7 +125,7 @@
 	[sheet orderOut:self];
 }
 
-- (void)scaleToWidth:(int)width height:(int)height xorg:(int)xorg yorg:(int)yorg moving:(BOOL)isMoving interpolation:(int)interpolation index:(int)index undoRecord:(ScaleUndoRecord *)undoRecord
+- (void)scaleToWidth:(int)width height:(int)height xorg:(int)xorg yorg:(int)yorg moving:(BOOL)isMoving index:(int)index undoRecord:(ScaleUndoRecord *)undoRecord
 {
     SeaContent *contents = [document contents];
     SeaLayer *curLayer;
@@ -175,7 +159,6 @@
 		undoRecord->scaledYOrg = yorg;
 		undoRecord->isMoving = isMoving;
 		undoRecord->index = index;
-		undoRecord->interpolation = interpolation;
 		undoRecord->isScaled = YES;
 	}
 
@@ -186,7 +169,7 @@
 	// Determine the scaling rate
 	xScale = ((float)width / (float)oldWidth);
 	yScale = ((float)height / (float)oldHeight);
-	[[document selection] scaleSelectionHorizontally:xScale vertically:yScale interpolation:interpolation];
+	[[document selection] scaleSelectionHorizontally:xScale vertically:yScale];
 
 	// Go through each layer
 	for (whichLayer = 0; whichLayer < layerCount; whichLayer++) {
@@ -206,7 +189,7 @@
 			}
 						
 			// Change the layer's size
-			[curLayer scaleX:xScale scaleY:yScale rotate:0];
+            [curLayer scaleX:xScale scaleY:yScale rotate:0];
 			if (index == kAllLayers){
 				[curLayer setOffsets:IntMakePoint([curLayer xoff] * xScale, [curLayer yoff] * yScale)];
 			}else if(isMoving) {
@@ -225,12 +208,12 @@
 }
 
 
-- (void)scaleToWidth:(int)width height:(int)height interpolation:(int)interpolation index:(int)index
+- (void)scaleToWidth:(int)width height:(int)height index:(int)index
 {
     ScaleUndoRecord *undoRecord = [[ScaleUndoRecord alloc] init];
 
     @synchronized (document.mutex) {
-        [self scaleToWidth:width height:height xorg: 0 yorg: 0 moving: NO interpolation:interpolation index:index undoRecord:undoRecord];
+        [self scaleToWidth:width height:height xorg: 0 yorg: 0 moving: NO index:index undoRecord:undoRecord];
 
         [[[document undoManager] prepareWithInvocationTarget:self] undoScale:undoRecord];
 
@@ -245,11 +228,11 @@
     }
 }
 
-- (void)scaleToWidth:(int)width height:(int)height xorg:(int)xorg yorg:(int)yorg interpolation:(int)interpolation index:(int)index
+- (void)scaleToWidth:(int)width height:(int)height xorg:(int)xorg yorg:(int)yorg index:(int)index
 {
     ScaleUndoRecord *undoRecord = [[ScaleUndoRecord alloc] init];
 	
-    [self scaleToWidth:width height:height xorg: xorg yorg: yorg moving: YES interpolation:interpolation index:index undoRecord:undoRecord];
+    [self scaleToWidth:width height:height xorg: xorg yorg: yorg moving:YES index:index undoRecord:undoRecord];
 
 	[[[document undoManager] prepareWithInvocationTarget:self] undoScale:undoRecord];
 
@@ -325,7 +308,7 @@
         else {
 
             // Otherwise just reverse the process with the information we stored on the original scaling
-            [self scaleToWidth:undoRecord->scaledWidth height:undoRecord->scaledHeight xorg: undoRecord->scaledXOrg yorg: undoRecord->scaledYOrg moving: undoRecord->isMoving interpolation:undoRecord->interpolation index:undoRecord->index undoRecord:NULL];
+            [self scaleToWidth:undoRecord->scaledWidth height:undoRecord->scaledHeight xorg: undoRecord->scaledXOrg yorg: undoRecord->scaledYOrg moving: undoRecord->isMoving index:undoRecord->index undoRecord:NULL];
             undoRecord->isScaled = YES;
         }
     }

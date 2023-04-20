@@ -68,7 +68,7 @@
             return;
         }
 
-        [seaScale scaleToWidth:width height:height interpolation:NSImageInterpolationHigh index:kAllLayers];
+        [seaScale scaleToWidth:width height:height index:kAllLayers];
     }
     
     [self setResolution:newRes];

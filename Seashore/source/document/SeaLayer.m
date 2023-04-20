@@ -246,7 +246,7 @@
     int ox = [[document contents] width] - xoff - width;
     int oy = yoff;
 
-    [self setRotation:-90 interpolation:0 withTrim:FALSE];
+    [self setRotation:-90 withTrim:FALSE];
     xoff = oy;
     yoff = ox;
 }
@@ -255,12 +255,12 @@
 {
     int ox = xoff;
     int oy = [[document contents] height] - yoff - height;
-    [self setRotation:90 interpolation:0 withTrim:FALSE];
+    [self setRotation:90 withTrim:FALSE];
     xoff = oy;
     yoff = ox;
 }
 
-- (void)setRotation:(float)degrees interpolation:(int)interpolation withTrim:(BOOL)trim
+- (void)setRotation:(float)degrees withTrim:(BOOL)trim
 {
     float radians = degrees * PI / 180.0;
 
@@ -310,6 +310,7 @@
         }
 
         CGContextRef ctx = CreateImageContext(bounds);
+        CGContextSetInterpolationQuality(ctx,kCGInterpolationHigh);
 
         unsigned char *new_data = ImageContextGetData(ctx);
 

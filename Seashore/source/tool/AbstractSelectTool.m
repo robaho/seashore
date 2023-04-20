@@ -35,7 +35,6 @@
     if(scalingDir > kNoDir && !translating){
         [[document selection] scaleSelectionTo: newRect
                                           from: [self preScaledRect]
-                                 interpolation: NSImageInterpolationHigh
                                      usingMask: [self preScaledMask]];
     }else if (translating && scalingDir == kNoDir){
         SeaLayer *layer = [[document contents] activeLayer];
