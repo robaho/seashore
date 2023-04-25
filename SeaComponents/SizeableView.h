@@ -16,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setIntrinsicContentSize:(NSSize)size;
 
++ (NSView*)withSize:(NSSize)size;
+
 @end
 
 NS_ASSUME_NONNULL_END

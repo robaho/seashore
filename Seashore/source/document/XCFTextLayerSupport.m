@@ -41,9 +41,15 @@ NSString* parseMarkup(NSString *s) {
     NSDictionary *dict = [ParasiteData parseParasite:p];
 
     TextProperties* props = [[TextProperties alloc] init];
-    props.text = dict[@"text"];
-    if(props.text==NULL) {
-        props.text = parseMarkup(dict[@"markup"]);
+    NSString *rtf = dict[@"rtf"];
+    if(rtf != NULL) {
+        props.text = [[NSAttributedString alloc] initWithRTF:[rtf dataUsingEncoding:NSUTF8StringEncoding] documentAttributes:NULL];
+    } else {
+        NSString *s = dict[@"text"];
+        if(s==NULL) {
+            s = parseMarkup(dict[@"markup"]);
+        }
+        props.text = [[NSAttributedString alloc] initWithString:s];
     }
 
     float fontSize = [(NSString*)dict[@"font-size"] floatValue];
@@ -118,16 +124,41 @@ NSString* parseMarkup(NSString *s) {
     return props;
 }
 
+static NSString* escapeString(NSString* s) {
+    NSMutableString *ms = [NSMutableString string];
+    for(int i=0;i<s.length;i++) {
+        unichar c = [s characterAtIndex:i];
+        switch(c) {
+            case '\\':
+                [ms appendString:@"\\\\"]; break;
+            case '\n':
+                [ms appendString:@"\\n"]; break;
+            case '"':
+                [ms appendString:@"\\\""]; break;
+            default:
+                [ms appendString:[NSString stringWithCharacters:&c length:1]];
+        }
+    }
+    return ms;
+}
+
 + (Parasite)toParasite:(SeaTextLayer*)layer properties:(TextProperties*)properties
 {
     Parasite p;
     p.name = strdup("gimp-text-layer");
 
+    NSAttributedString *text = properties.text;
+
+    NSDictionary *documentAttributes = @{NSDocumentTypeDocumentAttribute: NSRTFTextDocumentType};
+    NSData *rtfData = [text dataFromRange:NSMakeRange(0, text.length) documentAttributes:documentAttributes error:NULL];
+    NSString *rtfString = [[NSString alloc] initWithData:rtfData encoding:NSUTF8StringEncoding];
+
     NSMutableString *ms = [NSMutableString string];
-    [ms appendString:[NSString stringWithFormat:@"(text \"%@\")\n",properties.text]];
+    [ms appendString:[NSString stringWithFormat:@"(rtf \"%@\")\n",escapeString(rtfString)]];
+    [ms appendString:[NSString stringWithFormat:@"(text \"%@\")\n",escapeString([properties.text string])]];
     [ms appendString:[NSString stringWithFormat:@"(font-size %f)\n",[properties.font pointSize]]];
     [ms appendString:[NSString stringWithFormat:@"(font-size-unit %@)\n",@"points"]];
-    [ms appendString:[NSString stringWithFormat:@"(font \"%@\")\n",[properties.font displayName]]];
+    [ms appendString:[NSString stringWithFormat:@"(font \"%@\")\n",escapeString([properties.font displayName])]];
 
     NSString *justify=@"left";
     switch(properties.alignment) {

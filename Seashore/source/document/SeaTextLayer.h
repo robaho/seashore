@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TextProperties : NSObject <NSCopying>
-@property NSString *text;
+@property NSAttributedString *text;
 @property NSColor *color;
 @property NSFont *font;
 @property NSBezierPath * _Nullable textPath;

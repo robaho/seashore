@@ -11,6 +11,10 @@
 				<b>License:</b> GNU General Public License<br>
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
+@interface MyTextView : NSTextView
+- (void)setPlaceholderString:(NSString*)s;
+@end
+
 
 @interface TextOptions : AbstractScaleOptions {
 	// The pop-up menu specifying the alignment to be used
@@ -23,7 +27,9 @@
     id colorWell;
     id boundsButton;
 
-    NSTextFieldRedirect *textArea;
+    NSSegmentedControl *textControls;
+
+    MyTextView *textArea;
 	
     // The font manager associated with the text tool
 	NSFontManager *fontManager;

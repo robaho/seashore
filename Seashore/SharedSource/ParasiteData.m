@@ -98,7 +98,11 @@ NSString* parseEscaped(NSString* s){
     for(int i=0;i<len;i++) {
         switch(buffer[i]) {
             case '\\':
-                escape=TRUE;
+                if(escape) {
+                    [ms appendString:@"\\"]; escape=FALSE;
+                } else {
+                    escape=TRUE;
+                }
                 continue;
             default:
                 if(!escape) {
@@ -129,13 +133,22 @@ NSString* parseEscaped(NSString* s){
 
 + (NSDictionary*)parseString:(NSString*)s
 {
-    NSRegularExpression *exp = [NSRegularExpression regularExpressionWithPattern:@"^[(]([^\\s]*) (.*)[)]$" options:NSRegularExpressionAnchorsMatchLines|NSRegularExpressionUseUnixLineSeparators error:nil];
+    NSRegularExpression *exp = [NSRegularExpression regularExpressionWithPattern:@"\\([^)]+\\s.+\\)" options:0 error:nil];
+    NSRegularExpression *exp2 = [NSRegularExpression regularExpressionWithPattern:@"\\(([^\\s]+)\\s(.+)\\)" options:NSRegularExpressionDotMatchesLineSeparators error:nil];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 
     NSArray *matches = [exp matchesInString:s options:0 range:NSMakeRange(0,[s length])];
     for (NSTextCheckingResult *match in matches) {
-        NSString *key = [s substringWithRange:[match rangeAtIndex:1]];
-        NSString *value = [s substringWithRange:[match rangeAtIndex:2]];
+        NSString *ms = [s substringWithRange:[match range]];
+
+        NSArray<NSTextCheckingResult*> *kvMatches = [exp2 matchesInString:ms options:0 range:NSMakeRange(0,[ms length])];
+
+        if(kvMatches.count!=1 || kvMatches[0].numberOfRanges!=3)
+            continue;
+
+        NSString *key = [ms substringWithRange:[kvMatches[0] rangeAtIndex:1]];
+        NSString *value = [ms substringWithRange:[kvMatches[0] rangeAtIndex:2]];
+
         if([value hasPrefix:@"\""]) {
             // remove quotes
             value = [value substringWithRange:NSMakeRange(1,[value length]-2)];

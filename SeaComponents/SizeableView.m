@@ -24,4 +24,11 @@
     return contentSize;
 }
 
++ (NSView*)withSize:(NSSize)size
+{
+    SizeableView *s = [[SizeableView alloc] init];
+    s->contentSize = size;
+    return s;
+}
+
 @end

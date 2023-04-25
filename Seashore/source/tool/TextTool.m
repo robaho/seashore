@@ -201,7 +201,7 @@
             textRect.size.height = MIN([contents height]/3,[contents height]-textRect.origin.y);
         }
         textLayer.properties = [options properties];
-        textLayer.properties.text = @"";
+        textLayer.properties.text = [[NSAttributedString alloc] init];
         [options setProperties:textLayer.properties];
         [textLayer setBounds:textRect];
         [[document contents] addLayerObject:textLayer atIndex:[[document contents] activeLayerIndex]];
@@ -260,7 +260,7 @@
 
     TextProperties *props = [options properties];
 
-    NSString *oldText = layer.properties.text;
+    NSAttributedString *oldText = layer.properties.text;
     if(!hasUndo && ![[layer properties] isEqualToProperties:props]) {
         hasUndo = TRUE;
         [[[document undoManager] prepareWithInvocationTarget:self] undoTextProperties:layer properties:[layer properties]];
@@ -270,7 +270,7 @@
     [layer updateBitmap];
     [[document whiteboard] update:[layer globalRect]];
 
-    if(![layer.properties.text isEqualToString:oldText]){
+    if(![layer.properties.text isEqualToAttributedString:oldText]){
         [[document helpers] layerTitleChanged];
     }
 }

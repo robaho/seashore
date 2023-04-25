@@ -10,6 +10,23 @@
 #import "SeaHelpers.h"
 #import "SeaSelection.h"
 
+@implementation MyTextView
+- (void)changeColor:(id)sender
+{
+}
+- (void)setPlaceholderString:(NSString*)s
+{
+    NSDictionary *attrs;
+
+    if (@available(macOS 10.10, *)) {
+        attrs = [NSDictionary dictionaryWithObject:[NSColor placeholderTextColor] forKey:NSForegroundColorAttributeName];
+    } else {
+        attrs = [NSDictionary dictionaryWithObject:[NSColor grayColor] forKey:NSForegroundColorAttributeName];
+    }
+    NSAttributedString *as = [[NSAttributedString alloc] initWithString:s attributes:attrs];
+    [self setValue:as forKey:@"placeholderAttributedString"];
+}
+@end
 @implementation TextOptions
 
 - (id)init:(id)document
@@ -97,12 +114,67 @@
         [fontButton setLabel:[NSString stringWithFormat:@"%@ %d",[font displayName],(int)[font pointSize]]];
 	}
 
-    textArea = [[NSTextFieldRedirect alloc] init];
+//    [self addSubview:[SizeableView withSize:NSMakeSize(-1,6)]];
+
+    textControls = [[NSSegmentedControl alloc] init];
+    [[textControls cell] setTrackingMode:NSSegmentSwitchTrackingSelectAny];
+    [textControls setCtrlSize:NSSmallControlSize];
+    [textControls setSegmentCount:4];
+    [textControls setImage:[NSImage imageNamed:@"bold"] forSegment:0];
+    [textControls setImage:[NSImage imageNamed:@"italic"] forSegment:1];
+    [textControls setImage:[NSImage imageNamed:@"underline"] forSegment:2];
+    [textControls setImage:[NSImage imageNamed:@"strikethrough"] forSegment:3];
+    [textControls setTarget:self];
+    [textControls setAction:@selector(textControlsChanged:)];
+    [self addSubview:textControls];
+
+    [self addSubview:[SizeableView withSize:NSMakeSize(-1,6)]];
+
+    textArea = [[MyTextView alloc] init];
     [self addSubview:textArea];
 
+    [textArea setUsesFontPanel:NO];
     [textArea setDelegate:self];
+    [textArea setRichText:TRUE];
+//    [textArea setAllowsEditingTextAttributes:FALSE];
 
     return self;
+}
+
+//- (NSFontPanelModeMask)validModesForFontPanel:(NSFontPanel *)fontPanel
+//{
+//    return NSFontPanelModeMaskCollection | NSFontPanelSizeModeMask;
+//}
+
+- (void)textDidChange:(id)sender
+{
+    [self update:sender];
+}
+
+- (NSDictionary<NSAttributedStringKey, id> *)textView:(NSTextView *)textView
+                         shouldChangeTypingAttributes:(NSDictionary<NSString *,id> *)oldTypingAttributes
+                                         toAttributes:(NSDictionary<NSAttributedStringKey, id> *)newTypingAttributes
+{
+    NSMutableDictionary *copy = [NSMutableDictionary dictionaryWithDictionary:newTypingAttributes];
+    [copy setValue:[NSColor textColor] forKey:NSForegroundColorAttributeName];
+    return copy;
+}
+
+- (void)textViewDidChangeSelection:(id)sender
+{
+    NSRange r = [textArea selectedRange];
+//    [[textArea textStorage] setAttributes:[self typingAttrs] range:r];
+}
+
+- (void)textControlsChanged:(id)sender
+{
+    NSRange r = [textArea selectedRange];
+    if(r.length==0) {
+        [self update:textArea];
+    } else {
+        [[textArea textStorage] setAttributes:[self typingAttrs] range:r];
+        [self update:sender];
+    }
 }
 
 - (void)componentChanged:(id)sender
@@ -127,7 +199,7 @@
 	[fontManager orderFrontFontPanel:self];
 }
 
-- (IBAction)changeFont:(id)sender
+- (IBAction)changeSpecialFont:(id)sender
 {
     font = [sender convertFont:[fontManager selectedFont]];
 
@@ -157,6 +229,32 @@
 	return NSLeftTextAlignment;
 }
 
+- (NSDictionary<NSAttributedStringKey, id> *) typingAttrs
+{
+    NSMutableDictionary<NSAttributedStringKey,id> *attrs = [NSMutableDictionary dictionary];
+
+    NSFont *font = [NSFont systemFontOfSize:12];
+    attrs[NSFontAttributeName] = font;
+    attrs[NSForegroundColorAttributeName] = [NSColor textColor];
+
+    if([textControls isSelectedForSegment:0]) {
+        font = [fontManager convertFont:font toHaveTrait:NSFontBoldTrait];;
+        attrs[NSFontAttributeName] = font;
+    }
+    if([textControls isSelectedForSegment:1]) {
+        font = [fontManager convertFont:font toHaveTrait:NSFontItalicTrait];
+        attrs[NSFontAttributeName] = font;
+    }
+    if([textControls isSelectedForSegment:2]) {
+        attrs[NSUnderlineStyleAttributeName] = [NSNumber numberWithInt:1];
+    }
+    if([textControls isSelectedForSegment:3]) {
+        attrs[NSStrikethroughStyleAttributeName] = [NSNumber numberWithInt:1];
+    }
+
+    return attrs;
+}
+
 - (IBAction)update:(id)sender
 {
     if([[document toolboxUtility] tool]!=kTextTool)
@@ -169,12 +267,14 @@
     [verticalMarginSlider setMaxValue:([tool bounds].size.height)];
 
     [tool updateLayer];
+
+    [textArea setTypingAttributes:[self typingAttrs]];
 }
 
 - (TextProperties*)properties
 {
     TextProperties* props = [[TextProperties alloc] init];
-    props.text = [textArea stringValue];
+    props.text = [textArea attributedString];
     props.lineSpacing = [lineSpacingSlider floatValue];
     props.verticalMargin = [verticalMarginSlider floatValue];
     props.outline = [outlineSlider isChecked] ? [outlineSlider intValue] : 0;
@@ -186,23 +286,31 @@
     return props;
 }
 
++ (NSAttributedString*)removeColor:(NSAttributedString*)s
+{
+    NSMutableAttributedString *ms = [[NSMutableAttributedString alloc] initWithAttributedString:s];
+    [ms addAttribute:NSForegroundColorAttributeName value:[NSColor textColor] range:NSMakeRange(0,ms.length)];
+    return ms;
+}
+
 - (void)setProperties:(TextProperties *)props
 {
-    NSString *text = props.text;
+    NSAttributedString *text = props.text;
+    NSAttributedString *empty = [[NSAttributedString alloc] init];
 
     if(props==NULL) {
-        [textArea.cell setPlaceholderString:@"Select text layer or Click/Drag to create a new layer."];
-        [textArea setStringValue:@""];
-        [textArea setEnabled:FALSE];
+        [textArea setPlaceholderString:@"Select text layer or Click/Drag to create a new layer."];
+        [[textArea textStorage] setAttributedString:empty];
+        [textArea setEditable:FALSE];
         return;
     }
 
-    [textArea.cell setPlaceholderString:@"Enter text here."];
-    [textArea setEnabled:TRUE];
+    [textArea setPlaceholderString:@"Enter text here."];
+    [textArea setEditable:TRUE];
     if(!text) {
-        [textArea setStringValue:@""];
+//        [[textArea textStorage] setAttributedString:empty];
     } else {
-        [textArea setStringValue:text];
+        [[textArea textStorage] setAttributedString:[TextOptions removeColor:text]];
     }
 
     [lineSpacingSlider setFloatValue:props.lineSpacing];
