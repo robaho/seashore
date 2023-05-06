@@ -74,6 +74,9 @@ NSString* parseMarkup(NSString *s) {
         fontName = [fontName stringByReplacingOccurrencesOfString:@"Sans-serif" withString:@"Helvetica"];
 
         NSFont *font = [NSFont fontWithName:fontName size:fontSize];
+        if(font==NULL) {
+            font = [NSFont systemFontOfSize:fontSize];
+        }
         props.font = font;
     }
 

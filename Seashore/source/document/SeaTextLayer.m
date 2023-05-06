@@ -80,33 +80,25 @@
 
 + (void)replaceFont:(NSFont*)font withSize:(CGFloat)size inString:(NSMutableAttributedString *)s
 {
+    if(s==NULL || font==NULL)
+        return;
     [s enumerateAttribute:NSFontAttributeName inRange:NSMakeRange(0,[s length]) options:0 usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
         NSFont* f = value;
         NSFontDescriptor *fd = f.fontDescriptor;
 
         int traits = (fd.symbolicTraits & (NSFontBoldTrait | NSFontItalicTrait));
-//        int original = font.fontDescriptor.symbolicTraits & (NSFontCondensedTrait | NSFontMonoSpaceTrait);
 
         NSFont *newFont;
         if(traits != 0) {
             newFont = [[NSFontManager sharedFontManager] convertFont:font toHaveTrait:traits];
-//            NSFontDescriptor* ufd = [font.fontDescriptor fontDescriptorWithSymbolicTraits:(traits | original)];
-//            newFont = [NSFont fontWithDescriptor:ufd size:size];
+            if(newFont==NULL) {
+                newFont = [NSFont fontWithName:[font fontName] size:size];
+            }
         } else {
             newFont = [NSFont fontWithName:[font fontName] size:size];
         }
-        [s removeAttribute:NSFontAttributeName range:range];
         [s addAttribute:NSFontAttributeName value:newFont range:range];
     }];
-
-    //    s enumerateAttribute(.font, in: NSRange(location: 0, length: self.length)) { (value, range, stop) in
-    //        if let f = value as? UIFont {
-    //            let ufd = f.fontDescriptor.withFamily(font.familyName).withSymbolicTraits(f.fontDescriptor.symbolicTraits)!
-    //            let newFont = UIFont(descriptor: ufd, size: f.pointSize)
-    //            removeAttribute(.font, range: range)
-    //            addAttribute(.font, value: newFont, range: range)
-    //        }
-    //            }
 }
 
 
@@ -142,7 +134,6 @@
 
     NSFont *font = _properties.font;
     float fontSize = [font pointSize] * ([[document contents] yres] / 72.0);
-//    font = [NSFont fontWithName:[font displayName] size:fontSize];
 
     NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
 
@@ -152,7 +143,6 @@
     [paraStyle setLineBreakMode:NSLineBreakByWordWrapping];
 
     [attrs setValue:paraStyle forKey:NSParagraphStyleAttributeName];
-//    [attrs setValue:font forKey:NSFontAttributeName];
     [attrs setValue:color forKey:NSForegroundColorAttributeName];
 
     if(_properties.outline)
