@@ -1,5 +1,6 @@
 #import "Seashore.h"
 #import "WandOptions.h"
+#import "AbstractTool.h"
 #import "AbstractSelectTool.h"
 
 /*!
@@ -12,7 +13,7 @@
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
 
-@interface WandTool : AbstractSelectTool {
+@interface WandTool : AbstractSelectTool <DraggableTool> {
     IntPoint startPoint,currentPoint;
 
     WandOptions *options;

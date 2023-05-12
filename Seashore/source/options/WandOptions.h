@@ -16,6 +16,7 @@
 	id toleranceSlider;
     // if checked then non-continguous regions are checked
     id selectAllRegions;
+    id dragAdjustsTolerance;
 }
 
 /*!
@@ -32,5 +33,7 @@
  @result        Returns a Bool.
  */
 - (bool)selectAllRegions;
+
+- (bool)dragAdjustsTolerance;
 
 @end

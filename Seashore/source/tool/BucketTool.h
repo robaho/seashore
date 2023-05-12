@@ -15,7 +15,7 @@
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
 
-@interface BucketTool : AbstractTool {
+@interface BucketTool : AbstractTool <DraggableTool> {
 	// The update rectangle associated with the last fill 
 	IntRect rect;
     IntPoint startPoint,currentPoint;

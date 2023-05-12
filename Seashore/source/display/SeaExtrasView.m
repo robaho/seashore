@@ -16,6 +16,7 @@
 #import "CloneTool.h"
 #import "EffectTool.h"
 #import "GradientTool.h"
+#import "BucketTool.h"
 #import "WandTool.h"
 #import "TextTool.h"
 #import "SeaSelection.h"
@@ -603,6 +604,30 @@ static bool isBlack(NSColor *c){
     [path stroke];
 }
 
+- (void)drawDragLine:(id<DraggableTool>)tool
+{
+    SeaLayer *layer = [[document contents] activeLayer];
+
+    int xoff = [layer xoff];
+    int yoff = [layer yoff];
+
+    // Draw the connecting line
+    [[[SeaController seaPrefs] guideColor: 1.0] set];
+
+    NSPoint startNS = IntPointMakeNSPoint(IntOffsetPoint([tool start],xoff,yoff));
+    NSPoint currentNS = IntPointMakeNSPoint(IntOffsetPoint([tool current],xoff,yoff));
+
+    NSBezierPath *tempPath = [NSBezierPath bezierPath];
+    [tempPath moveToPoint:startNS];
+    [tempPath lineToPoint:currentNS];
+    [tempPath stroke];
+
+    float size = [self scaledSize:6];
+
+    [[NSBezierPath bezierPathWithOvalInRect:NSGrowRect(NSEmptyRect(startNS),size)] fill];
+    [[NSBezierPath bezierPathWithOvalInRect:NSGrowRect(NSEmptyRect(currentNS),size)] fill];
+}
+
 
 - (void)drawExtras
 {
@@ -684,24 +709,15 @@ static bool isBlack(NSColor *c){
             [self drawHandle:startNS type:kGradientStartType index: -1];
             [self drawHandle:currentNS type:kGradientEndType index: -1];
         }
-    }else if (curToolIndex == kWandTool || curToolIndex == kBucketTool){
-        WandTool *tool = [[document tools] getTool: curToolIndex];
-        if([tool intermediate] && (curToolIndex == kBucketTool || ![tool isMovingOrScaling])){
-            // Draw the connecting line
-            [[[SeaController seaPrefs] guideColor: 1.0] set];
-
-            NSPoint startNS = IntPointMakeNSPoint(IntOffsetPoint([tool start],xoff,yoff));
-            NSPoint currentNS = IntPointMakeNSPoint(IntOffsetPoint([tool current],xoff,yoff));
-
-            NSBezierPath *tempPath = [NSBezierPath bezierPath];
-            [tempPath moveToPoint:startNS];
-            [tempPath lineToPoint:currentNS];
-            [tempPath stroke];
-
-            float size = [self scaledSize:6];
-
-            [[NSBezierPath bezierPathWithOvalInRect:NSGrowRect(NSEmptyRect(startNS),size)] fill];
-            [[NSBezierPath bezierPathWithOvalInRect:NSGrowRect(NSEmptyRect(currentNS),size)] fill];
+    }else if (curToolIndex == kWandTool){
+        WandTool *tool = (WandTool*)[[document tools] getTool: curToolIndex];
+        if([tool intermediate] && ![tool isMovingOrScaling]){
+            [self drawDragLine:tool];
+        }
+    }else if (curToolIndex == kBucketTool){
+        BucketTool *tool = (BucketTool*)[[document tools] getTool: curToolIndex];
+        if([tool intermediate]){
+            [self drawDragLine:tool];
         }
     }
 }
