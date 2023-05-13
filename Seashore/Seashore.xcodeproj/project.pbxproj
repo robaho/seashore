@@ -24,10 +24,10 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		2B13A0B929F0BE4C001EB7FE /* bold.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B13A0B529F0BE4B001EB7FE /* bold.png */; };
-		2B13A0BA29F0BE4C001EB7FE /* strikethrough.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B13A0B629F0BE4B001EB7FE /* strikethrough.png */; };
-		2B13A0BB29F0BE4C001EB7FE /* italic.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B13A0B729F0BE4B001EB7FE /* italic.png */; };
-		2B13A0BC29F0BE4C001EB7FE /* underline.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B13A0B829F0BE4B001EB7FE /* underline.png */; };
+		2B13A0B929F0BE4C001EB7FE /* boldTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B13A0B529F0BE4B001EB7FE /* boldTemplate.png */; };
+		2B13A0BA29F0BE4C001EB7FE /* strikethroughTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B13A0B629F0BE4B001EB7FE /* strikethroughTemplate.png */; };
+		2B13A0BB29F0BE4C001EB7FE /* italicTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B13A0B729F0BE4B001EB7FE /* italicTemplate.png */; };
+		2B13A0BC29F0BE4C001EB7FE /* underlineTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B13A0B829F0BE4B001EB7FE /* underlineTemplate.png */; };
 		2B1467892925EF2100A7E748 /* ConnectedComponents.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B84485A28BEE74300C068D1 /* ConnectedComponents.m */; };
 		2B146799292B4A9E00A7E748 /* AspectRatioPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B146798292B4A9D00A7E748 /* AspectRatioPanel.xib */; };
 		2B1F70EB21DD472B00D6F371 /* SeaColorProfiles.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1F70EA21DD472B00D6F371 /* SeaColorProfiles.m */; };
@@ -549,10 +549,10 @@
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		2B08E5C021E28C4C0011037C /* Seashore.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Seashore.entitlements; sourceTree = "<group>"; };
-		2B13A0B529F0BE4B001EB7FE /* bold.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bold.png; sourceTree = "<group>"; };
-		2B13A0B629F0BE4B001EB7FE /* strikethrough.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = strikethrough.png; sourceTree = "<group>"; };
-		2B13A0B729F0BE4B001EB7FE /* italic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = italic.png; sourceTree = "<group>"; };
-		2B13A0B829F0BE4B001EB7FE /* underline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = underline.png; sourceTree = "<group>"; };
+		2B13A0B529F0BE4B001EB7FE /* boldTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boldTemplate.png; sourceTree = "<group>"; };
+		2B13A0B629F0BE4B001EB7FE /* strikethroughTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = strikethroughTemplate.png; sourceTree = "<group>"; };
+		2B13A0B729F0BE4B001EB7FE /* italicTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = italicTemplate.png; sourceTree = "<group>"; };
+		2B13A0B829F0BE4B001EB7FE /* underlineTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = underlineTemplate.png; sourceTree = "<group>"; };
 		2B146798292B4A9D00A7E748 /* AspectRatioPanel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AspectRatioPanel.xib; sourceTree = "<group>"; };
 		2B1F70E921DD471000D6F371 /* SeaColorProfiles.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaColorProfiles.h; sourceTree = "<group>"; };
 		2B1F70EA21DD472B00D6F371 /* SeaColorProfiles.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeaColorProfiles.m; sourceTree = "<group>"; };
@@ -1793,10 +1793,10 @@
 		F5B278B803EF612701A0A16F /* miscellanea */ = {
 			isa = PBXGroup;
 			children = (
-				2B13A0B529F0BE4B001EB7FE /* bold.png */,
-				2B13A0B729F0BE4B001EB7FE /* italic.png */,
-				2B13A0B629F0BE4B001EB7FE /* strikethrough.png */,
-				2B13A0B829F0BE4B001EB7FE /* underline.png */,
+				2B13A0B529F0BE4B001EB7FE /* boldTemplate.png */,
+				2B13A0B729F0BE4B001EB7FE /* italicTemplate.png */,
+				2B13A0B629F0BE4B001EB7FE /* strikethroughTemplate.png */,
+				2B13A0B829F0BE4B001EB7FE /* underlineTemplate.png */,
 				2B7E489628307CA7001EF27D /* alert.png */,
 				DCF8059C0FC99C0F00F72FB3 /* right-align.png */,
 				DCF8059D0FC99C0F00F72FB3 /* left-align.png */,
@@ -2019,7 +2019,7 @@
 				2B2D8CA421F7C822004527F2 /* grabberTemplate.png in Resources */,
 				A8EDF0D7078959C80022BB31 /* next.png in Resources */,
 				2BED225621F3F899005B496C /* textTemplate.png in Resources */,
-				2B13A0BB29F0BE4C001EB7FE /* italic.png in Resources */,
+				2B13A0BB29F0BE4C001EB7FE /* italicTemplate.png in Resources */,
 				A8EDF0DA078959C80022BB31 /* eraser-cursor.png in Resources */,
 				A8EDF0DB078959C80022BB31 /* selection.png in Resources */,
 				A8EDF0DC078959C80022BB31 /* Main Icon.icns in Resources */,
@@ -2070,7 +2070,7 @@
 				DCCC461C0FB32277006A7E69 /* crosspoint-add-cursor.png in Resources */,
 				2B8840202894B6C500E5EF28 /* textLayerTemplate.png in Resources */,
 				DCCC461D0FB32277006A7E69 /* resize-ne-sw-cursor.png in Resources */,
-				2B13A0BC29F0BE4C001EB7FE /* underline.png in Resources */,
+				2B13A0BC29F0BE4C001EB7FE /* underlineTemplate.png in Resources */,
 				DCCC461E0FB32277006A7E69 /* resize-nw-se-cursor.png in Resources */,
 				2BCD7A1B2862982D007EB89B /* What's New and Tips.rtf in Resources */,
 				DC493C2E0FB7A287009D352D /* resize-cursor.png in Resources */,
@@ -2095,9 +2095,9 @@
 				DC414D27102FE71E00B66F04 /* channels-menuTemplate.png in Resources */,
 				2BED226D21F3FB40005B496C /* gradientTemplate.png in Resources */,
 				2BED227221F3FB40005B496C /* cloneTemplate.png in Resources */,
-				2B13A0BA29F0BE4C001EB7FE /* strikethrough.png in Resources */,
+				2B13A0BA29F0BE4C001EB7FE /* strikethroughTemplate.png in Resources */,
 				DCB08D9110463653009DE7C3 /* selectalphaTemplate.png in Resources */,
-				2B13A0B929F0BE4C001EB7FE /* bold.png in Resources */,
+				2B13A0B929F0BE4C001EB7FE /* boldTemplate.png in Resources */,
 				2BF40507227DC8DB0091E1EA /* swapTemplate.png in Resources */,
 				DCB08D9210463653009DE7C3 /* selectinverseTemplate.png in Resources */,
 				2BED226F21F3FB40005B496C /* paintbrushTemplate.png in Resources */,

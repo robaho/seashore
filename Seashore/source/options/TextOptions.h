@@ -38,6 +38,8 @@
     NSColor *color;
 
     NSBezierPath *textPath;
+
+    bool propertiesChanging;
 }
 
 - (TextProperties*)properties;

@@ -202,7 +202,6 @@
         }
         textLayer.properties = [options properties];
         textLayer.properties.text = [[NSAttributedString alloc] init];
-        [options setProperties:textLayer.properties];
         [textLayer setBounds:textRect];
         [[document contents] addLayerObject:textLayer atIndex:[[document contents] activeLayerIndex]];
     } else {
@@ -260,7 +259,7 @@
 
     TextProperties *props = [options properties];
 
-    NSAttributedString *oldText = layer.properties.text;
+    NSString *oldText = [layer.properties.text string];
     if(!hasUndo && ![[layer properties] isEqualToProperties:props]) {
         hasUndo = TRUE;
         [[[document undoManager] prepareWithInvocationTarget:self] undoTextProperties:layer properties:[layer properties]];
@@ -270,7 +269,7 @@
     [layer updateBitmap];
     [[document whiteboard] update:[layer globalRect]];
 
-    if(![layer.properties.text isEqualToAttributedString:oldText]){
+    if(![[layer.properties.text string] isEqualToString:oldText]){
         [[document helpers] layerTitleChanged];
     }
 }

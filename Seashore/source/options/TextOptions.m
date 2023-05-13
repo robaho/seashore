@@ -120,10 +120,10 @@
     [[textControls cell] setTrackingMode:NSSegmentSwitchTrackingSelectAny];
     [textControls setCtrlSize:NSSmallControlSize];
     [textControls setSegmentCount:4];
-    [textControls setImage:[NSImage imageNamed:@"bold"] forSegment:0];
-    [textControls setImage:[NSImage imageNamed:@"italic"] forSegment:1];
-    [textControls setImage:[NSImage imageNamed:@"underline"] forSegment:2];
-    [textControls setImage:[NSImage imageNamed:@"strikethrough"] forSegment:3];
+    [textControls setImage:[NSImage imageNamed:@"boldTemplate"] forSegment:0];
+    [textControls setImage:[NSImage imageNamed:@"italicTemplate"] forSegment:1];
+    [textControls setImage:[NSImage imageNamed:@"underlineTemplate"] forSegment:2];
+    [textControls setImage:[NSImage imageNamed:@"strikethroughTemplate"] forSegment:3];
     [textControls setTarget:self];
     [textControls setAction:@selector(textControlsChanged:)];
     [self addSubview:textControls];
@@ -162,8 +162,7 @@
 
 - (void)textViewDidChangeSelection:(id)sender
 {
-    NSRange r = [textArea selectedRange];
-//    [[textArea textStorage] setAttributes:[self typingAttrs] range:r];
+    [self update:textArea];
 }
 
 - (void)textControlsChanged:(id)sender
@@ -257,6 +256,9 @@
 
 - (IBAction)update:(id)sender
 {
+    if (propertiesChanging)
+        return;
+
     if([[document toolboxUtility] tool]!=kTextTool)
         return;
 
@@ -274,7 +276,7 @@
 - (TextProperties*)properties
 {
     TextProperties* props = [[TextProperties alloc] init];
-    props.text = [textArea attributedString];
+    props.text = [[textArea attributedString] copy];
     props.lineSpacing = [lineSpacingSlider floatValue];
     props.verticalMargin = [verticalMarginSlider floatValue];
     props.outline = [outlineSlider isChecked] ? [outlineSlider intValue] : 0;
@@ -295,6 +297,8 @@
 
 - (void)setProperties:(TextProperties *)props
 {
+    propertiesChanging = true;
+
     NSAttributedString *text = props.text;
     NSAttributedString *empty = [[NSAttributedString alloc] init];
 
@@ -302,6 +306,7 @@
         [textArea setPlaceholderString:@"Select text layer or Click/Drag to create a new layer."];
         [[textArea textStorage] setAttributedString:empty];
         [textArea setEditable:FALSE];
+        propertiesChanging = false;
         return;
     }
 
@@ -347,6 +352,8 @@
     textPath = props.textPath;
 
     [[textArea window] makeFirstResponder:textArea];
+
+    propertiesChanging=false;
 }
 
 - (void)shutdown
