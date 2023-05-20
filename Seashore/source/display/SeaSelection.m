@@ -265,12 +265,14 @@
     IntRect overlayRect = [layer globalRect];
     IntRect oldRect;
 
+    IntRect newMaskRect;
+
 	if(!mask || !active){
 		mode = kDefaultMode;
-        maskRect = newRect;
+        newMaskRect = newRect;
 	}else {
 		oldRect = maskRect;
-		maskRect = IntSumRects(maskRect,newRect);
+		newMaskRect = IntSumRects(maskRect,newRect);
 	}
 
 	if(!mode)
@@ -278,17 +280,17 @@
 	else
 		active = NO;
 	
-	newMask = calloc(maskRect.size.width * maskRect.size.height,1);
+	newMask = calloc(newMaskRect.size.width * newMaskRect.size.height,1);
 	overlay = [[document whiteboard] overlay];
-	for (i = maskRect.origin.x; i < maskRect.size.width + maskRect.origin.x; i++) {
-		for (j = maskRect.origin.y; j < maskRect.size.height + maskRect.origin.y; j++) {
+	for (i = newMaskRect.origin.x; i < newMaskRect.size.width + newMaskRect.origin.x; i++) {
+		for (j = newMaskRect.origin.y; j < newMaskRect.size.height + newMaskRect.origin.y; j++) {
             IntPoint p = IntMakePoint(i,j);
             if(!IntPointInRect(p,overlayRect)) {
                 continue;
             }
 
             int x = i - [layer xoff], y = j - [layer yoff];
-            int maskOffset = (j - maskRect.origin.y) * maskRect.size.width + i - maskRect.origin.x;
+            int maskOffset = (j - newMaskRect.origin.y) * newMaskRect.size.width + i - newMaskRect.origin.x;
 
 			if(mode){
 				// Find the mask of the new point
@@ -350,20 +352,23 @@
 			
 		}
 	}
-	
-	// Free previous mask information 
-	if (mask) { free(mask); mask = NULL; }
 
-	if(active){
-		mask = newMask;
-		[self trimSelection];
-	}else{
-		free(newMask);
-	}
+    @synchronized (document.mutex) {
+        maskRect = newMaskRect;
 
-	// Update the changes
-    [self updateMaskImage];
-	[[document helpers] selectionChanged];
+        if (mask) { free(mask); mask = NULL; }
+
+        if(active){
+            mask = newMask;
+            [self trimSelection];
+        }else{
+            free(newMask);
+        }
+
+        // Update the changes
+        [self updateMaskImage];
+        [[document helpers] selectionChanged];
+    }
 }
 
 - (void)selectOpaque

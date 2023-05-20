@@ -123,7 +123,6 @@ void DumpObjcMethods(Class clz) {
     if(LOG_PERFORMANCE) {
         NSLog(@"overlay modified %@",NSStringFromIntRect(layerRect));
     }
-    SeaLayer *layer = [[document contents] activeLayer];
 
     if (IntRectIsEmpty(overlayModifiedRect)) {
         overlayModifiedRect = layerRect;

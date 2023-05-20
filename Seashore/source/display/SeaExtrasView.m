@@ -711,7 +711,7 @@ static bool isBlack(NSColor *c){
         }
     }else if (curToolIndex == kWandTool){
         WandTool *tool = (WandTool*)[[document tools] getTool: curToolIndex];
-        if([tool intermediate] && ![tool isMovingOrScaling]){
+        if([tool intermediate] && ![tool isMovingOrScaling] && ![tool isPreviewing]){
             [self drawDragLine:tool];
         }
     }else if (curToolIndex == kBucketTool){

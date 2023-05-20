@@ -174,10 +174,12 @@
     ctx.seeds = seeds;
     ctx.numSeeds = intervals;
 
+    memcpy(ctx.fillColor,basePixel,4);
+
 	if ([[document selection] active])
-        rect = bucketFill(&ctx,[[document selection] localRect], basePixel);
+        rect = bucketFill(&ctx,[[document selection] localRect]);
 	else
-        rect = bucketFill(&ctx,IntMakeRect(0, 0, width, height), basePixel);
+        rect = bucketFill(&ctx,IntMakeRect(0, 0, width, height));
 
 	if ([options useTextures] && IntContainsRect(IntMakeRect(0, 0, width, height), rect)) {
         CGContextRef overlayCtx = [[document whiteboard] overlayCtx];

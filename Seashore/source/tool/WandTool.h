@@ -15,6 +15,7 @@
 
 @interface WandTool : AbstractSelectTool <DraggableTool> {
     IntPoint startPoint,currentPoint;
+    IntRect previewRect;
 
     WandOptions *options;
 }
@@ -42,4 +43,6 @@
 	@discussion	For figuring out where to draw the outside
 */
 - (IntPoint)current;
+
+- (bool)isPreviewing;
 @end

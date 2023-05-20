@@ -29,11 +29,12 @@ enum {
 	@class	SeaSelection
 	@abstract	Manages user selections.
 */
+@class SeaDocument;
 
 @interface SeaSelection : NSObject {
 
 	// The document associated with this object
-	__weak id document;
+	__weak SeaDocument* document;
 
 	// The current selection rectangle in document coordinates
 	IntRect maskRect;

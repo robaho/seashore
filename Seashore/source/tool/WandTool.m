@@ -7,6 +7,8 @@
 #import "SeaWhiteboard.h"
 #import "WandOptions.h"
 #import "SeaSelection.h"
+#import "SeaHelpers.h"
+#import "SeaPrefs.h"
 #import <SeaLibrary/Bitmap.h>
 
 @implementation WandTool
@@ -29,66 +31,109 @@
 	}
 }
 
+int signum(int n) { return (n < 0) ? -1 : (n > 0) ? +1 : 0; }
+
 - (void)mouseDraggedTo:(IntPoint)where withEvent:(NSEvent *)event
 {
 	[super dragHandler:where withEvent:event];
 	
 	if(![super isMovingOrScaling]){
-        IntRect dirty = IntMakeRect(startPoint.x,startPoint.y,currentPoint.x-startPoint.x,currentPoint.y-startPoint.y);
+        if([options dragAdjustsTolerance]) {
+            currentPoint = where;
+            int range = currentPoint.x >= startPoint.x ? [[document contents] width]-startPoint.x : startPoint.x;
 
-        currentPoint = where;
+            double adj = ((currentPoint.x-startPoint.x)/(double)range)*255;
+            double tolerance = MIN(MAX([options tolerance] + adj,0),255);
+            [self preview:tolerance];
+        } else {
+            IntRect dirty = IntMakeRect(startPoint.x,startPoint.y,currentPoint.x-startPoint.x,currentPoint.y-startPoint.y);
 
-        IntRect rect = IntMakeRect(startPoint.x,startPoint.y,currentPoint.x-startPoint.x,currentPoint.y-startPoint.y);
+            currentPoint = where;
 
-        [[document docView] setNeedsDisplayInLayerRect:IntSumRects(dirty,rect):8];
+            IntRect rect = IntMakeRect(startPoint.x,startPoint.y,currentPoint.x-startPoint.x,currentPoint.y-startPoint.y);
+
+            [[document docView] setNeedsDisplayInLayerRect:IntSumRects(dirty,rect):8];
+        }
 	}
 }
 
-- (void)mouseUpAt:(IntPoint)where withEvent:(NSEvent *)event
+-(IntRect)fillOverlay:(IntPoint*)seeds nSeeds:(int)nseeds color:(unsigned char*)color tolerance:(int)tolerance
 {
-    int old = intermediate;
-    bool wasMovingOrScaling = [super isMovingOrScaling];
-
-	[super upHandler:where withEvent:event];
-
     SeaLayer *layer = [[document contents] activeLayer];
-    
     int width = [layer width], height = [layer height];
     unsigned char *overlay = [[document whiteboard] overlay], *data = [layer data];
-    unsigned char basePixel[4];
-    
-    IntRect rect;
-    
-    if(!old || wasMovingOrScaling)
-        goto done;
-    
-    if (!IntPointInRect(where,IntMakeRect(0,0,width,height)))
-        goto done;
 
-    // Clear last selection
-    if([options selectionMode] == kDefaultMode || [options selectionMode] == kForceNewMode)
-        [[document selection] clearSelection];
-    
-    // Fill the region to be selected
-    memset(basePixel,0,SPP);
-    basePixel[alphaPos] = 255;
-    
-    int tolerance = [options tolerance];
-    int mode = [options selectionMode];
     bool selectAllRegions = [options selectAllRegions];
     int channel = [[document contents] selectedChannel];
-    
+
+    fillContext ctx;
+    ctx.overlay = overlay;
+    ctx.data = data;
+    ctx.width = width;
+    ctx.height = height;
+    ctx.seeds = seeds;
+    ctx.numSeeds = nseeds;
+    ctx.tolerance = tolerance;
+    ctx.channel = channel;
+
+    memcpy(ctx.fillColor,color,4);
+
+    IntRect rect;
+
+    if(selectAllRegions) {
+        memset(overlay,0,width*height*SPP);
+        rect = IntMakeRect(0,0,width,height);
+        for(int row=0;row<height;row++){
+            for(int col=0;col<width;col++){
+                if(shouldFill(&ctx,col,row)) {
+                    memcpy(&(overlay[(row * width + col) * SPP]), color, SPP);
+                }
+            }
+        }
+    } else {
+        rect = bucketFill(&ctx, IntMakeRect(0, 0, width, height));
+    }
+    return rect;
+}
+
+-(void)preview:(double)tolerance
+{
+    [[document whiteboard] clearOverlay];
+    [[document whiteboard] setOverlayOpacity:200];
+
+    IntPoint seeds[] = { startPoint };
+
+    NSColor *selcolor = [[SeaController seaPrefs] selectionColor:.75];
+
+    unsigned char color[4];
+    color[CR]= [selcolor redComponent]*255;
+    color[CG]= [selcolor greenComponent]*255;
+    color[CB]= [selcolor blueComponent]*255;
+    color[alphaPos] = 255;
+
+    previewRect = [self fillOverlay:seeds nSeeds:1 color:color tolerance:tolerance];
+
+    [[document helpers] overlayChanged:previewRect];
+}
+
+-(IntRect)bucketFill
+{
+    SeaLayer *layer = [[document contents] activeLayer];
+    int width = [layer width], height = [layer height];
+    unsigned char *data = [layer data];
+
     int seedIndex;
-    int xDelta = where.x - startPoint.x;
-    int yDelta = where.y - startPoint.y;
-    
+
+    int xDelta = currentPoint.x - startPoint.x;
+    int yDelta = currentPoint.y - startPoint.y;
+
     int distance = (int)ceil(sqrt(xDelta*xDelta+yDelta*yDelta));
     int intervals = MAX(MIN(distance,64),1);
-    
+
     IntPoint* seeds = malloc(sizeof(IntPoint) * (intervals));
-    
+
     int inrect=0;
-    
+
     for(seedIndex = 0; seedIndex < intervals; seedIndex++){
         int x = startPoint.x + (int)ceil(xDelta * ((float)seedIndex / intervals));
         int y = startPoint.y + (int)ceil(yDelta * ((float)seedIndex / intervals));
@@ -104,44 +149,58 @@
     next_seed:
         continue;
     }
-    intervals=inrect;
 
-    fillContext ctx;
-    ctx.overlay = overlay;
-    ctx.data = data;
-    ctx.width = width;
-    ctx.height = height;
-    ctx.seeds = seeds;
-    ctx.numSeeds = intervals;
-    ctx.tolerance = tolerance;
-    ctx.channel = channel;
+    int tolerance = [options tolerance];
 
-    if(selectAllRegions) {
-        memset(overlay,0,width*height*SPP);
-        rect = IntMakeRect(0,0,width,height);
-        for(int row=0;row<height;row++){
-            for(int col=0;col<width;col++){
-                IntPoint p = IntMakePoint(col,row);
-                if(shouldFill(&ctx,p)) {
-                    memcpy(&(overlay[(row * width + col) * SPP]), basePixel, SPP);
-                }
-            }
-        }
-    } else {
-        rect = bucketFill(&ctx, IntMakeRect(0, 0, width, height), basePixel);
-    }
+    unsigned char color[4];
+    memset(color,0,SPP);
+    color[alphaPos] = 255;
+
+    IntRect rect = [self fillOverlay:seeds nSeeds:inrect color:color tolerance:tolerance];
+
+    [[document helpers] overlayChanged:rect];
+
+    return rect;
+}
+
+
+- (bool)isPreviewing
+{
+    return [options dragAdjustsTolerance];
+}
+
+- (void)mouseUpAt:(IntPoint)where withEvent:(NSEvent *)event
+{
+    int old = intermediate;
+    bool wasMovingOrScaling = [super isMovingOrScaling];
+
+	[super upHandler:where withEvent:event];
+
+    if(!old || wasMovingOrScaling)
+        goto done;
     
-    free(seeds);
+    if([options selectionMode] == kDefaultMode || [options selectionMode] == kForceNewMode)
+        [[document selection] clearSelection];
 
-    // Then select it
-    [[document selection] selectOverlay:rect mode: mode];
+    int mode = [options selectionMode];
 
-    // Also, we universally float the selection if alt is down
+    IntRect rect;
+
+    if([options dragAdjustsTolerance]) {
+        rect = previewRect;
+    } else {
+        rect = [self bucketFill];
+    }
+
+    [[document selection] selectOverlay:rect mode:mode];
+
     if([[self getOptions] modifier] == kAltModifier) {
         [[document contents] layerFromSelection:NO];
     }
 
 done:
+    [[document whiteboard] clearOverlay];
+
     return;
 }
 
