@@ -109,16 +109,3 @@
 - (NSCursor*)toolCursor:(SeaCursors*)cursors;
 
 @end
-
-@protocol DraggableTool
-/*!
- @method        startPoint
- @discussion    For figuring out where to draw the center
- */
-- (IntPoint)start;
-/*!
- @method        currentPoint
- @discussion    For figuring out where to draw the outside
- */
-- (IntPoint)current;
-@end

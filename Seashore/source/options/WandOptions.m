@@ -17,9 +17,6 @@
     selectAllRegions = [SeaCheckbox checkboxWithTitle:@"Select all regions" Listener:NULL];
     [self addSubview:selectAllRegions];
 
-    dragAdjustsTolerance = [SeaCheckbox checkboxWithTitle:@"Drag adjusts tolerance" Listener:NULL];
-    [self addSubview:dragAdjustsTolerance];
-
 	int value;
 	if ([gUserDefaults objectForKey:@"wand tolerance"] == NULL) {
 		[toleranceSlider setIntValue:15];
@@ -46,11 +43,6 @@
 - (bool)selectAllRegions
 {
     return [selectAllRegions isChecked];
-}
-
-- (bool)dragAdjustsTolerance
-{
-    return [dragAdjustsTolerance isChecked];
 }
 
 - (void)shutdown

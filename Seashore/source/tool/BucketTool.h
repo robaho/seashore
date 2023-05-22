@@ -15,14 +15,10 @@
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
 
-@interface BucketTool : AbstractTool <DraggableTool> {
-	// The update rectangle associated with the last fill 
-	IntRect rect;
+@interface BucketTool : AbstractTool {
     IntPoint startPoint,currentPoint;
+    IntRect previewRect;
 
-	// You can preview by holding down shift, so we need to track that
-	BOOL isPreviewing;
-    
     BucketOptions *options;
     CGContextRef textureCtx;
 }
@@ -48,17 +44,4 @@
 				The mouse up event.
 */
 - (void)mouseUpAt:(IntPoint)where withEvent:(NSEvent *)event;
-
-/*!
-	@method		startPoint
-	@discussion	For figuring out where to draw the center
-*/
-- (IntPoint)start;
-
-/*!
-	@method		currentPoint
-	@discussion	For figuring out where to draw the outside
-*/
-- (IntPoint)current;
-
 @end

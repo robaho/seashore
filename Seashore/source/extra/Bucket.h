@@ -15,8 +15,7 @@
 typedef struct {
     unsigned char *overlay;
     unsigned char *data;
-    IntPoint *seeds;
-    int numSeeds;
+    IntPoint start;
     int tolerance;
     int channel;
     int width,height;

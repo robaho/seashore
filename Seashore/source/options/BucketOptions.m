@@ -10,14 +10,14 @@
 {
     self = [super init:document];
 
-    [super clearModifierMenu];
-    [super addModifierMenuItem:@"Flood entire selection (Option)" tag:1];
-    [super addModifierMenuItem:@"Preview flood (Shift)" tag:2];
-
     [brushesButton setHidden:true];
 
     toleranceSlider = [SeaSlider compactSliderWithTitle:@"Tolerance" Min:0 Max:255 Listener:NULL];
     [self addSubview:toleranceSlider];
+
+    fillAllRegions = [SeaCheckbox checkboxWithTitle:@"Fill all regions" Listener:NULL];
+    [self addSubview:fillAllRegions];
+
 
     int value;
 	if ([gUserDefaults objectForKey:@"bucket tolerance"] == NULL) {
@@ -28,6 +28,8 @@
 	}
     [toleranceSlider setIntValue:value];
 
+    [fillAllRegions setChecked:[gUserDefaults boolForKey:@"wand fillAllRegions"]];
+
     [super loadOpacity:@"bucket opacity"];
     return self;
 }
@@ -37,10 +39,17 @@
 	return [toleranceSlider intValue];
 }
 
+- (bool)fillAllRegions
+{
+    return [fillAllRegions isChecked];
+}
+
 - (void)shutdown
 {
 	[gUserDefaults setInteger:[toleranceSlider intValue] forKey:@"bucket tolerance"];
     [gUserDefaults setInteger:[opacitySlider intValue] forKey:@"bucket opacity"];
+    [gUserDefaults setBool:[fillAllRegions isChecked] forKey:@"bucket fillAllRegions"];
+
 }
 
 @end

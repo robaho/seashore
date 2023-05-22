@@ -22,8 +22,8 @@ typedef struct {
 
 void push(stack* s,entry e) {
     if(s->count==s->size) {
-        s->entries = realloc(s->entries, sizeof(entry)*kStackSizeIncrement);
         s->size+=kStackSizeIncrement;
+        s->entries = realloc(s->entries, sizeof(entry)*(s->size));
     }
     s->entries[s->count]=e;
     s->count++;
@@ -45,61 +45,46 @@ inline BOOL shouldFill(fillContext *ctx,int x, int y)
     int channel = ctx->channel;
 
     if(x<0 || y < 0 || x>=ctx->width || y>=ctx->height)
-        return false;
+        return NO;
 
     int offset = (width * y + x)*SPP;
 
     if(memcmp(ctx->overlay+offset,ctx->fillColor,SPP)==0) {
-        return false;
+        return NO;
     }
 
-	for(seedIndex = 0; seedIndex < ctx->numSeeds; seedIndex++){
-		IntPoint seed = ctx->seeds[seedIndex];
-		BOOL outsideTolerance = NO;
-		int k, temp;
-		
-		int offset = (width * y + x)*SPP;
-        int offset0 = (width *seed.y + seed.x)*SPP;
-		
-		if (overlay[offset + alphaPos] > 0){
-			outsideTolerance = YES;
-			continue;
-		}
-		
-		if (channel == kAllChannels) {
-            if (data[offset + alphaPos] == 0)
-                return YES;
+    int k, temp;
+    int offset0 = (width * ctx->start.y + ctx->start.x)*SPP;
 
-			for (k = CR; k <= CB; k++) {
-				temp = abs((int)data[offset + k] - (int)data[offset0 + k]);
-				if (temp > tolerance){
-					outsideTolerance = YES;
-					break;
-				}
-			}
-		} else if (channel == kPrimaryChannels) {
-		
-			for (k = CR; k <= CB; k++) {
-				temp = abs((int)data[offset + k] - (int)data[offset0 + k]);
-				if (temp > tolerance){
-					outsideTolerance = YES;
-					break;
-				}
-			}
-		
-		} else if (channel == kAlphaChannel) {
-			temp = abs((int)data[offset + alphaPos] - (int)data[offset0+alphaPos]);
-			if (temp > tolerance){
-				outsideTolerance = YES;
-			}
-		}
-		
-		if(!outsideTolerance){
-			return YES;
-		}
-	}
-	
-	return NO;
+    if (overlay[offset + alphaPos] > 0){
+        // already filled
+        return NO;
+    }
+
+    if (channel == kAllChannels) {
+        if (data[offset + alphaPos] == 0)
+            return YES;
+        for (k = CR; k <= CB; k++) {
+            temp = abs((int)data[offset + k] - (int)data[offset0 + k]);
+            if (temp > tolerance){
+                return NO;
+            }
+        }
+    } else if (channel == kPrimaryChannels) {
+        for (k = CR; k <= CB; k++) {
+            temp = abs((int)data[offset + k] - (int)data[offset0 + k]);
+            if (temp > tolerance){
+                return NO;
+            }
+        }
+    } else if (channel == kAlphaChannel) {
+        temp = abs((int)data[offset + alphaPos] - (int)data[offset0+alphaPos]);
+        if (temp > tolerance){
+            return NO;
+        }
+    }
+
+	return YES;
 }
 
 typedef struct {
@@ -121,7 +106,7 @@ IntRect bucketFill(fillContext *ctx,IntRect rect)
     int width = ctx->width;
     int height = ctx->height;
 
-    IntPoint seed = ctx->seeds[0];
+    IntPoint seed = ctx->start;
 
     boundaries b = {seed.x,seed.x,seed.y,seed.y};
 
@@ -142,8 +127,8 @@ IntRect bucketFill(fillContext *ctx,IntRect rect)
 
     stack s = { NULL, 0, 0};
 
-    int x = ctx->seeds[0].x;
-    int y = ctx->seeds[0].y;
+    int x = seed.x;
+    int y = seed.y;
 
     push(&s,(entry){y,x,x,1});
     push(&s,(entry){y+1,x,x,-1});

@@ -141,6 +141,11 @@ void DumpObjcMethods(Class clz) {
     dispatch_semaphore_signal(renderSem); // will pass tempOverlayModifiedRect to whiteboardModifiedRect when it runs
 }
 
+- (void)ignoreSelection:(BOOL)ignore
+{
+    ignoreSelection = ignore;
+}
+
 - (BOOL)isOpaque
 {
     return TRUE;
@@ -164,7 +169,7 @@ void DumpObjcMethods(Class clz) {
     int yoff = [layer yoff];
 
     int selectedChannel = [[document contents] selectedChannel];
-    bool selectionActive = [[document selection] active];
+    bool selectionActive = [[document selection] active] && !ignoreSelection;
 
     IntRect maskRect = [[document selection] maskRect];
     unsigned char *mask = [[document selection] mask];
@@ -552,7 +557,7 @@ static void patternCallback(void *info, CGContextRef context) {
 
         r = IntConstrainRect(overlayModifiedRect,IntMakeRect(0,0,lw,lh));
 
-        bool isSelectionActive = [[document selection] active];
+        bool isSelectionActive = [[document selection] active] && !ignoreSelection;
         IntRect selectionRect = [[document selection] localRect];
 
         if (isSelectionActive) {
@@ -581,6 +586,7 @@ static void patternCallback(void *info, CGContextRef context) {
 
         overlayOpacity = 0;
         overlayBehaviour = kNormalBehaviour;
+        ignoreSelection = false;
 
         [[document whiteboard] update:IntOffsetRect(temp, [layer xoff], [layer yoff])];
     }
@@ -605,6 +611,7 @@ static void patternCallback(void *info, CGContextRef context) {
         overlayModifiedRect = tempOverlayModifiedRect = IntZeroRect;
         overlayOpacity = 0;
         overlayBehaviour = kNormalBehaviour;
+        ignoreSelection = false;
 
         [self update:IntOffsetRect(temp, [layer xoff], [layer yoff])];
     }

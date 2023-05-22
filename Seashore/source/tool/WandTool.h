@@ -13,7 +13,7 @@
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
 
-@interface WandTool : AbstractSelectTool <DraggableTool> {
+@interface WandTool : AbstractSelectTool {
     IntPoint startPoint,currentPoint;
     IntRect previewRect;
 
@@ -31,18 +31,4 @@
 				The mouse down event.
 */
 - (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event;
-
-/*!
-	@method		startPoint
-	@discussion	For figuring out where to draw the center
-*/
-- (IntPoint)start;
-
-/*!
-	@method		currentPoint
-	@discussion	For figuring out where to draw the outside
-*/
-- (IntPoint)current;
-
-- (bool)isPreviewing;
 @end

@@ -88,6 +88,7 @@ enum {
 	// The opacity for the overlay
 	int overlayOpacity;
     float overlayOpacity_float;
+    bool ignoreSelection;
 
     IntRect overlayModifiedRect;
     IntRect tempOverlayModifiedRect;
@@ -218,6 +219,8 @@ enum {
 - (void)update:(IntRect)rect;
 
 - (void)overlayModified:(IntRect)rect;
+
+- (void)ignoreSelection:(BOOL)ignore;
 
 // ACCESSOR METHODS
 
