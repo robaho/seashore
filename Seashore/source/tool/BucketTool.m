@@ -67,6 +67,7 @@
 
 - (void)mouseUpAt:(IntPoint)where withEvent:(NSEvent *)event
 {
+    [queue waitUntilAllOperationsAreFinished];
 	[[document whiteboard] applyOverlay];
 	intermediate = NO;
     [[document recentsUtility] rememberBucket:options];
@@ -134,7 +135,7 @@
         IntRect dirty = previewRect;
 
         [[document whiteboard] clearOverlayForUpdate];
-        [[document whiteboard] setOverlayOpacity:200];
+        [[document whiteboard] setOverlayOpacity:[options opacity]];
         [[document whiteboard] ignoreSelection:true];
 
         unsigned char _color[4];
@@ -161,11 +162,12 @@
     [queue addOperation:op];
 }
 
-
 - (void)endLineDrawing
 {
     if(!intermediate)
         return;
+
+    [queue waitUntilAllOperationsAreFinished];
 
     [[document helpers] applyOverlay];
     intermediate=NO;
