@@ -123,7 +123,6 @@ void DumpObjcMethods(Class clz) {
     if(LOG_PERFORMANCE) {
         NSLog(@"overlay modified %@",NSStringFromIntRect(layerRect));
     }
-    SeaLayer *layer = [[document contents] activeLayer];
 
     if (IntRectIsEmpty(overlayModifiedRect)) {
         overlayModifiedRect = layerRect;
@@ -140,6 +139,11 @@ void DumpObjcMethods(Class clz) {
     }
 
     dispatch_semaphore_signal(renderSem); // will pass tempOverlayModifiedRect to whiteboardModifiedRect when it runs
+}
+
+- (void)ignoreSelection:(BOOL)ignore
+{
+    ignoreSelection = ignore;
 }
 
 - (BOOL)isOpaque
@@ -165,7 +169,7 @@ void DumpObjcMethods(Class clz) {
     int yoff = [layer yoff];
 
     int selectedChannel = [[document contents] selectedChannel];
-    bool selectionActive = [[document selection] active];
+    bool selectionActive = [[document selection] active] && !ignoreSelection;
 
     IntRect maskRect = [[document selection] maskRect];
     unsigned char *mask = [[document selection] mask];
@@ -553,7 +557,7 @@ static void patternCallback(void *info, CGContextRef context) {
 
         r = IntConstrainRect(overlayModifiedRect,IntMakeRect(0,0,lw,lh));
 
-        bool isSelectionActive = [[document selection] active];
+        bool isSelectionActive = [[document selection] active] && !ignoreSelection;
         IntRect selectionRect = [[document selection] localRect];
 
         if (isSelectionActive) {
@@ -582,6 +586,7 @@ static void patternCallback(void *info, CGContextRef context) {
 
         overlayOpacity = 0;
         overlayBehaviour = kNormalBehaviour;
+        ignoreSelection = false;
 
         [[document whiteboard] update:IntOffsetRect(temp, [layer xoff], [layer yoff])];
     }
@@ -606,10 +611,23 @@ static void patternCallback(void *info, CGContextRef context) {
         overlayModifiedRect = tempOverlayModifiedRect = IntZeroRect;
         overlayOpacity = 0;
         overlayBehaviour = kNormalBehaviour;
+        ignoreSelection = false;
 
         [self update:IntOffsetRect(temp, [layer xoff], [layer yoff])];
     }
 }
+- (void)clearOverlayForUpdate {
+    @synchronized (document.mutex) {
+        int width = layer_width;
+        int height = layer_height;
+
+        [self copyLayerToTemp:overlayModifiedRect];
+
+        memset(overlay, 0, width * height * SPP);
+        memset(replace, 0, width * height);
+    }
+}
+
 
 - (unsigned char *)overlay {
   return overlay;

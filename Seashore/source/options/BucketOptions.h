@@ -12,6 +12,7 @@
 
 @interface BucketOptions : AbstractPaintOptions {
 	id toleranceSlider;
+    id fillAllRegions;
 }
 
 /*!
@@ -21,4 +22,5 @@
 				bucket tool.
 */
 - (int)tolerance;
+- (bool)fillAllRegions;
 @end

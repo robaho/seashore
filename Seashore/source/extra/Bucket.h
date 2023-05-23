@@ -15,11 +15,11 @@
 typedef struct {
     unsigned char *overlay;
     unsigned char *data;
-    IntPoint *seeds;
-    int numSeeds;
+    IntPoint start;
     int tolerance;
     int channel;
     int width,height;
+    unsigned char fillColor[4];
 } fillContext;
 
 /*!
@@ -29,36 +29,13 @@ typedef struct {
 				on the bitmap directly but instead on an overlay which can later
 				be composited on to the bitmap.
 	@param		rect
-				The largest region of the bitmap to fill (must lie entirely
-				within bitmap).
-	@param		overlay
-				The block of memory containing the overlay data. Rather than
-				change pixels of the bitmap directly, changes will be made to
-				this block which can then be manipulated.
-	@param		data
-				The block of memory containing the bitmap data.
-	@param		width
-				The width of both the bitmap and overlay.
-	@param		height
-				The height of both the bitmap and overlay.
-	@param		seeds
-				The seed points at which to begin filling.
-	@param		numSeeds
-				The number of seed points in the array.
-	@param		fillColor
-				The colour with which to replace the various pixels.
-	@param		tolerance
-				Pixels will only be replaced if their channel(s) are within this
-				tolerance of the seed point. A tolerance of 255 indicates that
-				all pixels should be replaced in the given rectangle (bucketFill
-				works much faster on such calls).
-	@param		channel
-				The channel(s) to use in determining whether a pixel meets the
-				above condition.
+				The bounding rect for the fill.
+	@param		op
+				The operation to check for cancellation.
 	@result		Returns the smallest possible IntRect including all affected
 				pixels.
 */
-IntRect bucketFill(fillContext *ctx,IntRect rect,unsigned char *fillColor);
+IntRect bucketFill(fillContext *ctx,IntRect rect,NSOperation *op);
 /*!
 @function    textureFill
 @discussion    Given a bitmap, this function fills the bitmap with the given
@@ -71,6 +48,6 @@ The region of the bitmap to replace with the given texture (must
 */
 void textureFill(CGContextRef dst,CGContextRef textureCtx, IntRect rect);
 void cloneFill(CGContextRef dst,CGContextRef srcCtx,IntRect rect,IntPoint offset,IntRect srcRect);
-BOOL shouldFill(fillContext *ctx,IntPoint point);
+BOOL shouldFill(fillContext *ctx,int x,int y);
 void smudgeFill(IntRect rect, unsigned char *layerData, unsigned char *data, int width, int height, unsigned char *accum, unsigned char *temp, unsigned char *mask, int brushWidth,int brushHeight, int rate, bool *noMoreBlur);
 void blitImage(CGContextRef dst,vImage_Buffer *iBuf,IntRect r,unsigned char opacity);

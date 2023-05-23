@@ -20,16 +20,6 @@ enum {
     kReplacingBehaviour
 };
 
-/*!
-	@protocol	PluginClass
-	@abstract	required methods of a plugin with Seashore
-	@discussion	This class is in the public domain allowing plug-ins of any
-				license to be made compatible with Seashore.
-				<br><br>
-				<b>License:</b> Public Domain 2004<br>
-				<b>Copyright:</b> N/A
-*/
-
 @interface PluginClassImpl : NSObject
 {
     id<PluginData> pluginData;

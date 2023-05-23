@@ -10,203 +10,167 @@
 
 extern dispatch_queue_t queue;
 
-inline BOOL shouldFill(fillContext *ctx,IntPoint point)
+typedef struct {
+    int y,xl,xr,dy;
+} entry;
+
+typedef struct {
+    entry *entries;
+    int size;
+    int count;
+} stack;
+
+void push(stack* s,entry e) {
+    if(s->count==s->size) {
+        s->size+=kStackSizeIncrement;
+        s->entries = realloc(s->entries, sizeof(entry)*(s->size));
+    }
+    s->entries[s->count]=e;
+    s->count++;
+}
+entry pop(stack* s) {
+    s->count--;
+    return s->entries[s->count];
+}
+
+inline BOOL shouldFill(fillContext *ctx,int x, int y)
 {
 	int seedIndex;
     int width = ctx->width;
+
     unsigned char *overlay = ctx->overlay;
     unsigned char *data = ctx->data;
+
     int tolerance = ctx->tolerance;
     int channel = ctx->channel;
-	
-	for(seedIndex = 0; seedIndex < ctx->numSeeds; seedIndex++){
-		
-		IntPoint seed = ctx->seeds[seedIndex];
-		BOOL outsideTolerance = NO;
-		int k, temp;
-		
-		int offset = (width * point.y + point.x)*SPP;
-        int offset0 = (width *seed.y + seed.x)*SPP;
-		
-		if (overlay[offset + alphaPos] > 0){
-			outsideTolerance = YES;
-			continue;
-		}
-		
-		if (channel == kAllChannels) {
-            if (data[offset + alphaPos] == 0)
-                return YES;
 
-			for (k = CR; k <= CB; k++) {
-				temp = abs((int)data[offset + k] - (int)data[offset0 + k]);
-				if (temp > tolerance){
-					outsideTolerance = YES;
-					break;
-				}
-			}
-		} else if (channel == kPrimaryChannels) {
-		
-			for (k = CR; k <= CB; k++) {
-				temp = abs((int)data[offset + k] - (int)data[offset0 + k]);
-				if (temp > tolerance){
-					outsideTolerance = YES;
-					break;
-				}
-			}
-		
-		} else if (channel == kAlphaChannel) {
-			temp = abs((int)data[offset + alphaPos] - (int)data[offset0+alphaPos]);
-			if (temp > tolerance){
-				outsideTolerance = YES;
-			}
-		}
-		
-		if(!outsideTolerance){
-			return YES;
-		}
-	}
-	
-	return NO;
+    if(x<0 || y < 0 || x>=ctx->width || y>=ctx->height)
+        return NO;
+
+    int offset = (width * y + x)*SPP;
+
+    if(memcmp(ctx->overlay+offset,ctx->fillColor,SPP)==0) {
+        return NO;
+    }
+
+    int k, temp;
+    int offset0 = (width * ctx->start.y + ctx->start.x)*SPP;
+
+    if (overlay[offset + alphaPos] > 0){
+        // already filled
+        return NO;
+    }
+
+    if (channel == kAllChannels) {
+        if (data[offset + alphaPos] == 0)
+            return YES;
+        for (k = CR; k <= CB; k++) {
+            temp = abs((int)data[offset + k] - (int)data[offset0 + k]);
+            if (temp > tolerance){
+                return NO;
+            }
+        }
+    } else if (channel == kPrimaryChannels) {
+        for (k = CR; k <= CB; k++) {
+            temp = abs((int)data[offset + k] - (int)data[offset0 + k]);
+            if (temp > tolerance){
+                return NO;
+            }
+        }
+    } else if (channel == kAlphaChannel) {
+        temp = abs((int)data[offset + alphaPos] - (int)data[offset0+alphaPos]);
+        if (temp > tolerance){
+            return NO;
+        }
+    }
+
+	return YES;
 }
 
-IntRect bucketFill(fillContext *ctx,IntRect rect,unsigned char *fillColor)
-{
-	int seedIndex;
-	// We know at the very least that this point is in the rect
-	IntRect result = IntMakeRect(ctx->seeds[0].x, ctx->seeds[0].y, 1, 1);
+typedef struct {
+    int min_x,max_x,min_y,max_y;
+} boundaries;
 
+void set(fillContext *ctx,int x,int y,boundaries *b) {
+    memcpy(ctx->overlay+(y*ctx->width+x)*SPP,ctx->fillColor,SPP);
+    b->min_x=MIN(b->min_x,x);
+    b->max_x=MAX(b->max_x,x);
+    b->min_y=MIN(b->min_y,y);
+    b->max_y=MAX(b->max_y,y);
+}
+
+IntRect bucketFill(fillContext *ctx,IntRect rect,NSOperation *op)
+{
     unsigned char *overlay = ctx->overlay;
-    unsigned char *data = ctx->data;
     int tolerance = ctx->tolerance;
     int width = ctx->width;
     int height = ctx->height;
 
-	for(seedIndex = 0; seedIndex < ctx->numSeeds; seedIndex++){
-		IntPoint point, newPoint, seed = ctx->seeds[seedIndex];
-		IntPoint *stack;
-		int stackSize, stackPos, k;
-		int minLeft = seed.x, maxRight = seed.x, minTop = seed.y, maxBottom = seed.y;
-		int i, j;
-		unsigned char firstPixel[4];
-		int origTolerance = tolerance;
+    IntPoint seed = ctx->start;
 
-		// If the overlay alread contains this point, then our work is already done
-		BOOL visited = YES;
-		for (k = 0; k < SPP; k++){
-			// Compare to see if the fill exists at this point in the overlay
-			if(overlay[(seed.y * width + seed.x) * SPP + k] != fillColor[k]){
-				visited = NO;
-			}
-		}
-		if(visited){
-			// We have in fact already filled this point so there's no reason 
-			// to do another bucket fill from this point
-			continue;
-		}
+    boundaries b = {seed.x,seed.x,seed.y,seed.y};
 
-		if (!IntContainsRect(IntMakeRect(0, 0, width, height), rect)) NSLog(@"Bad rectangle passed to textureFill()");
-		if (fillColor[alphaPos] == 0) return IntMakeRect(0, 0, 0, 0);
-		
-		if (tolerance > 0 && tolerance < 255) {
-			tolerance = 255;
-			memcpy(firstPixel, data, SPP);
-			for (j = rect.origin.y; j < rect.origin.y + rect.size.height && tolerance != origTolerance; j++) {
-				for	(i = rect.origin.x; i < rect.origin.x + rect.size.width; i++) {
-					if (memcmp(firstPixel, &data[(j * width + i) * SPP], SPP) != 0) {
-						tolerance = origTolerance;
-						break;
-					}
-				}
-			}
-		}
-		
-		if (tolerance < 0) {
-			result = IntMakeRect(0, 0, 0, 0);
-		}
-		else if (tolerance >= 255) {
-			for (j = rect.origin.y; j < rect.origin.y + rect.size.height; j++) {
-				for	(i = rect.origin.x; i < rect.origin.x + rect.size.width; i++) {
-					memcpy(&(overlay[(j * width + i) * SPP]), fillColor, SPP);
-				}
-			}
-			
-			result = rect;
-		}
-		else {
-			stack = malloc(sizeof(IntPoint) * kStackSizeIncrement);
-			stackSize = kStackSizeIncrement;
-			stackPos = 0;
-			point = seed;
-			do {
-				
-				if (stackPos == stackSize) {
-					stackSize += kStackSizeIncrement;
-					stack = realloc(stack, sizeof(IntPoint) * stackSize);
-				}
-				
-				if (overlay[(point.y * width + point.x) * SPP + alphaPos] == 0)  {
-					for (k = 0; k < SPP; k++)
-						overlay[(point.y * width + point.x) * SPP + k] = fillColor[k];
-				}
-				
-				newPoint = point;
-				newPoint.y++;
-				if (IntPointInRect(newPoint, rect) && shouldFill(ctx,newPoint)) {
-					stack[stackPos] = point;
-					stackPos++;
-					point = newPoint;
-					if (point.y > maxBottom) maxBottom = point.y;
-				}
-				else {
-				
-					newPoint = point;
-					newPoint.y--;
-					if (IntPointInRect(newPoint, rect) && shouldFill(ctx,newPoint)) {
-						stack[stackPos] = point;
-						stackPos++;
-						point = newPoint;
-						if (point.y < minTop) minTop = point.y;
-					}
-					else {
-					
-						newPoint = point;
-						newPoint.x++;
-						if (IntPointInRect(newPoint, rect) && shouldFill(ctx,newPoint)) {
-							stack[stackPos] = point;
-							stackPos++;
-							point = newPoint;
-							if (point.x > maxRight) maxRight = point.x;
-						}
-						else {
-							
-							newPoint = point;
-							newPoint.x--;
-							if (IntPointInRect(newPoint, rect) && shouldFill(ctx,newPoint)) {
-								stack[stackPos] = point;
-								stackPos++;
-								point = newPoint;
-								if (point.x < minLeft) minLeft = point.x;
-							}
-							else {
-								stackPos--;
-								if (stackPos > -1)
-									point = stack[stackPos];
-							}
-				
-						}
-						
-					}
-					
-				}
-				
-			} while (stackPos > -1);
-			
-			free(stack);
-			result = IntSumRects(result, IntMakeRect(minLeft, minTop, maxRight - minLeft + 1, maxBottom - minTop + 1));
-		}
-	}
-	
-	return result;
+    if (!IntContainsRect(IntMakeRect(0, 0, width, height), rect)) NSLog(@"Bad rectangle passed to textureFill()");
+    if (ctx->fillColor[alphaPos] == 0) return IntZeroRect;
+
+    if (tolerance < 0) {
+        return IntZeroRect;
+    }
+    if (tolerance >= 255) {
+        for (int j = rect.origin.y; j < rect.origin.y + rect.size.height; j++) {
+            if([op isCancelled])
+                return IntZeroRect;
+            for	(int i = rect.origin.x; i < rect.origin.x + rect.size.width; i++) {
+                memcpy(&(overlay[(j * width + i) * SPP]), ctx->fillColor, SPP);
+            }
+        }
+        return rect;
+    }
+
+    stack s = { NULL, 0, 0};
+
+    int x = seed.x;
+    int y = seed.y;
+
+    push(&s,(entry){y,x,x,1});
+    push(&s,(entry){y+1,x,x,-1});
+
+    int l,x1,x2,dy;
+
+    while(s.count>0) {
+        if([op isCancelled])
+            return IntZeroRect;
+        
+        entry e = pop(&s);
+
+        y  = e.y + e.dy;
+        x1 = e.xl;
+        x2 = e.xr;
+        dy = e.dy;
+
+        for(x=x1;shouldFill(ctx,x,y);x--)
+            set(ctx,x,y,&b);
+        if(x>=x1) goto skip;
+        l = x+1;
+        if(l<x1) push(&s,(entry){y,l,x1-1,-dy});
+        x = x1+1;
+        do {
+            for(;shouldFill(ctx,x,y);x++) {
+                set(ctx,x,y,&b);
+            }
+            push(&s,(entry){y,l,x-1,dy});
+            if(x>x2+1) {
+                push(&s,(entry){y,x2+1,x-1,-dy});
+            }
+     skip:
+            for(x++;x<=x2 && !shouldFill(ctx,x,y);x++);
+            l=x;
+        } while(x<=x2);
+    }
+
+    free(s.entries);
+
+    return IntMakeRect(b.min_x, b.min_y, b.max_x - b.min_x + 1, b.max_y - b.min_y + 1);
 }
 
 void textureFill0(CGContextRef dst,CGContextRef textureCtx,IntRect rect)

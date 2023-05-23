@@ -1,5 +1,6 @@
 #import "Seashore.h"
 #import "WandOptions.h"
+#import "AbstractTool.h"
 #import "AbstractSelectTool.h"
 
 /*!
@@ -14,8 +15,12 @@
 
 @interface WandTool : AbstractSelectTool {
     IntPoint startPoint,currentPoint;
-
+    IntRect previewRect;
+    
     WandOptions *options;
+
+    unsigned char lastTolerance;
+    NSOperationQueue *queue;
 }
 
 
@@ -29,16 +34,4 @@
 				The mouse down event.
 */
 - (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event;
-
-/*!
-	@method		startPoint
-	@discussion	For figuring out where to draw the center
-*/
-- (IntPoint)start;
-
-/*!
-	@method		currentPoint
-	@discussion	For figuring out where to draw the outside
-*/
-- (IntPoint)current;
 @end
