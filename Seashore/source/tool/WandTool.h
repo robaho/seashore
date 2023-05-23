@@ -16,8 +16,11 @@
 @interface WandTool : AbstractSelectTool {
     IntPoint startPoint,currentPoint;
     IntRect previewRect;
-
+    
     WandOptions *options;
+
+    unsigned char lastTolerance;
+    NSOperationQueue *queue;
 }
 
 

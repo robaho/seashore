@@ -144,6 +144,7 @@ enum {
 	@discussion	Clears the overlay without applying it.
 */
 - (void)clearOverlay;
+- (void)clearOverlayForUpdate;
 
 /*!
 	@method		overlay

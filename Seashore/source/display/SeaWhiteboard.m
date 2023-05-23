@@ -616,6 +616,18 @@ static void patternCallback(void *info, CGContextRef context) {
         [self update:IntOffsetRect(temp, [layer xoff], [layer yoff])];
     }
 }
+- (void)clearOverlayForUpdate {
+    @synchronized (document.mutex) {
+        int width = layer_width;
+        int height = layer_height;
+
+        [self copyLayerToTemp:overlayModifiedRect];
+
+        memset(overlay, 0, width * height * SPP);
+        memset(replace, 0, width * height);
+    }
+}
+
 
 - (unsigned char *)overlay {
   return overlay;

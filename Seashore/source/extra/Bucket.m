@@ -99,7 +99,7 @@ void set(fillContext *ctx,int x,int y,boundaries *b) {
     b->max_y=MAX(b->max_y,y);
 }
 
-IntRect bucketFill(fillContext *ctx,IntRect rect)
+IntRect bucketFill(fillContext *ctx,IntRect rect,NSOperation *op)
 {
     unsigned char *overlay = ctx->overlay;
     int tolerance = ctx->tolerance;
@@ -111,13 +111,15 @@ IntRect bucketFill(fillContext *ctx,IntRect rect)
     boundaries b = {seed.x,seed.x,seed.y,seed.y};
 
     if (!IntContainsRect(IntMakeRect(0, 0, width, height), rect)) NSLog(@"Bad rectangle passed to textureFill()");
-    if (ctx->fillColor[alphaPos] == 0) return IntMakeRect(0, 0, 0, 0);
+    if (ctx->fillColor[alphaPos] == 0) return IntZeroRect;
 
     if (tolerance < 0) {
-        return IntMakeRect(0, 0, 0, 0);
+        return IntZeroRect;
     }
     if (tolerance >= 255) {
         for (int j = rect.origin.y; j < rect.origin.y + rect.size.height; j++) {
+            if([op isCancelled])
+                return IntZeroRect;
             for	(int i = rect.origin.x; i < rect.origin.x + rect.size.width; i++) {
                 memcpy(&(overlay[(j * width + i) * SPP]), ctx->fillColor, SPP);
             }
@@ -136,6 +138,9 @@ IntRect bucketFill(fillContext *ctx,IntRect rect)
     int l,x1,x2,dy;
 
     while(s.count>0) {
+        if([op isCancelled])
+            return IntZeroRect;
+        
         entry e = pop(&s);
 
         y  = e.y + e.dy;
@@ -150,11 +155,15 @@ IntRect bucketFill(fillContext *ctx,IntRect rect)
         if(l<x1) push(&s,(entry){y,l,x1-1,-dy});
         x = x1+1;
         do {
-            for(;shouldFill(ctx,x,y);x++)
+            for(;shouldFill(ctx,x,y);x++) {
                 set(ctx,x,y,&b);
+            }
             push(&s,(entry){y,l,x-1,dy});
-            if(x>x2+1) push(&s,(entry){y,x2+1,x-1,-dy});
-     skip:  for(x++;x<=x2 && !shouldFill(ctx,x,y);x++);
+            if(x>x2+1) {
+                push(&s,(entry){y,x2+1,x-1,-dy});
+            }
+     skip:
+            for(x++;x<=x2 && !shouldFill(ctx,x,y);x++);
             l=x;
         } while(x<=x2);
     }

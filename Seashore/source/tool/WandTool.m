@@ -15,6 +15,10 @@
 
 - (void)awakeFromNib {
     options = [[WandOptions alloc] init:document];
+
+    // use a queue to perform fill operations so we can cancel for smoother preview
+    queue = [[NSOperationQueue alloc] init];
+    [queue setMaxConcurrentOperationCount:1];
 }
 
 - (int)toolId
@@ -28,6 +32,7 @@
 	
 	if(![super isMovingOrScaling]){
 		currentPoint = startPoint = where;
+        lastTolerance = 0;
         [self preview:[options tolerance]];
 	}
 }
@@ -48,7 +53,7 @@ int signum(int n) { return (n < 0) ? -1 : (n > 0) ? +1 : 0; }
 	}
 }
 
--(IntRect)fillOverlay:(IntPoint)start color:(unsigned char*)color tolerance:(int)tolerance
+-(IntRect)fillOverlay:(IntPoint)start color:(unsigned char*)color tolerance:(int)tolerance op:(NSOperation*)op
 {
     SeaLayer *layer = [[document contents] activeLayer];
     int width = [layer width], height = [layer height];
@@ -74,6 +79,8 @@ int signum(int n) { return (n < 0) ? -1 : (n > 0) ? +1 : 0; }
         memset(overlay,0,width*height*SPP);
         rect = IntMakeRect(0,0,width,height);
         for(int row=0;row<height;row++){
+            if([op isCancelled])
+                return IntZeroRect;
             for(int col=0;col<width;col++){
                 if(shouldFill(&ctx,col,row)) {
                     memcpy(&(overlay[(row * width + col) * SPP]), color, SPP);
@@ -81,28 +88,48 @@ int signum(int n) { return (n < 0) ? -1 : (n > 0) ? +1 : 0; }
             }
         }
     } else {
-        rect = bucketFill(&ctx, IntMakeRect(0, 0, width, height));
+        rect = bucketFill(&ctx, IntMakeRect(0, 0, width, height),op);
     }
     return rect;
 }
 
--(void)preview:(double)tolerance
+-(void)preview:(unsigned char)tolerance
 {
-    [[document whiteboard] clearOverlay];
-    [[document whiteboard] setOverlayOpacity:200];
-    [[document whiteboard] ignoreSelection:true];
+    if(tolerance==lastTolerance) {
+        return;
+    }
+    lastTolerance = tolerance;
+    NSColor *color = [[SeaController seaPrefs] selectionColor:.75];
 
-    NSColor *selcolor = [[SeaController seaPrefs] selectionColor:.75];
+    [queue cancelAllOperations];
+    [queue waitUntilAllOperationsAreFinished];
 
-    unsigned char color[4];
-    color[CR]= [selcolor redComponent]*255;
-    color[CG]= [selcolor greenComponent]*255;
-    color[CB]= [selcolor blueComponent]*255;
-    color[alphaPos] = 255;
+    NSBlockOperation *op = [[NSBlockOperation alloc] init];
+    __weak NSBlockOperation* weakOp = op;
 
-    previewRect = [self fillOverlay:startPoint color:color tolerance:tolerance];
+    [op addExecutionBlock:^{
+        IntRect dirty = previewRect;
 
-    [[document helpers] overlayChanged:previewRect];
+        [[document whiteboard] clearOverlayForUpdate];
+        [[document whiteboard] setOverlayOpacity:200];
+        [[document whiteboard] ignoreSelection:true];
+
+        unsigned char _color[4];
+        _color[CR]= [color redComponent]*255;
+        _color[CG]= [color greenComponent]*255;
+        _color[CB]= [color blueComponent]*255;
+        _color[alphaPos] = 255;
+
+        IntRect tmp = [self fillOverlay:startPoint color:_color tolerance:tolerance op:weakOp];
+        if(IntRectIsEmpty(tmp))
+            return;
+        previewRect = tmp;
+
+        dirty = IntRectIsEmpty(dirty) ? previewRect : IntSumRects(dirty,previewRect);
+        [[document helpers] overlayChanged:dirty];
+    }];
+
+    [queue addOperation:op];
 }
 
 - (void)mouseUpAt:(IntPoint)where withEvent:(NSEvent *)event
@@ -119,6 +146,8 @@ int signum(int n) { return (n < 0) ? -1 : (n > 0) ? +1 : 0; }
         [[document selection] clearSelection];
 
     int mode = [options selectionMode];
+
+    [queue waitUntilAllOperationsAreFinished];
 
     IntRect rect = previewRect;
     [[document selection] selectOverlay:rect mode:mode];

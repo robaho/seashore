@@ -22,5 +22,5 @@
 				bucket tool.
 */
 - (int)tolerance;
-- (Boolean)fillAllRegions;
+- (bool)fillAllRegions;
 @end
