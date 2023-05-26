@@ -50,6 +50,9 @@
             mapARGBtoAGGG(CGBitmapContextGetData(textureCtx),w*h*SPP);
         }
     }
+
+    lastTolerance = 0;
+    [self preview:[options tolerance]];
 }
 
 - (void)mouseDraggedTo:(IntPoint)where withEvent:(NSEvent *)event
@@ -71,46 +74,6 @@
 	[[document whiteboard] applyOverlay];
 	intermediate = NO;
     [[document recentsUtility] rememberBucket:options];
-}
-
--(IntRect)fillOverlay:(IntPoint)start color:(unsigned char*)color tolerance:(int)tolerance op:(NSOperation*)op
-{
-    SeaLayer *layer = [[document contents] activeLayer];
-    int width = [layer width], height = [layer height];
-    unsigned char *overlay = [[document whiteboard] overlay], *data = [layer data];
-
-    bool fillAllRegions = [options fillAllRegions];
-    int channel = [[document contents] selectedChannel];
-
-    fillContext ctx;
-    ctx.overlay = overlay;
-    ctx.data = data;
-    ctx.width = width;
-    ctx.height = height;
-    ctx.start = start;
-    ctx.tolerance = tolerance;
-    ctx.channel = channel;
-
-    memcpy(ctx.fillColor,color,4);
-
-    IntRect rect;
-
-    if(fillAllRegions) {
-        memset(overlay,0,width*height*SPP);
-        rect = IntMakeRect(0,0,width,height);
-        for(int row=0;row<height;row++){
-            if([op isCancelled])
-                return IntZeroRect;
-            for(int col=0;col<width;col++){
-                if(shouldFill(&ctx,col,row)) {
-                    memcpy(&(overlay[(row * width + col) * SPP]), color, SPP);
-                }
-            }
-        }
-    } else {
-        rect = bucketFill(&ctx, IntMakeRect(0, 0, width, height),op);
-    }
-    return rect;
 }
 
 -(void)preview:(unsigned char)tolerance
@@ -136,7 +99,6 @@
 
         [[document whiteboard] clearOverlayForUpdate];
         [[document whiteboard] setOverlayOpacity:[options opacity]];
-        [[document whiteboard] ignoreSelection:true];
 
         unsigned char _color[4];
         _color[CR]= [color redComponent]*255;
@@ -144,7 +106,7 @@
         _color[CB]= [color blueComponent]*255;
         _color[alphaPos] = 255;
 
-        IntRect tmp = [self fillOverlay:startPoint color:_color tolerance:tolerance op:weakOp];
+        IntRect tmp = [self fillOverlay:startPoint color:_color tolerance:tolerance allRegions:[options fillAllRegions] op:weakOp];
         if(IntRectIsEmpty(tmp))
             return;
 

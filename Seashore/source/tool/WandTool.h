@@ -1,6 +1,7 @@
 #import "Seashore.h"
 #import "WandOptions.h"
 #import "AbstractTool.h"
+#import "AbstractTool+FillExtensions.h"
 #import "AbstractSelectTool.h"
 
 /*!
@@ -22,16 +23,4 @@
     unsigned char lastTolerance;
     NSOperationQueue *queue;
 }
-
-
-/*!
-	@method		mouseDownAt:withEvent:
-	@discussion	Handles mouse down events.
-	@param		where
-				Where in the document the mouse down event occurred (in terms of
-				the document's pixels).
-	@param		event
-				The mouse down event.
-*/
-- (void)mouseDownAt:(IntPoint)where withEvent:(NSEvent *)event;
 @end

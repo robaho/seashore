@@ -33,12 +33,42 @@ entry pop(stack* s) {
     return s->entries[s->count];
 }
 
+inline BOOL inTolerance(unsigned char *base,unsigned char *color,unsigned char tolerance,int channel){
+    int k,temp;
+    if (channel == kAllChannels) {
+        if (base[alphaPos] == 0)
+            return YES;
+        int r = base[CR]-color[CR];
+        int b = base[CG]-color[CG];
+        int g = base[CB]-color[CB];
+        double dist = sqrt(2*r*r + 4*b*b + 3*g*g);
+        return dist < tolerance;
+        //        for (k = CR; k <= CB; k++) {
+        //            temp = abs((int)base[k] - (int)color[k]);
+        //            if (temp > tolerance){
+        //                return FALSE;
+        //            }
+        //        }
+    } else if (channel == kPrimaryChannels) {
+        for (k = CR; k <= CB; k++) {
+            temp = abs((int)base[k] - (int)color[k]);
+            if (temp > tolerance){
+                return FALSE;
+            }
+        }
+    } else if (channel == kAlphaChannel) {
+        temp = abs((int)base[alphaPos] - (int)color[alphaPos]);
+        if (temp > tolerance){
+            return FALSE;
+        }
+    }
+    return TRUE;
+}
 inline BOOL shouldFill(fillContext *ctx,int x, int y)
 {
-	int seedIndex;
+    int seedIndex;
     int width = ctx->width;
 
-    unsigned char *overlay = ctx->overlay;
     unsigned char *data = ctx->data;
 
     int tolerance = ctx->tolerance;
@@ -53,40 +83,16 @@ inline BOOL shouldFill(fillContext *ctx,int x, int y)
         return NO;
     }
 
-    int k, temp;
-    int offset0 = (width * ctx->start.y + ctx->start.x)*SPP;
+    unsigned char *color = data+offset;
 
-    if (overlay[offset + alphaPos] > 0){
-        // already filled
-        return NO;
-    }
-
-    if (channel == kAllChannels) {
-        if (data[offset + alphaPos] == 0)
+    for(seedIndex = 0; seedIndex < ctx->numSeeds; seedIndex++){
+        IntPoint seed = ctx->seeds[seedIndex];
+        unsigned char *seed_color = data+(width*seed.y + seed.x)*SPP;
+        if(inTolerance(seed_color,color,tolerance,channel))
             return YES;
-        for (k = CR; k <= CB; k++) {
-            temp = abs((int)data[offset + k] - (int)data[offset0 + k]);
-            if (temp > tolerance){
-                return NO;
-            }
-        }
-    } else if (channel == kPrimaryChannels) {
-        for (k = CR; k <= CB; k++) {
-            temp = abs((int)data[offset + k] - (int)data[offset0 + k]);
-            if (temp > tolerance){
-                return NO;
-            }
-        }
-    } else if (channel == kAlphaChannel) {
-        temp = abs((int)data[offset + alphaPos] - (int)data[offset0+alphaPos]);
-        if (temp > tolerance){
-            return NO;
-        }
     }
-
-	return YES;
+    return NO;
 }
-
 typedef struct {
     int min_x,max_x,min_y,max_y;
 } boundaries;
@@ -99,6 +105,28 @@ void set(fillContext *ctx,int x,int y,boundaries *b) {
     b->max_y=MAX(b->max_y,y);
 }
 
+IntRect bucketFillAll(fillContext *ctx,IntRect rect,NSOperation *op)
+{
+
+    int y = rect.origin.y;
+    int maxy = y+rect.size.height;
+    int x = rect.origin.x;
+    int maxx = x+rect.size.width;
+
+    boundaries b = {maxx,x,maxy,y};
+
+    for(int row=y;row<maxy;row++){
+        if([op isCancelled])
+            return IntZeroRect;
+        for(int col=x;col<maxx;col++){
+            if(shouldFill(ctx,col,row)) {
+                set(ctx,col,row,&b);
+            }
+        }
+    }
+    return IntMakeRect(b.min_x, b.min_y, b.max_x - b.min_x + 1, b.max_y - b.min_y + 1);
+}
+
 IntRect bucketFill(fillContext *ctx,IntRect rect,NSOperation *op)
 {
     unsigned char *overlay = ctx->overlay;
@@ -106,7 +134,7 @@ IntRect bucketFill(fillContext *ctx,IntRect rect,NSOperation *op)
     int width = ctx->width;
     int height = ctx->height;
 
-    IntPoint seed = ctx->start;
+    IntPoint seed = ctx->seeds[0];
 
     boundaries b = {seed.x,seed.x,seed.y,seed.y};
 

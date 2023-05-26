@@ -79,6 +79,7 @@
 		2BDD5E5F2208AE3200F9BC74 /* RecentsItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BDD5E5E2208AE3200F9BC74 /* RecentsItem.m */; };
 		2BDD5E63220F33A300F9BC74 /* pencilLargeTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BDD5E62220F33A300F9BC74 /* pencilLargeTemplate.png */; };
 		2BDE5B6529873C1A000267E2 /* layer-infoTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BDE5B6429873C1A000267E2 /* layer-infoTemplate.png */; };
+		2BDF5FFE2A20391200CCF395 /* AbstractTool+FillExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BDF5FFD2A20391100CCF395 /* AbstractTool+FillExtensions.m */; };
 		2BE0CC9D294FBFE3001A05AD /* SeaComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE0CC9B294FBFE3001A05AD /* SeaComponents.framework */; };
 		2BE0CC9E294FBFE3001A05AD /* SeaComponents.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE0CC9B294FBFE3001A05AD /* SeaComponents.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BE0CC9F294FBFE3001A05AD /* SeaLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE0CC9C294FBFE3001A05AD /* SeaLibrary.framework */; };
@@ -630,6 +631,8 @@
 		2BDD5E5E2208AE3200F9BC74 /* RecentsItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecentsItem.m; sourceTree = "<group>"; };
 		2BDD5E62220F33A300F9BC74 /* pencilLargeTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pencilLargeTemplate.png; sourceTree = "<group>"; };
 		2BDE5B6429873C1A000267E2 /* layer-infoTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "layer-infoTemplate.png"; sourceTree = "<group>"; };
+		2BDF5FFC2A20391100CCF395 /* AbstractTool+FillExtensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AbstractTool+FillExtensions.h"; sourceTree = "<group>"; };
+		2BDF5FFD2A20391100CCF395 /* AbstractTool+FillExtensions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AbstractTool+FillExtensions.m"; sourceTree = "<group>"; };
 		2BE0CC9B294FBFE3001A05AD /* SeaComponents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SeaComponents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BE0CC9C294FBFE3001A05AD /* SeaLibrary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SeaLibrary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BE0CCA2294FC8D2001A05AD /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
@@ -1757,6 +1760,8 @@
 				A830C7B10B8AE3B4002AB85C /* EffectTool.m */,
 				2B2D8CC821F9A870004527F2 /* ZoomTool.h */,
 				2B2D8CC921F9A870004527F2 /* ZoomTool.m */,
+				2BDF5FFC2A20391100CCF395 /* AbstractTool+FillExtensions.h */,
+				2BDF5FFD2A20391100CCF395 /* AbstractTool+FillExtensions.m */,
 			);
 			name = "Tool Classes";
 			path = source/tool;
@@ -2144,6 +2149,7 @@
 			files = (
 				A8EDF0F4078959C80022BB31 /* main.m in Sources */,
 				A8EDF0F5078959C80022BB31 /* SeaHelp.m in Sources */,
+				2BDF5FFE2A20391200CCF395 /* AbstractTool+FillExtensions.m in Sources */,
 				2B399C34279DE15D000D0C58 /* SeaContent.m in Sources */,
 				A8EDF0F7078959C80022BB31 /* SeaLayer.m in Sources */,
 				2BFB124227951CD80063A750 /* AlphaToGrayFilter.m in Sources */,

@@ -1,6 +1,7 @@
 #import "Seashore.h"
 #import "BucketOptions.h"
 #import "AbstractTool.h"
+#import "AbstractTool+FillExtensions.h"
 
 /*!
 	@class		BucketTool

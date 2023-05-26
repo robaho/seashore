@@ -53,52 +53,13 @@ int signum(int n) { return (n < 0) ? -1 : (n > 0) ? +1 : 0; }
 	}
 }
 
--(IntRect)fillOverlay:(IntPoint)start color:(unsigned char*)color tolerance:(int)tolerance op:(NSOperation*)op
-{
-    SeaLayer *layer = [[document contents] activeLayer];
-    int width = [layer width], height = [layer height];
-    unsigned char *overlay = [[document whiteboard] overlay], *data = [layer data];
-
-    bool selectAllRegions = [options selectAllRegions];
-    int channel = [[document contents] selectedChannel];
-
-    fillContext ctx;
-    ctx.overlay = overlay;
-    ctx.data = data;
-    ctx.width = width;
-    ctx.height = height;
-    ctx.start = start;
-    ctx.tolerance = tolerance;
-    ctx.channel = channel;
-
-    memcpy(ctx.fillColor,color,4);
-
-    IntRect rect;
-
-    if(selectAllRegions) {
-        memset(overlay,0,width*height*SPP);
-        rect = IntMakeRect(0,0,width,height);
-        for(int row=0;row<height;row++){
-            if([op isCancelled])
-                return IntZeroRect;
-            for(int col=0;col<width;col++){
-                if(shouldFill(&ctx,col,row)) {
-                    memcpy(&(overlay[(row * width + col) * SPP]), color, SPP);
-                }
-            }
-        }
-    } else {
-        rect = bucketFill(&ctx, IntMakeRect(0, 0, width, height),op);
-    }
-    return rect;
-}
-
 -(void)preview:(unsigned char)tolerance
 {
     if(tolerance==lastTolerance) {
         return;
     }
     lastTolerance = tolerance;
+
     NSColor *color = [[SeaController seaPrefs] selectionColor:.75];
 
     [queue cancelAllOperations];
@@ -120,7 +81,7 @@ int signum(int n) { return (n < 0) ? -1 : (n > 0) ? +1 : 0; }
         _color[CB]= [color blueComponent]*255;
         _color[alphaPos] = 255;
 
-        IntRect tmp = [self fillOverlay:startPoint color:_color tolerance:tolerance op:weakOp];
+        IntRect tmp = [self fillOverlay:startPoint color:_color tolerance:tolerance allRegions:[options selectAllRegions] op:weakOp];
         if(IntRectIsEmpty(tmp))
             return;
         previewRect = tmp;

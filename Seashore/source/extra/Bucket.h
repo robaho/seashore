@@ -15,7 +15,8 @@
 typedef struct {
     unsigned char *overlay;
     unsigned char *data;
-    IntPoint start;
+    IntPoint *seeds;
+    int numSeeds;
     int tolerance;
     int channel;
     int width,height;
@@ -36,6 +37,10 @@ typedef struct {
 				pixels.
 */
 IntRect bucketFill(fillContext *ctx,IntRect rect,NSOperation *op);
+IntRect bucketFillAll(fillContext *ctx,IntRect rect,NSOperation *op);
+BOOL inTolerance(unsigned char *base,unsigned char *color,unsigned char tolerance,int channel);
+BOOL shouldFill(fillContext *ctx,int x,int y);
+
 /*!
 @function    textureFill
 @discussion    Given a bitmap, this function fills the bitmap with the given
@@ -48,6 +53,5 @@ The region of the bitmap to replace with the given texture (must
 */
 void textureFill(CGContextRef dst,CGContextRef textureCtx, IntRect rect);
 void cloneFill(CGContextRef dst,CGContextRef srcCtx,IntRect rect,IntPoint offset,IntRect srcRect);
-BOOL shouldFill(fillContext *ctx,int x,int y);
 void smudgeFill(IntRect rect, unsigned char *layerData, unsigned char *data, int width, int height, unsigned char *accum, unsigned char *temp, unsigned char *mask, int brushWidth,int brushHeight, int rate, bool *noMoreBlur);
 void blitImage(CGContextRef dst,vImage_Buffer *iBuf,IntRect r,unsigned char opacity);
