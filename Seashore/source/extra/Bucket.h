@@ -21,6 +21,10 @@ typedef struct {
     int channel;
     int width,height;
     unsigned char fillColor[4];
+    int seedCache[64];
+    int matchCache[64];
+    double hueCache[64];
+    int nMatches;
 } fillContext;
 
 /*!
@@ -38,8 +42,6 @@ typedef struct {
 */
 IntRect bucketFill(fillContext *ctx,IntRect rect,NSOperation *op);
 IntRect bucketFillAll(fillContext *ctx,IntRect rect,NSOperation *op);
-BOOL inTolerance(unsigned char *base,unsigned char *color,unsigned char tolerance,int channel);
-BOOL shouldFill(fillContext *ctx,int x,int y);
 
 /*!
 @function    textureFill

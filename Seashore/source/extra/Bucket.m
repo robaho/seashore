@@ -20,7 +20,7 @@ typedef struct {
     int count;
 } stack;
 
-void push(stack* s,entry e) {
+static inline void push(stack* s,entry e) {
     if(s->count==s->size) {
         s->size+=kStackSizeIncrement;
         s->entries = realloc(s->entries, sizeof(entry)*(s->size));
@@ -28,20 +28,53 @@ void push(stack* s,entry e) {
     s->entries[s->count]=e;
     s->count++;
 }
-entry pop(stack* s) {
+static inline entry pop(stack* s) {
     s->count--;
     return s->entries[s->count];
 }
 
-inline BOOL inTolerance(unsigned char *base,unsigned char *color,unsigned char tolerance,int channel){
+double RGBtoHue(double R, double G, double B) {
+    return
+    R==G && R==B ? 0. :
+    R>=G && R>=B ?
+    (B>G ? 6./6.-1./6.*(B-G)/(R-G)
+     :      0./6.+1./6.*(G-B)/(R-B)) :
+    G>=R && G>=B ?
+    (R>B ? 2./6.-1./6.*(R-B)/(G-B)
+     :      2./6.+1./6.*(B-R)/(G-R)) :
+    G>R  ? 4./6.-1./6.*(G-R)/(B-R)
+    :      4./6.+1./6.*(R-G)/(B-G) ; }
+
+double calculateHue(fillContext *ctx,int x,int y) {
+    unsigned char *pixel = ctx->data + (ctx->width * y + x)*SPP;
+
+    if(ctx->channel==kAllChannels) {
+        return RGBtoHue(pixel[CR],pixel[CG],pixel[CB]);
+    }
+    if(ctx->channel==kPrimaryChannels) {
+        return RGBtoHue(pixel[CR],pixel[CG],pixel[CB]);
+    }
+    if(ctx->channel==kAlphaChannel) {
+        return RGBtoHue(pixel[alphaPos],pixel[alphaPos],pixel[alphaPos]);
+    }
+    return 0;
+}
+
+static inline double colorDistance(unsigned char *e1,unsigned char *e2)
+{
+    int rmean = ( (int)e1[CR] + (int)e2[CR] ) / 2;
+    int r = (int)e1[CR] - (int)e2[CR];
+    int g = (int)e1[CG] - (int)e2[CG];
+    int b = (int)e1[CB] - (int)e2[CB];
+    return sqrt((((512+rmean)*r*r)>>8) + 4*g*g + (((767-rmean)*b*b)>>8));
+}
+
+static inline bool inTolerance(unsigned char *base,unsigned char *color,unsigned char tolerance,int channel){
     int k,temp;
     if (channel == kAllChannels) {
         if (base[alphaPos] == 0)
             return YES;
-        int r = base[CR]-color[CR];
-        int b = base[CG]-color[CG];
-        int g = base[CB]-color[CB];
-        double dist = sqrt(2*r*r + 4*b*b + 3*g*g);
+        double dist = colorDistance(base,color);
         return dist < tolerance;
         //        for (k = CR; k <= CB; k++) {
         //            temp = abs((int)base[k] - (int)color[k]);
@@ -64,15 +97,13 @@ inline BOOL inTolerance(unsigned char *base,unsigned char *color,unsigned char t
     }
     return TRUE;
 }
-inline BOOL shouldFill(fillContext *ctx,int x, int y)
+
+static inline bool shouldFill(fillContext *ctx,int x, int y)
 {
-    int seedIndex;
+//    int seedIndex;
     int width = ctx->width;
 
     unsigned char *data = ctx->data;
-
-    int tolerance = ctx->tolerance;
-    int channel = ctx->channel;
 
     if(x<0 || y < 0 || x>=ctx->width || y>=ctx->height)
         return NO;
@@ -83,21 +114,51 @@ inline BOOL shouldFill(fillContext *ctx,int x, int y)
         return NO;
     }
 
-    unsigned char *color = data+offset;
+//    double hue = calculateHue(ctx,x,y) * 360;
+//    double tolerance = ctx->tolerance/255.0;
+//
+//    for(int i=0;i<ctx->numSeeds;i++) {
+//        double h1 = ctx->hueCache[i]*360;
+//        double diff = ABS(MIN(ABS(h1-hue), 360-ABS(h1-hue)))/180.0;
+//        if(diff < tolerance) {
+//            NSLog(@"diff %f tol %f",diff,tolerance);
+//            return YES;
+//        }
+//    }
+//    return NO;
 
-    for(seedIndex = 0; seedIndex < ctx->numSeeds; seedIndex++){
-        IntPoint seed = ctx->seeds[seedIndex];
-        unsigned char *seed_color = data+(width*seed.y + seed.x)*SPP;
-        if(inTolerance(seed_color,color,tolerance,channel))
+    int tolerance = ctx->tolerance;
+    int channel = ctx->channel;
+
+    unsigned char *color = data+offset;
+//    int ci = *(int *)color;
+//    for(int i=0;i<ctx->nMatches;i++) {
+//        if(ctx->matchCache[i]==ci) {
+//            return NO;
+//        }
+//    }
+//
+    for(int seedIndex = 0; seedIndex < ctx->numSeeds; seedIndex++){
+//        IntPoint seed = ctx->seeds[seedIndex];
+//        unsigned char *seed_color = data+(width*seed.y + seed.x)*SPP;
+        unsigned char *seed_color = (unsigned char *)&(ctx->seedCache[seedIndex]);
+        if(inTolerance(seed_color,color,tolerance,channel)) {
             return YES;
+        }
     }
+//    if(ctx->nMatches<64) {
+//        ctx->matchCache[ctx->nMatches++]=ci;
+//    } else {
+//        memcpy(&ctx->matchCache[1],&ctx->matchCache[0],63*(sizeof(int)));
+//        ctx->matchCache[0]=ci;
+//    }
     return NO;
 }
 typedef struct {
     int min_x,max_x,min_y,max_y;
 } boundaries;
 
-void set(fillContext *ctx,int x,int y,boundaries *b) {
+static inline void set(fillContext *ctx,int x,int y,boundaries *b) {
     memcpy(ctx->overlay+(y*ctx->width+x)*SPP,ctx->fillColor,SPP);
     b->min_x=MIN(b->min_x,x);
     b->max_x=MAX(b->max_x,x);
@@ -105,9 +166,29 @@ void set(fillContext *ctx,int x,int y,boundaries *b) {
     b->max_y=MAX(b->max_y,y);
 }
 
-IntRect bucketFillAll(fillContext *ctx,IntRect rect,NSOperation *op)
-{
+void fillHueCache(fillContext *ctx) {
+    for(int i=0;i<ctx->numSeeds;i++) {
+        IntPoint p = ctx->seeds[i];
+        ctx->hueCache[i]=calculateHue(ctx,p.x,p.y);
+    }
+}
 
+void fillSeedCache(fillContext *ctx) {
+//    fillHueCache(ctx);
+    unsigned char *data = ctx->data;
+    int width = ctx->width;
+
+    ctx->nMatches=0;
+
+    for(int i=0;i<ctx->numSeeds;i++) {
+        IntPoint p = ctx->seeds[i];
+        ctx->seedCache[i]=*(unsigned int *)(data + (width * p.y + p.x)*SPP);
+    }
+}
+
+
+IntRect bucketFillAll0(fillContext *ctx,IntRect rect,NSOperation *op)
+{
     int y = rect.origin.y;
     int maxy = y+rect.size.height;
     int x = rect.origin.x;
@@ -124,8 +205,30 @@ IntRect bucketFillAll(fillContext *ctx,IntRect rect,NSOperation *op)
             }
         }
     }
+
     return IntMakeRect(b.min_x, b.min_y, b.max_x - b.min_x + 1, b.max_y - b.min_y + 1);
 }
+
+IntRect bucketFillAll(fillContext *ctx,IntRect rect,NSOperation *op)
+{
+    fillSeedCache(ctx);
+
+    int cores = MAX([[NSProcessInfo processInfo] activeProcessorCount],1);
+
+    if(cores==1){
+        return bucketFillAll0(ctx,rect,op);
+    }
+
+    dispatch_group_t group = dispatch_group_create();
+    int h = MAX(rect.size.height/cores,1);
+    for(int row=0;row<rect.size.height;row+=h) {
+        IntRect rect0 = IntMakeRect(rect.origin.x,row+rect.origin.y,rect.size.width,MIN(h,rect.size.height-row));
+        dispatch_group_async(group,queue,^{bucketFillAll0(ctx,rect0,op);});
+    }
+    dispatch_group_wait(group,DISPATCH_TIME_FOREVER);
+    return rect;
+}
+
 
 IntRect bucketFill(fillContext *ctx,IntRect rect,NSOperation *op)
 {
@@ -154,6 +257,8 @@ IntRect bucketFill(fillContext *ctx,IntRect rect,NSOperation *op)
         }
         return rect;
     }
+
+    fillSeedCache(ctx);
 
     stack s = { NULL, 0, 0};
 
