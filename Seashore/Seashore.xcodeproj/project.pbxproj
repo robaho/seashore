@@ -44,6 +44,74 @@
 		2B399C35279DE15D000D0C58 /* SeaDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B399C2E279DE15C000D0C58 /* SeaDocument.m */; };
 		2B3DFBB02874E19200D39148 /* SeaHistogram.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B3DFBAF2874E19200D39148 /* SeaHistogram.m */; };
 		2B5CFA372958BC8400706C6D /* PocketSVG.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2BC9B0432958B9970042CA01 /* PocketSVG.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756AF62A2556FA001888D9 /* Alpha2Gray.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AB22A2556FA001888D9 /* Alpha2Gray.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756AF72A2556FB001888D9 /* AffineTile+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AB32A2556FA001888D9 /* AffineTile+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756AF82A2556FC001888D9 /* AutoEnhance+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AB42A2556FA001888D9 /* AutoEnhance+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756AF92A2556FD001888D9 /* Bloom+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AB52A2556FA001888D9 /* Bloom+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756AFA2A2556FE001888D9 /* Brightness+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AB62A2556FA001888D9 /* Brightness+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756AFB2A2556FF001888D9 /* Bump+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AB72A2556FA001888D9 /* Bump+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756AFC2A255700001888D9 /* Checkerboard+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AB82A2556FA001888D9 /* Checkerboard+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756AFD2A255701001888D9 /* CircleSplash+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AB92A2556FA001888D9 /* CircleSplash+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756AFE2A255701001888D9 /* CircularScreen+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756ABA2A2556FA001888D9 /* CircularScreen+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756AFF2A255702001888D9 /* CircularWrap+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756ABB2A2556FA001888D9 /* CircularWrap+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B002A255703001888D9 /* CMYKHalftone+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756ABC2A2556FA001888D9 /* CMYKHalftone+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B012A255704001888D9 /* Crystallize+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756ABD2A2556FA001888D9 /* Crystallize+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B022A255705001888D9 /* DisplacementDistortion+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756ABE2A2556FA001888D9 /* DisplacementDistortion+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B032A255706001888D9 /* DotScreen+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756ABF2A2556FA001888D9 /* DotScreen+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B042A255707001888D9 /* Edges+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AC02A2556FA001888D9 /* Edges+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B052A255708001888D9 /* EdgeWork+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AC12A2556FA001888D9 /* EdgeWork+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B062A255708001888D9 /* Exposure+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AC22A2556FA001888D9 /* Exposure+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B072A255709001888D9 /* FalseColor+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AC32A2556FA001888D9 /* FalseColor+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B082A25570A001888D9 /* GammaAdjust+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AC42A2556FA001888D9 /* GammaAdjust+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B092A25570B001888D9 /* Gaussian+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AC52A2556FA001888D9 /* Gaussian+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B0A2A25570C001888D9 /* GlassDistortion+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AC62A2556FA001888D9 /* GlassDistortion+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B0B2A25570D001888D9 /* GlassLozenge+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AC72A2556FA001888D9 /* GlassLozenge+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B0C2A25570E001888D9 /* Gloom+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AC82A2556FA001888D9 /* Gloom+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B0D2A25570F001888D9 /* HatchedScreen+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AC92A2556FA001888D9 /* HatchedScreen+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B0E2A255710001888D9 /* Hole+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756ACA2A2556FA001888D9 /* Hole+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B0F2A255710001888D9 /* HorizStripes+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756ACB2A2556FA001888D9 /* HorizStripes+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B102A255711001888D9 /* Invert+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756ACC2A2556FA001888D9 /* Invert+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B112A255712001888D9 /* Kaleidoscope+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756ACD2A2556FA001888D9 /* Kaleidoscope+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B122A255713001888D9 /* KeystoneCombined.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756ACE2A2556FA001888D9 /* KeystoneCombined.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B132A255714001888D9 /* KeystoneHorizontal.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756ACF2A2556FA001888D9 /* KeystoneHorizontal.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B142A255715001888D9 /* KeystoneVertical.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AD02A2556FA001888D9 /* KeystoneVertical.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B152A255716001888D9 /* LenticularHalo+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AD12A2556FA001888D9 /* LenticularHalo+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B162A255716001888D9 /* LineScreen+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AD22A2556FA001888D9 /* LineScreen+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B172A255717001888D9 /* Median+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AD32A2556FA001888D9 /* Median+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B182A255718001888D9 /* Monochrome+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AD42A2556FA001888D9 /* Monochrome+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B192A255719001888D9 /* MotionBlur+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AD52A2556FA001888D9 /* MotionBlur+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B1A2A25571A001888D9 /* NoiseReduction+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AD62A2556FA001888D9 /* NoiseReduction+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B1B2A25571B001888D9 /* OpTile+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AD72A2556FA001888D9 /* OpTile+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B1C2A25571C001888D9 /* ParallelogramTile+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AD82A2556FA001888D9 /* ParallelogramTile+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B1D2A25571D001888D9 /* PerspectiveCorrection.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AD92A2556FA001888D9 /* PerspectiveCorrection.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B1E2A25571E001888D9 /* PerspectiveRotate.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756ADA2A2556FA001888D9 /* PerspectiveRotate.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B1F2A25571F001888D9 /* PerspectiveTile+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756ADB2A2556FA001888D9 /* PerspectiveTile+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B202A255720001888D9 /* PerspectiveTransform.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756ADC2A2556FA001888D9 /* PerspectiveTransform.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B212A255721001888D9 /* Pinch+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756ADD2A2556FA001888D9 /* Pinch+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B222A255722001888D9 /* Pixellate+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756ADE2A2556FA001888D9 /* Pixellate+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B232A255723001888D9 /* Pointillize+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756ADF2A2556FA001888D9 /* Pointillize+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B242A255724001888D9 /* Posterize+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AE02A2556FA001888D9 /* Posterize+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B252A255725001888D9 /* Random+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AE12A2556FA001888D9 /* Random+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B262A255726001888D9 /* Sepia+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AE22A2556FA001888D9 /* Sepia+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B272A255727001888D9 /* Sharpen+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AE32A2556FA001888D9 /* Sharpen+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B282A255728001888D9 /* SpotLight+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AE42A2556FA001888D9 /* SpotLight+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B292A255729001888D9 /* Starshine+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AE52A2556FA001888D9 /* Starshine+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B2A2A25572A001888D9 /* Straighten.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AE62A2556FA001888D9 /* Straighten.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B2B2A25572A001888D9 /* Sunbeams+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AE72A2556FA001888D9 /* Sunbeams+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B2C2A25572B001888D9 /* TorusLens+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AE82A2556FA001888D9 /* TorusLens+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B2D2A25572C001888D9 /* TriangleTile+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AE92A2556FA001888D9 /* TriangleTile+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B2E2A25572D001888D9 /* Twirl+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AEA2A2556FA001888D9 /* Twirl+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B2F2A25572E001888D9 /* UnsharpMask+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AEB2A2556FA001888D9 /* UnsharpMask+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B302A25572F001888D9 /* VertStripes+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AEC2A2556FA001888D9 /* VertStripes+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B312A255730001888D9 /* Vortex+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AED2A2556FA001888D9 /* Vortex+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B322A255731001888D9 /* WhitePointAdjust+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AEE2A2556FA001888D9 /* WhitePointAdjust+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B332A255732001888D9 /* ZoomBlur+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AEF2A2556FA001888D9 /* ZoomBlur+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B342A255733001888D9 /* CMYK.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AF02A2556FA001888D9 /* CMYK.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B352A255734001888D9 /* ColorLevels.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AF12A2556FA001888D9 /* ColorLevels.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B362A255734001888D9 /* Greyscale.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AF22A2556FA001888D9 /* Greyscale.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B372A255735001888D9 /* HSV.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AF32A2556FA001888D9 /* HSV.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B382A255736001888D9 /* Threshold.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AF42A2556FA001888D9 /* Threshold.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B756B392A255737001888D9 /* ToneCurve.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B756AF52A2556FA001888D9 /* ToneCurve.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2B7C12DF27F9362100A2D658 /* NSAffineTransform_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B7C12DE27F9362100A2D658 /* NSAffineTransform_Extensions.m */; };
 		2B7C12E127FCFCE800A2D658 /* linkTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B7C12E027FCFCE800A2D658 /* linkTemplate.png */; };
 		2B7C12E427FD014C00A2D658 /* LayerInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B7C12E327FD014C00A2D658 /* LayerInfoCell.m */; };
@@ -161,7 +229,6 @@
 		2BE0CD39294FD795001A05AD /* Plugins.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE0CD37294FD794001A05AD /* Plugins.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BE0CD3A294FECFA001A05AD /* XCFQuickLook.qlgenerator in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCF0294FD744001A05AD /* XCFQuickLook.qlgenerator */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BE0CD3B294FED06001A05AD /* XCFSpotlight.mdimporter in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BE0CCF1294FD744001A05AD /* XCFSpotlight.mdimporter */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2BE76CD221EE937400B6C65F /* Seashore.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 2BE76CD121EE937400B6C65F /* Seashore.xcconfig */; };
 		2BEA688227B7408F00BC1453 /* SeaScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BEA688127B7408F00BC1453 /* SeaScrollView.m */; };
 		2BEC1D6627A2DC54008F5612 /* SeaBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BEC1D6527A2DC54008F5612 /* SeaBackground.m */; };
 		2BED225621F3F899005B496C /* textTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BED225521F3F899005B496C /* textTemplate.png */; };
@@ -472,72 +539,140 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				2B756AFC2A255700001888D9 /* Checkerboard+.bundle in CopyFiles */,
+				2B756B192A255719001888D9 /* MotionBlur+.bundle in CopyFiles */,
+				2B756B162A255716001888D9 /* LineScreen+.bundle in CopyFiles */,
+				2B756B302A25572F001888D9 /* VertStripes+.bundle in CopyFiles */,
 				2BE0CD11294FD756001A05AD /* LenticularHalo+.bundle in CopyFiles */,
 				2BE0CCFD294FD749001A05AD /* Crystallize+.bundle in CopyFiles */,
+				2B756B252A255725001888D9 /* Random+.bundle in CopyFiles */,
+				2B756B0E2A255710001888D9 /* Hole+.bundle in CopyFiles */,
 				2BE0CD09294FD750001A05AD /* HatchedScreen+.bundle in CopyFiles */,
+				2B756AFD2A255701001888D9 /* CircleSplash+.bundle in CopyFiles */,
 				2BE0CD0A294FD751001A05AD /* Hole+.bundle in CopyFiles */,
+				2B756AF62A2556FA001888D9 /* Alpha2Gray.bundle in CopyFiles */,
 				2BE0CD15294FD759001A05AD /* MotionBlur+.bundle in CopyFiles */,
+				2B756B2F2A25572E001888D9 /* UnsharpMask+.bundle in CopyFiles */,
 				2BE0CCF8294FD746001A05AD /* Checkerboard+.bundle in CopyFiles */,
+				2B756B272A255727001888D9 /* Sharpen+.bundle in CopyFiles */,
+				2B756B222A255722001888D9 /* Pixellate+.bundle in CopyFiles */,
+				2B756AF92A2556FD001888D9 /* Bloom+.bundle in CopyFiles */,
+				2B756AF82A2556FC001888D9 /* AutoEnhance+.bundle in CopyFiles */,
 				2BE0CCF6294FD745001A05AD /* Brightness+.bundle in CopyFiles */,
 				2BE0CD0B294FD751001A05AD /* HorizStripes+.bundle in CopyFiles */,
+				2B756B1F2A25571F001888D9 /* PerspectiveTile+.bundle in CopyFiles */,
 				2BE0CD1E294FD761001A05AD /* Pixellate+.bundle in CopyFiles */,
 				2BE0CCFB294FD748001A05AD /* CircularWrap+.bundle in CopyFiles */,
 				2BE0CCFE294FD749001A05AD /* DisplacementDistortion+.bundle in CopyFiles */,
+				2B756B0B2A25570D001888D9 /* GlassLozenge+.bundle in CopyFiles */,
 				2BE0CD32294FD777001A05AD /* HSV.bundle in CopyFiles */,
 				2BE0CD06294FD74E001A05AD /* GlassDistortion+.bundle in CopyFiles */,
+				2B756B282A255728001888D9 /* SpotLight+.bundle in CopyFiles */,
+				2B756B032A255706001888D9 /* DotScreen+.bundle in CopyFiles */,
+				2B756B292A255729001888D9 /* Starshine+.bundle in CopyFiles */,
+				2B756B0A2A25570C001888D9 /* GlassDistortion+.bundle in CopyFiles */,
 				2BE0CCF3294FD744001A05AD /* AffineTile+.bundle in CopyFiles */,
 				2BE0CD2D294FD771001A05AD /* Vortex+.bundle in CopyFiles */,
+				2B756B332A255732001888D9 /* ZoomBlur+.bundle in CopyFiles */,
+				2B756AF72A2556FB001888D9 /* AffineTile+.bundle in CopyFiles */,
 				2BE0CD2B294FD76F001A05AD /* UnsharpMask+.bundle in CopyFiles */,
 				2BE0CD1A294FD75E001A05AD /* PerspectiveRotate.bundle in CopyFiles */,
 				2BE0CD26294FD769001A05AD /* Straighten.bundle in CopyFiles */,
+				2B756B1B2A25571B001888D9 /* OpTile+.bundle in CopyFiles */,
+				2B756AFA2A2556FE001888D9 /* Brightness+.bundle in CopyFiles */,
+				2B756B022A255705001888D9 /* DisplacementDistortion+.bundle in CopyFiles */,
 				2BE0CD00294FD74A001A05AD /* Edges+.bundle in CopyFiles */,
+				2B756B042A255707001888D9 /* Edges+.bundle in CopyFiles */,
+				2B756B242A255724001888D9 /* Posterize+.bundle in CopyFiles */,
+				2B756B1C2A25571C001888D9 /* ParallelogramTile+.bundle in CopyFiles */,
 				2BE0CD1C294FD75F001A05AD /* PerspectiveTransform.bundle in CopyFiles */,
+				2B756B012A255704001888D9 /* Crystallize+.bundle in CopyFiles */,
+				2B756AFF2A255702001888D9 /* CircularWrap+.bundle in CopyFiles */,
 				2BE0CD08294FD74F001A05AD /* Gloom+.bundle in CopyFiles */,
 				2BE0CCF5294FD745001A05AD /* Bloom+.bundle in CopyFiles */,
 				2BE0CD2F294FD773001A05AD /* ZoomBlur+.bundle in CopyFiles */,
 				2BE0CD2E294FD772001A05AD /* WhitePointAdjust+.bundle in CopyFiles */,
+				2B756B102A255711001888D9 /* Invert+.bundle in CopyFiles */,
 				2BE0CD29294FD76C001A05AD /* TriangleTile+.bundle in CopyFiles */,
 				2BE0CD21294FD764001A05AD /* Random+.bundle in CopyFiles */,
 				2BE0CD1B294FD75E001A05AD /* PerspectiveTile+.bundle in CopyFiles */,
 				2BE0CD10294FD755001A05AD /* KeystoneVertical.bundle in CopyFiles */,
+				2B756B0C2A25570E001888D9 /* Gloom+.bundle in CopyFiles */,
 				2BE0CD07294FD74F001A05AD /* GlassLozenge+.bundle in CopyFiles */,
 				2BE0CD22294FD765001A05AD /* Sepia+.bundle in CopyFiles */,
 				2BE0CD23294FD766001A05AD /* Sharpen+.bundle in CopyFiles */,
 				2BE0CD04294FD74D001A05AD /* GammaAdjust+.bundle in CopyFiles */,
 				2BE0CD13294FD758001A05AD /* Median+.bundle in CopyFiles */,
+				2B756B262A255726001888D9 /* Sepia+.bundle in CopyFiles */,
+				2B756AFB2A2556FF001888D9 /* Bump+.bundle in CopyFiles */,
 				2BE0CCF9294FD747001A05AD /* CircleSplash+.bundle in CopyFiles */,
+				2B756AFE2A255701001888D9 /* CircularScreen+.bundle in CopyFiles */,
+				2B756B0F2A255710001888D9 /* HorizStripes+.bundle in CopyFiles */,
+				2B756B2D2A25572C001888D9 /* TriangleTile+.bundle in CopyFiles */,
+				2B756B2A2A25572A001888D9 /* Straighten.bundle in CopyFiles */,
 				2BE0CCF7294FD746001A05AD /* Bump+.bundle in CopyFiles */,
+				2B756B052A255708001888D9 /* EdgeWork+.bundle in CopyFiles */,
+				2B756B062A255708001888D9 /* Exposure+.bundle in CopyFiles */,
 				2BE0CD12294FD757001A05AD /* LineScreen+.bundle in CopyFiles */,
 				2BE0CD2C294FD770001A05AD /* VertStripes+.bundle in CopyFiles */,
 				2BE0CD31294FD776001A05AD /* ColorLevels.bundle in CopyFiles */,
+				2B756B202A255720001888D9 /* PerspectiveTransform.bundle in CopyFiles */,
 				2BE0CCFC294FD748001A05AD /* CMYKHalftone+.bundle in CopyFiles */,
 				2BE0CD1D294FD760001A05AD /* Pinch+.bundle in CopyFiles */,
 				2BE0CD18294FD75C001A05AD /* ParallelogramTile+.bundle in CopyFiles */,
 				2BE0CD28294FD76B001A05AD /* TorusLens+.bundle in CopyFiles */,
+				2B756B082A25570A001888D9 /* GammaAdjust+.bundle in CopyFiles */,
 				2BE0CD01294FD74B001A05AD /* EdgeWork+.bundle in CopyFiles */,
 				2BE0CD33294FD778001A05AD /* Threshold.bundle in CopyFiles */,
+				2B756B312A255730001888D9 /* Vortex+.bundle in CopyFiles */,
 				2BE0CD0E294FD754001A05AD /* KeystoneCombined.bundle in CopyFiles */,
 				2BE0CD1F294FD762001A05AD /* Pointillize+.bundle in CopyFiles */,
+				2B756B1D2A25571D001888D9 /* PerspectiveCorrection.bundle in CopyFiles */,
+				2B756B152A255716001888D9 /* LenticularHalo+.bundle in CopyFiles */,
 				2BE0CCF4294FD745001A05AD /* AutoEnhance+.bundle in CopyFiles */,
 				2BE0CD03294FD74C001A05AD /* FalseColor+.bundle in CopyFiles */,
+				2B756B1E2A25571E001888D9 /* PerspectiveRotate.bundle in CopyFiles */,
 				2BE0CD30294FD774001A05AD /* CMYK.bundle in CopyFiles */,
 				2BE0CCFA294FD747001A05AD /* CircularScreen+.bundle in CopyFiles */,
+				2B756B072A255709001888D9 /* FalseColor+.bundle in CopyFiles */,
+				2B756B2C2A25572B001888D9 /* TorusLens+.bundle in CopyFiles */,
 				2BE0CD17294FD75B001A05AD /* OpTile+.bundle in CopyFiles */,
+				2B756B322A255731001888D9 /* WhitePointAdjust+.bundle in CopyFiles */,
 				2BE0CD24294FD767001A05AD /* SpotLight+.bundle in CopyFiles */,
 				2BE0CD0C294FD752001A05AD /* Invert+.bundle in CopyFiles */,
 				2BE0CD02294FD74C001A05AD /* Exposure+.bundle in CopyFiles */,
+				2B756B002A255703001888D9 /* CMYKHalftone+.bundle in CopyFiles */,
 				2BE0CD16294FD75A001A05AD /* NoiseReduction+.bundle in CopyFiles */,
 				2BE0CD14294FD758001A05AD /* Monochrome+.bundle in CopyFiles */,
+				2B756B1A2A25571A001888D9 /* NoiseReduction+.bundle in CopyFiles */,
 				2BE0CD2A294FD76E001A05AD /* Twirl+.bundle in CopyFiles */,
+				2B756B122A255713001888D9 /* KeystoneCombined.bundle in CopyFiles */,
+				2B756B142A255715001888D9 /* KeystoneVertical.bundle in CopyFiles */,
 				2BE0CCF2294FD744001A05AD /* Alpha2Gray.bundle in CopyFiles */,
 				2BE0CD34294FD779001A05AD /* ToneCurve.bundle in CopyFiles */,
+				2B756B342A255733001888D9 /* CMYK.bundle in CopyFiles */,
+				2B756B182A255718001888D9 /* Monochrome+.bundle in CopyFiles */,
+				2B756B372A255735001888D9 /* HSV.bundle in CopyFiles */,
+				2B756B2B2A25572A001888D9 /* Sunbeams+.bundle in CopyFiles */,
 				2BE0CD05294FD74D001A05AD /* Gaussian+.bundle in CopyFiles */,
+				2B756B232A255723001888D9 /* Pointillize+.bundle in CopyFiles */,
+				2B756B382A255736001888D9 /* Threshold.bundle in CopyFiles */,
+				2B756B112A255712001888D9 /* Kaleidoscope+.bundle in CopyFiles */,
+				2B756B0D2A25570F001888D9 /* HatchedScreen+.bundle in CopyFiles */,
+				2B756B092A25570B001888D9 /* Gaussian+.bundle in CopyFiles */,
+				2B756B362A255734001888D9 /* Greyscale.bundle in CopyFiles */,
+				2B756B172A255717001888D9 /* Median+.bundle in CopyFiles */,
 				2BE0CD27294FD76A001A05AD /* Sunbeams+.bundle in CopyFiles */,
+				2B756B212A255721001888D9 /* Pinch+.bundle in CopyFiles */,
+				2B756B132A255714001888D9 /* KeystoneHorizontal.bundle in CopyFiles */,
+				2B756B392A255737001888D9 /* ToneCurve.bundle in CopyFiles */,
 				2BE0CD0F294FD754001A05AD /* KeystoneHorizontal.bundle in CopyFiles */,
 				2BE0CD20294FD763001A05AD /* Posterize+.bundle in CopyFiles */,
 				2BE0CD0D294FD753001A05AD /* Kaleidoscope+.bundle in CopyFiles */,
 				2BE0CD25294FD768001A05AD /* Starshine+.bundle in CopyFiles */,
 				2BE0CD19294FD75D001A05AD /* PerspectiveCorrection.bundle in CopyFiles */,
+				2B756B2E2A25572D001888D9 /* Twirl+.bundle in CopyFiles */,
+				2B756B352A255734001888D9 /* ColorLevels.bundle in CopyFiles */,
 				2BE0CCFF294FD74A001A05AD /* DotScreen+.bundle in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -581,6 +716,74 @@
 		2B399CA5279E0558000D0C58 /* SeaLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeaLayer.h; sourceTree = "<group>"; };
 		2B3DFBAE2874E19200D39148 /* SeaHistogram.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaHistogram.h; sourceTree = "<group>"; };
 		2B3DFBAF2874E19200D39148 /* SeaHistogram.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeaHistogram.m; sourceTree = "<group>"; };
+		2B756AB22A2556FA001888D9 /* Alpha2Gray.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = Alpha2Gray.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AB32A2556FA001888D9 /* AffineTile+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "AffineTile+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AB42A2556FA001888D9 /* AutoEnhance+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "AutoEnhance+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AB52A2556FA001888D9 /* Bloom+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Bloom+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AB62A2556FA001888D9 /* Brightness+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Brightness+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AB72A2556FA001888D9 /* Bump+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Bump+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AB82A2556FA001888D9 /* Checkerboard+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Checkerboard+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AB92A2556FA001888D9 /* CircleSplash+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "CircleSplash+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756ABA2A2556FA001888D9 /* CircularScreen+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "CircularScreen+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756ABB2A2556FA001888D9 /* CircularWrap+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "CircularWrap+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756ABC2A2556FA001888D9 /* CMYKHalftone+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "CMYKHalftone+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756ABD2A2556FA001888D9 /* Crystallize+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Crystallize+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756ABE2A2556FA001888D9 /* DisplacementDistortion+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "DisplacementDistortion+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756ABF2A2556FA001888D9 /* DotScreen+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "DotScreen+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AC02A2556FA001888D9 /* Edges+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Edges+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AC12A2556FA001888D9 /* EdgeWork+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "EdgeWork+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AC22A2556FA001888D9 /* Exposure+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Exposure+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AC32A2556FA001888D9 /* FalseColor+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "FalseColor+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AC42A2556FA001888D9 /* GammaAdjust+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "GammaAdjust+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AC52A2556FA001888D9 /* Gaussian+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Gaussian+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AC62A2556FA001888D9 /* GlassDistortion+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "GlassDistortion+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AC72A2556FA001888D9 /* GlassLozenge+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "GlassLozenge+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AC82A2556FA001888D9 /* Gloom+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Gloom+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AC92A2556FA001888D9 /* HatchedScreen+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "HatchedScreen+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756ACA2A2556FA001888D9 /* Hole+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Hole+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756ACB2A2556FA001888D9 /* HorizStripes+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "HorizStripes+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756ACC2A2556FA001888D9 /* Invert+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Invert+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756ACD2A2556FA001888D9 /* Kaleidoscope+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Kaleidoscope+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756ACE2A2556FA001888D9 /* KeystoneCombined.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = KeystoneCombined.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756ACF2A2556FA001888D9 /* KeystoneHorizontal.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = KeystoneHorizontal.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AD02A2556FA001888D9 /* KeystoneVertical.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = KeystoneVertical.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AD12A2556FA001888D9 /* LenticularHalo+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "LenticularHalo+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AD22A2556FA001888D9 /* LineScreen+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "LineScreen+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AD32A2556FA001888D9 /* Median+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Median+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AD42A2556FA001888D9 /* Monochrome+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Monochrome+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AD52A2556FA001888D9 /* MotionBlur+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "MotionBlur+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AD62A2556FA001888D9 /* NoiseReduction+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "NoiseReduction+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AD72A2556FA001888D9 /* OpTile+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "OpTile+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AD82A2556FA001888D9 /* ParallelogramTile+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "ParallelogramTile+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AD92A2556FA001888D9 /* PerspectiveCorrection.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = PerspectiveCorrection.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756ADA2A2556FA001888D9 /* PerspectiveRotate.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = PerspectiveRotate.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756ADB2A2556FA001888D9 /* PerspectiveTile+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "PerspectiveTile+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756ADC2A2556FA001888D9 /* PerspectiveTransform.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = PerspectiveTransform.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756ADD2A2556FA001888D9 /* Pinch+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Pinch+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756ADE2A2556FA001888D9 /* Pixellate+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Pixellate+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756ADF2A2556FA001888D9 /* Pointillize+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Pointillize+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AE02A2556FA001888D9 /* Posterize+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Posterize+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AE12A2556FA001888D9 /* Random+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Random+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AE22A2556FA001888D9 /* Sepia+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Sepia+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AE32A2556FA001888D9 /* Sharpen+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Sharpen+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AE42A2556FA001888D9 /* SpotLight+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "SpotLight+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AE52A2556FA001888D9 /* Starshine+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Starshine+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AE62A2556FA001888D9 /* Straighten.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = Straighten.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AE72A2556FA001888D9 /* Sunbeams+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Sunbeams+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AE82A2556FA001888D9 /* TorusLens+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "TorusLens+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AE92A2556FA001888D9 /* TriangleTile+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "TriangleTile+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AEA2A2556FA001888D9 /* Twirl+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Twirl+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AEB2A2556FA001888D9 /* UnsharpMask+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "UnsharpMask+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AEC2A2556FA001888D9 /* VertStripes+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "VertStripes+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AED2A2556FA001888D9 /* Vortex+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Vortex+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AEE2A2556FA001888D9 /* WhitePointAdjust+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "WhitePointAdjust+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AEF2A2556FA001888D9 /* ZoomBlur+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "ZoomBlur+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AF02A2556FA001888D9 /* CMYK.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = CMYK.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AF12A2556FA001888D9 /* ColorLevels.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = ColorLevels.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AF22A2556FA001888D9 /* Greyscale.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = Greyscale.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AF32A2556FA001888D9 /* HSV.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = HSV.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AF42A2556FA001888D9 /* Threshold.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = Threshold.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B756AF52A2556FA001888D9 /* ToneCurve.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = ToneCurve.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B7C12DD27F9362100A2D658 /* NSAffineTransform_Extensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSAffineTransform_Extensions.h; sourceTree = "<group>"; };
 		2B7C12DE27F9362100A2D658 /* NSAffineTransform_Extensions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSAffineTransform_Extensions.m; sourceTree = "<group>"; };
 		2B7C12E027FCFCE800A2D658 /* linkTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = linkTemplate.png; sourceTree = "<group>"; };
@@ -1224,6 +1427,74 @@
 		2A37F4C3FDCFA73011CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2B756AB22A2556FA001888D9 /* Alpha2Gray.bundle */,
+				2B756AB32A2556FA001888D9 /* AffineTile+.bundle */,
+				2B756AB42A2556FA001888D9 /* AutoEnhance+.bundle */,
+				2B756AB52A2556FA001888D9 /* Bloom+.bundle */,
+				2B756AB62A2556FA001888D9 /* Brightness+.bundle */,
+				2B756AB72A2556FA001888D9 /* Bump+.bundle */,
+				2B756AB82A2556FA001888D9 /* Checkerboard+.bundle */,
+				2B756AB92A2556FA001888D9 /* CircleSplash+.bundle */,
+				2B756ABA2A2556FA001888D9 /* CircularScreen+.bundle */,
+				2B756ABB2A2556FA001888D9 /* CircularWrap+.bundle */,
+				2B756ABC2A2556FA001888D9 /* CMYKHalftone+.bundle */,
+				2B756ABD2A2556FA001888D9 /* Crystallize+.bundle */,
+				2B756ABE2A2556FA001888D9 /* DisplacementDistortion+.bundle */,
+				2B756ABF2A2556FA001888D9 /* DotScreen+.bundle */,
+				2B756AC02A2556FA001888D9 /* Edges+.bundle */,
+				2B756AC12A2556FA001888D9 /* EdgeWork+.bundle */,
+				2B756AC22A2556FA001888D9 /* Exposure+.bundle */,
+				2B756AC32A2556FA001888D9 /* FalseColor+.bundle */,
+				2B756AC42A2556FA001888D9 /* GammaAdjust+.bundle */,
+				2B756AC52A2556FA001888D9 /* Gaussian+.bundle */,
+				2B756AC62A2556FA001888D9 /* GlassDistortion+.bundle */,
+				2B756AC72A2556FA001888D9 /* GlassLozenge+.bundle */,
+				2B756AC82A2556FA001888D9 /* Gloom+.bundle */,
+				2B756AC92A2556FA001888D9 /* HatchedScreen+.bundle */,
+				2B756ACA2A2556FA001888D9 /* Hole+.bundle */,
+				2B756ACB2A2556FA001888D9 /* HorizStripes+.bundle */,
+				2B756ACC2A2556FA001888D9 /* Invert+.bundle */,
+				2B756ACD2A2556FA001888D9 /* Kaleidoscope+.bundle */,
+				2B756ACE2A2556FA001888D9 /* KeystoneCombined.bundle */,
+				2B756ACF2A2556FA001888D9 /* KeystoneHorizontal.bundle */,
+				2B756AD02A2556FA001888D9 /* KeystoneVertical.bundle */,
+				2B756AD12A2556FA001888D9 /* LenticularHalo+.bundle */,
+				2B756AD22A2556FA001888D9 /* LineScreen+.bundle */,
+				2B756AD32A2556FA001888D9 /* Median+.bundle */,
+				2B756AD42A2556FA001888D9 /* Monochrome+.bundle */,
+				2B756AD52A2556FA001888D9 /* MotionBlur+.bundle */,
+				2B756AD62A2556FA001888D9 /* NoiseReduction+.bundle */,
+				2B756AD72A2556FA001888D9 /* OpTile+.bundle */,
+				2B756AD82A2556FA001888D9 /* ParallelogramTile+.bundle */,
+				2B756AD92A2556FA001888D9 /* PerspectiveCorrection.bundle */,
+				2B756ADA2A2556FA001888D9 /* PerspectiveRotate.bundle */,
+				2B756ADB2A2556FA001888D9 /* PerspectiveTile+.bundle */,
+				2B756ADC2A2556FA001888D9 /* PerspectiveTransform.bundle */,
+				2B756ADD2A2556FA001888D9 /* Pinch+.bundle */,
+				2B756ADE2A2556FA001888D9 /* Pixellate+.bundle */,
+				2B756ADF2A2556FA001888D9 /* Pointillize+.bundle */,
+				2B756AE02A2556FA001888D9 /* Posterize+.bundle */,
+				2B756AE12A2556FA001888D9 /* Random+.bundle */,
+				2B756AE22A2556FA001888D9 /* Sepia+.bundle */,
+				2B756AE32A2556FA001888D9 /* Sharpen+.bundle */,
+				2B756AE42A2556FA001888D9 /* SpotLight+.bundle */,
+				2B756AE52A2556FA001888D9 /* Starshine+.bundle */,
+				2B756AE62A2556FA001888D9 /* Straighten.bundle */,
+				2B756AE72A2556FA001888D9 /* Sunbeams+.bundle */,
+				2B756AE82A2556FA001888D9 /* TorusLens+.bundle */,
+				2B756AE92A2556FA001888D9 /* TriangleTile+.bundle */,
+				2B756AEA2A2556FA001888D9 /* Twirl+.bundle */,
+				2B756AEB2A2556FA001888D9 /* UnsharpMask+.bundle */,
+				2B756AEC2A2556FA001888D9 /* VertStripes+.bundle */,
+				2B756AED2A2556FA001888D9 /* Vortex+.bundle */,
+				2B756AEE2A2556FA001888D9 /* WhitePointAdjust+.bundle */,
+				2B756AEF2A2556FA001888D9 /* ZoomBlur+.bundle */,
+				2B756AF02A2556FA001888D9 /* CMYK.bundle */,
+				2B756AF12A2556FA001888D9 /* ColorLevels.bundle */,
+				2B756AF22A2556FA001888D9 /* Greyscale.bundle */,
+				2B756AF32A2556FA001888D9 /* HSV.bundle */,
+				2B756AF42A2556FA001888D9 /* Threshold.bundle */,
+				2B756AF52A2556FA001888D9 /* ToneCurve.bundle */,
 				2BC9B0432958B9970042CA01 /* PocketSVG.framework */,
 				2BA290C729527C3200175B25 /* CoreGraphics.framework */,
 				2BE0CD37294FD794001A05AD /* Plugins.framework */,
@@ -2083,7 +2354,6 @@
 				2BED226E21F3FB40005B496C /* effectTemplate.png in Resources */,
 				DCC904D70FC60BAF00C74521 /* hide-infoTemplate.png in Resources */,
 				DCC9063A0FC65D9200C74521 /* show-infoTemplate.png in Resources */,
-				2BE76CD221EE937400B6C65F /* Seashore.xcconfig in Resources */,
 				DCF805560FC8672800F72FB3 /* inspector.png in Resources */,
 				DCF8059F0FC99C0F00F72FB3 /* right-align.png in Resources */,
 				DCF805A00FC99C0F00F72FB3 /* left-align.png in Resources */,

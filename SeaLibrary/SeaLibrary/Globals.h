@@ -15,6 +15,7 @@
 #define CR 1
 #define CG 2
 #define CB 3
+#define CA 0
 
 #ifdef __BIG_ENDIAN__
 #define MSB 0

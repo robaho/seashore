@@ -310,7 +310,7 @@
 			};
 			name = Debug;
 		};
-		2B1F690E21D7095C00D6F371 /* Release */ = {
+		2B756AB02A252B9C001888D9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2BE0CC98294FA5E5001A05AD /* Seashore.xcconfig */;
 			buildSettings = {
@@ -318,7 +318,7 @@
 			};
 			name = Release;
 		};
-		2B1F690F21D7095C00D6F371 /* Release */ = {
+		2B756AB12A252B9C001888D9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -338,7 +338,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2B1F690D21D7095700D6F371 /* Debug */,
-				2B1F690F21D7095C00D6F371 /* Release */,
+				2B756AB12A252B9C001888D9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -347,7 +347,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2B1F690C21D7095700D6F371 /* Debug */,
-				2B1F690E21D7095C00D6F371 /* Release */,
+				2B756AB02A252B9C001888D9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

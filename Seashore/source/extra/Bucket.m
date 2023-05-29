@@ -60,13 +60,14 @@ double calculateHue(fillContext *ctx,int x,int y) {
     return 0;
 }
 
-static inline double colorDistance(unsigned char *e1,unsigned char *e2)
+static inline float colorDistance(unsigned char *e1,unsigned char *e2)
 {
     int rmean = ( (int)e1[CR] + (int)e2[CR] ) / 2;
     int r = (int)e1[CR] - (int)e2[CR];
     int g = (int)e1[CG] - (int)e2[CG];
     int b = (int)e1[CB] - (int)e2[CB];
-    return sqrt((((512+rmean)*r*r)>>8) + 4*g*g + (((767-rmean)*b*b)>>8));
+//    return sqrt((float)((((512+rmean)*r*r)>>8) + 4*g*g + (((767-rmean)*b*b)>>8)));
+    return (((512+rmean)*r*r)>>8) + 4*g*g + (((767-rmean)*b*b)>>8);
 }
 
 static inline bool inTolerance(unsigned char *base,unsigned char *color,unsigned char tolerance,int channel){
@@ -74,8 +75,8 @@ static inline bool inTolerance(unsigned char *base,unsigned char *color,unsigned
     if (channel == kAllChannels) {
         if (base[alphaPos] == 0)
             return YES;
-        double dist = colorDistance(base,color);
-        return dist < tolerance;
+        float dist = colorDistance(base,color);
+        return dist < tolerance*tolerance;
         //        for (k = CR; k <= CB; k++) {
         //            temp = abs((int)base[k] - (int)color[k]);
         //            if (temp > tolerance){

@@ -201,22 +201,16 @@
 		};
 		2B1F683D21D6F43800D6F371 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2BF10A462937178D002272AB /* Seashore.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.Plugins;
 				PRODUCT_NAME = Plugins;
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				USER_HEADER_SEARCH_PATHS = "${PROJECT_DIR}/..";
 			};
 			name = Debug;
 		};
 		2B1F683E21D6F43800D6F371 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2BF10A462937178D002272AB /* Seashore.xcconfig */;
 			buildSettings = {
 				GENERATE_INFOPLIST_FILE = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = app.seashore.Plugins;
@@ -235,7 +229,7 @@
 				2B1F683B21D6F43800D6F371 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		2B1F683C21D6F43800D6F371 /* Build configuration list for PBXNativeTarget "Plugins" */ = {
 			isa = XCConfigurationList;
@@ -244,7 +238,7 @@
 				2B1F683E21D6F43800D6F371 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
