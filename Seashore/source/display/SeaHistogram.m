@@ -38,82 +38,82 @@ extern dispatch_queue_t queue;
     [self calculateHistogram];
 }
 
+static void histoByAddress(unsigned char *data,int width,int height,int mode,HistogramView *histogramView) {
+    int *histogram = calloc(256*3,sizeof(int)); // allocate enough for all planes
+    int bytesPerRow = width*SPP;
+
+    for (int row=0;row<height;row++) {
+        for(int col=0;col<width;col++) {
+            int offset = row*bytesPerRow+col*SPP;
+
+            if(data[offset+alphaPos]==0)
+                continue; // ignore completely transparent pixels
+
+            int max = 0;
+            switch(mode) {
+                case 0: // value
+                    for (int i = CR; i <= CB; i++)
+                        max = MAX(max,data[offset + i]);
+                    histogram[max]++;
+                    break;
+                case 1: // red
+                case 2: // green
+                case 3: // blue
+                    histogram[data[offset+mode-1+CR]]++;
+                    break;
+                case 4:
+                    for (int i = 0; i < SPP-1; i++) {
+                        int value = data[offset+i+CR];
+                        histogram[i*256+value]++;
+                    }
+            }
+        }
+    }
+    dispatch_async(dispatch_get_main_queue(),^{
+        [histogramView updateHistogram:mode histogram:histogram];
+    });
+}
+
+static void histoForLayer(NSData* data,int width,int height,int mode,HistogramView *histogramView) {
+    histoByAddress((unsigned char*)[data bytes],width,height,mode,histogramView);
+}
+static void histoForImage(CGContextRef ctx,int width,int height,int mode,HistogramView *histogramView) {
+    histoByAddress(CGBitmapContextGetData(ctx),width,height,mode,histogramView);
+    CGContextRelease(ctx);
+}
+
 - (void)calculateHistogram
 {
     SeaContent *contents = [document contents];
 
     int sw,sh;
 
-    int source = [sourceComboBox indexOfSelectedItem];
-
-    NSData *data_ref;
-    CGContextRef ctx=NULL;
-
-    if(source==0) { // layer
-        data_ref = [[document whiteboard] layerData];
-        SeaLayer *layer = [contents activeLayer];
-
-        sw = [layer width];
-        sh = [layer height];
-    } else { // image
-        ctx = [[document whiteboard] dataCtx];
-        CGContextRetain(ctx);
-        sw = [contents width];
-        sh = [contents height];
-    }
-
     int mode = [modeComboBox indexOfSelectedItem];
 
     if([contents type]==XCF_GRAY_IMAGE)
         mode = 0; // only value supported
 
-    dispatch_async(queue, ^{
+    int source = [sourceComboBox indexOfSelectedItem];
 
-        unsigned char *data;
-        int bytesPerRow;
-        if(ctx!=NULL) {
-            data = CGBitmapContextGetData(ctx);
-            bytesPerRow = CGBitmapContextGetBytesPerRow(ctx);
-        } else {
-            data = [data_ref bytes];
-            bytesPerRow = sw*SPP;
-        }
+    CGContextRef ctx=NULL;
 
-        int *histogram = calloc(256*3,sizeof(int)); // allocate enough for all planes
+    if(source==0) { // layer
+        NSData *data_ref = [[document whiteboard] layerData];
+        SeaLayer *layer = [contents activeLayer];
+        int sw = [layer width], sh = [layer height];
 
-        for (int row=0;row<sh;row++) {
-            for(int col=0;col<sw;col++) {
-                int offset = row*bytesPerRow+col*SPP;
-
-                if(data[offset+alphaPos]==0)
-                    continue; // ignore completely transparent pixels
-
-                int max = 0;
-                switch(mode) {
-                    case 0: // value
-                        for (int i = CR; i <= CB; i++)
-                            max = MAX(max,data[offset + i]);
-                        histogram[max]++;
-                        break;
-                    case 1: // red
-                    case 2: // green
-                    case 3: // blue
-                        histogram[data[offset+mode-1+CR]]++;
-                        break;
-                    case 4:
-                        for (int i = 0; i < SPP-1; i++) {
-                            int value = data[offset+i+CR];
-                            histogram[i*256+value]++;
-                        }
-                }
-            }
-        }
-        CGContextRelease(ctx);
-
-        dispatch_async(dispatch_get_main_queue(),^{
-            [histogramView updateHistogram:mode histogram:histogram];
+        dispatch_async(queue, ^{
+            histoForLayer(data_ref,sw,sh,mode,histogramView);
         });
-    });
+    } else { // image
+        CGContextRef ctx = [[document whiteboard] dataCtx];
+        CGContextRetain(ctx);
+        int sw = [contents width], sh = [contents height];
+
+        dispatch_async(queue, ^{
+            histoForImage(ctx,sw,sh,mode,histogramView);
+        });
+    }
 }
 
 - (void)shutdown
