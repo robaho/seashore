@@ -169,6 +169,11 @@
     [[gCurrentDocument contents] layerFromSelection:NO];
 }
 
+- (IBAction)fillHolesInSelection:(id)sender
+{
+    [[gCurrentDocument selection] fillHolesInSelection];
+}
+
 - (IBAction)duplicate:(id)sender
 {
 	[[gCurrentDocument contents] layerFromSelection: YES];
@@ -478,6 +483,7 @@
 		break;
         case 310:
         case 311:
+        case 312:
             if (![[document selection] active])
                 return NO;
             break;

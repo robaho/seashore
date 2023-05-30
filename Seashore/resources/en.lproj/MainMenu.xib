@@ -706,6 +706,14 @@ CA
                                     <action selector="flipSelectionVertically:" target="501" id="1615"/>
                                 </connections>
                             </menuItem>
+                            <menuItem isSeparatorItem="YES" id="TAd-VS-ryg">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Fill Holes" tag="312" id="Vpa-Xx-buj" userLabel="Fill Holes">
+                                <connections>
+                                    <action selector="fillHolesInSelection:" target="501" id="BOa-OI-oST"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="7zx-sz-TdA">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
@@ -970,7 +978,7 @@ Gw
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <textView editable="NO" importsGraphics="NO" verticallyResizable="YES" baseWritingDirection="leftToRight" usesFontPanel="YES" usesRuler="YES" spellingCorrection="YES" smartInsertDelete="YES" id="4078">
-                                    <rect key="frame" x="0.0" y="-5616" width="423" height="5850"/>
+                                    <rect key="frame" x="0.0" y="-5733" width="423" height="5850"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1958,7 +1966,7 @@ DQ
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" title="Full Color" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2992" id="7330">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="menu"/>
+                        <font key="font" usesAppearanceFont="YES"/>
                         <menu key="menu" title="OtherViews" id="2991">
                             <items>
                                 <menuItem title="Full Color" state="on" id="2992"/>
@@ -1976,7 +1984,7 @@ DQ
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" title="72 dpi" bezelStyle="rounded" alignment="left" lineBreakMode="clipping" state="on" borderStyle="borderAndBezel" tag="72" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2986" id="7329">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="menu"/>
+                        <font key="font" usesAppearanceFont="YES"/>
                         <menu key="menu" title="OtherViews" id="2985">
                             <items>
                                 <menuItem title="72 dpi" state="on" tag="72" id="2986"/>
@@ -2107,7 +2115,7 @@ DQ
                                     <autoresizingMask key="autoresizingMask"/>
                                     <popUpButtonCell key="cell" type="push" title="72 dpi" bezelStyle="rounded" alignment="left" lineBreakMode="clipping" state="on" borderStyle="borderAndBezel" tag="72" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2892" id="7355">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                        <font key="font" metaFont="menu"/>
+                                        <font key="font" usesAppearanceFont="YES"/>
                                         <menu key="menu" title="OtherViews" id="2891">
                                             <items>
                                                 <menuItem title="72 dpi" state="on" tag="72" id="2892"/>
@@ -2126,7 +2134,7 @@ DQ
                                     <autoresizingMask key="autoresizingMask"/>
                                     <popUpButtonCell key="cell" type="push" title="Full Color" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2903" id="7356">
                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                        <font key="font" metaFont="menu"/>
+                                        <font key="font" usesAppearanceFont="YES"/>
                                         <menu key="menu" title="OtherViews" id="2902">
                                             <items>
                                                 <menuItem title="Full Color" state="on" id="2903"/>
@@ -2240,7 +2248,7 @@ DQ
                         <autoresizingMask key="autoresizingMask"/>
                         <popUpButtonCell key="cell" type="push" title="Open Recent" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" pullsDown="YES" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="7281" id="7341">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="menu"/>
+                            <font key="font" usesAppearanceFont="YES"/>
                             <menu key="menu" title="OtherViews" id="7278">
                                 <items>
                                     <menuItem title="Open Recent" state="on" hidden="YES" id="7281"/>
@@ -2481,9 +2489,6 @@ DQ
             <point key="canvasLocation" x="234.5" y="-549.5"/>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="X1R-xm-eP3"/>
-        <menuItem isSeparatorItem="YES" id="omZ-1G-bdx">
-            <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-        </menuItem>
         <window title="Support Seashore" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="seashore support" animationBehavior="default" id="o3j-6x-erT">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <rect key="contentRect" x="283" y="305" width="613" height="414"/>

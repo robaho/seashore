@@ -305,5 +305,7 @@ enum {
 */
 - (void)trimSelection;
 
+- (void)fillHolesInSelection;
+
 
 @end

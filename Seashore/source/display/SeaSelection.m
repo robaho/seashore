@@ -11,6 +11,7 @@
 #import "SeaWhiteboard.h"
 #import "SeaFlip.h"
 #import "ConnectedComponents.h"
+#import "Bucket.h"
 #import <Accelerate/Accelerate.h>
 #import <CoreImage/CoreImage.h>
 
@@ -224,7 +225,6 @@
         free(newMask);
     }
     
-    // Update the changes
     [[document helpers] selectionChanged];
 }
 
@@ -840,6 +840,58 @@
     }
 
     maskRect = IntMakeRect(rect.origin.x + selectionLeft, rect.origin.y + selectionTop, newWidth, newHeight);
+}
+
+- (void)fillHolesInSelection
+{
+    fillContext ctx;
+
+    ctx.channel = kAlphaChannel;
+    ctx.width = maskRect.size.width;
+    ctx.height = maskRect.size.height;
+
+    unsigned char *maskDst = calloc(ctx.width*ctx.height,SPP);
+    unsigned char *maskSrc = calloc(ctx.width*ctx.height,SPP);
+
+    // need to convert mask to RGB for bucket fill at corners
+
+    for(int row=0;row<ctx.height;row++) {
+        for(int col=0;col<ctx.width;col++) {
+            if(mask[row*ctx.width+col]!=0) {
+                memset(maskSrc+((row*ctx.width+col)*SPP),0xFF,SPP);
+            }
+        }
+    }
+
+    ctx.data = maskSrc;
+    ctx.overlay = maskDst;
+    memcpy(ctx.fillColor,(unsigned char[]){0x7f,0x7f,0x7f,0x7f},SPP);
+    ctx.tolerance = 0;
+
+    IntPoint seeds[] = { IntMakePoint(0,0),IntMakePoint(0,ctx.height-1),IntMakePoint(ctx.width-1,0),IntMakePoint(ctx.width-1,ctx.height-1)};
+
+    for(int i=0;i<4;i++) {
+        ctx.seeds = seeds+i;
+        ctx.numSeeds = 1;
+
+        NSOperation *op = [[NSOperation alloc] init];
+
+        bucketFill(&ctx,IntMakeRect(0,0,ctx.width,ctx.height),op);
+    }
+
+    for(int row=0;row<ctx.height;row++) {
+        for(int col=0;col<ctx.width;col++) {
+            if(maskDst[(row*ctx.width+col)*SPP]==0) {
+                mask[row*ctx.width+col]=0xFF;
+            }
+        }
+    }
+
+    free(maskDst);
+    free(maskSrc);
+
+    [self updateMaskImage];
+    [[document helpers] selectionChanged];
 }
 
 @end
