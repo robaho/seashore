@@ -30,8 +30,7 @@
 		name = [[NSString alloc] initWithString:LOCALSTR(@"background layer", @"Background")];
 	else
 		name = [[NSString alloc] initWithFormat:LOCALSTR(@"layer title", @"Layer %d"), uniqueLayerID];
-	oldNames = [[NSArray alloc] init];
-	
+
 	return self;
 }
 
@@ -400,10 +399,7 @@
 
 - (void)setName:(NSString *)newName
 {
-	if (name) {
-		oldNames = [oldNames arrayByAddingObject:name];
-		name = newName;
-	}
+    name = newName;
 }
 
 - (unsigned char *)data

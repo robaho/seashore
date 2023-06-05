@@ -56,13 +56,19 @@
 {
     self = [super initWithDocument:document];
     _properties = [[TextProperties alloc] init];
+    [super setName:NULL];
     return self;
 }
 
 - (SeaTextLayer*)initWithDocument:(SeaDocument *)document layer:(SeaLayer*)layer properties:(nonnull TextProperties *)props
 {
     self = [super initWithDocument:document];
+    [super setName:[layer name]];
     _properties = [props copy];
+    if([[[_properties text] string] isEqualToString:[layer name]]) {
+        [super setName:NULL];
+    }
+
     [self setBounds:[layer globalRect]];
     return self;
 }
@@ -70,6 +76,9 @@
 - (NSString*)name
 {
     if([self isRasterized]) {
+        return [super name];
+    }
+    if([super name]!=NULL) {
         return [super name];
     }
     if(!_properties.text || [_properties.text length]==0)

@@ -29,9 +29,6 @@
 	// The layer's name
 	NSString *name;
 
-	// Old names of the layers
-	NSArray *oldNames;
-	
 	// The opacity of the layer (at most 255)
 	int opacity;
 	

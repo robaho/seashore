@@ -26,6 +26,10 @@
     NSAttributedString *as = [[NSAttributedString alloc] initWithString:s attributes:attrs];
     [self setValue:as forKey:@"placeholderAttributedString"];
 }
+-(void)paste:(id)sender
+{
+    [super pasteAsPlainText:sender];
+}
 @end
 @implementation TextOptions
 
@@ -162,11 +166,13 @@
 
 - (void)textViewDidChangeSelection:(id)sender
 {
+    NSLog(@"text did change selection");
     [self update:textArea];
 }
 
 - (void)textControlsChanged:(id)sender
 {
+    NSLog(@"text controls changed");
     NSRange r = [textArea selectedRange];
     if(r.length==0) {
         [self update:textArea];
@@ -178,6 +184,7 @@
 
 - (void)componentChanged:(id)sender
 {
+    NSLog(@"component changed");
     [self update:sender];
 }
 
@@ -190,6 +197,7 @@
 
 -(void)controlTextDidChange:(NSNotification *)obj
 {
+    NSLog(@"control text changed");
     [self update:textArea];
 }
 
