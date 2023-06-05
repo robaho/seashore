@@ -50,10 +50,14 @@
             }
             seeds[nseeds]=IntMakePoint(x,y);
             nseeds++;
+            if(nseeds==64) {
+                goto done;
+            }
         same:
             continue;
         }
     }
+done:
     ctx->seeds = calloc(nseeds,sizeof(IntPoint));
     memcpy(ctx->seeds,seeds,sizeof(IntPoint)*nseeds);
     ctx->numSeeds = nseeds;
