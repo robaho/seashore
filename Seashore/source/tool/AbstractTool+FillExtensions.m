@@ -15,7 +15,6 @@
 {
     double zoom = [[document docView] zoom];
     if(zoom>=1) {
-        ctx->seeds = malloc(sizeof(IntPoint));
         ctx->seeds[0] = at;
         ctx->numSeeds = 1;
         return;
@@ -25,11 +24,8 @@
     int size = 1 / zoom;
     size = MIN(size,8);
 
-    IntPoint seeds[64];
-    int nseeds=0;
-
-    seeds[0]=at;
-    nseeds=1;
+    ctx->seeds[0]=at;
+    int nseeds=1;
 
     SeaLayer *layer = [[document contents] activeLayer];
     int width = [layer width], height = [layer height];
@@ -44,11 +40,11 @@
             if(x<0 || x>=width)
                 continue;
             for(int i=0;i<nseeds;i++) {
-                if(isSameColor(data,width,seeds[i].x,seeds[i].y,x,y)) {
+                if(isSameColor(data,width,ctx->seeds[i].x,ctx->seeds[i].y,x,y)) {
                     goto same;
                 }
             }
-            seeds[nseeds]=IntMakePoint(x,y);
+            ctx->seeds[nseeds]=IntMakePoint(x,y);
             nseeds++;
             if(nseeds==64) {
                 goto done;
@@ -58,8 +54,6 @@
         }
     }
 done:
-    ctx->seeds = calloc(nseeds,sizeof(IntPoint));
-    memcpy(ctx->seeds,seeds,sizeof(IntPoint)*nseeds);
     ctx->numSeeds = nseeds;
 }
 
@@ -91,7 +85,6 @@ done:
         rect = bucketFill(&ctx, IntMakeRect(0, 0, width, height),op);
     }
 
-    free(ctx.seeds);
     return rect;
 }
 
