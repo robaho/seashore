@@ -871,7 +871,7 @@
     IntPoint seeds[] = { IntMakePoint(0,0),IntMakePoint(0,ctx.height-1),IntMakePoint(ctx.width-1,0),IntMakePoint(ctx.width-1,ctx.height-1)};
 
     for(int i=0;i<4;i++) {
-        ctx.seeds = seeds+i;
+        ctx.seeds[i] = seeds[i];
         ctx.numSeeds = 1;
 
         NSOperation *op = [[NSOperation alloc] init];
