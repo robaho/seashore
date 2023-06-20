@@ -78,6 +78,9 @@
 
 -(void)preview:(unsigned char)tolerance
 {
+    if(!IntPointInRect(startPoint, [[[document contents] activeLayer] localRect]))
+        return;
+
     if(tolerance==lastTolerance) {
         return;
     }
