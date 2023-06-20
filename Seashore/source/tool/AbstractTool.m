@@ -7,7 +7,7 @@
 #import "SeaDocument.h"
 #import "SeaContent.h"
 #import "SeaSelection.h"
-#import "SeaLayer.h";
+#import "SeaLayer.h"
 
 @implementation AbstractTool
 
