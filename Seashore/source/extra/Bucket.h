@@ -15,14 +15,14 @@
 typedef struct {
     unsigned char *overlay;
     unsigned char *data;
-    IntPoint *seeds;
+    IntPoint seeds[64];
     int numSeeds;
     int tolerance;
     int channel;
     int width,height;
     unsigned char fillColor[4];
-    int seedCache[64];
-    int matchCache[64];
+    uint32_t seedCache[64];
+    uint32_t matchCache[64];
     double hueCache[64];
     int nMatches;
 } fillContext;

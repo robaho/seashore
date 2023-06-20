@@ -183,7 +183,7 @@ void fillSeedCache(fillContext *ctx) {
 
     for(int i=0;i<ctx->numSeeds;i++) {
         IntPoint p = ctx->seeds[i];
-        ctx->seedCache[i]=*(unsigned int *)(data + (width * p.y + p.x)*SPP);
+        ctx->seedCache[i]=*(uint32_t *)(data + (width * p.y + p.x)*SPP);
     }
 }
 
@@ -272,8 +272,10 @@ IntRect bucketFill(fillContext *ctx,IntRect rect,NSOperation *op)
     int l,x1,x2,dy;
 
     while(s.count>0) {
-        if([op isCancelled])
+        if([op isCancelled]) {
+            free(s.entries);
             return IntZeroRect;
+        }
         
         entry e = pop(&s);
 
