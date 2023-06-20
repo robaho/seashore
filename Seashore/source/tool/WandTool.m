@@ -55,6 +55,9 @@ int signum(int n) { return (n < 0) ? -1 : (n > 0) ? +1 : 0; }
 
 -(void)preview:(unsigned char)tolerance
 {
+    if(!IntPointInRect(startPoint, [[[document contents] activeLayer] localRect]))
+        return;
+
     if(tolerance==lastTolerance) {
         return;
     }
@@ -100,6 +103,8 @@ int signum(int n) { return (n < 0) ? -1 : (n > 0) ? +1 : 0; }
 
 	[super upHandler:where withEvent:event];
 
+    [queue waitUntilAllOperationsAreFinished];
+
     if(!old || wasMovingOrScaling)
         goto done;
     
@@ -107,8 +112,6 @@ int signum(int n) { return (n < 0) ? -1 : (n > 0) ? +1 : 0; }
         [[document selection] clearSelection];
 
     int mode = [options selectionMode];
-
-    [queue waitUntilAllOperationsAreFinished];
 
     IntRect rect = previewRect;
     [[document selection] selectOverlay:rect mode:mode];
@@ -135,6 +138,15 @@ done:
 - (AbstractOptions*)getOptions
 {
     return options;
+}
+
+- (void)updateCursor:(IntPoint)p cursors:(SeaCursors*)cursors
+{
+    if(!IntPointInRect(p, [[[document contents] activeLayer] globalRect])) {
+        [[cursors noopCursor] set];
+        return;
+    }
+    return [super updateCursor:p cursors:cursors];
 }
 
 @end
