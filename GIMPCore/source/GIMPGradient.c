@@ -670,8 +670,8 @@ void GCFillGradient(unsigned char *dest, int destWidth, int destHeight, IntRect 
     rbd.fg.g *= rbd.fg.a;
 
 	rbd.bg.r = (double)info.end_color[CR] / 255.0;
-	rbd.bg.g = (double)info.end_color[CB] / 255.0;
-	rbd.bg.b = (double)info.end_color[CG] / 255.0;
+	rbd.bg.g = (double)info.end_color[CG] / 255.0;
+	rbd.bg.b = (double)info.end_color[CB] / 255.0;
 	rbd.bg.a = (double)info.end_color[alphaPos] / 255.0;
 
     rbd.bg.r *= rbd.bg.a;

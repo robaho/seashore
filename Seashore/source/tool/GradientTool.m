@@ -71,28 +71,28 @@
     if([[document contents] isRGB]) {
         color = [contents foreground];
         info.start_color[CR] = [color redComponent] * 255;
-        info.start_color[CB] = [color greenComponent] * 255;
-        info.start_color[CG] = [color blueComponent] * 255;
+        info.start_color[CG] = [color greenComponent] * 255;
+        info.start_color[CB] = [color blueComponent] * 255;
         info.start_color[alphaPos] = [options startOpacity] * 255;
         info.end = where;
 
         color = [contents background];
         info.end_color[CR] = [color redComponent] * 255;
-        info.end_color[CB] = [color greenComponent] * 255;
-        info.end_color[CG] = [color blueComponent] * 255;
+        info.end_color[CG] = [color greenComponent] * 255;
+        info.end_color[CB] = [color blueComponent] * 255;
         info.end_color[alphaPos] = [options endOpacity] * 255;
     } else {
         color = [contents foreground];
         info.start_color[CR] = [color whiteComponent] * 255;
-        info.start_color[CB] = [color whiteComponent] * 255;
         info.start_color[CG] = [color whiteComponent] * 255;
+        info.start_color[CB] = [color whiteComponent] * 255;
         info.start_color[alphaPos] = [options startOpacity] * 255;
         info.end = where;
 
         color = [contents background];
         info.end_color[CR] = [color whiteComponent] * 255;
-        info.end_color[CB] = [color whiteComponent] * 255;
         info.end_color[CG] = [color whiteComponent] * 255;
+        info.end_color[CB] = [color whiteComponent] * 255;
         info.end_color[alphaPos] = [options endOpacity] * 255;
     }
 
