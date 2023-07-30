@@ -188,9 +188,9 @@
 	} else if (translating) {
 //        NSLog(@"dragging translate");
         // moving selection
-        return IntMakeRect(postScaledRect.origin.x+globalPoint.x-moveOrigin.x,
-                           postScaledRect.origin.y+globalPoint.y-moveOrigin.y,
-                           postScaledRect.size.width,postScaledRect.size.height);
+        return IntMakeRect(preScaledRect.origin.x+globalPoint.x-moveOrigin.x,
+                           preScaledRect.origin.y+globalPoint.y-moveOrigin.y,
+                           preScaledRect.size.width,preScaledRect.size.height);
     } else {
 //        NSLog(@"dragging initial");
         // dragging initial selection
