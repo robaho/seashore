@@ -978,7 +978,7 @@ Gw
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <textView editable="NO" importsGraphics="NO" verticallyResizable="YES" baseWritingDirection="leftToRight" usesFontPanel="YES" usesRuler="YES" spellingCorrection="YES" smartInsertDelete="YES" id="4078">
-                                    <rect key="frame" x="0.0" y="-5733" width="423" height="5850"/>
+                                    <rect key="frame" x="0.0" y="-5850" width="423" height="5850"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1585,6 +1585,7 @@ This General Public License does not permit incorporating your program into prop
                 <outlet property="panel" destination="1329" id="1350"/>
                 <outlet property="preciseCursorCheckbox" destination="2713" id="2773"/>
                 <outlet property="resolutionMenu" destination="2984" id="3018"/>
+                <outlet property="rightButtonDrawsBGColorCheckbox" destination="nVq-tw-OZq" id="aPG-0F-3KF"/>
                 <outlet property="selectionColorMenu" destination="Ija-59-LNZ" id="Pe9-h1-RhH"/>
                 <outlet property="smartInterpolationCheckbox" destination="2714" id="2772"/>
                 <outlet property="transparencyColorWell" destination="ur0-Fq-68q" id="05v-2I-eXQ"/>
@@ -1771,7 +1772,7 @@ DQ
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="2723">
-                    <rect key="frame" x="10" y="276" width="407" height="5"/>
+                    <rect key="frame" x="10" y="242" width="407" height="5"/>
                     <autoresizingMask key="autoresizingMask"/>
                 </box>
                 <button fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2716">
@@ -1786,7 +1787,7 @@ DQ
                     </connections>
                 </button>
                 <button fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2714">
-                    <rect key="frame" x="139" y="322" width="265" height="18"/>
+                    <rect key="frame" x="139" y="321" width="265" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Use image smoothing" bezelStyle="regularSquare" imagePosition="leading" alignment="left" controlSize="small" inset="2" id="7317">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1807,8 +1808,19 @@ DQ
                         <action selector="setPreciseCursor:" target="507" id="2812"/>
                     </connections>
                 </button>
+                <button fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nVq-tw-OZq">
+                    <rect key="frame" x="139" y="268" width="265" height="18"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <buttonCell key="cell" type="check" title="Right button draws using background color" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="cHT-Rp-Avi">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="message" size="11"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="setPreciseCursor:" target="507" id="dad-Yf-uaX"/>
+                    </connections>
+                </button>
                 <button fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2712">
-                    <rect key="frame" x="139" y="253" width="265" height="18"/>
+                    <rect key="frame" x="139" y="219" width="265" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Create a new document at start-up" bezelStyle="regularSquare" imagePosition="leading" alignment="left" controlSize="small" inset="2" id="7315">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1828,7 +1840,7 @@ DQ
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2709">
-                    <rect key="frame" x="15" y="256" width="114" height="14"/>
+                    <rect key="frame" x="15" y="222" width="114" height="14"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Program Settings" id="7312">
                         <font key="font" metaFont="smallSystemBold"/>
@@ -1837,7 +1849,7 @@ DQ
                     </textFieldCell>
                 </textField>
                 <button fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l9U-wX-bq8">
-                    <rect key="frame" x="139" y="235" width="265" height="18"/>
+                    <rect key="frame" x="139" y="201" width="265" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Zoom to fit documents at open" bezelStyle="regularSquare" imagePosition="leading" alignment="left" controlSize="small" inset="2" id="XZS-OH-hSM">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1848,7 +1860,7 @@ DQ
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="On6-a0-Qn1">
-                    <rect key="frame" x="321" y="202" width="96" height="19"/>
+                    <rect key="frame" x="321" y="168" width="96" height="19"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="0" drawsBackground="YES" id="uQg-CD-LDH">
                         <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="rDb-np-8bK"/>
@@ -1861,7 +1873,7 @@ DQ
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j4Q-q1-bNR">
-                    <rect key="frame" x="138" y="198" width="177" height="28"/>
+                    <rect key="frame" x="138" y="164" width="177" height="28"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" id="Vxy-5H-5sb">
                         <font key="font" metaFont="smallSystem"/>
@@ -1872,7 +1884,7 @@ DQ
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZCx-Vj-5ii">
-                    <rect key="frame" x="150" y="158" width="202" height="30"/>
+                    <rect key="frame" x="150" y="124" width="202" height="30"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" title="* Unlimited undo levels can use excessive memory when working with large images." id="yHB-Fu-ekg">
                         <font key="font" metaFont="miniSystem"/>

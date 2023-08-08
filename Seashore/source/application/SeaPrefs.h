@@ -119,6 +119,8 @@ enum {
 
     IBOutlet id canvasShadowCheckbox;
 
+    IBOutlet id rightButtonDrawsBGColorCheckbox;
+
     // Stores whether or not layer boundaries are visible
 	BOOL layerBounds;
 
@@ -624,6 +626,11 @@ enum {
  @result        Returns YES if to show the shadow, NO otherwise.
  */
 - (BOOL)showCanvasShadow;
+
+/*!
+ @result        Returns YES if to use the bg color, else it erases.
+ */
+- (BOOL)rightButtonDrawsBGColor;
 
 /*!
 	@method		validateMenuItem:

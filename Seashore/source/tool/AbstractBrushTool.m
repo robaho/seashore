@@ -4,6 +4,7 @@
 #import "AbstractBrushTool.h"
 #import "Bucket.h"
 #import "SeaSelection.h"
+#import "SeaPrefs.h"
 
 #define EPSILON 0.0001
 
@@ -183,7 +184,7 @@
 {
     if([options brushIsErasing]) {
         SeaLayer *layer = [[document contents] activeLayer];
-        if([layer hasAlpha])
+        if([layer hasAlpha] && ![(SeaPrefs *)[SeaController seaPrefs] rightButtonDrawsBGColor])
             [[document whiteboard] setOverlayBehaviour:kErasingBehaviour];
     }
     [[document whiteboard] setOverlayOpacity:[options opacity]];

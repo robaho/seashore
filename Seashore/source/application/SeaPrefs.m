@@ -241,6 +241,11 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
     else
         showCanvasShadow = TRUE;
 
+    if ([gUserDefaults objectForKey:@"righhtButtonDrawsBGColor"])
+        [rightButtonDrawsBGColorCheckbox setState:[gUserDefaults boolForKey:@"rightButtonDrawsBGColor"]];
+    else
+        [rightButtonDrawsBGColorCheckbox setState:FALSE];
+
 
 	// Get the main screen resolution
 	if (GetMainDisplayDPI(&xdpi, &ydpi)) {
@@ -323,6 +328,7 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	[gUserDefaults setObject:[font fontName] forKey:@"fontName"];
 	[gUserDefaults setFloat:[font pointSize] forKey:@"fontSize"];
     [gUserDefaults setBool:showCanvasShadow forKey:@"canvasShadow"];
+    [gUserDefaults setBool:[rightButtonDrawsBGColorCheckbox state] forKey:@"rightButtonDrawsBGColor"];
 }
 
 - (NSToolbarItem *) toolbar: (NSToolbar *)toolbar itemForItemIdentifier: (NSString *) itemIdent willBeInsertedIntoToolbar:(BOOL) willBeInserted
@@ -750,6 +756,9 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	IntSize result = IntMakeSize(width, height);
 	
 	return result;
+}
+- (BOOL)rightButtonDrawsBGColor {
+    return [rightButtonDrawsBGColorCheckbox state];
 }
 
 - (int)resolution
