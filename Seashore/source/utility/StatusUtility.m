@@ -7,10 +7,13 @@
 #import "ToolboxUtility.h"
 #import "SeaView.h"
 #import "SeaWindowContent.h"
+#import "SeaPrefs.h"
 
 @implementation StatusUtility
 - (void)awakeFromNib
 {
+    NSControlSize size = [[SeaController seaPrefs] controlSize];
+    [dimensionLabel setCtrlSize:size];
 }
 
 - (void)shutdown

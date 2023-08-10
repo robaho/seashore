@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)setColorValue:(NSColor*)color;
 
 +(SeaLabelledValue*)withLabel:(NSString*)label;
++(SeaLabelledValue*)withLabel:(NSString*)label size:(NSControlSize)size;
 
 @end
 

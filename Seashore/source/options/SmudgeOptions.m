@@ -3,12 +3,15 @@
 #import "SeaController.h"
 #import "SeaHelp.h"
 #import "SeaTools.h"
+#import "SeaPrefs.h"
 
 @implementation SmudgeOptions
 
 - (id)init:(id)document
 {
     self = [super init:document];
+
+    NSControlSize size = [[SeaController seaPrefs] controlSize];
 
     [modifierPopup setHidden:TRUE];
 
@@ -17,7 +20,7 @@
     [scalingCheckbox setHidden:true];
     [opacitySlider setHidden:true];
 
-    rateSlider = [SeaSlider compactSliderWithTitle:@"Rate" Min:0 Max:100 Listener:NULL];
+    rateSlider = [SeaSlider compactSliderWithTitle:@"Rate" Min:0 Max:100 Listener:NULL Size:size];
     [self addSubview:rateSlider];
 
     if ([gUserDefaults objectForKey:@"smudge fade"] == NULL) {

@@ -33,7 +33,6 @@ inline static NSColor* secondaryLabelColor(void)
     [colorWell setCtrlSize:NSControlSizeMini];
 
     [label setTextColor:secondaryLabelColor()];
-    [value setFont:[NSFont userFixedPitchFontOfSize:[NSFont systemFontSizeForControlSize:NSControlSizeMini]]];
 
     [self addSubview:label];
     [self addSubview:value];
@@ -91,8 +90,16 @@ inline static NSColor* secondaryLabelColor(void)
 
 +(SeaLabelledValue*)withLabel:(NSString*)label
 {
+    return [SeaLabelledValue withLabel:label size:NSControlSizeMini];
+}
+
++(SeaLabelledValue*)withLabel:(NSString*)label size:(NSControlSize)size
+{
     SeaLabelledValue *lv = [[SeaLabelledValue alloc] init];
     [lv->label setStringValue:label];
+    [lv->label setCtrlSize:size];
+    [lv->value setCtrlSize:size];
+    [lv->colorWell setCtrlSize:size];
     return lv;
 }
 

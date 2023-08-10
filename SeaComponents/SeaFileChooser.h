@@ -11,10 +11,11 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *title;
     id<Listener> listener;
     NSArray *fileTypes;
+    NSControlSize size;
 }
 
 -(NSString*)path;
-+ (SeaFileChooser*)chooserWithTitle:(NSString*)title types:(NSArray*)fileTypes directory:(NSString*) directory Listener:(id<Listener>)listener;
++ (SeaFileChooser*)chooserWithTitle:(NSString*)title types:(NSArray*)fileTypes directory:(NSString*) directory Listener:(id<Listener>)listener Size:(NSControlSize)size;
 
 @end
 

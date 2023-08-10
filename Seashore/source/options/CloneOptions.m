@@ -6,12 +6,15 @@
 #import "CloneTool.h"
 #import "SeaDocument.h"
 #import "SeaTools.h"
+#import "SeaPrefs.h"
 
 @implementation CloneOptions
 
 - (id)init:(id)document
 {
     self = [super init:document];
+
+    NSControlSize size = [[SeaController seaPrefs] controlSize];
 
     [super clearModifierMenu];
     [self addModifierMenuItem:@"Mark source (Option)" tag:1];
@@ -21,10 +24,10 @@
     [pressurePopup setHidden:true];
     [scalingCheckbox setHidden:true];
 
-    sourceLabel = [Label compactLabel];
+    sourceLabel = [Label labelWithSize:size];
     [self addSubview:sourceLabel];
 
-    mergedCheckbox = [SeaCheckbox checkboxWithTitle:@"Use sample from all layers" Listener:self];
+    mergedCheckbox = [SeaCheckbox checkboxWithTitle:@"Use sample from all layers" Listener:self Size:size];
     [self addSubview:mergedCheckbox];
 
     [mergedCheckbox setChecked:[gUserDefaults boolForKey:@"clone merged"]];

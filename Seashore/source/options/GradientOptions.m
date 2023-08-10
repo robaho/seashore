@@ -2,6 +2,7 @@
 #import "SeaController.h"
 #import "SeaTools.h"
 #import "SeaHelp.h"
+#import "SeaPrefs.h"
 #import <GIMPCore/GIMPCore.h>
 
 @implementation GradientOptions
@@ -9,6 +10,8 @@
 - (id)init:(id)document
 {
     self = [super init:document];
+
+    NSControlSize size = [[SeaController seaPrefs] controlSize];
 
     [super clearModifierMenu];
     [super addModifierMenuItem:@"Lock gradients to 45°" tag:3];
@@ -23,7 +26,7 @@
     [menu addItem:[super itemWithTitle:@"Spiral (clockwise)" tag:GIMP_GRADIENT_SPIRAL_CLOCKWISE]];
     [menu addItem:[super itemWithTitle:@"Spiral (anti-clockwise)" tag:GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE]];
 
-    typePopup = [SeaPopup compactWithTitle:@"Gradient style" Menu:menu Listener:NULL];
+    typePopup = [SeaPopup compactWithTitle:@"Gradient style" Menu:menu Listener:NULL Size:size];
     [self addSubview:typePopup];
 
     menu = [[NSMenu alloc]init];
@@ -31,12 +34,12 @@
     [menu addItem:[super itemWithTitle:@"Sawtooth wave" tag:GIMP_REPEAT_SAWTOOTH]];
     [menu addItem:[super itemWithTitle:@"Triangular wave" tag:GIMP_REPEAT_TRIANGULAR]];
 
-    repeatPopup = [SeaPopup compactWithTitle:@"Repeating pattern" Menu:menu Listener:NULL];
+    repeatPopup = [SeaPopup compactWithTitle:@"Repeating pattern" Menu:menu Listener:NULL Size:size];
     [self addSubview:repeatPopup];
 
-    startOpacitySlider = [SeaSlider compactSliderWithTitle:@"Start opacity" Min:0 Max:100 Listener:NULL];
+    startOpacitySlider = [SeaSlider compactSliderWithTitle:@"Start opacity" Min:0 Max:100 Listener:NULL Size:size];
     [self addSubview:startOpacitySlider];
-    endOpacitySlider = [SeaSlider compactSliderWithTitle:@"End opacity" Min:0 Max:100 Listener:NULL];
+    endOpacitySlider = [SeaSlider compactSliderWithTitle:@"End opacity" Min:0 Max:100 Listener:NULL Size:size];
     [self addSubview:endOpacitySlider];
 
 	int index;

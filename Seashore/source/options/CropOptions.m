@@ -9,6 +9,7 @@
 #import "SeaContent.h"
 #import "AspectRatio.h"
 #import "SeaLayer.h"
+#import "SeaPrefs.h"
 
 #define customItemIndex 2
 
@@ -18,6 +19,8 @@
 {
     self = [super init:document];
 
+    NSControlSize size = [[SeaController seaPrefs] controlSize];
+
     [super clearModifierMenu];
     [super addModifierMenuItem:@"1:1 aspect ratio (Shift)" tag:2];
     [super addModifierMenuItem:@"Force new selection (Control)" tag:3];
@@ -25,8 +28,8 @@
     aspectRatio =  [[AspectRatio alloc] init:document master:self andString:@"crop"];
     [self addSubview:[aspectRatio view]];
 
-    [self addSubview:[SeaButton compactButton:@"Crop Image" target:self action:@selector(cropImage:)]];
-    [self addSubview:[SeaButton compactButton:@"Crop Layer" target:self action:@selector(cropLayer:)]];
+    [self addSubview:[SeaButton compactButton:@"Crop Image" target:self action:@selector(cropImage:) size:size]];
+    [self addSubview:[SeaButton compactButton:@"Crop Layer" target:self action:@selector(cropLayer:) size:size]];
 
     return self;
 }

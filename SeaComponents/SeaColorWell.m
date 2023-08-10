@@ -118,20 +118,22 @@
     [colorWell setEnabled:FALSE];
 }
 
-+ (SeaColorWell*)colorWellWithTitle:(NSString*)title Listener:(nullable id<Listener>)listener
++ (SeaColorWell*)colorWellWithTitle:(NSString*)title Listener:(nullable id<Listener>)listener Size:(NSControlSize)size
 {
     SeaColorWell *cw = [[SeaColorWell alloc] init];
     [cw->title setStringValue:title];
-    [cw->colorWell setCtrlSize:NSControlSizeSmall];
+    [cw->title setCtrlSize:size];
+    [cw->colorWell setCtrlSize:size];
     cw->listener = listener;
     return cw;
 }
-+ (SeaColorWell*)compactWithTitle:(NSString*)title Listener:(nullable id<Listener>)listener
+
++ (SeaColorWell*)compactWithTitle:(NSString*)title Listener:(nullable id<Listener>)listener Size:(NSControlSize)size
 {
     SeaColorWell *cw = [[SeaColorWell alloc] init];
     cw->compact = true;
-    [cw->title makeCompact];
-    [cw->colorWell setCtrlSize:NSControlSizeMini];
+    [cw->title setCtrlSize:size];
+    [cw->colorWell setCtrlSize:size];
     [cw->title setStringValue:title];
     cw->listener = listener;
     return cw;

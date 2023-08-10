@@ -20,10 +20,12 @@
 - (id)init:(id)document {
     self = [super init];
 
+    NSControlSize size = [[SeaController seaPrefs] controlSize];
+
     modifierPopup = [[SeaPopupButton alloc] init];
     [modifierPopup setButtonType:NSButtonTypeMomentaryPushIn];
-    [modifierPopup setCtrlSize:NSControlSizeMini];
-    [modifierPopup setFont:[NSFont systemFontOfSize:[NSFont systemFontSizeForControlSize:NSControlSizeMini]]];
+    [modifierPopup setCtrlSize:size];
+    [modifierPopup setFont:[NSFont systemFontOfSize:[NSFont systemFontSizeForControlSize:size]]];
     [modifierPopup setTarget:self];
     [modifierPopup setAction:@selector(modifierPopupChanged:)];
     [self addModifierMenuItem:@"No modifiers active" tag:0];

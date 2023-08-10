@@ -6,7 +6,7 @@
 {
     self = [super initWithFrame:frameRect];
 
-    button = [SeaButton compactButton:@"Choose" withLabel:@"" target:self action:@selector(buttonPressed:)];
+    button = [SeaButton compactButton:@"Choose" withLabel:@"" target:self action:@selector(buttonPressed:) size:size];
 
     [self addSubview:button];
 
@@ -60,9 +60,10 @@
     [button setFrame:NSMakeRect(0,0,bounds.size.width,bounds.size.height)];
 }
 
-+ (SeaFileChooser*)chooserWithTitle:(NSString*)title types:(NSArray*)fileTypes directory:(NSString*)directory  Listener:(id<Listener>)listener
++ (SeaFileChooser*)chooserWithTitle:(NSString*)title types:(NSArray*)fileTypes directory:(NSString*)directory  Listener:(id<Listener>)listener Size:(NSControlSize)size
 {
     SeaFileChooser *chooser = [[SeaFileChooser alloc] init];
+    chooser->size = size;
     chooser->title = title;
     chooser->fileTypes = fileTypes;
     chooser->directory = directory;

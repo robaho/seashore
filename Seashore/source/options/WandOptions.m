@@ -4,6 +4,7 @@
 #import "SeaController.h"
 #import "SeaHelp.h"
 #import "SeaTools.h"
+#import "SeaPrefs.h"
 
 @implementation WandOptions
 
@@ -11,10 +12,12 @@
 {
     self = [super init:document];
 
-    toleranceSlider = [SeaSlider compactSliderWithTitle:@"Tolerance" Min:0 Max:255 Listener:NULL];
+    NSControlSize size = [[SeaController seaPrefs] controlSize];
+
+    toleranceSlider = [SeaSlider compactSliderWithTitle:@"Tolerance" Min:0 Max:255 Listener:NULL Size:size];
     [self addSubview:toleranceSlider];
 
-    selectAllRegions = [SeaCheckbox checkboxWithTitle:@"Select all regions" Listener:NULL];
+    selectAllRegions = [SeaCheckbox checkboxWithTitle:@"Select all regions" Listener:NULL Size:size];
     [self addSubview:selectAllRegions];
 
 	int value;

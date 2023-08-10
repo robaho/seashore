@@ -20,7 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setEnabled:(BOOL)enabled;
 
 +(SeaButton*)compactButton:(NSString*)title target:(id)target action:(nullable SEL)action;
-+(SeaButton*)compactButton:(NSString*)title withLabel:(NSString*)label target:(id)target action:(nullable SEL)action;
++(SeaButton*)compactButton:(NSString*)title target:(id)target action:(nullable SEL)action size:(NSControlSize)size;
++(SeaButton*)compactButton:(NSString*)title withLabel:(NSString*)label target:(id)target action:(nullable SEL)action size:(NSControlSize)size;
 
 @end
 

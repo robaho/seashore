@@ -50,17 +50,20 @@
     return [self stringValue];
 }
 
+- (void)setCtrlSize:(NSControlSize)size
+{
+    [super setCtrlSize:size];
+    [self setFont:[NSFont labelFontOfSize:[NSFont systemFontSizeForControlSize:size]]];
+}
+
 - (void)makeSmall {
     [self setCtrlSize:NSControlSizeSmall];
-    [self setFont:[NSFont labelFontOfSize:[NSFont systemFontSizeForControlSize:NSControlSizeSmall]]];
 }
 - (void)makeCompact {
     [self setCtrlSize:NSControlSizeMini];
-    [self setFont:[NSFont labelFontOfSize:[NSFont systemFontSizeForControlSize:NSControlSizeMini]]];
 }
 - (void)makeRegular {
     [self setCtrlSize:NSControlSizeRegular];
-    [self setFont:[NSFont labelFontOfSize:[NSFont systemFontSizeForControlSize:NSControlSizeRegular]]];
 }
 
 +(Label*)label
@@ -83,5 +86,12 @@
     [label makeSmall];
     return label;
 }
++ (Label*)labelWithSize:(NSControlSize)size
+{
+    Label* label = [[Label alloc] init];
+    [label setCtrlSize:size];
+    return label;
+}
+
 
 @end

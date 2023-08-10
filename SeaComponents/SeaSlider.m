@@ -181,19 +181,26 @@
 
 + (SeaSlider*)sliderWithTitle:(NSString*)title Min:(double)min Max:(double) max Listener:(nullable id<Listener>)listener
 {
+    return [SeaSlider sliderWithCheck:title Min:min Max:max Listener:listener Size:NSControlSizeSmall];
+}
++ (SeaSlider*)sliderWithTitle:(NSString*)title Min:(double)min Max:(double) max Listener:(nullable id<Listener>)listener Size:(NSControlSize)size
+{
     SeaSlider *slider = [[SeaSlider  alloc] init];
     [slider->title setTitle:title];
     [slider->slider setMinValue:min];
     [slider->slider setMaxValue:max];
     slider->listener = listener;
+    [slider->title setCtrlSize:size];
+    [slider->value setCtrlSize:size];
+    [slider->slider setCtrlSize:size];
     return slider;
 }
 
-+ (SeaSlider*)sliderWithCheck:(NSString*)title Min:(double)min Max:(double) max Listener:(nullable id<Listener>)listener
++ (SeaSlider*)sliderWithCheck:(NSString*)title Min:(double)min Max:(double) max Listener:(nullable id<Listener>)listener Size:(NSControlSize)size
 {
-    SeaSlider *slider = [SeaSlider compactSliderWithTitle:title Min:min Max:max Listener:listener];
-    [slider->checkbox setCtrlSize:NSControlSizeMini];
-    [slider->checkbox setFont:[NSFont systemFontOfSize:[NSFont systemFontSizeForControlSize:NSControlSizeMini]]];
+    SeaSlider *slider = [SeaSlider compactSliderWithTitle:title Min:min Max:max Listener:listener Size:size];
+    [slider->checkbox setCtrlSize:size];
+    [slider->checkbox setFont:[NSFont systemFontOfSize:[NSFont systemFontSizeForControlSize:size]]];
     [slider->checkbox setTitle:title];
     slider->checkable=true;
     [slider->checkbox setHidden:FALSE];
@@ -202,20 +209,24 @@
     return slider;
 }
 
-+ (SeaSlider*)compactSliderWithTitle:(NSString*)title Min:(double)min Max:(double) max Listener:(nullable id<Listener>)listener
++ (SeaSlider*)compactSliderWithTitle:(NSString*)title Min:(double)min Max:(double) max Listener:(nullable id<Listener>)listener Size:(NSControlSize)size
 {
     SeaSlider *slider = [[SeaSlider alloc] init];
     slider->compact = TRUE;
     [slider->title setTitle:title];
-    [slider->title setCtrlSize:NSMiniControlSize];
-    [slider->title setFont:[NSFont labelFontOfSize:[NSFont systemFontSizeForControlSize:NSMiniControlSize]]];
-    [slider->value setCtrlSize:NSMiniControlSize];
-    [slider->value setFont:[NSFont labelFontOfSize:[NSFont systemFontSizeForControlSize:NSMiniControlSize]]];
-    [slider->slider setCtrlSize:NSMiniControlSize];
+    [slider->title setCtrlSize:size];
+    [slider->value setCtrlSize:size];
+    [slider->slider setCtrlSize:size];
     [slider->slider setMinValue:min];
     [slider->slider setMaxValue:max];
     slider->listener = listener;
     return slider;
+}
+
+
++ (SeaSlider*)compactSliderWithTitle:(NSString*)title Min:(double)min Max:(double)max Listener:(nullable id<Listener>)listener
+{
+    return [SeaSlider compactSliderWithTitle:title Min:min Max:max Listener:listener Size:NSMiniControlSize];
 }
 
 @end

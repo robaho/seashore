@@ -5,12 +5,15 @@
 #import <Plugins/PluginClass.h>
 #import "InfoPanel.h"
 #import "EffectTool.h"
+#import "SeaPrefs.h"
 
 @implementation EffectOptions
 
 - (id)init:(id)document
 {
     self = [super init:document];
+
+    NSControlSize size = [[SeaController seaPrefs] controlSize];
 
     [self setSubviews:[NSArray array]];
     [self setIdentifier:@"Effect Options"];
@@ -24,16 +27,16 @@
 
     NSView *top = [VerticalView view];
 
-    effectsButton = [SeaButton compactButton:@"Effects" withLabel:@"No effect selected." target:self action:@selector(showEffects:)];
+    effectsButton = [SeaButton compactButton:@"Effects" withLabel:@"No effect selected." target:self action:@selector(showEffects:) size:size];
 
     instructionsArea = [VerticalView view];
     [instructionsArea setIdentifier:@"effects instructions area"];
 
-    clickCountLabel = [Label compactLabel];
+    clickCountLabel = [Label labelWithSize:size];
     instructionsLabel = [[NSTextField alloc] init];
 
     [instructionsLabel setIdentifier:@"effects instructions label"];
-    [instructionsLabel setFont:[NSFont labelFontOfSize:[NSFont systemFontSizeForControlSize:NSMiniControlSize]]];
+    [instructionsLabel setFont:[NSFont labelFontOfSize:[NSFont systemFontSizeForControlSize:size]]];
     [instructionsLabel setEditable:FALSE];
     [instructionsLabel setBordered:FALSE];
     [instructionsLabel setBezeled:FALSE];
@@ -42,7 +45,7 @@
     instructionsLabel.cell.lineBreakMode=NSLineBreakByWordWrapping;
     instructionsLabel.cell.usesSingleLineMode=FALSE;
 
-    detectRectangleButton = [SeaButton compactButton:@"Detect Rectangle" target:tool action:@selector(detectRectangle:)];
+    detectRectangleButton = [SeaButton compactButton:@"Detect Rectangle" target:tool action:@selector(detectRectangle:) size:size];
 
     [instructionsArea addSubview:clickCountLabel];
     [instructionsArea addSubview:instructionsLabel];
@@ -56,11 +59,11 @@
 
     NSView *bottom = [VerticalView view];
 
-    resetButton = [SeaButton compactButton:@"Reset" target:tool action:@selector(reset:)];
+    resetButton = [SeaButton compactButton:@"Reset" target:tool action:@selector(reset:) size:size];
     [bottom addSubview:resetButton];
-    applyButton = [SeaButton compactButton:@"Apply" target:tool action:@selector(apply:)];
+    applyButton = [SeaButton compactButton:@"Apply" target:tool action:@selector(apply:) size:size];
     [bottom addSubview:applyButton];
-    reapplyButton = [SeaButton compactButton:@"Reapply Last Effect" target:tool action:@selector(reapply:)];
+    reapplyButton = [SeaButton compactButton:@"Reapply Last Effect" target:tool action:@selector(reapply:) size:size];
     [bottom addSubview:reapplyButton];
 
     [borderView addSubview:top];

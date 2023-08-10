@@ -29,23 +29,25 @@
 
 - (void)awakeFromNib
 {
+    NSControlSize size = [[SeaController seaPrefs] controlSize];
+
     VerticalView *left = [VerticalView view];
-    xValue = [SeaLabelledValue withLabel:@"X"];
-    yValue = [SeaLabelledValue withLabel:@"Y"];
-    widthValue = [SeaLabelledValue withLabel:@"Width"];
-    heightValue = [SeaLabelledValue withLabel:@"Height"];
-    deltaX = [SeaLabelledValue withLabel:@"Delta X"];
-    deltaY = [SeaLabelledValue withLabel:@"Delta Y"];
+    xValue = [SeaLabelledValue withLabel:@"X" size:size];
+    yValue = [SeaLabelledValue withLabel:@"Y" size:size];
+    widthValue = [SeaLabelledValue withLabel:@"Width" size:size];
+    heightValue = [SeaLabelledValue withLabel:@"Height" size:size];
+    deltaX = [SeaLabelledValue withLabel:@"Delta X" size:size];
+    deltaY = [SeaLabelledValue withLabel:@"Delta Y" size:size];
 
     [left addSubviews:xValue,yValue,widthValue,heightValue,deltaX,deltaY,nil];
 
     VerticalView *right = [VerticalView view];
-    redValue = [SeaLabelledValue withLabel:@"Red"];
-    greenValue = [SeaLabelledValue withLabel:@"Green"];
-    blueValue = [SeaLabelledValue withLabel:@"Blue"];
-    alphaValue = [SeaLabelledValue withLabel:@"Alpha"];
-    radiusValue = [SeaLabelledValue withLabel:@"Radius"];
-    colorWell = [SeaLabelledValue withLabel:@"Color"];
+    redValue = [SeaLabelledValue withLabel:@"Red" size:size];
+    greenValue = [SeaLabelledValue withLabel:@"Green" size:size];
+    blueValue = [SeaLabelledValue withLabel:@"Blue" size:size];
+    alphaValue = [SeaLabelledValue withLabel:@"Alpha" size:size];
+    radiusValue = [SeaLabelledValue withLabel:@"Radius" size:size];
+    colorWell = [SeaLabelledValue withLabel:@"Color" size:size];
 
     [colorWell setColorValue:[NSColor colorWithCalibratedWhite: 0 alpha:1.0]];
 

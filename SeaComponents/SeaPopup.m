@@ -117,7 +117,12 @@
 
 + (SeaPopup*)popupWithCheck:(NSString*)title Menu:(NSMenu*)menu Listener:(nullable id<Listener>)listener
 {
-    SeaPopup *popup = [SeaPopup compactWithTitle:title Menu:menu Listener:listener];
+    return [SeaPopup popupWithCheck:title Menu:menu Listener:listener Size:NSControlSizeMini];
+}
+
++ (SeaPopup*)popupWithCheck:(NSString*)title Menu:(NSMenu*)menu Listener:(nullable id<Listener>)listener Size:(NSControlSize)size
+{
+    SeaPopup *popup = [SeaPopup compactWithTitle:title Menu:menu Listener:listener Size:size];
     popup->checkable=true;
     [popup->checkbox setHidden:FALSE];
     [popup->title setHidden:TRUE];
@@ -126,18 +131,19 @@
     return popup;
 }
 
-+ (SeaPopup*)compactWithTitle:(NSString*)title Menu:(NSMenu*)menu Listener:(nullable id<Listener>)listener
+
++ (SeaPopup*)compactWithTitle:(NSString*)title Menu:(NSMenu*)menu Listener:(nullable id<Listener>)listener Size:(NSControlSize)size
 {
     SeaPopup *popup = [[SeaPopup alloc] init];
     [popup->popup setMenu:menu];
     popup->compact = true;
-    [popup->title setCtrlSize:NSControlSizeMini];
+    [popup->title setCtrlSize:size];
     [popup->title setTitle:title];
-    [popup->title setFont:[NSFont labelFontOfSize:[NSFont systemFontSizeForControlSize:NSControlSizeMini]]];
-    [popup->popup setCtrlSize:NSControlSizeMini];
-    [popup->popup setFont:[NSFont labelFontOfSize:[NSFont systemFontSizeForControlSize:NSControlSizeMini]]];
-    [popup->checkbox setCtrlSize:NSControlSizeMini];
-    [popup->checkbox setFont:[NSFont labelFontOfSize:[NSFont systemFontSizeForControlSize:NSControlSizeMini]]];
+    [popup->title setFont:[NSFont labelFontOfSize:[NSFont systemFontSizeForControlSize:size]]];
+    [popup->popup setCtrlSize:size];
+    [popup->popup setFont:[NSFont labelFontOfSize:[NSFont systemFontSizeForControlSize:size]]];
+    [popup->checkbox setCtrlSize:size];
+    [popup->checkbox setFont:[NSFont labelFontOfSize:[NSFont systemFontSizeForControlSize:size]]];
     [popup->checkbox setTitle:title];
     popup->listener = listener;
     return popup;

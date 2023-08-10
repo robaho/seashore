@@ -19,8 +19,6 @@
     [button setImagePosition:NSNoImage];
     [button setBezelStyle:NSRoundedBezelStyle];
     [button setButtonType:NSMomentaryPushInButton];
-    [button setCtrlSize:NSControlSizeMini];
-    [button setFont:[NSFont systemFontOfSize:[NSFont systemFontSizeForControlSize:NSControlSizeMini]]];
     [self addSubview:button];
     [self addSubview:label];
     self.autoresizesSubviews = FALSE;
@@ -68,22 +66,34 @@
 
 +(SeaButton*)compactButton:(NSString*)title target:(id)target action:(nullable SEL)action
 {
+    return [SeaButton compactButton:title target:target action:action size:NSControlSizeMini];
+}
+
++(SeaButton*)compactButton:(NSString*)title target:(id)target action:(nullable SEL)action size:(NSControlSize)size
+{
     SeaButton *button = [[SeaButton alloc] init];
     [button->button setTitle:title];
     [button->button setTarget:target];
     [button->button setAction:action];
     [button setIdentifier:title];
+    [button->button setCtrlSize:size];
+    [button->button setFont:[NSFont systemFontOfSize:[NSFont systemFontSizeForControlSize:size]]];
+    [button->label setCtrlSize:NSControlSizeRegular];
 
     return button;
 }
 
-+(SeaButton*)compactButton:(NSString*)title withLabel:(NSString*)label target:(id)target action:(nullable SEL)action
++(SeaButton*)compactButton:(NSString*)title withLabel:(NSString*)label target:(id)target action:(nullable SEL)action size:(NSControlSize)size
 {
     SeaButton *button = [[SeaButton alloc] init];
     [button->label setHidden:FALSE];
     [button->button setTitle:title];
     [button->button setTarget:target];
     [button->button setAction:action];
+    [button->button setCtrlSize:size];
+    [button->button setFont:[NSFont systemFontOfSize:[NSFont systemFontSizeForControlSize:size]]];
+    [button->label setCtrlSize:size];
+
     [button setIdentifier:title];
 
     return button;

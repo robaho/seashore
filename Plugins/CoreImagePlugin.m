@@ -98,13 +98,13 @@ static Property PropertyMeta[] = {
         case kPT_Float:
         case kPT_Integer:
         case kPT_Angle: {
-            SeaSlider *slider = [SeaSlider sliderWithTitle:meta.label Min:meta.min Max:meta.max Listener:self];
+            SeaSlider *slider = [SeaSlider sliderWithTitle:meta.label Min:meta.min Max:meta.max Listener:self Size:defaultControlSize];
             [self->panel addSubview:slider];
             entry.component = slider;
         }
             break;
         case kPT_Color: {
-            SeaColorWell *cw = [SeaColorWell colorWellWithTitle:meta.label Listener:self];
+            SeaColorWell *cw = [SeaColorWell colorWellWithTitle:meta.label Listener:self Size:defaultControlSize];
             [self->panel addSubview:cw];
             entry.component = cw;
         }

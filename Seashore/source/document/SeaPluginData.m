@@ -119,4 +119,9 @@
 	[[document whiteboard] clearOverlay];
 }
 
+- (NSControlSize)size
+{
+    return [[SeaController seaPrefs] controlSize];
+}
+
 @end

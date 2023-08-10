@@ -4,19 +4,22 @@
 #import "BrushUtility.h"
 #import "TextureUtility.h"
 #import "SeaDocument.h"
+#import "SeaPrefs.h"
 
 @implementation AbstractPaintOptions
 
 - (id)init:(id)document {
     self = [super init:document];
 
-    opacitySlider = [SeaSlider compactSliderWithTitle:@"Opacity" Min:0 Max:100 Listener:NULL];
+    NSControlSize size = [[SeaController seaPrefs] controlSize];
+
+    opacitySlider = [SeaSlider compactSliderWithTitle:@"Opacity" Min:0 Max:100 Listener:NULL Size:size];
     [self addSubview:opacitySlider];
 
-    brushesButton = [SeaButton compactButton:@"Brushes" target:self action:@selector(toggleBrushes:)];
+    brushesButton = [SeaButton compactButton:@"Brushes" target:self action:@selector(toggleBrushes:) size:size];
     [self addSubview:brushesButton];
 
-    texturesButton = [SeaButton compactButton:@"Textures" target:self action:@selector(toggleTextures:)];
+    texturesButton = [SeaButton compactButton:@"Textures" target:self action:@selector(toggleTextures:) size:size];
     [self addSubview:texturesButton];
 
     return self;

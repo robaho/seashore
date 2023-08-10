@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setChecked:(bool)b;
 
 + (SeaCheckbox*)checkboxWithTitle:(NSString*)title Listener:(nullable id<Listener>)listener;
++ (SeaCheckbox*)checkboxWithTitle:(NSString*)title Listener:(nullable id<Listener>)listener Size:(NSControlSize)size;
 
 @end
 NS_ASSUME_NONNULL_END

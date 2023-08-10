@@ -978,7 +978,7 @@ Gw
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <textView editable="NO" importsGraphics="NO" verticallyResizable="YES" baseWritingDirection="leftToRight" usesFontPanel="YES" usesRuler="YES" spellingCorrection="YES" smartInsertDelete="YES" id="4078">
-                                    <rect key="frame" x="0.0" y="-5850" width="423" height="5850"/>
+                                    <rect key="frame" x="0.0" y="-5967" width="423" height="5850"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1591,6 +1591,7 @@ This General Public License does not permit incorporating your program into prop
                 <outlet property="transparencyColorWell" destination="ur0-Fq-68q" id="05v-2I-eXQ"/>
                 <outlet property="transparentBackgroundCheckbox" destination="2994" id="3019"/>
                 <outlet property="undoLevelsInput" destination="On6-a0-Qn1" id="qAB-Gy-ueD"/>
+                <outlet property="useLargerFontsCheckbox" destination="o7d-mn-yEj" id="8bk-rk-hbx"/>
                 <outlet property="widthValue" destination="2983" id="3016"/>
                 <outlet property="windowBackWell" destination="3759" id="3761"/>
                 <outlet property="zoomToFitAtOpenCheckbox" destination="l9U-wX-bq8" id="fhw-10-Ccv"/>
@@ -1816,7 +1817,7 @@ DQ
                         <font key="font" metaFont="message" size="11"/>
                     </buttonCell>
                     <connections>
-                        <action selector="setPreciseCursor:" target="507" id="dad-Yf-uaX"/>
+                        <action selector="settingsChanged:" target="507" id="abE-ay-wMG"/>
                     </connections>
                 </button>
                 <button fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2712">
@@ -1892,6 +1893,17 @@ DQ
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <button fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o7d-mn-yEj">
+                    <rect key="frame" x="139" y="107" width="265" height="18"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <buttonCell key="cell" type="check" title="Use larger fonts (requires relaunch)" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="gNT-7b-bxQ">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="message" size="11"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="settingsChanged:" target="507" id="ia6-2O-G6r"/>
+                    </connections>
+                </button>
             </subviews>
             <point key="canvasLocation" x="33.5" y="725.5"/>
         </customView>

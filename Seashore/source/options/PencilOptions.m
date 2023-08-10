@@ -4,6 +4,7 @@
 #import "SeaHelp.h"
 #import "SeaTools.h"
 #import "SeaDocument.h"
+#import "SeaPrefs.h"
 
 @implementation PencilOptions
 
@@ -16,7 +17,9 @@
     [pressurePopup setHidden:true];
     [scalingCheckbox setHidden:true];
 
-    sizeSlider = [SeaSlider compactSliderWithTitle:@"Pencil size" Min:1 Max:100 Listener:NULL];
+    NSControlSize size = [[SeaController seaPrefs] controlSize];
+
+    sizeSlider = [SeaSlider compactSliderWithTitle:@"Pencil size" Min:1 Max:100 Listener:NULL Size:size];
     [self addSubview:sizeSlider];
 
 	int value;
@@ -29,7 +32,7 @@
 	}
 	[sizeSlider setIntValue:value];
 
-    circularTipCheckbox = [SeaCheckbox checkboxWithTitle:@"Circular tip" Listener:NULL];
+    circularTipCheckbox = [SeaCheckbox checkboxWithTitle:@"Circular tip" Listener:NULL Size:size];
     [self addSubview:circularTipCheckbox];
 
     if ([gUserDefaults objectForKey:@"pencil circular tip"] == NULL) {

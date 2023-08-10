@@ -4,6 +4,7 @@
 #import "SeaTools.h"
 #import "SeaController.h"
 #import "SeaDocument.h"
+#import "SeaPrefs.h"
 
 @implementation BrushOptions
 
@@ -11,12 +12,14 @@
 {
     self = [super init:document];
 
+    NSControlSize size = [[SeaController seaPrefs] controlSize];
+
     [super clearModifierMenu];
     [super addModifierMenuItem:@"Erase (Option)" tag:1];
     [super addModifierMenuItem:@"Draw straight lines (Shift)" tag:2];
     [super addModifierMenuItem:@"Draw striaght lines at 45° (Shift + Control)" tag:4];
 
-    fadeSlider = [SeaSlider sliderWithCheck:@"Fade-out" Min:1 Max:120 Listener:NULL];
+    fadeSlider = [SeaSlider sliderWithCheck:@"Fade-out" Min:1 Max:120 Listener:NULL Size:size];
     [self addSubview:fadeSlider];
 
     NSMenu *menu = [[NSMenu alloc] init];
@@ -24,7 +27,7 @@
     [menu addItemWithTitle:@"Normal" action:NULL keyEquivalent:@""];
     [menu addItemWithTitle:@"Darker" action:NULL keyEquivalent:@""];
 
-    pressurePopup = [SeaPopup popupWithCheck:@"Pressure sensitive" Menu:menu Listener:NULL];
+    pressurePopup = [SeaPopup popupWithCheck:@"Pressure sensitive" Menu:menu Listener:NULL Size:size];
     [self addSubview:pressurePopup];
 
 	if ([gUserDefaults objectForKey:@"brush fade"] == NULL) {
@@ -46,7 +49,7 @@
         [pressurePopup setChecked:[gUserDefaults boolForKey:@"brush pressure"]];
 	}
 
-    scalingCheckbox = [SeaCheckbox checkboxWithTitle:@"Brush scaling" Listener:NULL];
+    scalingCheckbox = [SeaCheckbox checkboxWithTitle:@"Brush scaling" Listener:NULL Size:size];
 
     [self addSubview:scalingCheckbox];
 	

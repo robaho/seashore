@@ -3,6 +3,7 @@
 #import "SeaController.h"
 #import "SeaHelp.h"
 #import "SeaTools.h"
+#import "SeaPrefs.h"
 
 @implementation BucketOptions
 
@@ -10,12 +11,14 @@
 {
     self = [super init:document];
 
+    NSControlSize size = [[SeaController seaPrefs] controlSize];
+
     [brushesButton setHidden:true];
 
-    toleranceSlider = [SeaSlider compactSliderWithTitle:@"Tolerance" Min:0 Max:255 Listener:NULL];
+    toleranceSlider = [SeaSlider compactSliderWithTitle:@"Tolerance" Min:0 Max:255 Listener:NULL Size:size];
     [self addSubview:toleranceSlider];
 
-    fillAllRegions = [SeaCheckbox checkboxWithTitle:@"Fill all regions" Listener:NULL];
+    fillAllRegions = [SeaCheckbox checkboxWithTitle:@"Fill all regions" Listener:NULL Size:size];
     [self addSubview:fillAllRegions];
 
 

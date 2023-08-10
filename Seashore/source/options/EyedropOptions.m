@@ -3,6 +3,7 @@
 #import "SeaHelp.h"
 #import "SeaController.h"
 #import "SeaTools.h"
+#import "SeaPrefs.h"
 
 @implementation EyedropOptions
 
@@ -10,12 +11,14 @@
 {
     self = [super init:document];
 
+    NSControlSize size = [[SeaController seaPrefs] controlSize];
+
     [super clearModifierMenu];
     [super addModifierMenuItem:@"Select background color" tag:1];
 
-    sizeSlider = [SeaSlider compactSliderWithTitle:@"Sample size" Min:1 Max:11 Listener:NULL];
+    sizeSlider = [SeaSlider compactSliderWithTitle:@"Sample size" Min:1 Max:11 Listener:NULL Size:size];
     [self addSubview:sizeSlider];
-    mergedCheckbox = [SeaCheckbox checkboxWithTitle:@"Use sample from all layers" Listener:NULL];
+    mergedCheckbox = [SeaCheckbox checkboxWithTitle:@"Use sample from all layers" Listener:NULL Size:size];
     [self addSubview:mergedCheckbox];
 
 	int value;

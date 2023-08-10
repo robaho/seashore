@@ -7,6 +7,7 @@
 #import "ImageToolbarItem.h"
 #import "SeaHelpers.h"
 #import <IOKit/graphics/IOGraphicsLib.h>
+#import <SeaLibrary/SeaLibrary.h>
 
 static NSString*	PrefsToolbarIdentifier 	= @"Preferences Toolbar Instance Identifier";
 
@@ -241,11 +242,8 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
     else
         showCanvasShadow = TRUE;
 
-    if ([gUserDefaults objectForKey:@"righhtButtonDrawsBGColor"])
-        [rightButtonDrawsBGColorCheckbox setState:[gUserDefaults boolForKey:@"rightButtonDrawsBGColor"]];
-    else
-        [rightButtonDrawsBGColorCheckbox setState:FALSE];
-
+    useLargerFonts = [gUserDefaults boolForKey:@"useLargerFonts"];
+    defaultControlSize = [self controlSize];
 
 	// Get the main screen resolution
 	if (GetMainDisplayDPI(&xdpi, &ydpi)) {
@@ -273,7 +271,17 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 		[[NSFontManager sharedFontManager] setSelectedFont:[NSFont messageFontOfSize:0] isMultiple:NO];
 	}
 
-	// Create the toolbar instance, and attach it to our document window 
+    if ([gUserDefaults objectForKey:@"rightButtonDrawsBGColor"])
+        [rightButtonDrawsBGColorCheckbox setState:[gUserDefaults boolForKey:@"rightButtonDrawsBGColor"]];
+    else
+        [rightButtonDrawsBGColorCheckbox setState:FALSE];
+
+    if ([gUserDefaults objectForKey:@"useLargerFonts"])
+        [useLargerFontsCheckbox setState:[gUserDefaults boolForKey:@"useLargerFonts"]];
+    else
+        [useLargerFontsCheckbox setState:FALSE];
+
+	// Create the toolbar instance, and attach it to our document window
     toolbar = [[NSToolbar alloc] initWithIdentifier: PrefsToolbarIdentifier];
     
     // Set up toolbar properties: Allow customization, give a default display mode, and remember state in user defaults 
@@ -329,6 +337,7 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	[gUserDefaults setFloat:[font pointSize] forKey:@"fontSize"];
     [gUserDefaults setBool:showCanvasShadow forKey:@"canvasShadow"];
     [gUserDefaults setBool:[rightButtonDrawsBGColorCheckbox state] forKey:@"rightButtonDrawsBGColor"];
+    [gUserDefaults setBool:[useLargerFontsCheckbox state] forKey:@"useLargerFonts"];
 }
 
 - (NSToolbarItem *) toolbar: (NSToolbar *)toolbar itemForItemIdentifier: (NSString *) itemIdent willBeInsertedIntoToolbar:(BOOL) willBeInserted
@@ -413,8 +422,8 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	else {
 		width = newWidth;
 	}
-	
-	[self apply: self];
+
+    [self settingsChanged:sender];
 }
 
 -(IBAction)setHeight:(id)sender
@@ -429,8 +438,8 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	else {
 		height = newHeight;
 	}
-	
-	[self apply: self];
+
+    [self settingsChanged:sender];
 }
 
 -(IBAction)setNewUnits:(id)sender
@@ -439,7 +448,7 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	[heightValue setStringValue:StringFromPixels(height, newUnits, resolution)];
 	[widthValue setStringValue:StringFromPixels(width, newUnits, resolution)];	
 	[heightUnits setStringValue:UnitsString(newUnits)];
-	[self apply: self];
+    [self settingsChanged:sender];
 }
 
 -(IBAction)changeUnits:(id)sender
@@ -456,60 +465,49 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	resolution = [[resolutionMenu selectedItem] tag];
 	width =  PixelsFromFloat([widthValue floatValue],newUnits,resolution);
 	height =  PixelsFromFloat([heightValue floatValue],newUnits,resolution);
-	[self apply: self];
+    [self settingsChanged:sender];
 }
 
 -(IBAction)setMode:(id)sender
 {
 	mode = [[modeMenu selectedItem] tag];
-	[self apply: self];
+    [self settingsChanged:sender];
 }
 
 -(IBAction)setTransparentBackground:(id)sender
 {
 	transparentBackground = [transparentBackgroundCheckbox state];
-	[self apply: self];
+    [self settingsChanged:sender];
 }
 
 -(IBAction)setSmartInterpolation:(id)sender
 {
 	smartInterpolation = [smartInterpolationCheckbox state];
-	[self apply: self];
+    [self settingsChanged:sender];
 }
 
 -(IBAction)setOpenUntitled:(id)sender
 {
 	openUntitled = [openUntitledCheckbox state];
-	[self apply: self];
+    [self settingsChanged:sender];
 }
 
 -(IBAction)setZoomToFitAtOpen:(id)sender
 {
     zoomToFitAtOpen = [zoomToFitAtOpenCheckbox state];
-    [self apply: self];
+    [self settingsChanged:sender];
 }
 
 -(IBAction)setMouseCoalescing:(id)sender
 {
 	mouseCoalescing = [coalescingCheckbox state];
-	[self apply: self];
-}	
+    [self settingsChanged:sender];
+}
 
 -(IBAction)setPreciseCursor:(id)sender
 {
 	preciseCursor = [preciseCursorCheckbox state];
-	[self apply: self];
-}
-
-- (IBAction)apply:(id)sender
-{
-	NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
-	int i;
-	
-	// Call for all documents' views to respond to the change
-	for (i = 0; i < [documents count]; i++) {
-		[[[documents objectAtIndex:i] docView] setNeedsDisplay:YES];
-	}
+    [self settingsChanged:sender];
 }
 
 - (void)windowWillClose:(NSNotification *)aNotification
@@ -547,42 +545,26 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 
 - (IBAction)toggleBoundaries:(id)sender
 {
-	NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
-
 	layerBounds = !layerBounds;
-    for (SeaDocument *doc in documents) {
-		[[doc docView] setNeedsDisplay:YES];
-	}
+    [self settingsChanged:sender];
 }
 
 - (IBAction)toggleGuides:(id)sender
 {
-	NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
-
 	guides = !guides;
-    for (SeaDocument *doc in documents) {
-		[[doc docView] setNeedsDisplay:YES];
-	}
+    [self settingsChanged:sender];
 }
 		
 - (IBAction)toggleRulers:(id)sender
 {
-	NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
-
 	rulers = !rulers;
-    for (SeaDocument *doc in documents) {
-		[[doc scrollView] updateRulersVisibility];
-	}
+    [self settingsChanged:sender];
 }
 
 - (IBAction)checkerboardChanged:(id)sender
 {
-	NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
-
 	useCheckerboard = [sender selectedRow];
-    for (SeaDocument *doc in documents) {
-		[[doc docView] setNeedsDisplay:YES];
-	}
+    [self settingsChanged:sender];
 }
 
 - (BOOL) useCheckerboard
@@ -592,8 +574,6 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 
 - (IBAction)defaultWindowBack:(id)sender
 {
-	NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
-
     NSString *osxMode = [[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"];
     if(osxMode && [osxMode isEqualToString:@"@Dark"]){
         windowBackColor = [NSColor windowBackgroundColor];
@@ -602,40 +582,24 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
     }
 
 	[windowBackWell setColor:windowBackColor];
-    for (SeaDocument *doc in documents) {
-		[doc updateWindowColor];
-		[[[doc docView] superview] setNeedsDisplay:YES];
-	}
+    [self settingsChanged:sender];
 }
 
 - (IBAction)windowBackChanged:(id)sender
 {
-	NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
-
     windowBackColor = [windowBackWell color];
-    for (SeaDocument *doc in documents) {
-		[doc updateWindowColor];
-		[[[doc docView] superview] setNeedsDisplay:YES];
-	}
+    [self settingsChanged:sender];
 }
 
 - (IBAction)transparencyColorChanged:(id)sender
 {
-    NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
-
     transparencyColor = [transparencyColorWell color];
-    for (SeaDocument *doc in documents) {
-        [[doc docView] setNeedsDisplay:YES];
-    }
+    [self settingsChanged:sender];
 }
 
 - (IBAction)undoLevelsChanged:(id)sender {
     undoLevels = [undoLevelsInput intValue];
-
-    NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
-    for (SeaDocument *doc in documents) {
-        [[doc undoManager] setLevelsOfUndo:undoLevels];
-    }
+    [self settingsChanged:sender];
 }
 
 - (NSColor *)windowBack
@@ -678,16 +642,11 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 
 - (IBAction)selectionColorChanged:(id)sender
 {
-	NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
-
     marchingAnts = [marchingAntsCheckbox state];
     layerBoundaryLines = [layerBoundaryLinesCheckbox state];
 	selectionColor = [selectionColorMenu indexOfSelectedItem];
     showCanvasShadow = [canvasShadowCheckbox state];
-    for (SeaDocument *doc in documents) {
-		[[doc docView] setNeedsDisplay:YES];
-        [[[[doc docView] enclosingScrollView] contentView] setNeedsDisplay:TRUE];
-	}
+    [self settingsChanged:sender];
 }
 
 - (BOOL)whiteLayerBounds
@@ -697,12 +656,8 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 
 - (IBAction)layerBoundsColorChanged:(id)sender
 {
-	NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
-
 	whiteLayerBounds = [sender selectedRow];
-    for (SeaDocument *doc in documents) {
-		[[doc docView] setNeedsDisplay:YES];
-	}
+    [self settingsChanged:sender];
 }
 
 - (NSColor *)guideColor:(float)alpha
@@ -720,27 +675,27 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 
 - (IBAction)guideColorChanged:(id)sender
 {
-	NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
-
 	guideColor = [guideColorMenu indexOfSelectedItem];
-    for (SeaDocument *doc in documents) {
-		[[doc docView] setNeedsDisplay:YES];
-	}
+    [self settingsChanged:sender];
 }
 
 - (IBAction)rotateSelectionColor:(id)sender
 {
-	NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
-
 	selectionColor = (selectionColor + 1) % kMaxColor;
-    for (SeaDocument *doc in documents) {
-		[[doc docView] setNeedsDisplay:YES];
-	}
-	
 	// Set the selection colour correctly
 	[selectionColorMenu selectItemAtIndex:selectionColor];
+
+    [self settingsChanged:sender];
 }
 
+- (IBAction)settingsChanged:(id)sender
+{
+    NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
+    for (SeaDocument *doc in documents) {
+        [[doc docView] setNeedsDisplay:YES];
+        [[[[doc docView] enclosingScrollView] contentView] setNeedsDisplay:TRUE];
+    }
+}
 - (BOOL)mouseCoalescing
 {
 	return mouseCoalescing;
@@ -757,8 +712,17 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
 	
 	return result;
 }
+
 - (BOOL)rightButtonDrawsBGColor {
     return [rightButtonDrawsBGColorCheckbox state];
+}
+
+- (BOOL)useLargerFonts {
+    return [useLargerFontsCheckbox state];
+}
+
+- (NSControlSize)controlSize {
+    return useLargerFonts ? NSControlSizeSmall : NSControlSizeMini;
 }
 
 - (int)resolution

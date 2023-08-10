@@ -15,8 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSColor*)colorValue;
 - (void)disableColorWell;
 
-+ (SeaColorWell*)colorWellWithTitle:(NSString*)title Listener:(nullable id<Listener>)listener;
-+ (SeaColorWell*)compactWithTitle:(NSString*)title Listener:(nullable id<Listener>)listener;
++ (SeaColorWell*)colorWellWithTitle:(NSString*)title Listener:(nullable id<Listener>)listener Size:(NSControlSize)size;
++ (SeaColorWell*)compactWithTitle:(NSString*)title Listener:(nullable id<Listener>)listener Size:(NSControlSize)size;
 
 @end
 

@@ -7,7 +7,7 @@
     self = [super initWithManager:data filter:@"CIDisplacementDistortion" points:0 bg:TRUE properties:kCI_Scale1000,0];
 
     NSString *directory = [NSString stringWithFormat:@"%@/textures/", [[NSBundle mainBundle] resourcePath]];
-    texture = [SeaFileChooser chooserWithTitle:@"Texture: %@" types:[NSImage imageTypes] directory:directory Listener:self];
+    texture = [SeaFileChooser chooserWithTitle:@"Texture: %@" types:[NSImage imageTypes] directory:directory Listener:self Size:[data size]];
     [panel addSubview:texture];
 
 	return self;

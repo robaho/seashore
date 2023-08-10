@@ -11,6 +11,7 @@
 #import "SeaMargins.h"
 #import "Units.h"
 #import "AspectRatio.h"
+#import "SeaPrefs.h"
 
 @implementation RectSelectOptions
 
@@ -18,7 +19,9 @@
 {
     self = [super init:document];
 
-    radiusSlider = [SeaSlider sliderWithCheck:@"Corner Radius" Min:0 Max:80 Listener:NULL];
+    NSControlSize size = [[SeaController seaPrefs] controlSize];
+
+    radiusSlider = [SeaSlider sliderWithCheck:@"Corner Radius" Min:0 Max:80 Listener:NULL Size:size];
     [self addSubview:radiusSlider];
 
     aspectRatio =  [[AspectRatio alloc] init:document master:self andString:[self preferenceName]];

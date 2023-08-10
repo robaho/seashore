@@ -32,7 +32,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (SeaPopup*)popupWithTitle:(NSString*)title Menu:(NSMenu*)menu Listener:(nullable id<Listener>)listener;
 + (SeaPopup*)popupWithCheck:(NSString*)title Menu:(NSMenu*)menu Listener:(nullable id<Listener>)listener;
-+ (SeaPopup*)compactWithTitle:(NSString*)title Menu:(NSMenu*)menu Listener:(nullable id<Listener>)listener;
++ (SeaPopup*)popupWithCheck:(NSString*)title Menu:(NSMenu*)menu Listener:(nullable id<Listener>)listener Size:(NSControlSize)size;
++ (SeaPopup*)compactWithTitle:(NSString*)title Menu:(NSMenu*)menu Listener:(nullable id<Listener>)listener Size:(NSControlSize)size;
 
 @end
 

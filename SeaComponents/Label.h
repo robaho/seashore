@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (Label*)label;
 + (Label*)compactLabel;
 + (Label*)smallLabel;
++ (Label*)labelWithSize:(NSControlSize)size;
 @end
 
 

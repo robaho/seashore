@@ -37,6 +37,8 @@
 {
     self = [super init:document];
 
+    NSControlSize size = [[SeaController seaPrefs] controlSize];
+
     [modifierPopup setHidden:TRUE];
 
     self.lastFills = TRUE;
@@ -44,7 +46,7 @@
     AbstractTool *tool = [[document tools] getTool:kTextTool];
 
     alignmentControl = [[NSSegmentedControl alloc] init];
-    [alignmentControl setCtrlSize:NSSmallControlSize];
+    [alignmentControl setCtrlSize:size];
     [alignmentControl setSegmentCount:3];
     [alignmentControl setImage:[NSImage imageNamed:@"left-align"] forSegment:0];
     [alignmentControl setImage:[NSImage imageNamed:@"center-align"] forSegment:1];
@@ -53,22 +55,22 @@
     [alignmentControl setAction:@selector(update:)];
     [self addSubview:alignmentControl];
 
-    outlineSlider = [SeaSlider sliderWithCheck:@"Outline (pt)" Min:1 Max:36 Listener:self];
+    outlineSlider = [SeaSlider sliderWithCheck:@"Outline (pt)" Min:1 Max:36 Listener:self Size:size];
     [self addSubview:outlineSlider];
 
-    fontButton = [SeaButton compactButton:@"Fonts" withLabel:@"Font" target:self action:@selector(showFonts:)];
+    fontButton = [SeaButton compactButton:@"Fonts" withLabel:@"Font" target:self action:@selector(showFonts:) size:size];
     [self addSubview:fontButton];
 
-    colorWell = [SeaColorWell compactWithTitle:@"Color" Listener:self];
+    colorWell = [SeaColorWell compactWithTitle:@"Color" Listener:self Size:size];
     [self addSubview:colorWell];
 
-    lineSpacingSlider = [SeaSlider compactSliderWithTitle:@"Line spacing" Min:0 Max:2 Listener:self];
+    lineSpacingSlider = [SeaSlider compactSliderWithTitle:@"Line spacing" Min:0 Max:2 Listener:self Size:size];
     [self addSubview:lineSpacingSlider];
 
-    verticalMarginSlider = [SeaSlider compactSliderWithTitle:@"Vertical margin" Min:0 Max:5000 Listener:self];
+    verticalMarginSlider = [SeaSlider compactSliderWithTitle:@"Vertical margin" Min:0 Max:5000 Listener:self Size:size];
     [self addSubview:verticalMarginSlider];
 
-    boundsButton = [SeaButton compactButton:@"Set Text Bounds from Selection" target:tool action:@selector(setTextBoundsFromSelection:)];
+    boundsButton = [SeaButton compactButton:@"Set Text Bounds from Selection" target:tool action:@selector(setTextBoundsFromSelection:) size:size];
     [self addSubview:boundsButton];
 
     [lineSpacingSlider setFloatValue:1.0];

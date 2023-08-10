@@ -21,8 +21,10 @@
 
 - (void)awakeFromNib
 {
+    NSControlSize size = [[SeaController seaPrefs] controlSize];
+
     blankView = [VerticalView view];
-    Label *label = [Label smallLabel];
+    Label *label = [Label labelWithSize:size];
     [label setTitle:@"No tool selected."];
     [blankView addSubview:label];
     

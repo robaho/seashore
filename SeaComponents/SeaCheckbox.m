@@ -65,9 +65,14 @@
 
 + (SeaCheckbox*)checkboxWithTitle:(NSString*)title Listener:(nullable id<Listener>)listener
 {
+    return [SeaCheckbox checkboxWithTitle:title Listener:listener Size:NSControlSizeMini];
+}
+
++ (SeaCheckbox*)checkboxWithTitle:(NSString*)title Listener:(nullable id<Listener>)listener Size:(NSControlSize)size
+{
     SeaCheckbox *checkbox = [[SeaCheckbox alloc] initWithFrame:NSZeroRect];
-    [checkbox->checkbox setCtrlSize:NSControlSizeMini];
-    [checkbox->checkbox setFont:[NSFont labelFontOfSize:[NSFont systemFontSizeForControlSize:NSControlSizeMini]]];
+    [checkbox->checkbox setCtrlSize:size];
+    [checkbox->checkbox setFont:[NSFont labelFontOfSize:[NSFont systemFontSizeForControlSize:size]]];
     [checkbox->checkbox setTitle:title];
     checkbox->listener = listener;
     return checkbox;

@@ -3,6 +3,8 @@
 
 IntRect IntZeroRect = {{0,0},{0,0}};
 
+NSControlSize defaultControlSize = NSControlSizeMini;
+
 inline IntPoint NSPointMakeIntPoint(NSPoint point)
 {
 	IntPoint newPoint;

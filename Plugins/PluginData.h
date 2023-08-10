@@ -130,4 +130,6 @@
  */
 - (void)settingsChanged;
 
+- (NSControlSize)size;
+
 @end

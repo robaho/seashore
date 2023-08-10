@@ -121,6 +121,8 @@ enum {
 
     IBOutlet id rightButtonDrawsBGColorCheckbox;
 
+    IBOutlet id useLargerFontsCheckbox;
+
     // Stores whether or not layer boundaries are visible
 	BOOL layerBounds;
 
@@ -188,6 +190,8 @@ enum {
 
     // if true show the shadow on the drawing canvas
     BOOL showCanvasShadow;
+
+    BOOL useLargerFonts;
 
 	// The toolbar
 	id toolbar;
@@ -337,14 +341,6 @@ enum {
 				Ignored.
 */
 -(IBAction)setPreciseCursor:(id)sender;
-
-/*!
-	@method		apply:
-	@discussion	Applies the settings of the preferences panel.
-	@param		sender
-				Ignored.
-*/
-- (IBAction)apply:(id)sender;
 
 /*!
 	@method		windowWillClose:
@@ -631,6 +627,12 @@ enum {
  @result        Returns YES if to use the bg color, else it erases.
  */
 - (BOOL)rightButtonDrawsBGColor;
+
+/*!
+ @result        Returns YES if to use larger fonts where we can
+ */
+- (BOOL)useLargerFonts;
+- (NSControlSize)controlSize;
 
 /*!
 	@method		validateMenuItem:

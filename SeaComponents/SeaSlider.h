@@ -34,8 +34,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setChecked:(bool)b;
 
 + (SeaSlider*)sliderWithTitle:(NSString*)title Min:(double)min Max:(double)max Listener:(nullable id<Listener>)listener;
-+ (SeaSlider*)sliderWithCheck:(NSString*)title Min:(double)min Max:(double)max Listener:(nullable id<Listener>)listener;
++ (SeaSlider*)sliderWithTitle:(NSString*)title Min:(double)min Max:(double)max Listener:(nullable id<Listener>)listener Size:(NSControlSize)size;
++ (SeaSlider*)sliderWithCheck:(NSString*)title Min:(double)min Max:(double)max Listener:(nullable id<Listener>)listener Size:(NSControlSize)size;
 + (SeaSlider*)compactSliderWithTitle:(NSString*)title Min:(double)min Max:(double)max Listener:(nullable id<Listener>)listener;
++ (SeaSlider*)compactSliderWithTitle:(NSString*)title Min:(double)min Max:(double) max Listener:(nullable id<Listener>)listener Size:(NSControlSize)size;
+
 
 @end
 

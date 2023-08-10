@@ -3,12 +3,15 @@
 #import "SeaController.h"
 #import "SeaHelp.h"
 #import "SeaTools.h"
+#import "SeaPrefs.h"
 
 @implementation EraserOptions
 
 - (id)init:(id)document
 {
     self = [super init:document];
+
+    NSControlSize size = [[SeaController seaPrefs] controlSize];
 
     [texturesButton setHidden:true];
     [fadeSlider setHidden:true];
@@ -17,7 +20,7 @@
 
 	int value;
 
-    mimicBrushCheckbox = [SeaCheckbox checkboxWithTitle:@"Mimic Brush Fading" Listener:NULL];
+    mimicBrushCheckbox = [SeaCheckbox checkboxWithTitle:@"Mimic Brush Fading" Listener:NULL Size:size];
     [self addSubview:mimicBrushCheckbox];
 	
 	if ([gUserDefaults objectForKey:@"eraser opacity"] == NULL) {

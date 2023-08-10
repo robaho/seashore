@@ -4,6 +4,7 @@
 #import "Units.h"
 #import "AbstractScaleOptions.h"
 #import <SeaComponents/SeaComponents.h>
+#import "SeaPrefs.h"
 
 #define customItemIndex 2
 
@@ -12,6 +13,8 @@
 - (id)init:(id)document master:(id)imaster andString:(id)iprefString
 {
     self = [super init];
+
+    NSControlSize size = [[SeaController seaPrefs] controlSize];
 
     self->document = document;
 
@@ -24,7 +27,7 @@
 
     [NSBundle loadNibNamed:@"AspectRatioPanel" owner:self];
 
-    ratioPopup = [SeaPopup popupWithCheck:@"Aspect Ratio" Menu:menu Listener:self];
+    ratioPopup = [SeaPopup popupWithCheck:@"Aspect Ratio" Menu:menu Listener:self Size:size];
 
 	int ratioIndex;
 	id customItem;

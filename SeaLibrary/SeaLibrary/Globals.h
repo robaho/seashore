@@ -115,3 +115,5 @@ typedef IntPoint IntResolution;
 NS_INLINE long getCurrentMillis() {
     return (long)([[NSDate date] timeIntervalSince1970]*1000.0);
 }
+
+extern NSControlSize defaultControlSize;
