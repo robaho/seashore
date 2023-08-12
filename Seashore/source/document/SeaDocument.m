@@ -467,16 +467,6 @@
 {
 }
 
-- (NSRect) windowWillUseStandardFrame:(NSWindow *)sender defaultFrame:(NSRect)defaultFrame
-{
-	// I don't know what would call this besides the doc window
-	if(sender != docWindow){
-		NSLog(@"An unknown window (%@) has attempted to zoom.", sender);
-		return NSZeroRect;
-	}
-	return [self standardFrame];
-}
-
 - (void)restoreStateWithCoder:(NSCoder *)coder
 {
     [super restoreStateWithCoder:coder];
