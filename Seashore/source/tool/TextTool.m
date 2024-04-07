@@ -214,6 +214,33 @@
     [[document helpers] selectionChanged];
 }
 
+static void CGPathToBezierPathApplierFunction(void *info, const CGPathElement *element) {
+    NSBezierPath *bezierPath = (__bridge NSBezierPath *)info;
+    CGPoint *points = element->points;
+    switch(element->type) {
+        case kCGPathElementMoveToPoint: [bezierPath moveToPoint:points[0]]; break;
+        case kCGPathElementAddLineToPoint: [bezierPath lineToPoint:points[0]]; break;
+        case kCGPathElementAddQuadCurveToPoint: {
+            NSPoint qp0 = bezierPath.currentPoint, qp1 = points[0], qp2 = points[1], cp1, cp2;
+            CGFloat m = (2.0 / 3.0);
+            cp1.x = (qp0.x + ((qp1.x - qp0.x) * m));
+            cp1.y = (qp0.y + ((qp1.y - qp0.y) * m));
+            cp2.x = (qp2.x + ((qp1.x - qp2.x) * m));
+            cp2.y = (qp2.y + ((qp1.y - qp2.y) * m));
+            [bezierPath curveToPoint:qp2 controlPoint1:cp1 controlPoint2:cp2];
+            break;
+        }
+        case kCGPathElementAddCurveToPoint: [bezierPath curveToPoint:points[2] controlPoint1:points[0] controlPoint2:points[1]]; break;
+        case kCGPathElementCloseSubpath: [bezierPath closePath]; break;
+    }
+}
+
+static NSBezierPath* bezierPathWithCGPath(CGPathRef cgPath) {
+    NSBezierPath *bezierPath = [NSBezierPath bezierPath];
+    CGPathApply(cgPath, (__bridge void *)bezierPath, CGPathToBezierPathApplierFunction);
+    return bezierPath;
+}
+
 - (IBAction)setTextBoundsFromSelection:(id)sender {
     SeaTextLayer *textLayer = [self textLayer];
     if([self textLayer]==NULL) {
@@ -226,7 +253,11 @@
     }
     if([[document selection] active]) {
         CGPathRef path = [[document selection] maskPath];
-        textLayer.properties.textPath = [NSBezierPath bezierPathWithCGPath:path];
+        if (@available(macOS 14.0, *)) {
+            textLayer.properties.textPath = [NSBezierPath bezierPathWithCGPath:path];
+        } else {
+            textLayer.properties.textPath = bezierPathWithCGPath(path);
+        }
         [self setBounds:[[document selection] maskRect]];
     } else {
         textLayer.properties.textPath = NULL;
