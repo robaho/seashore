@@ -80,54 +80,54 @@
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
-	if (image != nil) {
-		[NSGraphicsContext saveGraphicsState];
-        NSShadow *shadow = [[NSShadow alloc] init];
-		[shadow setShadowOffset: NSMakeSize(1, 1)];
-		[shadow setShadowBlurRadius:2];
-		[shadow setShadowColor:[NSColor shadowColor]];
-		[shadow set];
-		
-		NSRect imageFrame;
-        NSRect textFrame;
-        NSDivideRect(cellFrame, &imageFrame, &textFrame, 48, NSMinXEdge);
+    if (image == nil) {
+        [super drawWithFrame:cellFrame inView:controlView];
+        return;
+    }
 
-        NSSize imageSize = [image size];
-        float image_proportion = imageSize.width / imageSize.height;
+    [NSGraphicsContext saveGraphicsState];
+    NSShadow *shadow = [[NSShadow alloc] init];
+    [shadow setShadowOffset: NSMakeSize(1, 1)];
+    [shadow setShadowBlurRadius:2];
+    [shadow setShadowColor:[NSColor shadowColor]];
+    [shadow set];
 
-        if(image_proportion>1) {
-            float new_height = imageFrame.size.width/image_proportion;
-            imageFrame.origin.y += (imageFrame.size.height - new_height)/2;
-            imageFrame.size.height = new_height;
-        }
-        else {
-            float new_width = image_proportion*imageFrame.size.height;
-            imageFrame.origin.x += (imageFrame.size.width - new_width)/2;
-            imageFrame.size.width = new_width;
-        }
+    NSRect imageFrame;
+    NSRect textFrame;
+    NSDivideRect(cellFrame, &imageFrame, &textFrame, 48, NSMinXEdge);
 
-        [NSGraphicsContext restoreGraphicsState];
-        
-        [image drawInRect:imageFrame fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:TRUE hints:NULL];
+    NSSize imageSize = [image size];
+    float image_proportion = imageSize.width / imageSize.height;
 
-        textFrame = NSGrowRect(textFrame,-4);
+    if(image_proportion>1) {
+        float new_height = imageFrame.size.width/image_proportion;
+        imageFrame.origin.y += (imageFrame.size.height - new_height)/2;
+        imageFrame.size.height = new_height;
+    }
+    else {
+        float new_width = image_proportion*imageFrame.size.height;
+        imageFrame.origin.x += (imageFrame.size.width - new_width)/2;
+        imageFrame.size.width = new_width;
+    }
 
-        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        [paragraphStyle setLineBreakMode:NSLineBreakByWordWrapping];
+    [NSGraphicsContext restoreGraphicsState];
 
-        NSMutableDictionary *attrs = [NSMutableDictionary dictionaryWithObjectsAndKeys:paragraphStyle,NSParagraphStyleAttributeName,nil];
-		if(selected){
-			[attrs addEntriesFromDictionary:[NSDictionary dictionaryWithObjectsAndKeys:[NSFont boldSystemFontOfSize:12] , NSFontAttributeName, [NSColor selectedControlTextColor], NSForegroundColorAttributeName, nil]];
-			[[self stringValue] drawInRect:textFrame withAttributes:attrs];
-		}else{
-			[attrs addEntriesFromDictionary:[NSDictionary dictionaryWithObjectsAndKeys:[NSFont systemFontOfSize:12] , NSFontAttributeName, [NSColor controlTextColor], NSForegroundColorAttributeName, nil]];
-		}
+    [image drawInRect:imageFrame fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:TRUE hints:NULL];
 
+    textFrame = NSGrowRect(textFrame,-4);
+
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle setLineBreakMode:NSLineBreakByWordWrapping];
+
+    NSMutableDictionary *attrs = [NSMutableDictionary dictionaryWithObjectsAndKeys:paragraphStyle,NSParagraphStyleAttributeName,nil];
+    if(selected){
+        [attrs addEntriesFromDictionary:[NSDictionary dictionaryWithObjectsAndKeys:[NSFont boldSystemFontOfSize:12] , NSFontAttributeName, [NSColor selectedControlTextColor], NSForegroundColorAttributeName, nil]];
         [[self stringValue] drawInRect:textFrame withAttributes:attrs];
+    }else{
+        [attrs addEntriesFromDictionary:[NSDictionary dictionaryWithObjectsAndKeys:[NSFont systemFontOfSize:12] , NSFontAttributeName, [NSColor controlTextColor], NSForegroundColorAttributeName, nil]];
+    }
 
-	}else{
-		[super drawWithFrame:cellFrame inView:controlView];
-	}
+    [[self stringValue] drawInRect:textFrame withAttributes:attrs];
 }
 
 - (NSSize)cellSize
