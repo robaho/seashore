@@ -48,7 +48,7 @@
     if([label isHidden]) {
         [button setFrame:NSMakeRect(0,0,bounds.size.width,bounds.size.height)];
     } else {
-        float w = [button intrinsicContentSize].width;
+        float w = [button fittingSize].width;
         [label setFrame:NSMakeRect(0,0,bounds.size.width-w,bounds.size.height)];
         [button setFrame:NSMakeRect(bounds.size.width-w,0,w,bounds.size.height)];
     }
