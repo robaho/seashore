@@ -294,8 +294,6 @@ static NSBezierPath* bezierPathWithCGPath(CGPathRef cgPath) {
     TextProperties *props = [options properties];
     NSString *oldText = [layer.properties.text string];
 
-    NSLog(@"old %@ current %@",oldText,[props.text string]);
-
     if(!hasUndo && ![[layer properties] isEqualToProperties:props]) {
         hasUndo = TRUE;
         [[[document undoManager] prepareWithInvocationTarget:self] undoTextProperties:layer properties:[layer properties]];
