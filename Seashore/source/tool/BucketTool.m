@@ -70,10 +70,7 @@
 
 - (void)mouseUpAt:(IntPoint)where withEvent:(NSEvent *)event
 {
-    [queue waitUntilAllOperationsAreFinished];
-	[[document whiteboard] applyOverlay];
-	intermediate = NO;
-    [[document recentsUtility] rememberBucket:options];
+    [self endLineDrawing];
 }
 
 -(void)preview:(unsigned char)tolerance
@@ -129,9 +126,6 @@
 
 - (void)endLineDrawing
 {
-    if(!intermediate)
-        return;
-
     [queue waitUntilAllOperationsAreFinished];
 
     [[document helpers] applyOverlay];
