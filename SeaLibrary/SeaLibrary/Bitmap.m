@@ -76,7 +76,7 @@ void mapARGBtoAGGG(unsigned char *data,int length) {
 }
 
 /*
- convert NSImageRep to a format Seashore can work with, which is ARGB
+ convert NSImageRep to a format Seashore can work with, which is ARGB non-premultiplied
  */
 unsigned char *convertRepToARGB(NSImageRep *imageRep) {
     
@@ -107,6 +107,35 @@ unsigned char *convertRepToARGB(NSImageRep *imageRep) {
     unpremultiplyBitmap(4,buffer,buffer,width*height);
 
     return buffer;
+}
+
+/** convert an unpremultipled RGBA image to ARGB in place */
+void convertRGBAtoARGB(unsigned char *buffer, int length) {
+    vImage_Buffer buf = {.data=buffer,.rowBytes=length*4,.width=length,.height=1};
+    static const uint8_t permuteMap[] = {3,0,1,2};
+
+    vImagePermuteChannels_ARGB8888(&buf,&buf,permuteMap,kvImageNoFlags);
+}
+
+unsigned char *convertGAToARGB(unsigned char *src,int length) {
+
+    CGColorSpaceRef graySpace = CGColorSpaceCreateDeviceGray();
+    vImage_CGImageFormat inFormat = {.bitsPerComponent=8,.bitsPerPixel=8*2,.colorSpace=graySpace,.bitmapInfo=kCGImageAlphaLast};
+    vImage_CGImageFormat outFormat = {.bitsPerComponent=8,.bitsPerPixel=8*4,.bitmapInfo=kCGImageAlphaFirst};
+
+    unsigned char *outData = malloc(length*4);
+
+    vImage_Buffer ibuf = {.data=src,.height=1,.width=length,.rowBytes=length*2};
+    vImage_Buffer obuf = {.data=outData,.height=1,.width=length,.rowBytes=length*4};
+
+    vImageConverterRef converter = vImageConverter_CreateWithCGImageFormat(&inFormat,&outFormat,nil,kvImageNoFlags,nil);
+
+    vImage_Error err = vImageConvert_AnyToAny(converter, &ibuf, &obuf,nil, kvImageNoFlags);
+
+    vImageConverter_Release(converter);
+    CGColorSpaceRelease(graySpace);
+
+    return outData;
 }
 
 void premultiplyBitmap(int spp, unsigned char *output, unsigned char *input, int length)

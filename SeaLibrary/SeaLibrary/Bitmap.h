@@ -106,6 +106,18 @@ void unpremultiplyRGBA(unsigned char *destPtr, unsigned char *srcPtr, int length
 */
 unsigned char averagedComponentValue(int spp, unsigned char *data, int width, int height, int component, int radius, IntPoint where);
 
+/**
+    @discussion convert unmultiplied RGBA to ARGB in place
+    @param  length the number of RGBA pixels
+ */
+void convertRGBAtoARGB(unsigned char *buffer, int length);
+
+/**
+ @discussion convert unmultiplied GA to ARGB in place
+ @param  length the number of GA pixels
+ */
+unsigned char *convertGAToARGB(unsigned char *buffer, int length);
+
 CGImageRef getTintedCG(CGImageRef src,NSColor *tint);
 NSImage *getTinted(NSImage* src,NSColor *tint);
 
