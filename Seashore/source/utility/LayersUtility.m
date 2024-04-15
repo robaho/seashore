@@ -110,7 +110,8 @@
 }
 
 - (IBAction)toggleAllVisibility:(id)sender {
-    int layerCount = [[document contents] layerCount];
+    SeaContent *contents = [document contents];
+    int layerCount = [contents layerCount];
     if(layerCount==1) {
         return;
     }
@@ -129,12 +130,11 @@
         }
     }
     for(int i=0;i<layerCount;i++) {
-        SeaLayer *layer = [[document contents] layer:i];
         if(i==clicked) {
-            [layer setVisible:TRUE];
+            [contents setVisible:TRUE forLayer:i];
             continue;
         }
-        [layer setVisible:!anyVisible];
+        [contents setVisible:!anyVisible forLayer:i];
     }
     [[document docView] setNeedsDisplay:TRUE];
     [sender setNeedsDisplay:TRUE];

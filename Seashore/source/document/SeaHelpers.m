@@ -140,9 +140,9 @@
 
 - (void)layerAttributesChanged:(int)index hold:(BOOL)hold
 {
-	id contents = [document contents], layer;
-	IntRect rect;
-	
+    SeaContent *contents = [document contents];
+    SeaLayer *layer;
+
 	if (index == kActiveLayer)
 		index = [contents activeLayerIndex];
 	
@@ -153,8 +153,7 @@
 		break;
 		default:
 			layer = [contents layer:index];
-			rect = IntMakeRect([layer xoff], [layer yoff], [(SeaLayer *)layer width], [(SeaLayer *)layer height]);
-			[[document whiteboard] update:rect];
+			[[document whiteboard] update:[layer globalBounds]];
 		break;
 	}
 	
