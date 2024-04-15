@@ -31,6 +31,7 @@ void rasterizeCIImage(CIImage *image,unsigned char *dest,int width,int height) {
     CGRect r = CGRectMake(0,0,width,height);
     [ci drawImage:image inRect:r fromRect:extent];
     CGContextRelease(cg);
+    unpremultiplyBitmap(4,dest,dest,width*height);
 }
 
 @implementation PluginClassImpl
