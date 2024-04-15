@@ -80,7 +80,7 @@ static inline NSColor *averagedPixelValue(id<PixelProvider> pp,int radius, IntPo
 - (NSColor *)getSample:(id<PixelProvider>)pp
 {
     IntPoint pos = [[document docView] getMousePosition:NO];
-    int radius = [options sampleSize] - 1;
+    int radius = [options sampleSize];
 
     float t[4];
 

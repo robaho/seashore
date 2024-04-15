@@ -909,8 +909,8 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
 - (IntPoint)getMousePosition:(BOOL)compensation
 {
     SeaContent *contents = [document contents];
-    
-    NSPoint tempPoint = [self convertPoint:[[self window] convertScreenToBase:[NSEvent mouseLocation]] fromView:NULL];
+
+    NSPoint tempPoint = [self convertPoint:[[self window] mouseLocationOutsideOfEventStream] fromView:nil];
     IntPoint localPoint = NSPointMakeIntPoint(tempPoint);
     // tempPoint.y = [self bounds].size.height - tempPoint.y;
     if (!NSMouseInRect(tempPoint, [self visibleRect], YES) || ![[self window] isVisible])
@@ -925,7 +925,6 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
         if (localPoint.x < 0 || localPoint.x >= [(SeaContent *)[document contents] width] || localPoint.y < 0 || localPoint.y >= [[document contents] height])
             localPoint.x = localPoint.y = -1;
     }
-    
     return localPoint;
 }
 
