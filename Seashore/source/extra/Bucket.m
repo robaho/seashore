@@ -73,7 +73,7 @@ static inline float colorDistance(unsigned char *e1,unsigned char *e2)
 static inline bool inTolerance(unsigned char *base,unsigned char *color,unsigned char tolerance,int channel){
     int k,temp;
     if (channel == kAllChannels) {
-        if (base[alphaPos] == 0)
+        if (base[alphaPos] == 0 && color[alphaPos] == 0)
             return YES;
         float dist = colorDistance(base,color);
         return dist < tolerance*tolerance;

@@ -853,7 +853,7 @@
     unsigned char *maskDst = calloc(ctx.width*ctx.height,SPP);
     unsigned char *maskSrc = calloc(ctx.width*ctx.height,SPP);
 
-    // need to convert mask to RGB for bucket fill at corners
+    // need to convert mask to ARGB for bucket fill at corners
 
     for(int row=0;row<ctx.height;row++) {
         for(int col=0;col<ctx.width;col++) {
@@ -871,7 +871,7 @@
     IntPoint seeds[] = { IntMakePoint(0,0),IntMakePoint(0,ctx.height-1),IntMakePoint(ctx.width-1,0),IntMakePoint(ctx.width-1,ctx.height-1)};
 
     for(int i=0;i<4;i++) {
-        ctx.seeds[i] = seeds[i];
+        ctx.seeds[0]=seeds[i];
         ctx.numSeeds = 1;
 
         NSOperation *op = [[NSOperation alloc] init];

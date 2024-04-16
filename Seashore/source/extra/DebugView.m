@@ -26,12 +26,13 @@
 
     dv.image = image;
 
-    NSWindow *win = [[NSWindow alloc] initWithContentRect:NSMakeRect(0,0,400,400) styleMask:NSWindowStyleMaskResizable|NSWindowStyleMaskTitled backing:0 defer:FALSE];
+    NSWindow *win = [[NSWindow alloc] initWithContentRect:NSMakeRect(0,0,400,400) styleMask:NSWindowStyleMaskResizable|NSWindowStyleMaskTitled|NSWindowStyleMaskClosable backing:0 defer:FALSE];
 
     [win setContentView:dv];
     [win setContentSize:NSMakeSize(400,400)];
     [win setTitle:@"DebugWindow"];
     [win orderFront:NULL];
+    [win setReleasedWhenClosed:FALSE];
 
     return dv;
 }
@@ -43,7 +44,7 @@
         memcpy(tmp,data,width*height*SPP);
         data = tmp;
     }
-    NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:SPP hasAlpha:TRUE isPlanar:FALSE colorSpaceName:MyRGBSpace bitmapFormat:kCGImageAlphaPremultipliedFirst bytesPerRow:width*SPP bitsPerPixel:SPP*8];
+    NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data pixelsWide:width pixelsHigh:height bitsPerSample:8 samplesPerPixel:SPP hasAlpha:TRUE isPlanar:FALSE colorSpaceName:MyRGBSpace bitmapFormat:NSBitmapFormatAlphaFirst bytesPerRow:width*SPP bitsPerPixel:SPP*8];
 
     return [DebugView createWithRep:rep];
 }
