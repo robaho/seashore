@@ -153,7 +153,8 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
 - (IBAction)zoomNormal:(id)sender
 {
     float dpi = MAX([[document contents] xres], [[document contents] yres]);
-    [[document scrollView] setMagnification:72.0/dpi];
+    zoomFactor = 72.0/dpi;
+    [[document scrollView] setMagnification:zoomFactor];
     [self setNeedsDisplay:YES];
     [[document helpers] zoomChanged];
 }
@@ -206,7 +207,8 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
 {
     float magnification = [[document scrollView] magnification];
     magnification *= 2;
-    [[document scrollView] setMagnification:magnification centeredAtPoint:point];
+    zoomFactor = magnification;
+    [[document scrollView] setMagnification:zoomFactor centeredAtPoint:point];
     [self setNeedsDisplay:YES];
     [[document helpers] zoomChanged];
 }
@@ -221,14 +223,15 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
 {
     float magnification = [[document scrollView] magnification];
     magnification /= 2;
-    [[document scrollView] setMagnification:magnification centeredAtPoint:point];
+    zoomFactor = magnification;
+    [[document scrollView] setMagnification:zoomFactor centeredAtPoint:point];
     [self setNeedsDisplay:YES];
     [[document helpers] zoomChanged];
 }
 
 - (float)zoom
 {
-    return [[document scrollView] magnification];
+    return zoomFactor;
 }
 
 -(void)setNeedsDisplay:(BOOL)b

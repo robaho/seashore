@@ -240,11 +240,13 @@
 }
 - (float)floatValue
 {
-    return [self valueForSliderPosition:[slider doubleValue]];
+    return current_value;
 }
 
 - (void)updateValue
 {
+    current_value = [self valueForSliderPosition:[slider doubleValue]];
+
     switch(format){
         case 0:
             [value setStringValue:[NSString stringWithFormat:@"%d", [self intValue]]];

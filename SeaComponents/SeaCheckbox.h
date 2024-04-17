@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
     NSButton *checkbox;
     __weak id<Listener> listener;
+    bool checked;
 }
 
 - (bool)isChecked;

@@ -90,6 +90,8 @@ enum {
     SeaExtrasView *extrasView;
 
     long lastMouseMove;
+
+    float zoomFactor;
 }
 
 /*!

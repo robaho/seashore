@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
     bool checkable;
     double min_value, max_value;
     int value_width;
+    double current_value;
 }
 
 - (void)setIntValue:(int)value;

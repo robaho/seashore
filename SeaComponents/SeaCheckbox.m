@@ -41,10 +41,11 @@
 }
 
 - (bool)isChecked {
-    return [checkbox state] == NSControlStateValueOn;
+    return checked;
 }
 
 - (void)setChecked:(bool)state {
+    checked=state;
     if(state) {
         [checkbox setState:NSControlStateValueOn];
     } else {
@@ -60,6 +61,7 @@
 
 - (void)checkboxChanged:(id)sender
 {
+    checked = [checkbox state] == NSControlStateValueOn;
     if(listener) [listener componentChanged:self];
 }
 
