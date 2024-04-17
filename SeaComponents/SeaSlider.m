@@ -64,7 +64,7 @@
 
 - (void)stepperAction:(NSStepper*)sender
 {
-    double adjustment = max_value <= 1 ? 0.01 : 1;
+    double adjustment = (max_value <= 1 || min_value < 0) ? 0.01 : 1;
     double position = [slider floatValue];
     double value = [self valueForSliderPosition:position];
 
