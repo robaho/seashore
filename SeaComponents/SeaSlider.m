@@ -64,12 +64,16 @@
 
 - (void)stepperAction:(NSStepper*)sender
 {
+    double adjustment = max_value <= 1 ? 0.01 : 1;
+    double position = [slider floatValue];
+    double value = [self valueForSliderPosition:position];
+
     if (sender.intValue > 0){
         //positive side was pressed
-        [slider setDoubleValue:[slider doubleValue]+0.025];
+        [slider setDoubleValue:[self sliderPositionForValue:(value+adjustment)]];
     } else if(sender.intValue < 0){
         //negative side was pressed
-        [slider setDoubleValue:[slider doubleValue]-0.025];
+        [slider setDoubleValue:[self sliderPositionForValue:(value-adjustment)]];
     }
     sender.intValue = 0;
     [self sliderChanged:self];
@@ -158,7 +162,7 @@
     }
 }
 
--(double) wpmForSliderValue: (double) sliderValue {
+-(double) valueForSliderPosition: (double) position {
     if(min_value<0) { // linear scaling
         return [slider doubleValue] * (max_value-min_value) + min_value;
     }
@@ -175,12 +179,12 @@
     // Adjustment factor
     double scale = (maxv - minv) / (max - min);
 
-    double wpm = exp(minv + (scale * (sliderValue - min)));
+    double wpm = exp(minv + (scale * (position - min)));
     double percent = (wpm-1)/100.0;
     return (max_value-min_value)*percent + min_value;
 }
 
--(double) sliderValueForWpm: (double) value {
+-(double) sliderPositionForValue: (double) value {
 
     if(min_value<0) { // linear scaling
         return (value-min_value)/(max_value-min_value);
@@ -208,7 +212,7 @@
         value = (min_value+max_value)/2;
 
     format = 0;
-    [slider setDoubleValue:[self sliderValueForWpm:value]];
+    [slider setDoubleValue:[self sliderPositionForValue:value]];
 
     [self updateValue];
 }
@@ -227,7 +231,7 @@
         format = 2;
     }
 
-    [slider setDoubleValue:[self sliderValueForWpm:value]];
+    [slider setDoubleValue:[self sliderPositionForValue:value]];
     [self updateValue];
 }
 - (void)setMaxValue:(double)value
@@ -236,7 +240,7 @@
 }
 - (float)floatValue
 {
-    return [self wpmForSliderValue:[slider doubleValue]];
+    return [self valueForSliderPosition:[slider doubleValue]];
 }
 
 - (void)updateValue
