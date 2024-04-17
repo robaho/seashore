@@ -51,7 +51,7 @@
         SeaLayer *layer = [[document contents] activeLayer];
         if([layer isTextLayer]){
             SeaTextLayer *textLayer = (SeaTextLayer*)layer;
-            [options setProperties:[textLayer properties]];
+            [options setProperties:(textLayer.isRasterized ? NULL : [textLayer properties])];
         } else {
             [options setProperties:NULL];
         }
