@@ -177,10 +177,12 @@ static inline void fix_endian_write(int *input, int size)
 	
 	// Write the name of the layer
 	if ([layer name]) {
-		tempIntString[0] = strlen([[layer name] UTF8String]) + 1;
+        const char *cstring =[[layer name] UTF8String];
+        int len = strlen(cstring) + 1;
+        tempIntString[0] = len;
 		fix_endian_write(tempIntString, 1);
 		fwrite(tempIntString, sizeof(int), 1, file);
-		fwrite([[layer name] UTF8String], sizeof(char), strlen([[layer name] UTF8String]) + 1, file);
+		fwrite(cstring, sizeof(char), len, file);
 	}
 	else {
 		tempIntString[0] = 0;
@@ -247,10 +249,12 @@ static inline void fix_endian_write(int *input, int size)
 
     if([layer isTextLayer]) {
         SeaTextLayer *textLayer = (SeaTextLayer*)layer;
-        TextProperties *textProperties = textLayer.properties;
-        if(textProperties) {
-            [textLayer applyTransform:[NSAffineTransform transform]]; // force render to bitmap
-            [parasites addParasite:[XCFTextLayerSupport toParasite:textLayer properties:textProperties]];
+        if(!textLayer.isRasterized) {
+            TextProperties *textProperties = textLayer.properties;
+            if(textProperties) {
+                [textLayer applyTransform:[NSAffineTransform transform]]; // force render to bitmap
+                [parasites addParasite:[XCFTextLayerSupport toParasite:textLayer properties:textProperties]];
+            }
         }
     }
 

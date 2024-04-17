@@ -83,7 +83,7 @@
     }
     if(!_properties.text || [_properties.text length]==0)
         return @"Empty text layer";
-    return [_properties.text string];
+    return [[NSString alloc] initWithString:[_properties.text string]];
 }
 
 
@@ -229,7 +229,7 @@
     if(rasterized!=isRasterized) {
         rasterized = isRasterized;
         if(rasterized) {
-            [self setName:_properties.text];
+            [self setName:[[NSString alloc] initWithString:[_properties.text string]]];
         }
         [[[document undoManager] prepareWithInvocationTarget:self] setIsRasterized:!isRasterized];
     }
