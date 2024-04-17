@@ -17,11 +17,12 @@ NS_ASSUME_NONNULL_BEGIN
     NSButton *checkbox;
     Label *title;
     Label *value;
-    int valueType;
+    NSStepper *stepper;
     __weak id<Listener> listener;
     int format;
     bool compact;
     bool checkable;
+    double min_value, max_value;
     int value_width;
 }
 
