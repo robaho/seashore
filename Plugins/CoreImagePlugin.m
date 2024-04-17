@@ -63,7 +63,8 @@ static Property PropertyMeta[] = {
     {kCI_Point3,@"Point 3",NULL,@"inputPoint3",kPT_Point,0,0,3},
     {kCI_Pitch,@"Pitch",@"pitch",@"inputPitch",kPT_Angle,-360,360,0},
     {kCI_Roll,@"Roll",@"roll",@"inputRoll",kPT_Angle,-360,360,0},
-    {kCI_Angle,@"Yaw",@"yaw",@"inputYaw",kPT_Angle,-360,360,0},
+    {kCI_Yaw,@"Yaw",@"yaw",@"inputYaw",kPT_Angle,-360,360,0},
+    {kCI_Vibrance,@"Amount",@"amount",@"inputAmount",kPT_Float,-5,5,0},
 
 };
 

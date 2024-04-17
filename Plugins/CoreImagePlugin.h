@@ -52,6 +52,7 @@ typedef enum {
     kCI_Pitch,
     kCI_Roll,
     kCI_Yaw,
+    kCI_Vibrance,
 } CIProperty;
 
 @interface CoreImagePlugin : PluginClassImpl <PluginClass>
