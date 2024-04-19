@@ -40,6 +40,9 @@
       location = "container:SeashorePlugins"
       name = "SeashorePlugins">
       <FileRef
+         location = "group:CICannyEdgeDetector/CICannyEdgeDetector.xcodeproj">
+      </FileRef>
+      <FileRef
          location = "group:CIVibrance/CIVibrance.xcodeproj">
       </FileRef>
       <FileRef

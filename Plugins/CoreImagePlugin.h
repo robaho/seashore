@@ -53,6 +53,11 @@ typedef enum {
     kCI_Roll,
     kCI_Yaw,
     kCI_Vibrance,
+    kCI_GaussianSigma,
+    kCI_ThresholdLow,
+    kCI_ThresholdHigh,
+    kCI_HysteresisPasses,
+    kCI_Perceptual,
 } CIProperty;
 
 @interface CoreImagePlugin : PluginClassImpl <PluginClass>

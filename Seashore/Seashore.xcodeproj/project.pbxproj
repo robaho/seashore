@@ -253,6 +253,7 @@
 		2BF40507227DC8DB0091E1EA /* swapTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF40506227DC8DB0091E1EA /* swapTemplate.png */; };
 		2BF4050A228258A90091E1EA /* HEICExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF40509228258A90091E1EA /* HEICExporter.m */; };
 		2BF868832BD0112700666B72 /* Vibrance+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BF868822BD0112700666B72 /* Vibrance+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2BF868952BD0931500666B72 /* CannyEdgeDetector+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BF868942BD0931500666B72 /* CannyEdgeDetector+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BF873852860E532002C30C7 /* SeaSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF873842860E532002C30C7 /* SeaSupport.m */; };
 		2BFB124127951CD80063A750 /* SeaCoreImageKernels.cikernel in Resources */ = {isa = PBXBuildFile; fileRef = 2BFB123E27951CD80063A750 /* SeaCoreImageKernels.cikernel */; };
 		2BFB124227951CD80063A750 /* AlphaToGrayFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BFB124027951CD80063A750 /* AlphaToGrayFilter.m */; };
@@ -599,6 +600,7 @@
 				2BE0CD1B294FD75E001A05AD /* PerspectiveTile+.bundle in CopyFiles */,
 				2BE0CD10294FD755001A05AD /* KeystoneVertical.bundle in CopyFiles */,
 				2B756B0C2A25570E001888D9 /* Gloom+.bundle in CopyFiles */,
+				2BF868952BD0931500666B72 /* CannyEdgeDetector+.bundle in CopyFiles */,
 				2BE0CD07294FD74F001A05AD /* GlassLozenge+.bundle in CopyFiles */,
 				2BE0CD22294FD765001A05AD /* Sepia+.bundle in CopyFiles */,
 				2BE0CD23294FD766001A05AD /* Sharpen+.bundle in CopyFiles */,
@@ -944,6 +946,7 @@
 		2BF405082282589B0091E1EA /* HEICExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEICExporter.h; sourceTree = "<group>"; };
 		2BF40509228258A90091E1EA /* HEICExporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEICExporter.m; sourceTree = "<group>"; };
 		2BF868822BD0112700666B72 /* Vibrance+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Vibrance+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BF868942BD0931500666B72 /* CannyEdgeDetector+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "CannyEdgeDetector+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BF873832860E532002C30C7 /* SeaSupport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaSupport.h; sourceTree = "<group>"; };
 		2BF873842860E532002C30C7 /* SeaSupport.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeaSupport.m; sourceTree = "<group>"; };
 		2BFB123E27951CD80063A750 /* SeaCoreImageKernels.cikernel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SeaCoreImageKernels.cikernel; sourceTree = "<group>"; };
@@ -1430,6 +1433,7 @@
 		2A37F4C3FDCFA73011CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2BF868942BD0931500666B72 /* CannyEdgeDetector+.bundle */,
 				2BF868822BD0112700666B72 /* Vibrance+.bundle */,
 				2B756AB22A2556FA001888D9 /* Alpha2Gray.bundle */,
 				2B756AB32A2556FA001888D9 /* AffineTile+.bundle */,
@@ -2730,8 +2734,8 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Seashore.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8Q9M9WAC2F;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Seashore;

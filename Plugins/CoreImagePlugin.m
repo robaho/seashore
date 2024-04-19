@@ -6,6 +6,7 @@ typedef enum {
     kPT_Angle,
     kPT_Point,
     kPT_Color,
+    kPT_Bool,
 } CIPropertyType;
 
 typedef struct {
@@ -65,7 +66,11 @@ static Property PropertyMeta[] = {
     {kCI_Roll,@"Roll",@"roll",@"inputRoll",kPT_Angle,-360,360,0},
     {kCI_Yaw,@"Yaw",@"yaw",@"inputYaw",kPT_Angle,-360,360,0},
     {kCI_Vibrance,@"Amount",@"amount",@"inputAmount",kPT_Float,-5,5,0},
-
+    {kCI_GaussianSigma,@"Gaussian Sigma",@"gaussianSigma",@"inputGaussianSigma",kPT_Float,0,5,1.9},
+    {kCI_ThresholdLow,@"Low Threshold",@"thresholdLow",@"inputThresholdLow",kPT_Float,0,1,0.02},
+    {kCI_ThresholdHigh,@"High Threshold",@"thresholdHigh",@"inputThresholdHigh",kPT_Float,0,1,0.05},
+    {kCI_HysteresisPasses,@"Hysterisis Passes",@"hysteresisPasses",@"inputHysteresisPasses",kPT_Integer,0,20,1},
+    {kCI_Perceptual,@"Perceptual",@"perceptual",@"inputPerceptual",kPT_Bool,0,1,0}
 };
 
 @protocol Component
@@ -76,6 +81,8 @@ static Property PropertyMeta[] = {
 -(NSColor*)colorValue;
 -(void)setColorValue:(NSColor*)value;
 -(NSPoint*)pointValue:(int)index;
+-(void)setChecked:(bool)value;
+-(bool)isChecked;
 @end
 
 @interface PropertyEntry : NSObject
@@ -108,6 +115,12 @@ static Property PropertyMeta[] = {
             SeaColorWell *cw = [SeaColorWell colorWellWithTitle:meta.label Listener:self Size:defaultControlSize];
             [self->panel addSubview:cw];
             entry.component = cw;
+        }
+            break;
+        case kPT_Bool: {
+            SeaCheckbox *cb = [SeaCheckbox checkboxWithTitle:meta.label Listener:self Size:defaultControlSize];
+            [self->panel addSubview:cb];
+            entry.component = cb;
         }
             break;
         case kPT_Point:
@@ -150,6 +163,9 @@ static Property PropertyMeta[] = {
             case kPT_Color:
                 [p.component setColorValue:(p.meta.defvalue==0) ? [pluginData foreColor] : [pluginData backColor]];
                 break;
+            case kPT_Bool:
+                [p.component setChecked:(p.meta.defvalue==1)];
+                break;
         }
     }
     return panel;
@@ -166,6 +182,9 @@ static Property PropertyMeta[] = {
                 break;
             case kPT_Float:
                 [gUserDefaults setFloat:[p.component floatValue] forKey:setting];
+                break;
+            case kPT_Bool:
+                [gUserDefaults setBool:[p.component isChecked] forKey:setting];
                 break;
             case kPT_Point:
             case kPT_Color:
@@ -340,6 +359,10 @@ static Property PropertyMeta[] = {
             case kPT_Color: {
                 NSColor *c = [p.component colorValue];
                 [filter setValue:createCIColor(c) forKey:filterProperty];
+                break;
+            }
+            case kPT_Bool: {
+                [filter setValue:[NSNumber numberWithBool:[p.component isChecked]] forKey:filterProperty];
                 break;
             }
             case kPT_Point: {

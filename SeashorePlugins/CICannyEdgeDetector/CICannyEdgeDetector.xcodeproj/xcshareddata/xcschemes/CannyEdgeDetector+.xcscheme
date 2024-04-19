@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2BF868742BD00F9700666B72"
-               BuildableName = "Vibrance+.bundle"
-               BlueprintName = "Vibrance+"
-               ReferencedContainer = "container:CIVibrance.xcodeproj">
+               BlueprintIdentifier = "2BF868842BD091F700666B72"
+               BuildableName = "CannyEdgeDetector+.bundle"
+               BlueprintName = "CannyEdgeDetector+"
+               ReferencedContainer = "container:CICannyEdgeDetector.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -50,10 +50,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2BF868742BD00F9700666B72"
-            BuildableName = "Vibrance+.bundle"
-            BlueprintName = "Vibrance+"
-            ReferencedContainer = "container:CIVibrance.xcodeproj">
+            BlueprintIdentifier = "2BF868842BD091F700666B72"
+            BuildableName = "CannyEdgeDetector+.bundle"
+            BlueprintName = "CannyEdgeDetector+"
+            ReferencedContainer = "container:CICannyEdgeDetector.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
