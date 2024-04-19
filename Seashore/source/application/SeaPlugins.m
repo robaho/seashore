@@ -41,6 +41,27 @@ NSInteger plugin_sort(id<PluginClass> obj1,id<PluginClass> obj2, void *context)
     return self;
 }
 
++ (NSComparisonResult)compareVersion:(NSString*)versionOne toVersion:(NSString*)versionTwo {
+    NSArray* versionOneComp = [versionOne componentsSeparatedByString:@"."];
+    NSArray* versionTwoComp = [versionTwo componentsSeparatedByString:@"."];
+
+    NSInteger pos = 0;
+
+    while ([versionOneComp count] > pos || [versionTwoComp count] > pos) {
+        NSInteger v1 = [versionOneComp count] > pos ? [[versionOneComp objectAtIndex:pos] integerValue] : 0;
+        NSInteger v2 = [versionTwoComp count] > pos ? [[versionTwoComp objectAtIndex:pos] integerValue] : 0;
+        if (v1 < v2) {
+            return NSOrderedAscending;
+        }
+        else if (v1 > v2) {
+            return NSOrderedDescending;
+        }
+        pos++;
+    }
+
+    return NSOrderedSame;
+}
+
 - (void)loadPlugins:(NSString*)pluginsPath
 {
     NSLog(@"Loading plugins from %@",pluginsPath);
@@ -56,6 +77,18 @@ NSInteger plugin_sort(id<PluginClass> obj1,id<PluginClass> obj2, void *context)
         NSString *path = [NSString stringWithFormat:@"%@/%@", pluginsPath, filename];
         NSBundle *bundle = [NSBundle bundleWithPath:path];
         if (bundle && [bundle principalClass]) {
+            NSObject *version = [bundle objectForInfoDictionaryKey:@"MinSystemVersion"];
+            if (version!=NULL) {
+                if(@available(macOS 10.10,*)) {
+                    NSString *versionString = [NSString stringWithFormat:@"%@", version];
+                    NSOperatingSystemVersion osVersion = [[NSProcessInfo processInfo] operatingSystemVersion];
+                    NSString *osVersionString = [NSString stringWithFormat:@"%ld.%ld", osVersion.majorVersion, osVersion.minorVersion];
+                    if([SeaPlugins compareVersion:osVersionString toVersion:versionString]==NSOrderedAscending) {
+                        NSLog(@"os version %@",osVersionString);
+                        continue;
+                    }
+                }
+            }
             Class klass = [bundle principalClass];
             if(![klass conformsToProtocol:@protocol(PluginClass)]) {
                 NSLog(@"%@ does not implement PluginClass, ignoring.",path);
