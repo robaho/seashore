@@ -693,6 +693,7 @@ CGDisplayErr GetMainDisplayDPI(float *horizontalDPI, float *verticalDPI)
     NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
     for (SeaDocument *doc in documents) {
         [[doc docView] setNeedsDisplay:YES];
+        [[doc scrollView] updateRulersVisibility];
         [[[[doc docView] enclosingScrollView] contentView] setNeedsDisplay:TRUE];
     }
 }
