@@ -453,7 +453,7 @@
                                                     </customView>
                                                     <box boxType="custom" borderType="line" borderWidth="2" cornerRadius="4" title="Banner" titlePosition="noTitle" id="wqY-o8-8Zv" customClass="SeaBox">
                                                         <rect key="frame" x="0.0" y="585" width="717" height="30"/>
-                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                         <view key="contentView" id="nCU-7B-OIH" customClass="BorderView">
                                                             <rect key="frame" x="2" y="2" width="713" height="26"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -488,9 +488,9 @@
                                                                         <userDefinedRuntimeAttribute type="boolean" keyPath="leftJustify" value="YES"/>
                                                                     </userDefinedRuntimeAttributes>
                                                                 </customView>
-                                                                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lGh-Gk-Tzt">
+                                                                <button verticalHuggingPriority="750" fixedFrame="YES" id="lGh-Gk-Tzt">
                                                                     <rect key="frame" x="536" y="1" width="120" height="23"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                     <buttonCell key="cell" type="roundTextured" title="More Information" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ie8-JW-rLF">
                                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                         <font key="font" metaFont="system"/>
