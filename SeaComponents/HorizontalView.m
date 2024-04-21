@@ -37,7 +37,7 @@ IB_DESIGNABLE
     for(NSView *v in [self subviews]) {
         if(!v.hidden) {
             visible_count++;
-            NSSize s = v.intrinsicContentSize;
+            NSSize s = v.fittingSize;
             height = MAX(height,s.height);
             if(s.width!=NSViewNoInstrinsicMetric) {
                 width+=s.width;
@@ -57,21 +57,47 @@ IB_DESIGNABLE
     }
 
     int visible_count=0;
+    float visible_width=0;
+    NSView *widest=NULL;
     for(NSView *v in [self subviews]) {
         if(!v.hidden) {
             visible_count++;
+            visible_width+=v.fittingSize.width;
+            if(widest==NULL || v.fittingSize.width > widest.fittingSize.width) {
+                widest = v;
+            }
         }
     }
     if(visible_count==0) {
         return;
     }
-    float width = (bounds.size.width - (visible_count-1)*_gap - _margin*2)/visible_count;
-    float x=_margin;
-    for(NSView *v in [self subviews]) {
-        if(v.hidden) continue;
-        [v setFrame:NSMakeRect(x,0,width,bounds.size.height)];
-        x+=width;
-        x+=_gap;
+    if(_leftJustify) {
+        float widestAdj = 0;
+        visible_width += (visible_count-1)*_gap + _margin*2;
+        if(visible_width > bounds.size.width) {
+            widestAdj = visible_width-bounds.size.width;
+        }
+        float x=_margin;
+        for(NSView *v in [self subviews]) {
+            if(v.hidden) continue;
+            float h = MIN(v.fittingSize.height,bounds.size.height);
+            float width = v.fittingSize.width;
+            if(v==widest) width -= widestAdj;
+            width = MAX(MIN(width,bounds.size.width-x),0);
+            [v setFrame:NSMakeRect(x,0+(bounds.size.height-h)/2,width,h)];
+            x+=width;
+            x+=_gap;
+        }
+    } else {
+        float width = (bounds.size.width - (visible_count-1)*_gap - _margin*2)/visible_count;
+        float x=_margin;
+        for(NSView *v in [self subviews]) {
+            if(v.hidden) continue;
+            float h = MIN(v.fittingSize.height,bounds.size.height);
+            [v setFrame:NSMakeRect(x,0+(bounds.size.height-h)/2,width,h)];
+            x+=width;
+            x+=_gap;
+        }
     }
 }
 

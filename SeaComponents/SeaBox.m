@@ -7,22 +7,23 @@
 {
     self = [super initWithFrame:frameRect];
     initialSize = frameRect.size;
-    self.autoresizesSubviews = TRUE;
+    self.autoresizesSubviews = FALSE;
     self.translatesAutoresizingMaskIntoConstraints = FALSE;
+
     return self;
 }
 - (SeaBox*)initWithCoder:(NSCoder*)coder
 {
     self = [super initWithCoder:coder];
     initialSize = self.frame.size;
-    self.autoresizesSubviews = TRUE;
+    self.autoresizesSubviews = FALSE;
     self.translatesAutoresizingMaskIntoConstraints = FALSE;
     return self;
 }
 
 - (void)awakeFromNib
 {
-    self.autoresizesSubviews = TRUE;
+    self.autoresizesSubviews = FALSE;
     self.translatesAutoresizingMaskIntoConstraints = FALSE;
 }
 
@@ -50,7 +51,7 @@
 
     NSRect titleRect = [self titleRect];
 
-    myBorderRect = CGRectInset(bounds, 8, 0);
+    myBorderRect = CGRectInset(bounds, 8, self.borderWidth);
     myBorderRect.size.height -= titleRect.size.height+2;
     if(myBorderRect.size.height<0 || myBorderRect.size.width<0) {
         return;
@@ -72,9 +73,14 @@
     } else {
         [NSColor.windowFrameColor setStroke];
     }
+    bool custom = self.boxType == NSBoxCustom;
+
+    if(custom) {
+        [self.borderColor setStroke];
+    }
 
     NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:myBorderRect xRadius:5 yRadius:5];
-    [path setLineWidth:1];
+    [path setLineWidth:custom ? self.borderWidth : 1];
     [path stroke];
 
     [[self titleFont] set];

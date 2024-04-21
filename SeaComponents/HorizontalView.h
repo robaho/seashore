@@ -14,6 +14,7 @@ IB_DESIGNABLE @interface HorizontalView : NSView
 
 @property IBInspectable float margin;
 @property IBInspectable float gap;
+@property IBInspectable BOOL leftJustify;
 @end
 
 

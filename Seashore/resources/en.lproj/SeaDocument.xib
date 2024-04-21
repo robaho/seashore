@@ -45,18 +45,19 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="Window" separatorStyle="line" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="5" userLabel="Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
-            <rect key="contentRect" x="0.0" y="0.0" width="1169" height="653"/>
+            <rect key="contentRect" x="0.0" y="0.0" width="1224" height="615"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
+            <value key="minSize" type="size" width="400" height="300"/>
             <view key="contentView" id="6" customClass="SeaWindowContent">
-                <rect key="frame" x="0.0" y="0.0" width="1169" height="653"/>
+                <rect key="frame" x="0.0" y="0.0" width="1224" height="615"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <splitView dividerStyle="paneSplitter" vertical="YES" id="GDs-Wz-FqW" customClass="SeaSplitView">
-                        <rect key="frame" x="0.0" y="0.0" width="1169" height="653"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1224" height="615"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <customView fixedFrame="YES" id="2729" userLabel="Left Pane" customClass="BorderView">
-                                <rect key="frame" x="0.0" y="0.0" width="251" height="653"/>
+                                <rect key="frame" x="0.0" y="0.0" width="251" height="615"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
                                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2940" customClass="BorderView">
@@ -159,7 +160,7 @@
                                         </connections>
                                     </customView>
                                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Qa-Co-cVm" customClass="BorderView">
-                                        <rect key="frame" x="0.0" y="25" width="251" height="628"/>
+                                        <rect key="frame" x="0.0" y="25" width="251" height="590"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
                                             <box borderType="line" title="Point Information" id="XzW-kL-x8j" customClass="SeaBox">
@@ -179,21 +180,21 @@
                                                 </view>
                                             </box>
                                             <box borderType="line" title="Layers" id="R00-xD-j7P" customClass="SeaBox">
-                                                <rect key="frame" x="0.0" y="194" width="252" height="434"/>
+                                                <rect key="frame" x="0.0" y="194" width="252" height="396"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <view key="contentView" id="JUy-Eu-fGn" customClass="BorderView">
-                                                    <rect key="frame" x="3" y="3" width="246" height="416"/>
+                                                    <rect key="frame" x="3" y="3" width="246" height="378"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="47" horizontalPageScroll="10" verticalLineScroll="47" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="7808">
-                                                            <rect key="frame" x="5" y="8" width="236" height="402"/>
+                                                            <rect key="frame" x="5" y="8" width="236" height="364"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <clipView key="contentView" drawsBackground="NO" id="sE3-sQ-GEf">
-                                                                <rect key="frame" x="0.0" y="0.0" width="236" height="402"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="236" height="364"/>
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                 <subviews>
                                                                     <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="44" indentationPerLevel="4" outlineTableColumn="9834" id="7811" customClass="SeaOutlineView">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="236" height="402"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="236" height="364"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <size key="intercellSpacing" width="2" height="3"/>
                                                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -270,19 +271,19 @@
                                 </connections>
                             </customView>
                             <customView fixedFrame="YES" id="2730" userLabel="Right Pane" customClass="BorderView">
-                                <rect key="frame" x="261" y="0.0" width="908" height="653"/>
+                                <rect key="frame" x="261" y="0.0" width="963" height="615"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
                                     <splitView dividerStyle="paneSplitter" vertical="YES" id="Y2J-XN-GAg" customClass="SeaSplitView">
-                                        <rect key="frame" x="0.0" y="0.0" width="908" height="653"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="963" height="615"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
                                             <customView identifier="ContentView" fixedFrame="YES" id="oDO-im-hCn" customClass="BorderView">
-                                                <rect key="frame" x="0.0" y="0.0" width="670" height="653"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="725" height="615"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <subviews>
-                                                    <customView identifier="Status Bar" id="YA2-f1-Dus" customClass="BorderView">
-                                                        <rect key="frame" x="0.0" y="0.0" width="670" height="27"/>
+                                                    <customView identifier="Status Bar" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YA2-f1-Dus" customClass="BorderView">
+                                                        <rect key="frame" x="0.0" y="0.0" width="725" height="27"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                         <subviews>
                                                             <customView autoresizesSubviews="NO" id="PIg-o8-poO" customClass="HorizontalView">
@@ -344,7 +345,7 @@
                                                                 </userDefinedRuntimeAttributes>
                                                             </customView>
                                                             <textField autoresizesSubviews="NO" focusRingType="none" verticalHuggingPriority="750" textCompletion="NO" id="LMI-nG-Yup" customClass="Label">
-                                                                <rect key="frame" x="96" y="7" width="345" height="13"/>
+                                                                <rect key="frame" x="96" y="7" width="400" height="13"/>
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                                 <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" focusRingType="none" alignment="center" placeholderString="100% · 512 × 384 px · 72 dpi · Full Color" usesSingleLineMode="YES" id="edJ-yn-wyk" customClass="CenteringCell">
                                                                     <font key="font" metaFont="menu" size="10"/>
@@ -353,7 +354,7 @@
                                                                 </textFieldCell>
                                                             </textField>
                                                             <customView autoresizesSubviews="NO" id="JdC-HG-5Qt" customClass="BorderView">
-                                                                <rect key="frame" x="405" y="0.0" width="265" height="27"/>
+                                                                <rect key="frame" x="460" y="0.0" width="265" height="27"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                                                 <subviews>
                                                                     <customView id="KSY-g2-Sq8" customClass="HorizontalView">
@@ -447,28 +448,49 @@
                                                         </connections>
                                                     </customView>
                                                     <customView id="ZaW-40-WEY" userLabel="Content Area">
-                                                        <rect key="frame" x="0.0" y="27" width="668" height="590"/>
+                                                        <rect key="frame" x="0.0" y="27" width="723" height="552"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     </customView>
-                                                    <box boxType="custom" borderType="line" borderWidth="2" cornerRadius="4" title="Banner" titlePosition="noTitle" id="wqY-o8-8Zv">
-                                                        <rect key="frame" x="0.0" y="620" width="667" height="30"/>
-                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                                        <view key="contentView" id="nCU-7B-OIH">
-                                                            <rect key="frame" x="2" y="2" width="663" height="26"/>
+                                                    <box boxType="custom" borderType="line" borderWidth="2" cornerRadius="4" title="Banner" titlePosition="noTitle" id="wqY-o8-8Zv" customClass="SeaBox">
+                                                        <rect key="frame" x="0.0" y="585" width="717" height="30"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        <view key="contentView" id="nCU-7B-OIH" customClass="BorderView">
+                                                            <rect key="frame" x="2" y="2" width="713" height="26"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V8z-3o-RuR">
-                                                                    <rect key="frame" x="6" y="5" width="266" height="16"/>
-                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" title="Please support the Seashore Project." allowsEditingTextAttributes="YES" usesSingleLineMode="YES" id="OpK-8c-v4O">
-                                                                        <font key="font" usesAppearanceFont="YES"/>
-                                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                    </textFieldCell>
-                                                                </textField>
+                                                                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JJw-vk-3Fd" customClass="HorizontalView">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="359" height="26"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                    <subviews>
+                                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" preferredMaxLayoutWidth="239" translatesAutoresizingMaskIntoConstraints="NO" id="V8z-3o-RuR">
+                                                                            <rect key="frame" x="18" y="5" width="243" height="16"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" title="Please support the Seashore Project." allowsEditingTextAttributes="YES" usesSingleLineMode="YES" id="OpK-8c-v4O">
+                                                                                <font key="font" usesAppearanceFont="YES"/>
+                                                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                            </textFieldCell>
+                                                                        </textField>
+                                                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8uP-xu-J2s">
+                                                                            <rect key="frame" x="267" y="5" width="62" height="15"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                                            <buttonCell key="cell" type="roundRect" title="(Updated)" bezelStyle="roundedRect" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="tb2-q9-qpS">
+                                                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                                <font key="font" metaFont="cellTitle"/>
+                                                                            </buttonCell>
+                                                                            <color key="contentTintColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
+                                                                            <connections>
+                                                                                <action selector="showSupportSeashore:" target="6" id="jd2-pj-117"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                    </subviews>
+                                                                    <userDefinedRuntimeAttributes>
+                                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="leftJustify" value="YES"/>
+                                                                    </userDefinedRuntimeAttributes>
+                                                                </customView>
                                                                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lGh-Gk-Tzt">
-                                                                    <rect key="frame" x="500" y="1" width="156" height="23"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                                                    <rect key="frame" x="536" y="1" width="120" height="23"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
                                                                     <buttonCell key="cell" type="roundTextured" title="More Information" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ie8-JW-rLF">
                                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                         <font key="font" metaFont="system"/>
@@ -477,19 +499,11 @@
                                                                         <action selector="showSupportSeashore:" target="6" id="CXx-HX-A3Q"/>
                                                                     </connections>
                                                                 </button>
-                                                                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8uP-xu-J2s">
-                                                                    <rect key="frame" x="259" y="3" width="72" height="19"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                    <buttonCell key="cell" type="roundRect" title="(Updated)" bezelStyle="roundedRect" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="tb2-q9-qpS">
-                                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                                        <font key="font" metaFont="cellTitle"/>
-                                                                    </buttonCell>
-                                                                    <color key="contentTintColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
-                                                                    <connections>
-                                                                        <action selector="showSupportSeashore:" target="6" id="jd2-pj-117"/>
-                                                                    </connections>
-                                                                </button>
                                                             </subviews>
+                                                            <connections>
+                                                                <outlet property="middle" destination="JJw-vk-3Fd" id="r4o-Tk-U0D"/>
+                                                                <outlet property="right" destination="lGh-Gk-Tzt" id="yVO-WV-x42"/>
+                                                            </connections>
                                                         </view>
                                                         <color key="borderColor" name="systemBrownColor" catalog="System" colorSpace="catalog"/>
                                                     </box>
@@ -509,20 +523,20 @@
                                                 </connections>
                                             </customView>
                                             <customView fixedFrame="YES" id="RuG-ok-73V" customClass="BorderView">
-                                                <rect key="frame" x="680" y="0.0" width="228" height="653"/>
+                                                <rect key="frame" x="735" y="0.0" width="228" height="615"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <subviews>
                                                     <tabView focusRingType="none" controlSize="small" id="YN2-pl-YCB" userLabel="Tabs">
-                                                        <rect key="frame" x="-7" y="-10" width="239" height="241"/>
+                                                        <rect key="frame" x="-7" y="-10" width="239" height="203"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <tabViewItems>
                                                             <tabViewItem label="Recents" identifier="Recents" id="b5B-SY-bWL" userLabel="Recents">
                                                                 <view key="view" id="IH0-9r-NY6" customClass="BorderView">
-                                                                    <rect key="frame" x="10" y="29" width="219" height="199"/>
+                                                                    <rect key="frame" x="10" y="29" width="219" height="161"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <collectionView focusRingType="none" selectable="YES" id="cjF-QV-i89">
-                                                                            <rect key="frame" x="-3" y="4" width="218" height="190"/>
+                                                                            <rect key="frame" x="-3" y="4" width="218" height="152"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                             <color key="primaryBackgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         </collectionView>
@@ -617,7 +631,7 @@
                                                         </tabViewItems>
                                                     </tabView>
                                                     <box borderType="bezel" title="Tool Options" id="wg2-rK-1Ko" customClass="SeaBox">
-                                                        <rect key="frame" x="0.0" y="232" width="229" height="413"/>
+                                                        <rect key="frame" x="0.0" y="194" width="229" height="413"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                         <view key="contentView" id="GZk-1U-kkK" customClass="BorderView">
                                                             <rect key="frame" x="3" y="3" width="223" height="395"/>
@@ -676,7 +690,7 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="4559"/>
             </connections>
-            <point key="canvasLocation" x="-2361.5" y="-2048.5"/>
+            <point key="canvasLocation" x="-2334" y="-2067.5"/>
         </window>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="70" userLabel="Accessory View">
             <rect key="frame" x="0.0" y="0.0" width="688" height="30"/>
@@ -3376,6 +3390,7 @@ DQ
         <designable name="Iey-cC-BJx">
             <size key="intrinsicContentSize" width="5" height="0.0"/>
         </designable>
+        <designable name="JJw-vk-3Fd"/>
         <designable name="KSY-g2-Sq8"/>
         <designable name="Mxk-rD-Q3j">
             <size key="intrinsicContentSize" width="-10" height="0.0"/>
