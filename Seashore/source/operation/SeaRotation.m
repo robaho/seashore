@@ -47,7 +47,9 @@
 
 	// Rotate the image
 	if ([rotateValue floatValue] != 0) {
-		[self rotate:[rotateValue floatValue] withTrim:FALSE];
+        @synchronized (document.mutex) {
+            [self rotate:[rotateValue floatValue] withTrim:FALSE];
+        }
 	}
 }
 
