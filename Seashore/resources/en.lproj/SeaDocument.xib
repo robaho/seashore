@@ -488,8 +488,8 @@
                                                                         <userDefinedRuntimeAttribute type="boolean" keyPath="leftJustify" value="YES"/>
                                                                     </userDefinedRuntimeAttributes>
                                                                 </customView>
-                                                                <button verticalHuggingPriority="750" fixedFrame="YES" id="lGh-Gk-Tzt">
-                                                                    <rect key="frame" x="536" y="1" width="120" height="23"/>
+                                                                <button verticalHuggingPriority="750" id="lGh-Gk-Tzt">
+                                                                    <rect key="frame" x="536" y="3" width="120" height="23"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                     <buttonCell key="cell" type="roundTextured" title="More Information" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ie8-JW-rLF">
                                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
