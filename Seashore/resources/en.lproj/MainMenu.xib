@@ -67,7 +67,7 @@
                                     <action selector="newDocument:" target="-1" id="194"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="New from Pasteboard" tag="400" keyEquivalent="n" id="1968">
+                            <menuItem title="New from Clipboard" tag="400" keyEquivalent="n" id="1968">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                 <connections>
                                     <action selector="newDocumentFromPasteboard:" target="448" id="1971"/>
@@ -978,7 +978,7 @@ Gw
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <textView editable="NO" importsGraphics="NO" verticallyResizable="YES" baseWritingDirection="leftToRight" usesFontPanel="YES" usesRuler="YES" spellingCorrection="YES" smartInsertDelete="YES" id="4078">
-                                    <rect key="frame" x="0.0" y="-5967" width="423" height="5850"/>
+                                    <rect key="frame" x="0.0" y="-6201" width="423" height="5850"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -2073,10 +2073,10 @@ DQ
         <window title="New Image" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="2877" userLabel="New Image" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="223" y="314" width="277" height="286"/>
+            <rect key="contentRect" x="223" y="314" width="277" height="270"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
             <view key="contentView" id="2878">
-                <rect key="frame" x="0.0" y="0.0" width="277" height="286"/>
+                <rect key="frame" x="0.0" y="0.0" width="277" height="270"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2879">
@@ -2089,7 +2089,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2880">
-                        <rect key="frame" x="167" y="12" width="96" height="32"/>
+                        <rect key="frame" x="168" y="24" width="96" height="32"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <buttonCell key="cell" type="push" title="Create" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="7339">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -2101,6 +2101,18 @@ DQ
                         <connections>
                             <action selector="createDocument:" target="2281" id="2935"/>
                             <outlet property="nextKeyView" destination="2906" id="2913"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PEW-tO-bIv">
+                        <rect key="frame" x="13" y="-1" width="165" height="32"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <buttonCell key="cell" type="push" title="New from Clipboard" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="zat-Vr-kWl">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="newDocumentFromPasteboard:" target="448" id="WWh-wY-feH"/>
+                            <outlet property="nextKeyView" destination="2906" id="tLe-Xc-ZXU"/>
                         </connections>
                     </button>
                     <box fixedFrame="YES" title="New Image Settings" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="2888">
@@ -2248,7 +2260,7 @@ DQ
                         </view>
                     </box>
                     <popUpButton toolTip="Various predefined sizes" fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2881">
-                        <rect key="frame" x="163" y="244" width="90" height="18"/>
+                        <rect key="frame" x="163" y="245" width="90" height="18"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <popUpButtonCell key="cell" type="bevel" title="Presets" bezelStyle="rounded" alignment="left" controlSize="small" borderStyle="bezel" tag="1" inset="2" pullsDown="YES" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2887" id="7340">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -2268,7 +2280,7 @@ DQ
                         </connections>
                     </popUpButton>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7277">
-                        <rect key="frame" x="17" y="16" width="130" height="26"/>
+                        <rect key="frame" x="16" y="27" width="159" height="26"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <popUpButtonCell key="cell" type="push" title="Open Recent" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" pullsDown="YES" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="7281" id="7341">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -2288,7 +2300,7 @@ DQ
             <connections>
                 <outlet property="initialFirstResponder" destination="2906" id="2917"/>
             </connections>
-            <point key="canvasLocation" x="684" y="-12"/>
+            <point key="canvasLocation" x="690.5" y="-20"/>
         </window>
         <customView id="3676" userLabel="Color Prefs">
             <rect key="frame" x="0.0" y="0.0" width="431" height="359"/>
