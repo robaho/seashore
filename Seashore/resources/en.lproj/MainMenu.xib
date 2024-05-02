@@ -978,7 +978,7 @@ Gw
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <textView editable="NO" importsGraphics="NO" verticallyResizable="YES" baseWritingDirection="leftToRight" usesFontPanel="YES" usesRuler="YES" spellingCorrection="YES" smartInsertDelete="YES" id="4078">
-                                    <rect key="frame" x="0.0" y="-6201" width="423" height="5850"/>
+                                    <rect key="frame" x="0.0" y="-6318" width="423" height="5850"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -2111,7 +2111,7 @@ DQ
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="newDocumentFromPasteboard:" target="448" id="WWh-wY-feH"/>
+                            <action selector="newDocumentFromPasteboard:" target="448" id="eKP-jN-LIE"/>
                             <outlet property="nextKeyView" destination="2906" id="tLe-Xc-ZXU"/>
                         </connections>
                     </button>
