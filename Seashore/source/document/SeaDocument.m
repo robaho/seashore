@@ -2,6 +2,7 @@
 #import "CocoaContent.h"
 #import "XBMContent.h"
 #import "SVGContent.h"
+#import "WEBPContent.h"
 #import "SeaDocument.h"
 #import "SeaView.h"
 #import "CenteringClipView.h"
@@ -108,27 +109,20 @@
 - (void)awakeFromNib
 {
     [super awakeFromNib];
-    
+
+    NSMutableArray *tmp = [NSMutableArray array];
+    [tmp addObject:gifExporter];
+    [tmp addObject:jpegExporter];
+    [tmp addObject:pngExporter];
+    [tmp addObject:tiffExporter];
+    [tmp addObject:xcfExporter];
+    [tmp addObject:webpExporter];
+
     if (@available(macOS 10.13.4, *)) {
-        exporters = [NSArray arrayWithObjects:
-                     gifExporter,
-                     jpegExporter,
-                     jp2Exporter,
-                     pngExporter,
-                     tiffExporter,
-                     xcfExporter,
-                     heicExporter,
-                     NULL];
-    } else {
-        exporters = [NSArray arrayWithObjects:
-                     gifExporter,
-                     jpegExporter,
-                     jp2Exporter,
-                     pngExporter,
-                     tiffExporter,
-                     xcfExporter,
-                     NULL];
+        [tmp addObject:heicExporter];
     }
+
+    exporters = [NSArray arrayWithArray:tmp];
 
     [self setWindow:docWindow];
     
@@ -317,7 +311,14 @@
                 return NO;
             }
             readOnly = YES;
+        } else if ([WEBPContent typeIsEditable: type]) {
 
+            // Load a SVG document
+            contents = [[WEBPContent alloc] initWithDocument:self contentsOfFile:path];
+            if (contents == NULL) {
+                return NO;
+            }
+            readOnly = YES;
         } else {
             // Handle an unknown document type
             NSLog(@"Unknown type passed to readFromFile:<%@>ofType:<%@>", path, type);

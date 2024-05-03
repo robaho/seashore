@@ -252,6 +252,10 @@
 		2BED227E21F4D958005B496C /* clone-cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BED227D21F4D958005B496C /* clone-cursor.png */; };
 		2BF40507227DC8DB0091E1EA /* swapTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF40506227DC8DB0091E1EA /* swapTemplate.png */; };
 		2BF4050A228258A90091E1EA /* HEICExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF40509228258A90091E1EA /* HEICExporter.m */; };
+		2BF59F0B2BE3CD93008B330A /* WEBPExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF59F0A2BE3CD93008B330A /* WEBPExporter.m */; };
+		2BF59F0E2BE3CFEE008B330A /* WEBPImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF59F0C2BE3CFEE008B330A /* WEBPImporter.m */; };
+		2BF59F252BE3E719008B330A /* WEBPContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF59F232BE3E719008B330A /* WEBPContent.m */; };
+		2BF59F3A2BE3FACA008B330A /* WebP.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BF59F392BE3FACA008B330A /* WebP.xcframework */; };
 		2BF868832BD0112700666B72 /* Vibrance+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BF868822BD0112700666B72 /* Vibrance+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BF868952BD0931500666B72 /* CannyEdgeDetector+.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BF868942BD0931500666B72 /* CannyEdgeDetector+.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BF873852860E532002C30C7 /* SeaSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF873842860E532002C30C7 /* SeaSupport.m */; };
@@ -945,6 +949,13 @@
 		2BF40506227DC8DB0091E1EA /* swapTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = swapTemplate.png; sourceTree = "<group>"; };
 		2BF405082282589B0091E1EA /* HEICExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEICExporter.h; sourceTree = "<group>"; };
 		2BF40509228258A90091E1EA /* HEICExporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEICExporter.m; sourceTree = "<group>"; };
+		2BF59F092BE3CD93008B330A /* WEBPExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEBPExporter.h; sourceTree = "<group>"; };
+		2BF59F0A2BE3CD93008B330A /* WEBPExporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEBPExporter.m; sourceTree = "<group>"; };
+		2BF59F0C2BE3CFEE008B330A /* WEBPImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WEBPImporter.m; path = source/importer/WEBPImporter.m; sourceTree = SOURCE_ROOT; };
+		2BF59F0D2BE3CFEE008B330A /* WEBPImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WEBPImporter.h; path = source/importer/WEBPImporter.h; sourceTree = SOURCE_ROOT; };
+		2BF59F232BE3E719008B330A /* WEBPContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEBPContent.m; sourceTree = "<group>"; };
+		2BF59F242BE3E719008B330A /* WEBPContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEBPContent.h; sourceTree = "<group>"; };
+		2BF59F392BE3FACA008B330A /* WebP.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WebP.xcframework; path = ../WebP/WebP.xcframework; sourceTree = "<group>"; };
 		2BF868822BD0112700666B72 /* Vibrance+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "Vibrance+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BF868942BD0931500666B72 /* CannyEdgeDetector+.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = "CannyEdgeDetector+.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BF873832860E532002C30C7 /* SeaSupport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeaSupport.h; sourceTree = "<group>"; };
@@ -1294,6 +1305,7 @@
 				2BE0CCAC294FCF41001A05AD /* CoreImage.framework in Frameworks */,
 				A84E106408E7A4FB0084BCB7 /* IOKit.framework in Frameworks */,
 				2BA290C829527C3300175B25 /* CoreGraphics.framework in Frameworks */,
+				2BF59F3A2BE3FACA008B330A /* WebP.xcframework in Frameworks */,
 				2BE0CCA3294FC8D2001A05AD /* Accelerate.framework in Frameworks */,
 				A8BF652708E6FEAB006E9BFC /* Carbon.framework in Frameworks */,
 				A8EDF14C078959C80022BB31 /* Cocoa.framework in Frameworks */,
@@ -1433,6 +1445,7 @@
 		2A37F4C3FDCFA73011CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2BF59F392BE3FACA008B330A /* WebP.xcframework */,
 				2BF868942BD0931500666B72 /* CannyEdgeDetector+.bundle */,
 				2BF868822BD0112700666B72 /* Vibrance+.bundle */,
 				2B756AB22A2556FA001888D9 /* Alpha2Gray.bundle */,
@@ -1667,6 +1680,8 @@
 		A8D6BCDC07C2152100B91A1D /* Importer Classes */ = {
 			isa = PBXGroup;
 			children = (
+				2BF59F0C2BE3CFEE008B330A /* WEBPImporter.m */,
+				2BF59F0D2BE3CFEE008B330A /* WEBPImporter.h */,
 				A8D6BCE907C215E000B91A1D /* CocoaImporter.h */,
 				A8D6BCEA07C215E000B91A1D /* CocoaImporter.m */,
 				A8F22EDA07EA9871005AD30E /* SVGImporter.h */,
@@ -1896,6 +1911,8 @@
 		F50687FD039B9946016F7F19 /* Document Classes */ = {
 			isa = PBXGroup;
 			children = (
+				2BF59F242BE3E719008B330A /* WEBPContent.h */,
+				2BF59F232BE3E719008B330A /* WEBPContent.m */,
 				2B399C2A279DE15C000D0C58 /* CocoaContent.h */,
 				2B399C27279DE15C000D0C58 /* CocoaContent.m */,
 				2B399C2C279DE15C000D0C58 /* SeaContent.h */,
@@ -1954,6 +1971,8 @@
 		F57AD82B03FF7FDB0185BAF6 /* Exporter Classes */ = {
 			isa = PBXGroup;
 			children = (
+				2BF59F092BE3CD93008B330A /* WEBPExporter.h */,
+				2BF59F0A2BE3CD93008B330A /* WEBPExporter.m */,
 				A8D9FDA0053C0B5500A80207 /* AbstractExporter.h */,
 				A8D9FDA1053C0B5500A80207 /* AbstractExporter.m */,
 				A8F0FFCE0A35E06200259FD6 /* GIFExporter.h */,
@@ -2438,6 +2457,7 @@
 				2B3DFBB02874E19200D39148 /* SeaHistogram.m in Sources */,
 				A8EDF100078959C80022BB31 /* SeaController.m in Sources */,
 				A8EDF101078959C80022BB31 /* SeaProxy.m in Sources */,
+				2BF59F252BE3E719008B330A /* WEBPContent.m in Sources */,
 				A8EDF102078959C80022BB31 /* SeaPrefs.m in Sources */,
 				A8EDF104078959C80022BB31 /* CocoaLayer.m in Sources */,
 				A8EDF105078959C80022BB31 /* TIFFExporter.m in Sources */,
@@ -2514,6 +2534,7 @@
 				A8CA58EE07936EBF004BE921 /* SeaPluginData.m in Sources */,
 				A8D6BCEC07C215E000B91A1D /* CocoaImporter.m in Sources */,
 				A8D6C11D07C2323200B91A1D /* XCFImporter.m in Sources */,
+				2BF59F0E2BE3CFEE008B330A /* WEBPImporter.m in Sources */,
 				A81F6EB307C2EE35005C2DBD /* XBMImporter.m in Sources */,
 				A899739F07C42F5200B38F38 /* TextureExporter.m in Sources */,
 				2BEA688227B7408F00BC1453 /* SeaScrollView.m in Sources */,
@@ -2562,6 +2583,7 @@
 				DC3B6F5E0FD37C14000F0427 /* LayerDataSource.m in Sources */,
 				2BF4050A228258A90091E1EA /* HEICExporter.m in Sources */,
 				DC3B6F850FD48F9B000F0427 /* LayerCell.m in Sources */,
+				2BF59F0B2BE3CD93008B330A /* WEBPExporter.m in Sources */,
 				2BFC6C412778F83100F707D9 /* AbstractBrushTool.m in Sources */,
 				DCA8928F0FD4AAA3002BEC8A /* NSOutlineView_Extensions.m in Sources */,
 				2B399C33279DE15D000D0C58 /* XBMContent.m in Sources */,
@@ -2686,7 +2708,10 @@
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SELECTED_FILES = readwrite;
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../PocketSVG";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)/../WebP",
+					"$(SRCROOT)/../PocketSVG",
+				);
 			};
 			name = Debug;
 		};
@@ -2724,7 +2749,10 @@
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SELECTED_FILES = readwrite;
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../PocketSVG";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)/../WebP",
+					"$(SRCROOT)/../PocketSVG",
+				);
 			};
 			name = Release;
 		};

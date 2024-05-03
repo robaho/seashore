@@ -117,6 +117,13 @@ void convertRGBAtoARGB(unsigned char *buffer, int length) {
     vImagePermuteChannels_ARGB8888(&buf,&buf,permuteMap,kvImageNoFlags);
 }
 
+void convertARGBtoRGBA(unsigned char *buffer, int length) {
+    vImage_Buffer buf = {.data=buffer,.rowBytes=length*4,.width=length,.height=1};
+    static const uint8_t permuteMap[] = {1,2,3,0};
+
+    vImagePermuteChannels_ARGB8888(&buf,&buf,permuteMap,kvImageNoFlags);
+}
+
 unsigned char *convertGAToARGB(unsigned char *src,int length) {
 
     CGColorSpaceRef graySpace = CGColorSpaceCreateDeviceGray();

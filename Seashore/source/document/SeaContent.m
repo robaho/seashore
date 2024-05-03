@@ -14,10 +14,13 @@
 #import "CocoaContent.h"
 #import "XBMContent.h"
 #import "SVGContent.h"
+#import "WEBPContent.h"
 #import "CocoaImporter.h"
+#import "WEBPImporter.h"
 #import "XCFImporter.h"
 #import "XBMImporter.h"
 #import "SVGImporter.h"
+#import "WEBPImporter.h"
 #import "ToolboxUtility.h"
 #import "CloneTool.h"
 #import "PositionTool.h"
@@ -382,6 +385,12 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
         importer = [[SVGImporter alloc] init];
         success = [importer addToDocument:document contentsOfFile:path];
         
+    } else if ([WEBPContent typeIsEditable:docType]) {
+
+        // Load SVG layers
+        importer = [[WEBPImporter alloc] init];
+        success = [importer addToDocument:document contentsOfFile:path];
+
     } else {
         
         // Handle an unknown document type

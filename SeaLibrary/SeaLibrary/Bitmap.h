@@ -45,8 +45,10 @@ CG_INLINE void RESTORE_BITMAP(unsigned char *dst,unsigned char *src,IntRect rect
     }
 }
 
-/** return a point to a memory block that is a RGBA representation of the imageRep with same width & height*/
+/** return a point to a memory block that is a ARGB representation of the imageRep with same width & height*/
 unsigned char *convertRepToARGB(NSImageRep *imageRep);
+/** return a point to a memory block that is a RGBA representation of the imageRep with same width & height*/
+unsigned char *convertRepToRGBA(NSImageRep *imageRep);
 
 CGImageRef convertToGA(CGImageRef src);
 CGImageRef convertToAGGG(CGImageRef src);
@@ -111,6 +113,7 @@ unsigned char averagedComponentValue(int spp, unsigned char *data, int width, in
     @param  length the number of RGBA pixels
  */
 void convertRGBAtoARGB(unsigned char *buffer, int length);
+void convertARGBtoRGBA(unsigned char *buffer, int length);
 
 /**
  @discussion convert unmultiplied GA to ARGB in place

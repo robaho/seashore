@@ -16,7 +16,7 @@
                 <outlet property="contentView" destination="ZaW-40-WEY" id="IpO-6C-oQV"/>
                 <outlet property="docWindow" destination="5" id="56"/>
                 <outlet property="exportersPopUp" destination="71" id="76"/>
-                <outlet property="gifExporter" destination="870" id="871"/>
+                <outlet property="gifExporter" destination="870" id="Ovf-QB-ggP"/>
                 <outlet property="heicExporter" destination="1tO-4B-6H8" id="feo-jb-glL"/>
                 <outlet property="helpers" destination="291" id="292"/>
                 <outlet property="histogram" destination="MBr-Kg-xuZ" id="lCh-Qm-Zi8"/>
@@ -38,6 +38,7 @@
                 <outlet property="toolboxUtility" destination="1598" id="sEf-ps-7lU"/>
                 <outlet property="tools" destination="259" id="290"/>
                 <outlet property="warnings" destination="16701" id="16704"/>
+                <outlet property="webpExporter" destination="BIp-R3-V9w" id="WvS-9E-uhS"/>
                 <outlet property="xcfExporter" destination="331" id="335"/>
             </connections>
         </customObject>
@@ -1000,7 +1001,7 @@ DQ
                     </textField>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="891" y="462"/>
+            <point key="canvasLocation" x="560" y="450"/>
         </window>
         <window title="Canvas Size" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="109" userLabel="Image Size &amp; Position" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES" utility="YES"/>
@@ -2326,6 +2327,16 @@ Gw
             </connections>
         </customObject>
         <customObject id="331" userLabel="XCFExporter" customClass="XCFExporter"/>
+        <customObject id="BIp-R3-V9w" userLabel="WEBPExporter" customClass="WEBPExporter">
+            <connections>
+                <outlet property="compressImageView" destination="ukG-gx-oiu" id="3OY-qp-nei"/>
+                <outlet property="compressLabel" destination="NAq-td-ml8" id="XqJ-N6-37W"/>
+                <outlet property="compressSlider" destination="lkH-1e-hkR" id="wEI-mT-S9A"/>
+                <outlet property="losslessCheckbox" destination="iz8-BE-VSg" id="ddx-q5-pl6"/>
+                <outlet property="panel" destination="IZ0-R5-b9e" id="Qem-l6-KW5"/>
+                <outlet property="realImageView" destination="ujD-63-fOn" id="hl1-r4-yV9"/>
+            </connections>
+        </customObject>
         <customObject id="421" userLabel="TextureExporter" customClass="TextureExporter">
             <connections>
                 <outlet property="categoryTable" destination="415" id="434"/>
@@ -3384,6 +3395,95 @@ DQ
                 </subviews>
             </view>
             <point key="canvasLocation" x="-2746.5" y="-1253.5"/>
+        </window>
+        <window title="WEBP Options" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="IZ0-R5-b9e" userLabel="WEBP Options" customClass="NSPanel">
+            <windowStyleMask key="styleMask" titled="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="520" y="370" width="360" height="354"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
+            <view key="contentView" id="eMI-Uj-0uC">
+                <rect key="frame" x="0.0" y="0.0" width="360" height="354"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T9T-zG-kgX">
+                        <rect key="frame" x="17" y="275" width="326" height="14"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Please select the compression level:" id="dRR-5x-S63">
+                            <font key="font" metaFont="message" size="11"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <slider toolTip="Compression level" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lkH-1e-hkR">
+                        <rect key="frame" x="18" y="243" width="324" height="28"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <sliderCell key="cell" alignment="left" maxValue="100" tickMarkPosition="below" numberOfTickMarks="11" allowsTickMarkValuesOnly="YES" sliderType="linear" id="rg0-7F-fHA">
+                            <font key="font" usesAppearanceFont="YES"/>
+                        </sliderCell>
+                        <connections>
+                            <action selector="compressionChanged:" target="BIp-R3-V9w" id="ExK-2X-cZd"/>
+                        </connections>
+                    </slider>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NAq-td-ml8">
+                        <rect key="frame" x="186" y="60" width="154" height="13"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Compressed - 10%" id="lhB-R3-nD5">
+                            <font key="font" metaFont="menu" size="10"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <imageView toolTip="Original version of the image" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ujD-63-fOn" customClass="NSPreciseImageView">
+                        <rect key="frame" x="17" y="78" width="160" height="160"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="s8C-eS-4zC"/>
+                    </imageView>
+                    <imageView toolTip="Compressed version of the image" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ukG-gx-oiu" customClass="NSPreciseImageView">
+                        <rect key="frame" x="183" y="78" width="160" height="160"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="BjH-4v-cdQ"/>
+                    </imageView>
+                    <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="opx-SQ-730">
+                        <rect key="frame" x="20" y="49" width="320" height="5"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </box>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kgD-CQ-hIa">
+                        <rect key="frame" x="250" y="12" width="96" height="32"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="BE0-V7-HcS">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="endPanel:" target="328" id="ejC-hX-u5z"/>
+                        </connections>
+                    </button>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JiG-qC-MLj">
+                        <rect key="frame" x="20" y="60" width="154" height="13"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Original" id="uFE-RL-VRc">
+                            <font key="font" metaFont="menu" size="10"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iz8-BE-VSg">
+                        <rect key="frame" x="18" y="317" width="161" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="check" title="Lossless Compression" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="cRq-xD-gFu">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="compressionChanged:" target="BIp-R3-V9w" id="7Uj-os-c5F"/>
+                        </connections>
+                    </button>
+                </subviews>
+            </view>
+            <point key="canvasLocation" x="1007" y="450"/>
         </window>
     </objects>
     <designables>

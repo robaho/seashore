@@ -138,7 +138,7 @@ id seaController;
 	[licenseWindow makeKeyAndOrderFront:self];
 }
 
-- (IBAction)newDocumentFromClipboard:(id)sender
+- (IBAction)newDocumentFromPasteboard:(id)sender
 {
 	NSDocument *document;
 	

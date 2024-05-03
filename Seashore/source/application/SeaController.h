@@ -133,7 +133,7 @@
 	@param		sender
 				Ignored.
 */
-- (IBAction)newDocumentFromClipboard:(id)sender;
+- (IBAction)newDocumentFromPasteboard:(id)sender;
 
 /*!
 	@method		registerForTermination:

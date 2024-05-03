@@ -66,7 +66,7 @@
 	IBOutlet id docWindow;
 	
 	// The exporters
-	IBOutlet id gifExporter, jpegExporter, jp2Exporter, pngExporter, tiffExporter, xcfExporter, heicExporter;
+	IBOutlet id gifExporter, jpegExporter, jp2Exporter, pngExporter, tiffExporter, xcfExporter, webpExporter, heicExporter;
 	
 	IBOutlet id textureExporter;
     
