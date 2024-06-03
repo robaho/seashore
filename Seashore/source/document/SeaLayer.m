@@ -283,7 +283,7 @@
     NSBezierPath *tempPath = [NSBezierPath bezierPathWithRect:r];
     [tempPath transformUsingAffineTransform:tx];
 
-    return NSRectMakeIntRect(NSIntegralRect([tempPath bounds])).size;
+    return NSRectMakeIntRect(NSIntegralRectWithOptions([tempPath bounds],NSAlignAllEdgesNearest)).size;
 }
 
 - (void)scaleX:(float)xscale scaleY:(float)yscale rotate:(float)rotation
