@@ -33,17 +33,9 @@
     [instructionsArea setIdentifier:@"effects instructions area"];
 
     clickCountLabel = [Label labelWithSize:size];
-    instructionsLabel = [[NSTextField alloc] init];
-
+    instructionsLabel = [Label labelWithSize:size];
     [instructionsLabel setIdentifier:@"effects instructions label"];
-    [instructionsLabel setFont:[NSFont labelFontOfSize:[NSFont systemFontSizeForControlSize:size]]];
-    [instructionsLabel setEditable:FALSE];
-    [instructionsLabel setBordered:FALSE];
-    [instructionsLabel setBezeled:FALSE];
-    [instructionsLabel setDrawsBackground:FALSE];
-
-    instructionsLabel.cell.lineBreakMode=NSLineBreakByWordWrapping;
-    instructionsLabel.cell.usesSingleLineMode=FALSE;
+    [instructionsLabel makeMultiline];
 
     detectRectangleButton = [SeaButton compactButton:@"Detect Rectangle" target:tool action:@selector(detectRectangle:) size:size];
 

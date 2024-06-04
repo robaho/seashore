@@ -60,4 +60,9 @@
     }
 }
 
+- (BOOL)useTextures
+{
+    return [[document toolboxUtility] foregroundIsTexture];
+}
+
 @end

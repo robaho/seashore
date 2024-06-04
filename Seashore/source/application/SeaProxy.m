@@ -100,22 +100,22 @@
 
 - (IBAction)raiseLayer:(id)sender
 {
-	[(SeaContent *)[gCurrentDocument contents] raiseLayer:kActiveLayer];
+	[[gCurrentDocument contents] raiseLayer:kActiveLayer];
 }
 
 - (IBAction)bringToFront:(id)sender
 {
-	[(SeaContent *)[gCurrentDocument contents] moveLayerOfIndex:kActiveLayer toIndex: 0];
+	[[gCurrentDocument contents] moveLayerOfIndex:kActiveLayer toIndex: 0];
 }
 
 - (IBAction)lowerLayer:(id)sender
 {
-	[(SeaContent *)[gCurrentDocument contents] lowerLayer:kActiveLayer];
+	[[gCurrentDocument contents] lowerLayer:kActiveLayer];
 }
 
 - (IBAction)sendToBack:(id)sender
 {
-	[(SeaContent *)[gCurrentDocument contents] moveLayerOfIndex:kActiveLayer toIndex: [(SeaContent *)[gCurrentDocument contents] layerCount]];	
+	[[gCurrentDocument contents] moveLayerOfIndex:kActiveLayer toIndex: [(SeaContent *)[gCurrentDocument contents] layerCount]];
 }
 
 - (IBAction)deleteLayer:(id)sender
@@ -130,23 +130,22 @@
 
 - (IBAction)addLayer:(id)sender
 {
-	SeaContent *contents = [gCurrentDocument contents];
-	[contents addLayer:kActiveLayer];
+	[[gCurrentDocument contents] addLayer:kActiveLayer];
 }
 
 - (IBAction)duplicateLayer:(id)sender
 {
-    [(SeaContent *)[gCurrentDocument contents] duplicateLayer:kActiveLayer];
+    [[gCurrentDocument contents] duplicateLayer:kActiveLayer];
 }
 
 - (IBAction)layerAbove:(id)sender
 {
-	[(SeaContent *)[gCurrentDocument contents] layerAbove];
+	[[gCurrentDocument contents] layerAbove];
 }
 
 - (IBAction)layerBelow:(id)sender
 {
-	[(SeaContent *)[gCurrentDocument contents] layerBelow];
+	[[gCurrentDocument contents] layerBelow];
 }
 
 - (IBAction)setColorSpace:(id)sender

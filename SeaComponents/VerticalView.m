@@ -58,8 +58,9 @@ IB_DESIGNABLE
         lastVisible = v;
         int height = 0;
         id temp = v;
+        int width = _preferredMaxLayoutWidth !=0 ? _preferredMaxLayoutWidth : bounds.size.width;
         if([temp respondsToSelector:@selector(setPreferredMaxLayoutWidth:)]) {
-            [temp setPreferredMaxLayoutWidth:(_preferredMaxLayoutWidth-2)]; // -2 is hack for multiline text bug
+            [temp setPreferredMaxLayoutWidth:(width-2)]; // -2 is hack for multiline text bug
             [temp invalidateIntrinsicContentSize];
         }
         NSSize size = v.intrinsicContentSize;

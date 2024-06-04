@@ -53,7 +53,7 @@
 - (bool)applyTextures
 {
     BrushOptions *options = [self getBrushOptions];
-    return [options useTextures] && ![options brushIsErasing] && ![brush isPixMap];
+    return [options useTextures] && ![brush isPixMap];
 }
 
 - (IntRect)plotBrushAt:(NSPoint)where pressure:(int)pressure
@@ -156,7 +156,11 @@
     if([options useTextures]) {
         CGContextRelease(textureCtx);
 
-        NSImage *pattern = [[[document toolboxUtility] foreground] patternImage];
+        NSImage *pattern;
+        if([options brushIsErasing])
+            pattern = [[[document toolboxUtility] background] patternImage];
+        else
+            pattern = [[[document toolboxUtility] foreground] patternImage];
         int w = pattern.size.width;
         int h = pattern.size.height;
 

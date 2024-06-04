@@ -16,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)makeSmall;
 -(void)makeCompact;
 -(void)makeRegular;
+-(void)makeMultiline;
+-(void)makeNote;
 
 + (Label*)label;
 + (Label*)compactLabel;

@@ -165,11 +165,6 @@
 	return [[modifierPopup selectedItem] tag];
 }
 
-- (BOOL)useTextures
-{
-    return [[document toolboxUtility] foregroundIsTexture];
-}
-
 - (void)shutdown
 {
 }

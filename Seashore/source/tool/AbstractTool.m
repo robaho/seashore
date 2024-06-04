@@ -54,6 +54,7 @@
 
 - (void) switchingTools:(BOOL)active
 {
+    [[self getOptions] update:self];
 }
 
 - (void)endLineDrawing

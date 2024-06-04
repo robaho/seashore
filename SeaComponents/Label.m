@@ -12,10 +12,9 @@
 @end
 @implementation CenteringCell
 - (NSRect) titleRectForBounds:(NSRect)frame {
-    CGFloat stringHeight = self.attributedStringValue.size.height;
     NSRect titleRect     = [super titleRectForBounds:frame];
     titleRect.origin.y = frame.origin.y +
-    (frame.size.height - stringHeight) / 2.0;
+    (frame.size.height - titleRect.size.height) / 2.0;
     return titleRect;
 }
 - (void) drawInteriorWithFrame:(NSRect)cFrame inView:(NSView*)cView {
@@ -64,6 +63,18 @@
 }
 - (void)makeRegular {
     [self setCtrlSize:NSControlSizeRegular];
+}
+
+- (void)makeMultiline {
+    self.cell.lineBreakMode=NSLineBreakByWordWrapping;
+    self.cell.usesSingleLineMode = FALSE;
+}
+
+- (void)makeNote {
+    [self makeMultiline];
+    [self setBordered:TRUE];
+    [self setBezelStyle:NSTextFieldRoundedBezel];
+    self.cell.highlighted = true;
 }
 
 +(Label*)label

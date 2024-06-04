@@ -63,6 +63,7 @@
 - (void)switchingTools:(BOOL)active
 {
     intermediate=FALSE;
+    [super switchingTools:active];
 }
 
 - (void)updateCursor:(IntPoint)p cursors:(SeaCursors*)cursors

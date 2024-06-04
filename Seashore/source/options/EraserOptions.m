@@ -4,12 +4,19 @@
 #import "SeaHelp.h"
 #import "SeaTools.h"
 #import "SeaPrefs.h"
+#import "SeaLayer.h"
+#import "SeaDocument.h"
 
 @implementation EraserOptions
 
 - (id)init:(id)document
 {
     self = [super init:document];
+
+    [super clearModifierMenu];
+    [super addModifierMenuItem:@"Erase with Background Color (Option)" tag:1];
+    [super addModifierMenuItem:@"Draw straight lines (Shift)" tag:2];
+    [super addModifierMenuItem:@"Draw striaght lines at 45° (Shift + Control)" tag:4];
 
     NSControlSize size = [[SeaController seaPrefs] controlSize];
 
@@ -32,12 +39,24 @@
 	[opacitySlider setIntValue:value];
 	[mimicBrushCheckbox setChecked:[gUserDefaults boolForKey:@"eraser mimicBrush"]];
 
+    erasingNote = [Label labelWithSize:size];
+    [erasingNote makeNote];
+    [erasingNote setTitle:@"Layer has alpha disabled. Eraser uses background color."];
+
+    [self addSubview:erasingNote];
+
     return self;
 }
 
 - (BOOL)brushIsErasing
 {
     return TRUE;
+}
+
+- (BOOL)isEraseWithBackground
+{
+    // brushIsErasing means alternate mouse button (option) is being used
+    return [super brushIsErasing];
 }
 
 - (BOOL)mimicBrush
@@ -49,6 +68,12 @@
 {
 	[gUserDefaults setInteger:[opacitySlider intValue] forKey:@"eraser opacity"];
 	[gUserDefaults setObject:[mimicBrushCheckbox isChecked] ? @"YES" : @"NO" forKey:@"eraser mimicBrush"];
+}
+
+- (void)update:(id) sender
+{
+    SeaLayer *layer = [[document contents] activeLayer];
+    erasingNote.hidden = [layer hasAlpha];
 }
 
 @end

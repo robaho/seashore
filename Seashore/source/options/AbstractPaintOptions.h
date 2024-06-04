@@ -25,7 +25,7 @@
 - (int)opacity;
 - (float)opacityFloat;
 - (void)setOpacityFloat:(float)opacity;
-
 - (void)loadOpacity:(NSString*)tag;
+- (BOOL)useTextures;
 
 @end

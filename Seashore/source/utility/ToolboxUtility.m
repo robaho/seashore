@@ -166,6 +166,11 @@ static NSString*  SelectionEditIdentifier = @"Selection Edit Identifier";
     return CGColorGetPattern([foreground CGColor])!=NULL;
 }
 
+- (BOOL)backgroundIsTexture
+{
+    return CGColorGetPattern([background CGColor])!=NULL;
+}
+
 - (NSColor *)background
 {
 	return background;

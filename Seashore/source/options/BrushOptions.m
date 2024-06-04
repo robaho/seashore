@@ -114,6 +114,14 @@
 	return isErasing;
 }
 
+- (BOOL)useTextures {
+    if([self brushIsErasing]) {
+        return [[document toolboxUtility] backgroundIsTexture];
+    } else {
+        return [[document toolboxUtility] foregroundIsTexture];
+    }
+}
+
 - (void)updateModifiers:(unsigned int)modifiers
 {
 	[super updateModifiers:modifiers];

@@ -14,6 +14,7 @@
 @interface EraserOptions : BrushOptions {
 	// A checkbox indicating whether to fade in the same style as the paintbrush
 	id mimicBrushCheckbox;
+    Label *erasingNote;
 }
 /*!
 	@method		mimicBrush
@@ -28,5 +29,10 @@
 	@discussion	Saves current options upon shutdown.
 */
 - (void)shutdown;
+
+/*!
+ @discussion    returns true if the erase should be with the background color regardless of layer alpha setting
+ */
+- (BOOL)isEraseWithBackground;
 
 @end

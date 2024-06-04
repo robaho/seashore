@@ -40,16 +40,11 @@
 	return NO;
 }
 
-- (bool)applyTextures
-{
-    return FALSE;
-}
-
-- (void)setOverlayOptions:(BrushOptions*)options
+- (void)setOverlayOptions:(EraserOptions*)options
 {
     SeaLayer *layer = [[document contents] activeLayer];
 
-    if([layer hasAlpha])
+    if([layer hasAlpha] && ![options isEraseWithBackground])
         [[document whiteboard] setOverlayBehaviour:kErasingBehaviour];
     [[document whiteboard] setOverlayOpacity:[options opacity]];
 }

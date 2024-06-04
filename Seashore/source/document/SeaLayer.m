@@ -1,6 +1,12 @@
+#import <ApplicationServices/ApplicationServices.h>
+#import <CoreImage/CoreImage.h>
+#import <sys/stat.h>
+#import <sys/mount.h>
+
 #import "SeaLayer.h"
 #import "SeaContent.h"
 #import "SeaDocument.h"
+#import "SeaHelpers.h"
 #import "SeaLayerUndo.h"
 #import "SeaController.h"
 #import "LayersUtility.h"
@@ -9,11 +15,6 @@
 #import "SeaTools.h"
 #import "PositionTool.h"
 #import "NSAffineTransform_Extensions.h"
-
-#import <ApplicationServices/ApplicationServices.h>
-#import <CoreImage/CoreImage.h>
-#import <sys/stat.h>
-#import <sys/mount.h>
 
 @implementation SeaLayer
 
@@ -426,6 +427,7 @@
 	hasAlpha = !hasAlpha;
 	[[document layersUtility] update:kLayersUpdateAll];
 	[[[document undoManager] prepareWithInvocationTarget:self] toggleAlpha];
+    [[document helpers] layerAttributesChanged:kActiveLayer hold:FALSE];
 }
 
 - (void)introduceAlpha

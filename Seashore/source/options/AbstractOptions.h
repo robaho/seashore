@@ -40,6 +40,8 @@ enum {
 				<b>Copyright:</b> Copyright (c) 2002 Mark Pazolli
 */
 
+@class SeaDocument;
+
 @interface AbstractOptions : VerticalView {
 	
 	// The modifier options associated with this tool
@@ -48,7 +50,7 @@ enum {
     bool forceAlt;
 	
 	// The document associated
-	__weak IBOutlet id document;
+	__weak IBOutlet SeaDocument* document;
 }
 
 - (void)update:(id)sender;
@@ -92,14 +94,6 @@ enum {
 	@result		Returns an integer indicating the active modifier's tag.
 */
 - (int)modifier;
-
-/*!
-	@method		useTextures
-	@discussion	Returns whether or not the tool should use textures.
-	@result		Returns NO to indicate that by defualt tools do not use
-				textures.
-*/
-- (BOOL)useTextures;
 
 /*!
 	@method		shutdown

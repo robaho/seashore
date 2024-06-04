@@ -57,19 +57,18 @@ enum {
 - (BOOL)scale;
 
 /*!
-	@method		useTextures
-	@discussion	Returns whether or not the tool should use textures.
-	@result		Returns YES if the tool should use textures, NO if the tool
-				should use the foreground colour.
-*/
-- (BOOL)useTextures;
-
-/*!
 	@method		brushIsErasing
-	@discussion	Returns whether or not the brush is erasing.
+	@discussion	Returns whether or not the brush is erasing which is a bit of a misnomer. It actually means
+is the user drawing or erasing with the alternate mouse button down
 	@result		Returns YES if the brush is erasing, NO if the brush is using
 				its normal operation.
 */
 - (BOOL)brushIsErasing;
+
+/*!
+ @discussion    Returns whether or not the the current paint/erase color is a texture
+ */
+- (BOOL)useTextures;
+
 
 @end

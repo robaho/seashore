@@ -88,6 +88,7 @@
 - (NSColor *)background;
 
 - (BOOL)foregroundIsTexture;
+- (BOOL)backgroundIsTexture;
 
 /*!
 	@method		setForeground:

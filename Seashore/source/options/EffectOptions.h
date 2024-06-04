@@ -17,7 +17,7 @@
 	// The label showing the number of clicks remaining
 	id clickCountLabel;
     // The instruction for those effects
-    NSTextField *instructionsLabel;
+    Label *instructionsLabel;
 
     id effectsButton;
 

@@ -159,6 +159,7 @@
 	
 	if (!hold)
 		[[document layersUtility] update:kLayersUpdateAll];
+    [[document toolboxUtility] update:FALSE];
 }
 
 - (void)layerBoundariesChanged:(int)index
