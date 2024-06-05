@@ -41,7 +41,7 @@
 
     erasingNote = [Label labelWithSize:size];
     [erasingNote makeNote];
-    [erasingNote setTitle:@"Layer has alpha disabled. Eraser uses background color."];
+    [erasingNote setTitle:@"Layer has alpha disabled so eraser uses background color."];
 
     [self addSubview:erasingNote];
 
@@ -74,6 +74,8 @@
 {
     SeaLayer *layer = [[document contents] activeLayer];
     erasingNote.hidden = [layer hasAlpha];
+    [self setNeedsDisplay:TRUE];
+    [self setNeedsLayout:TRUE];
 }
 
 @end
