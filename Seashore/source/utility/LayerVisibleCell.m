@@ -12,18 +12,16 @@
 }
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView {
-    int h = [image size].height;
-    int h0 = cellFrame.size.height - h;
 
-    NSRect r = NSMakeRect(cellFrame.origin.x,cellFrame.origin.y+h0/2,[image size].width,[image size].height);
+    cellFrame = NSGrowRect(cellFrame,2);
 
     SeaLayer *layer = (SeaLayer*)[self representedObject];
     if([layer visible]) {
         NSImage *img = getTinted(image, [NSColor alternateSelectedControlColor]);
-        [img drawInRect:r];
+        [img drawInRect:scaledRect(img,cellFrame)];
     } else {
         NSImage *img = getTinted(image, [NSColor controlTextColor]);
-        [img drawInRect:r fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:.5];
+        [img drawInRect:scaledRect(img,cellFrame) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:.5];
     }
 }
 @end

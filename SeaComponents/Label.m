@@ -11,14 +11,18 @@
 @interface CenteringCell : NSTextFieldCell
 @end
 @implementation CenteringCell
-- (NSRect) titleRectForBounds:(NSRect)frame {
-    NSRect titleRect     = [super titleRectForBounds:frame];
-    titleRect.origin.y = frame.origin.y +
-    (frame.size.height - titleRect.size.height) / 2.0;
-    return titleRect;
+- (NSRect)titleRectForBounds:(NSRect)theRect {
+    NSRect titleFrame = [super titleRectForBounds:theRect];
+    NSSize titleSize = [[self attributedStringValue] boundingRectWithSize:theRect.size options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingTruncatesLastVisibleLine].size;
+    titleFrame.origin.y = theRect.origin.y + (theRect.size.height - titleSize.height) / 2.0;
+    if(self.bordered)
+        titleFrame.origin.x +=2;
+    return titleFrame;
 }
-- (void) drawInteriorWithFrame:(NSRect)cFrame inView:(NSView*)cView {
-    [super drawInteriorWithFrame:[self titleRectForBounds:cFrame] inView:cView];
+
+- (void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView {
+    NSRect titleRect = [self titleRectForBounds:cellFrame];
+    [[self attributedStringValue] drawWithRect:titleRect options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingTruncatesLastVisibleLine];
 }
 @end
 

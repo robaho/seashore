@@ -30,10 +30,8 @@ IB_DESIGNABLE
     [self layout];
 }
 
-- (void)layout
+- (void)assignComponents
 {
-    NSString *name = [self identifier];
-
     if(_middle && _middle.superview!=self)
         _middle = nil;
     if(_top && _top.superview!=self)
@@ -51,6 +49,34 @@ IB_DESIGNABLE
             _middle = [self subviews][0];
         }
     }
+}
+
+//- (NSSize)intrinsicContentSize
+//{
+//    float width=0,height=0;
+//
+//    [self assignComponents];
+//
+//    if(_top && !_top.hidden) height += _top.intrinsicContentSize.height;
+//    if(_bottom && !_bottom.hidden) height += _bottom.intrinsicContentSize.height;
+//    if(_middle && !_middle.hidden) height += _middle.intrinsicContentSize.height;
+//    if(_left && !_left.hidden) height = MAX(height,_left.intrinsicContentSize.height);
+//    if(_right && !_right.hidden) height = MAX(height,_right.intrinsicContentSize.height);
+//
+//    if(_left && !_left.hidden) width += _left.intrinsicContentSize.width;
+//    if(_right && !_right.hidden) width += _right.intrinsicContentSize.width;
+//    if(_middle && !_middle.hidden) width += _middle.intrinsicContentSize.width;
+//    if(_top && !_top.hidden) width = MAX(width,_top.intrinsicContentSize.width);
+//    if(_bottom && !_bottom.hidden) width = MAX(width,_bottom.intrinsicContentSize.width);
+//
+//    return NSMakeSize(width,height);
+//}
+
+- (void)layout
+{
+    NSString *name = [self identifier];
+
+    [self assignComponents];
 
     NSRect bounds = NSMakeRect(0,0,self.frame.size.width,self.frame.size.height);
 

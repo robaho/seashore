@@ -446,7 +446,6 @@
 		DCB08D9310463653009DE7C3 /* selectallTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = DCB08D9010463653009DE7C3 /* selectallTemplate.png */; };
 		DCC900AB0FC50A3000C74521 /* SeaToolbarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC900AA0FC50A3000C74521 /* SeaToolbarItem.m */; };
 		DCC904D70FC60BAF00C74521 /* hide-infoTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = DCC904D60FC60BAF00C74521 /* hide-infoTemplate.png */; };
-		DCC9063A0FC65D9200C74521 /* show-infoTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = DCC906390FC65D9200C74521 /* show-infoTemplate.png */; };
 		DCCC461A0FB32277006A7E69 /* crosspoint-subtract-cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = DCCC46150FB32277006A7E69 /* crosspoint-subtract-cursor.png */; };
 		DCCC461B0FB32277006A7E69 /* crosspoint-close-cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = DCCC46160FB32277006A7E69 /* crosspoint-close-cursor.png */; };
 		DCCC461C0FB32277006A7E69 /* crosspoint-add-cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = DCCC46170FB32277006A7E69 /* crosspoint-add-cursor.png */; };
@@ -1217,7 +1216,6 @@
 		DCC900A90FC50A3000C74521 /* SeaToolbarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeaToolbarItem.h; sourceTree = "<group>"; };
 		DCC900AA0FC50A3000C74521 /* SeaToolbarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeaToolbarItem.m; sourceTree = "<group>"; };
 		DCC904D60FC60BAF00C74521 /* hide-infoTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hide-infoTemplate.png"; sourceTree = "<group>"; };
-		DCC906390FC65D9200C74521 /* show-infoTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "show-infoTemplate.png"; sourceTree = "<group>"; };
 		DCCC46150FB32277006A7E69 /* crosspoint-subtract-cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crosspoint-subtract-cursor.png"; sourceTree = "<group>"; };
 		DCCC46160FB32277006A7E69 /* crosspoint-close-cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crosspoint-close-cursor.png"; sourceTree = "<group>"; };
 		DCCC46170FB32277006A7E69 /* crosspoint-add-cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crosspoint-add-cursor.png"; sourceTree = "<group>"; };
@@ -2188,7 +2186,6 @@
 				DC414D07102FE08400B66F04 /* trueviewTemplate.png */,
 				DC414D26102FE71E00B66F04 /* channels-menuTemplate.png */,
 				DCC904D60FC60BAF00C74521 /* hide-infoTemplate.png */,
-				DCC906390FC65D9200C74521 /* show-infoTemplate.png */,
 				F5FE2C7203C43530013856BA /* duplicateTemplate.png */,
 				DCF904C00FCCB4C4001629C0 /* deleteTemplate.png */,
 				F5FE2C7303C43530013856BA /* newTemplate.png */,
@@ -2380,7 +2377,6 @@
 				DC493D740FB8BAAF009D352D /* noop-cursor.png in Resources */,
 				2BED226E21F3FB40005B496C /* effectTemplate.png in Resources */,
 				DCC904D70FC60BAF00C74521 /* hide-infoTemplate.png in Resources */,
-				DCC9063A0FC65D9200C74521 /* show-infoTemplate.png in Resources */,
 				DCF805560FC8672800F72FB3 /* inspector.png in Resources */,
 				DCF8059F0FC99C0F00F72FB3 /* right-align.png in Resources */,
 				DCF805A00FC99C0F00F72FB3 /* left-align.png in Resources */,

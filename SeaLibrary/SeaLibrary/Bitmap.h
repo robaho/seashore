@@ -123,6 +123,7 @@ unsigned char *convertGAToARGB(unsigned char *buffer, int length);
 
 CGImageRef getTintedCG(CGImageRef src,NSColor *tint);
 NSImage *getTinted(NSImage* src,NSColor *tint);
+NSRect scaledRect(NSImage *img,NSRect r);
 
 NS_INLINE bool isSameColor(unsigned char *data,int width,int x,int y,int x0,int y0) {
     return *(uint32_t*)(data+(width*y+x)*SPP)==*(uint32_t*)(data+(width*y0+x0)*SPP);

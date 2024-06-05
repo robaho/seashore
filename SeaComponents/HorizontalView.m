@@ -15,6 +15,7 @@ IB_DESIGNABLE
     self = [super initWithFrame:frameRect];
     self.gap=5;
     self.margin=5;
+    self.top_margin=0;
     self.autoresizesSubviews = FALSE;
     self.translatesAutoresizingMaskIntoConstraints = FALSE;
     return self;
@@ -80,20 +81,22 @@ IB_DESIGNABLE
         float x=_margin;
         for(NSView *v in [self subviews]) {
             if(v.hidden) continue;
-            float h = MIN(v.fittingSize.height,bounds.size.height);
+            float h = MIN(v.fittingSize.height,bounds.size.height)-_top_margin*2;
             float width = v.fittingSize.width;
             if(v==widest) width -= widestAdj;
             width = MAX(MIN(width,bounds.size.width-x),0);
+            if(width<16) continue;
             [v setFrame:NSMakeRect(x,0+(bounds.size.height-h)/2,width,h)];
             x+=width;
             x+=_gap;
         }
     } else {
         float width = (bounds.size.width - (visible_count-1)*_gap - _margin*2)/visible_count;
+        if(width<16) return;
         float x=_margin;
         for(NSView *v in [self subviews]) {
             if(v.hidden) continue;
-            float h = MIN(v.fittingSize.height,bounds.size.height);
+            float h = MIN(v.fittingSize.height,bounds.size.height)-_top_margin*2;
             [v setFrame:NSMakeRect(x,0+(bounds.size.height-h)/2,width,h)];
             x+=width;
             x+=_gap;

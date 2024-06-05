@@ -96,19 +96,7 @@
     NSRect textFrame;
     NSDivideRect(cellFrame, &imageFrame, &textFrame, 48, NSMinXEdge);
 
-    NSSize imageSize = [image size];
-    float image_proportion = imageSize.width / imageSize.height;
-
-    if(image_proportion>1) {
-        float new_height = imageFrame.size.width/image_proportion;
-        imageFrame.origin.y += (imageFrame.size.height - new_height)/2;
-        imageFrame.size.height = new_height;
-    }
-    else {
-        float new_width = image_proportion*imageFrame.size.height;
-        imageFrame.origin.x += (imageFrame.size.width - new_width)/2;
-        imageFrame.size.width = new_width;
-    }
+    imageFrame = scaledRect(image,imageFrame);
 
     [NSGraphicsContext restoreGraphicsState];
 

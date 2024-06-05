@@ -269,6 +269,22 @@ NSImage *getTinted(NSImage *src,NSColor *tint){
     return tinted;
 }
 
+NSRect scaledRect(NSImage *img,NSRect r) {
+    NSSize s = [img size];
+    float x=0,y=0,w=s.width,h=s.height;
+
+    float scale = MIN(r.size.width/w,r.size.height/h);
+    if(scale<1) {
+        w = w * scale;
+        h = h * scale;
+    }
+
+    if(w<r.size.width) x = (r.size.width-w)/2;
+    if(h<r.size.height) y = (r.size.height-h)/2;
+
+    return NSMakeRect(x+r.origin.x,y+r.origin.y,w,h);
+}
+
 CGImageRef CGImageDeepCopy(CGImageRef image) {
     int width = CGImageGetWidth(image);
     int height = CGImageGetHeight(image);
