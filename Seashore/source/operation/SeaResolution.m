@@ -114,4 +114,19 @@
 	if ([forceSquare state]) [yValue setStringValue:[xValue stringValue]];
 }
 
+- (IBAction)quickSet:(id)sender
+{
+    [sheet makeFirstResponder:sender];
+    [NSApp endSheet:sheet];
+    [sheet orderOut:self];
+
+    IntResolution newRes;
+
+    int resolution = [sender tag];
+    newRes.x = resolution;
+    newRes.y = resolution;
+
+    [self setResolution:newRes];
+}
+
 @end

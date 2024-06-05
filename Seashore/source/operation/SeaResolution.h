@@ -92,4 +92,10 @@
 */
 - (IBAction)xValueChanged:(id)sender;
 
+/*!
+ @discussion    Called to quickly set the resolution to a specific value.
+ @param        sender where the tag is the resolution
+ */
+- (IBAction)quickSet:(id)sender;
+
 @end

@@ -49,6 +49,7 @@
 
 - (void)resolutionChanged
 {
+    [[document scrollView] updateRulers];
 	[[document docView] readjust];
 	[[document statusUtility] update];
 }
