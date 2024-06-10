@@ -81,6 +81,7 @@
 - (id)initWithPasteboard
 {
     id pboard = [NSPasteboard generalPasteboard];
+    // check URL first, because if it is a file we want the file details, name, etc.
     NSPasteboardType ptype = [pboard availableTypeFromArray:[NSArray arrayWithObjects:NSURLPboardType,NSTIFFPboardType,nil]];
     if([ptype isEqualToString:NSURLPboardType]){
         NSURL *url = [NSURL URLFromPasteboard:pboard];
@@ -99,6 +100,8 @@
 	
 	// Create contents
 	contents = [[SeaContent alloc] initFromPasteboardWithDocument:self];
+    if(contents==NULL)
+        return NULL;
 	
 	// Mark document as dirty
 	[self updateChangeCount:NSChangeDone];

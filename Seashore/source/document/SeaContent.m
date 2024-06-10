@@ -66,6 +66,9 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     if (imageRepDataType != NULL) {
         imageRepData = [pboard dataForType:imageRepDataType];
         imageRep = [[NSBitmapImageRep alloc] initWithData:imageRepData];
+    } else {
+        NSBeep();
+        return NULL;
     }
     
     // Fill out as many of the properties as possible
