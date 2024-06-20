@@ -1072,11 +1072,14 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
                 return NO;
         break;
         case 262: /* Paste */
-            availableType = [[NSPasteboard generalPasteboard] availableTypeFromArray:[NSArray arrayWithObjects:NSTIFFPboardType, NULL]];
+            availableType = [[NSPasteboard generalPasteboard] availableTypeFromArray:[NSArray arrayWithObjects:NSTIFFPboardType, NSURLPboardType, NULL]];
             if (availableType)
                 return YES;
-            else
+            else {
+                NSString *string = [[NSPasteboard generalPasteboard] stringForType:NSStringPboardType];
+                if(string!=NULL && [string hasPrefix:@"<svg"]) return YES;
                 return NO;
+            }
         break;
     }
     

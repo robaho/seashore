@@ -143,7 +143,7 @@ id seaController;
 	NSDocument *document;
 	
 	// Ensure that the document is valid
-	if(![[NSPasteboard generalPasteboard] availableTypeFromArray:[NSArray arrayWithObjects:NSTIFFPboardType, NSURLPboardType, NULL]]){
+	if(![[NSPasteboard generalPasteboard] availableTypeFromArray:[NSArray arrayWithObjects:NSTIFFPboardType, NSURLPboardType, NSStringPboardType, NULL]]){
 		NSBeep();
 		return;
 	}
@@ -215,8 +215,11 @@ id seaController;
 			availableType = [[NSPasteboard generalPasteboard] availableTypeFromArray:[NSArray arrayWithObjects:NSTIFFPboardType, NSURLPboardType, NULL]];
 			if (availableType)
 				return YES;
-			else
-				return NO;
+            else {
+                NSString *string = [[NSPasteboard generalPasteboard] stringForType:NSStringPboardType];
+                if(string!=NULL && [string hasPrefix:@"<svg"]) return YES;
+                return NO;
+            }
 		break;
 	}
 	

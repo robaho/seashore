@@ -8,6 +8,7 @@
 #import "SeaController.h"
 
 #import <PocketSVG/PocketSVG.h>
+#import <QuartzCore/QuartzCore.h>
 
 @interface FlippedView : NSView
 @end
@@ -40,11 +41,19 @@
 	return YES;
 }
 
-- (SeaLayer*)loadSVGLayer:(id)doc path:(NSString*)path
+- (SeaLayer*)loadSVGLayer:(id)doc path:(NSString*)path {
+    SVGLayer *svg = [[SVGLayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path]];
+    return [self loadSVGLayer:doc svg:svg];
+}
+
+- (SeaLayer*)loadSVGLayer:(id)doc string:(NSString*)svgData {
+    SVGLayer *svg = [[SVGLayer alloc] initWithString:svgData];
+    return [self loadSVGLayer:doc svg:svg];
+}
+
+- (SeaLayer*)loadSVGLayer:(id)doc svg:(SVGLayer*)svg
 {
     [NSBundle loadNibNamed:@"SVGContent" owner:self];
-    
-    SVGLayer *svg = [[SVGLayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path]];
     
     // Run the scaling panel
     [scalePanel center];

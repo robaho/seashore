@@ -52,6 +52,13 @@
 - (SeaLayer*)loadSVGLayer:(id)doc path:(NSString*)path;
 
 /*!
+ @method     loadSVGLayer
+ @discussion shared method to load a SeaLayer from a SVG file. shows dialog to control scaling.
+ @result NULL if the SVG file could not be loaded
+ */
+- (SeaLayer*)loadSVGLayer:(id)doc string:(NSString*)contents;
+
+/*!
 	@method		endPanel:
 	@discussion	Closes the current modal dialog.
 	@param		sender

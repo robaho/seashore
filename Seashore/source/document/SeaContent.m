@@ -67,6 +67,20 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
         imageRepData = [pboard dataForType:imageRepDataType];
         imageRep = [[NSBitmapImageRep alloc] initWithData:imageRepData];
     } else {
+        NSString* string = [[NSPasteboard generalPasteboard] stringForType:NSStringPboardType];
+        if(string!=NULL && [string hasPrefix:@"<svg"]) {
+            SeaLayer *layer = [[[SVGImporter alloc] init] loadSVGLayer:doc string:string];
+            width = [layer width];
+            height = [layer height];
+            parasites = [[ParasiteData alloc] init];
+            exifData = NULL;
+            layers = [[NSArray alloc] initWithObjects:layer, NULL];
+            selectedChannel = kAllChannels; trueView = NO;
+            document = doc;
+            activeLayerIndex = 0;
+            return self;
+        }
+
         NSBeep();
         return NULL;
     }
@@ -639,22 +653,26 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
     IntSize sel_size;
     
     // Ensure that the document is valid
-    if(![pboard availableTypeFromArray:[NSArray arrayWithObjects:NSTIFFPboardType, NSURLPboardType, NULL]]){
+    NSPasteboardType ptype = [pboard availableTypeFromArray:[NSArray arrayWithObjects:NSURLPboardType,NSTIFFPboardType,NSStringPboardType,nil]];
+    if(!ptype) {
         NSBeep();
         return;
     }
     
     [[document helpers] endLineDrawing];
 
-    NSPasteboardType ptype = [pboard availableTypeFromArray:[NSArray arrayWithObjects:NSURLPboardType,NSTIFFPboardType,nil]];
     if([ptype isEqualToString:NSURLPboardType]){
         NSURL *url = [NSURL URLFromPasteboard:pboard];
         if([url isFileURL]) {
             NSString *path = [url path];
             image = [[NSImage alloc] initByReferencingFile:path];
-            imageRep = [[NSBitmapImageRep alloc] initWithData:[image TIFFRepresentation]];
-            if(imageRep==NULL) {
-                // maybe another image type, like SVG or Seashore, so try and import the file
+            if(image.valid) {
+                imageRep = [[NSBitmapImageRep alloc] initWithData:[image TIFFRepresentation]];
+                if(imageRep==NULL) {
+                    NSBeep();
+                    return;
+                }
+            } else { // not an image type understood, so try our importers
                 [self importLayerFromFile:path];
                 return;
             }
@@ -662,7 +680,19 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
             // we'll try the image types below
         }
     }
-    
+
+    if([ptype isEqualToString:NSStringPboardType]){
+        NSString* string = [[NSPasteboard generalPasteboard] stringForType:NSStringPboardType];
+        if(string!=NULL && [string hasPrefix:@"<svg"]) {
+            SeaLayer *layer = [[[SVGImporter alloc] init] loadSVGLayer:document string:string];
+            [self addLayerObject:layer atIndex:index];
+            return;
+        } else {
+            NSBeep();
+            return;
+        }
+    }
+
     if(imageRep==NULL){
         // Get the data from the pasteboard
         imageRepDataType = [pboard availableTypeFromArray:[NSArray arrayWithObject:NSTIFFPboardType]];

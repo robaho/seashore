@@ -3576,14 +3576,12 @@ DQ
         <designable name="JJw-vk-3Fd">
             <size key="intrinsicContentSize" width="10" height="0.0"/>
         </designable>
-        <designable name="KSY-g2-Sq8"/>
         <designable name="Mxk-rD-Q3j">
             <size key="intrinsicContentSize" width="5" height="0.0"/>
         </designable>
         <designable name="PIg-o8-poO">
             <size key="intrinsicContentSize" width="25" height="0.0"/>
         </designable>
-        <designable name="uOM-Yq-TUp"/>
     </designables>
     <resources>
         <image name="NSStopProgressFreestandingTemplate" width="15" height="15"/>
