@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
+#import <libxml2/libxml/xmlreader.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -27,6 +28,15 @@ extern "C" {
  */
 NSArray *CGPathsFromSVGString(NSString *svgString, SVGAttributeSet **attributes);
 
+/*!
+ * @brief Returns a single CGPathRef parsed from the contents of a single string formatted like the d attribute inside a path element
+ *
+ * @param svgString The string containing the SVG formatted path, this is just the path string from the d attribute and no xml
+ *
+ * @return A single CGPathRef object
+ *
+ */
+CGPathRef CGPathFromSVGPathString(NSString *svgString);
 
 /*!
  * @brief Returns SVG representing `paths`
@@ -41,6 +51,7 @@ NSString *SVGStringFromCGPaths(NSArray *paths, SVGAttributeSet *attributes);
 
 @interface SVGAttributeSet : NSObject <NSCopying, NSMutableCopying>
 - (NSDictionary<NSString*,id> *)attributesForPath:(CGPathRef)path;
+@property(nonatomic, readonly) CGRect viewBox;
 @end
 @interface SVGMutableAttributeSet : SVGAttributeSet
 - (void)setAttributes:(NSDictionary<NSString*,id> *)attributes forPath:(CGPathRef)path;
