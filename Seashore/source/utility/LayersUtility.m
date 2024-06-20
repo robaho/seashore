@@ -9,6 +9,8 @@
 #import "SeaPrefs.h"
 #import "SeaProxy.h"
 #import "SeaWindowContent.h"
+#import "Units.h"
+#import "LayerOptionsMenu.h"
 
 @implementation LayersUtility
 
@@ -21,6 +23,10 @@
 {
 	// Enable the utility
 	enabled = YES;
+
+    NSControlSize size = [[SeaController seaPrefs] controlSize];
+    [layerInfoLabel setCtrlSize:size];
+
 }
 
 - (void)update:(LayersUtilityUpdateEnum)updateCode
@@ -47,6 +53,7 @@
 			}
 		break;
 	}
+    [self updateLayerInfo];
 	[dataSource update];
 }
 
@@ -147,6 +154,33 @@
 	}else{
 		NSBeep();
 	}
+}
+
+- (void)updateLayerInfo
+{
+    SeaContent *contents = [document contents];
+    SeaLayer *layer = [contents activeLayer];
+    int units = [document measureStyle];
+    float xres = [contents xres];
+    float yres = [contents yres];
+
+    if(!layer) {
+        [layerInfoLabel setStringValue:@""];
+        return;
+    }
+    NSString* width = StringFromPixels([layer width],units,xres);
+    NSString* height = StringFromPixels([layer height],units,xres);
+    NSString* alpha = [layer hasAlpha] ? @"alpha" : @"no alpha";
+    NSString* opacity = [NSString stringWithFormat:@" %.1f%%", (float)[layer opacity] / 2.55];
+
+    NSString* blendMode= @"";
+    for(int i=0;i<blendMenuCount();i++) {
+        if(blendMenu[i].tag==[layer mode]) {
+            blendMode = blendMenu[i].title;
+        }
+    }
+
+    [layerInfoLabel setStringValue:[NSString stringWithFormat:@"%@ x %@ %@, %@, %@, %@",width,height,UnitsString(units),alpha,opacity,blendMode]];
 }
 
 @end

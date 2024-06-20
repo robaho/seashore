@@ -36,6 +36,8 @@ typedef enum {
 
 	// The Data Source used by the table that serves as the layers view.
 	IBOutlet id dataSource;
+
+    IBOutlet id layerInfoLabel;
 }
 
 /*!
@@ -138,4 +140,7 @@ typedef enum {
 - (IBAction)deleteLayer:(id)sender;
 
 - (IBAction)toggleAllVisibility:(id)sender;
+
+- (void)updateLayerInfo;
+
 @end

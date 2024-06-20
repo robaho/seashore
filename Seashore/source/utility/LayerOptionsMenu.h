@@ -13,4 +13,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+typedef struct {
+    NSString *title;
+    int tag;
+} BlendMenuItem;
+
+extern BlendMenuItem blendMenu[];
+extern int blendMenuCount();
+
 NS_ASSUME_NONNULL_END

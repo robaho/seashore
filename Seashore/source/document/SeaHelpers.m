@@ -157,9 +157,12 @@
 			[[document whiteboard] update:[layer globalBounds]];
 		break;
 	}
-	
+    
+    [[document layersUtility] updateLayerInfo];
+
 	if (!hold)
 		[[document layersUtility] update:kLayersUpdateAll];
+    
     [[document toolboxUtility] update:FALSE];
 }
 
@@ -192,6 +195,7 @@
 	
 	[[document whiteboard] readjustLayer];
 	[[document layersUtility] update:kLayersUpdateAll];
+    [[document layersUtility] updateLayerInfo];
 	[[document docView] setNeedsDisplay:YES];
     [[document toolboxUtility] update:FALSE];
 }

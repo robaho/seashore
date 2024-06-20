@@ -3,13 +3,7 @@
 
 @implementation LayerOptionsMenu
 
-
-typedef struct {
-    NSString *title;
-    int tag;
-} BlendMenuItem;
-
-static BlendMenuItem items[] = { // see map in XcfExporter
+BlendMenuItem blendMenu[] = { // see map in XcfExporter
     {@"Normal", kCGBlendModeNormal},
     {NULL,-1}, // seperator
     {@"Darken", kCGBlendModeDarken}, // Darken Only
@@ -35,15 +29,19 @@ static BlendMenuItem items[] = { // see map in XcfExporter
     {@"Luminosity", kCGBlendModeLuminosity}, // LCH Lightness
 };
 
+int blendMenuCount() {
+    return sizeof(blendMenu)/sizeof(blendMenu[0]);
+}
+
 -(void)awakeFromNib
 {
-    for(int i=0;i<(sizeof(items)/sizeof(items[0]));i++) {
-        NSString *s = items[i].title;
+    for(int i=0;i<blendMenuCount();i++) {
+        NSString *s = blendMenu[i].title;
         if(!s) {
             [self addItem:[NSMenuItem separatorItem]];
         } else {
             NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:s action:NULL keyEquivalent:@""];
-            [item setTag:items[i].tag];
+            [item setTag:blendMenu[i].tag];
             [self addItem:item];
         }
     }
