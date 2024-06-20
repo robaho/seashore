@@ -2553,15 +2553,19 @@ Gw
             <connections>
                 <outlet property="alphaEnabledCheckbox" destination="15193" id="15198"/>
                 <outlet property="document" destination="-2" id="2939"/>
+                <outlet property="heightUnits" destination="7371" id="jas-HL-tdQ"/>
                 <outlet property="heightValue" destination="6523" id="7360"/>
                 <outlet property="layerTitle" destination="6527" id="7364"/>
+                <outlet property="leftUnits" destination="7373" id="FL4-xf-FvF"/>
                 <outlet property="leftValue" destination="6521" id="7362"/>
                 <outlet property="linkedCheckbox" destination="10608" id="11970"/>
                 <outlet property="modePopup" destination="6533" id="7381"/>
                 <outlet property="opacityLabel" destination="6534" id="7382"/>
                 <outlet property="opacitySlider" destination="6536" id="7383"/>
                 <outlet property="panel" destination="2893" id="2931"/>
+                <outlet property="topUnits" destination="7375" id="6N6-Gr-pT1"/>
                 <outlet property="topValue" destination="6520" id="7363"/>
+                <outlet property="widthUnits" destination="7368" id="GRv-bI-R5J"/>
                 <outlet property="widthValue" destination="6526" id="7361"/>
             </connections>
         </customObject>
@@ -3576,12 +3580,14 @@ DQ
         <designable name="JJw-vk-3Fd">
             <size key="intrinsicContentSize" width="10" height="0.0"/>
         </designable>
+        <designable name="KSY-g2-Sq8"/>
         <designable name="Mxk-rD-Q3j">
             <size key="intrinsicContentSize" width="5" height="0.0"/>
         </designable>
         <designable name="PIg-o8-poO">
             <size key="intrinsicContentSize" width="25" height="0.0"/>
         </designable>
+        <designable name="uOM-Yq-TUp"/>
     </designables>
     <resources>
         <image name="NSStopProgressFreestandingTemplate" width="15" height="15"/>

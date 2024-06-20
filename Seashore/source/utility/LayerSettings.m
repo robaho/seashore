@@ -35,10 +35,10 @@
 	[topValue setStringValue:StringFromPixels([layer yoff], units, yres)];
 	[widthValue setStringValue:StringFromPixels([layer width],units,xres)];
 	[heightValue setStringValue:StringFromPixels([layer height],units, yres)];	
-	[leftUnits setTitle:UnitsString(units)];
-	[topUnits setTitle:UnitsString(units)];	
-	[widthUnits setTitle:UnitsString(units)];
-	[heightUnits setTitle:UnitsString(units)];
+	[leftUnits setStringValue:UnitsString(units)];
+	[topUnits setStringValue:UnitsString(units)];
+	[widthUnits setStringValue:UnitsString(units)];
+	[heightUnits setStringValue:UnitsString(units)];
 	
 	if (document && layer) {
 		
