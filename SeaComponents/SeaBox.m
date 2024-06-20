@@ -53,10 +53,13 @@
 
     myBorderRect = CGRectInset(bounds, 8, self.borderWidth);
     myBorderRect.size.height -= titleRect.size.height+2;
+
     if(myBorderRect.size.height<0 || myBorderRect.size.width<0) {
         return;
     }
-    [[self contentView] setFrame:myBorderRect];
+    CGRect contentRect = CGRectInset(myBorderRect, self.contentViewMargins.width,self.contentViewMargins.height);
+
+    [[self contentView] setFrame:contentRect];
 }
 
 - (void)viewWillDraw

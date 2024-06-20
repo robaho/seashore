@@ -178,11 +178,11 @@
                                                         <rect key="frame" x="7" y="174" width="250" height="48"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                         <view key="contentView" id="YE2-DU-G6B" customClass="VerticalView">
-                                                            <rect key="frame" x="3" y="3" width="244" height="30"/>
+                                                            <rect key="frame" x="8" y="3" width="234" height="30"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NJP-TV-twK" customClass="Label">
-                                                                    <rect key="frame" x="5" y="7" width="144" height="11"/>
+                                                                    <rect key="frame" x="5" y="7" width="134" height="11"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                                     <textFieldCell key="cell" controlSize="mini" lineBreakMode="clipping" title="Some layer information" id="u8S-lD-Sya">
                                                                         <font key="font" metaFont="miniSystem"/>
@@ -195,8 +195,12 @@
                                                                 <userDefinedRuntimeAttribute type="number" keyPath="gap">
                                                                     <real key="value" value="5"/>
                                                                 </userDefinedRuntimeAttribute>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="margin">
+                                                                    <real key="value" value="3"/>
+                                                                </userDefinedRuntimeAttribute>
                                                             </userDefinedRuntimeAttributes>
                                                         </view>
+                                                        <size key="contentViewMargins" width="5" height="0.0"/>
                                                     </box>
                                                     <box borderType="line" title="Point Information" id="XzW-kL-x8j" customClass="SeaBox">
                                                         <rect key="frame" x="7" y="-4" width="250" height="163"/>

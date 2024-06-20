@@ -171,7 +171,7 @@
     NSString* width = StringFromPixels([layer width],units,xres);
     NSString* height = StringFromPixels([layer height],units,xres);
     NSString* alpha = [layer hasAlpha] ? @"alpha" : @"no alpha";
-    NSString* opacity = [NSString stringWithFormat:@" %.1f%%", (float)[layer opacity] / 2.55];
+    NSString* opacity = [NSString stringWithFormat:@"%.1f%%", (float)[layer opacity] / 2.55];
 
     NSString* blendMode= @"";
     for(int i=0;i<blendMenuCount();i++) {

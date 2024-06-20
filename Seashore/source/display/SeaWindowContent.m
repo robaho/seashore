@@ -70,6 +70,11 @@
     [parent layout];
     [parent setNeedsDisplay:TRUE];
 
+    if([[parent superview] isKindOfClass:[BorderView class]]) {
+        [[parent superview] layout];
+        [[parent superview] setNeedsDisplay:TRUE];
+    }
+
     if([parent isKindOfClass:NSSplitView.class]){
         NSSplitView *sv = (NSSplitView*)parent;
         [sv adjustSubviews];
