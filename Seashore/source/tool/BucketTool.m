@@ -51,7 +51,7 @@
         }
     }
 
-    lastTolerance = 0;
+    lastTolerance = -1;
     [self preview:[options tolerance]];
 }
 

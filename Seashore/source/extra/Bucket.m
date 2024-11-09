@@ -76,7 +76,7 @@ static inline bool inTolerance(unsigned char *base,unsigned char *color,unsigned
         if (base[alphaPos] == 0 && color[alphaPos] == 0)
             return YES;
         float dist = colorDistance(base,color);
-        return dist < tolerance*tolerance;
+        return dist <= tolerance*tolerance;
         //        for (k = CR; k <= CB; k++) {
         //            temp = abs((int)base[k] - (int)color[k]);
         //            if (temp > tolerance){
