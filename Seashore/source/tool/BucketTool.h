@@ -23,7 +23,7 @@
     BucketOptions *options;
     CGContextRef textureCtx;
 
-    unsigned char lastTolerance;
+    int lastTolerance;
     NSOperationQueue *queue;
 }
 
