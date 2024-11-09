@@ -1,0 +1,12 @@
+{
+    "boost-test-adapter-robaho.tests": [
+        {
+            "testExecutables": [
+                {
+                    "glob": "**/*{_test,_test.exe}"
+                }
+            ],
+            "debugConfig": "Test Config"
+        }
+    ]
+}

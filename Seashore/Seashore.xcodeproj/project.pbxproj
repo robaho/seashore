@@ -2708,6 +2708,7 @@
 					"$(SRCROOT)/../WebP",
 					"$(SRCROOT)/../PocketSVG",
 				);
+				SDKROOT = "";
 			};
 			name = Debug;
 		};
@@ -2749,6 +2750,7 @@
 					"$(SRCROOT)/../WebP",
 					"$(SRCROOT)/../PocketSVG",
 				);
+				SDKROOT = "";
 			};
 			name = Release;
 		};
