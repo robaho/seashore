@@ -196,10 +196,19 @@
 
 - (void)mouseDraggedTo:(IntPoint)where withEvent:(NSEvent *)event
 {
-    if(!intermediate)
+    BrushOptions *options = [self getBrushOptions];
+
+    bool lineDraw = false;
+    if (([options modifier] == kShiftModifier || [options modifier] == kShiftControlModifier)) {
+        lineDraw = YES;
+    }
+
+    if(!intermediate && !lineDraw)
         return;
 
-    BrushOptions *options = [self getBrushOptions];
+    if(!intermediate) {
+        [self mouseDownAt:IntMakePoint(lastPoint.x,lastPoint.y) withEvent:event];
+    }
 
     // Check this is a new point
     if (where.x == lastPoint.x && where.y == lastPoint.y) {
@@ -211,9 +220,6 @@
 
 - (void)endLineDrawing
 {
-    if(!intermediate)
-        return;
-    
     [[document helpers] applyOverlay];
     intermediate=NO;
 

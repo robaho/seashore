@@ -65,9 +65,6 @@
 	int xMod = (lastPoint.x > where.x) ? -1 : 1, yMod = (lastPoint.y > where.y) ? -1 : 1;
 	int xDist = fabs(lastPoint.x - where.x), yDist = fabs(lastPoint.y - where.y);
 
-    if (!intermediate)
-        return;
-	
 	// Only continue if the current point is different from the last point
 	if (lastPoint.x == where.x && lastPoint.y == where.y)
 		return;
@@ -99,9 +96,6 @@
 
 - (void)endLineDrawing
 {
-    if(!intermediate)
-        return;
-
     [[document helpers] applyOverlay];
     intermediate=NO;
 

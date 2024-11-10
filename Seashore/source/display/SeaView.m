@@ -351,14 +351,15 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
 
     [cursorsManager updateCursor:theEvent];
 
-    // Check if it is a line draw
+    // Get the current tool
+    AbstractTool *curTool = [document currentTool];
+
+    lineDraw = ([curTool acceptsLineDraws] && ([options modifier] == kShiftModifier || [options modifier] == kShiftControlModifier));
+
     if (lineDraw) {
         [self mouseDragged:theEvent];
         return;
     }
-    
-    // Get the current tool
-    AbstractTool *curTool = [document currentTool];
     
     // Calculate the localPoint and localActiveLayerPoint
     mouseDownLoc = [theEvent locationInWindow];
@@ -437,7 +438,6 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
 
     [curTool mouseDraggedTo:localPoint withEvent:theEvent];
     lastLocalPoint = localPoint;
-    lineDraw = NO;
 
     [self autoscroll:theEvent];
     
@@ -462,21 +462,16 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
     // Return to normal coalescing
     NSEvent.mouseCoalescingEnabled = true;
 
-    // Check if it is a line draw
-    if ([curTool acceptsLineDraws] && ([options modifier] == kShiftModifier || [options modifier] == kShiftControlModifier)) {
-        lineDraw = YES;
-        return;
-    }
-
     // Calculate the localPoint and localActiveLayerPoint
     mouseDownLoc = NSMakePoint(-256e6, -256e6);
     localPoint = [self convertPoint:[theEvent locationInWindow] fromView:NULL];
     localActiveLayerPoint.x = localPoint.x - [[[document contents] activeLayer] xoff];
     localActiveLayerPoint.y = localPoint.y - [[[document contents] activeLayer] yoff];
     
-    // First treat this as an ordinary drag
-    [self mouseDragged:theEvent];
-    
+    if(!lineDraw) {
+        [self mouseDragged:theEvent];
+    }
+
     // Reset the delta
     delta = IntMakePoint(0,0);
 
@@ -906,7 +901,6 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
 
 - (void)endLineDrawing
 {
-    lineDraw = NO;
 }
 
 - (IntPoint)getMousePosition:(BOOL)compensation
