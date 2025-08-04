@@ -1,3 +1,5 @@
+# Work on Seashore is being deprioritized in favor of [Seahorse](https://apps.apple.com/us/app/seahorse-image-editor/id6742335288?mt=12).  Read more in the FAQ [here](https://eolcoderllc.github.io/Seahorse/future_of_seashore)
+
 # seashore ![icon](doc/icon.png)
 
 [![Download](doc/download.png)](https://geo.itunes.apple.com/us/app/seashore/id1448648921?mt=12&app=apps)
