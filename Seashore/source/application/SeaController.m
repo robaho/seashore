@@ -8,6 +8,7 @@
 #import "SeaHelp.h"
 #import "SeaTools.h"
 #import "SeaDocumentController.h"
+#import "SeaContent.h"
 
 id seaController;
 
@@ -217,7 +218,7 @@ id seaController;
 				return YES;
             else {
                 NSString *string = [[NSPasteboard generalPasteboard] stringForType:NSStringPboardType];
-                if(string!=NULL && [string hasPrefix:@"<svg"]) return YES;
+                if(SeaStringLooksLikeSVG(string)) return YES;
                 return NO;
             }
 		break;

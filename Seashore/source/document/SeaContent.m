@@ -36,6 +36,19 @@
 static NSString*    FloatAnchorToolbarItemIdentifier = @"Float/Anchor Toolbar Item Identifier";
 static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Selection Toolbar Item Identifier";
 
+BOOL SeaStringLooksLikeSVG(NSString *string)
+{
+    if (string == NULL)
+        return NO;
+
+    // The <svg> element is not always the first thing in the string: an XML
+    // declaration, a doctype or a comment may precede it, and most files
+    // written by an editor do begin with a declaration.
+    NSRange head = NSMakeRange(0, MIN((NSUInteger)1024, [string length]));
+
+    return [string rangeOfString:@"<svg" options:0 range:head].location != NSNotFound;
+}
+
 @implementation SeaContent
 
 - (id)initWithDocument:(id)doc
@@ -68,7 +81,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
         imageRep = [[NSBitmapImageRep alloc] initWithData:imageRepData];
     } else {
         NSString* string = [[NSPasteboard generalPasteboard] stringForType:NSStringPboardType];
-        if(string!=NULL && [string hasPrefix:@"<svg"]) {
+        if(SeaStringLooksLikeSVG(string)) {
             SeaLayer *layer = [[[SVGImporter alloc] init] loadSVGLayer:doc string:string];
             width = [layer width];
             height = [layer height];
@@ -683,7 +696,7 @@ static NSString*    DuplicateSelectionToolbarItemIdentifier = @"Duplicate Select
 
     if([ptype isEqualToString:NSStringPboardType]){
         NSString* string = [[NSPasteboard generalPasteboard] stringForType:NSStringPboardType];
-        if(string!=NULL && [string hasPrefix:@"<svg"]) {
+        if(SeaStringLooksLikeSVG(string)) {
             SeaLayer *layer = [[[SVGImporter alloc] init] loadSVGLayer:document string:string];
             [self addLayerObject:layer atIndex:index];
             return;

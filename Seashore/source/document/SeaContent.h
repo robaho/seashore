@@ -14,6 +14,18 @@
 @class SeaLayer;
 @class SeaDocument;
 
+/*!
+	@function	SeaStringLooksLikeSVG
+	@discussion	Whether a string from the pasteboard should be treated as SVG.
+				The <svg> element is not always first: an XML declaration, a
+				doctype or a comment may precede it, and most files written by
+				an editor do begin with a declaration.
+	@param		string
+				The string to examine, which may be NULL.
+	@result		YES if the string appears to be SVG.
+*/
+BOOL SeaStringLooksLikeSVG(NSString *string);
+
 @interface SeaContent : NSObject {
 	
 	// The document associated with this object
