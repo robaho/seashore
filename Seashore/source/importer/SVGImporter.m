@@ -47,7 +47,8 @@
 }
 
 - (SeaLayer*)loadSVGLayer:(id)doc string:(NSString*)svgData {
-    SVGLayer *svg = [[SVGLayer alloc] initWithString:svgData];
+    SVGLayer *svg = [[SVGLayer alloc] init];
+    [svg setPaths:[SVGBezierPath pathsFromSVGString:svgData]];
     return [self loadSVGLayer:doc svg:svg];
 }
 
