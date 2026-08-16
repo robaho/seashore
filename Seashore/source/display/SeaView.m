@@ -1071,7 +1071,7 @@ static NSString*    SelectAlphaToolbarItemIdentifier = @"Select Alpha Toolbar It
                 return YES;
             else {
                 NSString *string = [[NSPasteboard generalPasteboard] stringForType:NSStringPboardType];
-                if(string!=NULL && [string hasPrefix:@"<svg"]) return YES;
+                if(SeaStringLooksLikeSVG(string)) return YES;
                 return NO;
             }
         break;
